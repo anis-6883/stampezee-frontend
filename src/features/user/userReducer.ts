@@ -35,14 +35,10 @@ const userSlice = createSlice({
       state.users = [...state.users, action.payload];
     },
     updateUser: (state, action: PayloadAction<IUser>) => {
-      state.users = state.users.map((item: IUser) =>
-        item.id === action.payload.id ? { ...item, ...action.payload } : item
-      );
+      state.users = state.users.map((item: IUser) => (item.id === action.payload.id ? { ...item, ...action.payload } : item));
     },
     deleteUser: (state, action: PayloadAction<{ id: string }>) => {
-      state.users = state.users.filter(
-        (item: IUser) => item.id !== action.payload.id
-      );
+      state.users = state.users.filter((item: IUser) => item.id !== action.payload.id);
     },
   },
 });

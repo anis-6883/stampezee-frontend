@@ -6,15 +6,7 @@ import { FaRegNoteSticky } from 'react-icons/fa6';
 import { GiPrayer } from 'react-icons/gi';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { IoBookOutline } from 'react-icons/io5';
-import {
-  LuBook,
-  LuFileText,
-  LuHighlighter,
-  LuLayoutDashboard,
-  LuMusic,
-  LuUserCog,
-  LuUsers,
-} from 'react-icons/lu';
+import { LuBook, LuFileText, LuHighlighter, LuLayoutDashboard, LuMusic, LuUserCog, LuUsers } from 'react-icons/lu';
 import { RiQuestionAnswerLine } from 'react-icons/ri';
 
 // Note: do not add href in the label object, it is rendering as label

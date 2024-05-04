@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  useGetGeneralSettingsQuery,
-  useUpdateGeneralSettingsMutation,
-} from '@/features/super-admin/general-settings/generalSettingsApi';
+import { useGetGeneralSettingsQuery, useUpdateGeneralSettingsMutation } from '@/features/super-admin/general-settings/generalSettingsApi';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -19,16 +16,9 @@ import TabButtonItem from './TabButtonItem';
 import TermsAndConditionForm from './TermsAndConditionForm';
 
 export default function SettingsMainForm() {
-  const {
-    data: generalSetting,
-    isLoading,
-    isError,
-  } = useGetGeneralSettingsQuery(undefined);
+  const { data: generalSetting, isLoading, isError } = useGetGeneralSettingsQuery(undefined);
 
-  const [
-    updateSettings,
-    { data: updatedData, isSuccess, isError: updatingError },
-  ] = useUpdateGeneralSettingsMutation();
+  const [updateSettings, { data: updatedData, isSuccess, isError: updatingError }] = useUpdateGeneralSettingsMutation();
 
   const [currentTab, setCurrentTab] = useState(0);
   const [siteLogo, setSiteLogo] = useState(null);
@@ -83,14 +73,7 @@ export default function SettingsMainForm() {
     }
   }, [generalSetting, isError, isLoading]);
 
-  const tabs = [
-    'General Settings',
-    'Apps & Social Links',
-    'Logo & Icon',
-    'Terms and Condition',
-    'Privacy and Policy',
-    'Cloudinary',
-  ];
+  const tabs = ['General Settings', 'Apps & Social Links', 'Logo & Icon', 'Terms and Condition', 'Privacy and Policy', 'Cloudinary'];
 
   const handleTabChange = (tab: number) => {
     setCurrentTab(tab);
@@ -147,32 +130,19 @@ export default function SettingsMainForm() {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-      enableReinitialize
-    >
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} enableReinitialize>
       {({ values, setFieldValue }) => (
         <Form>
           <div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
               <div className="col-span-1 flex flex-col text-black md:col-span-3">
                 {tabs.map((tab, index) => (
-                  <TabButtonItem
-                    key={index}
-                    tab={tab}
-                    onClick={() => handleTabChange(index)}
-                    active={currentTab === index}
-                  />
+                  <TabButtonItem key={index} tab={tab} onClick={() => handleTabChange(index)} active={currentTab === index} />
                 ))}
               </div>
               <div className="col-span-1 w-full rounded-lg border border-gray-200 bg-white p-5 shadow md:col-span-9">
                 <div hidden={currentTab === 0 ? false : true}>
-                  <GeneralSettingsForm
-                    setFieldValue={setFieldValue}
-                    values={values}
-                  />
+                  <GeneralSettingsForm setFieldValue={setFieldValue} values={values} />
                 </div>
 
                 <div hidden={currentTab === 1 ? false : true}>
@@ -191,17 +161,11 @@ export default function SettingsMainForm() {
                 </div>
 
                 <div hidden={currentTab === 3 ? false : true}>
-                  <TermsAndConditionForm
-                    values={values}
-                    setFieldValue={setFieldValue}
-                  />
+                  <TermsAndConditionForm values={values} setFieldValue={setFieldValue} />
                 </div>
 
                 <div hidden={currentTab === 4 ? false : true}>
-                  <PrivacyAndPolicyForm
-                    values={values}
-                    setFieldValue={setFieldValue}
-                  />
+                  <PrivacyAndPolicyForm values={values} setFieldValue={setFieldValue} />
                 </div>
 
                 <div hidden={currentTab === 5 ? false : true}>
@@ -210,17 +174,8 @@ export default function SettingsMainForm() {
               </div>
             </div>
             <div className="flex w-full justify-end">
-              <button
-                type="submit"
-                className="btn btn-primary btn-sm mt-6 text-white"
-                disabled={isSubmitting}
-              >
-                Submit{' '}
-                {isSubmitting ? (
-                  <PiSpinnerLight className="ml-1 animate-spin" />
-                ) : (
-                  <FiCheckCircle className="ml-1" />
-                )}
+              <button type="submit" className="btn btn-primary btn-sm mt-6 text-white" disabled={isSubmitting}>
+                Submit {isSubmitting ? <PiSpinnerLight className="ml-1 animate-spin" /> : <FiCheckCircle className="ml-1" />}
               </button>
             </div>
           </div>

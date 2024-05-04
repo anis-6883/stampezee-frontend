@@ -11,10 +11,7 @@ export const siteConfig = {
   mode: MODE.LIGHT,
 };
 
-export const metaObject = (
-  title?: string,
-  description: string = siteConfig.description
-): Metadata => {
+export const metaObject = (title?: string, description: string = siteConfig.description): Metadata => {
   return {
     title: title ? `${title} - StampEzee` : siteConfig.title,
     description,

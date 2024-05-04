@@ -2,19 +2,8 @@
 
 import { Fragment, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import {
-  Title,
-  Input,
-  Button,
-  ActionIcon,
-  Empty,
-  SearchNotFoundIcon,
-} from 'rizzui';
-import {
-  PiFileTextDuotone,
-  PiMagnifyingGlassBold,
-  PiXBold,
-} from 'react-icons/pi';
+import { Title, Input, Button, ActionIcon, Empty, SearchNotFoundIcon } from 'rizzui';
+import { PiFileTextDuotone, PiMagnifyingGlassBold, PiXBold } from 'react-icons/pi';
 import cn from '@/hooks/class-names';
 import { pageLinks } from './page-links.data';
 
@@ -26,10 +15,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
   if (searchText.length > 0) {
     menuItemsFiltered = pageLinks.filter((item: any) => {
       const label = item.name;
-      return (
-        label.match(searchText.toLowerCase()) ||
-        (label.toLowerCase().match(searchText.toLowerCase()) && label)
-      );
+      return label.match(searchText.toLowerCase()) || (label.toLowerCase().match(searchText.toLowerCase()) && label);
     });
   }
 
@@ -54,9 +40,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
           onChange={(e) => setSearchText(() => e.target.value)}
           placeholder="Search here"
           className="flex-1"
-          prefix={
-            <PiMagnifyingGlassBold className="h-[18px] w-[18px] text-gray-600" />
-          }
+          prefix={<PiMagnifyingGlassBold className="h-[18px] w-[18px] text-gray-600" />}
           suffix={
             searchText && (
               <Button
@@ -73,12 +57,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
             )
           }
         />
-        <ActionIcon
-          variant="text"
-          size="sm"
-          className="ms-3 text-gray-500 hover:text-gray-700"
-          onClick={onClose}
-        >
+        <ActionIcon variant="text" size="sm" className="ms-3 text-gray-500 hover:text-gray-700" onClick={onClose}>
           <PiXBold className="h-5 w-5" />
         </ActionIcon>
       </div>
@@ -86,17 +65,9 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
       <div className="custom-scrollbar max-h-[60vh] overflow-y-auto border-t border-gray-300 px-2 py-4">
         <>
           {menuItemsFiltered.length === 0 ? (
-            <Empty
-              className="scale-75"
-              image={<SearchNotFoundIcon />}
-              text="No Result Found"
-              textClassName="text-xl"
-            />
+            <Empty className="scale-75" image={<SearchNotFoundIcon />} text="No Result Found" textClassName="text-xl" />
           ) : (
-            <Title
-              as="h6"
-              className="mb-5 px-3 font-semibold dark:text-gray-700"
-            >
+            <Title as="h6" className="mb-5 px-3 font-semibold dark:text-gray-700">
               Quick Page Links
             </Title>
           )}
@@ -115,12 +86,8 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
                   </span>
 
                   <span className="ms-3 grid gap-0.5">
-                    <span className="font-medium capitalize text-gray-900 dark:text-gray-700">
-                      {item.name}
-                    </span>
-                    <span className="text-gray-500">
-                      {item?.href as string}
-                    </span>
+                    <span className="font-medium capitalize text-gray-900 dark:text-gray-700">{item.name}</span>
+                    <span className="text-gray-500">{item?.href as string}</span>
                   </span>
                 </Link>
               ) : (

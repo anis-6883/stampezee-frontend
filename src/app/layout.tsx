@@ -8,6 +8,7 @@ import ReduxProvider from './providers/redux-provider';
 import cn from '@/hooks/class-names';
 import dynamic from 'next/dynamic';
 import { Toaster } from 'react-hot-toast';
+import { cookies } from 'next/headers';
 
 const NextProgress = dynamic(() => import('@/components/next-progress'), {
   ssr: false,
@@ -18,16 +19,14 @@ export const metadata = {
   description: siteConfig.description,
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const tokenExist = cookies().get('act')?.value ? true : false;
+
   return (
-    <html lang="en" dir="ltr">
-      <body className={cn(poppins.variable, lexendDeca.variable, 'font-inter')}>
+    <html lang="en" dir="ltr" suppressHydrationWarning={true}>
+      <body className={cn(poppins.variable, lexendDeca.variable, 'font-inter')} suppressHydrationWarning={true}>
         <ReduxProvider>
-          <AuthProvider>
+          <AuthProvider tokenExist={tokenExist}>
             <NextProgress />
             {children}
             <Toaster />

@@ -3,31 +3,18 @@
 import QuillLoader from '@/components/reactQuill/QuillLoader';
 import { routes } from '@/config/routes';
 import { userFormValidation } from '@/config/validation';
-import {
-  useCreateUserMutation,
-  useGetSingleUserQuery,
-  useUpdateUserMutation,
-} from '@/features/user/userApi';
+import { useCreateUserMutation, useGetSingleUserQuery, useUpdateUserMutation } from '@/features/user/userApi';
 import { Field, Form, Formik } from 'formik';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { Button, Input } from 'rizzui';
 
-const QuillEditor = dynamic(
-  () => import('@/components/reactQuill/QuillEditor'),
-  {
-    ssr: false,
-    loading: () => <QuillLoader className="col-span-full h-[143px]" />,
-  }
-);
+const QuillEditor = dynamic(() => import('@/components/reactQuill/QuillEditor'), {
+  ssr: false,
+  loading: () => <QuillLoader className="col-span-full h-[143px]" />,
+});
 
-export default function CreateUser({
-  edit,
-  id,
-}: {
-  edit?: boolean;
-  id?: string;
-}) {
+export default function CreateUser({ edit, id }: { edit?: boolean; id?: string }) {
   const [createUser] = useCreateUserMutation();
   const [updateUser] = useUpdateUserMutation();
   const { data } = useGetSingleUserQuery(id, { skip: !edit });
@@ -63,12 +50,7 @@ export default function CreateUser({
   }
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={userFormValidation}
-      onSubmit={handleSubmit}
-      enableReinitialize
-    >
+    <Formik initialValues={initialValues} validationSchema={userFormValidation} onSubmit={handleSubmit} enableReinitialize>
       {({ values, setFieldValue }) => (
         <Form>
           <Field name="email">
@@ -78,12 +60,7 @@ export default function CreateUser({
                 label={
                   <span className="mb-1 font-semibold">
                     Email
-                    <span className="text-red-600">
-                      *{' '}
-                      {meta.touched && meta.error && (
-                        <span>({meta.error})</span>
-                      )}
-                    </span>
+                    <span className="text-red-600">* {meta.touched && meta.error && <span>({meta.error})</span>}</span>
                   </span>
                 }
                 className="col-span-full"
@@ -100,12 +77,7 @@ export default function CreateUser({
                 label={
                   <span className="mb-1 font-semibold">
                     Name
-                    <span className="text-red-600">
-                      *{' '}
-                      {meta.touched && meta.error && (
-                        <span>({meta.error})</span>
-                      )}
-                    </span>
+                    <span className="text-red-600">* {meta.touched && meta.error && <span>({meta.error})</span>}</span>
                   </span>
                 }
                 className="col-span-full"
@@ -122,12 +94,7 @@ export default function CreateUser({
                   label={
                     <span className="mb-1 font-semibold">
                       Password
-                      <span className="text-red-600">
-                        *{' '}
-                        {meta.touched && meta.error && (
-                          <span>({meta.error})</span>
-                        )}
-                      </span>
+                      <span className="text-red-600">* {meta.touched && meta.error && <span>({meta.error})</span>}</span>
                     </span>
                   }
                   className="col-span-full"

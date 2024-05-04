@@ -1,12 +1,4 @@
-export default function TabButtonItem({
-  tab,
-  onClick,
-  active,
-}: {
-  tab: string;
-  onClick: () => void;
-  active: boolean;
-}) {
+export default function TabButtonItem({ tab, onClick, active }: { tab: string; onClick: () => void; active: boolean }) {
   return (
     <div
       onClick={onClick}

@@ -25,9 +25,7 @@ export default function DeleteConfirmation({
     <ModalButton
       view={
         <div>
-          <p className="text-lg font-semibold">
-            Are you sure you want to remove {title}?{' '}
-          </p>
+          <p className="text-lg font-semibold">Are you sure you want to remove {title}? </p>
           <p className="my-5 text-xs">This action cannot be undone.</p>
           <div className="flex items-end justify-end space-x-2">
             <button

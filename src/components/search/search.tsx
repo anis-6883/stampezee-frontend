@@ -6,13 +6,7 @@ import { Modal } from 'rizzui';
 import SearchTrigger from '@/components/search/search-trigger';
 import SearchList from '@/components/search/search-list';
 
-export default function SearchWidget({
-  className,
-  icon,
-}: {
-  className?: string;
-  icon?: React.ReactNode;
-}) {
+export default function SearchWidget({ className, icon }: { className?: string; icon?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -32,11 +26,7 @@ export default function SearchWidget({
 
   return (
     <>
-      <SearchTrigger
-        icon={icon}
-        className={className}
-        onClick={() => setOpen(true)}
-      />
+      <SearchTrigger icon={icon} className={className} onClick={() => setOpen(true)} />
 
       <Modal
         isOpen={open}

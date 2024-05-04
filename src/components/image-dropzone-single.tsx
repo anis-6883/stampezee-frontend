@@ -84,51 +84,28 @@ export default function ImageDropzoneSingle({
               sizes="100vw"
               className="h-24 w-24 rounded-md border border-gray-200 object-contain p-1"
             />
-            {value && value.name && (
-              <p className="mt-2 text-[14px] font-bold text-gray-800">
-                {value.name}
-              </p>
-            )}
-            <button
-              type="button"
-              className="rounded bg-red-500 p-1"
-              onClick={removeFile}
-            >
+            {value && value.name && <p className="mt-2 text-[14px] font-bold text-gray-800">{value.name}</p>}
+            <button type="button" className="rounded bg-red-500 p-1" onClick={removeFile}>
               <FaTrashAlt className="hover:fill-secondary-400 h-5 w-5 fill-white transition-colors" />
             </button>
           </div>
         ) : (
           <div className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-2">
             <input {...getInputProps()} />
-            <Image
-              src="/images/upload.png"
-              height={60}
-              width={60}
-              alt="upload"
-            />
+            <Image src="/images/upload.png" height={60} width={60} alt="upload" />
             {error ? (
               <p className="text-sm text-red-500">{error}</p>
             ) : (
               <>
                 <h3 className="mt-2 text-sm font-medium text-gray-900">
-                  <label
-                    htmlFor="file-upload"
-                    className="relative cursor-pointer"
-                  >
+                  <label htmlFor="file-upload" className="relative cursor-pointer">
                     <span>Drag and drop</span>
                     <span className="text-primary"> or browse</span>
                     <span> to upload!</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      className="sr-only"
-                    />
+                    <input id="file-upload" name="file-upload" type="file" className="sr-only" />
                   </label>
                 </h3>
-                <p className="mt-1 text-xs text-gray-500">
-                  PNG, JPG, GIF up to {sizeText}
-                </p>
+                <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to {sizeText}</p>
               </>
             )}
           </div>

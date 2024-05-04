@@ -26,10 +26,7 @@ export const metadata = {
 export default function Page({ params: { id } }: { params: { id: number } }) {
   return (
     <>
-      <PageHeader
-        title={pageHeader.title}
-        breadcrumb={pageHeader.breadcrumb}
-      ></PageHeader>
+      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}></PageHeader>
     </>
   );
 }

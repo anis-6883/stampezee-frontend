@@ -18,5 +18,4 @@ export const generalSettingsApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetGeneralSettingsQuery, useUpdateGeneralSettingsMutation } =
-  generalSettingsApi;
+export const { useGetGeneralSettingsQuery, useUpdateGeneralSettingsMutation } = generalSettingsApi;

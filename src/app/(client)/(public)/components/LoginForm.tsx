@@ -28,15 +28,7 @@ export default function LoginForm() {
     password: Yup.string().required('Required!'),
   });
 
-  const [
-    adminLogin,
-    {
-      data: loginResponse,
-      isSuccess: loginSuccess,
-      isError: isLoginError,
-      error: loginError,
-    },
-  ] = useAdminLoginMutation();
+  const [adminLogin, { data: loginResponse, isSuccess: loginSuccess, isError: isLoginError, error: loginError }] = useAdminLoginMutation();
 
   // Handle Login Response
   useEffect(() => {
@@ -54,22 +46,22 @@ export default function LoginForm() {
     if (loginSuccess) {
       if (loginResponse?.status) {
         toast.success('Login Successful!');
-        console.log(loginResponse);
+        // console.log(loginResponse);
         dispatch(setValue({ target: 'user', value: loginResponse.data }));
-        replace(routes.admin.dashboard);
+
+        if (loginResponse?.data?.role === 'admin') {
+          replace(routes.admin.dashboard);
+        }
+
+        if (loginResponse?.data?.role === 'user') {
+          replace(routes.user.profile);
+        }
       } else {
         setSubmitting(false);
         toast.error(loginResponse?.message);
       }
     }
-  }, [
-    loginError,
-    isLoginError,
-    loginSuccess,
-    loginResponse,
-    replace,
-    dispatch,
-  ]);
+  }, [loginError, isLoginError, loginSuccess, loginResponse, replace, dispatch]);
 
   // Submit Handler
   const handleSubmit = (values: any) => {
@@ -82,11 +74,7 @@ export default function LoginForm() {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={loginSchema}
-      onSubmit={handleSubmit}
-    >
+    <Formik initialValues={initialValues} validationSchema={loginSchema} onSubmit={handleSubmit}>
       {() => {
         return (
           <Form>
@@ -109,11 +97,7 @@ export default function LoginForm() {
                     placeholder={'john@example.com'}
                     {...field}
                   />
-                  {meta.touched && meta.error && (
-                    <p className="mt-1 select-none px-1 font-medium text-red">
-                      {meta.error}
-                    </p>
-                  )}
+                  {meta.touched && meta.error && <p className="mt-1 select-none px-1 font-medium text-red">{meta.error}</p>}
                 </div>
               )}
             </Field>
@@ -135,11 +119,7 @@ export default function LoginForm() {
                     placeholder="********"
                     {...field}
                   />
-                  {meta.touched && meta.error && (
-                    <p className="mt-1 select-none px-1 font-medium text-red">
-                      {meta.error}
-                    </p>
-                  )}
+                  {meta.touched && meta.error && <p className="mt-1 select-none px-1 font-medium text-red">{meta.error}</p>}
                 </div>
               )}
             </Field>
@@ -152,8 +132,7 @@ export default function LoginForm() {
               >
                 {submitting ? (
                   <span className="flex items-center gap-x-2">
-                    Requesting...{' '}
-                    <ImSpinner9 className="animate-spin text-base" />
+                    Requesting... <ImSpinner9 className="animate-spin text-base" />
                   </span>
                 ) : (
                   <span>Login</span>

@@ -11,5 +11,4 @@ export const popularFootballEntityApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllLeaguesQuery, useGetPopularLeaguesQuery } =
-  popularFootballEntityApi;
+export const { useGetAllLeaguesQuery, useGetPopularLeaguesQuery } = popularFootballEntityApi;

@@ -13,23 +13,9 @@ interface ICommonInputProps {
 }
 
 //@ts-ignore
-interface IInputProps
-  extends ICommonInputProps,
-    RizzInputProps,
-    InputHTMLAttributes<HTMLInputElement> {
+interface IInputProps extends ICommonInputProps, RizzInputProps, InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  type?:
-    | 'text'
-    | 'number'
-    | 'email'
-    | 'time'
-    | 'date'
-    | 'datetime-local'
-    | 'month'
-    | 'search'
-    | 'tel'
-    | 'url'
-    | 'week';
+  type?: 'text' | 'number' | 'email' | 'time' | 'date' | 'datetime-local' | 'month' | 'search' | 'tel' | 'url' | 'week';
 }
 
 /**

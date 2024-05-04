@@ -22,15 +22,7 @@ export function useDrawer() {
   const state = useAtomValue(drawerAtom);
   const setState = useSetAtom(drawerAtom);
 
-  const openDrawer = ({
-    view,
-    placement,
-    customSize,
-  }: {
-    view: React.ReactNode;
-    placement: DrawerPlacements;
-    customSize?: string;
-  }) => {
+  const openDrawer = ({ view, placement, customSize }: { view: React.ReactNode; placement: DrawerPlacements; customSize?: string }) => {
     setState({
       ...state,
       isOpen: true,

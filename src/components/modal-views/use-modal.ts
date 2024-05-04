@@ -18,13 +18,7 @@ export function useModal() {
   const state = useAtomValue(modalAtom);
   const setState = useSetAtom(modalAtom);
 
-  const openModal = ({
-    view,
-    customSize,
-  }: {
-    view: React.ReactNode;
-    customSize?: string;
-  }) => {
+  const openModal = ({ view, customSize }: { view: React.ReactNode; customSize?: string }) => {
     setState({
       ...state,
       isOpen: true,

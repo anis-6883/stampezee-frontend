@@ -61,22 +61,14 @@ export default function QuillEditor({
 
   return (
     <div className={cn(className)}>
-      {label && (
-        <label className={cn('mb-1.5 block', labelClassName)}>{label}</label>
-      )}
+      {label && <label className={cn('mb-1.5 block', labelClassName)}>{label}</label>}
       <ReactQuill
         modules={quillModules}
         // formats={quillFormats}
-        className={cn(
-          'react-quill',
-          toolbarPosition === 'bottom' && 'react-quill-toolbar-bottom relative',
-          className
-        )}
+        className={cn('react-quill', toolbarPosition === 'bottom' && 'react-quill-toolbar-bottom relative', className)}
         {...props}
       />
-      {error && (
-        <FieldError size="md" error={error} className={errorClassName} />
-      )}
+      {error && <FieldError size="md" error={error} className={errorClassName} />}
     </div>
   );
 }

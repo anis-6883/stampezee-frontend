@@ -12,22 +12,9 @@ const classNames = {
   after: `after:absolute after:inset-0 after:bg-red-light after:content-[''] after:bg-skeleton dark:after:bg-skeleton-dark after:animate-skeleton`,
 };
 
-export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <span
-        className={cn(
-          classNames.base,
-          classNames.before,
-          classNames.after,
-          className
-        )}
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
+export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(({ className, ...props }, ref) => {
+  return <span className={cn(classNames.base, classNames.before, classNames.after, className)} ref={ref} {...props} />;
+});
 
 Skeleton.displayName = 'Skeleton';
 

@@ -1,11 +1,7 @@
 import Header from '@/layouts/header';
 import Sidebar from '@/layouts/sidebar';
 
-export default function HydrogenLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function HydrogenLayout({ children }: { children: React.ReactNode }) {
   return (
     <main className="flex min-h-screen flex-grow">
       <Sidebar className="fixed hidden dark:bg-gray-50 xl:block" />

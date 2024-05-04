@@ -3,13 +3,7 @@ import { Field } from 'formik';
 import Select from 'react-select';
 import FormBlockWrapper from '../../../../../components/shared/Form/FormBlockWrapper';
 
-export default function GeneralSettingsForm({
-  setFieldValue,
-  values,
-}: {
-  setFieldValue: any;
-  values: any;
-}) {
+export default function GeneralSettingsForm({ setFieldValue, values }: { setFieldValue: any; values: any }) {
   return (
     <FormBlockWrapper title="Main Information">
       <div className="grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-3">
@@ -19,20 +13,10 @@ export default function GeneralSettingsForm({
               <label className="w-full">
                 <div className="label">
                   <span className="label-text font-semibold">
-                    Company Name{' '}
-                    <span className="text-red-600">
-                      *{' '}
-                      {meta.touched && meta.error && (
-                        <span>({meta.error})</span>
-                      )}
-                    </span>
+                    Company Name <span className="text-red-600">* {meta.touched && meta.error && <span>({meta.error})</span>}</span>
                   </span>
                 </div>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...field}
-                />
+                <input type="text" className="input input-bordered w-full" {...field} />
               </label>
             </>
           )}
@@ -44,20 +28,10 @@ export default function GeneralSettingsForm({
               <label className="form-control w-full">
                 <div className="label">
                   <span className="label-text font-semibold">
-                    Site Title{' '}
-                    <span className="text-red-600">
-                      *{' '}
-                      {meta.touched && meta.error && (
-                        <span>({meta.error})</span>
-                      )}
-                    </span>
+                    Site Title <span className="text-red-600">* {meta.touched && meta.error && <span>({meta.error})</span>}</span>
                   </span>
                 </div>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...field}
-                />
+                <input type="text" className="input input-bordered w-full" {...field} />
               </label>
             </>
           )}
@@ -69,10 +43,7 @@ export default function GeneralSettingsForm({
               <label className="form-control w-full">
                 <div className="label">
                   <span className="label-text font-semibold">
-                    Time Zone{' '}
-                    <span className="text-red-600">
-                      * {meta.touched && meta.error && <span>(Required!)</span>}
-                    </span>
+                    Time Zone <span className="text-red-600">* {meta.touched && meta.error && <span>(Required!)</span>}</span>
                   </span>
                 </div>
                 <Select
@@ -96,15 +67,9 @@ export default function GeneralSettingsForm({
             <>
               <label className="form-control w-full">
                 <div className="label">
-                  <span className="label-text font-semibold">
-                    QP SMS App Key (OTP)
-                  </span>
+                  <span className="label-text font-semibold">QP SMS App Key (OTP)</span>
                 </div>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...field}
-                />
+                <input type="text" className="input input-bordered w-full" {...field} />
               </label>
             </>
           )}
@@ -115,15 +80,9 @@ export default function GeneralSettingsForm({
             <>
               <label className="form-control w-full">
                 <div className="label">
-                  <span className="label-text font-semibold">
-                    QP SMS Secret Key (OTP)
-                  </span>
+                  <span className="label-text font-semibold">QP SMS Secret Key (OTP)</span>
                 </div>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...field}
-                />
+                <input type="text" className="input input-bordered w-full" {...field} />
               </label>
             </>
           )}

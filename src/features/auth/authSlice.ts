@@ -10,10 +10,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setValue: (
-      state,
-      action: PayloadAction<{ target: string; value: IUser | undefined }>
-    ) => {
+    setValue: (state, action: PayloadAction<{ target: string; value: IUser | undefined }>) => {
       // @ts-ignore - Ignore TypeScript error as the types are correct
       state[action.payload.target] = action.payload.value;
     },

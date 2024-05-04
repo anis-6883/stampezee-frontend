@@ -22,14 +22,8 @@ export default function Header() {
       )}
     >
       <div className="flex w-full max-w-2xl items-center">
-        <HamburgerButton
-          view={<Sidebar className="static w-full 2xl:w-full" />}
-        />
-        <Link
-          href={'/'}
-          aria-label="Site Logo"
-          className="me-4 w-9 shrink-0 lg:me-5 xl:hidden"
-        >
+        <HamburgerButton view={<Sidebar className="static w-full 2xl:w-full" />} />
+        <Link href={'/'} aria-label="Site Logo" className="me-4 w-9 shrink-0 lg:me-5 xl:hidden">
           <Logo iconOnly={true} />
         </Link>
 

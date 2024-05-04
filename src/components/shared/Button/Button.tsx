@@ -11,9 +11,7 @@ interface ICommonProps {
   className?: string;
 }
 
-interface IButtonProps
-  extends ICommonProps,
-    ButtonHTMLAttributes<HTMLButtonElement> {
+interface IButtonProps extends ICommonProps, ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   startIcon?: React.ReactNode | null;
   endIcon?: React.ReactNode | null;

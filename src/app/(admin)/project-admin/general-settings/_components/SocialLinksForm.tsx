@@ -11,11 +11,7 @@ export default function SocialLinksForm() {
               <div className="label">
                 <span className="label-text font-semibold">Facebook</span>
               </div>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                {...field}
-              />
+              <input type="text" className="input input-bordered w-full" {...field} />
             </label>
           )}
         </Field>
@@ -26,11 +22,7 @@ export default function SocialLinksForm() {
               <div className="label">
                 <span className="label-text font-semibold">Instagram</span>
               </div>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                {...field}
-              />
+              <input type="text" className="input input-bordered w-full" {...field} />
             </label>
           )}
         </Field>
@@ -41,11 +33,7 @@ export default function SocialLinksForm() {
               <div className="label">
                 <span className="label-text font-semibold">Youtube</span>
               </div>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                {...field}
-              />
+              <input type="text" className="input input-bordered w-full" {...field} />
             </label>
           )}
         </Field>
@@ -56,15 +44,9 @@ export default function SocialLinksForm() {
           {({ field, meta }: { field: any; meta: any }) => (
             <label className="form-control w-full">
               <div className="label">
-                <span className="label-text font-semibold">
-                  Android Download Link
-                </span>
+                <span className="label-text font-semibold">Android Download Link</span>
               </div>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                {...field}
-              />
+              <input type="text" className="input input-bordered w-full" {...field} />
             </label>
           )}
         </Field>
@@ -73,15 +55,9 @@ export default function SocialLinksForm() {
           {({ field }: { field: any; meta: any }) => (
             <label className="form-control w-full">
               <div className="label">
-                <span className="label-text font-semibold">
-                  iOS Download Link
-                </span>
+                <span className="label-text font-semibold">iOS Download Link</span>
               </div>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                {...field}
-              />
+              <input type="text" className="input input-bordered w-full" {...field} />
             </label>
           )}
         </Field>

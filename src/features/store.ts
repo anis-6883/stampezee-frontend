@@ -10,8 +10,7 @@ const store = configureStore({
     userStore: userReducer,
   },
   devTools: process.env.NEXT_PUBLIC_NODE_ENV !== 'production',
-  middleware: (getDefaultMiddlewares) =>
-    getDefaultMiddlewares().concat(apiSlice.middleware),
+  middleware: (getDefaultMiddlewares) => getDefaultMiddlewares().concat(apiSlice.middleware),
 });
 
 export default store;

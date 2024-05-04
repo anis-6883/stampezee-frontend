@@ -1,10 +1,5 @@
 import { apiSlice } from '@/features/api/apiSlice';
-import {
-  addUser,
-  deleteUser,
-  setValue,
-  updateUser,
-} from '@/features/user/userReducer';
+import { addUser, deleteUser, setValue, updateUser } from '@/features/user/userReducer';
 import { IUser } from '@/types';
 import hotToast from '@/utils/hotToast';
 const userApi = apiSlice.injectEndpoints({
@@ -38,10 +33,7 @@ const userApi = apiSlice.injectEndpoints({
     getSingleUser: builder.query({
       query: (id) => `/user/profile/${id}`,
     }),
-    createUser: builder.mutation<
-      { data: { user: IUser; status: boolean; message: string } },
-      IUser
-    >({
+    createUser: builder.mutation<{ data: { user: IUser; status: boolean; message: string } }, IUser>({
       query: (data) => {
         return {
           url: '/user/register',
@@ -63,10 +55,7 @@ const userApi = apiSlice.injectEndpoints({
         }
       },
     }),
-    updateUser: builder.mutation<
-      { data: { updatedUser: IUser; status: boolean; message: string } },
-      {}
-    >({
+    updateUser: builder.mutation<{ data: { updatedUser: IUser; status: boolean; message: string } }, {}>({
       query: ({ id, data }: { id: string; data: IUser }) => {
         return {
           url: `/user/${id}`,
@@ -88,10 +77,7 @@ const userApi = apiSlice.injectEndpoints({
         }
       },
     }),
-    deleteUser: builder.mutation<
-      { data: { deletedUser: IUser; status: boolean; message: string } },
-      IUser
-    >({
+    deleteUser: builder.mutation<{ data: { deletedUser: IUser; status: boolean; message: string } }, IUser>({
       query: (id) => {
         return {
           url: `/user/${id}`,
@@ -115,10 +101,4 @@ const userApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useGetUsersQuery,
-  useCreateUserMutation,
-  useGetSingleUserQuery,
-  useUpdateUserMutation,
-  useDeleteUserMutation,
-} = userApi;
+export const { useGetUsersQuery, useCreateUserMutation, useGetSingleUserQuery, useUpdateUserMutation, useDeleteUserMutation } = userApi;

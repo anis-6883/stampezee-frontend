@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  DrawerPlacements,
-  useDrawer,
-} from '@/components/drawer-views/use-drawer';
+import { DrawerPlacements, useDrawer } from '@/components/drawer-views/use-drawer';
 import { ActionIcon } from 'rizzui';
 import cn from '@/hooks/class-names';
 
@@ -14,12 +11,7 @@ interface Props {
   className?: string;
 }
 
-export default function HamburgerButton({
-  view,
-  placement = 'left',
-  customSize = '320px',
-  className,
-}: Props) {
+export default function HamburgerButton({ view, placement = 'left', customSize = '320px', className }: Props) {
   const { openDrawer } = useDrawer();
   return (
     <ActionIcon
@@ -34,19 +26,8 @@ export default function HamburgerButton({
         })
       }
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={2}
-        stroke="currentColor"
-        className="h-6 w-6"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5"
-        />
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-6 w-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />
       </svg>
     </ActionIcon>
   );

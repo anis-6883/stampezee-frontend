@@ -4,11 +4,7 @@ import { useIsMounted } from '@/hooks/use-is-mounted';
 import HydrogenLayout from '@/layouts/layout';
 import { WiDaySnowThunderstorm } from 'react-icons/wi';
 
-export default function DefaultLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DefaultLayout({ children }: { children: React.ReactNode }) {
   const isMounted = useIsMounted();
 
   if (!isMounted) {

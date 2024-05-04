@@ -27,10 +27,7 @@ export const metadata = {
 export default function Page() {
   return (
     <>
-      <PageHeader
-        title={pageHeader.title}
-        breadcrumb={pageHeader.breadcrumb}
-      ></PageHeader>
+      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}></PageHeader>
       <CreateUser />
     </>
   );

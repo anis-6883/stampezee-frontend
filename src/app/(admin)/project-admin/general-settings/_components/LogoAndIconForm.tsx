@@ -35,11 +35,7 @@ export default function LogoAndIconForm({
                 sizes="100vw"
                 className="h-24 w-24 rounded-md border border-gray-200 object-contain p-1"
               />
-              <button
-                type="button"
-                className="rounded bg-red-500 p-1"
-                onClick={() => setFieldValue('site_logo', '')}
-              >
+              <button type="button" className="rounded bg-red-500 p-1" onClick={() => setFieldValue('site_logo', '')}>
                 <FaTrashAlt className="hover:fill-secondary-400 h-5 w-5 fill-white transition-colors" />
               </button>
             </div>
@@ -68,11 +64,7 @@ export default function LogoAndIconForm({
                 sizes="100vw"
                 className="h-24 w-24 rounded-md border border-gray-200 object-contain p-1"
               />
-              <button
-                type="button"
-                className="rounded bg-red-500 p-1"
-                onClick={() => setFieldValue('site_icon', '')}
-              >
+              <button type="button" className="rounded bg-red-500 p-1" onClick={() => setFieldValue('site_icon', '')}>
                 <FaTrashAlt className="hover:fill-secondary-400 h-5 w-5 fill-white transition-colors" />
               </button>
             </div>

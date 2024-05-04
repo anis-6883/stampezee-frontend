@@ -1,10 +1,6 @@
 import { debounce } from '@/utils/debounce';
 import { ActionIcon, Box } from '@mantine/core';
-import {
-  MRT_PaginationState,
-  MantineReactTable,
-  useMantineReactTable,
-} from 'mantine-react-table';
+import { MRT_PaginationState, MantineReactTable, useMantineReactTable } from 'mantine-react-table';
 import Link from 'next/link';
 import { HiOutlinePencil } from 'react-icons/hi2';
 import DeleteConfirmation from '../deleteModal/DeleteConfirmation';
@@ -25,11 +21,7 @@ interface CustomTableProps<T> {
   data: Record<string, any>[];
   pagination: IPagination;
   totalDocs?: number;
-  setPagination: (
-    pagination:
-      | MRT_PaginationState
-      | ((oldState: MRT_PaginationState) => MRT_PaginationState)
-  ) => void;
+  setPagination: (pagination: MRT_PaginationState | ((oldState: MRT_PaginationState) => MRT_PaginationState)) => void;
   deleteRow: (id: string) => void;
   editRow: (id: number | string) => string;
   setQuery: Function;
@@ -54,9 +46,7 @@ export default function CustomTable<T>({
   const handleFilter = (keyword: string) => {
     // @ts-ignore
     if (setQuery) {
-      setQuery(
-        keyword?.length > 3 ? { search: `${searchField}:${keyword}` } : {}
-      );
+      setQuery(keyword?.length > 3 ? { search: `${searchField}:${keyword}` } : {});
     }
   };
   const debounceFilter = debounce(handleFilter, 500);

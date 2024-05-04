@@ -13,5 +13,4 @@ export const fixtureApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetFootballFixturesQuery, useCheckHighlightsQuery } =
-  fixtureApi;
+export const { useGetFootballFixturesQuery, useCheckHighlightsQuery } = fixtureApi;

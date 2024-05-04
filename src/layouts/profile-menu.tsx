@@ -22,7 +22,7 @@ const menuItems = [
 ];
 
 function DropdownMenu() {
-  const { push } = useRouter();
+  const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user } = useSelector(
     (state: RootState) => ({
@@ -35,7 +35,7 @@ function DropdownMenu() {
   const handleLogout = async () => {
     logOut(null)
       .then((res) => {
-        push(routes.adminLogin);
+        replace(routes.adminLogin);
         dispatch(setValue({ target: 'user', value: undefined }));
       })
       .catch((err) => {
@@ -46,10 +46,7 @@ function DropdownMenu() {
   return (
     <div className="w-64 text-left rtl:text-right">
       <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
-        <Avatar
-          src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp"
-          name={user?.name ?? ''}
-        />
+        <Avatar src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp" name={user?.name ?? ''} />
         <div className="ms-3">
           <Title as="h6" className="font-semibold">
             {user?.name ?? ''}
@@ -81,13 +78,7 @@ function DropdownMenu() {
   );
 }
 
-export default function ProfileMenu({
-  buttonClassName,
-  avatarClassName,
-}: {
-  buttonClassName?: string;
-  avatarClassName?: string;
-}) {
+export default function ProfileMenu({ buttonClassName, avatarClassName }: { buttonClassName?: string; avatarClassName?: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -99,11 +90,7 @@ export default function ProfileMenu({
     <Popover enableOverlay placement="bottom-start">
       <Popover.Trigger>
         <div className="w-12 cursor-pointer">
-          <Avatar
-            name="Jane Doe"
-            src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp"
-            size="lg"
-          />
+          <Avatar name="Jane Doe" src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp" size="lg" />
         </div>
       </Popover.Trigger>
       <Popover.Content>{({ setOpen }) => <DropdownMenu />}</Popover.Content>

@@ -26,15 +26,6 @@
       }
     ]
   },
-  "include": [
-    "next-env.d.ts",
-    "additional.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.mjs",
-    ".next/types/**/*.ts",
-    "next.config.js"
-  ],
+  "include": ["next-env.d.ts", "additional.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs", ".next/types/**/*.ts", "next.config.js"],
   "exclude": ["node_modules", "path/to/aos/directory"]
 }

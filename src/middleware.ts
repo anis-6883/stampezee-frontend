@@ -3,36 +3,31 @@ import { NextRequest, NextResponse } from 'next/server';
 import { routes } from './config/routes';
 
 const adminProtectedRoutes: string[] = [routes.admin.dashboard];
-const userProtectedRoutes: string[] = [];
-const publicRoutes: string[] = [routes.adminLogin];
+const userProtectedRoutes: string[] = [routes.user.profile];
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const isProtectedRoute = adminProtectedRoutes.includes(path);
-  const isPublicRoute =
-    publicRoutes.includes(path) || userProtectedRoutes.includes(path);
+  const isProtectedRoute = adminProtectedRoutes.includes(path) || userProtectedRoutes.includes(path);
 
   const accessToken = cookies().get('act')?.value;
 
+  // No Access Token & Route is Protected, Redirect to Login
   if (!accessToken && isProtectedRoute) {
     return NextResponse.redirect(new URL('/login', req.nextUrl));
   }
 
   if (accessToken) {
-    const response: any = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/auth-check`,
-      {
-        headers: {
-          'x-api-key': process.env.NEXT_PUBLIC_API_KEY!,
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    )
+    const response: any = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth-check`, {
+      headers: {
+        'x-api-key': process.env.NEXT_PUBLIC_API_KEY!,
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .catch(() => null);
 
     // Server Issue
-    if (response === null) {
+    if (response === null && !path.startsWith('/login')) {
       return NextResponse.redirect(new URL('/login', req.nextUrl));
     }
 
@@ -41,9 +36,17 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/login', req.nextUrl));
     }
 
-    // if (isPublicRoute && response?.status === true && req.nextUrl.pathname.startsWith("/login")) {
-    //   return NextResponse.redirect(new URL("/admin/dashboard", req.nextUrl));
-    // }
+    const role: 'admin' | 'user' = response?.data?.role;
+
+    // Redirect to Admin Dashboard
+    if (role === 'admin' && path.startsWith('/login')) {
+      return NextResponse.redirect(new URL('/project-admin/dashboard', req.nextUrl));
+    }
+
+    // Redirect to User Dashboard
+    if (role === 'user' && (path.startsWith('/login') || adminProtectedRoutes.includes(path))) {
+      return NextResponse.redirect(new URL('/profile', req.nextUrl));
+    }
   }
 
   return NextResponse.next();

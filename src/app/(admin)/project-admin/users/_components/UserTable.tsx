@@ -1,8 +1,5 @@
 'use client';
-import {
-  useDeleteUserMutation,
-  useGetUsersQuery,
-} from '@/features/user/userApi';
+import { useDeleteUserMutation, useGetUsersQuery } from '@/features/user/userApi';
 import { MRT_PaginationState, type MRT_ColumnDef } from 'mantine-react-table';
 import { useMemo, useState } from 'react';
 

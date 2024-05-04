@@ -490,26 +490,15 @@ td.rc-table-cell-fix-right {
   @apply m-1.5 rounded border border-gray-100 lg:m-1;
 }
 
-.text_editor
-  .rdw-editor-wrapper
-  .rdw-editor-toolbar
-  > div
-  > .rdw-option-wrapper {
+.text_editor .rdw-editor-wrapper .rdw-editor-toolbar > div > .rdw-option-wrapper {
   @apply h-9 w-10 w-9 border-0 border-r border-gray-100 last:border-r-0 hover:bg-gray-50 hover:shadow-none @lg:m-0;
 }
 
-.text_editor
-  .rdw-editor-wrapper
-  .rdw-editor-toolbar
-  > div
-  > .rdw-option-wrapper.rdw-option-active {
+.text_editor .rdw-editor-wrapper .rdw-editor-toolbar > div > .rdw-option-wrapper.rdw-option-active {
   @apply bg-gray-100 shadow-none;
 }
 
-.text_editor
-  .rdw-editor-wrapper
-  .rdw-editor-main
-  .public-DraftStyleDefault-block {
+.text_editor .rdw-editor-wrapper .rdw-editor-main .public-DraftStyleDefault-block {
   @apply m-0;
 }
 
@@ -657,13 +646,11 @@ td.rc-table-cell-fix-right {
 
 /* social btn shadow  */
 .social-btn-shadow {
-  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.1))
-    drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.1)) drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.1));
 }
 
 .social-btn-shadow:hover {
-  filter: drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.05))
-    drop-shadow(0px 20px 25px rgba(0, 0, 0, 0.05));
+  filter: drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.05)) drop-shadow(0px 20px 25px rgba(0, 0, 0, 0.05));
 }
 
 /* profile card swiper pagination  */
@@ -776,12 +763,7 @@ div[style='z-index: 1000001;'],
   @apply h-12 border-gray-200 py-3.5 text-[13px] font-semibold uppercase text-gray-400 lg:px-7;
 }
 
-:is(
-    .rbc-header + .rbc-header,
-    .rbc-day-bg + .rbc-day-bg,
-    .rbc-month-row + .rbc-month-row,
-    .rbc-timeslot-group
-  ) {
+:is(.rbc-header + .rbc-header, .rbc-day-bg + .rbc-day-bg, .rbc-month-row + .rbc-month-row, .rbc-timeslot-group) {
   @apply border-gray-200;
 }
 
@@ -959,8 +941,6 @@ div[style='z-index: 1000001;'],
   @apply !mx-[3px] !h-2 !w-2.5 !rounded-full !bg-gray-600 !duration-200;
 }
 
-.pos-all-items-top-slider
-  .swiper-pagination
-  span.swiper-pagination-bullet-active {
+.pos-all-items-top-slider .swiper-pagination span.swiper-pagination-bullet-active {
   @apply !w-4 !bg-gray-400;
 }

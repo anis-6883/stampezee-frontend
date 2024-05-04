@@ -10,15 +10,9 @@ export default function CloudinaryForm() {
             <>
               <label className="form-control w-full">
                 <div className="label">
-                  <span className="label-text font-semibold">
-                    Cloudinary Cloud Name
-                  </span>
+                  <span className="label-text font-semibold">Cloudinary Cloud Name</span>
                 </div>
-                <input
-                  type="text"
-                  className={`input input-bordered w-full ${meta.touched && meta.error && 'input-error'}`}
-                  {...field}
-                />
+                <input type="text" className={`input input-bordered w-full ${meta.touched && meta.error && 'input-error'}`} {...field} />
               </label>
             </>
           )}
@@ -29,15 +23,9 @@ export default function CloudinaryForm() {
             <>
               <label className="form-control w-full">
                 <div className="label">
-                  <span className="label-text font-semibold">
-                    Cloudinary Api Key
-                  </span>
+                  <span className="label-text font-semibold">Cloudinary Api Key</span>
                 </div>
-                <input
-                  type="text"
-                  className={`input input-bordered w-full ${meta.touched && meta.error && 'input-error'}`}
-                  {...field}
-                />
+                <input type="text" className={`input input-bordered w-full ${meta.touched && meta.error && 'input-error'}`} {...field} />
               </label>
             </>
           )}
@@ -48,15 +36,9 @@ export default function CloudinaryForm() {
             <>
               <label className="form-control w-full">
                 <div className="label">
-                  <span className="label-text font-semibold">
-                    Cloudinary App Secret
-                  </span>
+                  <span className="label-text font-semibold">Cloudinary App Secret</span>
                 </div>
-                <input
-                  type="text"
-                  className={`input input-bordered w-full ${meta.touched && meta.error && 'input-error'}`}
-                  {...field}
-                />
+                <input type="text" className={`input input-bordered w-full ${meta.touched && meta.error && 'input-error'}`} {...field} />
               </label>
             </>
           )}

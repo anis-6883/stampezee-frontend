@@ -8,16 +8,8 @@ export type BreadcrumbItemProps = {
   children: React.ReactNode;
 };
 
-const BreadcrumbItem = ({
-  href = '#',
-  className,
-  children,
-}: BreadcrumbItemProps) => (
-  <Link
-    href={href}
-    role="button"
-    className={cn('inline-flex items-center gap-2 text-sm', className)}
-  >
+const BreadcrumbItem = ({ href = '#', className, children }: BreadcrumbItemProps) => (
+  <Link href={href} role="button" className={cn('inline-flex items-center gap-2 text-sm', className)}>
     {children}
   </Link>
 );
@@ -49,18 +41,11 @@ const Breadcrumb = ({
         return (
           <>
             {React.cloneElement(child, {
-              className: cn(
-                'text-gray-700 last:text-gray-500 font-medium',
-                disableCurrent && 'last:pointer-events-none'
-              ),
+              className: cn('text-gray-700 last:text-gray-500 font-medium', disableCurrent && 'last:pointer-events-none'),
             })}
             {index < numOfItems - 1 &&
               (separatorVariant === 'default' ? (
-                <span
-                  className={cn('text-sm text-gray-500', separatorClassName)}
-                >
-                  {separator}
-                </span>
+                <span className={cn('text-sm text-gray-500', separatorClassName)}>{separator}</span>
               ) : (
                 <span className="h-1 w-1 rounded-full bg-gray-300" />
               ))}

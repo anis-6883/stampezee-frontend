@@ -25,10 +25,7 @@ export default function Page() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
-        <Link
-          href={routes.admin.video.create}
-          className="btn btn-primary btn-sm text-white"
-        >
+        <Link href={routes.admin.video.create} className="btn btn-primary btn-sm text-white">
           <HiPlus className="text-lg" /> Add New Video
         </Link>
       </PageHeader>
