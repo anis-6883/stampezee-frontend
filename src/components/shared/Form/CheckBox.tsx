@@ -1,15 +1,15 @@
-"use strict";
+'use strict';
 
-import { ErrorMessage, Field, FieldProps } from "formik";
-import { capitalize } from "lodash";
-import { CheckboxProps, Checkbox as RizCheckBox } from "rizzui";
+import { ErrorMessage, Field, FieldProps } from 'formik';
+import { capitalize } from 'lodash';
+import { CheckboxProps, Checkbox as RizCheckBox } from 'rizzui';
 
 interface CheckBoxProps extends CheckboxProps {
   name: string;
   label: string;
   className?: string;
   required?: boolean;
-  labelPlacement?: "left" | "right";
+  labelPlacement?: 'left' | 'right';
   disabled?: boolean;
 }
 
@@ -42,10 +42,10 @@ interface CheckBoxProps extends CheckboxProps {
  */
 export default function CheckBox({
   name,
-  label = "",
+  label = '',
   required = true,
-  className = "",
-  labelPlacement = "right",
+  className = '',
+  labelPlacement = 'right',
   disabled = false,
   ...rest
 }: CheckBoxProps) {
@@ -54,15 +54,15 @@ export default function CheckBox({
       {({ field, meta }: FieldProps) => (
         <RizCheckBox
           label={
-            <span className='font-semibold mb-1'>
+            <span className="mb-1 font-semibold">
               <span>{capitalize(label)}</span>
-              <span className='text-red-600'>
-                {required && "*"} <ErrorMessage name={name} />
+              <span className="text-red-600">
+                {required && '*'} <ErrorMessage name={name} />
               </span>
             </span>
           }
-          labelPlacement='right'
-          rounded='lg'
+          labelPlacement="right"
+          rounded="lg"
           className={`max-w-max ${className}`}
           disabled={disabled}
           {...field}

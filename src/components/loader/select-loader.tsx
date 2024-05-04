@@ -1,5 +1,5 @@
-import cn from "@/hooks/class-names";
-import { Skeleton } from "@/components/ui/skeleton";
+import cn from '@/hooks/class-names';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface SelectLoaderProps {
   className?: string;
@@ -8,8 +8,8 @@ interface SelectLoaderProps {
 export default function SelectLoader({ className }: SelectLoaderProps) {
   return (
     <div className={cn(className)}>
-      <Skeleton className='mb-1.5 h-4 w-28 rounded' />
-      <Skeleton className='h-10 w-full rounded' />
+      <Skeleton className="mb-1.5 h-4 w-28 rounded" />
+      <Skeleton className="h-10 w-full rounded" />
     </div>
   );
 }

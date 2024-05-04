@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { atom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtomValue, useSetAtom } from 'jotai';
 
 type ModalTypes = {
   view: React.ReactNode;
@@ -11,32 +11,38 @@ type ModalTypes = {
 const modalAtom = atom<ModalTypes>({
   isOpen: false,
   view: null,
-  customSize: "320px"
+  customSize: '320px',
 });
 
 export function useModal() {
   const state = useAtomValue(modalAtom);
   const setState = useSetAtom(modalAtom);
 
-  const openModal = ({ view, customSize }: { view: React.ReactNode; customSize?: string }) => {
+  const openModal = ({
+    view,
+    customSize,
+  }: {
+    view: React.ReactNode;
+    customSize?: string;
+  }) => {
     setState({
       ...state,
       isOpen: true,
       view,
-      customSize
+      customSize,
     });
   };
 
   const closeModal = () => {
     setState({
       ...state,
-      isOpen: false
+      isOpen: false,
     });
   };
 
   return {
     ...state,
     openModal,
-    closeModal
+    closeModal,
   };
 }

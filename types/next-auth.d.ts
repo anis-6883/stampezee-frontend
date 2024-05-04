@@ -1,6 +1,6 @@
-import { DefaultUser } from "next-auth";
+import { DefaultUser } from 'next-auth';
 
-declare module "next-auth" {
+declare module 'next-auth' {
   /**
    * Leveraged by session callback's user object (AdapterUser extends User)
    */

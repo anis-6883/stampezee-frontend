@@ -1,7 +1,7 @@
-import { metaObject } from "@/config/site.config";
+import { metaObject } from '@/config/site.config';
 
 export const metadata = {
-  ...metaObject("Home Page")
+  ...metaObject('Home Page'),
 };
 
 export default async function Page() {

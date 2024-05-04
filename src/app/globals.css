@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-
   /* default theme */
   :root {
     /*
@@ -109,7 +108,7 @@
   }
 
   /* dark theme */
-  [data-theme="dark"] {
+  [data-theme='dark'] {
     /*
       - gray/natural color shades for texts, borders and disabled elements.
       - If required we can use as background too.
@@ -179,16 +178,16 @@
     @apply hidden;
   }
 
-  input[type="search"]::-webkit-search-cancel-button {
+  input[type='search']::-webkit-search-cancel-button {
     @apply hidden;
   }
 
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     @apply m-0 appearance-none;
   }
 
-  input[type="checkbox"]:checked {
+  input[type='checkbox']:checked {
     @apply bg-none;
   }
 
@@ -412,7 +411,7 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 } */
 
-input[type="checkbox"]:checked~svg {
+input[type='checkbox']:checked ~ svg {
   @apply !text-gray-0;
 }
 /* ................................................... */
@@ -442,31 +441,31 @@ td.rc-table-cell-fix-right {
 
 .rc-table-cell-fix-right-first:after,
 .rc-table-cell-fix-right-last:after {
-  content: "";
+  content: '';
   transform: translate(-100%);
   @apply pointer-events-none absolute -bottom-[1px] -left-[1px] top-0 w-5;
 }
 
-.rc-pagination-prev:not(.rc-pagination-disabled)>div,
-.rc-pagination-next:not(.rc-pagination-disabled)>div,
-.rc-pagination-jump-prev:not(.rc-pagination-disabled)>div,
-.rc-pagination-jump-next:not(.rc-pagination-disabled)>div {
+.rc-pagination-prev:not(.rc-pagination-disabled) > div,
+.rc-pagination-next:not(.rc-pagination-disabled) > div,
+.rc-pagination-jump-prev:not(.rc-pagination-disabled) > div,
+.rc-pagination-jump-next:not(.rc-pagination-disabled) > div {
   @apply text-gray-700;
 }
 
 /*
 * All form inputs common css
 */
-.isomorphic-form label>span,
-.isomorphic-form .rizzui-phone-number>label {
+.isomorphic-form label > span,
+.isomorphic-form .rizzui-phone-number > label {
   @apply font-medium;
 }
 
-.isomorphic-form label>div {
+.isomorphic-form label > div {
   @apply leading-none;
 }
 
-.isomorphic-form label>div,
+.isomorphic-form label > div,
 .isomorphic-form label input,
 .isomorphic-form label select {
   @apply !text-sm;
@@ -487,19 +486,30 @@ td.rc-table-cell-fix-right {
   @apply px-4 py-3 text-gray-700;
 }
 
-.text_editor .rdw-editor-wrapper .rdw-editor-toolbar>div {
+.text_editor .rdw-editor-wrapper .rdw-editor-toolbar > div {
   @apply m-1.5 rounded border border-gray-100 lg:m-1;
 }
 
-.text_editor .rdw-editor-wrapper .rdw-editor-toolbar>div>.rdw-option-wrapper {
+.text_editor
+  .rdw-editor-wrapper
+  .rdw-editor-toolbar
+  > div
+  > .rdw-option-wrapper {
   @apply h-9 w-10 w-9 border-0 border-r border-gray-100 last:border-r-0 hover:bg-gray-50 hover:shadow-none @lg:m-0;
 }
 
-.text_editor .rdw-editor-wrapper .rdw-editor-toolbar>div>.rdw-option-wrapper.rdw-option-active {
+.text_editor
+  .rdw-editor-wrapper
+  .rdw-editor-toolbar
+  > div
+  > .rdw-option-wrapper.rdw-option-active {
   @apply bg-gray-100 shadow-none;
 }
 
-.text_editor .rdw-editor-wrapper .rdw-editor-main .public-DraftStyleDefault-block {
+.text_editor
+  .rdw-editor-wrapper
+  .rdw-editor-main
+  .public-DraftStyleDefault-block {
   @apply m-0;
 }
 
@@ -541,100 +551,100 @@ td.rc-table-cell-fix-right {
   @apply rounded-b-none rounded-t-md;
 }
 
-.react-quill-toolbar-bottom .ql-toolbar.ql-snow+.ql-container.ql-snow {
+.react-quill-toolbar-bottom .ql-toolbar.ql-snow + .ql-container.ql-snow {
   border-top: 1px solid;
   @apply border-t-gray-300;
 }
 
 /** All toolbar buttons are inside of .ql-formats */
 .ql-formats button,
-.ql-formats>span {
+.ql-formats > span {
   position: relative;
   /** Set a tooltip with css pseudo-elements, when buttons are hover, active or focus */
 }
 
 .ql-formats button:hover::before,
-.ql-formats>span:hover::before {
-  content: "";
+.ql-formats > span:hover::before {
+  content: '';
   @apply absolute left-1/2 top-[-9px] z-10 -translate-x-1/2 transform border-x-[7px] border-y-[6px] border-solid border-transparent border-t-[#0d1e42];
 }
 
 .ql-formats button:hover::after,
-.ql-formats>span:hover::after {
+.ql-formats > span:hover::after {
   @apply absolute left-1/2 top-[-41px] z-50 -translate-x-1/2 whitespace-nowrap rounded-md bg-[#0d1e42] px-2.5 py-2 text-xs text-white;
 }
 
 /** Set tooltip content for toolbar options **/
 .ql-bold:hover::after {
-  content: "Bold";
+  content: 'Bold';
 }
 
 .ql-italic:hover::after {
-  content: "Italic";
+  content: 'Italic';
 }
 
 .ql-underline:hover::after {
-  content: "Underline";
+  content: 'Underline';
 }
 
 .ql-strike:hover::after {
-  content: "Strikeout";
+  content: 'Strikeout';
 }
 
 .ql-link:hover::after {
-  content: "Hyperlink";
+  content: 'Hyperlink';
 }
 
 .ql-blockquote:hover::after {
-  content: "Quote";
+  content: 'Quote';
 }
 
 .ql-code-block:hover::after {
-  content: "Code Block";
+  content: 'Code Block';
 }
 
-.ql-list[value="bullet"]:hover::after {
-  content: "Bulleted List";
+.ql-list[value='bullet']:hover::after {
+  content: 'Bulleted List';
 }
 
-.ql-list[value="ordered"]:hover::after {
-  content: "Numbered List";
+.ql-list[value='ordered']:hover::after {
+  content: 'Numbered List';
 }
 
-.ql-script[value="sub"]:hover::after {
-  content: "Sub Script";
+.ql-script[value='sub']:hover::after {
+  content: 'Sub Script';
 }
 
-.ql-script[value="super"]:hover::after {
-  content: "Super Script";
+.ql-script[value='super']:hover::after {
+  content: 'Super Script';
 }
 
-.ql-indent[value="-1"]:hover::after {
-  content: "Indent -1";
+.ql-indent[value='-1']:hover::after {
+  content: 'Indent -1';
 }
 
-.ql-indent[value="+1"]:hover::after {
-  content: "Indent +1";
+.ql-indent[value='+1']:hover::after {
+  content: 'Indent +1';
 }
 
 .ql-color:hover::after {
-  content: "Text Color";
+  content: 'Text Color';
 }
 
 .ql-background:hover::after {
-  content: "Background Color";
+  content: 'Background Color';
 }
 
 .ql-align:hover::after {
-  content: "Text Align";
+  content: 'Text Align';
 }
 
 .ql-clean:hover::after {
-  content: "Clear Formatting";
+  content: 'Clear Formatting';
 }
 
 .ql-font:hover::after {
-  content: "Font Family";
+  content: 'Font Family';
 }
 
 /* react-quill responsive styles */
@@ -647,11 +657,13 @@ td.rc-table-cell-fix-right {
 
 /* social btn shadow  */
 .social-btn-shadow {
-  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.1)) drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.1))
+    drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.1));
 }
 
 .social-btn-shadow:hover {
-  filter: drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.05)) drop-shadow(0px 20px 25px rgba(0, 0, 0, 0.05));
+  filter: drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.05))
+    drop-shadow(0px 20px 25px rgba(0, 0, 0, 0.05));
 }
 
 /* profile card swiper pagination  */
@@ -666,7 +678,7 @@ td.rc-table-cell-fix-right {
 }
 
 /* colors filter  */
-.colors-filter input[type="checkbox"]:checked~svg {
+.colors-filter input[type='checkbox']:checked ~ svg {
   @apply !hidden;
 }
 
@@ -713,7 +725,7 @@ textarea::placeholder {
 /* .gmnoprint {
   @apply hidden;
 } */
-div[style="z-index: 1000001;"],
+div[style='z-index: 1000001;'],
 .gm-style-cc {
   @apply hidden;
 }
@@ -764,7 +776,12 @@ div[style="z-index: 1000001;"],
   @apply h-12 border-gray-200 py-3.5 text-[13px] font-semibold uppercase text-gray-400 lg:px-7;
 }
 
-:is(.rbc-header + .rbc-header, .rbc-day-bg + .rbc-day-bg, .rbc-month-row + .rbc-month-row, .rbc-timeslot-group) {
+:is(
+    .rbc-header + .rbc-header,
+    .rbc-day-bg + .rbc-day-bg,
+    .rbc-month-row + .rbc-month-row,
+    .rbc-timeslot-group
+  ) {
   @apply border-gray-200;
 }
 
@@ -817,7 +834,7 @@ div[style="z-index: 1000001;"],
   @apply h-12;
 }
 
-.rbc-time-content>*+*>* {
+.rbc-time-content > * + * > * {
   @apply border-l border-gray-200;
 }
 
@@ -854,7 +871,7 @@ div[style="z-index: 1000001;"],
   @apply px-2;
 }
 
-.rbc-day-slot .rbc-time-slot+.rbc-time-slot {
+.rbc-day-slot .rbc-time-slot + .rbc-time-slot {
   @apply border-t border-gray-200;
 }
 
@@ -888,8 +905,8 @@ div[style="z-index: 1000001;"],
 
 .rbc-agenda-view,
 .rbc-agenda-view table.rbc-agenda-table,
-.rbc-agenda-view table.rbc-agenda-table thead>tr>th,
-.rbc-agenda-view table.rbc-agenda-table tbody>tr>td+td {
+.rbc-agenda-view table.rbc-agenda-table thead > tr > th,
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td {
   @apply border-gray-200;
 }
 
@@ -942,6 +959,8 @@ div[style="z-index: 1000001;"],
   @apply !mx-[3px] !h-2 !w-2.5 !rounded-full !bg-gray-600 !duration-200;
 }
 
-.pos-all-items-top-slider .swiper-pagination span.swiper-pagination-bullet-active {
+.pos-all-items-top-slider
+  .swiper-pagination
+  span.swiper-pagination-bullet-active {
   @apply !w-4 !bg-gray-400;
 }

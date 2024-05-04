@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { Field } from "formik";
-import { capitalize } from "lodash";
-import { Switch as RizSwitch } from "rizzui";
+import { Field } from 'formik';
+import { capitalize } from 'lodash';
+import { Switch as RizSwitch } from 'rizzui';
 
 interface SwitchProps {
   name: string;
   checked?: boolean;
   label?: string;
-  lablePlacement?: "left" | "right";
+  lablePlacement?: 'left' | 'right';
   switchClassName?: string;
   switchKnobClassName?: string;
 }
@@ -43,9 +43,9 @@ export default function Switch({
   name,
   checked = false,
   label,
-  lablePlacement = "left",
+  lablePlacement = 'left',
   switchClassName,
-  switchKnobClassName
+  switchKnobClassName,
 }: SwitchProps): JSX.Element {
   return (
     <Field name={name}>

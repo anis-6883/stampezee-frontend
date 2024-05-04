@@ -1,25 +1,25 @@
-import PageHeader from "@/components/page-header";
-import { routes } from "@/config/routes";
-import { metaObject } from "@/config/site.config";
-import Link from "next/link";
-import { HiPlus } from "react-icons/hi2";
-import UserTable from "./_components/UserTable";
+import PageHeader from '@/components/page-header';
+import { routes } from '@/config/routes';
+import { metaObject } from '@/config/site.config';
+import Link from 'next/link';
+import { HiPlus } from 'react-icons/hi2';
+import UserTable from './_components/UserTable';
 
 const pageHeader = {
-  title: "Users",
+  title: 'Users',
   breadcrumb: [
     {
       href: routes.admin.dashboard,
-      name: "Dashboard"
+      name: 'Dashboard',
     },
     {
-      name: "User"
-    }
-  ]
+      name: 'User',
+    },
+  ],
 };
 
 export const metadata = {
-  ...metaObject("Users Management")
+  ...metaObject('Users Management'),
 };
 
 export default function Page() {
@@ -28,9 +28,9 @@ export default function Page() {
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
         <Link
           href={routes.admin.user.create}
-          className='bg-primary hover:bg-primary-dark duration-300 transition-all py-2 px-3 rounded-md flex space-x-2 items-center text-white'
+          className="flex items-center space-x-2 rounded-md bg-primary px-3 py-2 text-white transition-all duration-300 hover:bg-primary-dark"
         >
-          <HiPlus className='text-lg' /> Add User
+          <HiPlus className="text-lg" /> Add User
         </Link>
       </PageHeader>
       <UserTable />

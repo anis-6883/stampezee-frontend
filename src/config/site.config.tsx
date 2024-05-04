@@ -1,19 +1,22 @@
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 enum MODE {
-  DARK = "dark",
-  LIGHT = "light"
+  DARK = 'dark',
+  LIGHT = 'light',
 }
 
 export const siteConfig = {
-  title: "StampEzee",
+  title: 'StampEzee',
   description: `StampEzee is a comprehensive stamp collection system designed to streamline the process of purchasing stamps by order`,
-  mode: MODE.LIGHT
+  mode: MODE.LIGHT,
 };
 
-export const metaObject = (title?: string, description: string = siteConfig.description): Metadata => {
+export const metaObject = (
+  title?: string,
+  description: string = siteConfig.description
+): Metadata => {
   return {
     title: title ? `${title} - StampEzee` : siteConfig.title,
-    description
+    description,
   };
 };

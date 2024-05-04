@@ -1,21 +1,23 @@
-"use client";
+'use client';
 
-import React, { ButtonHTMLAttributes } from "react";
-import { Button as RizButton } from "rizzui";
+import React, { ButtonHTMLAttributes } from 'react';
+import { Button as RizButton } from 'rizzui';
 
 interface ICommonProps {
   isLoading?: boolean;
   disabled?: boolean;
-  size?: "sm" | "md" | "lg" | "xl" | undefined;
-  variant?: "solid" | "flat" | "outline" | "text" | undefined;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | undefined;
+  variant?: 'solid' | 'flat' | 'outline' | 'text' | undefined;
   className?: string;
 }
 
-interface IButtonProps extends ICommonProps, ButtonHTMLAttributes<HTMLButtonElement> {
+interface IButtonProps
+  extends ICommonProps,
+    ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   startIcon?: React.ReactNode | null;
   endIcon?: React.ReactNode | null;
-  type?: "button" | "submit" | "reset";
+  type?: 'button' | 'submit' | 'reset';
 }
 
 /**
@@ -54,15 +56,15 @@ interface IButtonProps extends ICommonProps, ButtonHTMLAttributes<HTMLButtonElem
  */
 
 export default function Button({
-  text = "",
+  text = '',
   startIcon = null,
   endIcon = null,
-  className = "",
+  className = '',
   variant = undefined,
   size = undefined,
   isLoading = false,
   disabled = false,
-  type = "button",
+  type = 'button',
   ...rest
 }: IButtonProps): JSX.Element {
   const buttonProps: ICommonProps = {
@@ -71,7 +73,7 @@ export default function Button({
     size,
     isLoading,
     disabled,
-    ...rest
+    ...rest,
   };
 
   return (

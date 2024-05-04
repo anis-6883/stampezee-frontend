@@ -1,19 +1,19 @@
-import { apiSlice } from "@/features/api/apiSlice";
+import { apiSlice } from '@/features/api/apiSlice';
 
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => "/admin/users"
+      query: () => '/admin/users',
     }),
     deleteUser: builder.mutation({
       query: (id) => {
         return {
           url: `/admin/users/${id}`,
-          method: "DELETE"
+          method: 'DELETE',
         };
-      }
-    })
-  })
+      },
+    }),
+  }),
 });
 
 export const { useGetUsersQuery, useDeleteUserMutation } = userApi;

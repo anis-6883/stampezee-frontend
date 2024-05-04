@@ -1,4 +1,4 @@
-import { Checkbox } from "rizzui";
+import { Checkbox } from 'rizzui';
 
 interface VideoItem {
   imageUrl: string;
@@ -12,7 +12,7 @@ const VideoCard = ({
   imageUrl,
   title,
   isChecked,
-  handleChange
+  handleChange,
 }: {
   id: string;
   imageUrl: string;
@@ -21,21 +21,29 @@ const VideoCard = ({
   handleChange: (e: React.ChangeEvent<HTMLInputElement>, id: string) => void;
 }) => {
   return (
-    <div className='mr-4 mb-4 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
-      <a href='#'>
-        <img className='rounded-t-lg' height={80} width='100%' src={imageUrl} alt='' />
+    <div className="mb-4 mr-4 max-w-xs rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800">
+      <a href="#">
+        <img
+          className="rounded-t-lg"
+          height={80}
+          width="100%"
+          src={imageUrl}
+          alt=""
+        />
       </a>
-      <div className='p-2'>
-        <a href='#'>
-          <h5 className='mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white'>{title}</h5>
+      <div className="p-2">
+        <a href="#">
+          <h5 className="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
+            {title}
+          </h5>
         </a>
         <Checkbox
-          name='id'
-          label='checked'
+          name="id"
+          label="checked"
           checked={isChecked}
           onChange={(event) => handleChange(event, id)}
-          style={{ color: "white" }}
-          rounded='lg'
+          style={{ color: 'white' }}
+          rounded="lg"
         />
       </div>
     </div>

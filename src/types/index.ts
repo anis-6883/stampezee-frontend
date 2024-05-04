@@ -50,27 +50,27 @@ export interface ISongBook {
   id?: string;
   name: string;
   image: string;
-  status?: "0" | "1";
+  status?: '0' | '1';
 }
 export interface ISong {
   id?: string;
   bookName: string | ISongBook;
   songTitle: string;
   lyrics: string;
-  status?: "0" | "1";
+  status?: '0' | '1';
 }
 
 export interface IVideoCategory {
   id?: string;
   name: string;
-  status?: "1" | "0";
+  status?: '1' | '0';
 }
 
 export interface IVideo {
   id?: string;
   category: string | IVideoCategory;
   videoIds: string[];
-  status?: "1" | "0";
+  status?: '1' | '0';
 }
 
 export interface ILanguage {
@@ -79,8 +79,8 @@ export interface ILanguage {
   name: string;
   nameLocal: string;
   script?: string;
-  scriptDirection: "LTR" | "RTL";
-  status?: "0" | "1";
+  scriptDirection: 'LTR' | 'RTL';
+  status?: '0' | '1';
 }
 
 export interface IDailyManna {
@@ -120,14 +120,14 @@ export interface IVersion {
   versionId: string;
   name: string;
   nameLocal: string;
-  type: "text" | "audio" | "Both";
+  type: 'text' | 'audio' | 'Both';
   abbreviation?: string;
   abbreviationLocal?: string;
   description?: string;
   descriptionLocal?: string;
   copyrightText?: string;
   copyrightInfo?: string;
-  status?: "0" | "1";
+  status?: '0' | '1';
 }
 
 export interface IBook {
@@ -135,14 +135,14 @@ export interface IBook {
   language: ILanguage;
   version: IVersion;
   compositeKey: string;
-  collectionCode?: "OT" | "NT" | "Both";
+  collectionCode?: 'OT' | 'NT' | 'Both';
   bookId: string;
   name: string;
   nameLong: string;
   bookOrder?: string;
   numberOfChapters?: number;
-  type: "text" | "audio" | "Both";
-  status?: "0" | "1";
+  type: 'text' | 'audio' | 'Both';
+  status?: '0' | '1';
 }
 
 export interface IChapter {
@@ -156,8 +156,8 @@ export interface IChapter {
   resourceUrl?: string;
   resourceExpiry?: string;
   number: number;
-  type: "text" | "audio" | "Both";
-  status?: "0" | "1";
+  type: 'text' | 'audio' | 'Both';
+  status?: '0' | '1';
 }
 
 export interface IAudio {
@@ -176,13 +176,13 @@ export interface IVerse {
   content: string;
   verseId: string;
   position: number;
-  status?: "0" | "1";
+  status?: '0' | '1';
 }
 
 export interface IQaCategory {
   id?: string;
   name: string;
-  status?: "0" | "1";
+  status?: '0' | '1';
 }
 
 export interface IQa {
@@ -190,13 +190,13 @@ export interface IQa {
   category: IQaCategory;
   question: string;
   answer: string;
-  status?: "0" | "1";
+  status?: '0' | '1';
 }
 
 export interface IPosterCategory {
   id?: string;
   name: string;
-  status?: "0" | "1";
+  status?: '0' | '1';
 }
 
 export interface IPoster {
@@ -205,7 +205,7 @@ export interface IPoster {
   image?: string;
   title: string;
   description?: string;
-  status?: "0" | "1";
+  status?: '0' | '1';
 }
 
 export interface ITag {
@@ -230,5 +230,5 @@ export interface IDictionary {
   caption?: string;
   tags: ITag[];
   examples: IExample[];
-  status?: "0" | "1";
+  status?: '0' | '1';
 }

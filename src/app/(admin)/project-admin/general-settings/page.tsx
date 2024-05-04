@@ -1,29 +1,32 @@
-import PageHeader from "@/components/page-header";
-import { routes } from "@/config/routes";
-import { metaObject } from "@/config/site.config";
-import SettingsMainForm from "./_components/SettingsMainForm";
+import PageHeader from '@/components/page-header';
+import { routes } from '@/config/routes';
+import { metaObject } from '@/config/site.config';
+import SettingsMainForm from './_components/SettingsMainForm';
 
 const pageHeader = {
-  title: "General Settings",
+  title: 'General Settings',
   breadcrumb: [
     {
       href: routes.admin.dashboard,
-      name: "Dashboard"
+      name: 'Dashboard',
     },
     {
-      name: "General Settings"
-    }
-  ]
+      name: 'General Settings',
+    },
+  ],
 };
 
 export const metadata = {
-  ...metaObject("General Settings")
+  ...metaObject('General Settings'),
 };
 
 export default function Page() {
   return (
     <>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}></PageHeader>
+      <PageHeader
+        title={pageHeader.title}
+        breadcrumb={pageHeader.breadcrumb}
+      ></PageHeader>
       <SettingsMainForm />
     </>
   );

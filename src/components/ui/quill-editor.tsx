@@ -1,7 +1,7 @@
-import ReactQuill, { type ReactQuillProps } from "react-quill";
-import { FieldError } from "rizzui";
-import cn from "@/hooks/class-names";
-import "react-quill/dist/quill.snow.css";
+import ReactQuill, { type ReactQuillProps } from 'react-quill';
+import { FieldError } from 'rizzui';
+import cn from '@/hooks/class-names';
+import 'react-quill/dist/quill.snow.css';
 
 interface QuillEditorProps extends ReactQuillProps {
   error?: string;
@@ -9,7 +9,7 @@ interface QuillEditorProps extends ReactQuillProps {
   className?: string;
   labelClassName?: string;
   errorClassName?: string;
-  toolbarPosition?: "top" | "bottom";
+  toolbarPosition?: 'top' | 'bottom';
 }
 
 export default function QuillEditor({
@@ -19,26 +19,26 @@ export default function QuillEditor({
   className,
   labelClassName,
   errorClassName,
-  toolbarPosition = "top",
+  toolbarPosition = 'top',
   ...props
 }: QuillEditorProps) {
   const quillModules = {
     toolbar: [
       // [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
-      ["bold", "italic", "underline", "strike"], // toggled buttons
-      ["blockquote", "code-block"],
+      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['blockquote', 'code-block'],
 
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ script: "sub" }, { script: "super" }], // superscript/subscript
-      [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+      [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
 
       [{ color: [] }, { background: [] }], // dropdown with defaults from theme
       [{ font: [] }],
       [{ align: [] }],
 
-      ["clean"]
-    ]
+      ['clean'],
+    ],
   };
 
   // const quillFormats = [
@@ -61,14 +61,22 @@ export default function QuillEditor({
 
   return (
     <div className={cn(className)}>
-      {label && <label className={cn("mb-1.5 block", labelClassName)}>{label}</label>}
+      {label && (
+        <label className={cn('mb-1.5 block', labelClassName)}>{label}</label>
+      )}
       <ReactQuill
         modules={quillModules}
         // formats={quillFormats}
-        className={cn("react-quill", toolbarPosition === "bottom" && "react-quill-toolbar-bottom relative", className)}
+        className={cn(
+          'react-quill',
+          toolbarPosition === 'bottom' && 'react-quill-toolbar-bottom relative',
+          className
+        )}
         {...props}
       />
-      {error && <FieldError size='md' error={error} className={errorClassName} />}
+      {error && (
+        <FieldError size="md" error={error} className={errorClassName} />
+      )}
     </div>
   );
 }

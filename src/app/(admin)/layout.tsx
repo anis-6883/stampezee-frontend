@@ -1,17 +1,21 @@
-"use client";
+'use client';
 
-import { useIsMounted } from "@/hooks/use-is-mounted";
-import HydrogenLayout from "@/layouts/layout";
-import { WiDaySnowThunderstorm } from "react-icons/wi";
+import { useIsMounted } from '@/hooks/use-is-mounted';
+import HydrogenLayout from '@/layouts/layout';
+import { WiDaySnowThunderstorm } from 'react-icons/wi';
 
-export default function DefaultLayout({ children }: { children: React.ReactNode }) {
+export default function DefaultLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const isMounted = useIsMounted();
 
   if (!isMounted) {
     return (
-      <div className='flex h-screen items-center justify-center'>
+      <div className="flex h-screen items-center justify-center">
         <span>
-          <WiDaySnowThunderstorm className='animate-bounce text-6xl' />
+          <WiDaySnowThunderstorm className="animate-bounce text-6xl" />
         </span>
       </div>
     );

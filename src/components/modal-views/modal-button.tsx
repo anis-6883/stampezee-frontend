@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useModal } from "@/components/modal-views/use-modal";
-import cn from "@/hooks/class-names";
-import { PiPlusBold } from "react-icons/pi";
-import { type ButtonProps } from "rizzui";
+import { useModal } from '@/components/modal-views/use-modal';
+import cn from '@/hooks/class-names';
+import { PiPlusBold } from 'react-icons/pi';
+import { type ButtonProps } from 'rizzui';
 
 interface ModalButtonProps extends ButtonProps {
   label?: string;
@@ -14,21 +14,21 @@ interface ModalButtonProps extends ButtonProps {
 }
 
 export default function ModalButton({
-  label = "New",
+  label = 'New',
   className,
-  customSize = "500px",
+  customSize = '500px',
   view,
-  icon = <PiPlusBold className='me-1.5 h-[17px] w-[17px]' />,
+  icon = <PiPlusBold className="me-1.5 h-[17px] w-[17px]" />,
   ...rest
 }: ModalButtonProps) {
   const { openModal } = useModal();
   return (
     <button
-      className={cn("", className)}
+      className={cn('', className)}
       onClick={() =>
         openModal({
           view,
-          customSize
+          customSize,
         })
       }
       {...rest}

@@ -1,32 +1,35 @@
-import PageHeader from "@/components/page-header";
-import { routes } from "@/config/routes";
-import { metaObject } from "@/config/site.config";
+import PageHeader from '@/components/page-header';
+import { routes } from '@/config/routes';
+import { metaObject } from '@/config/site.config';
 
 const pageHeader = {
-  title: "Update Content",
+  title: 'Update Content',
   breadcrumb: [
     {
       href: routes.admin.dashboard,
-      name: "Dashboard"
+      name: 'Dashboard',
     },
     {
       href: routes.admin.contentManagement.home,
-      name: "ContentManagement"
+      name: 'ContentManagement',
     },
     {
-      name: "Update"
-    }
-  ]
+      name: 'Update',
+    },
+  ],
 };
 
 export const metadata = {
-  ...metaObject("Manage Content")
+  ...metaObject('Manage Content'),
 };
 
 export default function Page({ params: { id } }: { params: { id: number } }) {
   return (
     <>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}></PageHeader>
+      <PageHeader
+        title={pageHeader.title}
+        breadcrumb={pageHeader.breadcrumb}
+      ></PageHeader>
     </>
   );
 }

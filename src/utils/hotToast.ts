@@ -1,4 +1,4 @@
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast';
 
 /**
  * toaster function is used to show a toast

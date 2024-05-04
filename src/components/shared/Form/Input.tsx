@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { ErrorMessage, Field, FieldProps } from "formik";
-import { capitalize } from "lodash";
-import { InputHTMLAttributes } from "react";
-import { Input as RizInput, InputProps as RizzInputProps } from "rizzui";
+import { ErrorMessage, Field, FieldProps } from 'formik';
+import { capitalize } from 'lodash';
+import { InputHTMLAttributes } from 'react';
+import { Input as RizInput, InputProps as RizzInputProps } from 'rizzui';
 
 interface ICommonInputProps {
   label?: string | null;
@@ -13,9 +13,23 @@ interface ICommonInputProps {
 }
 
 //@ts-ignore
-interface IInputProps extends ICommonInputProps, RizzInputProps, InputHTMLAttributes<HTMLInputElement> {
+interface IInputProps
+  extends ICommonInputProps,
+    RizzInputProps,
+    InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  type?: "text" | "number" | "email" | "time" | "date" | "datetime-local" | "month" | "search" | "tel" | "url" | "week";
+  type?:
+    | 'text'
+    | 'number'
+    | 'email'
+    | 'time'
+    | 'date'
+    | 'datetime-local'
+    | 'month'
+    | 'search'
+    | 'tel'
+    | 'url'
+    | 'week';
 }
 
 /**
@@ -48,14 +62,14 @@ interface IInputProps extends ICommonInputProps, RizzInputProps, InputHTMLAttrib
 export default function Input({
   name,
   label = null,
-  type = "text",
-  placeholder = "",
+  type = 'text',
+  placeholder = '',
   required = false,
-  className = "",
+  className = '',
   ...rest
 }: IInputProps): JSX.Element {
   const handleWheel = (event: any) => {
-    if (type === "number") {
+    if (type === 'number') {
       event.target.blur();
     }
   };
@@ -66,10 +80,10 @@ export default function Input({
         <RizInput
           type={type}
           label={
-            <span className='font-semibold mb-1'>
+            <span className="mb-1 font-semibold">
               <span>{capitalize(label || name)}</span>
-              <span className='text-red-600 font-bold'>
-                {required && " *"} <ErrorMessage name={name} />
+              <span className="font-bold text-red-600">
+                {required && ' *'} <ErrorMessage name={name} />
               </span>
             </span>
           }
