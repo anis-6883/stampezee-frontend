@@ -13,7 +13,7 @@ export interface IOption {
 
 export interface IAuthState {
   user?: any | undefined;
-  forgetPhone: string;
+  role: string;
 }
 
 export interface IUser {

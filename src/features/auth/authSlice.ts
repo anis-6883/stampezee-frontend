@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState: IAuthState = {
   user: undefined,
-  forgetPhone: '',
+  role: 'admin',
 };
 
 const authSlice = createSlice({
@@ -16,6 +16,7 @@ const authSlice = createSlice({
     },
     userLoggedIn: (state, action) => {
       state.user = action.payload;
+      state.role = action.payload.role;
     },
     userLoggedOut: (state, action) => {
       state.user = action.payload;

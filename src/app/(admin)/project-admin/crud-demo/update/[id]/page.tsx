@@ -10,7 +10,7 @@ const pageHeader = {
       name: 'Dashboard',
     },
     {
-      href: routes.admin.contentManagement.home,
+      href: routes.admin.dashboard,
       name: 'ContentManagement',
     },
     {

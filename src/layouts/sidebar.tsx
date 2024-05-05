@@ -1,11 +1,13 @@
 'use client';
 
 import { routes } from '@/config/routes';
+import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
 import { PiCaretDownBold } from 'react-icons/pi';
+import { useSelector } from 'react-redux';
 import { Collapse, Title } from 'rizzui';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
@@ -13,7 +15,7 @@ import { menuItems } from './menu-items';
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
-  // const { role } = useSelector((state: RootState) => state.authSlice);
+  const role = useSelector((state: RootState) => state.authSlice.role);
 
   return (
     <aside
@@ -24,13 +26,13 @@ export default function Sidebar({ className }: { className?: string }) {
     >
       <div className="sticky top-0 z-40 bg-gray-0/10 px-6 pb-2 pt-2 dark:bg-gray-100/5 2xl:px-6 2xl:pt-2">
         <Link href={routes.admin.dashboard} aria-label="Site Logo">
-          <img src="/images/logo.png" width={150} height={50} alt="logo" className="m-auto pt-2" />
+          <img src="/images/logo.png" width={80} height={50} alt="logo" className="m-auto pt-2" />
         </Link>
       </div>
 
       <SimpleBar className="h-[calc(100%-80px)]">
         <div className="mt-4 pb-3 3xl:mt-6">
-          {menuItems.map((item: any, index: number) => {
+          {menuItems[role].map((item: any, index: number) => {
             const isActive =
               item.name === 'Dashboard'
                 ? pathname === '/admin'

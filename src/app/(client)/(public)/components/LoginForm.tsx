@@ -2,10 +2,10 @@
 
 import { routes } from '@/config/routes';
 import { useAdminLoginMutation } from '@/features/auth/authApi';
-import { setValue } from '@/features/auth/authSlice';
+import { userLoggedIn } from '@/features/auth/authSlice';
 import { Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
 import { LuMail, LuUnlock } from 'react-icons/lu';
@@ -16,6 +16,7 @@ import * as Yup from 'yup';
 export default function LoginForm() {
   const { replace } = useRouter();
   const dispatch = useDispatch();
+  const emailInputRef = useRef<HTMLInputElement>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const initialValues = {
@@ -46,10 +47,9 @@ export default function LoginForm() {
     if (loginSuccess) {
       if (loginResponse?.status) {
         toast.success('Login Successful!');
-        // console.log(loginResponse);
-        dispatch(setValue({ target: 'user', value: loginResponse.data }));
+        dispatch(userLoggedIn(loginResponse?.data));
 
-        if (loginResponse?.data?.role === 'admin') {
+        if (['admin', 'retailer'].includes(loginResponse?.data?.role)) {
           replace(routes.admin.dashboard);
         }
 
@@ -62,6 +62,13 @@ export default function LoginForm() {
       }
     }
   }, [loginError, isLoginError, loginSuccess, loginResponse, replace, dispatch]);
+
+  // Auto Focus
+  useEffect(() => {
+    if (emailInputRef.current) {
+      emailInputRef.current.focus();
+    }
+  }, []);
 
   // Submit Handler
   const handleSubmit = (values: any) => {
@@ -95,6 +102,7 @@ export default function LoginForm() {
                     labelClassName="text-base"
                     autoComplete="off"
                     placeholder={'john@example.com'}
+                    ref={emailInputRef}
                     {...field}
                   />
                   {meta.touched && meta.error && <p className="mt-1 select-none px-1 font-medium text-red">{meta.error}</p>}

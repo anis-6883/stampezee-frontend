@@ -36,10 +36,10 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/login', req.nextUrl));
     }
 
-    const role: 'admin' | 'user' = response?.data?.role;
+    const role: 'admin' | 'user' | 'retailer' = response?.data?.role;
 
     // Redirect to Admin Dashboard
-    if (role === 'admin' && path.startsWith('/login')) {
+    if (['admin', 'retailer'].includes(role) && path.startsWith('/login')) {
       return NextResponse.redirect(new URL('/project-admin/dashboard', req.nextUrl));
     }
 

@@ -1,10 +1,10 @@
 {
-  "name": "next.js-frontend-boilerplate",
+  "name": "stampezee",
   "version": "1.0",
-  "description": "Next.js Frontend Boilerplate",
+  "description": "StampEzee is a comprehensive stamp collection system designed to streamline the process of purchasing stamps by order.",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3005",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -62,8 +62,6 @@
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.3",
     "husky": "^9.0.11",
-    "i": "^0.3.7",
-    "npm": "^10.7.0",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
