@@ -28,7 +28,7 @@ export default function Page() {
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
         <Link
           href={routes.admin.user.create}
-          className="flex items-center space-x-2 rounded-md bg-primary px-3 py-2 text-white transition-all duration-300 hover:bg-primary-dark"
+          className="hover:bg-primary-dark flex items-center space-x-2 rounded-md bg-primary px-3 py-2 text-white transition-all duration-300"
         >
           <HiPlus className="text-lg" /> Add User
         </Link>

@@ -1,27 +1,23 @@
 'use client';
 
-import { useGetOwnProfileMutation } from '@/features/auth/authApi';
+import { useGetOwnProfileQuery } from '@/features/auth/authApi';
 import { userLoggedIn, userLoggedOut } from '@/features/auth/authSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 export default function AuthProvider({ children, tokenExist }: { children: React.ReactNode; tokenExist: boolean }): React.ReactNode {
   const dispatch = useDispatch();
-  const [getOwnProfile] = useGetOwnProfileMutation();
+  const { data, isLoading, isError } = useGetOwnProfileQuery(undefined, {
+    skip: !tokenExist,
+  });
 
   useEffect(() => {
-    if (tokenExist) {
-      getOwnProfile(null)
-        .then((res: any) => {
-          dispatch(userLoggedIn(res.data.data));
-        })
-        .catch((err: any) => {
-          dispatch(userLoggedOut(undefined));
-        });
+    if (tokenExist && !isLoading && !isError) {
+      dispatch(userLoggedIn(data?.data));
     } else {
       dispatch(userLoggedOut(undefined));
     }
-  }, [dispatch, getOwnProfile, tokenExist]);
+  }, [data, dispatch, isError, isLoading, tokenExist]);
 
   return <>{children}</>;
 }

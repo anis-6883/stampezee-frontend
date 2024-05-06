@@ -1,9 +1,10 @@
 import { routes } from '@/config/routes';
 import { BsShop } from 'react-icons/bs';
-import { FaCogs, FaDollarSign, FaRegIdBadge } from 'react-icons/fa';
+import { FaCogs, FaRegIdBadge } from 'react-icons/fa';
+import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { LuBarChart3, LuUsers } from 'react-icons/lu';
 import { MdQrCodeScanner } from 'react-icons/md';
-import { PiBellRingingBold, PiNewspaperClippingLight, PiStamp, PiTreeStructure } from 'react-icons/pi';
+import { PiBellRinging, PiCurrencyDollar, PiNewspaperClippingLight, PiStamp, PiTreeStructure } from 'react-icons/pi';
 import { TbUserShield } from 'react-icons/tb';
 
 export const menuItems: { [key: string]: any } = {
@@ -20,7 +21,7 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Retailers',
-      href: routes.admin.manageAdmin,
+      href: routes.admin.retailer.home,
       icon: <BsShop />,
     },
     {
@@ -31,12 +32,12 @@ export const menuItems: { [key: string]: any } = {
     {
       name: 'Push Notifications',
       href: routes.admin.user.home,
-      icon: <PiBellRingingBold />,
+      icon: <PiBellRinging />,
     },
     {
       name: 'Billings',
       href: routes.admin.user.home,
-      icon: <FaDollarSign />,
+      icon: <PiCurrencyDollar />,
     },
     {
       name: 'Pages',
@@ -46,7 +47,7 @@ export const menuItems: { [key: string]: any } = {
     {
       name: 'General Settings',
       href: routes.admin.generalSettings,
-      icon: <FaCogs />,
+      icon: <HiOutlineCog8Tooth />,
     },
   ],
   retailer: [
@@ -73,7 +74,7 @@ export const menuItems: { [key: string]: any } = {
     {
       name: 'Push Notifications',
       href: routes.admin.user.home,
-      icon: <PiBellRingingBold />,
+      icon: <PiBellRinging />,
     },
     {
       name: 'Memberships',

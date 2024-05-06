@@ -5,28 +5,29 @@ export const authApi = apiSlice.injectEndpoints({
     adminLogin: builder.mutation({
       query: (data) => {
         return {
-          url: `/api/v1/admin/login`,
+          url: `/api/v1/user/login`,
           method: 'POST',
           body: data,
         };
       },
     }),
-    getProfile: builder.query({
-      query: (id: string) => `/admin/${id}`,
-      providesTags: ['userProfile'],
-    }),
-    getOwnProfile: builder.mutation({
-      query: () => '/api/v1/admin/profile',
-    }),
     logoutUser: builder.mutation({
       query: () => {
         return {
-          url: '/api/v1/admin/logout',
+          url: '/api/v1/user/logout',
           method: 'POST',
         };
       },
     }),
+    getProfile: builder.query({
+      query: (id: string) => `/user/${id}`,
+      providesTags: ['userProfile'],
+    }),
+    getOwnProfile: builder.query({
+      query: () => `/api/v1/user/profile`,
+      providesTags: ['userOwnProfile'],
+    }),
   }),
 });
 
-export const { useGetProfileQuery, useAdminLoginMutation, useGetOwnProfileMutation, useLogoutUserMutation } = authApi;
+export const { useGetProfileQuery, useAdminLoginMutation, useGetOwnProfileQuery, useLogoutUserMutation } = authApi;

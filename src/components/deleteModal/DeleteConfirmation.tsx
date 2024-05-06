@@ -29,7 +29,7 @@ export default function DeleteConfirmation({
           <p className="my-5 text-xs">This action cannot be undone.</p>
           <div className="flex items-end justify-end space-x-2">
             <button
-              className="flex items-center space-x-2 rounded-md bg-primary px-3 py-2 text-white transition-all duration-300 hover:bg-primary-dark"
+              className="hover:bg-primary-dark flex items-center space-x-2 rounded-md bg-primary px-3 py-2 text-white transition-all duration-300"
               onClick={handleDelete}
             >
               Confirm

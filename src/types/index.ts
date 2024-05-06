@@ -1,3 +1,5 @@
+import { MouseEventHandler } from 'react';
+
 export interface IPagination {
   page: number;
   limit: number;
@@ -15,6 +17,17 @@ export interface IAuthState {
   user?: any | undefined;
   role: string;
 }
+
+export interface IQueryType {
+  pageIndex: number;
+  pageSize: number;
+  search?: string | null;
+}
+
+export type ITableOption = {
+  name: string | React.ReactNode;
+  action: MouseEventHandler<HTMLButtonElement>;
+};
 
 export interface IUser {
   id?: string;

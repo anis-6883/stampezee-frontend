@@ -17,7 +17,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (accessToken) {
-    const response: any = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth-check`, {
+    const response: any = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/user/auth-check`, {
       headers: {
         'x-api-key': process.env.NEXT_PUBLIC_API_KEY!,
         Authorization: `Bearer ${accessToken}`,

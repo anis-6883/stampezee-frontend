@@ -36,10 +36,7 @@ export default {
           1000: 'rgb(var(--gray-1000) / <alpha-value>)',
         },
         primary: {
-          lighter: 'rgb(var(--primary-lighter) / <alpha-value>)',
-          light: 'rgb(var(--primary-light) / <alpha-value>)',
-          DEFAULT: 'rgb(var(--primary-default) / <alpha-value>)',
-          dark: 'rgb(var(--primary-dark) / <alpha-value>)',
+          DEFAULT: '#3872FA',
         },
         secondary: {
           lighter: 'rgb(var(--secondary-lighter) / <alpha-value>)',
