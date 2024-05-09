@@ -39,7 +39,8 @@ export default function HeaderContent() {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleResize);
     };
-  }, [sidBer]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /**
    * Checks if the current URL path matches the provided path.
@@ -54,6 +55,10 @@ export default function HeaderContent() {
     } else {
       return false;
     }
+  }
+
+  function routeCheck(names: string) {
+    setCurrentUrl(names);
   }
 
   return (
@@ -84,6 +89,7 @@ export default function HeaderContent() {
                       </li>
                       <li className="transition duration-300 ease-in-out hover:bg-gray-100">
                         <Link
+                          onClick={() => routeCheck('')}
                           href="/"
                           className={`block rounded py-3 pl-4 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                         >
@@ -93,6 +99,7 @@ export default function HeaderContent() {
                       </li>
                       <li className="transition duration-300 ease-in-out hover:bg-gray-100">
                         <Link
+                          onClick={() => routeCheck('/pricing')}
                           href="/pricing"
                           className={`block rounded py-3 pl-4 ${checkActiveButton('/pricing') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                         >
@@ -102,6 +109,7 @@ export default function HeaderContent() {
                       </li>
                       <li className="transition duration-300 ease-in-out hover:bg-gray-100">
                         <Link
+                          onClick={() => routeCheck('/faqs')}
                           href="/faqs"
                           className={`block rounded py-3 pl-4 ${checkActiveButton('/faqs') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                         >
@@ -111,6 +119,7 @@ export default function HeaderContent() {
                       </li>
                       <li className="transition duration-300 ease-in-out hover:bg-gray-100">
                         <Link
+                          onClick={() => routeCheck('/contact-us')}
                           href="/contact-us"
                           className={`block rounded py-3 pl-4 ${checkActiveButton('/contact-us') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                         >
@@ -134,6 +143,7 @@ export default function HeaderContent() {
                   >
                     <li>
                       <Link
+                        onClick={() => routeCheck('')}
                         href="/"
                         className={`block rounded px-3 py-2 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                       >
@@ -142,6 +152,7 @@ export default function HeaderContent() {
                     </li>
                     <li>
                       <Link
+                        onClick={() => routeCheck('/pricing')}
                         href="/pricing"
                         className={`block rounded px-3 py-2 ${checkActiveButton('/pricing') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                       >
@@ -151,6 +162,7 @@ export default function HeaderContent() {
                     <li>
                       <Link
                         href="/faqs"
+                        onClick={() => routeCheck('/faqs')}
                         className={`block rounded px-3 py-2 ${checkActiveButton('/faqs') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                       >
                         {checkActiveButton('/faqs') && <p className="mr-2 h-[.40rem] w-[.40rem] rounded-full bg-red-300"></p>} FAQ
@@ -158,6 +170,7 @@ export default function HeaderContent() {
                     </li>
                     <li>
                       <Link
+                        onClick={() => routeCheck('/contact-us')}
                         href="/contact-us"
                         className={`block rounded px-3 py-2 ${checkActiveButton('/contact-us') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                       >
