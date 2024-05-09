@@ -944,3 +944,30 @@ div[style='z-index: 1000001;'],
 .pos-all-items-top-slider .swiper-pagination span.swiper-pagination-bullet-active {
   @apply !w-4 !bg-gray-400;
 }
+
+.css-dcyb5u {
+  background:
+    linear-gradient(rgba(22, 28, 36, 0.8), rgba(22, 28, 36, 0.8)) center center / cover no-repeat,
+    url(./../../public/default/hero.jpg);
+  background-position: center center;
+  overflow: hidden;
+}
+/* .faq-hero {
+  background:
+    linear-gradient(rgba(22, 28, 36, 0.8), rgba(22, 28, 36, 0.8)) center center / cover no-repeat,
+    url(./../../public/default/faq-hero.jpg);
+  background-position: center center;
+  overflow: hidden;
+} */
+.faq-hero {
+  /* Background image with a semi-transparent overlay */
+  background:
+    linear-gradient(rgba(22, 28, 36, 0.8), rgba(22, 28, 36, 0.8)),
+    url(./../../public/default/faq-hero.jpg) center / cover no-repeat;
+  /* Center the background image */
+  background-position: center;
+  /* Make sure the background covers the entire container */
+  background-size: cover;
+  /* Ensure content within the container doesn't overflow */
+  overflow: hidden;
+}

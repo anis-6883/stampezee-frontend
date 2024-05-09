@@ -37,6 +37,8 @@ export default {
         },
         primary: {
           DEFAULT: '#3872FA',
+          red: '#DF2828',
+          black: '#212B36',
         },
         secondary: {
           lighter: 'rgb(var(--secondary-lighter) / <alpha-value>)',
@@ -49,6 +51,14 @@ export default {
           light: 'rgb(var(--red-light) / <alpha-value>)',
           DEFAULT: 'rgb(var(--red-default) / <alpha-value>)',
           dark: 'rgb(var(--red-dark) / <alpha-value>)',
+          '200': '#FFCCCC',
+          '300': '#FF9999',
+          '400': '#FF6666',
+          '500': '#FF3333',
+          '600': '#FF0000',
+          '700': '#CC0000',
+          '800': '#990000',
+          '900': '#660000',
         },
         orange: {
           lighter: 'rgb(var(--orange-lighter) / <alpha-value>)',
