@@ -68,7 +68,7 @@ export default function page() {
                 <span style={{ opacity: 1, transform: 'none' }}>w</span>
               </div>
               <br />
-              <div className="flex gap-3 text-4xl font-bold text-white sm:text-6xl">
+              <div className="flex gap-3 text-[1.5rem]  font-bold text-white sm:text-6xl md:text-[4rem]">
                 <div className="">
                   <span style={{ opacity: 1, transform: 'none' }}>c</span>
                   <span style={{ opacity: 1, transform: 'none' }}>a</span>
@@ -96,11 +96,11 @@ export default function page() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto mt-10 mt-40 max-w-screen-xl">
+      <div className="md-px-0 container mx-auto mt-10 max-w-screen-xl px-3">
         <h1 className="text-[2rem] font-bold  leading-tight">Frequently asked questions</h1>
       </div>
 
-      <div className="container mx-auto mt-10 max-w-screen-xl">
+      <div className="md-px-0 container mx-auto mt-10 max-w-screen-xl px-3">
         <Accordion faqData={faqData} />
       </div>
     </div>

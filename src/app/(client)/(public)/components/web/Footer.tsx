@@ -3,7 +3,7 @@ import Image from '../Image';
 
 export default function Footer() {
   return (
-    <div className="mx-auto max-w-screen-xl">
+    <div className="container mx-auto max-w-screen-xl px-3 sm:px-5">
       <footer className="container mx-auto">
         <hr className="mb-20 mt-10" />
         <div className="">
@@ -68,13 +68,13 @@ export default function Footer() {
                   <div className="">
                     <div
                       className=" m-0 mb-6 mt-5 flex items-center justify-center rounded-full bg-[#FFDBDB] p-3"
-                      style={{ width: 'max-content' }}
+                      style={{ width: '100%' }}
                     >
                       <input
                         aria-invalid="false"
                         id=":r0:"
                         placeholder="Email Address"
-                        className="rounded-md border-0 border-gray-300 bg-transparent px-4 py-2 outline-none focus:border-none focus:shadow-none focus:outline-none "
+                        className="w-[60%] rounded-md border-0 border-gray-300 bg-transparent px-4 py-2 outline-none focus:border-none focus:shadow-none focus:outline-none sm:w-full "
                         type="email"
                         defaultValue=""
                         style={{
