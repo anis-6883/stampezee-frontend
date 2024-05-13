@@ -1,4 +1,4 @@
-import { lexendDeca, poppins, publicSans } from '@/app/fonts';
+import { poppins } from '@/app/fonts';
 import '@/app/globals.css';
 import GlobalDrawer from '@/components/drawer-views/container';
 import GlobalModal from '@/components/modal-views/container';
@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning={true}>
       <body
-        className={cn(poppins.variable, lexendDeca.variable, publicSans.variable, 'font-inter')}
+        className={cn(poppins.variable, 'font-inter')}
         suppressHydrationWarning={true}
         style={{ fontFamily: "'Public Sans', sans-serif", letterSpacing: '0.1em' }}
       >
