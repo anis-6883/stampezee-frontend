@@ -75,7 +75,7 @@ export default function HeaderContent() {
             <div className="mr-3 ">
               <div
                 onClick={() => setSidBer(sidBer == true && !sidBer)}
-                className={`${sidBer ? 'fixed -top-2 left-0 h-[100vh] w-full overflow-hidden bg-[#14131385] transition-all duration-300 ease-in-out' : 'hidden'} items-center justify-between md:order-1 md:flex md:w-auto `}
+                className={`${sidBer ? 'fixed -top-2 left-0 h-[101vh] w-full overflow-hidden bg-[#14131385] transition-all duration-300 ease-in-out' : 'hidden'} z-10 items-center justify-between md:order-1 md:flex md:w-auto`}
                 id="navbar-cta"
               >
                 {sidBer ? (
@@ -127,7 +127,7 @@ export default function HeaderContent() {
                           Contact
                         </Link>
                       </li>
-                      <li className="flex items-center">
+                      <li className="mt-5 flex w-full items-center justify-center text-center">
                         <button
                           type="button"
                           className="dark:hover:bg[#454F5B] mt-3 w-10/12 rounded-lg bg-primary-red px-4 py-2 text-center text-sm font-medium text-white duration-300 ease-in-out hover:bg-[#454F5B] focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-primary-red dark:focus:ring-[#454F5B]"
@@ -139,13 +139,13 @@ export default function HeaderContent() {
                   </div>
                 ) : (
                   <ul
-                    className={`${sidBer ? 'h-full' : ''} mt-4 flex max-w-[352px] flex-col rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
+                    className={`${sidBer ? 'h-full' : ''} mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                   >
-                    <li>
+                    <li className="w-max-content">
                       <Link
                         onClick={() => routeCheck('')}
                         href="/"
-                        className={`block rounded px-3 py-2 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                        className={`w-max-content block rounded px-3 py-2 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                       >
                         {checkActiveButton('') && <p className="mr-2 h-[.40rem] w-[.40rem] rounded-full bg-red-300"></p>} How It Works
                       </Link>

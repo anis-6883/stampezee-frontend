@@ -17,9 +17,9 @@ export default async function Page() {
         <div className="h-[63vh] w-full bg-red-500 object-cover sm:h-[97vh]"></div>
         <div className=" absolute inset-0"></div>
         <div className="absolute inset-0  mx-auto  max-w-screen-xl items-center">
-          <div className="flex h-full items-center  sm:ml-3 ">
+          <div className="flex h-full items-center ">
             <div className="absolute flex w-full items-center justify-between">
-              <div className="w-1/2">
+              <div className="sm-p-0 w-full p-3 text-center sm:w-1/2 sm:text-left">
                 <h1 className="text-center text-4xl font-bold text-white sm:text-left sm:text-6xl">
                   Revolutionize Your Customer Experience
                 </h1>
@@ -42,27 +42,29 @@ export default async function Page() {
                   GET STARTED
                 </Link>
               </div>
-              <div className="w-1/2">
+              <div className="w-0 sm:w-1/2">
                 <Image src="/default/hero-image.png" alt="hero image" />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Featured
-        image="/default/why-stamp.png"
-        title="Why choose StampEzee?"
-        description=" Digitalization has transformed the way businesses interact with their customers. Our platform combines intuitive design, robust
+      <div className="p-3 md:p-0">
+        <Featured
+          image="/default/why-stamp.png"
+          title="Why choose StampEzee?"
+          description=" Digitalization has transformed the way businesses interact with their customers. Our platform combines intuitive design, robust
         analytics, and unparalleled customization, bringing you the ultimate tool for customer engagement."
-        bgHeight="py-20"
-      />
-      <Featured
-        imagePosition="right"
-        image="/default/empower.png"
-        title="Empower Customer Retention"
-        description="In today's competitive market, customer retention is key. StampEzee fosters loyalty and encourages repeat business. More than a rewards system, our platform amplifies your brand engagement, nurturing long-lasting customer relationships."
-        bgHeight="py-20"
-      />
+          bgHeight="py-20"
+        />
+        <Featured
+          imagePosition="right"
+          image="/default/empower.png"
+          title="Empower Customer Retention"
+          description="In today's competitive market, customer retention is key. StampEzee fosters loyalty and encourages repeat business. More than a rewards system, our platform amplifies your brand engagement, nurturing long-lasting customer relationships."
+          bgHeight="py-20"
+        />
+      </div>
       {/* How It Works start */}
       <div className=" bg-[#FCE8E8] py-10">
         <div className="container mx-auto px-4">
@@ -86,28 +88,30 @@ export default async function Page() {
             <p className="mb-7 text-[1.2rem] font-[600] leading-8 text-primary-black">TESTIMONIALS</p>
             <div className="mb-7 text-center text-5xl font-bold text-primary-black">Read What Others Have to Say</div>
           </div>
-          <div className="container mx-auto grid max-w-screen-xl grid-cols-1  md:grid-cols-2 lg:grid-cols-3">
-            <Testimonial
-              image={'/default/olivia.png'}
-              name="OLIVIA COLE"
-              position="Restaurant Manager"
-              description={`StampEzee has been a game changer for our business. The convenience it offers our customers, coupled with the insights we've
+          <div>
+            <div className="container mx-auto grid max-w-screen-xl grid-cols-1  gap-3 p-3 md:grid-cols-2 md:p-0 lg:grid-cols-3">
+              <Testimonial
+                image={'/default/olivia.png'}
+                name="OLIVIA COLE"
+                position="Restaurant Manager"
+                description={`StampEzee has been a game changer for our business. The convenience it offers our customers, coupled with the insights we've
               gained, has truly elevated our operations.`}
-            />
-            <Testimonial
-              image={'/default/aaron.png'}
-              name="OLIVIA COLE"
-              position="Restaurant Manager"
-              description={`StampEzee has been a game changer for our business. The convenience it offers our customers, coupled with the insights we've
+              />
+              <Testimonial
+                image={'/default/aaron.png'}
+                name="OLIVIA COLE"
+                position="Restaurant Manager"
+                description={`StampEzee has been a game changer for our business. The convenience it offers our customers, coupled with the insights we've
               gained, has truly elevated our operations.`}
-            />
-            <Testimonial
-              image={'/default/symon.png'}
-              name="OLIVIA COLE"
-              position="Restaurant Manager"
-              description={`StampEzee has been a game changer for our business. The convenience it offers our customers, coupled with the insights we've
+              />
+              <Testimonial
+                image={'/default/symon.png'}
+                name="OLIVIA COLE"
+                position="Restaurant Manager"
+                description={`StampEzee has been a game changer for our business. The convenience it offers our customers, coupled with the insights we've
               gained, has truly elevated our operations.`}
-            />
+              />
+            </div>
           </div>
         </div>
       </div>

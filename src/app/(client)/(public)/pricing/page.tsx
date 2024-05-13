@@ -121,7 +121,7 @@ export default function page() {
         <div className="absolute inset-0  mx-auto  max-w-screen-xl items-center">
           <div className="flex h-full items-center justify-center sm:ml-3 sm:block">
             <div className="bottom-[28%] sm:absolute">
-              <div className="text-center text-4xl font-bold text-[#DF2828] sm:text-left sm:text-6xl">
+              <div className="text-center text-[3rem]  font-bold leading-10 text-[#DF2828] sm:text-left md:text-[4rem]">
                 <span style={{ opacity: 1, transform: 'none' }}>e</span>
                 <span style={{ opacity: 1, transform: 'none' }}>x</span>
                 <span style={{ opacity: 1, transform: 'none' }}>p</span>
@@ -131,7 +131,7 @@ export default function page() {
                 <span style={{ opacity: 1, transform: 'none' }}>e</span>
               </div>
               <br />
-              <div className="flex gap-3 text-4xl font-bold text-white sm:text-6xl">
+              <div className="flex gap-3 text-[1rem] font-bold	leading-10	text-white md:text-[3rem]">
                 <div className="">
                   <span style={{ opacity: 1, transform: 'none' }}>our</span>
                 </div>
@@ -150,7 +150,7 @@ export default function page() {
           </div>
         </div>
       </div>
-      <div className=" container mx-auto mt-16 max-w-screen-xl">
+      <div className=" ms-px-0 container mx-auto mt-16 max-w-screen-xl px-5">
         <div className="mx-auto  text-start">
           <h2 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Subscriptions</h2>
           <p className="mb-4 text-2xl font-medium tracking-tight text-gray-900 dark:text-white">Our Plans</p>
