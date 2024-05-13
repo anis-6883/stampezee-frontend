@@ -82,6 +82,7 @@ export default {
       fontFamily: {
         poppins: ['var(--font-poppins)'],
         lexend: ['var(--font-lexend)'],
+        publicSans: ['var(--font-public-sans)'],
       },
       // required these animations for the Loader component
       animation: {

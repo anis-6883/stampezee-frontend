@@ -1,14 +1,14 @@
-import AuthProvider from './providers/auth-provider';
-import { lexendDeca, poppins } from '@/app/fonts';
+import { lexendDeca, poppins, publicSans } from '@/app/fonts';
 import '@/app/globals.css';
 import GlobalDrawer from '@/components/drawer-views/container';
 import GlobalModal from '@/components/modal-views/container';
 import { siteConfig } from '@/config/site.config';
-import ReduxProvider from './providers/redux-provider';
 import cn from '@/hooks/class-names';
 import dynamic from 'next/dynamic';
-import { Toaster } from 'react-hot-toast';
 import { cookies } from 'next/headers';
+import { Toaster } from 'react-hot-toast';
+import AuthProvider from './providers/auth-provider';
+import ReduxProvider from './providers/redux-provider';
 
 const NextProgress = dynamic(() => import('@/components/next-progress'), {
   ssr: false,
@@ -24,7 +24,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning={true}>
-      <body className={cn(poppins.variable, lexendDeca.variable, 'font-inter')} suppressHydrationWarning={true}>
+      <body
+        className={cn(poppins.variable, lexendDeca.variable, publicSans.variable, 'font-inter')}
+        suppressHydrationWarning={true}
+        style={{ fontFamily: "'Public Sans', sans-serif", letterSpacing: '0.1em' }}
+      >
         <ReduxProvider>
           <AuthProvider tokenExist={tokenExist}>
             <NextProgress />
