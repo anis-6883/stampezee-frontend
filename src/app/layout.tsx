@@ -3,7 +3,6 @@ import '@/app/globals.css';
 import GlobalDrawer from '@/components/drawer-views/container';
 import GlobalModal from '@/components/modal-views/container';
 import { siteConfig } from '@/config/site.config';
-import cn from '@/hooks/class-names';
 import dynamic from 'next/dynamic';
 import { cookies } from 'next/headers';
 import { Toaster } from 'react-hot-toast';
@@ -23,12 +22,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const tokenExist = cookies().get('act')?.value ? true : false;
 
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning={true}>
-      <body
-        className={cn(poppins.variable, 'font-inter')}
-        suppressHydrationWarning={true}
-        style={{ fontFamily: "'Public Sans', sans-serif", letterSpacing: '0.1em' }}
-      >
+    <html lang="en" dir="ltr" suppressHydrationWarning={true} className={poppins.className}>
+      <body suppressHydrationWarning={true}>
         <ReduxProvider>
           <AuthProvider tokenExist={tokenExist}>
             <NextProgress />
