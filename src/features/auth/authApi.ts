@@ -2,32 +2,106 @@ import { apiSlice } from '@/features/api/apiSlice';
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    adminLogin: builder.mutation({
+    logoutUser: builder.mutation({
+      query: () => {
+        return {
+          url: '/api/user-logout',
+          method: 'POST',
+        };
+      },
+    }),
+
+    getOwnProfile: builder.query({
+      query: () => `/api/get-profile`,
+      providesTags: ['userOwnProfile'],
+    }),
+
+    // super-admin api start
+    superAdminLogin: builder.mutation({
       query: (data) => {
         return {
-          url: `/api/v1/user/login`,
+          url: `/api/secret-root/admin/super-admin/login`,
           method: 'POST',
           body: data,
         };
       },
+      invalidatesTags: ['superAdminProfile'],
     }),
-    logoutUser: builder.mutation({
+    superAdminLogout: builder.mutation({
       query: () => {
         return {
-          url: '/api/v1/user/logout',
+          url: '/api/secret-root/admin/super-admin/logout',
           method: 'POST',
         };
       },
+      invalidatesTags: ['superAdminProfile'],
     }),
-    getProfile: builder.query({
-      query: (id: string) => `/user/${id}`,
-      providesTags: ['userProfile'],
+    superAdminGetProfile: builder.query({
+      query: (id: string) => `/api/secret-root/admin/super-admin/profile`,
+      providesTags: ['superAdminProfile'],
     }),
-    getOwnProfile: builder.query({
-      query: () => `/api/v1/user/profile`,
-      providesTags: ['userOwnProfile'],
+
+    // super-admin api end
+
+    // retailer api start
+    retailerGetProfile: builder.query({
+      query: () => `api/retailer/profile`,
+      providesTags: ['retailerProfile'],
     }),
+
+    retailerRegister: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/retailer/register`,
+          method: 'POST',
+          body: data,
+        };
+      },
+      invalidatesTags: ['retailerProfile'],
+    }),
+    retailerOtpVerify: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/retailer/otp-verify`,
+          method: 'POST',
+          body: data,
+        };
+      },
+      invalidatesTags: ['retailerProfile'],
+    }),
+    retailerLogin: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/api/retailer/login`,
+          method: 'POST',
+          body: data,
+        };
+      },
+      invalidatesTags: ['retailerProfile'],
+    }),
+    retailerLogout: builder.mutation({
+      query: () => {
+        return {
+          url: '/api/v1/retailer/logout',
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['retailerProfile'],
+    }),
+
+    // retailer api end
   }),
 });
 
-export const { useGetProfileQuery, useAdminLoginMutation, useGetOwnProfileQuery, useLogoutUserMutation } = authApi;
+export const {
+  useSuperAdminGetProfileQuery,
+  useSuperAdminLoginMutation,
+  useSuperAdminLogoutMutation,
+  useRetailerGetProfileQuery,
+  useRetailerLoginMutation,
+  useRetailerLogoutMutation,
+  useRetailerOtpVerifyMutation,
+  useRetailerRegisterMutation,
+  useGetOwnProfileQuery,
+  useLogoutUserMutation,
+} = authApi;

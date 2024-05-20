@@ -57,14 +57,9 @@ const MyForm = () => {
 
   return (
     <>
-      <div className="mb-2 mt-3 flex items-center text-lg">
-        {' '}
-        <TbWorldSearch className="mr-2 text-white" />
-        Country <span className="font-bold text-red-600"> *</span>
-      </div>
       <Field name="country">
         {({ field, meta }: { field: any; meta: any }) => (
-          <>
+          <div className="text-black">
             <Select
               {...field}
               value={options.find((option) => option.label === values.country || option.value === values.country)}
@@ -73,8 +68,8 @@ const MyForm = () => {
               getOptionLabel={getOptionLabel} // Use custom function to render option label
               styles={customStyles}
             />
-            <p className="mt-1 h-3 select-none px-1 font-medium text-red">{meta.touched && meta.error && meta.error}</p>
-          </>
+            <p className=" h-3 select-none px-1 font-medium text-red">{meta.touched && meta.error && meta.error}</p>
+          </div>
         )}
       </Field>
     </>

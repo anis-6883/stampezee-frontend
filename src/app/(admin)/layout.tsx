@@ -3,6 +3,7 @@
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import HydrogenLayout from '@/layouts/layout';
 import { WiDaySnowThunderstorm } from 'react-icons/wi';
+import AuthCheckMiddleware from './middleware/AuthCheckMiddleware';
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
   const isMounted = useIsMounted();

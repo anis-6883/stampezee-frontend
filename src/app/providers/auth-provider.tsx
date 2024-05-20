@@ -13,7 +13,8 @@ export default function AuthProvider({ children, tokenExist }: { children: React
 
   useEffect(() => {
     if (tokenExist && !isLoading && !isError) {
-      dispatch(userLoggedIn(data?.data));
+      dispatch(userLoggedIn({ ...data?.data, isLoggedIn: true }));
+      console.log('tokenExist', data);
     } else {
       dispatch(userLoggedOut(undefined));
     }

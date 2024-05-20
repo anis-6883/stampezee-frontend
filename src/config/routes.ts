@@ -1,8 +1,11 @@
 export const routes = {
   home: '/project-admin',
-  adminLogin: '/login',
+  retailerAdminLogin: '/retailer/login',
   user: {
     profile: '/profile',
+  },
+  superAdmin: {
+    dashboard: '/root/super-admin/dashboard',
   },
   admin: {
     dashboard: '/project-admin/dashboard',
@@ -12,7 +15,18 @@ export const routes = {
       edit: (id: number | string) => `/project-admin/users/update/${id}`,
     },
     retailer: {
+      dashboard: '/root/retailers/dashboard',
+
+      // create: '/project-admin/retailers/create',
+      // edit: (id: number | string) => `/project-admin/retailers/update/${id}`,
+    },
+    scans: {
       home: `/project-admin/retailers`,
+      // create: '/project-admin/retailers/create',
+      // edit: (id: number | string) => `/project-admin/retailers/update/${id}`,
+    },
+    notification: {
+      home: `/project-admin/push-notifications`,
       // create: '/project-admin/retailers/create',
       // edit: (id: number | string) => `/project-admin/retailers/update/${id}`,
     },
@@ -20,7 +34,7 @@ export const routes = {
     generalSettings: '/project-admin/general-settings',
   },
   retailer: {
-    dashboard: '/project-admin/dashboard',
+    dashboard: '/root/retailers/dashboard',
     user: {
       home: `/project-admin/users`,
       create: '/project-admin/users/create',

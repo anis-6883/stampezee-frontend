@@ -16,6 +16,7 @@ export interface IOption {
 export interface IAuthState {
   user?: any | undefined;
   role: string;
+  isLoggedIn: boolean;
 }
 
 export interface IQueryType {

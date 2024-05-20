@@ -8,7 +8,7 @@ import { PiBellRinging, PiCurrencyDollar, PiNewspaperClippingLight, PiStamp, PiT
 import { TbUserShield } from 'react-icons/tb';
 
 export const menuItems: { [key: string]: any } = {
-  admin: [
+  super_admin: [
     {
       name: 'Analytics',
       href: routes.admin.dashboard,
@@ -21,17 +21,17 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Retailers',
-      href: routes.admin.retailer.home,
+      href: routes.admin.user.home,
       icon: <BsShop />,
     },
     {
       name: 'Scans',
-      href: routes.admin.user.home,
+      href: routes.admin.scans.home,
       icon: <MdQrCodeScanner />,
     },
     {
       name: 'Push Notifications',
-      href: routes.admin.user.home,
+      href: routes.admin.notification.home,
       icon: <PiBellRinging />,
     },
     {
