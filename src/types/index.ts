@@ -9,9 +9,9 @@ export interface IAllBranchQueryArgs {
 export interface IPagination {
   page: number;
   limit: number;
-  hasNext: boolean;
-  hasPrev: boolean;
-  totalDocs: number;
+  hasNext?: boolean;
+  hasPrev?: boolean;
+  totalDocs?: number;
 }
 
 export interface IOption {
@@ -269,3 +269,68 @@ export interface Branch {
   latitude: string;
   status: boolean;
 }
+
+// SubAdmin
+export interface ISubAdmin {
+  _id: string;
+  retailerId: string;
+  branchId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  image: string | null;
+  status: boolean;
+  softDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ISubAdminResponse extends IResponse {
+  data: {
+    docs: ISubAdmin[];
+    page: number;
+    limit: number;
+    totalPage: number;
+    totalDocs: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
+}
+export interface ICreateSubAdmin {
+  // Define the fields required to create a sub-admin
+}
+
+export interface IUpdateSubAdmin {
+  // Define the fields required to update a sub-admin
+  id: string;
+}
+
+export interface IDeleteSubAdmin {
+  id: string;
+}
+// SubAdmin
+
+// stamp image
+
+export interface ICreateStampImage {
+  retailerId: string;
+  branchId: string;
+  imageUrl: string;
+}
+
+export interface IUpdateStampImage {
+  id: string;
+  retailerId?: string;
+  branchId?: string;
+  imageUrl?: string;
+}
+
+export interface IDeleteStampImage {
+  id: string;
+}
+
+export interface IAllBranchQueryArgs {
+  page: number;
+  limit: number;
+}
+// stamp image

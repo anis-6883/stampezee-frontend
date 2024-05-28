@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import InputField from '@/components/Formik/ImputField';
 import StatusBar from '@/components/Formik/StatusBar';
 import { routes } from '@/config/routes';
-import { useSingleBranchQuery, useUpdateBranchMutation } from '@/features/branch/branchApi';
+import { useSingleBranchQuery, useUpdateBranchMutation } from '@/features/retailer/branch/branchApi';
 import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
 import MapComponent from './Map';
@@ -63,15 +63,11 @@ export default function UpdateBranch({ branchId }: any) {
 
       // Extract branchId and the rest of the data
       const { _id, ...rest } = values;
-      const parsedValues = {
-        ...rest,
-        longitude: String(values.longitude),
-        latitude: String(values.latitude),
-      };
+      console.log(rest, 'values');
 
       // Call the updateBranch mutation
-      const result = await UpdateBranch({ data: parsedValues, branchId: branchId }).unwrap();
-      router.push(routes.retailer.branch.home);
+      // const result = await UpdateBranch({ data: values, branchId: branchId }).unwrap();
+      // router.push(routes.retailer.branch.home);
       toast.success('Branch updated successfully!');
     } catch (error) {
       console.error('Failed to update branch:', error);
@@ -84,6 +80,8 @@ export default function UpdateBranch({ branchId }: any) {
   if (branchLoading) {
     return 'loding....';
   }
+  console.log(formData, 'formData');
+
   return (
     <div>
       <Formik
@@ -114,7 +112,7 @@ export default function UpdateBranch({ branchId }: any) {
                 latitude: values.latitude,
               }}
             />
-            <StatusBar setFieldValue={setFieldValue} />
+            <StatusBar setFieldValue={setFieldValue} checkedStatus={values.status} />
             <div className="justify-end">
               <Button
                 type="submit"

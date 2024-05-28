@@ -1,11 +1,8 @@
 import { Field } from 'formik';
 //
-//     <InputField
-//     name="l-name"
-//     label="Last Name"
-//     icon={<MdDriveFileRenameOutline className="text-base" />}
-//     placeholder="Last Name"
-//   />
+{
+  /* <InputField name="name" label="Name" placeholder="" errors={errors.name} touched={touched.name} /> */
+}
 
 export default function InputField({
   name,
@@ -28,8 +25,6 @@ export default function InputField({
   touched?: any;
   type?: string;
 }) {
-  console.log(name, 'name----');
-
   return (
     <div className="w-full">
       {label && (

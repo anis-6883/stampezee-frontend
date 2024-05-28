@@ -40,6 +40,14 @@ export const routes = {
       create: `/root/retailer/branch/create`,
       edit: (id: number | string) => `/root/retailer/branch/${id}/update`,
     },
+    sub_admin: {
+      home: `/root/retailer/sub-admin`,
+      create: `/root/retailer/sub-admin/create`,
+      edit: (id: number | string) => `/root/retailer/sub-admin/${id}/update`,
+    },
+    stamp: {
+      home: `/root/retailer/stamps`,
+    },
     user: {
       home: `/project-admin/users`,
       create: '/project-admin/users/create',

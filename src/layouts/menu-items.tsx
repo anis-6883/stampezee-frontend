@@ -52,7 +52,7 @@ export const menuItems: { [key: string]: any } = {
   retailer: [
     {
       name: 'Analytics',
-      href: routes.admin.dashboard,
+      href: routes.retailer.dashboard,
       icon: <LuBarChart3 />,
     },
     {
@@ -62,12 +62,12 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Sub-Admins',
-      href: routes.admin.user.home,
+      href: routes.retailer.sub_admin.home,
       icon: <TbUserShield />,
     },
     {
       name: 'Stamps',
-      href: routes.admin.user.home,
+      href: routes.retailer.stamp.home,
       icon: <PiStamp />,
     },
     {

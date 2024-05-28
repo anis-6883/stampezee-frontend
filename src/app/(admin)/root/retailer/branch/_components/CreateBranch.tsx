@@ -21,7 +21,7 @@ const initialValues = {
 import InputField from '@/components/Formik/ImputField';
 import StatusBar from '@/components/Formik/StatusBar';
 import { routes } from '@/config/routes';
-import { useCreateBranchMutation } from '@/features/branch/branchApi';
+import { useCreateBranchMutation } from '@/features/retailer/branch/branchApi';
 import { Branch } from '@/types';
 import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
