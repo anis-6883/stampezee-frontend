@@ -15,6 +15,7 @@ import { menuItems } from './menu-items';
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
+
   const role = useSelector((state: RootState) => state.authSlice.role);
 
   return (
@@ -32,7 +33,7 @@ export default function Sidebar({ className }: { className?: string }) {
 
       <SimpleBar className="h-[calc(100%-80px)]">
         <div className="mt-4 pb-3 3xl:mt-6">
-          {menuItems[role].map((item: any, index: number) => {
+          {menuItems[role]?.map((item: any, index: number) => {
             const isActive =
               item.name === 'Dashboard'
                 ? pathname === '/admin'

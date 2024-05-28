@@ -1,7 +1,7 @@
 'use client';
 
 import { routes } from '@/config/routes';
-import { useLogoutUserMutation } from '@/features/auth/authApi';
+import { useGetOwnProfileQuery, useLogoutUserMutation } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import Link from 'next/link';
@@ -30,12 +30,12 @@ function DropdownMenu() {
     }),
     shallowEqual
   );
-
+  const {} = useGetOwnProfileQuery({});
   const [logOut] = useLogoutUserMutation();
   const handleLogout = async () => {
     logOut(null)
       .then((res) => {
-        replace(routes.adminLogin);
+        replace(routes.retailerAdminLogin);
         dispatch(setValue({ target: 'user', value: undefined }));
       })
       .catch((err) => {

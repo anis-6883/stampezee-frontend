@@ -1,5 +1,4 @@
 import { routes } from '@/config/routes';
-import { BsShop } from 'react-icons/bs';
 import { FaCogs, FaRegIdBadge } from 'react-icons/fa';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { LuBarChart3, LuUsers } from 'react-icons/lu';
@@ -8,7 +7,7 @@ import { PiBellRinging, PiCurrencyDollar, PiNewspaperClippingLight, PiStamp, PiT
 import { TbUserShield } from 'react-icons/tb';
 
 export const menuItems: { [key: string]: any } = {
-  admin: [
+  super_admin: [
     {
       name: 'Analytics',
       href: routes.admin.dashboard,
@@ -21,17 +20,17 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Retailers',
-      href: routes.admin.retailer.home,
-      icon: <BsShop />,
+      href: routes.admin.user.home,
+      // icon: <BsShop />,
     },
     {
       name: 'Scans',
-      href: routes.admin.user.home,
+      href: routes.admin.scans.home,
       icon: <MdQrCodeScanner />,
     },
     {
       name: 'Push Notifications',
-      href: routes.admin.user.home,
+      href: routes.admin.notification.home,
       icon: <PiBellRinging />,
     },
     {
@@ -83,11 +82,11 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Branches',
-      href: routes.admin.user.home,
+      href: routes.retailer.branch.home,
       icon: <PiTreeStructure />,
     },
     {
-      name: 'General Settings',
+      name: 'Account',
       href: routes.admin.generalSettings,
       icon: <FaCogs />,
     },
