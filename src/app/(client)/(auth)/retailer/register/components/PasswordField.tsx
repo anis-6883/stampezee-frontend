@@ -5,7 +5,7 @@ import { Password } from 'rizzui';
 
 interface PasswordFieldProps {
   name: string;
-  label: string;
+  label?: string;
   placeholder?: string;
 }
 
@@ -44,23 +44,28 @@ const PasswordField: React.FC<PasswordFieldProps> = ({ name, label, placeholder 
   return (
     <Field name={name}>
       {({ field, meta }: { field: any; meta: any }) => (
-        <div className="mt-3">
-          <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+        <div className="">
+          {/* <label htmlFor={name} className="block text-sm font-medium text-gray-700">
             {label}
-          </label>
+          </label> */}
           <div className="mt-1">
             <Password
-              size="lg"
+              size="md"
               label={
-                <p className="flex items-center gap-x-2">
-                  <LuUnlock className="text-base" /> {label}
-                  <span className="font-bold text-red-600"> *</span>
-                </p>
+                label ? (
+                  <p className="flex items-center gap-x-2">
+                    <LuUnlock className="text-base" /> {label}
+                    <span className="font-bold text-red-600"> *</span>
+                  </p>
+                ) : (
+                  ''
+                )
               }
-              variant="outline"
+              variant="flat"
               color="primary"
               labelClassName="text-base"
               autoComplete="off"
+              className="bg-gray-100"
               placeholder={placeholder}
               {...field}
               value={password}
@@ -71,11 +76,11 @@ const PasswordField: React.FC<PasswordFieldProps> = ({ name, label, placeholder 
               }}
             />
           </div>
-          <div className="mt-2 grid grid-cols-2 gap-4 gap-x-2">
-            <p className={`text-sm ${containsUppercase ? 'text-green-600' : 'text-red-600'}`}>At least one uppercase letter.</p>
-            <p className={`text-sm ${containsLowercase ? 'text-green-600' : 'text-red-600'}`}>At least one lowercase letter.</p>
-            <p className={`text-sm ${containsDigit ? 'text-green-600' : 'text-red-600'}`}>At least one digit.</p>
-            <p className={`text-sm ${isLengthValid ? 'text-green-600' : 'text-red-600'}`}>Password must be at least 6 characters long.</p>
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            <p className={`text-xs ${containsUppercase ? 'text-green-600' : 'text-red-600'}`}>At least one uppercase letter.</p>
+            <p className={`text-xs ${containsLowercase ? 'text-green-600' : 'text-red-600'}`}>At least one lowercase letter.</p>
+            <p className={`text-xs ${containsDigit ? 'text-green-600' : 'text-red-600'}`}>At least one digit.</p>
+            <p className={`text-xs ${isLengthValid ? 'text-green-600' : 'text-red-600'}`}>Password must be at least 6 characters long.</p>
           </div>
         </div>
       )}

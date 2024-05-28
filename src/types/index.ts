@@ -1,5 +1,11 @@
 import { MouseEventHandler } from 'react';
 
+// Define the type for the query arguments
+export interface IAllBranchQueryArgs {
+  page: number;
+  limit: number;
+  search?: string | null;
+}
 export interface IPagination {
   page: number;
   limit: number;
@@ -12,6 +18,13 @@ export interface IOption {
   label: string;
   value: string;
 }
+
+export type IResponse = {
+  status: boolean;
+  message: string;
+  pagination?: IPagination;
+  data: any;
+};
 
 export interface IAuthState {
   user?: any | undefined;
@@ -245,4 +258,14 @@ export interface IDictionary {
   tags: ITag[];
   examples: IExample[];
   status?: '0' | '1';
+}
+
+// branch
+export interface Branch {
+  _id?: string;
+  name: string;
+  address: string;
+  longitude: string;
+  latitude: string;
+  status: boolean;
 }

@@ -28,7 +28,6 @@ export default function CreateUser({ edit, id }: { edit?: boolean; id?: string }
         })
         .catch((err: any) => console.log(err));
     } else {
-      console.log('userValues', values);
       createUser(values)
         .then((res: any) => {
           if (res.data.status) router.push(routes.admin.user.home);

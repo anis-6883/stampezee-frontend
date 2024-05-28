@@ -1,5 +1,4 @@
 import { routes } from '@/config/routes';
-import { BsShop } from 'react-icons/bs';
 import { FaCogs, FaRegIdBadge } from 'react-icons/fa';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { LuBarChart3, LuUsers } from 'react-icons/lu';
@@ -22,7 +21,7 @@ export const menuItems: { [key: string]: any } = {
     {
       name: 'Retailers',
       href: routes.admin.user.home,
-      icon: <BsShop />,
+      // icon: <BsShop />,
     },
     {
       name: 'Scans',
@@ -83,11 +82,11 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Branches',
-      href: routes.admin.user.home,
+      href: routes.retailer.branch.home,
       icon: <PiTreeStructure />,
     },
     {
-      name: 'General Settings',
+      name: 'Account',
       href: routes.admin.generalSettings,
       icon: <FaCogs />,
     },

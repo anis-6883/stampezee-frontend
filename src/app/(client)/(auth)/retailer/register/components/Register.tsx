@@ -9,7 +9,6 @@ import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
 import { useDispatch } from 'react-redux';
-import { Button } from 'rizzui';
 import * as Yup from 'yup';
 import InputField from './ImputField';
 import OptionField from './OptionField';
@@ -64,7 +63,6 @@ export default function Register({ setCurrentStep, currentStep }: { setCurrentSt
     setSubmitting(true);
     try {
       const response = await axiosBackendUrl.post('/api/retailer/register', values);
-      console.log(response, 'data response');
 
       if (response.status === 201) {
         setCurrentStep(currentStep + 1);
@@ -85,7 +83,7 @@ export default function Register({ setCurrentStep, currentStep }: { setCurrentSt
 
   return (
     <div>
-      <div className="mt-12 flex flex-col items-center">
+      <div className="mt-8 flex flex-col items-center px-2">
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
           {({ errors, touched, setFieldValue }) => (
             <Form className="grid gap-4">
@@ -96,7 +94,7 @@ export default function Register({ setCurrentStep, currentStep }: { setCurrentSt
                 errors={errors.storeName}
                 touched={touched.storeName}
               />
-              <div className="block items-center justify-between gap-4 sm:flex">
+              <div className="flex w-full gap-3">
                 <InputField
                   name="firstName"
                   label="First Name"
@@ -106,7 +104,7 @@ export default function Register({ setCurrentStep, currentStep }: { setCurrentSt
                 />
                 <InputField name="lastName" label="Last Name" placeholder="Last Name" errors={errors.lastName} touched={touched.lastName} />
               </div>
-              <div className="block items-center justify-between gap-4 sm:flex">
+              <div className=" flex w-full  gap-3">
                 <InputField
                   name="email"
                   label="Email address"
@@ -116,7 +114,7 @@ export default function Register({ setCurrentStep, currentStep }: { setCurrentSt
                   type="email"
                   ref={emailInputRef}
                 />
-                <div>
+                <div className="w-full">
                   <PhoneNumber
                     // label="Phone Number"
                     country="us"
@@ -132,10 +130,10 @@ export default function Register({ setCurrentStep, currentStep }: { setCurrentSt
 
               <OptionField />
 
-              <div className="block items-center justify-between gap-4 sm:flex">
-                <InputField name="province" label="Province" placeholder="Province" errors={errors.province} touched={touched.province} />
-                <InputField name="city" label="City" placeholder="City" errors={errors.city} touched={touched.city} />
-              </div>
+              {/* <div className="block items-center justify-between gap-4 sm:flex"> */}
+              <InputField name="province" label="Province" placeholder="Province" errors={errors.province} touched={touched.province} />
+              <InputField name="city" label="City" placeholder="City" errors={errors.city} touched={touched.city} />
+              {/* </div> */}
               <InputField
                 name="postalCode"
                 label="Postal Code"
@@ -144,13 +142,11 @@ export default function Register({ setCurrentStep, currentStep }: { setCurrentSt
                 touched={touched.postalCode}
               />
               <InputField name="address" label="Address" placeholder="Address" errors={errors.address} touched={touched.address} />
-              <PasswordField name="password" label="Enter your password" />
-              <div className="mt-5 justify-end">
-                <Button
-                  color="primary"
+              <PasswordField name="password" />
+              <div className="justify-end">
+                <button
                   type="submit"
-                  className="flex w-full items-center justify-center text-sm font-semibold disabled:bg-[#1d58d8]"
-                  size="xl"
+                  className="focus:shadow-outline mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-500 py-3 font-semibold tracking-wide text-gray-100 transition-all duration-300 ease-in-out hover:bg-indigo-700 focus:outline-none"
                   disabled={submitting}
                 >
                   {submitting ? (
@@ -160,15 +156,16 @@ export default function Register({ setCurrentStep, currentStep }: { setCurrentSt
                   ) : (
                     <span>Next</span>
                   )}
-                </Button>
+                </button>
               </div>
             </Form>
           )}
         </Formik>
-        <div className="mt-5">
-          Sign in
+        <div className="mt-5 font-medium">
+          Already have an account?
           <Link href="/retailer/login" className="text-red">
-            Already have an account?
+            {' '}
+            Sign in
           </Link>
         </div>
       </div>

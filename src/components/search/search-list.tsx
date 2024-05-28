@@ -1,10 +1,10 @@
 'use client';
 
-import { Fragment, useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { Title, Input, Button, ActionIcon, Empty, SearchNotFoundIcon } from 'rizzui';
-import { PiFileTextDuotone, PiMagnifyingGlassBold, PiXBold } from 'react-icons/pi';
 import cn from '@/hooks/class-names';
+import Link from 'next/link';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import { PiFileTextDuotone, PiMagnifyingGlassBold, PiXBold } from 'react-icons/pi';
+import { ActionIcon, Button, Empty, Input, SearchNotFoundIcon, Title } from 'rizzui';
 import { pageLinks } from './page-links.data';
 
 export default function SearchList({ onClose }: { onClose?: () => void }) {
@@ -73,12 +73,12 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
           )}
         </>
 
-        {menuItemsFiltered.map((item, index) => {
+        {menuItemsFiltered.map((item: { name: string; href?: string }, index) => {
           return (
             <Fragment key={item.name + '-' + index}>
-              {item?.href ? (
+              {item.href ? (
                 <Link
-                  href={item?.href as string}
+                  href={item.href}
                   className="relative my-0.5 flex items-center rounded-lg px-3 py-2 text-sm hover:bg-gray-100 focus:outline-none focus-visible:bg-gray-100 dark:hover:bg-gray-50/50 dark:hover:backdrop-blur-lg"
                 >
                   <span className="inline-flex items-center justify-center rounded-md border border-gray-300 p-2 text-gray-500">
@@ -87,7 +87,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
 
                   <span className="ms-3 grid gap-0.5">
                     <span className="font-medium capitalize text-gray-900 dark:text-gray-700">{item.name}</span>
-                    <span className="text-gray-500">{item?.href as string}</span>
+                    <span className="text-gray-500">{item.href}</span>
                   </span>
                 </Link>
               ) : (

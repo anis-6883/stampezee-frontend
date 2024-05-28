@@ -15,17 +15,8 @@ import { menuItems } from './menu-items';
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
-  console.log(
-    useSelector((state: RootState) => state.authSlice),
-    'check user info'
-  );
 
   const role = useSelector((state: RootState) => state.authSlice.role);
-  console.log(role);
-  console.log(
-    useSelector((state: RootState) => state.authSlice),
-    'sidbar item check'
-  );
 
   return (
     <aside

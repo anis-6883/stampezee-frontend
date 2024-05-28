@@ -49,7 +49,6 @@ export default function LoginForm() {
 
     if (loginSuccess) {
       if (loginResponse?.status) {
-        console.log('loginResponse', loginResponse);
         toast.success('Login Successful!');
 
         dispatch(userLoggedIn({ ...loginResponse?.data, isLoggedIn: true }));

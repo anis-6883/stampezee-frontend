@@ -1,7 +1,4 @@
 import { metaObject } from '@/config/site.config';
-import Link from 'next/link';
-import Register from './components/Register';
-import Stepper from './components/Stap';
 import Stap from './components/Stap';
 
 export const metadata = {
@@ -22,7 +19,10 @@ export default async function Page() {
     //     <div className="">
     //       <img src="/images/logo.png" className="m-auto my-5 mt-0 w-20" alt="logo" />
     //       <h2 className="mb-5 text-center text-lg ">Register to StampEzee</h2>
-    <Stap />
+    <div className="min-h-[100vh] bg-gray-100">
+      <Stap />
+    </div>
+
     //       <div className="mt-5">
     //         By signing up, I agree to
     //         <Link href="/login" className="text-red">

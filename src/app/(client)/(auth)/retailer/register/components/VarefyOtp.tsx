@@ -55,8 +55,6 @@ const VarefyOtp = ({ setCurrentStep, currentStep }: { setCurrentStep: any; curre
   }, [loginError, isLoginError, loginSuccess, loginResponse, replace, dispatch]);
 
   const handleSubmit = async (values: any) => {
-    console.log(values, 'value data');
-
     setSubmitting(true); // Set submitting to true while the request is in progress
     retailerOtpVerify(values);
     // try {
@@ -86,7 +84,6 @@ const VarefyOtp = ({ setCurrentStep, currentStep }: { setCurrentStep: any; curre
   const resendOtp = async () => {
     try {
       const response = await axiosBackendUrl.get('/api/retailer/resend-otp'); // POST request with form values
-      console.log('Response:', response.data); // Log the response data
 
       if (response.status === 200) {
         toast.success(response.data.message);
@@ -104,7 +101,7 @@ const VarefyOtp = ({ setCurrentStep, currentStep }: { setCurrentStep: any; curre
   };
 
   return (
-    <>
+    <div>
       <Formik
         initialValues={{ pinCode: '' }}
         validationSchema={validationSchema}
@@ -122,7 +119,7 @@ const VarefyOtp = ({ setCurrentStep, currentStep }: { setCurrentStep: any; curre
             <div>
               <Field name="pinCode">
                 {({ field, form }: any) => (
-                  <div>
+                  <div className="mt-5">
                     <PinCode
                       length={6}
                       center={true}
@@ -131,8 +128,8 @@ const VarefyOtp = ({ setCurrentStep, currentStep }: { setCurrentStep: any; curre
                         form.setFieldTouched(field.name, true, false); // Mark the field as touched manually
                       }}
                     />
-                    {validation && <div className="text-red-600">{validation}</div>}
-                    {touched.pinCode && errors.pinCode && <div className="text-red-600">{errors.pinCode}</div>}
+                    {validation && <div className="mt-2 text-center text-red-600">{validation}</div>}
+                    {touched.pinCode && errors.pinCode && <div className="mt-2 text-center text-red-600">{errors.pinCode}</div>}
                   </div>
                 )}
               </Field>
@@ -141,13 +138,13 @@ const VarefyOtp = ({ setCurrentStep, currentStep }: { setCurrentStep: any; curre
               <Button
                 color="primary"
                 type="submit"
-                className="flex w-full items-center justify-center text-sm font-semibold disabled:bg-[#1d58d8]"
-                size="xl"
+                className="flex w-full items-center justify-center text-sm font-semibold disabled:bg-[#1d58d8] disabled:text-white"
+                size="lg"
                 disabled={submitting}
               >
                 {submitting ? (
                   <span className="flex items-center gap-x-2">
-                    Requesting... <ImSpinner9 className="animate-spin text-base" />
+                    Requesting... <ImSpinner9 className="animate-spin text-base " />
                   </span>
                 ) : (
                   <span>Finish</span>
@@ -157,9 +154,17 @@ const VarefyOtp = ({ setCurrentStep, currentStep }: { setCurrentStep: any; curre
           </Form>
         )}
       </Formik>
-      <button onClick={resendOtp}>Resent OTP</button>
-      {currentStep === 1 && <Button onClick={() => setCurrentStep(0)}>Reset</Button>}
-    </>
+      <div className="flex justify-center py-5">
+        <button className="text-sm font-semibold" onClick={resendOtp}>
+          Resent OTP
+        </button>
+        {currentStep === 1 && (
+          <Button variant="outline" className="text-semibold ml-2" onClick={() => setCurrentStep(0)}>
+            Reset
+          </Button>
+        )}
+      </div>
+    </div>
   );
 };
 

@@ -19,7 +19,6 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
       result = await baseQuery(args, api, extraOptions);
     }
   }
-  console.log('/refresh-token');
 
   return result;
 };
@@ -28,5 +27,5 @@ export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
   endpoints: () => ({}),
-  tagTypes: ['userProfile', 'userOwnProfile', 'contentManagement', 'user', 'retailerProfile', 'superAdminProfile'],
+  tagTypes: ['userProfile', 'userOwnProfile', 'contentManagement', 'user', 'retailerProfile', 'superAdminProfile', 'retailerBranch'],
 });

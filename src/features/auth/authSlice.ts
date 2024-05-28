@@ -16,8 +16,6 @@ const authSlice = createSlice({
       state[action.payload.target] = action.payload.value;
     },
     userLoggedIn: (state, action) => {
-      console.log('userLoggedIn', action.payload);
-
       state.user = action.payload;
       state.role = action.payload.role;
       state.isLoggedIn = action?.payload?.isLoggedIn ?? false;

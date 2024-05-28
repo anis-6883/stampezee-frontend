@@ -1,5 +1,4 @@
 import { Field, useFormikContext } from 'formik';
-import { TbWorldSearch } from 'react-icons/tb';
 import Select, { StylesConfig } from 'react-select';
 import countries from './AllCountries.json'; // Import the JSON file
 
@@ -14,19 +13,20 @@ const customStyles: StylesConfig = {
   control: (provided) => ({
     ...provided,
     backgroundColor: 'transparent',
-    color: 'red',
+    color: 'black',
+    opacity: '0.8',
     border: '1px solid white',
-    borderRadius: '4px',
+    borderRadius: '8px',
     cursor: 'pointer',
-    height: '50px',
+    height: '45px',
   }),
   option: (provided, state) => ({
     ...provided,
-    color: 'black', // Set option text color to black
+    color: 'white', // Set option text color to black
     backgroundColor: '#17202A', // Set option background color to transparent
     '&:hover': {
-      backgroundColor: '#1B2631', // Change background color on hover
-      color: 'black', // Change text color on hover
+      backgroundColor: '#38414B', // Change background color on hover
+      color: 'white', // Change text color on hover
     },
   }),
   singleValue: (provided) => ({
@@ -39,13 +39,13 @@ const customStyles: StylesConfig = {
   }),
   input: (provided) => ({
     ...provided,
-    color: 'white', // Set search input text color to red
+    color: 'black', // Set search input text color to red
   }),
 };
 
 // Custom function to render option label with country name and flag
 const getOptionLabel = (option: any) => (
-  <div className="flex text-white">
+  <div className="flex ">
     <img src={option.flag} alt={option.label} style={{ width: '20px', marginLeft: '5px' }} />
     <span className="ml-2">{option.label}</span>
   </div>
@@ -62,6 +62,7 @@ const MyForm = () => {
           <div className="text-black">
             <Select
               {...field}
+              className="bg-gray-100 "
               value={options.find((option) => option.label === values.country || option.value === values.country)}
               onChange={(selectedOption: any) => setFieldValue('country', selectedOption.label)}
               options={options}

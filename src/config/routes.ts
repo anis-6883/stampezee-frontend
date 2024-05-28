@@ -34,11 +34,23 @@ export const routes = {
     generalSettings: '/project-admin/general-settings',
   },
   retailer: {
-    dashboard: '/root/retailers/dashboard',
+    dashboard: '/root/retailer/dashboard',
+    branch: {
+      home: `/root/retailer/branch`,
+      create: `/root/retailer/branch/create`,
+      edit: (id: number | string) => `/root/retailer/branch/${id}/update`,
+    },
     user: {
       home: `/project-admin/users`,
       create: '/project-admin/users/create',
       edit: (id: number | string) => `/project-admin/users/update/${id}`,
     },
   },
+};
+
+// roleRoutes
+
+const roleRoutes = {
+  retailer: ['/root/retailers/'],
+  sup_admin: ['/root/super-admin'],
 };

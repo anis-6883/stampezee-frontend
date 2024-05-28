@@ -27,10 +27,10 @@ export default function InputField({
   type?: string;
 }) {
   return (
-    <div>
+    <div className="w-full">
       <Field
         name={name}
-        className={`w-full rounded-lg border ${errors && touched ? 'border-red-500' : 'border-gray-200'} bg-gray-100 px-8 py-4 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none`}
+        className={`w-full rounded-md border ${errors && touched ? 'border-red-500' : 'border-gray-200'} bg-gray-100 px-8 py-[0.6rem] text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none`}
         placeholder={placeholder}
         type={type}
       />
