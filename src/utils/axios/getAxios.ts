@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const bibleBackendUrl = axios.create({
+const axiosBackendUrl = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   timeout: 20000,
   withCredentials: true,
@@ -12,4 +12,4 @@ const bibleBackendUrl = axios.create({
   },
 });
 
-export { bibleBackendUrl };
+export { axiosBackendUrl };

@@ -7,10 +7,10 @@ export const pageLinks = [
     name: 'Home',
   },
   // label end
-  {
-    name: 'Users',
-    href: routes.admin.user.home,
-  },
+  // {
+  //   name: 'Users',
+  //   href: routes.admin.user.home,
+  // },
   // {
   //   name: "Support",
   //   href: routes.support.dashboard
