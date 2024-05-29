@@ -3,7 +3,7 @@
 import AskConfirmation from '@/app/(admin)/root/_components/AskConfirmation';
 import Table from '@/app/(admin)/root/_components/Table';
 import { routes } from '@/config/routes';
-import { useAllBranchQuery, useDeleteBranchMutation } from '@/features/branch/branchApi';
+import { useAllBranchQuery, useDeleteBranchMutation } from '@/features/retailer/branch/branchApi';
 import { Branch, IQueryType } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
