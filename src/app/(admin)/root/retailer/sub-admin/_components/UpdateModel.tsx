@@ -72,10 +72,11 @@ export default function UpdateModel({ branchId }: any) {
       // Call the updateBranch mutation
       const result = await UpdateBranch({ data: parsedValues, branchId: branchId }).unwrap();
       router.push(routes.retailer.branch.home);
-      toast.success('Branch updated successfully!');
-    } catch (error) {
+      toast.success('sub Admin updated successfully!');
+    } catch (error: any) {
       console.error('Failed to update branch:', error);
-      toast.error('Failed to update branch. Please try again.');
+      toast.error(error.data.massage ?? 'Failed to update sub Admin Please try again.');
+      setSubmitting(false);
     } finally {
       setSubmitting(false);
     }

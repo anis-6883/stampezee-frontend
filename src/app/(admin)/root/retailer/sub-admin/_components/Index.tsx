@@ -5,6 +5,7 @@ import Table from '@/app/(admin)/root/_components/Table';
 import { routes } from '@/config/routes';
 import { useDeleteSubAdminMutation, useGetAllSubAdminsQuery } from '@/features/retailer/sub-admin/subAdminApi';
 import { Branch, IQueryType } from '@/types';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -71,9 +72,12 @@ export default function BranchTable() {
       header: 'Actions',
       Cell: ({ row }: any) => (
         <div className="flex gap-2">
-          <button onClick={() => handleEdit(row.original)}>
+          {/* <button onClick={() => handleEdit(row.original)}>
             <HiOutlinePencil className="text-base" />
-          </button>
+          </button> */}
+          <Link onClick={() => handleEdit(row.original)} href={routes.retailer.sub_admin.edit(row.original._id)}>
+            <HiOutlinePencil className="text-base" />
+          </Link>
           <button onClick={() => handleDelete(row.original)}>
             <ImBin className="text-base" />
           </button>

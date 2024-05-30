@@ -65,7 +65,7 @@ export default function CreateModel({
       formData.append('image', values.image as Blob); // Ensure the image is appended as a Blob
       formData.append('status', values.status);
 
-      if (edit) {
+      if (edit && updateValue.id) {
         await updateStampImage({ id: updateValue.id, formData: formData }).unwrap();
       } else {
         await createStampImage(formData).unwrap();
@@ -74,11 +74,10 @@ export default function CreateModel({
       setModalState(false);
       handleClose;
 
-      // routes.push(routes.retailer.branch.home);
       toast.success('Branch created successfully!');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to create branch:', error);
-      toast.error('Failed to create branch. Please try again.');
+      toast.error(error.data.massage ?? 'Failed to create branch. Please try again.');
       setSubmitting(false);
     } finally {
       handleClose;
@@ -124,7 +123,6 @@ export default function CreateModel({
                   <StatusBar setFieldValue={setFieldValue} checkedStatus={values.status} />
                   <div className="mt-2">
                     <SubmitButton type="submit" isSubmitting={submitting} />
-
                   </div>
                 </Form>
               )}

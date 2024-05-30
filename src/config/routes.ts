@@ -45,8 +45,8 @@ export const routes = {
       create: `/root/retailer/sub-admin/create`,
       edit: (id: number | string) => `/root/retailer/sub-admin/${id}/update`,
     },
-    stamp: {
-      home: `/root/retailer/stamps`,
+    stampImage: {
+      home: `/root/retailer/stamps-image`,
     },
     user: {
       home: `/project-admin/users`,

@@ -66,8 +66,8 @@ export const menuItems: { [key: string]: any } = {
       icon: <TbUserShield />,
     },
     {
-      name: 'Stamps',
-      href: routes.retailer.stamp.home,
+      name: 'Stamps-images',
+      href: routes.retailer.stampImage.home,
       icon: <PiStamp />,
     },
     {
