@@ -11,10 +11,11 @@ import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 import CreateModel from './CreateModel';
+import _ from 'lodash';
 
 let popup = false;
 
-export default function MainTable() {
+export default function Index() {
   const router = useRouter();
 
   const [modalState, setModalState] = useState(false);
@@ -28,6 +29,8 @@ export default function MainTable() {
     limit: query.pageSize,
     ...searchQuery,
   });
+  console.log(data, 'stamp image data');
+
   const [deleteStampImage] = useDeleteStampImageMutation();
 
   const structure = [
@@ -60,7 +63,15 @@ export default function MainTable() {
   ];
   const handleEdit = (rowData: any) => {
     setEdit(true);
-    setUpdateValue(rowData);
+
+    const newData = {
+      id: rowData._id,
+      status: rowData.status,
+      title: rowData.title,
+      image: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${rowData.image}`,
+    };
+
+    setUpdateValue(newData);
     setModalState(true);
   };
 
@@ -70,12 +81,6 @@ export default function MainTable() {
       popup = t.visible;
       return AskConfirmation(t, () => deleteStampImage({ id: rowData._id }));
     });
-  };
-
-  const initialValues = {
-    title: 'subho',
-    image: 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-    status: false,
   };
 
   const handleClose = () => {

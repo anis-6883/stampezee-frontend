@@ -3,9 +3,8 @@
 import AskConfirmation from '@/app/(admin)/root/_components/AskConfirmation';
 import Table from '@/app/(admin)/root/_components/Table';
 import { routes } from '@/config/routes';
-import { useDeleteBranchMutation } from '@/features/retailer/branch/branchApi';
-import { useGetAllSubAdminsQuery } from '@/features/retailer/sub-admin/subAdminApi';
-import { IQueryType } from '@/types';
+import { useDeleteSubAdminMutation, useGetAllSubAdminsQuery } from '@/features/retailer/sub-admin/subAdminApi';
+import { Branch, IQueryType } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -14,8 +13,18 @@ import { ImBin } from 'react-icons/im';
 
 let popup = false;
 
-export default function MainTable() {
+export default function BranchTable() {
   const router = useRouter();
+
+  const [modalState, setModalState] = useState<boolean>(false);
+  const [formData, setFormData] = useState<Partial<Branch>>({
+    _id: '',
+    name: '',
+    address: '',
+    longitude: '',
+    latitude: '',
+    status: true, // true and false
+  });
 
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
@@ -24,22 +33,40 @@ export default function MainTable() {
     limit: query.pageSize,
     ...searchQuery,
   });
-  const [deleteBranch] = useDeleteBranchMutation();
+  console.log(data?.data, 'useGetAllSubAdminsQuery');
+
+  const [deleteSubAdmin] = useDeleteSubAdminMutation();
+
+  // const formatDate = (dateString: string) => {
+  //   const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  //   return new Date(dateString).toLocaleDateString('en-US', options);
+  // };
+
+  const formatDate = (dateString: string): string => {
+    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  };
 
   const structure = [
     {
-      header: 'Title',
-      accessorKey: 'name',
+      header: 'First Name',
+      accessorKey: 'firstName',
+    },
+
+    {
+      header: 'Last Name',
+      accessorKey: 'lastName',
     },
     {
-      header: 'Address',
-      accessorKey: 'address',
-      Cell: ({ row }: any) => (
-        <div>
-          {row?.original?.address.name.length > 60 ? `${row?.original?.address.name.substring(0, 60)}...` : row?.original?.address.name}
-        </div>
-      ),
+      header: 'Email',
+      accessorKey: 'email',
     },
+    {
+      header: 'Created At',
+      accessorKey: 'createdAt',
+      Cell: ({ row }: any) => <span>{formatDate(row.original.createdAt)}</span>,
+    },
+
     {
       header: 'Actions',
       Cell: ({ row }: any) => (
@@ -55,14 +82,14 @@ export default function MainTable() {
     },
   ];
   const handleEdit = (rowData: any) => {
-    router.push(routes.retailer.branch.edit(rowData._id));
+    router.push(routes.retailer.sub_admin.edit(rowData._id));
   };
 
   const handleDelete = async (rowData: any) => {
     if (popup) return;
     toast((t) => {
       popup = t.visible;
-      return AskConfirmation(t, () => deleteBranch({ _id: rowData._id }));
+      return AskConfirmation(t, () => deleteSubAdmin({ id: rowData._id }));
     });
   };
 

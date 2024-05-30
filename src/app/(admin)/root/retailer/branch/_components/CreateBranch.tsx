@@ -1,8 +1,8 @@
 'use client';
+import ButtonField from '@/components/Formik/Button';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Button } from 'rizzui';
 import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
@@ -15,16 +15,13 @@ const initialValues = {
   address: '',
   longitude: '',
   latitude: '',
-  status: true, // true and false
 };
 
 import InputField from '@/components/Formik/ImputField';
-import StatusBar from '@/components/Formik/StatusBar';
 import { routes } from '@/config/routes';
 import { useCreateBranchMutation } from '@/features/retailer/branch/branchApi';
 import { Branch } from '@/types';
 import toast from 'react-hot-toast';
-import { ImSpinner9 } from 'react-icons/im';
 import MapComponent from './Map';
 
 export default function CreateBranch() {
@@ -49,7 +46,7 @@ export default function CreateBranch() {
   };
 
   return (
-    <div>
+    <div className="mx-auto max-w-6xl">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -65,22 +62,10 @@ export default function CreateBranch() {
             <InputField name="name" label="Name" placeholder="" errors={errors.name} touched={touched.name} />
             <MapComponent setFieldValue={setFieldValue} errors={errors.address} touched={touched.address} />
             {/* <Switch label="Status" variant="outline" labelPlacement="right" className="hover" /> */}
-            <StatusBar setFieldValue={setFieldValue} />
-            <div className="justify-end">
-              <Button
-                type="submit"
-                className="flex w-full items-center justify-center bg-indigo-500 text-sm font-semibold text-white disabled:bg-[#1d58d8]"
-                size="lg"
-                disabled={submitting}
-              >
-                {submitting ? (
-                  <span className="flex items-center gap-x-2">
-                    Requesting... <ImSpinner9 className="animate-spin text-base" />
-                  </span>
-                ) : (
-                  <span>Submit</span>
-                )}
-              </Button>
+            {/* <StatusBar setFieldValue={setFieldValue} /> */}
+
+            <div className="mt-2 flex justify-end">
+              <ButtonField type="submit" isSubmitting={submitting} />
             </div>
           </Form>
         )}
