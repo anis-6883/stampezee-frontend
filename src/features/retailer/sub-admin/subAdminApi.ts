@@ -1,27 +1,6 @@
 import { apiSlice } from '@/features/api/apiSlice';
 import { ICreateSubAdmin, IDeleteSubAdmin, IPagination, IResponse, ISubAdminResponse, IUpdateSubAdmin } from '@/types';
 
-// data json response
-// {
-//     "status": true,
-//     "message": "Sub Admins fetched successfully!",
-//     "data": {
-//         "docs": [],
-//         "page": 1,
-//         "limit": 10,
-//         "totalPage": 0,
-//         "totalDocs": 0,
-//         "hasNext": false,
-//         "hasPrev": false
-//     }
-// }
-
-// api endpoint
-// api/retailer/sub-admin/all?page=1&limit=10 get all-data
-// api/retailer/sub-admin post data create
-// api/retailer/sub-admin/6649ecee76fb4665d4c053db  put data update
-// api/retailer/sub-admin/6649d97d6ae50d2093a088d9 delete data delete
-
 export const subAdminApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllSubAdmins: builder.query<ISubAdminResponse, IPagination>({

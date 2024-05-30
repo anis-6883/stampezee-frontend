@@ -64,6 +64,7 @@ export default function UpdateBranch({ branchId }: any) {
       // Call the updateBranch mutation
       const result = await UpdateBranch({ data: values, branchId: branchId }).unwrap();
       router.push(routes.retailer.branch.home);
+
       toast.success('Branch updated successfully!');
     } catch (error) {
       console.error('Failed to update branch:', error);

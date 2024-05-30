@@ -1,4 +1,5 @@
 'use client';
+
 import SubmitButton from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/ImputField';
@@ -33,6 +34,7 @@ export default function CreateModel({
   const [formData, setFormData] = useState<any>();
   const [createStampImage] = useCreateStampImageMutation();
   const [updateStampImage] = useUpdateStampImageMutation(updateValue.id);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -70,7 +72,7 @@ export default function CreateModel({
       }
 
       setModalState(false);
-      // handleClose;
+      handleClose;
 
       // routes.push(routes.retailer.branch.home);
       toast.success('Branch created successfully!');
@@ -122,6 +124,7 @@ export default function CreateModel({
                   <StatusBar setFieldValue={setFieldValue} checkedStatus={values.status} />
                   <div className="mt-2">
                     <SubmitButton type="submit" isSubmitting={submitting} />
+
                   </div>
                 </Form>
               )}
