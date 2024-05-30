@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 import InputField from '@/components/Formik/ImputField';
 import { routes } from '@/config/routes';
 import { useSingleBranchQuery, useUpdateBranchMutation } from '@/features/retailer/branch/branchApi';
+import getChangedFormData from '@/utils/getChangedFormData';
+import objectToFormData from '@/utils/objectToFormData';
 import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
 import MapComponent from './Map';
@@ -60,15 +62,18 @@ export default function UpdateBranch({ branchId }: any) {
       // Extract branchId and the rest of the data
       const { _id, ...rest } = values;
       console.log(rest, 'values');
+      const changedData = getChangedFormData(values, formData, ['_id']);
+      const createFormData: any = objectToFormData(changedData, ['_id']);
+      console.log(changedData, 'changedData');
 
       // Call the updateBranch mutation
-      const result = await UpdateBranch({ data: values, branchId: branchId }).unwrap();
+      const result = await UpdateBranch({ data: createFormData, branchId: branchId }).unwrap();
       router.push(routes.retailer.branch.home);
 
       toast.success('Branch updated successfully!');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to update branch:', error);
-      toast.error('Failed to update branch. Please try again.');
+      toast.error(error.data.massage ?? 'Failed to update branch. Please try again.');
       setSubmitting(false);
     } finally {
       setSubmitting(false);

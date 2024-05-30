@@ -1,0 +1,48 @@
+import { apiSlice } from '@/features/api/apiSlice';
+import { ICreateStampImage, IDeleteStampImage, IPagination, IResponse } from '@/types';
+
+// http://localhost:8000/api/secret-root/admin
+export const superAdminStampImageCategoryApi = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getAllSuperAdminStampImagesCategory: builder.query<IResponse, IPagination>({
+      query: (queries) => {
+        const values = Object.values(queries);
+        if (values.length) return `/api/secret-root/admin/super-admin/category/all?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/category/all`; // Ensure it returns a base URL if no queries are present
+      },
+      providesTags: ['superAdminRetailerStampCategory'],
+    }),
+    createSuperAdminStampImageCategory: builder.mutation<IResponse, ICreateStampImage>({
+      query: (newStampImage) => ({
+        url: '/api/secret-root/admin/super-admin/category',
+        method: 'POST',
+        body: newStampImage,
+      }),
+      invalidatesTags: ['superAdminRetailerStampCategory'],
+    }),
+    updateSuperAdminStampImageCategory: builder.mutation<IResponse, { id: string; formData: FormData }>({
+      query: ({ id, formData }: any) => ({
+        url: `api/secret-root/admin/super-admin/category/${id}`,
+        method: 'PUT',
+        body: formData,
+      }),
+      invalidatesTags: ['superAdminRetailerStampCategory'],
+    }),
+    deleteSuperAdminStampImageCategory: builder.mutation<IResponse, IDeleteStampImage>({
+      query: ({ id }) => ({
+        url: `api/secret-root/admin/super-admin/category/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['superAdminRetailerStampCategory'],
+    }),
+  }),
+});
+
+export const {
+  useGetAllSuperAdminStampImagesCategoryQuery,
+  useCreateSuperAdminStampImageCategoryMutation,
+  useUpdateSuperAdminStampImageCategoryMutation,
+  useDeleteSuperAdminStampImageCategoryMutation,
+} = superAdminStampImageCategoryApi;
+
+export default superAdminStampImageCategoryApi;

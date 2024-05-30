@@ -3,7 +3,7 @@
 import AskConfirmation from '@/app/(admin)/root/_components/AskConfirmation';
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/shared/Button/Button';
-import { useDeleteStampImageMutation, useGetAllStampImagesQuery } from '@/features/retailer/stamp/stampApi';
+import { useDeleteStampImageMutation, useGetAllStampImagesQuery } from '@/features/retailer/stamp-image/stampApi';
 import { IQueryType } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

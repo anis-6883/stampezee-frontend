@@ -1,0 +1,47 @@
+import { apiSlice } from '@/features/api/apiSlice';
+import { ICreateStampImage, IDeleteStampImage, IPagination, IResponse } from '@/types';
+
+export const superAdminStampImageApi = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getAllSuperAdminStampImages: builder.query<IResponse, IPagination>({
+      query: (queries) => {
+        const values = Object.values(queries);
+        if (values.length) return `/api/secret-root/admin/super-admin/stamp-image/all?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/stamp-image/all`; // Ensure it returns a base URL if no queries are present
+      },
+      providesTags: ['superAdminRetailerStamp'],
+    }),
+    createSuperAdminStampImage: builder.mutation<IResponse, ICreateStampImage>({
+      query: (newStampImage) => ({
+        url: '/api/secret-root/admin/super-admin/stamp-image',
+        method: 'POST',
+        body: newStampImage,
+      }),
+      invalidatesTags: ['superAdminRetailerStamp'],
+    }),
+    updateSuperAdminStampImage: builder.mutation<IResponse, { id: string; formData: FormData }>({
+      query: ({ id, formData }: any) => ({
+        url: `api/secret-root/admin/super-admin/stamp-image/${id}`,
+        method: 'PUT',
+        body: formData,
+      }),
+      invalidatesTags: ['superAdminRetailerStamp'],
+    }),
+    deleteSuperAdminStampImage: builder.mutation<IResponse, IDeleteStampImage>({
+      query: ({ id }) => ({
+        url: `api/secret-root/admin/super-admin/stamp-image/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['superAdminRetailerStamp'],
+    }),
+  }),
+});
+
+export const {
+  useGetAllSuperAdminStampImagesQuery,
+  useCreateSuperAdminStampImageMutation,
+  useUpdateSuperAdminStampImageMutation,
+  useDeleteSuperAdminStampImageMutation,
+} = superAdminStampImageApi;
+
+export default superAdminStampImageApi;

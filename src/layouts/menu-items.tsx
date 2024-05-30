@@ -1,6 +1,7 @@
 import { routes } from '@/config/routes';
 import { FaCogs, FaRegIdBadge } from 'react-icons/fa';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
+import { IoDuplicate } from 'react-icons/io5';
 import { LuBarChart3, LuUsers } from 'react-icons/lu';
 import { MdQrCodeScanner } from 'react-icons/md';
 import { PiBellRinging, PiCurrencyDollar, PiNewspaperClippingLight, PiStamp, PiTreeStructure } from 'react-icons/pi';
@@ -27,6 +28,16 @@ export const menuItems: { [key: string]: any } = {
       name: 'Scans',
       href: routes.admin.scans.home,
       icon: <MdQrCodeScanner />,
+    },
+    {
+      name: 'Stamps category',
+      href: routes.superAdmin.stampCategory.home,
+      icon: <IoDuplicate />,
+    },
+    {
+      name: 'Stamps Images',
+      href: routes.superAdmin.stampImage.home,
+      icon: <PiStamp />,
     },
     {
       name: 'Push Notifications',
