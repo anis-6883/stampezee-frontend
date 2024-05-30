@@ -45,7 +45,6 @@ export default function Create() {
   const handleSubmit = async (values: any) => {
     try {
       setSubmitting(true);
-      console.log('Creating branch:', values);
       // Convert values object to FormData
       const formData = objectToFormData(values);
 
@@ -53,8 +52,8 @@ export default function Create() {
       router.push(routes.retailer.sub_admin.home);
       toast.success(result.data.message ?? 'sub Admin created successfully!');
     } catch (error: any) {
-      console.error('Failed to create branch:', error);
-      toast.error(error.data.message ?? 'Failed to create branch. Please try again.');
+      console.error('Failed to create sub Admin:', error);
+      toast.error(error.data.message ?? 'Failed to create sub Admin. Please try again.');
       setSubmitting(false);
     } finally {
       setSubmitting(false);
