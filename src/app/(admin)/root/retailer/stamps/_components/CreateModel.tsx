@@ -1,4 +1,6 @@
 'use client';
+
+import SubmitButton from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/ImputField';
 import StatusBar from '@/components/Formik/StatusBar';
@@ -7,9 +9,8 @@ import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { ImSpinner9 } from 'react-icons/im';
 import { RxCross2 } from 'react-icons/rx';
-import { ActionIcon, Button, Modal, Text } from 'rizzui';
+import { ActionIcon, Modal, Text } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function CreateModel({
@@ -32,7 +33,8 @@ export default function CreateModel({
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState<any>();
   const [createStampImage] = useCreateStampImageMutation();
-  const [updateStampImage] = useUpdateStampImageMutation(updateValue._id);
+  const [updateStampImage] = useUpdateStampImageMutation(updateValue.id);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -63,8 +65,8 @@ export default function CreateModel({
       formData.append('image', values.image as Blob); // Ensure the image is appended as a Blob
       formData.append('status', values.status);
 
-      if (edit && updateValue._id) {
-        await updateStampImage({ id: updateValue._id, formData: formData }).unwrap();
+      if (edit) {
+        await updateStampImage({ id: updateValue.id, formData: formData }).unwrap();
       } else {
         await createStampImage(formData).unwrap();
       }
@@ -94,8 +96,8 @@ export default function CreateModel({
         className="relative"
       >
         <div className="m-auto px-7 pb-8 pt-6">
-          <div className="mb-7 flex items-center justify-between rounded-t-lg bg-indigo-500 px-4 py-3 text-white">
-            <Text>create your stamps</Text>
+          <div className="mb-5 flex items-center justify-between rounded-t-lg text-black">
+            <Text className="text-xl">Create your stamps</Text>
             <ActionIcon size="sm" variant="text" onClick={() => setModalState(false)}>
               <RxCross2 className="h-auto w-6" strokeWidth={1.8} />
             </ActionIcon>
@@ -111,28 +113,18 @@ export default function CreateModel({
             >
               {({ errors, touched, setFieldValue, values }) => (
                 <Form className="mt-5 grid gap-4">
-                  <InputField name="title" label="Title" placeholder="" errors={errors.title} touched={touched.title} />
+                  <InputField name="title" label="Title" placeholder="Enter title" errors={errors.title} touched={touched.title} />
                   <DragAndDropUpload
-                    setFieldValue={setFieldValue}
-                    name="image"
-                    image={values.image != null ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${values.image}` : null}
+                    value={{ name: 'image', image: values.image }}
+                    onChange={(image: any) => setFieldValue('image', image)}
+                    className="mt-2"
+                    size={1024 * 1000}
+                    sizeText="1MB"
                   />
                   <StatusBar setFieldValue={setFieldValue} checkedStatus={values.status} />
-                  <div className="justify-end">
-                    <Button
-                      type="submit"
-                      className="flex w-full items-center justify-center bg-indigo-500 text-sm font-semibold text-white disabled:bg-[#1d58d8]"
-                      size="lg"
-                      disabled={submitting}
-                    >
-                      {submitting ? (
-                        <span className="flex items-center gap-x-2">
-                          Requesting... <ImSpinner9 className="animate-spin text-base" />
-                        </span>
-                      ) : (
-                        <span>Submit</span>
-                      )}
-                    </Button>
+                  <div className="mt-2">
+                    <SubmitButton type="submit" isSubmitting={submitting} />
+
                   </div>
                 </Form>
               )}

@@ -1,50 +1,3 @@
-// import { useEffect, useState } from 'react';
-// import { Switch } from 'rizzui';
-
-// const StatusBar = ({ setFieldValue, checkedStatus = true }: any) => {
-//   const [status, setStatus] = useState(true);
-//   useEffect(() => {
-//     setStatus(checkedStatus);
-//   }, [checkedStatus, status]);
-
-//   const handleToggle = () => {
-//     setStatus(!status);
-//     setFieldValue('status', !status);
-//     console.log(status, 'click status');
-//   };
-
-//   return (
-//     <div className="status-bar">
-//       <Switch label="Status" variant="outline" labelPlacement="right" className="hover" checked={status} onChange={handleToggle} />
-//     </div>
-//   );
-// };
-
-// export default StatusBar;
-
-// import { useState } from 'react';
-// import { Switch } from 'rizzui';
-
-// const StatusBar = ({ setFieldValue, checkedStatus = false }: any) => {
-//   // State to manage the status
-//   console.log(checkedStatus, 'checkedStatus');
-
-//   const [status, setStatus] = useState(checkedStatus);
-//   console.log('status', status);
-
-//   // Handler to toggle the status
-//   const handleToggle = () => {
-//     setStatus(!status);
-//     setFieldValue('status', !status);
-//   };
-
-//   return (
-//     <div className="status-bar">
-//       <Switch label="Status" variant="outline" labelPlacement="right" className="hover" checked={status} onChange={handleToggle} />
-//     </div>
-//   );
-// };
-
 // export default StatusBar;
 import React, { useEffect, useState } from 'react';
 import { Switch } from 'rizzui';
@@ -56,7 +9,6 @@ interface StatusBarProps {
 
 const StatusBar: React.FC<StatusBarProps> = ({ setFieldValue, checkedStatus = true }) => {
   const [status, setStatus] = useState(checkedStatus);
-  console.log(checkedStatus, 'check status');
 
   useEffect(() => {
     setStatus(checkedStatus);
@@ -72,7 +24,15 @@ const StatusBar: React.FC<StatusBarProps> = ({ setFieldValue, checkedStatus = tr
 
   return (
     <div className="status-bar">
-      <Switch label="Status" variant="outline" labelPlacement="right" className="hover" checked={status} onChange={handleToggle} />
+      {/* <Switch label="Status" variant="outline" labelPlacement="right" checked={status} onChange={handleToggle} /> */}
+      <Switch
+        label="Status"
+        switchKnobClassName="bg-[#3872FA]"
+        variant="outline"
+        labelPlacement="right"
+        checked={status}
+        onChange={handleToggle}
+      />
     </div>
   );
 };

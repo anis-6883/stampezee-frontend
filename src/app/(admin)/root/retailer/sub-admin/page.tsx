@@ -1,12 +1,19 @@
-import MainTable from '../stamps/_components/MainTable';
+'use client';
+
+import { routes } from '@/config/routes';
+import Index from './_components/Index';
 
 export default function Page() {
   return (
     <div>
       <div className="flex justify-end">
-        <button className="mb-5 animate-bounce rounded-lg bg-red-500 p-2 text-white shadow-md">create sub-admin</button>
+        <a className="mb-5 bg-red-500 p-2 text-white" role="button" href={routes.retailer.sub_admin.create}>
+          create branch
+        </a>
       </div>
-      <MainTable />
+      <br />
+      <br />
+      <Index />
     </div>
   );
 }

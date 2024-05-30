@@ -1,9 +1,9 @@
-import MainTable from './_components/MainTable';
+import Index from './_components/Index';
 
 export default function Page() {
   return (
     <div>
-      <MainTable />
+      <Index />
     </div>
   );
 }

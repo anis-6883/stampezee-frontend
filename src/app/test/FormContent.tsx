@@ -3,8 +3,9 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import { getChangedFields } from '../../utils/getChangedFields';
+
 import { handleFormSubmit } from './handleFormSubmit';
+import getChangedFormData from '@/utils/getChangedFormData';
 
 // Define the shape of our form values
 interface UserFormValues {
@@ -48,7 +49,7 @@ const UpdateUserForm: React.FC = () => {
 
     // console.log('Updating user data with:', changedFields);
 
-    const changedFields = getChangedFields(values, userData!);
+    const changedFields = getChangedFormData(values, userData!);
     console.log('Updating user data with:', changedFields);
 
     // Example API call

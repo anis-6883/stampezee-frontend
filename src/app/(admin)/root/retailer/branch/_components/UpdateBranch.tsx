@@ -6,7 +6,6 @@ import { Button } from 'rizzui';
 import * as Yup from 'yup';
 
 import InputField from '@/components/Formik/ImputField';
-import StatusBar from '@/components/Formik/StatusBar';
 import { routes } from '@/config/routes';
 import { useSingleBranchQuery, useUpdateBranchMutation } from '@/features/retailer/branch/branchApi';
 import toast from 'react-hot-toast';
@@ -25,7 +24,6 @@ export default function UpdateBranch({ branchId }: any) {
     address: '',
     longitude: '',
     latitude: '',
-    status: true,
   });
   const [UpdateBranch] = useUpdateBranchMutation();
 
@@ -47,7 +45,6 @@ export default function UpdateBranch({ branchId }: any) {
         address: data.data.address?.name,
         longitude: data.data.address?.loc?.coordinates[0]?.toString() || '',
         latitude: data.data.address?.loc?.coordinates[1]?.toString() || '',
-        status: data.data.status,
       });
       // }
     }
@@ -60,18 +57,19 @@ export default function UpdateBranch({ branchId }: any) {
   const handleSubmit = async (values: any & { _id: string }) => {
     try {
       setSubmitting(true);
-
       // Extract branchId and the rest of the data
       const { _id, ...rest } = values;
       console.log(rest, 'values');
 
       // Call the updateBranch mutation
-      // const result = await UpdateBranch({ data: values, branchId: branchId }).unwrap();
-      // router.push(routes.retailer.branch.home);
+      const result = await UpdateBranch({ data: values, branchId: branchId }).unwrap();
+      router.push(routes.retailer.branch.home);
+
       toast.success('Branch updated successfully!');
     } catch (error) {
       console.error('Failed to update branch:', error);
       toast.error('Failed to update branch. Please try again.');
+      setSubmitting(false);
     } finally {
       setSubmitting(false);
     }
@@ -80,7 +78,6 @@ export default function UpdateBranch({ branchId }: any) {
   if (branchLoading) {
     return 'loding....';
   }
-  console.log(formData, 'formData');
 
   return (
     <div>
@@ -112,7 +109,6 @@ export default function UpdateBranch({ branchId }: any) {
                 latitude: values.latitude,
               }}
             />
-            <StatusBar setFieldValue={setFieldValue} checkedStatus={values.status} />
             <div className="justify-end">
               <Button
                 type="submit"

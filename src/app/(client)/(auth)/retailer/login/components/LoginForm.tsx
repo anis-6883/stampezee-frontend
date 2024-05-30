@@ -89,14 +89,14 @@ export default function LoginForm() {
                     <Field
                       name="email"
                       innerRef={emailInputRef}
-                      className={`w-full rounded-lg border ${errors.email && touched.email ? 'border-red-500' : 'border-gray-200'} bg-gray-100 px-8 py-[0.6rem] text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none`}
+                      className={`w-full rounded-lg border ${errors.email && touched.email ? 'border-red-500' : 'border-gray-200'} bg-gray-100 py-[0.6rem] text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none`}
                       placeholder="Email"
                       type="email"
                     />
                     {errors.email && touched.email && <div className="mt-2 text-xs text-red-500">{errors.email}</div>}
                     <Field
                       name="password"
-                      className={`mt-5 w-full rounded-lg border ${errors.password && touched.password ? 'border-red-500' : 'border-gray-200'} bg-gray-100 px-8 py-[0.6rem] text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none`}
+                      className={`mt-5 w-full rounded-lg border ${errors.password && touched.password ? 'border-red-500' : 'border-gray-200'} bg-gray-100  py-[0.6rem] text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none`}
                       placeholder="Password"
                       type="password"
                     />

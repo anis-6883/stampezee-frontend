@@ -267,12 +267,12 @@ export interface Branch {
   address: string;
   longitude: string;
   latitude: string;
-  status: boolean;
+  status?: boolean;
 }
 
 // SubAdmin
 export interface ISubAdmin {
-  _id: string;
+  _id?: string;
   retailerId: string;
   branchId: string;
   firstName: string;
@@ -280,9 +280,7 @@ export interface ISubAdmin {
   email: string;
   image: string | null;
   status: boolean;
-  softDeleted: boolean;
-  createdAt: string;
-  updatedAt: string;
+  softDeleted?: boolean;
 }
 
 export interface ISubAdminResponse extends IResponse {
@@ -301,8 +299,8 @@ export interface ICreateSubAdmin {
 }
 
 export interface IUpdateSubAdmin {
-  // Define the fields required to update a sub-admin
-  id: string;
+  id: string; // Assuming id is of type string, adjust if it's a different type
+  updateSubAdminData: any; // Adjust the type according to the structure of values
 }
 
 export interface IDeleteSubAdmin {

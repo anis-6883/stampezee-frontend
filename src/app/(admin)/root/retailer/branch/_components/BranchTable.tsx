@@ -33,6 +33,9 @@ export default function BranchTable() {
     limit: query.pageSize,
     ...searchQuery,
   });
+
+  console.log(data, 'branch');
+
   const [deleteBranch] = useDeleteBranchMutation();
 
   const structure = [
