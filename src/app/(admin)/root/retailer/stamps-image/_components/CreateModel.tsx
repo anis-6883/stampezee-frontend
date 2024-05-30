@@ -4,7 +4,7 @@ import SubmitButton from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/ImputField';
 import StatusBar from '@/components/Formik/StatusBar';
-import { useCreateStampImageMutation, useUpdateStampImageMutation } from '@/features/retailer/stamp/stampApi';
+import { useCreateStampImageMutation, useUpdateStampImageMutation } from '@/features/retailer/stamp-image/stampApi';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

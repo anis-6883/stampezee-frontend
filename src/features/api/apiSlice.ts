@@ -37,5 +37,7 @@ export const apiSlice = createApi({
     'retailerBranch',
     'retailerStamp',
     'subAdmin',
+    'superAdminRetailerStamp',
+    'superAdminRetailerStampCategory',
   ],
 });

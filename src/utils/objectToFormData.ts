@@ -31,4 +31,4 @@ export default function objectToFormData(obj: any, ignore: string[] | null | und
 // const formData = objectToFormData(values);
 
 // formData ignore keys and field then use this function
-// const formData = objectToFormData(values, ['_id', 'image']);
+// const createFormData = objectToFormData(values, ['_id']);

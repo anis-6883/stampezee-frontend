@@ -6,6 +6,12 @@ export const routes = {
   },
   superAdmin: {
     dashboard: '/root/super-admin/dashboard',
+    stampImage: {
+      home: `/root/super-admin/stamps-image`,
+    },
+    stampCategory: {
+      home: `/root/super-admin/stamps-category`,
+    },
   },
   admin: {
     dashboard: '/project-admin/dashboard',
@@ -48,6 +54,7 @@ export const routes = {
     stampImage: {
       home: `/root/retailer/stamps-image`,
     },
+
     user: {
       home: `/project-admin/users`,
       create: '/project-admin/users/create',

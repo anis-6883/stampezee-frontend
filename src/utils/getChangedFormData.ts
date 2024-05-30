@@ -29,5 +29,5 @@ export default function getChangedFormData(values: any, initialValues: any, igno
 // const initialValues = { _id: '123', name: 'John Doe', image: 'path/to/image.jpg', age: 30 };
 // const newValues = { _id: '123', name: 'Jane Doe', image: 'path/to/new-image.jpg', age: 30 };
 
-// const changedData = getChangedFormData(newValues, initialValues, ['_id', 'image']);
+// const changedData = getChangedFormData(newValues, initialValues, ['_id']);
 // console.log(changedData); // Output: { name: 'Jane Doe' }
