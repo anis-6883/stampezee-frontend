@@ -57,7 +57,7 @@ export default function page() {
               </a> */}
               <button
                 type="button"
-                className="dark:hover:bg[#454F5B] mt-3 rounded-lg bg-primary-red px-4 py-2 text-center text-sm font-medium text-white duration-300 ease-in-out hover:bg-[#454F5B] focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-primary-red dark:focus:ring-[#454F5B]"
+                className="dark:hover:bg[#454F5B] bg-primary-red dark:bg-primary-red mt-3 rounded-lg px-4 py-2 text-center text-sm font-medium text-white duration-300 ease-in-out hover:bg-[#454F5B] focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-[#454F5B]"
               >
                 Go to Contact Form
               </button>

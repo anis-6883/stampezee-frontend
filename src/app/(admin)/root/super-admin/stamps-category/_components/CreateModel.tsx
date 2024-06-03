@@ -2,7 +2,7 @@
 
 import SubmitButton from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
-import InputField from '@/components/Formik/ImputField';
+import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import StatusBar from '@/components/Formik/StatusBar';
 import {
@@ -123,7 +123,7 @@ export default function CreateModel({
             >
               {({ errors, touched, setFieldValue, values }) => (
                 <Form className="mt-5 grid gap-4">
-                  <InputField name="name" label="Name" placeholder="Enter Name" errors={errors.name} touched={touched.name} />
+                  <InputField name="name" label="Name" placeholder="Enter Name" />
                   <InputTextarea
                     name="description"
                     label="Description"

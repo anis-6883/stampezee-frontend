@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
-import InputField from './ImputField';
+import InputField from './InputField';
 import OptionField from './OptionField';
 import PasswordField from './PasswordField';
 import PhoneNumber from './phone-number';

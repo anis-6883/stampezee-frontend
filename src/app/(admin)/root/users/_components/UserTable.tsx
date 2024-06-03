@@ -3,9 +3,9 @@ import { useDeleteUserMutation, useGetUsersQuery } from '@/features/user/userApi
 import { MRT_PaginationState, type MRT_ColumnDef } from 'mantine-react-table';
 import { useMemo, useState } from 'react';
 
+import { LOADING_DATA } from '@/config/constants';
 import { routes } from '@/config/routes';
 import CustomTable from '../../../../../components/ui/CustomTable';
-import { LOADING_DATA } from '@/config/constants';
 
 interface User {
   email: string;
@@ -53,7 +53,7 @@ export default function UserTable() {
       setPagination={setPagination}
       totalDocs={userData?.data?.totalDocs}
       deleteRow={deleteUser as any}
-      editRow={routes?.admin?.user?.edit}
+      editRow={routes?.retailer?.user?.edit}
       setQuery={setQuery}
     />
   );

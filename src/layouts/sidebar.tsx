@@ -26,7 +26,7 @@ export default function Sidebar({ className }: { className?: string }) {
       )}
     >
       <div className="sticky top-0 z-40 bg-gray-0/10 px-6 pb-2 pt-2 dark:bg-gray-100/5 2xl:px-6 2xl:pt-2">
-        <Link href={routes.admin.dashboard} aria-label="Site Logo">
+        <Link href={role === 'super_admin' ? routes.superAdmin.dashboard : routes.retailer.dashboard} aria-label="Site Logo">
           <img src="/images/logo.png" width={80} height={50} alt="logo" className="m-auto pt-2" />
         </Link>
       </div>

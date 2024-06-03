@@ -8,7 +8,7 @@ import { ImSpinner9 } from 'react-icons/im';
 import { useDispatch } from 'react-redux';
 import { Button } from 'rizzui';
 import * as Yup from 'yup';
-import InputField from './ImputField';
+import InputField from './InputField';
 import OptionFild from './OptionField';
 import PasswordField from './PasswordField';
 
@@ -66,7 +66,7 @@ export default function Register() {
   //         dispatch(userLoggedIn(loginResponse?.data));
 
   //         if (['admin', 'retailer'].includes(loginResponse?.data?.role)) {
-  //           replace(routes.admin.dashboard);
+  //           replace(routes.superAdmin.dashboard);
   //         }
 
   //         if (loginResponse?.data?.role === 'user') {
@@ -90,7 +90,7 @@ export default function Register() {
       <div className="m-0 flex max-w-screen-xl flex-1 justify-center bg-white shadow sm:m-10 sm:rounded-lg">
         <div className="p-6 sm:p-12 sm:pt-3 lg:w-1/2 xl:w-5/12">
           <div>
-            <img src="./images/logo.png" className="mx-auto w-24" />
+            <img src="./images/logo.png" className="mx-auto w-24" alt="logo" />
           </div>
           <h1 className="text-center text-2xl font-extrabold xl:text-3xl">Sign Up</h1>
 

@@ -3,6 +3,10 @@
 import AskConfirmation from '@/app/(admin)/root/_components/AskConfirmation';
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/shared/Button/Button';
+import {
+  useDeleteSuperAdminStampImageMutation,
+  useGetAllSuperAdminStampImagesQuery,
+} from '@/features/super-admin/stamp-image/stampImageApi';
 import { IQueryType } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -10,11 +14,6 @@ import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 import CreateModel from './CreateModel';
-import {
-  useDeleteSuperAdminStampImageMutation,
-  useGetAllSuperAdminStampImagesQuery,
-} from '@/features/super-admin/stamp-image/stampImageApi';
-
 let popup = false;
 
 export default function Index() {

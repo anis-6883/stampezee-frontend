@@ -35,7 +35,7 @@ export default function DeleteConfirmation({
               Confirm
             </button>
             <button
-              className="flex items-center space-x-2 rounded-md bg-red px-3 py-2 text-white transition-all duration-300 hover:bg-red-dark"
+              className="bg-red hover:bg-red-dark flex items-center space-x-2 rounded-md px-3 py-2 text-white transition-all duration-300"
               onClick={closeModal}
             >
               Cancel

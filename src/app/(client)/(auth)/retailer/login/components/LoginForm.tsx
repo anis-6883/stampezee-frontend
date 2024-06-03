@@ -78,7 +78,7 @@ export default function LoginForm() {
       <div className="m-0 flex max-w-screen-xl flex-1 justify-center overflow-hidden bg-white shadow sm:m-10 sm:rounded-lg">
         <div className="p-2 sm:p-12 md:p-6 lg:w-1/2 xl:w-5/12">
           <div>
-            <img src="./../images/logo.png" className="mx-auto w-20" />
+            <img src="./../images/logo.png" className="mx-auto w-20" alt="logo" />
           </div>
           <div className="mt-8 flex flex-col items-center">
             <h1 className="text-xl font-extrabold xl:text-2xl">Sign In</h1>
@@ -125,7 +125,7 @@ export default function LoginForm() {
             </Formik>
             <div className="mt-5">
               New user?{' '}
-              <Link href="/retailer/register" className="border-b border-red text-red">
+              <Link href="/retailer/register" className="border-red text-red border-b">
                 Create an account
               </Link>
             </div>

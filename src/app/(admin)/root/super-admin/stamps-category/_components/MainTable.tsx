@@ -11,7 +11,6 @@ import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 import CreateModel from './CreateModel';
-
 let popup = false;
 
 export default function MainTable() {

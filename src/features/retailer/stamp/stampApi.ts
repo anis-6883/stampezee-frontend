@@ -43,7 +43,7 @@ export const stampApi = apiSlice.injectEndpoints({
     }),
     singleBranch: builder.query<{ success: boolean }, { _id: string }>({
       query: ({ _id }) => `/api/retailer/branch/${_id}`,
-      providesTags: ['retailerBranch'],
+      providesTags: ['branches'],
     }),
   }),
 });

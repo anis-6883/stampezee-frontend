@@ -36,8 +36,8 @@ export default async function Page() {
 
                 <Link
                   href="/"
-                  className={`dark:hover:bg[#454F5B] rounded-full bg-white 
-                p-3 px-[40px]   py-[20px] text-center text-2xl font-bold text-black duration-300 ease-in-out focus:outline-none  dark:bg-primary-red `}
+                  className={`dark:hover:bg[#454F5B] dark:bg-primary-red rounded-full 
+                bg-white p-3   px-[40px] py-[20px] text-center text-2xl font-bold text-black duration-300 ease-in-out  focus:outline-none `}
                 >
                   GET STARTED
                 </Link>
@@ -68,7 +68,7 @@ export default async function Page() {
       {/* How It Works start */}
       <div className=" bg-[#FCE8E8] py-10">
         <div className="container mx-auto px-4">
-          <div className="mb-7 text-center text-5xl font-bold text-primary-black">How It Works?</div>
+          <div className="text-primary-black mb-7 text-center text-5xl font-bold">How It Works?</div>
           <div className=" block items-center justify-between md:flex">
             <WorksCard
               image="/default/flex.svg"
@@ -85,8 +85,8 @@ export default async function Page() {
       <div>
         <div>
           <div className="text-center">
-            <p className="mb-7 text-[1.2rem] font-[600] leading-8 text-primary-black">TESTIMONIALS</p>
-            <div className="mb-7 text-center text-5xl font-bold text-primary-black">Read What Others Have to Say</div>
+            <p className="text-primary-black mb-7 text-[1.2rem] font-[600] leading-8">TESTIMONIALS</p>
+            <div className="text-primary-black mb-7 text-center text-5xl font-bold">Read What Others Have to Say</div>
           </div>
           <div>
             <div className="container mx-auto grid max-w-screen-xl grid-cols-1  gap-3 p-3 md:grid-cols-2 md:p-0 lg:grid-cols-3">

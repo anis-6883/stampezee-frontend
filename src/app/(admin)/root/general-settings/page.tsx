@@ -7,7 +7,7 @@ const pageHeader = {
   title: 'General Settings',
   breadcrumb: [
     {
-      href: routes.admin.dashboard,
+      href: routes.superAdmin.dashboard,
       name: 'Dashboard',
     },
     {

@@ -8,7 +8,7 @@ const pageHeader = {
   title: 'Manage Videos',
   breadcrumb: [
     {
-      href: routes.admin.dashboard,
+      href: routes.superAdmin.dashboard,
       name: 'Dashboard',
     },
     {
@@ -25,7 +25,7 @@ export default function Page() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
-        <Link href={routes.admin.dashboard} className="btn btn-primary btn-sm text-white">
+        <Link href={routes.superAdmin.dashboard} className="btn btn-primary btn-sm text-white">
           <HiPlus className="text-lg" /> Add New Video
         </Link>
       </PageHeader>

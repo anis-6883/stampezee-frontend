@@ -6,11 +6,11 @@ const pageHeader = {
   title: 'Create A Content',
   breadcrumb: [
     {
-      href: routes.admin.dashboard,
+      href: routes.superAdmin.dashboard,
       name: 'Dashboard',
     },
     {
-      href: routes.admin.dashboard,
+      href: routes.superAdmin.dashboard,
       name: 'Content Management',
     },
     {
