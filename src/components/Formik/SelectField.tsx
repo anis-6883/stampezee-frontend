@@ -12,6 +12,8 @@ interface SelectOptionProps {
   onChange: any;
   required?: boolean;
   disabled?: boolean;
+  errors?: any;
+  touched?: any;
 }
 
 const defaultOptions = [
@@ -29,26 +31,31 @@ const SelectField: React.FC<SelectOptionProps> = ({
   required = true,
   disabled = false,
   value = null,
+  errors,
+  touched,
 }) => {
   return (
-    <Field name={name}>
-      {({ field }: { field: any }) => (
-        <CustomSelect
-          disabled={disabled}
-          label={
-            <span>
-              {label}
-              {required && <span className="text-red-500"> *</span>}
-            </span>
-          }
-          options={options}
-          selectClassName={selectClassName}
-          labelClassName={labelClassName}
-          value={options.find((option) => option.value === (value || field.value))}
-          onChange={onChange}
-        />
-      )}
-    </Field>
+    <>
+      <Field name={name}>
+        {({ field }: { field: any }) => (
+          <CustomSelect
+            disabled={disabled}
+            label={
+              <span>
+                {label}
+                {required && <span className="text-red-500"> *</span>}
+              </span>
+            }
+            options={options}
+            selectClassName={selectClassName}
+            labelClassName={labelClassName}
+            value={options.find((option) => option.value === (value || field.value))}
+            onChange={onChange}
+          />
+        )}
+      </Field>
+      {errors && touched && <div className="mt-1 text-xs text-red-500">{errors}</div>}
+    </>
   );
 };
 
