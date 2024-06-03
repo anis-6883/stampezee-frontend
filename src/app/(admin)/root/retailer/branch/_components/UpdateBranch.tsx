@@ -1,54 +1,51 @@
 'use client';
-import { Form, Formik } from 'formik';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Button } from 'rizzui';
-import * as Yup from 'yup';
 
-import InputField from '@/components/Formik/ImputField';
+import InputField from '@/components/Formik/InputField';
 import { routes } from '@/config/routes';
 import { useSingleBranchQuery, useUpdateBranchMutation } from '@/features/retailer/branch/branchApi';
 import getChangedFormData from '@/utils/getChangedFormData';
-import objectToFormData from '@/utils/objectToFormData';
+import { Form, Formik } from 'formik';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { ImSpinner9 } from 'react-icons/im';
+import { BsCheck2Circle } from 'react-icons/bs';
+import * as Yup from 'yup';
+import Button from '../../../_components/Button';
 import MapComponent from './Map';
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('This field is required'),
-  address: Yup.string().min(2, 'Too Short!').max(150, 'Too Long!').required('This field is required'),
-});
-
 export default function UpdateBranch({ branchId }: any) {
-  const [submitting, setSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    address: '',
-    longitude: '',
-    latitude: '',
-  });
-  const [UpdateBranch] = useUpdateBranchMutation();
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [updateBranch, { isSuccess, isError }] = useUpdateBranchMutation();
   const {
     data: branchData,
     isLoading: branchLoading,
     isSuccess: branchIsSuccess,
     error: branchError,
   } = useSingleBranchQuery({ _id: String(branchId) });
-
   const router = useRouter();
+
+  const [formData, setFormData] = useState({
+    name: '',
+    address: '',
+    longitude: '',
+    latitude: '',
+  });
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Required!'),
+    address: Yup.string().required('Required!'),
+  });
 
   useEffect(() => {
     if (branchData && branchIsSuccess) {
       const data: any = branchData;
-      // if (data) {
+
       setFormData({
-        name: data.data.name || 'ujj',
-        address: data.data.address?.name,
-        longitude: data.data.address?.loc?.coordinates[0]?.toString() || '',
-        latitude: data.data.address?.loc?.coordinates[1]?.toString() || '',
+        name: data?.data?.name,
+        address: data?.data?.address?.name,
+        longitude: data?.data?.address?.loc?.coordinates[0]?.toString() || '',
+        latitude: data?.data?.address?.loc?.coordinates[1]?.toString() || '',
       });
-      // }
     }
 
     if (branchError) {
@@ -56,83 +53,56 @@ export default function UpdateBranch({ branchId }: any) {
     }
   }, [branchData, branchError, branchLoading, branchIsSuccess]);
 
+  // Submit Handler
   const handleSubmit = async (values: any & { _id: string }) => {
-    try {
-      setSubmitting(true);
-      // Extract branchId and the rest of the data
-      const { _id, ...rest } = values;
-      console.log(rest, 'values');
-      const changedData = getChangedFormData(values, formData, ['_id']);
-      const createFormData: any = objectToFormData(changedData, ['_id']);
-      console.log(changedData, 'changedData');
-
-      // Call the updateBranch mutation
-      const result = await UpdateBranch({ data: createFormData, branchId: branchId }).unwrap();
-      router.push(routes.retailer.branch.home);
-
-      toast.success('Branch updated successfully!');
-    } catch (error: any) {
-      console.error('Failed to update branch:', error);
-      toast.error(error.data.massage ?? 'Failed to update branch. Please try again.');
-      setSubmitting(false);
-    } finally {
-      setSubmitting(false);
+    if (values.latitude === '' || values.longitude === '') {
+      toast.error('Please select a location on the map!');
+      return;
     }
+
+    setIsSubmitting(true);
+
+    const parsedValues = {
+      ...values,
+      longitude: String(values.longitude),
+      latitude: String(values.latitude),
+    };
+    const changedData = getChangedFormData(parsedValues, formData, ['_id']);
+
+    updateBranch({ data: changedData, branchId: branchId }).unwrap();
   };
 
-  if (branchLoading) {
-    return 'loding....';
-  }
+  // Handle Response
+  useEffect(() => {
+    if (isError) {
+      setIsSubmitting(false);
+      toast.error('Something went wrong. Please try again!');
+    }
+
+    if (isSuccess) {
+      router.push(routes.retailer.branch.home);
+      toast.success('Branch updated successfully!');
+      setIsSubmitting(false);
+    }
+  }, [isError, isSuccess, router]);
 
   return (
-    <div>
-      <Formik
-        initialValues={formData}
-        enableReinitialize
-        validationSchema={validationSchema}
-        onSubmit={(values) => {
-          const parsedValues = {
-            ...values,
-            longitude: String(values.longitude),
-            latitude: String(values.latitude),
-          };
-
-          handleSubmit(parsedValues);
-        }}
-      >
-        {({ values, errors, touched, setFieldValue }) => (
-          <Form className="mt-5 grid gap-4">
-            <InputField name="name" label="Name" placeholder="" errors={errors.name} touched={touched.name} />
-            <MapComponent
-              setFieldValue={setFieldValue}
-              errors={errors.address}
-              touched={touched.address}
-              address={values.address}
-              update={true}
-              locationData={{
-                longitude: values.longitude,
-                latitude: values.latitude,
-              }}
+    <Formik initialValues={formData} enableReinitialize validationSchema={validationSchema} onSubmit={handleSubmit}>
+      {() => (
+        <Form className="mt-5 grid gap-4">
+          <InputField name="name" label="Name" placeholder="ex. Ring Road Branch" />
+          <MapComponent />
+          <div className="mt-2 flex justify-end">
+            <Button
+              color="warning"
+              type="submit"
+              text="Update"
+              postIcon={<BsCheck2Circle className="text-base" />}
+              isSubmitting={isSubmitting}
             />
-            <div className="justify-end">
-              <Button
-                type="submit"
-                className="flex w-full items-center justify-center bg-indigo-500 text-sm font-semibold text-white disabled:bg-[#1d58d8]"
-                size="lg"
-                disabled={submitting}
-              >
-                {submitting ? (
-                  <span className="flex items-center gap-x-2">
-                    Requesting... <ImSpinner9 className="animate-spin text-base" />
-                  </span>
-                ) : (
-                  <span>Submit</span>
-                )}
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 }

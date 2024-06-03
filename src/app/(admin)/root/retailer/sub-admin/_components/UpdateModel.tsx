@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Button } from 'rizzui';
 import * as Yup from 'yup';
 
-import InputField from '@/components/Formik/ImputField';
+import InputField from '@/components/Formik/InputField';
 import StatusBar from '@/components/Formik/StatusBar';
 import { routes } from '@/config/routes';
 import { useSingleBranchQuery, useUpdateBranchMutation } from '@/features/retailer/branch/branchApi';
@@ -103,7 +103,7 @@ export default function UpdateModel({ branchId }: any) {
       >
         {({ values, errors, touched, setFieldValue }) => (
           <Form className="mt-5 grid gap-4">
-            <InputField name="name" label="Name" placeholder="" errors={errors.name} touched={touched.name} />
+            <InputField name="name" label="Name" placeholder="" />
             <MapComponent
               setFieldValue={setFieldValue}
               errors={errors.address}

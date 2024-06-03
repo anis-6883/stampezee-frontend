@@ -78,7 +78,7 @@ export default function LoginForm() {
       <div className="m-0 flex max-w-screen-xl flex-1 justify-center bg-white shadow sm:m-10 sm:rounded-lg">
         <div className="p-6 sm:p-12 lg:w-1/2 xl:w-5/12">
           <div>
-            <img src="./../images/logo.png" className="mx-auto w-28" />
+            <img src="/images/logo.png" className="mx-auto w-28" alt="Logo" />
           </div>
           <div className="mt-12 flex flex-col items-center">
             <h1 className="text-2xl font-extrabold xl:text-3xl">Sign In</h1>
@@ -109,16 +109,6 @@ export default function LoginForm() {
                       {submitting ? <ImSpinner9 className="mr-3 h-5 w-5 animate-spin" /> : <LuUnlock className="h-6 w-6" />}
                       <span>Sign In</span>
                     </button>
-                    <p className="mt-6 text-center text-xs text-gray-600">
-                      {` I agree to abide by templatana's`}
-                      <a href="#" className="border-b border-dotted border-gray-500">
-                        Terms of Service
-                      </a>{' '}
-                      and its{' '}
-                      <a href="#" className="border-b border-dotted border-gray-500">
-                        Privacy Policy
-                      </a>
-                    </p>
                   </div>
                 </Form>
               )}

@@ -7,11 +7,11 @@ const pageHeader = {
   title: 'Create A User',
   breadcrumb: [
     {
-      href: routes.admin.dashboard,
+      href: routes.superAdmin.dashboard,
       name: 'Dashboard',
     },
     {
-      href: routes.admin.user.home,
+      href: routes.retailer.user.home,
       name: 'Users',
     },
     {

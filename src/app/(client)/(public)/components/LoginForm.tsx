@@ -50,7 +50,7 @@
 //         dispatch(userLoggedIn(loginResponse?.data));
 
 //         if (['admin', 'retailer'].includes(loginResponse?.data?.role)) {
-//           replace(routes.admin.dashboard);
+//           replace(routes.superAdmin.dashboard);
 //         }
 
 //         if (loginResponse?.data?.role === 'user') {

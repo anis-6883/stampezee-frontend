@@ -1,12 +1,32 @@
-'use client';
+import PageHeader from '@/components/page-header';
+import { routes } from '@/config/routes';
+import { metaObject } from '@/config/site.config';
 import CreateBranch from '../_components/CreateBranch';
 
-export default function page() {
+const pageHeader = {
+  title: 'Add New Branch',
+  breadcrumb: [
+    {
+      href: routes.retailer.dashboard,
+      name: 'Dashboard',
+    },
+    {
+      href: routes.retailer.branch.home,
+      name: 'Branches',
+    },
+    {
+      name: 'Create',
+    },
+  ],
+};
+
+export const metadata = { ...metaObject(pageHeader.title) };
+
+export default function Page() {
   return (
-    <div>
-      <h2 className="mb-2 text-center text-3xl font-semibold">Create a new branch </h2>
-      {/* <hr /> */}
+    <>
+      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
       <CreateBranch />
-    </div>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 import { apiSlice } from '@/features/api/apiSlice';
-import { Branch, IAllBranchQueryArgs, IResponse } from '@/types';
+import { IAllBranchQueryArgs, IResponse } from '@/types';
 
 export const branchApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,34 +9,34 @@ export const branchApi = apiSlice.injectEndpoints({
         if (values.length) return `/api/retailer/branch/all?${new URLSearchParams(queries as any)}`;
         return `/api/retailer/branch/all`; // Ensure it returns a base URL if no queries are present
       },
-      providesTags: ['retailerBranch'],
+      providesTags: ['branches'],
     }),
-    createBranch: builder.mutation<Branch, Partial<Branch>>({
+    singleBranch: builder.query({
+      query: ({ _id }) => `/api/retailer/branch/${_id}`,
+      providesTags: (result, error, arg) => [{ type: 'branch', id: arg }],
+    }),
+    createBranch: builder.mutation({
       query: (data) => ({
         url: `api/retailer/branch`,
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['retailerBranch'],
+      invalidatesTags: ['branches'],
     }),
-    updateBranch: builder.mutation<Branch, { data: Partial<Branch>; branchId: string }>({
+    updateBranch: builder.mutation({
       query: ({ data, branchId }) => ({
         url: `api/retailer/branch/${branchId}`,
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['retailerBranch'],
+      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
     }),
-    deleteBranch: builder.mutation<{ success: boolean }, { _id: string }>({
+    deleteBranch: builder.mutation({
       query: ({ _id }) => ({
         url: `api/retailer/branch/${_id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['retailerBranch'],
-    }),
-    singleBranch: builder.query<{ success: boolean }, { _id: string }>({
-      query: ({ _id }) => `/api/retailer/branch/${_id}`,
-      providesTags: ['retailerBranch'],
+      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
     }),
   }),
 });

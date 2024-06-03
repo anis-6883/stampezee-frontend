@@ -1,11 +1,4 @@
 import { Field } from 'formik';
-//
-//     <InputField
-//     name="l-name"
-//     label="Last Name"
-//     icon={<MdDriveFileRenameOutline className="text-base" />}
-//     placeholder="Last Name"
-//   />
 
 export default function InputField({
   name,

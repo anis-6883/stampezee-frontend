@@ -1,9 +1,8 @@
 import { routes } from '@/config/routes';
 import { BsShop } from 'react-icons/bs';
-import { FaCogs, FaRegIdBadge } from 'react-icons/fa';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
-import { IoDuplicate, IoImagesOutline } from 'react-icons/io5';
-import { LuBarChart3, LuUsers } from 'react-icons/lu';
+import { IoDiamondOutline, IoDuplicate, IoImageOutline } from 'react-icons/io5';
+import { LuBarChart3, LuUserCog, LuUsers } from 'react-icons/lu';
 import { MdQrCodeScanner } from 'react-icons/md';
 import { PiBellRinging, PiCurrencyDollar, PiNewspaperClippingLight, PiStamp, PiTreeStructure } from 'react-icons/pi';
 import { TbUserShield } from 'react-icons/tb';
@@ -12,22 +11,22 @@ export const menuItems: { [key: string]: any } = {
   super_admin: [
     {
       name: 'Analytics',
-      href: routes.admin.dashboard,
+      href: routes.superAdmin.dashboard,
       icon: <LuBarChart3 />,
     },
     {
       name: 'Customers',
-      href: routes.admin.user.home,
+      href: routes.superAdmin.dashboard,
       icon: <LuUsers />,
     },
     {
       name: 'Retailers',
-      href: routes.admin.user.home,
+      href: routes.superAdmin.dashboard,
       icon: <BsShop />,
     },
     {
       name: 'Scans',
-      href: routes.admin.scans.home,
+      href: routes.superAdmin.dashboard,
       icon: <MdQrCodeScanner />,
     },
     {
@@ -42,22 +41,22 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Push Notifications',
-      href: routes.admin.notification.home,
+      href: routes.superAdmin.dashboard,
       icon: <PiBellRinging />,
     },
     {
       name: 'Billings',
-      href: routes.admin.user.home,
+      href: routes.superAdmin.dashboard,
       icon: <PiCurrencyDollar />,
     },
     {
       name: 'Pages',
-      href: routes.admin.user.home,
+      href: routes.superAdmin.dashboard,
       icon: <PiNewspaperClippingLight />,
     },
     {
       name: 'General Settings',
-      href: routes.admin.generalSettings,
+      href: routes.superAdmin.dashboard,
       icon: <HiOutlineCog8Tooth />,
     },
   ],
@@ -69,7 +68,7 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Customers',
-      href: routes.admin.user.home,
+      href: routes.retailer.dashboard,
       icon: <LuUsers />,
     },
     {
@@ -85,17 +84,17 @@ export const menuItems: { [key: string]: any } = {
     {
       name: 'Stamps Images',
       href: routes.retailer.stampImage.home,
-      icon: <IoImagesOutline />,
+      icon: <IoImageOutline />,
     },
     {
       name: 'Push Notifications',
-      href: routes.admin.user.home,
+      href: routes.retailer.dashboard,
       icon: <PiBellRinging />,
     },
     {
-      name: 'Memberships',
-      href: routes.admin.user.home,
-      icon: <FaRegIdBadge />,
+      name: 'Membership Plans',
+      href: routes.retailer.dashboard,
+      icon: <IoDiamondOutline />,
     },
     {
       name: 'Branches',
@@ -103,9 +102,9 @@ export const menuItems: { [key: string]: any } = {
       icon: <PiTreeStructure />,
     },
     {
-      name: 'Account',
-      href: routes.admin.generalSettings,
-      icon: <FaCogs />,
+      name: 'Manage Profile',
+      href: routes.retailer.dashboard,
+      icon: <LuUserCog />,
     },
   ],
 };

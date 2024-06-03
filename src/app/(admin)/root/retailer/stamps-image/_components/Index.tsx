@@ -11,7 +11,6 @@ import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 import CreateModel from './CreateModel';
-import _ from 'lodash';
 
 let popup = false;
 

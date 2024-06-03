@@ -44,8 +44,8 @@ export default function Featured({
           <Image src={image} alt="image" />
         </div>
         <div className=" text-center md:text-left">
-          <h1 className="mb-7 text-5xl font-bold text-primary-black">{title}</h1>
-          <p className="text-xl font-bold text-primary-black">{description}</p>
+          <h1 className="text-primary-black mb-7 text-5xl font-bold">{title}</h1>
+          <p className="text-primary-black text-xl font-bold">{description}</p>
         </div>
       </div>
     </div>

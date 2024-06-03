@@ -1,7 +1,7 @@
 'use client';
 import SubmitButton from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
-import InputField from '@/components/Formik/ImputField';
+import InputField from '@/components/Formik/InputField';
 import SelectField from '@/components/Formik/SelectField';
 import StatusBar from '@/components/Formik/StatusBar';
 import { routes } from '@/config/routes';
@@ -113,9 +113,9 @@ export default function Update({ Id }: any) {
       >
         {({ values, errors, touched, setFieldValue }) => (
           <Form className="mt-5 grid gap-4">
-            <InputField name="firstName" label="First Name" placeholder="" errors={errors.firstName} touched={touched.firstName} />
-            <InputField name="lastName" label="Last Name" placeholder="" errors={errors.lastName} touched={touched.lastName} />
-            <InputField name="email" label="Email" placeholder="" errors={errors.email} touched={touched.email} />
+            <InputField name="firstName" label="First Name" placeholder="" />
+            <InputField name="lastName" label="Last Name" placeholder="" />
+            <InputField name="email" label="Email" placeholder="" />
             <SelectField
               name="branchId"
               label="Branch"

@@ -1,5 +1,3 @@
-import { routes } from '@/config/routes';
-
 // Note: do not add href in the label object, it is rendering as label
 export const pageLinks = [
   // label start
@@ -9,7 +7,7 @@ export const pageLinks = [
   // label end
   // {
   //   name: 'Users',
-  //   href: routes.admin.user.home,
+  //   href: routes.superAdmin.user.home,
   // },
   // {
   //   name: "Support",

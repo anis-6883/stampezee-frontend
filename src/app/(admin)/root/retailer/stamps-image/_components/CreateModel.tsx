@@ -2,7 +2,7 @@
 
 import SubmitButton from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
-import InputField from '@/components/Formik/ImputField';
+import InputField from '@/components/Formik/InputField';
 import StatusBar from '@/components/Formik/StatusBar';
 import { useCreateStampImageMutation, useUpdateStampImageMutation } from '@/features/retailer/stamp-image/stampApi';
 import { Form, Formik } from 'formik';
@@ -112,7 +112,7 @@ export default function CreateModel({
             >
               {({ errors, touched, setFieldValue, values }) => (
                 <Form className="mt-5 grid gap-4">
-                  <InputField name="title" label="Title" placeholder="Enter title" errors={errors.title} touched={touched.title} />
+                  <InputField name="title" label="Title" placeholder="Enter title" />
                   <DragAndDropUpload
                     value={{ name: 'image', image: values.image }}
                     onChange={(image: any) => setFieldValue('image', image)}

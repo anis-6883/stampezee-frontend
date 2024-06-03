@@ -1,5 +1,4 @@
 import { metaObject } from '@/config/site.config';
-import Link from 'next/link';
 import LoginForm from './components/LoginForm';
 
 export const metadata = {

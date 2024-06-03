@@ -9,7 +9,7 @@ const pageHeader = {
   title: 'Users',
   breadcrumb: [
     {
-      href: routes.admin.dashboard,
+      href: routes.superAdmin.dashboard,
       name: 'Dashboard',
     },
     {
@@ -27,7 +27,7 @@ export default function Page() {
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
         <Link
-          href={routes.admin.user.create}
+          href={routes.retailer.user.create}
           className="hover:bg-primary-dark flex items-center space-x-2 rounded-md bg-primary px-3 py-2 text-white transition-all duration-300"
         >
           <HiPlus className="text-lg" /> Add User

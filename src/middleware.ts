@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { routes } from './config/routes';
 
-const adminProtectedRoutes: string[] = [routes.admin.dashboard];
+const adminProtectedRoutes: string[] = [routes.superAdmin.dashboard];
 const userProtectedRoutes: string[] = [routes.user.profile];
 
 export default async function middleware(req: NextRequest) {

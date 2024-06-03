@@ -1,7 +1,7 @@
 'use client';
 import SubmitButton from '@/components/Formik/Button';
 import DateRangePicker from '@/components/Formik/DateRange';
-import InputField from '@/components/Formik/ImputField';
+import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import StatusBar from '@/components/Formik/StatusBar';
@@ -106,7 +106,7 @@ export default function Create() {
 
           return (
             <Form className="mt-5 grid gap-4">
-              <InputField name="title" label="Title" errors={errors.title} touched={touched.title} />
+              <InputField name="title" label="Title" />
               <InputTextarea
                 name="description"
                 label="Description"
@@ -116,22 +116,10 @@ export default function Create() {
                 setFieldValue={setFieldValue}
                 value={values.description}
               />
-              <InputField name="rules" label="Rules" errors={errors.rules} touched={touched.rules} />
+              <InputField name="rules" label="Rules" />
 
-              <InputField
-                name="noOfStampsToCollect"
-                label="Number of Stamps to Collect"
-                type="number"
-                errors={errors.noOfStampsToCollect}
-                touched={touched.noOfStampsToCollect}
-              />
-              <InputField
-                name="minPurchaseAmount"
-                label="Minimum Purchase Amount"
-                type="number"
-                errors={errors.minPurchaseAmount}
-                touched={touched.minPurchaseAmount}
-              />
+              <InputField name="noOfStampsToCollect" label="Number of Stamps to Collect" type="number" />
+              <InputField name="minPurchaseAmount" label="Minimum Purchase Amount" type="number" />
 
               <SelectField
                 name="branchId"
@@ -179,22 +167,9 @@ export default function Create() {
                 errors={errors.rewardType}
                 touched={touched.rewardType}
               />
-              {touched.rewardType && values.rewardType == 'promotion' && (
-                <InputField
-                  name="promotionReward"
-                  label="Promotion Reward"
-                  errors={errors.promotionReward}
-                  touched={touched.promotionReward}
-                />
-              )}
+              {touched.rewardType && values.rewardType == 'promotion' && <InputField name="promotionReward" label="Promotion Reward" />}
               {touched.rewardType && values.rewardType == 'discount' && (
-                <InputField
-                  name="discountReward"
-                  label="Discount Reward"
-                  type="number"
-                  errors={errors.discountReward}
-                  touched={touched.discountReward}
-                />
+                <InputField name="discountReward" label="Discount Reward" type="number" />
               )}
 
               <DateRangePicker startDate={values.startedAt} endDate={values.expiredAt} setFieldValue={setFieldValue} />
