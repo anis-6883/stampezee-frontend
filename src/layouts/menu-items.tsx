@@ -1,7 +1,8 @@
 import { routes } from '@/config/routes';
+import { BsShop } from 'react-icons/bs';
 import { FaCogs, FaRegIdBadge } from 'react-icons/fa';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
-import { IoDuplicate } from 'react-icons/io5';
+import { IoDuplicate, IoImagesOutline } from 'react-icons/io5';
 import { LuBarChart3, LuUsers } from 'react-icons/lu';
 import { MdQrCodeScanner } from 'react-icons/md';
 import { PiBellRinging, PiCurrencyDollar, PiNewspaperClippingLight, PiStamp, PiTreeStructure } from 'react-icons/pi';
@@ -22,7 +23,7 @@ export const menuItems: { [key: string]: any } = {
     {
       name: 'Retailers',
       href: routes.admin.user.home,
-      // icon: <BsShop />,
+      icon: <BsShop />,
     },
     {
       name: 'Scans',
@@ -77,9 +78,14 @@ export const menuItems: { [key: string]: any } = {
       icon: <TbUserShield />,
     },
     {
-      name: 'Stamps-images',
-      href: routes.retailer.stampImage.home,
+      name: 'Stamps',
+      href: routes.retailer.stamp.home,
       icon: <PiStamp />,
+    },
+    {
+      name: 'Stamps Images',
+      href: routes.retailer.stampImage.home,
+      icon: <IoImagesOutline />,
     },
     {
       name: 'Push Notifications',

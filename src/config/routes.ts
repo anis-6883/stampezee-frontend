@@ -54,6 +54,11 @@ export const routes = {
     stampImage: {
       home: `/root/retailer/stamps-image`,
     },
+    stamp: {
+      home: `/root/retailer/stamp`,
+      create: `/root/retailer/stamp/create`,
+      edit: (id: number | string) => `/root/retailer/stamp/${id}/update`,
+    },
 
     user: {
       home: `/project-admin/users`,
@@ -62,7 +67,6 @@ export const routes = {
     },
   },
 };
-
 // roleRoutes
 
 const roleRoutes = {

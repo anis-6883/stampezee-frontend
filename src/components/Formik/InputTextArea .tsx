@@ -24,8 +24,6 @@ export default function InputTextarea({
   type?: string;
   setFieldValue?: any;
 }) {
-  console.log(value, 'value');
-
   useEffect(() => {
     setFieldValue(name, value);
   }, [setFieldValue, value, name]);
