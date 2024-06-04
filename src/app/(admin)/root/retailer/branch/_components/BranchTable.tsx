@@ -2,7 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import { routes } from '@/config/routes';
-import { useAllBranchQuery, useDeleteBranchMutation } from '@/features/retailer/branch/branchApi';
+import { useAllBranchQuery, useDeleteBranchMutation, useUpdateBranchStatusMutation } from '@/features/retailer/branch/branchApi';
 import { IQueryType } from '@/types';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -11,9 +11,11 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 import Button from '../../../_components/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
+import SwitchButton from '../../../_components/SwitchButton';
 
 export default function BranchTable() {
   const [deleteBranch, { isSuccess, isError }] = useDeleteBranchMutation();
+  const [updateStatus] = useUpdateBranchStatusMutation();
   const [modalState, setModalState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
@@ -55,6 +57,17 @@ export default function BranchTable() {
           {row?.original?.address.name.length > 60 ? `${row?.original?.address.name.substring(0, 60)}...` : row?.original?.address.name}
         </div>
       ),
+    },
+    {
+      header: 'Status',
+      accessorKey: 'status',
+      Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
     },
     {
       header: 'Actions',
