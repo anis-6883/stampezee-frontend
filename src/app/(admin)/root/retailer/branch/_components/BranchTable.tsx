@@ -1,26 +1,24 @@
 'use client';
 
-import AskConfirmation from '@/app/(admin)/root/_components/AskConfirmation';
 import Table from '@/app/(admin)/root/_components/Table';
 import { routes } from '@/config/routes';
 import { useAllBranchQuery, useDeleteBranchMutation } from '@/features/retailer/branch/branchApi';
 import { IQueryType } from '@/types';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 import Button from '../../../_components/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 
-let popup = false;
-
 export default function BranchTable() {
-  const [deleteBranch] = useDeleteBranchMutation();
+  const [deleteBranch, { isSuccess, isError }] = useDeleteBranchMutation();
   const [modalState, setModalState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-
+  const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
+
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useAllBranchQuery({
     page: query.pageIndex + 1,
@@ -28,9 +26,25 @@ export default function BranchTable() {
     ...searchQuery,
   });
 
+  // Handle Delete Response
+  useEffect(() => {
+    if (isError) {
+      setDeleteSubmitting(false);
+      toast.error('Something went wrong. Please try again!');
+      setModalState(false);
+      setDeleteId(null);
+    }
+    if (isSuccess) {
+      setDeleteSubmitting(false);
+      toast.success('Branch deleted successfully!');
+      setModalState(false);
+      setDeleteId(null);
+    }
+  }, [isSuccess, isError]);
+
   const structure = [
     {
-      header: 'Title',
+      header: 'Name',
       accessorKey: 'name',
     },
     {
@@ -73,14 +87,6 @@ export default function BranchTable() {
     },
   ];
 
-  const handleDelete = async (rowData: any) => {
-    if (popup) return;
-    toast((t) => {
-      popup = t.visible;
-      return AskConfirmation(t, () => deleteBranch({ _id: rowData._id }));
-    });
-  };
-
   return (
     <>
       <Table
@@ -107,26 +113,17 @@ export default function BranchTable() {
         enableDnD={false}
         sortContext="branchTable"
         enableRowActions={false}
+        searchPlaceHolder="Search By Name"
       />
-      <DeleteConfirmModal deleteHandler={deleteBranch} modalState={modalState} setModalState={setModalState} deleteId={deleteId} />
-      {/* <Modal isOpen={modalState} onClose={() => setModalState(false)}>
-        <div className="m-auto px-7 pb-8 pt-6">
-          <div className="mb-5 flex items-center justify-between">
-            <h3 className="flex items-center gap-2 text-lg font-semibold text-danger">
-              <BsExclamationTriangle className="text-base" /> Delete Confirmation
-            </h3>
 
-            <ActionIcon size="sm" variant="text" onClick={() => setModalState(false)}>
-              <HiMiniXCircle className="text-2xl text-danger" />
-            </ActionIcon>
-          </div>
-          <p className="text-base font-medium">Do you want to delete?</p>
-          <div className="mt-8 flex justify-end gap-2">
-            <Button color="danger" onClick={() => setModalState(false)} text="Not Now" />
-            <Button color="primary" onClick={() => setModalState(false)} text="Yes, Confirm" />
-          </div>
-        </div>
-      </Modal> */}
+      <DeleteConfirmModal
+        deleteHandler={deleteBranch}
+        modalState={modalState}
+        setModalState={setModalState}
+        deleteId={deleteId}
+        isSubmitting={deleteSubmitting}
+        setIsSubmitting={setDeleteSubmitting}
+      />
     </>
   );
 }

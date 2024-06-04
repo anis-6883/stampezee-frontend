@@ -145,6 +145,19 @@
 }
 
 /* ................................................... */
+/* Maintain React Table Search Input */
+/* ................................................... */
+input.mantine-TextInput-input {
+  border-radius: 10px;
+  border-color: #d5dadf;
+}
+
+input.mantine-Select-input {
+  border-radius: 10px;
+  border-color: #d5dadf;
+}
+
+/* ................................................... */
 /* React Select CSS Change */
 /* ................................................... */
 .css-13cymwt-control {
