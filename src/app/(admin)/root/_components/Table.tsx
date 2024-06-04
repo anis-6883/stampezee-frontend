@@ -16,6 +16,7 @@ type props = {
   setQuery?: Function;
   sort?: Function;
   sortContext?: string;
+  searchPlaceHolder?: string;
 };
 
 export default function Table({
@@ -31,6 +32,7 @@ export default function Table({
   enableDnD = false,
   sort,
   sortContext,
+  searchPlaceHolder = 'Search',
 }: props) {
   const { data, pagination } = response;
 
@@ -52,6 +54,12 @@ export default function Table({
     columns,
     data,
     ...tableProperties,
+    mantineSearchTextInputProps: {
+      placeholder: searchPlaceHolder,
+      sx: { minWidth: '100px' },
+      variant: 'outlined',
+    },
+    positionGlobalFilter: 'left',
     initialState: {
       showGlobalFilter: true,
     },

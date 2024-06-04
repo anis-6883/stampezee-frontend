@@ -114,7 +114,7 @@ export default function MapComponent() {
           width: '100%',
           height: '400px',
         }}
-        zoom={10}
+        zoom={15}
         center={selectedLocation}
         onLoad={onLoad}
         onUnmount={onUnmount}

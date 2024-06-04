@@ -1,9 +1,8 @@
 import { apiSlice } from '@/features/api/apiSlice';
-import { IAllBranchQueryArgs, IResponse } from '@/types';
 
 export const branchApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    allBranch: builder.query<IResponse, IAllBranchQueryArgs>({
+    allBranch: builder.query({
       query: (queries) => {
         const values = Object.values(queries);
         if (values.length) return `/api/retailer/branch/all?${new URLSearchParams(queries as any)}`;

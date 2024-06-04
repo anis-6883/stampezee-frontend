@@ -9,13 +9,18 @@ export default function DeleteConfirmModal({
   deleteId,
   deleteHandler,
   setModalState,
+  isSubmitting,
+  setIsSubmitting,
 }: {
   modalState?: boolean;
   deleteId: string | null;
   deleteHandler: (obj: { _id: string }) => void;
   setModalState: (state: boolean) => void;
+  isSubmitting?: boolean;
+  setIsSubmitting: (state: boolean) => void;
 }) {
   const handleDelete = () => {
+    setIsSubmitting(true);
     if (deleteId) {
       deleteHandler({ _id: deleteId });
       setModalState(false);
@@ -37,7 +42,13 @@ export default function DeleteConfirmModal({
         <p className="text-base font-medium">Do you want to delete it ?</p>
         <div className="mt-10 flex justify-end gap-2">
           <Button color="danger" onClick={() => setModalState(false)} text="Not Now" postIcon={<MdDoNotDisturb className="text-base" />} />
-          <Button color="primary" onClick={handleDelete} text="Yes, Confirm" postIcon={<BsCheck2Circle className="text-base" />} />
+          <Button
+            color="primary"
+            onClick={handleDelete}
+            text="Yes, Confirm"
+            postIcon={<BsCheck2Circle className="text-base" />}
+            isSubmitting={isSubmitting}
+          />
         </div>
       </div>
     </Modal>
