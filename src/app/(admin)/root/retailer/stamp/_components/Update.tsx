@@ -129,8 +129,6 @@ export default function Update({ Id }: any) {
                   value: item._id,
                 }))}
                 onChange={(option: { label: string; value: string }) => setFieldValue('branchId', option.value)}
-                errors={errors.branchId}
-                touched={touched.branchId}
               />
 
               <SelectField
@@ -141,8 +139,6 @@ export default function Update({ Id }: any) {
                   value: item._id,
                 }))}
                 onChange={(option: { label: string; value: string }) => setFieldValue('categoryId', option.value)}
-                errors={errors.categoryId}
-                touched={touched.categoryId}
               />
               <SelectField
                 name="stampImageId"
@@ -152,8 +148,6 @@ export default function Update({ Id }: any) {
                   value: item._id,
                 }))}
                 onChange={(option: { label: string; value: string }) => setFieldValue('stampImageId', option.value)}
-                errors={errors.stampImageId}
-                touched={touched.stampImageId}
               />
 
               <SelectField
@@ -164,8 +158,6 @@ export default function Update({ Id }: any) {
                   { label: 'Discount', value: 'discount' },
                 ]}
                 onChange={(option: { label: string; value: string }) => setFieldValue('rewardType', option.value)}
-                errors={errors.rewardType}
-                touched={touched.rewardType}
               />
               {touched.rewardType && values.rewardType == 'promotion' && <InputField name="promotionReward" label="Promotion Reward" />}
               {touched.rewardType && values.rewardType == 'discount' && (

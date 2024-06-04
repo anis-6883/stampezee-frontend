@@ -68,7 +68,7 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Customers',
-      href: routes.retailer.dashboard,
+      href: routes.retailer.customer.home,
       icon: <LuUsers />,
     },
     {
@@ -88,12 +88,12 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Push Notifications',
-      href: routes.retailer.dashboard,
+      href: routes.retailer.notification.home,
       icon: <PiBellRinging />,
     },
     {
       name: 'Membership Plans',
-      href: routes.retailer.dashboard,
+      href: routes.retailer.membershipPlan,
       icon: <IoDiamondOutline />,
     },
     {
@@ -103,7 +103,7 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Manage Profile',
-      href: routes.retailer.dashboard,
+      href: routes.retailer.profile,
       icon: <LuUserCog />,
     },
   ],

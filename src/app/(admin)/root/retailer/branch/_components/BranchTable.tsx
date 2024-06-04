@@ -123,17 +123,14 @@ export default function BranchTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        enableDnD={false}
-        sortContext="branchTable"
-        enableRowActions={false}
         searchPlaceHolder="Search By Name"
       />
 
       <DeleteConfirmModal
+        deleteId={deleteId}
         deleteHandler={deleteBranch}
         modalState={modalState}
         setModalState={setModalState}
-        deleteId={deleteId}
         isSubmitting={deleteSubmitting}
         setIsSubmitting={setDeleteSubmitting}
       />

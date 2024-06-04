@@ -53,7 +53,7 @@ export default function UserTable() {
       setPagination={setPagination}
       totalDocs={userData?.data?.totalDocs}
       deleteRow={deleteUser as any}
-      editRow={routes?.retailer?.user?.edit}
+      editRow={routes?.retailer?.branch?.edit}
       setQuery={setQuery}
     />
   );

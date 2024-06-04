@@ -15,7 +15,6 @@ import { menuItems } from './menu-items';
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
-
   const role = useSelector((state: RootState) => state.authSlice.role);
 
   return (

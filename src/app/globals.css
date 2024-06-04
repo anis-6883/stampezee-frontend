@@ -161,16 +161,21 @@ input.mantine-Select-input {
 /* React Select CSS Change */
 /* ................................................... */
 .css-13cymwt-control {
-  min-height: 48px !important;
-  border-color: #484848 !important;
-  border-radius: 10px !important;
+  min-height: 43px !important;
+  border-radius: 7px !important;
+  border: 2px solid #cbd5e1 !important;
 }
 
 .css-t3ipsp-control {
-  min-height: 48px !important;
-  border-color: #484848 !important;
-  border-radius: 10px !important;
+  min-height: 43px !important;
+  border-color: #cbd5e1 !important;
+  border-radius: 7px !important;
+  border: 2px solid #cbd5e1 !important;
   box-shadow: none !important;
+}
+
+.rizzui-select-option:hover {
+  background-color: #f1f1f1;
 }
 
 /* ................................................... */

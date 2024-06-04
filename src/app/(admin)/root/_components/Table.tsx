@@ -28,7 +28,7 @@ export default function Table({
   setQuery,
   query,
   enablePagination = true,
-  enableRowActions = true,
+  enableRowActions = false,
   enableDnD = false,
   sort,
   sortContext,
@@ -66,7 +66,7 @@ export default function Table({
     ...(enablePagination && {
       manualPagination: pagination,
       mantinePaginationProps: {
-        rowsPerPageOptions: ['10', '25', '40'],
+        rowsPerPageOptions: ['10', '25', '50'],
         withEdges: false,
       },
       rowCount: pagination && pagination.totalDocuments,
@@ -97,11 +97,11 @@ export default function Table({
     enableToolbarInternalActions: false,
     enableColumnActions: false,
     onGlobalFilterChange: handleFilter,
+    enableSorting: enableDnD,
 
     ...(enableDnD && {
       enableRowDragging: true,
       enableRowOrdering: true,
-      enableSorting: true,
       mantineRowDragHandleProps: ({ table }) => ({
         onDragEnd: async () => {
           const { draggingRow, hoveredRow } = table.getState();

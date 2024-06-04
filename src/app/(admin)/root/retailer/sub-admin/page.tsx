@@ -1,19 +1,34 @@
-'use client';
-
+import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
-import Index from './_components/Index';
+import { metaObject } from '@/config/site.config';
+import SubAdminTable from './_components/SubAdminTable';
+
+const pageHeader = {
+  title: 'Manage Sub-Admins',
+  breadcrumb: [
+    {
+      href: routes.retailer.dashboard,
+      name: 'Dashboard',
+    },
+    {
+      name: 'Sub-Admins',
+    },
+  ],
+};
+
+export const metadata = { ...metaObject(pageHeader.title) };
 
 export default function Page() {
   return (
-    <div>
-      <div className="flex justify-end">
-        <a className="mb-5 bg-red-500 p-2 text-white" role="button" href={routes.retailer.sub_admin.create}>
-          create branch
-        </a>
-      </div>
-      <br />
-      <br />
-      <Index />
-    </div>
+    <>
+      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
+      {/* <div className="mb-5 flex justify-end">
+        <Link href={routes.retailer.sub_admin.create}>
+          <Button text="Add New Sub-Admin" preIcon={<HiPlus className="text-base" />} />
+        </Link>
+      </div> */}
+
+      <SubAdminTable />
+    </>
   );
 }

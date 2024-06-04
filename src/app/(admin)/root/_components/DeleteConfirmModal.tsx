@@ -14,7 +14,7 @@ export default function DeleteConfirmModal({
 }: {
   modalState?: boolean;
   deleteId: string | null;
-  deleteHandler: (obj: { _id: string }) => void;
+  deleteHandler: (id: string) => void;
   setModalState: (state: boolean) => void;
   isSubmitting?: boolean;
   setIsSubmitting: (state: boolean) => void;
@@ -22,7 +22,7 @@ export default function DeleteConfirmModal({
   const handleDelete = () => {
     setIsSubmitting(true);
     if (deleteId) {
-      deleteHandler({ _id: deleteId });
+      deleteHandler(deleteId);
       setModalState(false);
     }
   };
