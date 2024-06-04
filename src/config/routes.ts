@@ -15,6 +15,7 @@ export const routes = {
   },
   retailer: {
     dashboard: '/root/retailer/dashboard',
+    profile: '/root/retailer/profile',
     branch: {
       home: `/root/retailer/branch`,
       create: `/root/retailer/branch/create`,
@@ -33,11 +34,16 @@ export const routes = {
       create: `/root/retailer/stamp/create`,
       edit: (id: number | string) => `/root/retailer/stamp/${id}/update`,
     },
-
-    user: {
-      home: `/project-admin/users`,
-      create: '/project-admin/users/create',
-      edit: (id: number | string) => `/project-admin/users/update/${id}`,
+    customer: {
+      home: `/root/retailer/customer`,
+      create: '/root/retailer/customer/create',
+      edit: (id: number | string) => `/root/retailer/customer/update/${id}`,
     },
+    notification: {
+      home: `/root/retailer/notification`,
+      create: '/root/retailer/notification/create',
+      edit: (id: number | string) => `/root/retailer/notification/update/${id}`,
+    },
+    membershipPlan: `/root/retailer/membership-plan`,
   },
 };

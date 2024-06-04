@@ -24,13 +24,13 @@ export default function CreateUser({ edit, id }: { edit?: boolean; id?: string }
     if (edit) {
       updateUser({ id, data: values })
         .then((res: any) => {
-          if (res.data.status) router.push(routes.retailer.user.home);
+          if (res.data.status) router.push(routes.retailer.branch.home);
         })
         .catch((err: any) => console.log(err));
     } else {
       createUser(values)
         .then((res: any) => {
-          if (res.data.status) router.push(routes.retailer.user.home);
+          if (res.data.status) router.push(routes.retailer.branch.home);
         })
         .catch((err: any) => console.log(err));
     }

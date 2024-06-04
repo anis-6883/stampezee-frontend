@@ -1,10 +1,8 @@
 import { apiSlice } from '@/features/api/apiSlice';
-import { ICreateSubAdmin, IDeleteSubAdmin, IPagination, IResponse, ISubAdminResponse, IUpdateSubAdmin } from '@/types';
 
 export const subAdminApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllSubAdmins: builder.query<ISubAdminResponse, IPagination>({
-      //   query: ({ page, limit }) => `api/retailer/sub-admin/all?page=${page}&limit=${limit}`,
+    getAllSubAdmins: builder.query({
       query: (queries) => {
         const values = Object.values(queries);
         if (values.length) return `/api/retailer/sub-admin/all?${new URLSearchParams(queries as any)}`;
@@ -12,7 +10,11 @@ export const subAdminApi = apiSlice.injectEndpoints({
       },
       providesTags: ['subAdmin'],
     }),
-    createSubAdmin: builder.mutation<IResponse, ICreateSubAdmin>({
+    subAdminBranches: builder.query({
+      query: () => `/api/retailer/sub-admin/branches`,
+      providesTags: ['subAdminBranches'],
+    }),
+    createSubAdmin: builder.mutation({
       query: (newSubAdmin) => ({
         url: 'api/retailer/sub-admin',
         method: 'POST',
@@ -20,21 +22,20 @@ export const subAdminApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['subAdmin'],
     }),
-    singleSubAdmin: builder.query<IResponse, string>({
+    singleSubAdmin: builder.query({
       query: (id) => `api/retailer/sub-admin/${id}`,
       providesTags: ['subAdmin'],
     }),
-    updateSubAdmin: builder.mutation<IResponse, IUpdateSubAdmin>({
-      query: ({ id, updateSubAdminData }: any) => ({
+    updateSubAdmin: builder.mutation({
+      query: ({ id, data }: any) => ({
         url: `api/retailer/sub-admin/${id}`,
         method: 'PUT',
-        body: updateSubAdminData,
+        body: data,
       }),
       invalidatesTags: ['subAdmin'],
     }),
-
-    deleteSubAdmin: builder.mutation<IResponse, IDeleteSubAdmin>({
-      query: ({ id }) => ({
+    deleteSubAdmin: builder.mutation({
+      query: (id) => ({
         url: `api/retailer/sub-admin/${id}`,
         method: 'DELETE',
       }),
@@ -49,6 +50,5 @@ export const {
   useUpdateSubAdminMutation,
   useDeleteSubAdminMutation,
   useSingleSubAdminQuery,
+  useSubAdminBranchesQuery,
 } = subAdminApi;
-
-export default subAdminApi;

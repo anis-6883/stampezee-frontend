@@ -3,11 +3,11 @@ import { ImSpinner9 } from 'react-icons/im';
 
 const buttonStyles: Record<string, string> = {
   primary:
-    'bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white shadow-blue-500/50 hover:bg-gradient-to-br focus:ring-blue-300 dark:shadow-blue-800/80 dark:focus:ring-blue-800',
+    'bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white hover:bg-gradient-to-br focus:ring-blue-300 dark:shadow-blue-800/80 dark:focus:ring-blue-800',
   warning:
-    'bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 text-white shadow-orange-500/50 hover:bg-gradient-to-br focus:ring-orange-300 dark:shadow-orange-800/80 dark:focus:ring-orange-800',
+    'bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 text-white hover:bg-gradient-to-br focus:ring-orange-300 dark:shadow-orange-800/80 dark:focus:ring-orange-800',
   danger:
-    'bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white shadow-red-500/50 hover:bg-gradient-to-br focus:ring-red-300 dark:shadow-red-800/80 dark:focus:ring-red-800',
+    'bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white hover:bg-gradient-to-br focus:ring-red-300 dark:shadow-red-800/80 dark:focus:ring-red-800',
 };
 
 interface ButtonProps {

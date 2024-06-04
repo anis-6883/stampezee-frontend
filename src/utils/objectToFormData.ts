@@ -1,15 +1,3 @@
-// export default function objectToFormData(obj: any) {
-//   const formData = new FormData();
-
-//   Object.keys(obj).forEach((key) => {
-//     formData.append(key, obj[key]);
-//   });
-
-//   return formData;
-// }
-
-// v2
-
 export default function objectToFormData(obj: any, ignore: string[] | null | undefined = []) {
   const formData = new FormData();
 

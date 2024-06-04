@@ -11,7 +11,7 @@ const pageHeader = {
       name: 'Dashboard',
     },
     {
-      href: routes.retailer.user.home,
+      href: routes.retailer.branch.home,
       name: 'Users',
     },
     {

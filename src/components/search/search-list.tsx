@@ -1,17 +1,20 @@
 'use client';
 
+import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
 import Link from 'next/link';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { PiFileTextDuotone, PiMagnifyingGlassBold, PiXBold } from 'react-icons/pi';
+import { useSelector } from 'react-redux';
 import { ActionIcon, Button, Empty, Input, SearchNotFoundIcon, Title } from 'rizzui';
 import { pageLinks } from './page-links.data';
 
 export default function SearchList({ onClose }: { onClose?: () => void }) {
   const inputRef = useRef(null);
   const [searchText, setSearchText] = useState('');
+  const role = useSelector((state: RootState) => state.authSlice.role);
 
-  let menuItemsFiltered = pageLinks;
+  let menuItemsFiltered = pageLinks[role];
   if (searchText.length > 0) {
     menuItemsFiltered = pageLinks.filter((item: any) => {
       const label = item.name;
@@ -73,7 +76,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
           )}
         </>
 
-        {menuItemsFiltered.map((item: { name: string; href?: string }, index) => {
+        {menuItemsFiltered.map((item: { name: string; href?: string }, index: number) => {
           return (
             <Fragment key={item.name + '-' + index}>
               {item.href ? (
