@@ -7,7 +7,7 @@ export default function objectToFormData(obj: any, ignore: string[] | null | und
   }
 
   Object.keys(obj).forEach((key) => {
-    if (!ignore.includes(key)) {
+    if (!ignore.includes(key) && obj[key] !== '') {
       formData.append(key, obj[key]);
     }
   });

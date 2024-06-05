@@ -27,8 +27,8 @@ export default function CreateUpdateModal({
   setModalState: (state: boolean) => void;
 }) {
   const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
-  const [createSubAdmin, { isError: createError, isSuccess: createSuccess }] = useCreateSubAdminMutation();
-  const [updateSubAdmin, { isError: updateError, isSuccess: updateSuccess }] = useUpdateSubAdminMutation();
+  const [createSubAdmin, { isSuccess: createSuccess, error: createError }] = useCreateSubAdminMutation();
+  const [updateSubAdmin, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubAdminMutation();
   const [isSubmitting, setSubmitting] = useState(false);
   const { data: branches } = useSubAdminBranchesQuery(undefined);
 
@@ -44,10 +44,9 @@ export default function CreateUpdateModal({
 
   useEffect(() => {
     if (createError) {
-      toast.error('Something went wrong. Please try again!.');
-      setFormData({});
+      // @ts-ignore
+      toast.error(createError?.data?.message || 'Something went wrong. Please try again!.');
       setSubmitting(false);
-      setModalState(false);
     }
     if (createSuccess) {
       toast.success('Sub-Admin created successfully!');
@@ -59,10 +58,9 @@ export default function CreateUpdateModal({
 
   useEffect(() => {
     if (updateError) {
-      toast.error('Something went wrong. Please try again!.');
-      setFormData({});
+      // @ts-ignore
+      toast.error(updateError?.data?.message || 'Something went wrong. Please try again!.');
       setSubmitting(false);
-      setModalState(false);
     }
     if (updateSuccess) {
       toast.success('Sub-Admin updated successfully!');

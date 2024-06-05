@@ -34,6 +34,14 @@ export const subAdminApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['subAdmin'],
     }),
+    updateSubAdminStatus: builder.mutation({
+      query: ({ data, branchId }) => ({
+        url: `api/retailer/sub-admin/status/${branchId}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: (result, error, arg: any) => [{ type: 'branch', id: arg.id }],
+    }),
     deleteSubAdmin: builder.mutation({
       query: (id) => ({
         url: `api/retailer/sub-admin/${id}`,
@@ -51,4 +59,5 @@ export const {
   useDeleteSubAdminMutation,
   useSingleSubAdminQuery,
   useSubAdminBranchesQuery,
+  useUpdateSubAdminStatusMutation,
 } = subAdminApi;

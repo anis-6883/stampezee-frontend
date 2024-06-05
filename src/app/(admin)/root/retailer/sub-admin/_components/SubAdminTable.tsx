@@ -1,7 +1,11 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-import { useDeleteSubAdminMutation, useGetAllSubAdminsQuery } from '@/features/retailer/sub-admin/subAdminApi';
+import {
+  useDeleteSubAdminMutation,
+  useGetAllSubAdminsQuery,
+  useUpdateSubAdminStatusMutation,
+} from '@/features/retailer/sub-admin/subAdminApi';
 import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -10,12 +14,14 @@ import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
 import Button from '../../../_components/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
+import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModal from './CreateUpdateModal';
 
 export default function SubAdminTable() {
   const [formData, setFormData] = useState({});
   const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
   const [createState, setCreateState] = useState(false);
+  const [updateStatus] = useUpdateSubAdminStatusMutation();
 
   // Deletion State
   const [deleteState, setDeleteState] = useState(false);
@@ -75,17 +81,17 @@ export default function SubAdminTable() {
       header: 'Email',
       accessorKey: 'email',
     },
-    // {
-    //   header: 'Status',
-    //   accessorKey: 'status',
-    //   Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
-    //   mantineTableHeadCellProps: {
-    //     align: 'center',
-    //   },
-    //   mantineTableBodyCellProps: {
-    //     align: 'center',
-    //   },
-    // },
+    {
+      header: 'Status',
+      accessorKey: 'status',
+      Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
     {
       header: 'Actions',
       Cell: ({ row }: any) => (
