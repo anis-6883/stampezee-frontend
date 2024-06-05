@@ -22,12 +22,6 @@ export default function Page() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      {/* <div className="mb-5 flex justify-end">
-        <Link href={routes.retailer.sub_admin.create}>
-          <Button text="Add New Sub-Admin" preIcon={<HiPlus className="text-base" />} />
-        </Link>
-      </div> */}
-
       <SubAdminTable />
     </>
   );
