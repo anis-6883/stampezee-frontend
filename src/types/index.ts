@@ -1,5 +1,10 @@
 import { MouseEventHandler } from 'react';
 
+export interface ICountrySelect {
+  value: string;
+  label: string;
+  flag: string;
+}
 // Define the type for the query arguments
 export interface IAllBranchQueryArgs {
   page: number;

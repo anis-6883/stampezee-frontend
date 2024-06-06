@@ -35,7 +35,8 @@
     "**/*.mjs",
     ".next/types/**/*.ts",
     "next.config.js",
-    ".next/types/app/(client)/(public)/pricing/page.tsx"
+    ".next/types/app/(client)/(public)/pricing/page.tsx",
+    "src/utils/get-timezone-list. codpyts"
   ],
   "exclude": ["node_modules", "path/to/aos/directory"]
 }

@@ -2,8 +2,6 @@
 
 import React from 'react';
 import { Stepper } from 'rizzui';
-import Register from './Register';
-import VarefyOtp from './VarefyOtp';
 
 export default function App() {
   const [currentStep, setCurrentStep] = React.useState(0);
@@ -17,8 +15,8 @@ export default function App() {
             <Stepper.Step title="Step 2" description="Verify Your OTP" />
           </Stepper>
 
-          {currentStep === 0 && <Register currentStep={currentStep} setCurrentStep={setCurrentStep} />}
-          {currentStep === 1 && <VarefyOtp currentStep={currentStep} setCurrentStep={setCurrentStep} />}
+          {/* {currentStep === 0 && <Register currentStep={currentStep} setCurrentStep={setCurrentStep} />}
+          {currentStep === 1 && <VarefyOtp currentStep={currentStep} setCurrentStep={setCurrentStep} />} */}
         </div>
       </div>
     </>
