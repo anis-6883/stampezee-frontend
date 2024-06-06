@@ -52,7 +52,7 @@ const getOptionLabel = (option: any) => (
 );
 
 // Form component
-const MyForm = () => {
+const OptionField = () => {
   const { setFieldValue, values }: { setFieldValue: any; values: any } = useFormikContext();
 
   return (
@@ -77,4 +77,4 @@ const MyForm = () => {
   );
 };
 
-export default MyForm;
+export default OptionField;

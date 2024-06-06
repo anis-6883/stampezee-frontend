@@ -21,7 +21,8 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ text, color = 'primary', preIcon, postIcon, type = 'button', isSubmitting = false, onClick }) => {
-  const baseStyles = 'flex items-center gap-2 rounded-lg text-center text-sm font-medium shadow-lg focus:outline-none focus:ring-4';
+  const baseStyles =
+    'w-full justify-center flex items-center gap-2 rounded-lg text-center text-sm font-medium shadow-lg focus:outline-none focus:ring-4';
   const paddingStyles = text ? 'mb-2 me-2 px-5 py-2.5' : preIcon ? 'px-3 py-2' : '';
 
   return (
