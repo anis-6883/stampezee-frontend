@@ -1,24 +1,9 @@
-// import { metaObject } from '@/config/site.config';
-// import Stap from './components/Stap';
-
-// export const metadata = {
-//   ...metaObject('Register'),
-// };
-
-// export default async function Page() {
-//   return (
-//     <div className="min-h-[100vh] bg-gray-100">
-//       <Stap />
-//     </div>
-//   );
-// }
-
 import { metaObject } from '@/config/site.config';
 import Link from 'next/link';
 import RegisterForm from './components/RegisterForm';
 
 export const metadata = {
-  ...metaObject('Login Page'),
+  ...metaObject('Register Page'),
 };
 
 export default async function Page() {

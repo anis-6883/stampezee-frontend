@@ -41,7 +41,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
   };
 
   return (
-    <Modal isOpen={modalState} onClose={() => setModalState(false)}>
+    <Modal isOpen={modalState} onClose={() => setModalState(true)}>
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
           <Title as="h3">OTP Verification!</Title>
