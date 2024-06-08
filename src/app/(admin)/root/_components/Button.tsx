@@ -18,11 +18,20 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   isSubmitting?: boolean;
   onClick?: () => void;
+  className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, color = 'primary', preIcon, postIcon, type = 'button', isSubmitting = false, onClick }) => {
-  const baseStyles =
-    'w-full justify-center flex items-center gap-2 rounded-lg text-center text-sm font-medium shadow-lg focus:outline-none focus:ring-4';
+const Button: React.FC<ButtonProps> = ({
+  text,
+  color = 'primary',
+  preIcon,
+  postIcon,
+  type = 'button',
+  isSubmitting = false,
+  onClick,
+  className = '',
+}) => {
+  const baseStyles = `justify-center flex items-center gap-2 rounded-lg text-center text-sm font-medium shadow-lg focus:outline-none focus:ring-4 ${className}`;
   const paddingStyles = text ? 'mb-2 me-2 px-5 py-2.5' : preIcon ? 'px-3 py-2' : '';
 
   return (

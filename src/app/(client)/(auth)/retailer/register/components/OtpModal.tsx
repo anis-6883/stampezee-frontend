@@ -1,29 +1,63 @@
-import React, { SetStateAction, useState } from 'react';
+import Button from '@/app/(admin)/root/_components/Button';
+import { routes } from '@/config/routes';
+import { SerializedError } from '@/features/api/apiSlice';
+import { useRetailerOtpVerifyMutation, useRetailerResendOtpMutation } from '@/features/auth/authApi';
+import { useRouter } from 'next/navigation';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
-import { PiSpinnerLight } from 'react-icons/pi';
+import { ImSpinner9 } from 'react-icons/im';
 import { ActionIcon, Modal, PinCode, Title } from 'rizzui';
 
 export default function OtpModal({ modalState, setModalState }: { setModalState: (state: boolean) => void; modalState: boolean }) {
   const [otp, setOtp] = useState<SetStateAction<string | number | undefined>>('');
-  const [otpSubmitting, setOtpSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [resendOtpSubmitting, setResendOtpSubmitting] = useState(false);
   const [otpValidMsg, setOtpValidMsg] = useState('');
+  const [verifyEmail, { error: verifyError, isSuccess: verifySuccess }] = useRetailerOtpVerifyMutation();
+  const [resendOtp, { error: resendError, isSuccess: resendSuccess }] = useRetailerResendOtpMutation();
+  const { replace } = useRouter();
+
+  useEffect(() => {
+    if (verifyError) {
+      const myError = verifyError as SerializedError;
+      setIsSubmitting(false);
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+
+    if (verifySuccess) {
+      setIsSubmitting(false);
+      toast.success('OTP verified successfully!');
+      replace(routes.retailer.dashboard);
+    }
+  }, [replace, verifyError, verifySuccess]);
+
+  useEffect(() => {
+    if (resendError) {
+      setResendOtpSubmitting(false);
+      console.log('resendError: ', resendError);
+      const myError = resendError as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+    if (!resendError && resendSuccess) {
+      setResendOtpSubmitting(false);
+      toast.success('OTP sent on your email!');
+    }
+  }, [resendError, resendSuccess]);
 
   // Handler Otp Submit
   const otpSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    setOtpSubmitting(true);
+    setIsSubmitting(true);
     setOtpValidMsg('');
 
     if (typeof otp === 'string') {
       if (otp.length < 6) {
-        setOtpSubmitting(false);
+        setIsSubmitting(false);
         setOtpValidMsg('Please, Enter Valid OTP!');
       } else {
-        // verifyPhone({
-        //   phone,
-        //   otp,
-        // });
+        verifyEmail({ otp });
       }
     } else {
       setOtpValidMsg('Please, Enter Valid OTP!');
@@ -33,15 +67,11 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
   // Handle Resend Otp Submit
   const handleResendOtp = () => {
     setResendOtpSubmitting(true);
-
-    // resendOtp({
-    //   phone,
-    //   context: 'verify_code',
-    // });
+    resendOtp(undefined);
   };
 
   return (
-    <Modal isOpen={modalState} onClose={() => setModalState(false)}>
+    <Modal isOpen={modalState} onClose={() => setModalState(true)}>
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
           <Title as="h3">OTP Verification!</Title>
@@ -49,15 +79,18 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
             <HiMiniXCircle className="text-2xl text-danger" />
           </ActionIcon>
         </div>
+        <p className="my-5 text-sm font-medium">
+          We sent an OTP to your email. You have 2 minutes to complete this verification. Thank you!
+        </p>
         <div className="grid gap-x-5 gap-y-6">
           <form onSubmit={otpSubmitHandler}>
             <div>
-              <PinCode length={6} setValue={(input) => setOtp(input)} />
+              <PinCode inputClassName="text-lg" length={6} setValue={(input) => setOtp(input)} />
             </div>
-            {otpValidMsg && <p className="text-error mt-4 px-1 text-center font-medium">{otpValidMsg}</p>}
+            {otpValidMsg && <p className="mt-4 px-1 text-center font-medium text-danger">{otpValidMsg}</p>}
             <div className="mt-10 grid grid-cols-12 items-center">
               <div className="col-span-8">
-                <p className="flex select-none items-center">
+                <p className="flex select-none items-center text-sm font-medium">
                   Didn{"'"}t get any otp yet?{' '}
                   <span
                     className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-primary`}
@@ -65,10 +98,14 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
                   >
                     Resend OTP
                   </span>
-                  {resendOtpSubmitting && <PiSpinnerLight size={20} className="ml-1 animate-spin" />}
+                  {resendOtpSubmitting && <ImSpinner9 size={20} className="ml-1 animate-spin" />}
                 </p>
               </div>
               <div className="col-span-4 text-right"></div>
+            </div>
+
+            <div className="mt-10">
+              <Button type="submit" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={isSubmitting} />
             </div>
           </form>
         </div>

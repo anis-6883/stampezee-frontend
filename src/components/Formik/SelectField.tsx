@@ -6,7 +6,6 @@ interface SelectOptionProps {
   label?: string;
   name?: string;
   options?: { label: string; value: string }[];
-  selectClassName?: string;
   labelClassName?: string;
   value?: any;
   onChange: any;
@@ -23,7 +22,6 @@ const SelectField: React.FC<SelectOptionProps> = ({
   name = 'status',
   label = 'Status',
   options = defaultOptions,
-  selectClassName,
   labelClassName,
   onChange,
   required = true,
@@ -41,13 +39,13 @@ const SelectField: React.FC<SelectOptionProps> = ({
                 {required && <span className="text-red-500"> *</span>}
               </span>
             }
-            selectClassName={selectClassName}
+            selectClassName={`${meta.touched && meta.error ? '!border-red-500 ring-0' : 'border-gray-200'}`}
             labelClassName={labelClassName}
             options={options}
             value={options.find((option) => option.value === value)}
             onChange={onChange}
-            error={meta.touched && meta.error && <div className="mt-1 text-xs text-red-500">{meta.error}</div>}
             disabled={disabled}
+            // error={meta.touched && meta.error && <div className="mt-1 text-xs text-red-500">{meta.error}</div>}
           />
         )}
       </Field>
@@ -56,14 +54,3 @@ const SelectField: React.FC<SelectOptionProps> = ({
 };
 
 export default SelectField;
-
-{
-  /* <SelectField
-name='collectionCode'
-required={false}
-onChange={(v: any) => setFieldValue("collectionCode", v.value)}
-label='Collection Code'
-labelClassName='mt-2'
-options={collectionCode}
-/> */
-}

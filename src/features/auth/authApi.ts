@@ -41,14 +41,11 @@ export const authApi = apiSlice.injectEndpoints({
       providesTags: ['superAdminProfile'],
     }),
 
-    // super-admin api end
-
     // retailer api start
     retailerGetProfile: builder.query({
       query: () => `api/retailer/profile`,
       providesTags: ['retailerProfile'],
     }),
-
     retailerRegister: builder.mutation({
       query: (data) => {
         return {
@@ -57,7 +54,6 @@ export const authApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['retailerProfile'],
     }),
     retailerOtpVerify: builder.mutation({
       query: (data) => {
@@ -67,7 +63,15 @@ export const authApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['retailerProfile'],
+    }),
+    retailerResendOtp: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/retailer/resend-otp`,
+          method: 'POST',
+          body: data,
+        };
+      },
     }),
     retailerLogin: builder.mutation({
       query: (data) => {
@@ -77,7 +81,6 @@ export const authApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['retailerProfile'],
     }),
     retailerLogout: builder.mutation({
       query: () => {
@@ -86,10 +89,7 @@ export const authApi = apiSlice.injectEndpoints({
           method: 'POST',
         };
       },
-      invalidatesTags: ['retailerProfile'],
     }),
-
-    // retailer api end
   }),
 });
 
@@ -104,4 +104,5 @@ export const {
   useRetailerRegisterMutation,
   useGetOwnProfileQuery,
   useLogoutUserMutation,
+  useRetailerResendOtpMutation,
 } = authApi;

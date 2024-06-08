@@ -3,20 +3,39 @@
 import Button from '@/app/(admin)/root/_components/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
+import { SerializedError } from '@/features/api/apiSlice';
+import { useRetailerRegisterMutation } from '@/features/auth/authApi';
 import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import ReactSelect, { OnChangeValue } from 'react-select';
 import { FieldError } from 'rizzui';
 import * as Yup from 'yup';
 import OtpModal from './OtpModal';
-import PhoneNumber from './phone-number';
+import PhoneNumber from './PhoneNumber';
 
 export default function RegisterForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalState, setModalState] = useState(false);
+  const [register, { isSuccess, error }] = useRetailerRegisterMutation();
+
+  useEffect(() => {
+    if (error) {
+      const myError = error as SerializedError;
+      setIsSubmitting(false);
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+
+    if (isSuccess) {
+      setIsSubmitting(false);
+      setModalState(true);
+      toast.success('OTP sent on your email!');
+    }
+  }, [error, isSuccess]);
 
   const countryOptions = countryData.map((country) => ({
     value: country.code,
@@ -29,7 +48,7 @@ export default function RegisterForm() {
     firstName: '',
     lastName: '',
     email: '',
-    dialCode: '',
+    dialCode: '+1',
     phone: '',
     country: 'Canada',
     province: '',
@@ -42,7 +61,7 @@ export default function RegisterForm() {
   const validationSchema = Yup.object().shape({
     storeName: Yup.string().required('Required!'),
     firstName: Yup.string().required('Required!'),
-    lastName: Yup.string().required('Required!'),
+    lastName: Yup.string(),
     email: Yup.string().email('Invalid email').required('Required!'),
     phone: Yup.string().required('Required!'),
     country: Yup.string().required('Required!'),
@@ -50,48 +69,26 @@ export default function RegisterForm() {
     city: Yup.string().required('Required!'),
     postalCode: Yup.string().required('Required!'),
     address: Yup.string().required('Required!'),
-    password: Yup.string().required('Required!'),
-    // .matches(
-    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/,
-    //   'Password must be at least 6 characters long with 1 uppercase, 1 lowercase, and 1 digit'
-    // )
+    password: Yup.string().required('Required!').min(8, 'At least 8 characters long!'),
   });
 
   const handleSubmit = async (values: any) => {
-    // setIsSubmitting(true);
-    console.log('Values: ', values);
-    // try {
-    //   const response = await axiosBackendUrl.post('/api/retailer/register', values);
-
-    //   if (response.status === 201) {
-    //     toast.success(response.data.message);
-    //   } else {
-    //     toast.error('this email is already registered try another email');
-    //   }
-    // } catch (error: any) {
-    //   if (error.response) {
-    //     toast.error(error.response.data.message || 'An error occurred while submitting the form.');
-    //   } else {
-    //     toast.error('An error occurred while submitting the form.');
-    //   }
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+    setIsSubmitting(true);
+    console.log('values: ', removeEmptyValues(values));
+    register(removeEmptyValues(values));
   };
 
   return (
     <div>
-      <div className="mt-8 px-2">
+      <div className="mt-8">
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-          {({ values, errors, setFieldValue, touched, setFieldTouched }) => {
-            console.log('Values: ', values);
+          {({ errors, setFieldValue, touched, setFieldTouched }) => {
             return (
               <Form className="grid gap-4">
-                {/* <p>Fields marks with * are mandatory!</p> */}
                 <InputField name="storeName" label="Store Name" placeholder="Burger King" />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <InputField name="firstName" label="First Name" placeholder="John" />
-                  <InputField name="lastName" label="Last Name" placeholder="Doe" />
+                  <InputField name="lastName" label="Last Name" placeholder="Doe" required={false} />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -133,32 +130,37 @@ export default function RegisterForm() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                   <InputField name="province" label="Province" placeholder="Ontario" />
                   <InputField name="city" label="City" placeholder="Toronto" />
+                  <InputField name="postalCode" label="Postal Code" placeholder="M3C" />
                 </div>
 
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <InputField name="postalCode" label="Postal Code" placeholder="M3C" />
+                <div className="grid grid-cols-1">
                   <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <InputField name="email" label="Email" placeholder="john@email.com" />
-                  <InputPassword name="password" label="Password" placeholder="******" />
+                  <InputPassword name="password" label="Password" placeholder="********" />
                 </div>
 
-                <p className="text-end text-xs font-semibold">
-                  Fields marked with <span className="text-red-600">*</span> are mandatory!
+                <p className="flex flex-col text-end text-xs font-semibold">
+                  <span>
+                    Fields marked with <span className="text-red-600">*</span> are mandatory!
+                  </span>
+                  <span>
+                    Password must be at least <span className="text-red-600">8 characters</span> long!
+                  </span>
                 </p>
 
-                <Button type="submit" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={isSubmitting} />
-                {/* <Button
-                  type="button"
-                  text="Otp Modal Open"
+                <Button
+                  className="w-full"
+                  type="submit"
+                  text="Submit"
                   postIcon={<BsCheck2Circle className="text-base" />}
-                  onClick={() => setModalState(true)}
-                /> */}
+                  isSubmitting={isSubmitting}
+                />
               </Form>
             );
           }}

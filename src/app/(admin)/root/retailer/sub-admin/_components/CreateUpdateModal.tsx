@@ -4,6 +4,7 @@ import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
 import SelectField from '@/components/Formik/SelectField';
+import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateSubAdminMutation, useSubAdminBranchesQuery, useUpdateSubAdminMutation } from '@/features/retailer/sub-admin/subAdminApi';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
@@ -44,8 +45,8 @@ export default function CreateUpdateModal({
 
   useEffect(() => {
     if (createError) {
-      // @ts-ignore
-      toast.error(createError?.data?.message || 'Something went wrong. Please try again!.');
+      const myError = createError as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
       setSubmitting(false);
     }
     if (createSuccess) {
@@ -58,8 +59,8 @@ export default function CreateUpdateModal({
 
   useEffect(() => {
     if (updateError) {
-      // @ts-ignore
-      toast.error(updateError?.data?.message || 'Something went wrong. Please try again!.');
+      const myError = updateError as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
       setSubmitting(false);
     }
     if (updateSuccess) {
@@ -157,8 +158,10 @@ export default function CreateUpdateModal({
                     />
                   </div>
                 </div>
-
-                <div className="mt-10 flex justify-end">
+                <p className="text-end text-xs font-semibold">
+                  Fields marked with <span className="text-red-600">*</span> are mandatory!
+                </p>
+                <div className="mt-6 flex justify-end">
                   <Button
                     color={formData?._id ? 'warning' : 'primary'}
                     type="submit"
