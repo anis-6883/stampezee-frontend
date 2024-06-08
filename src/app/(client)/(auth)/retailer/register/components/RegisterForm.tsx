@@ -3,18 +3,20 @@
 import Button from '@/app/(admin)/root/_components/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
+import { SerializedError } from '@/features/api/apiSlice';
+import { useRetailerRegisterMutation } from '@/features/auth/authApi';
 import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import ReactSelect, { OnChangeValue } from 'react-select';
 import { FieldError } from 'rizzui';
 import * as Yup from 'yup';
 import OtpModal from './OtpModal';
-import PhoneNumber from './phone-number';
-import { useRetailerRegisterMutation } from '@/features/auth/authApi';
-import toast from 'react-hot-toast';
+import PhoneNumber from './PhoneNumber';
 
 export default function RegisterForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,12 +25,14 @@ export default function RegisterForm() {
 
   useEffect(() => {
     if (error) {
+      const myError = error as SerializedError;
       setIsSubmitting(false);
-      console.log(error);
+      toast.error(myError?.data?.message || 'Something went wrong!');
     }
 
     if (isSuccess) {
       setIsSubmitting(false);
+      setModalState(true);
       toast.success('OTP sent on your email!');
     }
   }, [error, isSuccess]);
@@ -70,7 +74,8 @@ export default function RegisterForm() {
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
-    register(values);
+    console.log('values: ', removeEmptyValues(values));
+    register(removeEmptyValues(values));
   };
 
   return (
@@ -149,7 +154,13 @@ export default function RegisterForm() {
                   </span>
                 </p>
 
-                <Button type="submit" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={isSubmitting} />
+                <Button
+                  className="w-full"
+                  type="submit"
+                  text="Submit"
+                  postIcon={<BsCheck2Circle className="text-base" />}
+                  isSubmitting={isSubmitting}
+                />
               </Form>
             );
           }}

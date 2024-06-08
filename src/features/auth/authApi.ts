@@ -64,6 +64,15 @@ export const authApi = apiSlice.injectEndpoints({
         };
       },
     }),
+    retailerResendOtp: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/retailer/resend-otp`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
     retailerLogin: builder.mutation({
       query: (data) => {
         return {
@@ -95,4 +104,5 @@ export const {
   useRetailerRegisterMutation,
   useGetOwnProfileQuery,
   useLogoutUserMutation,
+  useRetailerResendOtpMutation,
 } = authApi;

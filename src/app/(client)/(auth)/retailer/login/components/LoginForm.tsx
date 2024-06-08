@@ -91,7 +91,13 @@ export default function LoginForm() {
             <p className="text-end text-xs font-semibold">
               Fields marked with <span className="text-red-600">*</span> are mandatory!
             </p>
-            <Button type="submit" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={isSubmitting} />
+            <Button
+              className="w-full"
+              type="submit"
+              text="Submit"
+              postIcon={<BsCheck2Circle className="text-base" />}
+              isSubmitting={isSubmitting}
+            />
           </div>
         </Form>
       )}

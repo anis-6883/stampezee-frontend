@@ -1,5 +1,12 @@
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
+export interface SerializedError {
+  data: {
+    status: boolean;
+    message: string;
+  };
+}
+
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL as string,
   prepareHeaders: async (headers) => {

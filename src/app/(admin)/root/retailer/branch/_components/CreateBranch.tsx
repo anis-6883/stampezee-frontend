@@ -66,6 +66,9 @@ export default function CreateBranch() {
         <Form className="mt-5 grid gap-4">
           <InputField name="name" label="Name" placeholder="ex. Ring Road Branch" />
           <MapComponent />
+          <p className="text-end text-xs font-semibold">
+            Fields marked with <span className="text-red-600">*</span> are mandatory!
+          </p>
           <div className="mt-2 flex justify-end">
             <Button type="submit" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={isSubmitting} />
           </div>

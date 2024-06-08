@@ -1,5 +1,5 @@
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
-import { useFormikContext } from 'formik';
+import { Field, useFormikContext } from 'formik';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Input, Loader } from 'rizzui';
 
@@ -93,21 +93,24 @@ export default function MapComponent() {
   return isLoaded ? (
     <div>
       <StandaloneSearchBox onLoad={onSearchBoxLoad} onPlacesChanged={onPlacesChanged}>
-        <Input
-          value={values.address}
-          ref={autocompleteRef}
-          type="text"
-          label={
-            <span>
-              Address <span className="text-red-600">*</span>
-            </span>
-          }
-          placeholder="Search for places..."
-          onChange={handleInputChange}
-          name="address"
-          error={errors.address && touched.address && <div className="mt-1 text-xs text-red-500">{errors.address}</div>}
-          className="mb-3"
-        />
+        <Field name="address">
+          {({ field, meta }: { field: any; meta: any }) => (
+            <Input
+              className="mb-3"
+              onChange={handleInputChange}
+              label={
+                <span>
+                  Address <span className="text-red-600">*</span>
+                </span>
+              }
+              type="text"
+              placeholder="Search for places..."
+              ref={autocompleteRef}
+              value={values.address}
+              inputClassName={`${meta.touched && meta.error ? '!border-red-500 ring-0' : 'border-gray-200'}`}
+            />
+          )}
+        </Field>
       </StandaloneSearchBox>
       <GoogleMap
         mapContainerStyle={{
