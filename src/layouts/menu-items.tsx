@@ -1,10 +1,10 @@
 import { routes } from '@/config/routes';
 import { BsShop } from 'react-icons/bs';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
-import { IoDiamondOutline, IoDuplicate, IoImageOutline } from 'react-icons/io5';
-import { LuBarChart3, LuUserCog, LuUsers } from 'react-icons/lu';
+import { IoDiamondOutline, IoImageOutline } from 'react-icons/io5';
+import { LuBarChart3, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
 import { MdQrCodeScanner } from 'react-icons/md';
-import { PiBellRinging, PiCurrencyDollar, PiNewspaperClippingLight, PiStamp, PiTreeStructure } from 'react-icons/pi';
+import { PiBellRinging, PiCurrencyDollar, PiStamp, PiTreeStructure } from 'react-icons/pi';
 import { TbUserShield } from 'react-icons/tb';
 
 export const menuItems: { [key: string]: any } = {
@@ -16,47 +16,42 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Customers',
-      href: routes.superAdmin.dashboard,
+      href: routes.superAdmin.customer,
       icon: <LuUsers />,
     },
     {
       name: 'Retailers',
-      href: routes.superAdmin.dashboard,
+      href: routes.superAdmin.retailer.home,
       icon: <BsShop />,
     },
     {
       name: 'Scans',
-      href: routes.superAdmin.dashboard,
+      href: routes.superAdmin.scan,
       icon: <MdQrCodeScanner />,
     },
     {
-      name: 'Stamps category',
+      name: 'Stamp Categories',
       href: routes.superAdmin.stampCategory.home,
-      icon: <IoDuplicate />,
+      icon: <LuListChecks />,
     },
     {
-      name: 'Stamps Images',
+      name: 'Stamp Images',
       href: routes.superAdmin.stampImage.home,
       icon: <PiStamp />,
     },
     {
       name: 'Push Notifications',
-      href: routes.superAdmin.dashboard,
+      href: routes.superAdmin.notification,
       icon: <PiBellRinging />,
     },
     {
       name: 'Billings',
-      href: routes.superAdmin.dashboard,
+      href: routes.superAdmin.billing,
       icon: <PiCurrencyDollar />,
     },
     {
-      name: 'Pages',
-      href: routes.superAdmin.dashboard,
-      icon: <PiNewspaperClippingLight />,
-    },
-    {
       name: 'General Settings',
-      href: routes.superAdmin.dashboard,
+      href: routes.superAdmin.settings,
       icon: <HiOutlineCog8Tooth />,
     },
   ],
