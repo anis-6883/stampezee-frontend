@@ -30,7 +30,7 @@ export default function CreateUpdateModal({
   const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
   const [createSubAdmin, { isSuccess: createSuccess, error: createError }] = useCreateSubAdminMutation();
   const [updateSubAdmin, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubAdminMutation();
-  const [isSubmitting, setSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: branches } = useSubAdminBranchesQuery(undefined);
 
   useEffect(() => {
@@ -47,12 +47,12 @@ export default function CreateUpdateModal({
     if (createError) {
       const myError = createError as SerializedError;
       toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
-      setSubmitting(false);
+      setIsSubmitting(false);
     }
     if (createSuccess) {
       toast.success('Sub-Admin created successfully!');
       setFormData({});
-      setSubmitting(false);
+      setIsSubmitting(false);
       setModalState(false);
     }
   }, [createError, createSuccess, setFormData, setModalState]);
@@ -61,12 +61,12 @@ export default function CreateUpdateModal({
     if (updateError) {
       const myError = updateError as SerializedError;
       toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
-      setSubmitting(false);
+      setIsSubmitting(false);
     }
     if (updateSuccess) {
       toast.success('Sub-Admin updated successfully!');
       setFormData({});
-      setSubmitting(false);
+      setIsSubmitting(false);
       setModalState(false);
     }
   }, [setFormData, setModalState, updateError, updateSuccess]);
@@ -90,7 +90,7 @@ export default function CreateUpdateModal({
 
   // Submit Handler
   const submitHandler = async (values: any) => {
-    setSubmitting(true);
+    setIsSubmitting(true);
     const isFile = (obj: any): obj is File => obj instanceof File;
 
     let objToFormData: FormData;
@@ -115,7 +115,7 @@ export default function CreateUpdateModal({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          <Title as="h4">Add New Sub-Admin</Title>
+          {formData?._id ? <Title as="h4">Update A Sub-Admin</Title> : <Title as="h4">Add New Sub-Admin</Title>}
           <ActionIcon
             size="sm"
             variant="text"

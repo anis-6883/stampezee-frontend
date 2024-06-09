@@ -1,3 +1,5 @@
+import cn from '@/hooks/class-names';
+import { useFormikContext } from 'formik';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -19,6 +21,7 @@ export default function DragAndDropUpload({
 }) {
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState<string>('');
+  const { errors } = useFormikContext<any>();
 
   useEffect(() => {
     if (typeof value.image === 'string' && value.image != null) {
@@ -99,7 +102,12 @@ export default function DragAndDropUpload({
             </button>
           </div>
         ) : (
-          <div className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-2">
+          <div
+            className={cn(
+              'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-2',
+              errors.image && '!border-red-500 ring-0'
+            )}
+          >
             <input {...getInputProps()} />
             <MdCloudUpload className="text-4xl text-primary" />
 

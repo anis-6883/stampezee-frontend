@@ -6,7 +6,7 @@ export default function SubmitButton({
   text = 'Submit',
   loadingText = 'Please Wait...',
   isSubmitting = false,
-  buttonClass = '',
+  buttonClass = 'w-full h-[80%]',
 }: {
   type?: 'submit' | 'button';
   text?: string;
