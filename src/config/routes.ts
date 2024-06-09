@@ -13,8 +13,8 @@ export const routes = {
       home: `/root/super-admin/stamps-category`,
     },
     retailer: {
-      home: `/root/super-admin/retailer`,
-      create: `/root/super-admin/retailer/create`,
+      home: `/root/super-admin/retailers`,
+      create: `/root/super-admin/retailers/create`,
       edit: (id: number | string) => `/root/super-admin/retailer/${id}/update`,
     },
     notification: `/root/super-admin/notification`,

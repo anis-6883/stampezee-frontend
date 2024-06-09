@@ -1,5 +1,5 @@
 import { apiSlice } from '@/features/api/apiSlice';
-import { ICreateStampImage, IDeleteStampImage, IPagination, IResponse } from '@/types';
+import { IPagination, IResponse } from '@/types';
 
 export const superAdminStampImageApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,7 +11,7 @@ export const superAdminStampImageApi = apiSlice.injectEndpoints({
       },
       providesTags: ['superAdminRetailerStamp'],
     }),
-    createSuperAdminStampImage: builder.mutation<IResponse, ICreateStampImage>({
+    createSuperAdminStampImage: builder.mutation({
       query: (newStampImage) => ({
         url: '/api/secret-root/admin/super-admin/stamp-image',
         method: 'POST',
@@ -19,16 +19,16 @@ export const superAdminStampImageApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['superAdminRetailerStamp'],
     }),
-    updateSuperAdminStampImage: builder.mutation<IResponse, { id: string; formData: FormData }>({
-      query: ({ id, formData }: any) => ({
+    updateSuperAdminStampImage: builder.mutation({
+      query: ({ id, data }: any) => ({
         url: `api/secret-root/admin/super-admin/stamp-image/${id}`,
         method: 'PUT',
-        body: formData,
+        body: data,
       }),
       invalidatesTags: ['superAdminRetailerStamp'],
     }),
-    deleteSuperAdminStampImage: builder.mutation<IResponse, IDeleteStampImage>({
-      query: ({ id }) => ({
+    deleteSuperAdminStampImage: builder.mutation({
+      query: (id) => ({
         url: `api/secret-root/admin/super-admin/stamp-image/${id}`,
         method: 'DELETE',
       }),
