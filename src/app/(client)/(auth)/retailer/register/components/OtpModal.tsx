@@ -105,7 +105,13 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
             </div>
 
             <div className="mt-10">
-              <Button type="submit" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={isSubmitting} />
+              <Button
+                className="w-full"
+                type="submit"
+                text="Submit"
+                postIcon={<BsCheck2Circle className="text-base" />}
+                isSubmitting={isSubmitting}
+              />
             </div>
           </form>
         </div>

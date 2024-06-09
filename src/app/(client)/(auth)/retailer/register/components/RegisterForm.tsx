@@ -9,11 +9,12 @@ import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import ReactSelect, { OnChangeValue } from 'react-select';
-import { FieldError } from 'rizzui';
+import { Checkbox, FieldError } from 'rizzui';
 import * as Yup from 'yup';
 import OtpModal from './OtpModal';
 import PhoneNumber from './PhoneNumber';
@@ -56,6 +57,7 @@ export default function RegisterForm() {
     postalCode: '',
     address: '',
     password: '',
+    isAgree: '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -69,20 +71,21 @@ export default function RegisterForm() {
     city: Yup.string().required('Required!'),
     postalCode: Yup.string().required('Required!'),
     address: Yup.string().required('Required!'),
+    isAgree: Yup.string().required('Required!'),
     password: Yup.string().required('Required!').min(8, 'At least 8 characters long!'),
   });
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
     console.log('values: ', removeEmptyValues(values));
-    register(removeEmptyValues(values));
+    register(removeEmptyValues(values, ['isAgree']));
   };
 
   return (
     <div>
       <div className="mt-8">
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-          {({ errors, setFieldValue, touched, setFieldTouched }) => {
+          {({ errors, setFieldValue, touched, setFieldTouched, values }) => {
             return (
               <Form className="grid gap-4">
                 <InputField name="storeName" label="Store Name" placeholder="Burger King" />
@@ -143,6 +146,28 @@ export default function RegisterForm() {
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <InputField name="email" label="Email" placeholder="john@email.com" />
                   <InputPassword name="password" label="Password" placeholder="********" />
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Checkbox
+                    onChange={() => {
+                      values.isAgree === 'yes' ? setFieldValue('isAgree', '') : setFieldValue('isAgree', 'yes');
+                    }}
+                    inputClassName={`${errors.isAgree && touched.isAgree && '!border-red-500 ring-0'}`}
+                    size="sm"
+                    iconClassName="top-0"
+                    onBlur={() => setFieldTouched('isAgree', true)}
+                  />{' '}
+                  <p className="text-xs font-medium">
+                    I Agree with the{' '}
+                    <Link href="/retailer/login" className="border-b-2">
+                      Terms of Use
+                    </Link>{' '}
+                    and{' '}
+                    <Link href="/retailer/login" className="border-b-2">
+                      Privacy Policy
+                    </Link>
+                  </p>
                 </div>
 
                 <p className="flex flex-col text-end text-xs font-semibold">
