@@ -29,9 +29,9 @@ export default async function Page() {
             </div>
           </div>
         </div>
-        <div className="col-span-6 hidden md:block">
-          <div className="h-full w-full ">
-            <img src="/images/login-page.jpeg" className="h-full w-full rounded-r-lg" alt="logo" />
+        <div className="col-span-6  md:block">
+          <div className="flex h-full items-center justify-center">
+            <img src="/images/retailer-login.png" className="w-3/4 rounded-r-lg" alt="logo" />
           </div>
         </div>
       </div>
