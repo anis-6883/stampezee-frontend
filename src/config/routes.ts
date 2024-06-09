@@ -12,6 +12,16 @@ export const routes = {
     stampCategory: {
       home: `/root/super-admin/stamps-category`,
     },
+    retailer: {
+      home: `/root/super-admin/retailer`,
+      create: `/root/super-admin/retailer/create`,
+      edit: (id: number | string) => `/root/super-admin/retailer/${id}/update`,
+    },
+    notification: `/root/super-admin/notification`,
+    billing: `/root/super-admin/billing`,
+    scan: `/root/super-admin/scan`,
+    customer: `/root/super-admin/customer`,
+    settings: `/root/super-admin/settings`,
   },
   retailer: {
     dashboard: '/root/retailer/dashboard',

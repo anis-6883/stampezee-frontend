@@ -1,6 +1,5 @@
 'use client';
 
-import AskConfirmation from '@/app/(admin)/root/_components/AskConfirmation';
 import Table from '@/app/(admin)/root/_components/Table';
 import { routes } from '@/config/routes';
 import { useDeleteStampMutation, useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
@@ -9,7 +8,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 
@@ -86,7 +84,7 @@ export default function IndexTable() {
           <Link onClick={() => handleEdit(row.original)} href={routes.retailer.sub_admin.edit(row.original._id)}>
             <HiOutlinePencil className="text-base" />
           </Link>
-          <button onClick={() => handleDelete(row.original)}>
+          <button>
             <ImBin className="text-base" />
           </button>
         </div>
@@ -97,13 +95,13 @@ export default function IndexTable() {
     router.push(routes.retailer.sub_admin.edit(rowData._id));
   };
 
-  const handleDelete = async (rowData: any) => {
-    if (popup) return;
-    toast((t) => {
-      popup = t.visible;
-      return AskConfirmation(t, () => deleteStamp({ id: rowData._id }));
-    });
-  };
+  // const handleDelete = async (rowData: any) => {
+  //   if (popup) return;
+  //   toast((t) => {
+  //     popup = t.visible;
+  //     return AskConfirmation(t, () => deleteStamp({ id: rowData._id }));
+  //   });
+  // };
 
   return (
     <Table
