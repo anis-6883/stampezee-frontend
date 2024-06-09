@@ -21,9 +21,6 @@ import CreateUpdateModel from './CreateUpdateModel';
 export default function StampsImageTable() {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
-  const [modalState, setModalState] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [updateValue, setUpdateValue] = useState({});
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
@@ -38,27 +35,9 @@ export default function StampsImageTable() {
   const [deleteStampImage, { isSuccess, isError }] = useDeleteStampImageMutation();
   const [updateStatus] = useUpdateStampStatusMutation();
 
-  const handleEdit = (rowData: any) => {
-    setEdit(true);
-    setModalState(true);
-    const newData = {
-      id: rowData._id,
-      title: rowData.title,
-      image: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${rowData.image}`,
-    };
-
-    setUpdateValue(newData);
-  };
-
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
     setDeleteId(rowData._id);
-  };
-
-  const handleClose = () => {
-    setModalState(!modalState);
-    setEdit(!edit);
-    setUpdateValue({});
   };
 
   useEffect(() => {
