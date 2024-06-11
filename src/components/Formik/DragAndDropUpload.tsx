@@ -89,26 +89,33 @@ export default function DragAndDropUpload({
         })}
       >
         {value && preview ? (
-          <div className="flex items-center gap-3">
+          <div className="relative flex items-center gap-3">
             <Image
               src={preview}
               alt="Uploaded Image"
               width={0}
               height={0}
               sizes="100vw"
-              className={cn('h-24 w-24 rounded-md border border-gray-200 object-contain p-1', isRounded && 'rounded-full')}
+              className={cn('z-30 h-[120px] w-[120px] rounded-md border border-gray-200 object-contain p-1', isRounded && 'rounded-full')}
             />
             {/* {value && value.name && <p className="mt-2 text-[14px] font-bold text-gray-800">{value.name}</p>} */}
-            <button type="button" className="rounded bg-red-500 p-1" onClick={removeFile}>
-              <FaTrashAlt className="hover:fill-secondary-400 h-5 w-5 fill-white transition-colors" />
-            </button>
+            {!isRounded ? (
+              <button type="button" className="rounded bg-red-500 p-1" onClick={removeFile}>
+                <FaTrashAlt className="hover:fill-secondary-400 h-5 w-5 fill-white transition-colors" />
+              </button>
+            ) : (
+              <FaTrashAlt
+                onClick={removeFile}
+                className="hover:fill-secondary-400 absolute right-2 top-0 z-50 h-4 w-4 transform cursor-pointer fill-red-500 transition-all duration-700 ease-in-out hover:scale-125"
+              />
+            )}
           </div>
         ) : (
           <div
             className={cn(
               'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-2',
               errors.image && '!border-red-500 ring-0 ',
-              isRounded && 'h-[110px] w-[110px] gap-0 rounded-full'
+              isRounded && 'h-[120px] w-[120px] gap-0 rounded-full'
             )}
           >
             <input {...getInputProps()} />
@@ -126,7 +133,7 @@ export default function DragAndDropUpload({
                         <span> to upload!</span>
                       </div>
                     ) : (
-                      <span className="-mt-2 text-xs">Upload Image</span>
+                      <span className="-mt-2 p-1 text-xs">Upload Image</span>
                     )}
                     <input id="file-upload" name="file-upload" type="file" className="sr-only" />
                   </label>

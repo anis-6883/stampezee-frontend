@@ -24,6 +24,7 @@ export const superAdminStampImageCategoryApi = apiSlice.injectEndpoints({
         method: 'PUT',
         body: formData,
       }),
+      invalidatesTags: ['superAdminRetailerStampCategory'],
     }),
     updateSuperAdminCategoryStatus: builder.mutation({
       query: ({ data, branchId }) => ({

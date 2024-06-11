@@ -17,7 +17,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function StampCategory() {
+export default function StampCategoryTable() {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);

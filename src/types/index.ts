@@ -1,5 +1,22 @@
 import { MouseEventHandler } from 'react';
 
+export interface ITableProps {
+  response: any;
+  structure: any;
+  tableProperties?: any;
+  query?: IQueryType;
+  enablePagination?: boolean;
+  isLoading?: boolean;
+  isFetching?: boolean;
+  enableRowActions?: boolean;
+  enableDnD?: boolean;
+  setQuery?: Function;
+  sort?: Function;
+  sortContext?: string;
+  searchPlaceHolder?: string;
+  searchFieldWidth?: string;
+}
+
 export interface ICountrySelect {
   value: string;
   label: string;

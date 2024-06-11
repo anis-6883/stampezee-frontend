@@ -7,7 +7,6 @@ import InputPassword from '@/components/Formik/InputPassword';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateSuperAdminRetailerMutation, useUpdateSuperAdminRetailerMutation } from '@/features/super-admin/retailer/retailerApi';
-import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
@@ -15,7 +14,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
-import ReactSelect, { OnChangeValue } from 'react-select';
+import ReactSelect from 'react-select';
 import { ActionIcon, FieldError, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -42,6 +41,7 @@ export default function CreateUpdateModel({
     dialCode: formData?.dialCode || '+1',
     phone: formData?.phone || '',
     country: formData?.country || 'Canada',
+    status: true,
     province: formData?.province || '',
     city: formData?.city || '',
     postalCode: formData?.postalCode || '',
@@ -192,9 +192,9 @@ export default function CreateUpdateModel({
                         placeholder="Select your country"
                         options={countryOptions}
                         getOptionLabel={getOptionLabel}
-                        getOptionValue={(option) => option.label}
-                        defaultValue={countryOptions.filter((country) => country.label == formData?.country ?? 'Bangladesh')}
-                        onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => setFieldValue('country', selectedOption?.label)}
+                        getOptionValue={(option) => option.value}
+                        defaultValue={countryOptions.find((country) => country.label === (formData?.country || 'Canada'))}
+                        onChange={(selectedOption) => setFieldValue('country', selectedOption?.label)}
                         onBlur={() => setFieldTouched('country', true)}
                       />
                       {touched.country && errors.country && <FieldError className="text-xs text-red-600" />}

@@ -78,7 +78,7 @@ export default function RetailerTable() {
                 <span className="font-bold">Store Name:</span> {row?.original.storeName}
               </p>
               <p>
-                <span className="font-bold">User Name:</span> {row?.original.firstName} {row?.original.lastName}
+                <span className="font-bold">Name:</span> {row?.original.firstName} {row?.original.lastName}
               </p>
               <p>
                 <span className="font-bold">Email:</span> {row?.original.email}
@@ -96,9 +96,6 @@ export default function RetailerTable() {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Address:</span> {row?.original.address}
-          </p>
-          <p>
             <span className="font-bold">Country:</span> {row?.original.country}
           </p>
           <p>
@@ -109,6 +106,9 @@ export default function RetailerTable() {
           </p>
           <p>
             <span className="font-bold">Postal Code:</span> {row?.original.postalCode}
+          </p>
+          <p>
+            <span className="font-bold">Address:</span> {row?.original.address}
           </p>
         </div>
       ),
@@ -186,7 +186,8 @@ export default function RetailerTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Title"
+        searchPlaceHolder="Search By Name, Store, Email"
+        searchFieldWidth="270px"
       />
 
       <DeleteConfirmModal
