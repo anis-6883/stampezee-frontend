@@ -33,6 +33,10 @@ export default function RetailerTable() {
     ...searchQuery,
   });
 
+  if (!isLoading) {
+    console.log('Data: ', data);
+  }
+
   const [deleteRetailer, { isSuccess, isError }] = useDeleteSuperAdminRetailerMutation();
 
   const [updateStatus] = useUpdateRetailerStatusMutation();
@@ -123,7 +127,11 @@ export default function RetailerTable() {
     {
       header: 'Status',
       accessorKey: 'status',
-      Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
+      Cell: ({ row }: any) => {
+        return <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />;
+
+        // return row?.original?.status ? <div>Yes</div> : <div>No</div>;
+      },
       mantineTableHeadCellProps: {
         align: 'center',
       },

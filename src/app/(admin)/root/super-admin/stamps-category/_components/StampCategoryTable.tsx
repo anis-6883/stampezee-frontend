@@ -17,6 +17,13 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
+function capitalizeWords(input: string): string {
+  return input
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
 export default function StampCategoryTable() {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
@@ -58,10 +65,17 @@ export default function StampCategoryTable() {
     {
       header: 'Name',
       accessorKey: 'name',
+      enableSorting: false,
+      Cell: ({ row }: any) => (
+        <div>
+          <p>{capitalizeWords(row?.original?.name)}</p>
+        </div>
+      ),
     },
     {
       header: 'Image',
       accessorKey: 'image',
+      enableSorting: false,
       Cell: ({ row }: any) => (
         <div>
           <img
@@ -75,6 +89,7 @@ export default function StampCategoryTable() {
     {
       header: 'Status',
       accessorKey: 'status',
+      enableSorting: false,
       Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
       mantineTableHeadCellProps: {
         align: 'center',

@@ -33,6 +33,7 @@ export const stampApi = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
+      invalidatesTags: ['retailerStamp'],
     }),
     deleteStampImage: builder.mutation({
       query: (id) => ({

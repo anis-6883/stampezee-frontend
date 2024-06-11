@@ -41,7 +41,6 @@ export default function CreateUpdateModel({
     dialCode: formData?.dialCode || '+1',
     phone: formData?.phone || '',
     country: formData?.country || 'Canada',
-    status: true,
     province: formData?.province || '',
     city: formData?.city || '',
     postalCode: formData?.postalCode || '',
@@ -52,7 +51,7 @@ export default function CreateUpdateModel({
     about: formData?.about || '',
     website: formData?.website || '',
   };
-  console.log('formData', formData);
+
   const validationSchema = Yup.object().shape({
     storeName: Yup.string().required('Required!'),
     firstName: Yup.string().required('Required!'),
