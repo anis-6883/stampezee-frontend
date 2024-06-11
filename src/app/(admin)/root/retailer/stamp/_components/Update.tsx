@@ -111,10 +111,7 @@ export default function Update({ Id }: any) {
                 name="description"
                 label="Description"
                 placeholder="Write you message Description..."
-                errors={errors.description}
-                touched={touched.description}
                 setFieldValue={setFieldValue}
-                value={values.description}
               />
               <InputField name="rules" label="Rules" />
 

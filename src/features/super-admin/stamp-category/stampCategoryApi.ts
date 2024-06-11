@@ -1,10 +1,8 @@
 import { apiSlice } from '@/features/api/apiSlice';
-import { ICreateStampImage, IDeleteStampImage, IPagination, IResponse } from '@/types';
 
-// http://localhost:8000/api/secret-root/admin
 export const superAdminStampImageCategoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllSuperAdminStampImagesCategory: builder.query<IResponse, IPagination>({
+    getAllSuperAdminStampImagesCategory: builder.query({
       query: (queries) => {
         const values = Object.values(queries);
         if (values.length) return `/api/secret-root/admin/super-admin/category/all?${new URLSearchParams(queries as any)}`;
@@ -12,7 +10,7 @@ export const superAdminStampImageCategoryApi = apiSlice.injectEndpoints({
       },
       providesTags: ['superAdminRetailerStampCategory'],
     }),
-    createSuperAdminStampImageCategory: builder.mutation<IResponse, ICreateStampImage>({
+    createSuperAdminStampImageCategory: builder.mutation({
       query: (newStampImage) => ({
         url: '/api/secret-root/admin/super-admin/category',
         method: 'POST',
@@ -20,16 +18,15 @@ export const superAdminStampImageCategoryApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['superAdminRetailerStampCategory'],
     }),
-    updateSuperAdminStampImageCategory: builder.mutation<IResponse, { id: string; formData: FormData }>({
+    updateSuperAdminStampImageCategory: builder.mutation({
       query: ({ id, formData }: any) => ({
         url: `api/secret-root/admin/super-admin/category/${id}`,
         method: 'PUT',
         body: formData,
       }),
-      invalidatesTags: ['superAdminRetailerStampCategory'],
     }),
-    deleteSuperAdminStampImageCategory: builder.mutation<IResponse, IDeleteStampImage>({
-      query: ({ id }) => ({
+    deleteSuperAdminStampImageCategory: builder.mutation({
+      query: (id) => ({
         url: `api/secret-root/admin/super-admin/category/${id}`,
         method: 'DELETE',
       }),

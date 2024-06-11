@@ -12,12 +12,14 @@ export default function DragAndDropUpload({
   onChange,
   size,
   sizeText,
+  isRounded = false,
 }: {
   className: string;
   value: any;
   onChange: any;
   size: number;
   sizeText: string;
+  isRounded?: boolean;
 }) {
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState<string>('');
@@ -94,7 +96,7 @@ export default function DragAndDropUpload({
               width={0}
               height={0}
               sizes="100vw"
-              className="h-24 w-24 rounded-md border border-gray-200 object-contain p-1"
+              className={cn('h-24 w-24 rounded-md border border-gray-200 object-contain p-1', isRounded && 'rounded-full')}
             />
             {/* {value && value.name && <p className="mt-2 text-[14px] font-bold text-gray-800">{value.name}</p>} */}
             <button type="button" className="rounded bg-red-500 p-1" onClick={removeFile}>
@@ -105,25 +107,31 @@ export default function DragAndDropUpload({
           <div
             className={cn(
               'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-2',
-              errors.image && '!border-red-500 ring-0'
+              errors.image && '!border-red-500 ring-0 ',
+              isRounded && 'h-[110px] w-[110px] gap-0 rounded-full'
             )}
           >
             <input {...getInputProps()} />
-            <MdCloudUpload className="text-4xl text-primary" />
-
+            <MdCloudUpload className={cn('text-4xl text-primary', isRounded && 'text-4xl')} />
             {error ? (
               <p className="text-sm text-red-500">{error}</p>
             ) : (
               <>
                 <h3 className="mt-2 text-sm font-medium text-gray-900">
                   <label htmlFor="file-upload" className="relative cursor-pointer">
-                    <span>Drag and drop</span>
-                    <span className="text-primary"> or browse</span>
-                    <span> to upload!</span>
+                    {!isRounded ? (
+                      <div>
+                        <span>Drag and drop</span>
+                        <span className="text-primary"> or browse</span>
+                        <span> to upload!</span>
+                      </div>
+                    ) : (
+                      <span className="-mt-2 text-xs">Upload Image</span>
+                    )}
                     <input id="file-upload" name="file-upload" type="file" className="sr-only" />
                   </label>
                 </h3>
-                <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to {sizeText}</p>
+                {!isRounded && <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to {sizeText}</p>}
               </>
             )}
           </div>

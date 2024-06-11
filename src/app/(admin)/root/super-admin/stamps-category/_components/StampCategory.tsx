@@ -1,30 +1,28 @@
 'use client';
 
-import AskConfirmation from '@/app/(admin)/root/_components/AskConfirmation';
 import Table from '@/app/(admin)/root/_components/Table';
-
 import {
   useDeleteSuperAdminStampImageCategoryMutation,
   useGetAllSuperAdminStampImagesCategoryQuery,
+  useUpdateSuperAdminStampImageCategoryMutation,
 } from '@/features/super-admin/stamp-category/stampCategoryApi';
 import { IQueryType } from '@/types';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
 import Button from '../../../_components/Button';
-import CreateModel from './CreateModel';
-let popup = false;
+import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
+import SwitchButton from '../../../_components/SwitchButton';
+import CreateUpdateModel from './CreateUpdateModel';
 
 export default function StampCategory() {
-  const router = useRouter();
-
-  const [modalState, setModalState] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [updateValue, setUpdateValue] = useState({});
+  const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
+  const [deleteState, setDeleteState] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllSuperAdminStampImagesCategoryQuery({
@@ -33,82 +31,89 @@ export default function StampCategory() {
     ...searchQuery,
   });
 
-  const [deleteSuperAdminStampImage] = useDeleteSuperAdminStampImageCategoryMutation();
+  const [deleteSuperAdminStampCategory, { isSuccess, isError }] = useDeleteSuperAdminStampImageCategoryMutation();
+  const [updateStatus] = useUpdateSuperAdminStampImageCategoryMutation();
+
+  const handleDelete = async (rowData: any) => {
+    setDeleteState(true);
+    setDeleteId(rowData._id);
+  };
+
+  useEffect(() => {
+    if (isError) {
+      setDeleteSubmitting(false);
+      toast.error('Something went wrong. Please try again!');
+      setDeleteState(false);
+      setDeleteId(null);
+    }
+    if (isSuccess) {
+      setDeleteSubmitting(false);
+      toast.success('Stamps Image deleted successfully!');
+      setDeleteState(false);
+      setDeleteId(null);
+    }
+  }, [isSuccess, isError]);
 
   const structure = [
     {
       header: 'Name',
       accessorKey: 'name',
     },
-    // {
-    //   header: 'Description',
-    //   Cell: ({ row }: any) => <div>{row.original.description}</div>,
-    // },
     {
       header: 'Image',
       accessorKey: 'image',
       Cell: ({ row }: any) => (
         <div>
-          <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="h-10 w-10 rounded-full" />
+          <img
+            src={row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : '/images/categoryPlaceHolder.png'}
+            alt="image"
+            className="h-10 w-10 rounded-full"
+          />
         </div>
       ),
     },
     {
+      header: 'Status',
+      accessorKey: 'status',
+      Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
+    {
       header: 'Actions',
       Cell: ({ row }: any) => (
-        <div className="flex gap-2">
-          <button onClick={() => handleEdit(row.original)}>
-            <HiOutlinePencil className="text-base" />
-          </button>
-          <button onClick={() => handleDelete(row.original)}>
-            <ImBin className="text-base" />
-          </button>
+        <div className="flex items-center justify-center gap-2">
+          <Button
+            color="warning"
+            preIcon={<HiOutlinePencil className="text-base" />}
+            onClick={() => {
+              setFormData({
+                ...row.original,
+                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+              });
+              setCreateState(true);
+            }}
+          />
+
+          <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
         </div>
       ),
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
     },
   ];
-  const handleEdit = (rowData: any) => {
-    setEdit(true);
-
-    const newData = {
-      id: rowData._id,
-      status: rowData.status,
-      name: rowData.name,
-      description: rowData.description,
-      image: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${rowData.image}`,
-    };
-
-    setUpdateValue(newData);
-    setModalState(true);
-  };
-
-  const handleDelete = async (rowData: any) => {
-    if (popup) return;
-    toast((t) => {
-      popup = t.visible;
-      return AskConfirmation(t, () => deleteSuperAdminStampImage({ id: rowData._id }));
-    });
-  };
-
-  const handleClose = () => {
-    setModalState(!modalState);
-    setEdit(!edit);
-    setUpdateValue({});
-  };
 
   return (
     <>
-      <CreateModel
-        setModalState={handleClose}
-        // modalState={modalState}
-        modalState={createState}
-        edit={edit}
-        setEdit={setEdit}
-        updateValue={updateValue}
-        setUpdateValue={setUpdateValue}
-        handleClose={handleClose}
-      />
-
+      <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
       <div className="mb-4 flex justify-end">
         <Button onClick={() => setCreateState(true)} text="Add New Stamp Image" preIcon={<HiPlus className="text-base" />} />
       </div>
@@ -133,10 +138,19 @@ export default function StampCategory() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        enableDnD={false}
+        enableDnD={true}
         // sort={sort}
         sortContext="branchTable"
         enableRowActions={false}
+      />
+
+      <DeleteConfirmModal
+        deleteId={deleteId}
+        deleteHandler={deleteSuperAdminStampCategory}
+        modalState={deleteState}
+        setModalState={setDeleteState}
+        isSubmitting={deleteSubmitting}
+        setIsSubmitting={setDeleteSubmitting}
       />
     </>
   );

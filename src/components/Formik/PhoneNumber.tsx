@@ -1,8 +1,9 @@
+import { useFormikContext } from 'formik';
 import React from 'react';
 import type { PhoneInputProps } from 'react-phone-input-2';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import { FieldClearButton, FieldError, FieldHelperText, cn } from 'rizzui';
+import { FieldClearButton, FieldHelperText, cn } from 'rizzui';
 
 const labelStyles = {
   size: {
@@ -94,7 +95,7 @@ export interface PhoneNumberProps
   errorClassName?: string;
   helperText?: React.ReactNode;
   className?: string;
-  value?: string;
+  touched?: boolean;
 }
 
 const PhoneNumber = ({
@@ -104,6 +105,7 @@ const PhoneNumber = ({
   label,
   helperText,
   error,
+  touched,
   clearable,
   onClear,
   enableSearch,
@@ -115,51 +117,60 @@ const PhoneNumber = ({
   helperClassName,
   errorClassName,
   className,
-  value,
   ...props
-}: PhoneNumberProps) => (
-  <div className={cn('rizzui-phone-number', className)}>
-    {label && <label className={cn('block font-medium', labelStyles.size[size], labelClassName)}>{label}</label>}
+}: PhoneNumberProps) => {
+  const { setFieldTouched, values }: { setFieldTouched: any; values: any } = useFormikContext();
 
-    <div className="group/phone-number relative">
-      <PhoneInput
-        value={value ?? null}
-        inputClass={cn(
-          inputStyles.base,
-          inputStyles.size[size],
-          inputStyles.rounded[rounded],
-          inputStyles.variant[variant],
-          error && inputStyles.error,
-          inputClassName
-        )}
-        buttonClass={cn(
-          buttonStyles.base,
-          buttonStyles.size[size],
-          // @ts-ignore
-          props.inputProps?.disabled && 'pointer-events-none',
-          // @ts-ignore
-          props.inputProps?.readOnly && 'pointer-events-none',
-          buttonClassName
-        )}
-        dropdownClass={cn(dropdownStyles.base, dropdownStyles.rounded[rounded], dropdownStyles.highlightListColor, dropdownClassName)}
-        searchClass={cn(dropdownStyles.searchBox, searchClassName)}
-        enableSearch={enableSearch}
-        disableSearchIcon
-        {...props}
-      />
+  return (
+    <div className={cn('rizzui-phone-number', className)}>
+      {label && <label className={cn('block font-medium', labelStyles.size[size], labelClassName)}>{label}</label>}
 
-      {clearable && <FieldClearButton size={size} onClick={onClear} className={cn(clearIconStyles.base, clearIconStyles.position[size])} />}
+      <div className="group/phone-number relative">
+        <PhoneInput
+          inputClass={cn(
+            inputStyles.base,
+            inputStyles.size[size],
+            inputStyles.rounded[rounded],
+            inputStyles.variant[variant],
+            error && inputStyles.error,
+            inputClassName
+          )}
+          buttonClass={cn(
+            buttonStyles.base,
+            buttonStyles.size[size],
+            // @ts-ignore
+            props.inputProps?.disabled && 'pointer-events-none',
+            // @ts-ignore
+            props.inputProps?.readOnly && 'pointer-events-none',
+            buttonClassName
+          )}
+          dropdownClass={cn(dropdownStyles.base, dropdownStyles.rounded[rounded], dropdownStyles.highlightListColor, dropdownClassName)}
+          searchClass={cn(dropdownStyles.searchBox, searchClassName)}
+          enableSearch={enableSearch}
+          disableSearchIcon
+          {...props}
+          onBlur={() => {
+            setFieldTouched('phone', true);
+          }}
+          value={`${values?.dialCode}${values?.phone}`}
+          // country={'+880'}
+        />
+
+        {clearable && (
+          <FieldClearButton size={size} onClick={onClear} className={cn(clearIconStyles.base, clearIconStyles.position[size])} />
+        )}
+      </div>
+
+      {!error && helperText && (
+        <FieldHelperText size={size} className={helperClassName}>
+          {helperText}
+        </FieldHelperText>
+      )}
+
+      {/* {touched && error && <FieldError size={size} error={error} className={errorClassName} />} */}
     </div>
-
-    {!error && helperText && (
-      <FieldHelperText size={size} className={helperClassName}>
-        {helperText}
-      </FieldHelperText>
-    )}
-
-    {error && <FieldError size={size} error={error} className={errorClassName} />}
-  </div>
-);
+  );
+};
 
 PhoneNumber.displayName = 'PhoneNumber';
 export default PhoneNumber;

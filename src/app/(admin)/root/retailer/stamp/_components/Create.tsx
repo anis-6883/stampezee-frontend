@@ -3,6 +3,7 @@ import SubmitButton from '@/components/Formik/Button';
 import DateRangePicker from '@/components/Formik/DateRange';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
+
 import SelectField from '@/components/Formik/SelectField';
 import StatusBar from '@/components/Formik/StatusBar';
 import { routes } from '@/config/routes';
@@ -111,10 +112,7 @@ export default function Create() {
                 name="description"
                 label="Description"
                 placeholder="Write you message Description..."
-                errors={errors.description}
-                touched={touched.description}
                 setFieldValue={setFieldValue}
-                value={values.description}
               />
               <InputField name="rules" label="Rules" />
 

@@ -3,6 +3,7 @@
 import Button from '@/app/(admin)/root/_components/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
+import PhoneNumber from '@/components/Formik/PhoneNumber';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerRegisterMutation } from '@/features/auth/authApi';
 import { ICountrySelect } from '@/types';
@@ -17,7 +18,6 @@ import ReactSelect, { OnChangeValue } from 'react-select';
 import { Checkbox, FieldError } from 'rizzui';
 import * as Yup from 'yup';
 import OtpModal from './OtpModal';
-import PhoneNumber from './PhoneNumber';
 
 export default function RegisterForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -107,8 +107,6 @@ export default function RegisterForm() {
                       setFieldValue('dialCode', `+${countryData.dialCode}`);
                       setFieldValue('phone', value.slice(countryData.dialCode.length));
                     }}
-                    error={errors?.phone}
-                    touched={touched?.phone}
                     errorClassName="text-red-600 text-xs mt-1"
                     inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border-[2px]'} !h-[43px]`}
                     labelClassName="!mb-1"
