@@ -1,6 +1,6 @@
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
-import StampCategory from './_components/StampCategory';
+import StampCategoryTable from './_components/StampCategoryTable';
 
 const pageHeader = {
   title: 'Manage Stamp Category',
@@ -19,7 +19,7 @@ export default function Page() {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <StampCategory />
+      <StampCategoryTable />
     </div>
   );
 }

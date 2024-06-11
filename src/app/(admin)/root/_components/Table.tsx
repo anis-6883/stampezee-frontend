@@ -1,23 +1,7 @@
-import { IQueryType } from '@/types';
+import { IQueryType, ITableProps } from '@/types';
 import { MRT_Row, MantineReactTable, useMantineReactTable, type MRT_ColumnDef } from 'mantine-react-table';
 import { useMemo } from 'react';
 import toast from 'react-hot-toast';
-
-type props = {
-  response: any;
-  structure: any;
-  tableProperties?: any;
-  query?: IQueryType;
-  enablePagination?: boolean;
-  isLoading?: boolean;
-  isFetching?: boolean;
-  enableRowActions?: boolean;
-  enableDnD?: boolean;
-  setQuery?: Function;
-  sort?: Function;
-  sortContext?: string;
-  searchPlaceHolder?: string;
-};
 
 export default function Table({
   isLoading,
@@ -33,7 +17,8 @@ export default function Table({
   sort,
   sortContext,
   searchPlaceHolder = 'Search',
-}: props) {
+  searchFieldWidth = '180px',
+}: ITableProps) {
   const { data, pagination } = response;
 
   const handleFilter = (keyword: string) => {
@@ -56,7 +41,7 @@ export default function Table({
     ...tableProperties,
     mantineSearchTextInputProps: {
       placeholder: searchPlaceHolder,
-      sx: { minWidth: '100px' },
+      style: { width: searchFieldWidth },
       variant: 'outlined',
     },
     positionGlobalFilter: 'left',

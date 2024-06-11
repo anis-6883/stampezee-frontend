@@ -25,6 +25,7 @@ export const superAdminStampImageApi = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
+      invalidatesTags: ['superAdminRetailerStamp'],
     }),
     updateStampImageStatus: builder.mutation({
       query: ({ data, branchId }) => ({
