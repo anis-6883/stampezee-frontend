@@ -2,10 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 
-import {
-  useDeleteSuperAdminStampImageMutation,
-  useUpdateSuperAdminStampImageMutation,
-} from '@/features/super-admin/stamp-image/stampImageApi';
+import { useUpdateSuperAdminStampImageMutation } from '@/features/super-admin/stamp-image/stampImageApi';
 import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -13,7 +10,8 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 import Button from '../../../_components/Button';
 
-import { useGetAllRetailersQuery } from '@/features/super-admin/retailer/retailerApi';
+import { useDeleteSuperAdminRetailerMutation, useGetAllRetailersQuery } from '@/features/super-admin/retailer/retailerApi';
+import { HiPlus } from 'react-icons/hi2';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
@@ -32,7 +30,8 @@ export default function RetailerTable() {
     ...searchQuery,
   });
 
-  const [deleteSuperAdminStampImage, { isSuccess, isError }] = useDeleteSuperAdminStampImageMutation();
+  const [deleteRetailer, { isSuccess, isError }] = useDeleteSuperAdminRetailerMutation();
+
   const [updateStatus] = useUpdateSuperAdminStampImageMutation();
 
   const handleDelete = async (rowData: any) => {
@@ -60,41 +59,58 @@ export default function RetailerTable() {
       header: 'Info',
       accessorKey: 'image',
       Cell: ({ row }: any) => (
-        <div>
+        <div className="flex gap-2">
           <div>
             {row.original.image ? (
               <div>
-                <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="w-14 rounded" />
+                <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="h-full w-20 rounded" />
               </div>
             ) : (
-              <img src={'/profile.png'} alt="image" className="w-14 rounded" />
+              <img src={'/profile.png'} alt="image" className="h-full w-20 rounded" />
             )}
           </div>
-          <div></div>
+          <div>
+            <div className="text-md mx-auto text-start">
+              <p>
+                <span className="font-bold">Store Name:</span> {row?.original.storeName}
+              </p>
+              <p>
+                <span className="font-bold">User Name:</span> {row?.original.firstName} {row?.original.lastName}
+              </p>
+              <p>
+                <span className="font-bold">Email:</span> {row?.original.email}
+              </p>
+              <p>
+                <span className="font-bold">Phone:</span> {row?.original.phone}
+              </p>
+            </div>
+          </div>
         </div>
       ),
     },
     {
       header: 'Address',
-      // Cell: ({ row }: any) => (
-      //   <div className="flex items-center justify-center gap-2">
-      //     <Button
-      //       color="warning"
-      //       preIcon={<HiOutlinePencil className="text-base" />}
-      //       onClick={() => {
-      //         setFormData({
-      //           ...row.original,
-      //           image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
-      //         });
-      //         setCreateState(true);
-      //       }}
-      //     />
-
-      //     <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
-      //   </div>
-      // ),
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">
+          <p>
+            <span className="font-bold">Address:</span> {row?.original.address}
+          </p>
+          <p>
+            <span className="font-bold">Country:</span> {row?.original.country}
+          </p>
+          <p>
+            <span className="font-bold">City:</span> {row?.original.city}
+          </p>
+          <p>
+            <span className="font-bold">Province:</span> {row?.original.province}
+          </p>
+          <p>
+            <span className="font-bold">Postal Code:</span> {row?.original.postalCode}
+          </p>
+        </div>
+      ),
       mantineTableHeadCellProps: {
-        align: 'center',
+        align: 'start',
       },
       mantineTableBodyCellProps: {
         align: 'center',
@@ -143,6 +159,9 @@ export default function RetailerTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
+      <div className="mb-4 flex justify-end">
+        <Button onClick={() => setCreateState(true)} text="Add New Retailer" preIcon={<HiPlus className="text-base" />} />
+      </div>
       <Table
         isFetching={isFetching}
         isLoading={isLoading}
@@ -169,7 +188,7 @@ export default function RetailerTable() {
 
       <DeleteConfirmModal
         deleteId={deleteId}
-        deleteHandler={deleteSuperAdminStampImage}
+        deleteHandler={deleteRetailer}
         modalState={deleteState}
         setModalState={setDeleteState}
         isSubmitting={deleteSubmitting}

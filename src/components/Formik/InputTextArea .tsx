@@ -1,52 +1,38 @@
-import { useEffect } from 'react';
+import { Field } from 'formik';
 import { Textarea } from 'rizzui';
 
 export default function InputTextarea({
   name,
   label,
-  placeholder,
-  ref,
   required = true,
-  value, // Add value prop
-  errors,
-  touched,
-  type = 'text',
-  setFieldValue,
+  placeholder = 'Write you message...',
 }: {
   name: string;
   label: string;
   placeholder?: string;
   ref?: any;
   required?: boolean;
-  value?: any; // Modify prop types
-  errors?: any;
-  touched?: any;
   type?: string;
   setFieldValue?: any;
 }) {
-  useEffect(() => {
-    setFieldValue(name, value);
-  }, [setFieldValue, value, name]);
-
-  const handleChange = (e: any) => {
-    setFieldValue(name, e.target.value);
-  };
   return (
     <div>
-      <Textarea name={name} label={label} placeholder="Write you message..." onChange={handleChange} value={value} />
-      {errors && touched && <div className="mt-1 text-xs text-red-500">{errors}</div>}
+      <Field name={name}>
+        {({ field, meta }: { field: any; meta: any }) => (
+          <Textarea
+            {...field}
+            className="my-3"
+            name={name}
+            label={
+              <span>
+                {label} {required && <span className="text-red-600">*</span>}
+              </span>
+            }
+            placeholder={placeholder}
+            textareaClassName={`${meta.touched && meta.error ? '!border-red-500 ring-0' : 'border-gray-200'}`}
+          />
+        )}
+      </Field>
     </div>
   );
-}
-
-{
-  /* <InputTextarea
-name="description"
-label="Description"
-placeholder="Write you message Description..."
-errors={errors.description}
-touched={touched.description}
-setFieldValue={setFieldValue}
-value={values.description}
-/> */
 }

@@ -3,20 +3,24 @@
 import Button from '@/app/(admin)/root/_components/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
+import PhoneNumber from '@/components/Formik/PhoneNumber';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useRetailerRegisterMutation } from '@/features/auth/authApi';
+import { useCreateSuperAdminRetailerMutation } from '@/features/super-admin/retailer/retailerApi';
+import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import ReactSelect, { OnChangeValue } from 'react-select';
+import { FieldError } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function CreateRetailer() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalState, setModalState] = useState(false);
-  const [register, { isSuccess, error }] = useRetailerRegisterMutation();
+  const [register, { isSuccess, error }] = useCreateSuperAdminRetailerMutation();
 
   useEffect(() => {
     if (error) {
@@ -28,7 +32,6 @@ export default function CreateRetailer() {
     if (isSuccess) {
       setIsSubmitting(false);
       setModalState(true);
-      toast.success('OTP sent on your email!');
     }
   }, [error, isSuccess]);
 
@@ -65,13 +68,12 @@ export default function CreateRetailer() {
     city: Yup.string().required('Required!'),
     postalCode: Yup.string().required('Required!'),
     address: Yup.string().required('Required!'),
-    isAgree: Yup.string().required('Required!'),
     password: Yup.string().required('Required!').min(8, 'At least 8 characters long!'),
   });
 
   const handleSubmit = async (values: any) => {
-    setIsSubmitting(true);
     console.log('values: ', removeEmptyValues(values));
+    setIsSubmitting(true);
     register(removeEmptyValues(values, ['isAgree']));
   };
 
@@ -80,6 +82,7 @@ export default function CreateRetailer() {
       <div className="mt-8">
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
           {({ errors, setFieldValue, touched, setFieldTouched, values }) => {
+            console.log('values', values);
             return (
               <Form className="grid gap-4">
                 <InputField name="storeName" label="Store Name" placeholder="Burger King" />
@@ -88,7 +91,7 @@ export default function CreateRetailer() {
                   <InputField name="lastName" label="Last Name" placeholder="Doe" required={false} />
                 </div>
 
-                {/* <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <PhoneNumber
                     label={
                       <p>
@@ -101,8 +104,6 @@ export default function CreateRetailer() {
                       setFieldValue('dialCode', `+${countryData.dialCode}`);
                       setFieldValue('phone', value.slice(countryData.dialCode.length));
                     }}
-                    error={errors?.phone}
-                    touched={touched?.phone}
                     errorClassName="text-red-600 text-xs mt-1"
                     inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border-[2px]'} !h-[43px]`}
                     labelClassName="!mb-1"
@@ -125,7 +126,7 @@ export default function CreateRetailer() {
                     />
                     {touched.country && errors.country && <FieldError error={errors.country} className="text-xs text-red-600" />}
                   </div>
-                </div> */}
+                </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                   <InputField name="province" label="Province" placeholder="Ontario" />
@@ -166,3 +167,9 @@ export default function CreateRetailer() {
     </div>
   );
 }
+const getOptionLabel = (option: any): any => (
+  <div className="flex ">
+    <img src={option.flag} alt={option.label} style={{ width: '20px', marginLeft: '5px' }} />
+    <span className="ml-2">{option.label}</span>
+  </div>
+);

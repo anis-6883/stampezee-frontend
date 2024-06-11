@@ -1,22 +1,23 @@
 'use client';
 
+import Button from '@/app/(admin)/root/_components/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
+import InputPassword from '@/components/Formik/InputPassword';
+import PhoneNumber from '@/components/Formik/PhoneNumber';
 import { SerializedError } from '@/features/api/apiSlice';
-
-import {
-  useCreateSuperAdminStampImageMutation,
-  useUpdateSuperAdminStampImageMutation,
-} from '@/features/super-admin/stamp-image/stampImageApi';
+import { useCreateSuperAdminRetailerMutation, useUpdateSuperAdminRetailerMutation } from '@/features/super-admin/retailer/retailerApi';
+import { ICountrySelect } from '@/types';
+import countryData from '@/utils/get-country-list';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
-import { ActionIcon, Modal, Title } from 'rizzui';
+import ReactSelect, { OnChangeValue } from 'react-select';
+import { ActionIcon, FieldError, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
-import Button from '../../../_components/Button';
 
 export default function CreateUpdateModel({
   setFormData,
@@ -30,21 +31,43 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [createStampImage, { isSuccess: createSuccess, error: createError }] = useCreateSuperAdminStampImageMutation();
-  const [updateStampImage, { isSuccess: updateSuccess, error: updateError }] = useUpdateSuperAdminStampImageMutation();
+  const [register, { isSuccess: createSuccess, error: createError }] = useCreateSuperAdminRetailerMutation();
+  const [updateRtailar, { isSuccess: updateSuccess, error: updateError }] = useUpdateSuperAdminRetailerMutation();
 
   const initialValues = {
-    title: formData?.title || '',
-    image: formData?.image || null,
+    storeName: formData?.storeName || '',
+    firstName: formData?.firstName || '',
+    lastName: formData?.lastName || '',
+    email: formData?.email || '',
+    dialCode: formData?.dialCode || '+1',
+    phone: formData?.phone || '',
+    country: formData?.country || 'Canada',
+    province: formData?.province || '',
+    city: formData?.city || '',
+    postalCode: formData?.postalCode || '',
+    address: formData?.address || '',
+    password: '',
+    isAgree: formData?.isAgree || '',
+    image: formData?.image || '',
+    about: formData?.about || '',
+    website: formData?.website || '',
   };
-
-  const validationSchema = Yup.object({
-    title: Yup.string().required('Title is required'),
-    image: Yup.mixed().required('Image is required'),
+  console.log('formData', formData);
+  const validationSchema = Yup.object().shape({
+    storeName: Yup.string().required('Required!'),
+    firstName: Yup.string().required('Required!'),
+    lastName: Yup.string(),
+    email: Yup.string().email('Invalid email').required('Required!'),
+    phone: Yup.string().required('Required!'),
+    country: Yup.string().required('Required!'),
+    province: Yup.string().required('Required!'),
+    city: Yup.string().required('Required!'),
+    postalCode: Yup.string().required('Required!'),
+    address: Yup.string().required('Required!'),
+    password: (formData?._id ? Yup.string() : Yup.string().required('Required!')).min(8, 'At least 8 characters long!'),
   });
 
-  const submitHandler = async (values: any) => {
+  const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
     const isFile = (obj: any): obj is File => obj instanceof File;
 
@@ -55,100 +78,182 @@ export default function CreateUpdateModel({
       if (!isFile(values?.image)) ignoreList.push('image');
 
       objToFormData = objectToFormData(values, ignoreList);
-      updateStampImage({ id: formData._id, data: objToFormData });
+      updateRtailar({ id: formData._id, formData: objToFormData });
     } else {
       if (!isFile(values?.image)) {
         objToFormData = objectToFormData(values, ['image']);
       } else {
         objToFormData = objectToFormData(values);
       }
-      createStampImage(objToFormData);
+      register(objToFormData);
     }
   };
 
-  // Handle Create Response
   useEffect(() => {
     if (createError) {
       const myError = createError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
       setIsSubmitting(false);
+      toast.error(myError?.data?.message || 'Something went wrong!');
     }
+
     if (createSuccess) {
-      toast.success('Stamp Image created successfully!');
+      console.log('isSuccess', createSuccess);
+      toast.success('Retailer created successfully!');
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
+      setIsSubmitting(false);
     }
-  }, [createError, createSuccess, setFormData, setModalState]);
+  }, [createError, createSuccess, setModalState, setFormData]);
 
-  // Handle Update Response
   useEffect(() => {
     if (updateError) {
       const myError = updateError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
       setIsSubmitting(false);
+      toast.error(myError?.data?.message || 'Something went wrong!');
     }
+
     if (updateSuccess) {
-      toast.success('Stamp Image updated successfully!');
+      toast.success('Retailer Update successfully!');
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
+      setIsSubmitting(false);
     }
-  }, [setFormData, setModalState, updateError, updateSuccess]);
+  }, [updateError, updateSuccess, setModalState, setFormData]);
+
+  const countryOptions = countryData.map((country) => ({
+    value: country.code,
+    label: country.country,
+    flag: country.flag,
+  }));
 
   return (
-    <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
-      <div className="m-auto px-7 pb-8 pt-6">
-        <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Update A Stamp Image</Title> : <Title as="h4">Add New Stamp Image</Title>}
+    <div>
+      <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="700px">
+        <div className="m-auto px-7 pb-8 pt-6">
+          <div className="mb-7 flex items-center justify-between">
+            {formData?._id ? <Title as="h4">Update A Retailer</Title> : <Title as="h4">Add New Retailer</Title>}
 
-          <ActionIcon
-            size="sm"
-            variant="text"
-            onClick={() => {
-              setModalState(false);
-              setFormData({});
-            }}
-          >
-            <HiMiniXCircle className="text-2xl text-danger" />
-          </ActionIcon>
-        </div>
-        <div>
-          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
-            {({ setFieldValue, values }) => (
-              <Form className="mt-5">
-                <InputField name="title" label="Title" placeholder="Stamp One" />
-
-                <div className="my-4">
-                  <p className="font-medium">
-                    Upload Image <span className="text-red-600">*</span>
-                  </p>
+            <ActionIcon
+              size="sm"
+              variant="text"
+              onClick={() => {
+                setModalState(false);
+                setFormData({});
+              }}
+            >
+              <HiMiniXCircle className="text-2xl text-danger" />
+            </ActionIcon>
+          </div>
+          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            {({ errors, setFieldValue, touched, setFieldTouched, values }) => {
+              return (
+                <Form className="grid gap-4">
                   <DragAndDropUpload
                     value={{ name: 'image', image: values.image }}
                     onChange={(image: any) => setFieldValue('image', image)}
-                    className="mt-2"
+                    className=" mx-auto "
                     size={1024 * 1000}
                     sizeText="1MB"
+                    isRounded={true}
                   />
-                </div>
+                  <InputField name="storeName" label="Store Name" placeholder="Burger King" />
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <InputField name="firstName" label="First Name" placeholder="John" />
+                    <InputField name="lastName" label="Last Name" placeholder="Doe" required={false} />
+                  </div>
 
-                <p className="text-end text-xs font-semibold">
-                  Fields marked with <span className="text-red-600">*</span> are mandatory!
-                </p>
-                <div className="mt-6 flex justify-end">
-                  <Button
-                    color={formData?._id ? 'warning' : 'primary'}
-                    type="submit"
-                    text={formData?._id ? 'Update' : 'Submit'}
-                    postIcon={<BsCheck2Circle className="text-base" />}
-                    isSubmitting={isSubmitting}
-                  />
-                </div>
-              </Form>
-            )}
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <PhoneNumber
+                      label={
+                        <p>
+                          Phone Number <span className="text-red-600">*</span>
+                        </p>
+                      }
+                      country="ca"
+                      preferredCountries={['ca']}
+                      onChange={(value, countryData: any) => {
+                        setFieldValue('dialCode', `+${countryData.dialCode}`);
+                        setFieldValue('phone', value.slice(countryData.dialCode.length));
+                      }}
+                      errorClassName="text-red-600 text-xs mt-1"
+                      inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border-[2px]'} !h-[43px]`}
+                      labelClassName="!mb-1"
+                    />
+                    <div className="flex flex-col gap-1">
+                      <div>
+                        <p className="font-medium">
+                          Country
+                          <span className="text-red-500"> *</span>
+                        </p>
+                      </div>
+                      <ReactSelect
+                        placeholder="Select your country"
+                        options={countryOptions}
+                        getOptionLabel={getOptionLabel}
+                        getOptionValue={(option) => option.label}
+                        defaultValue={countryOptions.filter((country) => country.label == formData?.country ?? 'Bangladesh')}
+                        onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => setFieldValue('country', selectedOption?.label)}
+                        onBlur={() => setFieldTouched('country', true)}
+                      />
+                      {touched.country && errors.country && <FieldError className="text-xs text-red-600" />}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                    <InputField name="province" label="Province" placeholder="Ontario" />
+                    <InputField name="city" label="City" placeholder="Toronto" />
+                    <InputField name="postalCode" label="Postal Code" placeholder="M3C" />
+                  </div>
+
+                  <div className="grid grid-cols-1">
+                    <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" />
+                  </div>
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <div className="grid grid-cols-1">
+                      <InputField required={false} name="about" label="About" placeholder="Write About Here" />
+                    </div>
+
+                    <div className="grid grid-cols-1">
+                      <InputField required={false} name="website" label="Website" placeholder="https://www.user.com" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <InputField name="email" label="Email" placeholder="john@email.com" />
+                    {!formData._id && <InputPassword name="password" label="Password" placeholder="********" />}
+                  </div>
+
+                  <p className="flex flex-col text-end text-xs font-semibold">
+                    <span>
+                      Fields marked with <span className="text-red-600">*</span> are mandatory!
+                    </span>
+                    <span>
+                      Password must be at least <span className="text-red-600">8 characters</span> long!
+                    </span>
+                  </p>
+                  <div className="flex justify-end">
+                    <Button
+                      color={formData?._id ? 'warning' : 'primary'}
+                      type="submit"
+                      text={formData?._id ? 'Update' : 'Submit'}
+                      postIcon={<BsCheck2Circle className="text-base" />}
+                      isSubmitting={isSubmitting}
+                    />
+                  </div>
+                </Form>
+              );
+            }}
           </Formik>
         </div>
-      </div>
-    </Modal>
+      </Modal>
+    </div>
   );
 }
+const getOptionLabel = (option: any): any => (
+  <div className="flex ">
+    <img src={option.flag} alt={option.label} style={{ width: '20px', marginLeft: '5px' }} />
+    <span className="ml-2">{option.label}</span>
+  </div>
+);

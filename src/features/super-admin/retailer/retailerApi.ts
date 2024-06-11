@@ -11,9 +11,37 @@ export const superAdminRetailerApi = apiSlice.injectEndpoints({
       },
       providesTags: ['superAdminRetailer'],
     }),
+    createSuperAdminRetailer: builder.mutation({
+      query: (newRetailer) => ({
+        url: '/api/secret-root/admin/super-admin/manage-retailer',
+        method: 'POST',
+        body: newRetailer,
+      }),
+      invalidatesTags: ['superAdminRetailer'],
+    }),
+    updateSuperAdminRetailer: builder.mutation({
+      query: ({ id, formData }: any) => ({
+        url: `/api/secret-root/admin/super-admin/manage-retailer/${id}`,
+        method: 'PUT',
+        body: formData,
+      }),
+      invalidatesTags: ['superAdminRetailer'],
+    }),
+    deleteSuperAdminRetailer: builder.mutation({
+      query: (id) => ({
+        url: `/api/secret-root/admin/super-admin/manage-retailer/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['superAdminRetailer'],
+    }),
   }),
 });
 
-export const { useGetAllRetailersQuery } = superAdminRetailerApi;
+export const {
+  useGetAllRetailersQuery,
+  useCreateSuperAdminRetailerMutation,
+  useUpdateSuperAdminRetailerMutation,
+  useDeleteSuperAdminRetailerMutation,
+} = superAdminRetailerApi;
 
 export default superAdminRetailerApi;
