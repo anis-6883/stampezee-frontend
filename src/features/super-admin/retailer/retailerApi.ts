@@ -33,8 +33,8 @@ export const superAdminRetailerApi = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
+      invalidatesTags: ['superAdminRetailer'],
     }),
-
     deleteSuperAdminRetailer: builder.mutation({
       query: (id) => ({
         url: `/api/secret-root/admin/super-admin/manage-retailer/${id}`,

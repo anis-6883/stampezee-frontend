@@ -22,7 +22,6 @@ export default function Table({
   const { data, pagination } = response;
 
   const handleFilter = (keyword: string) => {
-    // @ts-ignore
     if (setQuery) {
       setQuery((prev: IQueryType) => {
         return {
@@ -59,9 +58,7 @@ export default function Table({
         isLoading: isLoading,
         showProgressBars: isFetching,
         pagination: {
-          // @ts-ignore
           pageIndex: query?.pageIndex as number,
-          // @ts-ignore
           pageSize: query?.pageSize as number,
         },
       },
