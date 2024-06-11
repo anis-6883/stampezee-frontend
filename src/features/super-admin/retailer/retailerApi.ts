@@ -27,6 +27,14 @@ export const superAdminRetailerApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['superAdminRetailer'],
     }),
+    updateRetailerStatus: builder.mutation({
+      query: ({ data, branchId }) => ({
+        url: `api/secret-root/admin/super-admin/manage-retailer/status/${branchId}`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
+
     deleteSuperAdminRetailer: builder.mutation({
       query: (id) => ({
         url: `/api/secret-root/admin/super-admin/manage-retailer/${id}`,
@@ -42,6 +50,7 @@ export const {
   useCreateSuperAdminRetailerMutation,
   useUpdateSuperAdminRetailerMutation,
   useDeleteSuperAdminRetailerMutation,
+  useUpdateRetailerStatusMutation,
 } = superAdminRetailerApi;
 
 export default superAdminRetailerApi;

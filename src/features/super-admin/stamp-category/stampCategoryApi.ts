@@ -25,6 +25,13 @@ export const superAdminStampImageCategoryApi = apiSlice.injectEndpoints({
         body: formData,
       }),
     }),
+    updateSuperAdminCategoryStatus: builder.mutation({
+      query: ({ data, branchId }) => ({
+        url: `api/secret-root/admin/super-admin/category/status/${branchId}`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
     deleteSuperAdminStampImageCategory: builder.mutation({
       query: (id) => ({
         url: `api/secret-root/admin/super-admin/category/${id}`,
@@ -40,6 +47,7 @@ export const {
   useCreateSuperAdminStampImageCategoryMutation,
   useUpdateSuperAdminStampImageCategoryMutation,
   useDeleteSuperAdminStampImageCategoryMutation,
+  useUpdateSuperAdminCategoryStatusMutation,
 } = superAdminStampImageCategoryApi;
 
 export default superAdminStampImageCategoryApi;

@@ -2,7 +2,6 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 
-import { useUpdateSuperAdminStampImageMutation } from '@/features/super-admin/stamp-image/stampImageApi';
 import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -10,7 +9,11 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 import Button from '../../../_components/Button';
 
-import { useDeleteSuperAdminRetailerMutation, useGetAllRetailersQuery } from '@/features/super-admin/retailer/retailerApi';
+import {
+  useDeleteSuperAdminRetailerMutation,
+  useGetAllRetailersQuery,
+  useUpdateRetailerStatusMutation,
+} from '@/features/super-admin/retailer/retailerApi';
 import { HiPlus } from 'react-icons/hi2';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
@@ -32,7 +35,7 @@ export default function RetailerTable() {
 
   const [deleteRetailer, { isSuccess, isError }] = useDeleteSuperAdminRetailerMutation();
 
-  const [updateStatus] = useUpdateSuperAdminStampImageMutation();
+  const [updateStatus] = useUpdateRetailerStatusMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);

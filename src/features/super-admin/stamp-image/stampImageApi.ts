@@ -26,6 +26,13 @@ export const superAdminStampImageApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    updateStampImageStatus: builder.mutation({
+      query: ({ data, branchId }) => ({
+        url: `api/secret-root/admin/super-admin/stamp-image/status/${branchId}`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
     deleteSuperAdminStampImage: builder.mutation({
       query: (id) => ({
         url: `api/secret-root/admin/super-admin/stamp-image/${id}`,
@@ -41,6 +48,7 @@ export const {
   useCreateSuperAdminStampImageMutation,
   useUpdateSuperAdminStampImageMutation,
   useDeleteSuperAdminStampImageMutation,
+  useUpdateStampImageStatusMutation,
 } = superAdminStampImageApi;
 
 export default superAdminStampImageApi;

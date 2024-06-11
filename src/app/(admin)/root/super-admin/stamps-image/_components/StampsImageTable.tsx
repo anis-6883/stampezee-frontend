@@ -5,7 +5,7 @@ import Table from '@/app/(admin)/root/_components/Table';
 import {
   useDeleteSuperAdminStampImageMutation,
   useGetAllSuperAdminStampImagesQuery,
-  useUpdateSuperAdminStampImageMutation,
+  useUpdateStampImageStatusMutation,
 } from '@/features/super-admin/stamp-image/stampImageApi';
 import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
@@ -34,7 +34,7 @@ export default function StampsImageTable() {
   });
 
   const [deleteSuperAdminStampImage, { isSuccess, isError }] = useDeleteSuperAdminStampImageMutation();
-  const [updateStatus] = useUpdateSuperAdminStampImageMutation();
+  const [updateStatus] = useUpdateStampImageStatusMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);

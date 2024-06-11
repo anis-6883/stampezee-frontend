@@ -4,7 +4,7 @@ import Table from '@/app/(admin)/root/_components/Table';
 import {
   useDeleteSuperAdminStampImageCategoryMutation,
   useGetAllSuperAdminStampImagesCategoryQuery,
-  useUpdateSuperAdminStampImageCategoryMutation,
+  useUpdateSuperAdminCategoryStatusMutation,
 } from '@/features/super-admin/stamp-category/stampCategoryApi';
 import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
@@ -32,7 +32,7 @@ export default function StampCategory() {
   });
 
   const [deleteSuperAdminStampCategory, { isSuccess, isError }] = useDeleteSuperAdminStampImageCategoryMutation();
-  const [updateStatus] = useUpdateSuperAdminStampImageCategoryMutation();
+  const [updateStatus] = useUpdateSuperAdminCategoryStatusMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
