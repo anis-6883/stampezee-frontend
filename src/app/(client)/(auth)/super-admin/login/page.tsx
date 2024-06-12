@@ -1,4 +1,5 @@
 import { metaObject } from '@/config/site.config';
+import Link from 'next/link';
 import LoginForm from './components/LoginForm';
 
 export const metadata = {
@@ -10,9 +11,9 @@ export default async function Page() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100 text-gray-900">
       <div className="m-0 grid max-w-screen-xl grid-cols-6 rounded-lg bg-white shadow sm:m-10 md:grid-cols-12">
         <div className="col-span-6 p-10">
-          <div>
+          <Link href="/">
             <img src="/images/logo.png" className="mx-auto w-28" alt="logo" />
-          </div>
+          </Link>
 
           <div className="mt-8 px-16">
             <h1 className="text-center text-xl font-bold xl:text-xl">Admin Login</h1>

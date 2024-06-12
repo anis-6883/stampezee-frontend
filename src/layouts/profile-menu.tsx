@@ -1,13 +1,15 @@
 'use client';
 
 import { routes } from '@/config/routes';
-import { useGetOwnProfileQuery, useLogoutUserMutation } from '@/features/auth/authApi';
-import { setValue } from '@/features/auth/authSlice';
+import { SerializedError } from '@/features/api/apiSlice';
+import { useLogoutUserMutation } from '@/features/auth/authApi';
+import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Button, Popover, Text, Title } from 'rizzui';
 
 const menuItems = [
@@ -24,24 +26,24 @@ const menuItems = [
 function DropdownMenu() {
   const { replace } = useRouter();
   const dispatch = useDispatch();
-  const { user } = useSelector(
-    (state: RootState) => ({
-      user: state.authSlice.user,
-    }),
-    shallowEqual
-  );
-  const {} = useGetOwnProfileQuery({});
-  const [logOut] = useLogoutUserMutation();
-  const handleLogout = async () => {
-    logOut(null)
-      .then((res) => {
+  const { user, role } = useSelector((state: RootState) => state.authSlice);
+  const [logOut, { isSuccess, error }] = useLogoutUserMutation();
+
+  // Handle Logout Response
+  useEffect(() => {
+    if (error) {
+      const myError = error as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
+    }
+    if (isSuccess) {
+      if (role === 'super_admin') {
+        replace(routes.superAdmin.login);
+      } else {
         replace(routes.retailerAdminLogin);
-        dispatch(setValue({ target: 'user', value: undefined }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      }
+      dispatch(userLoggedOut(undefined));
+    }
+  }, [dispatch, error, isSuccess, replace, role]);
 
   return (
     <div className="w-64 text-left rtl:text-right">
@@ -69,7 +71,7 @@ function DropdownMenu() {
         <Button
           className="h-auto w-full justify-start p-0 font-medium text-gray-700 outline-none focus-within:text-gray-600 hover:text-gray-900 focus-visible:ring-0"
           variant="text"
-          onClick={() => handleLogout()}
+          onClick={() => logOut(null)}
         >
           Sign Out
         </Button>
