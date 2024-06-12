@@ -1,4 +1,5 @@
 import React from 'react';
+import { BsCheck2Circle } from 'react-icons/bs';
 import { ImSpinner9 } from 'react-icons/im';
 
 const buttonStyles: Record<string, string> = {
@@ -8,11 +9,12 @@ const buttonStyles: Record<string, string> = {
     'bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 text-white hover:bg-gradient-to-br focus:ring-orange-300 dark:shadow-orange-800/80 dark:focus:ring-orange-800',
   danger:
     'bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white hover:bg-gradient-to-br focus:ring-red-300 dark:shadow-red-800/80 dark:focus:ring-red-800',
+  outline: 'text-black border border-[#DC3545] hover:bg-gradient-to-br focus:ring-red-300 shadow-none',
 };
 
 interface ButtonProps {
   text?: string;
-  color?: 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info';
+  color?: 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info' | 'outline';
   preIcon?: React.ReactNode;
   postIcon?: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
