@@ -196,7 +196,6 @@ export default function CreateUpdateModel({
                         onChange={(selectedOption) => setFieldValue('country', selectedOption?.label)}
                         onBlur={() => setFieldTouched('country', true)}
                       />
-                      {touched.country && errors.country && <FieldError className="text-xs text-red-600" />}
                     </div>
                   </div>
 
