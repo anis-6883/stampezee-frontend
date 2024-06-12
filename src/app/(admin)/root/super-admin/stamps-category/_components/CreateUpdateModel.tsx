@@ -42,7 +42,7 @@ export default function CreateUpdateModel({
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
-    description: Yup.string().required('Description is required'),
+    description: Yup.string(),
   });
 
   const submitHandler = async (values: any) => {
@@ -119,7 +119,7 @@ export default function CreateUpdateModel({
             {({ setFieldValue, values }) => (
               <Form className="mt-5">
                 <InputField name="name" label="Name" placeholder="Food" />
-                <InputTextarea name="description" label="Description" placeholder="Write here..." />
+                <InputTextarea required={false} name="description" label="Description" placeholder="Write here..." />
                 <div className="my-4">
                   <p className="font-medium">Upload Image</p>
                   <DragAndDropUpload
