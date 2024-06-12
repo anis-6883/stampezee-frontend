@@ -27,6 +27,14 @@ export const superAdminStampImageApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['superAdminRetailerStamp'],
     }),
+    updateSortingImage: builder.mutation({
+      query: (data) => ({
+        url: `api/secret-root/admin/super-admin/sort`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['superAdminRetailerStamp'],
+    }),
     updateStampImageStatus: builder.mutation({
       query: ({ data, branchId }) => ({
         url: `api/secret-root/admin/super-admin/stamp-image/status/${branchId}`,
@@ -51,6 +59,7 @@ export const {
   useUpdateSuperAdminStampImageMutation,
   useDeleteSuperAdminStampImageMutation,
   useUpdateStampImageStatusMutation,
+  useUpdateSortingImageMutation,
 } = superAdminStampImageApi;
 
 export default superAdminStampImageApi;

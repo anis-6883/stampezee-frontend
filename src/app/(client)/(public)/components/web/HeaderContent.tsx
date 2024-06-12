@@ -1,16 +1,47 @@
 'use client';
+
+import { useGetOwnProfileQuery, useLogoutUserMutation } from '@/features/auth/authApi';
+import { setValue } from '@/features/auth/authSlice';
+import { RootState } from '@/features/store';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FcFaq } from 'react-icons/fc';
 import { IoBagAdd, IoPricetagsSharp } from 'react-icons/io5';
 import { MdOutlineContacts } from 'react-icons/md';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { Button } from 'rizzui';
+import './HeaderStyle.css';
 
 export default function HeaderContent() {
   const [sidBer, setSidBer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
+  const { push } = useRouter();
+  const { authSlice }: any = useSelector((state) => state);
+
+  const { replace } = useRouter();
+  const dispatch = useDispatch();
+  const { user } = useSelector(
+    (state: RootState) => ({
+      user: state.authSlice.user,
+    }),
+    shallowEqual
+  );
+  const {} = useGetOwnProfileQuery({});
+  const [logOut] = useLogoutUserMutation();
+  const handleLogout = async () => {
+    logOut(null)
+      .then((res) => {
+        replace('/');
+        dispatch(setValue({ target: 'user', value: undefined }));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     setCurrentUrl(window.location.pathname); // Update currentUrl after the component mounts
@@ -60,12 +91,9 @@ export default function HeaderContent() {
   function routeCheck(names: string) {
     setCurrentUrl(names);
   }
-
   return (
     <div>
-      <nav
-        className={`fixed left-0 top-0 z-10 w-full border-gray-200 ${isScrolled ? 'backdrop-white-sm bg-white/30' : 'backdrop-white-sm bg-white '} `}
-      >
+      <nav className={`fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>
         <div className={`${sidBer ? '' : ''} mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-2`}>
           <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="images/logo.png" className="h-12" alt="stamp-ezee Logo" />
@@ -181,83 +209,59 @@ export default function HeaderContent() {
                 )}
               </div>
             </div>
-            <div className="flex">
-              <button
-                type="button"
-                className="dark:hover:bg[#454F5B] bg-primary-red dark:bg-primary-red rounded-lg px-4 py-2 text-center text-sm font-medium text-white duration-300 ease-in-out hover:bg-[#454F5B] focus:outline-none focus:ring-4  focus:ring-blue-300 dark:focus:ring-[#454F5B]"
-              >
-                Dashboard
-              </button>
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <Menu.Button className="ml-2">
-                    <Image
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt="author"
-                      className="h-10 w-10 rounded-full p-1 ring-2 ring-red-300 dark:ring-red-500"
-                      width={500}
-                      height={500}
-                    />
-                  </Menu.Button>
-                </div>
 
-                <Transition
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className=" absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white p-2 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={`
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'block text-sm' block px-4 py-2 font-bold
-                            `}
-                          >
-                            customer name
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={`
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'block text-sm' block px-4 py-2 font-bold text-gray-400
-                            `}
-                          >
-                            customer123@gmail.com
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <hr />
-                      <br />
-                      <form method="POST" action="#">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              type="submit"
-                              className={`
-                      active ? 'bg-gray-100 text-red-900' : 'text-red-700',
-                      'block text-sm' w-full px-4 py-2 text-left font-bold text-red-700
-                    `}
-                            >
-                              Logout
-                            </button>
-                          )}
-                        </Menu.Item>
-                      </form>
-                    </div>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
+            {/* user menu section */}
+
+            <div className="flex gap-2">
+              {user ? (
+                <Button onClick={() => push('root/retailer/dashboard')} color="danger" className=" bg-[#EF4444] text-white">
+                  Dashboard
+                </Button>
+              ) : (
+                <Link href={'/retailer/login'} className={` border-[#EF4444] ${!isScrolled ? 'text-black' : 'text-white'}`}>
+                  Login
+                </Link>
+              )}
+              {user && (
+                <Menu as="div" className="relative inline-block text-left">
+                  <div>
+                    <Menu.Button className="ml-2">
+                      <Image
+                        src={user?.image ? user?.image : '/images/man.png'}
+                        alt="author"
+                        className="h-10 w-10 rounded-full p-1 ring-2 ring-red-300 dark:ring-red-500"
+                        width={500}
+                        height={500}
+                      />
+                    </Menu.Button>
+                  </div>
+
+                  <Transition
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className=" absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white p-2 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div className="py-1">
+                        <div className="flex gap-1">
+                          <h2 className="font-bold">
+                            {user?.firstName} {user?.lastName}
+                          </h2>
+                        </div>
+                        <p className="mt-2 font-semibold">{user?.email}</p>
+                        <hr className="mt-3" />
+                        <br />
+                        <Button onClick={() => handleLogout()} variant="flat" className="h-7 w-full bg-[#EF4444] text-white">
+                          Logout
+                        </Button>
+                      </div>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              )}
               <button
                 data-collapse-toggle="navbar-cta"
                 onClick={() => setSidBer(!sidBer)}
@@ -275,7 +279,6 @@ export default function HeaderContent() {
           </div>
         </div>
       </nav>
-      <div className="h-[65px]"></div>
     </div>
   );
 }

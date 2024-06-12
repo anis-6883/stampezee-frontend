@@ -4,6 +4,7 @@ import Table from '@/app/(admin)/root/_components/Table';
 import {
   useDeleteSuperAdminStampImageCategoryMutation,
   useGetAllSuperAdminStampImagesCategoryQuery,
+  useUpdateSortingCategoryMutation,
   useUpdateSuperAdminCategoryStatusMutation,
 } from '@/features/super-admin/stamp-category/stampCategoryApi';
 import { IQueryType } from '@/types';
@@ -40,6 +41,7 @@ export default function StampCategoryTable() {
 
   const [deleteSuperAdminStampCategory, { isSuccess, isError }] = useDeleteSuperAdminStampImageCategoryMutation();
   const [updateStatus] = useUpdateSuperAdminCategoryStatusMutation();
+  const [sort] = useUpdateSortingCategoryMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
@@ -154,8 +156,8 @@ export default function StampCategoryTable() {
         setQuery={setQuery}
         query={query}
         enableDnD={true}
-        // sort={sort}
-        sortContext="branchTable"
+        sort={sort}
+        sortContext="category"
         enableRowActions={false}
       />
 

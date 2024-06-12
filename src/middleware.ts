@@ -1,15 +1,13 @@
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { routes } from './config/routes';
 
-const adminProtectedRoutes: string[] = [routes.superAdmin.dashboard];
-const userProtectedRoutes: string[] = [routes.user.profile];
+const adminProtectedRoutes = ['/root/super-admin/dashboard'];
+const userProtectedRoutes = ['/root/retailer/dashboard'];
 
 export default async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   const isProtectedRoute = adminProtectedRoutes.includes(pathname) || userProtectedRoutes.includes(pathname);
 
-  const accessToken = cookies().get('act')?.value;
+  const accessToken = req.cookies.get('act')?.value;
 
   // No Access Token & Route is Protected, Redirect to Login
   if (!accessToken && isProtectedRoute) {
@@ -18,34 +16,43 @@ export default async function middleware(req: NextRequest) {
 
   if (accessToken) {
     try {
-      const response: any = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/verify-token`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/verify-token`, {
         headers: {
-          'x-api-key': process.env.NEXT_PUBLIC_API_KEY!,
+          'x-api-key': process.env.NEXT_PUBLIC_API_KEY as string,
           Authorization: `Bearer ${accessToken}`,
         },
-      }).then((res) => res.json());
+      });
+
+      const data: any = await response.json();
 
       // If the token is invalid or there's no response, redirect to login
-      if (!response || response.status === false) {
+      if (!data || data.status === false) {
         return NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
       }
 
-      const role: 'super_admin' | 'retailer' = response.data.role;
+      const role = data.data.role;
 
-      // If the user is already on the correct dashboard, avoid redirection
-      if (role === 'retailer' && pathname.startsWith('/root/retailer')) {
-        return NextResponse.next();
+      // Redirect to the dashboard upon login
+      if (pathname === '/retailer/login' || pathname === '/super-admin/login') {
+        if (role === 'retailer') {
+          return NextResponse.redirect(new URL('/root/retailer/dashboard', req.nextUrl));
+        }
+        if (role === 'super_admin') {
+          return NextResponse.redirect(new URL('/root/super-admin/dashboard', req.nextUrl));
+        }
       }
-      if (role === 'super_admin' && pathname.startsWith('/root/super-admin')) {
+
+      // Allow access to the home page after login
+      if (pathname === '/') {
         return NextResponse.next();
       }
 
       // Role-based redirection logic
-      if (role === 'retailer') {
-        return NextResponse.redirect(new URL('/root/retailer/dashboard', req.nextUrl));
-      }
-      if (role === 'super_admin') {
-        return NextResponse.redirect(new URL('/root/super-admin/dashboard', req.nextUrl));
+      if (
+        (role === 'retailer' && pathname.startsWith('/root/retailer')) ||
+        (role === 'super_admin' && pathname.startsWith('/root/super-admin'))
+      ) {
+        return NextResponse.next();
       }
 
       // If the user role does not match the required role for the path, redirect to login
@@ -60,6 +67,7 @@ export default async function middleware(req: NextRequest) {
     }
   }
 
+  // Redirect to login if accessing protected routes without access token
   if (pathname.startsWith('/root/retailer')) {
     return NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
   }

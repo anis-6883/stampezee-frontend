@@ -5,6 +5,7 @@ import Table from '@/app/(admin)/root/_components/Table';
 import {
   useDeleteSuperAdminStampImageMutation,
   useGetAllSuperAdminStampImagesQuery,
+  useUpdateSortingImageMutation,
   useUpdateStampImageStatusMutation,
 } from '@/features/super-admin/stamp-image/stampImageApi';
 import { IQueryType } from '@/types';
@@ -35,6 +36,7 @@ export default function StampsImageTable() {
 
   const [deleteSuperAdminStampImage, { isSuccess, isError }] = useDeleteSuperAdminStampImageMutation();
   const [updateStatus] = useUpdateStampImageStatusMutation();
+  const [sort] = useUpdateSortingImageMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
@@ -136,7 +138,10 @@ export default function StampsImageTable() {
         }
         structure={structure}
         setQuery={setQuery}
+        enableDnD={true}
+        sort={sort}
         query={query}
+        sortContext="default_stamp_image"
         searchPlaceHolder="Search By Title"
       />
 

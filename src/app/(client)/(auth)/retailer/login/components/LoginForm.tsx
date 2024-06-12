@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 export default function LoginForm() {
-  const { replace } = useRouter();
+  const { push } = useRouter();
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [retailerLogin, { data: loginResponse, isSuccess: loginSuccess, error: loginError }] = useRetailerLoginMutation();
@@ -42,9 +42,9 @@ export default function LoginForm() {
     if (loginSuccess) {
       toast.success('Welcome to Retailer Panel!');
       dispatch(userLoggedIn({ ...loginResponse?.data, isLoggedIn: true }));
-      replace(routes.retailer.dashboard);
+      push(routes.retailer.dashboard);
     }
-  }, [dispatch, loginError, loginResponse, loginSuccess, replace]);
+  }, [dispatch, loginError, loginResponse, loginSuccess, push]);
 
   const handleSubmit = (values: { email: string; password: string }) => {
     setIsSubmitting(true);

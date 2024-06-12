@@ -4,7 +4,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 const initialState: IAuthState = {
   user: undefined,
   isLoggedIn: false,
-  role: 'admin',
+  role: '',
 };
 
 const authSlice = createSlice({
@@ -21,7 +21,8 @@ const authSlice = createSlice({
       state.isLoggedIn = action?.payload?.isLoggedIn ?? false;
     },
     userLoggedOut: (state, action) => {
-      state.user = action.payload;
+      state.user = undefined;
+      state.isLoggedIn = false;
     },
   },
 });

@@ -5,6 +5,7 @@ export const routes = {
     profile: '/profile',
   },
   superAdmin: {
+    login: '/root/super-admin/login',
     dashboard: '/root/super-admin/dashboard',
     stampImage: {
       home: `/root/super-admin/stamps-image`,
