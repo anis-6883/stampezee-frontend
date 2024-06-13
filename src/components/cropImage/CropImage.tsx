@@ -1,5 +1,4 @@
 import 'cropperjs/dist/cropper.css';
-import { useFormikContext } from 'formik';
 import { useEffect, useRef, useState } from 'react';
 import Cropper, { ReactCropperElement } from 'react-cropper';
 import Dropzone from 'react-dropzone';
