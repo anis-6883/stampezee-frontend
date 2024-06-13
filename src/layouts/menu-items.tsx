@@ -3,7 +3,7 @@ import { BsShop } from 'react-icons/bs';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { IoDiamondOutline, IoImageOutline } from 'react-icons/io5';
 import { LuBarChart3, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
-import { MdQrCodeScanner } from 'react-icons/md';
+import { MdOutlineSubscriptions, MdQrCodeScanner } from 'react-icons/md';
 import { PiBellRinging, PiCurrencyDollar, PiStamp, PiTreeStructure } from 'react-icons/pi';
 import { TbUserShield } from 'react-icons/tb';
 
@@ -38,6 +38,11 @@ export const menuItems: { [key: string]: any } = {
       name: 'Stamp Images',
       href: routes.superAdmin.stampImage.home,
       icon: <PiStamp />,
+    },
+    {
+      name: 'Subscription',
+      href: routes.superAdmin.subscription.home,
+      icon: <MdOutlineSubscriptions />,
     },
     {
       name: 'Push Notifications',

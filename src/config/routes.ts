@@ -13,6 +13,9 @@ export const routes = {
     stampCategory: {
       home: `/root/super-admin/stamps-category`,
     },
+    subscription: {
+      home: `/root/super-admin/subscription`,
+    },
     retailer: {
       home: `/root/super-admin/retailers`,
       create: `/root/super-admin/retailers/create`,
