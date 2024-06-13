@@ -11,6 +11,9 @@ import { useState } from 'react';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 
+import { HiPlus } from 'react-icons/hi2';
+import Button from '../../../_components/Button';
+
 let popup = false;
 
 export default function IndexTable() {
@@ -104,31 +107,37 @@ export default function IndexTable() {
   // };
 
   return (
-    <Table
-      isFetching={isFetching}
-      isLoading={isLoading}
-      response={
-        isLoading
-          ? {
-              data: [],
-              pagination: {
-                totalDocuments: 0,
-              },
-            }
-          : {
-              data: data?.data.docs || [],
-              pagination: {
-                totalDocuments: data?.data.totalDocs || 0,
-              },
-            }
-      }
-      structure={structure}
-      setQuery={setQuery}
-      query={query}
-      enableDnD={false}
-      // sort={sort}
-      sortContext="branchTable"
-      enableRowActions={false}
-    />
+    <>
+      <div className="mb-4 flex justify-end">
+        <Button onClick={() => router.push(routes.retailer.stamp.create)} text="Add New Stamp" preIcon={<HiPlus className="text-base" />} />
+      </div>
+
+      <Table
+        isFetching={isFetching}
+        isLoading={isLoading}
+        response={
+          isLoading
+            ? {
+                data: [],
+                pagination: {
+                  totalDocuments: 0,
+                },
+              }
+            : {
+                data: data?.data.docs || [],
+                pagination: {
+                  totalDocuments: data?.data.totalDocs || 0,
+                },
+              }
+        }
+        structure={structure}
+        setQuery={setQuery}
+        query={query}
+        enableDnD={false}
+        // sort={sort}
+        sortContext="branchTable"
+        enableRowActions={false}
+      />
+    </>
   );
 }

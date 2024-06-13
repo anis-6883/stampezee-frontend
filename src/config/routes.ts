@@ -40,7 +40,7 @@ export const routes = {
 
     stamp: {
       home: `/root/retailer/stamps`,
-      create: `/root/retailer/stamp/create`,
+      create: `/root/retailer/stamps/create`,
       edit: (id: number | string) => `/root/retailer/stamp/${id}/update`,
     },
 
