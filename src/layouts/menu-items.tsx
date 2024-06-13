@@ -77,7 +77,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <PiStamp />,
     },
     {
-      name: 'Stamps Images',
+      name: 'Stamp Images',
       href: routes.retailer.stampImage.home,
       icon: <IoImageOutline />,
     },

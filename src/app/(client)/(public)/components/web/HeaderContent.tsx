@@ -218,9 +218,13 @@ export default function HeaderContent() {
                   Dashboard
                 </Button>
               ) : (
-                <Link href={'/retailer/login'} className={` border-[#EF4444] ${!isScrolled ? 'text-black' : 'text-white'}`}>
+                <Button
+                  variant="outline"
+                  onClick={() => push('root/retailer/login')}
+                  className={` border-[#EF4444]  ${!isScrolled ? 'text-black' : 'text-white'}`}
+                >
                   Login
-                </Link>
+                </Button>
               )}
               {user && (
                 <Menu as="div" className="relative inline-block text-left">
