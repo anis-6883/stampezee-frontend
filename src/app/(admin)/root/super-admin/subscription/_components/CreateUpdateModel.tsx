@@ -30,16 +30,24 @@ export default function CreateUpdateModel({
 
   const [updateSubscription, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubscriptionMutation();
 
-  const initialValues = {
-    title: formData?.title || '',
-    // image: formData?.image || null,
-    limit: formData?.limit || null,
-    allowTotalTeamMember: formData?.allowTotalTeamMember || null,
-    allowTotalBranch: formData?.allowTotalBranch || null,
-    price: formData?.price || null,
-    descriptions: formData?.descriptions || getSubDetailsObject(false),
-    // 'descriptions: formData?.descriptions[1] || null,
-  };
+  let initialValues;
+
+  if (formData?.type === 'subscription') {
+    initialValues = {
+      title: formData?.title || '',
+      allowTotalTeamMember: formData?.allowTotalTeamMember || null,
+      allowTotalBranch: formData?.allowTotalBranch || null,
+      price: formData?.price || null,
+      descriptions: formData?.descriptions || getSubDetailsObject(false),
+    };
+  } else {
+    initialValues = {
+      title: formData?.title || '',
+      limit: formData?.limit || null,
+      price: formData?.price || null,
+      descriptions: formData?.descriptions || getSubDetailsObject(false),
+    };
+  }
 
   const validationSchema = Yup.object({
     title: Yup.string().required('Title is required'),
@@ -76,7 +84,7 @@ export default function CreateUpdateModel({
       setIsSubmitting(false);
     }
     if (updateSuccess) {
-      toast.success('Stamp Image updated successfully!');
+      toast.success('Subscription updated successfully!');
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
@@ -87,7 +95,7 @@ export default function CreateUpdateModel({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Update A Stamp Image</Title> : <Title as="h4">Add New Stamp Image</Title>}
+          {formData?._id ? <Title as="h4">Update A Subscription</Title> : <Title as="h4">Add New Subscription</Title>}
 
           <ActionIcon
             size="sm"
@@ -109,10 +117,15 @@ export default function CreateUpdateModel({
                     <InputField name="title" label="Title" placeholder="Title" />
                     <InputField name="price" label="Price" type="number" placeholder="999" />
                   </div>
-                  <div className="my-3 flex gap-2">
-                    <InputField name="allowTotalBranch" label="Total Branch" type="number" placeholder="0" />
-                    <InputField name="allowTotalTeamMember" label="Total Team Member" type="number" placeholder="0" />
-                    <InputField name="limit" type="number" label="Limit" placeholder="0" />
+                  <div className="my-3 flex gap-5">
+                    {formData?.type === 'subscription' && (
+                      <InputField name="allowTotalBranch" label="Total Branch" type="number" placeholder="0" />
+                    )}
+                    {formData?.type === 'subscription' && (
+                      <InputField name="allowTotalTeamMember" label="Total Team Member" type="number" placeholder="0" />
+                    )}
+
+                    {formData?.type !== 'subscription' && <InputField name="limit" type="number" label="Limit" placeholder="0" />}
                   </div>
                 </div>
 
