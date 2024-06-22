@@ -14,6 +14,7 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import Button from '../../../_components/Button';
 
 import { useGetAllSubscriptionQuery } from '@/features/super-admin/Subscription/stampImageApi';
+import cn from '@/hooks/class-names';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import CreateUpdateModel from './CreateUpdateModel';
 
@@ -109,7 +110,7 @@ export default function StampsImageTable() {
       accessorKey: 'type',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
-          <div className="rounded-full bg-[#df2828cc] p-2 font-bold text-white">
+          <div className={cn('rounded-full bg-[#df2828cc] p-2 font-bold text-white', row?.original?.type === 'addon' && 'bg-[#4531b6e0]')}>
             <h2>{row?.original?.type}</h2>
           </div>
         </div>
@@ -131,7 +132,7 @@ export default function StampsImageTable() {
             onClick={() => {
               setFormData({
                 ...row.original,
-                descriptions: [row.original.descriptions[0], row.original.descriptions[1]],
+                descriptions: row.original.descriptions,
                 image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
               });
               setCreateState(true);
