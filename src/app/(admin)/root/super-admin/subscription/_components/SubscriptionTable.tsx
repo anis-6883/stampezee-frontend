@@ -14,7 +14,7 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import Button from '../../../_components/Button';
 
 import { useGetAllSubscriptionQuery } from '@/features/super-admin/Subscription/stampImageApi';
-import cn from '@/hooks/class-names';
+import { Badge } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import CreateUpdateModel from './CreateUpdateModel';
 
@@ -68,7 +68,7 @@ export default function StampsImageTable() {
           <div>
             <h2>
               <span className="font-semibold">Duration: </span>
-              {row.original.duration}
+              {row.original.duration} days
             </h2>
             <h2>
               <span className="font-semibold">Allowed Branch: </span>
@@ -110,8 +110,12 @@ export default function StampsImageTable() {
       accessorKey: 'type',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
-          <div className={cn('rounded-full bg-[#df2828cc] p-2 font-bold text-white', row?.original?.type === 'addon' && 'bg-[#4531b6e0]')}>
-            <h2>{row?.original?.type}</h2>
+          <div className="text-white">
+            {row?.original?.type === 'addon' ? (
+              <Badge className="bg-primary">{row?.original?.type}</Badge>
+            ) : (
+              <Badge className="bg-danger">{row?.original?.type}</Badge>
+            )}
           </div>
         </div>
       ),
