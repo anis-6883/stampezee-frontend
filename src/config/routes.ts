@@ -43,8 +43,8 @@ export const routes = {
 
     stamp: {
       home: `/root/retailer/stamps`,
-      create: `/root/retailer/stamp/create`,
-      edit: (id: number | string) => `/root/retailer/stamp/${id}/update`,
+      create: `/root/retailer/stamps/create`,
+      edit: (id: number | string) => `/root/retailer/stamps/${id}/update`,
     },
 
     stampImage: {

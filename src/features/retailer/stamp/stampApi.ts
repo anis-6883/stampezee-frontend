@@ -12,6 +12,11 @@ export const stampApi = apiSlice.injectEndpoints({
       },
       providesTags: ['retailerStamp'],
     }),
+    getSingleStamps: builder.query<IResponse, any>({
+      query: (id) => {
+        return `/api/retailer/stamp/${id}`;
+      },
+    }),
     createStamp: builder.mutation<IResponse, any>({
       query: (newStamp) => ({
         url: '/api/retailer/stamp',
@@ -29,7 +34,7 @@ export const stampApi = apiSlice.injectEndpoints({
       invalidatesTags: ['retailerStamp'],
     }),
     deleteStamp: builder.mutation<IResponse, any>({
-      query: ({ id }) => ({
+      query: (id) => ({
         url: `api/retailer/stamp/${id}`,
         method: 'DELETE',
       }),
@@ -54,6 +59,7 @@ export const {
   useUpdateStampMutation,
   useDeleteStampMutation,
   useBranchCategoryImageListQuery,
+  useGetSingleStampsQuery,
 } = stampApi;
 
 export default stampApi;

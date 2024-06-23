@@ -1,10 +1,28 @@
 'use client';
+import { routes } from '@/config/routes';
 import Create from '../_components/Create';
+import PageHeader from '@/components/page-header';
+
+const pageHeader = {
+  title: 'Manage Stamps',
+  breadcrumb: [
+    {
+      href: routes.retailer.dashboard,
+      name: 'Dashboard',
+    },
+    {
+      name: 'Stamps',
+    },
+    {
+      name: 'Create',
+    },
+  ],
+};
 
 export default function page() {
   return (
     <div>
-      <h2 className="text-3xl font-semibold">Create a new Sub Admin </h2>
+      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
       <hr />
       <Create />
     </div>

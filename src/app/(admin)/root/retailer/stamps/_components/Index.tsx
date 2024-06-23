@@ -7,15 +7,23 @@ import { IQueryType } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
+
+import { HiPlus } from 'react-icons/hi2';
+import Button from '../../../_components/Button';
+import toast from 'react-hot-toast';
+import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 
 let popup = false;
 
 export default function IndexTable() {
   const router = useRouter();
 
+  const [deleteState, setDeleteState] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllStampsQuery({
@@ -25,12 +33,32 @@ export default function IndexTable() {
   });
   console.log(data?.data, 'useGetAllSubAdminsQuery');
 
-  const [deleteStamp] = useDeleteStampMutation();
+  const [deleteStamp, { isSuccess, isError }] = useDeleteStampMutation();
 
   const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
+
+  const handleDelete = async (rowData: any) => {
+    setDeleteState(true);
+    setDeleteId(rowData._id);
+  };
+
+  useEffect(() => {
+    if (isError) {
+      setDeleteSubmitting(false);
+      toast.error('Something went wrong. Please try again!');
+      setDeleteState(false);
+      setDeleteId(null);
+    }
+    if (isSuccess) {
+      setDeleteSubmitting(false);
+      toast.success('Stamp deleted successfully!');
+      setDeleteState(false);
+      setDeleteId(null);
+    }
+  }, [isSuccess, isError]);
 
   const structure = [
     {
@@ -81,12 +109,10 @@ export default function IndexTable() {
           {/* <button onClick={() => handleEdit(row.original)}>
             <HiOutlinePencil className="text-base" />
           </button> */}
-          <Link onClick={() => handleEdit(row.original)} href={routes.retailer.sub_admin.edit(row.original._id)}>
+          <Link onClick={() => handleEdit(row.original)} href={routes.retailer.stamp.edit(row.original._id)}>
             <HiOutlinePencil className="text-base" />
           </Link>
-          <button>
-            <ImBin className="text-base" />
-          </button>
+          <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
         </div>
       ),
     },
@@ -104,31 +130,46 @@ export default function IndexTable() {
   // };
 
   return (
-    <Table
-      isFetching={isFetching}
-      isLoading={isLoading}
-      response={
-        isLoading
-          ? {
-              data: [],
-              pagination: {
-                totalDocuments: 0,
-              },
-            }
-          : {
-              data: data?.data.docs || [],
-              pagination: {
-                totalDocuments: data?.data.totalDocs || 0,
-              },
-            }
-      }
-      structure={structure}
-      setQuery={setQuery}
-      query={query}
-      enableDnD={false}
-      // sort={sort}
-      sortContext="branchTable"
-      enableRowActions={false}
-    />
+    <>
+      <div className="mb-4 flex justify-end">
+        <Button onClick={() => router.push(routes.retailer.stamp.create)} text="Add New Stamp" preIcon={<HiPlus className="text-base" />} />
+      </div>
+
+      <Table
+        isFetching={isFetching}
+        isLoading={isLoading}
+        response={
+          isLoading
+            ? {
+                data: [],
+                pagination: {
+                  totalDocuments: 0,
+                },
+              }
+            : {
+                data: data?.data.docs || [],
+                pagination: {
+                  totalDocuments: data?.data.totalDocs || 0,
+                },
+              }
+        }
+        structure={structure}
+        setQuery={setQuery}
+        query={query}
+        enableDnD={false}
+        // sort={sort}
+        sortContext="branchTable"
+        enableRowActions={false}
+      />
+
+      <DeleteConfirmModal
+        deleteId={deleteId}
+        deleteHandler={deleteStamp}
+        modalState={deleteState}
+        setModalState={setDeleteState}
+        isSubmitting={deleteSubmitting}
+        setIsSubmitting={setDeleteSubmitting}
+      />
+    </>
   );
 }
