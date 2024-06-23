@@ -8,14 +8,14 @@ export const metadata = {
 
 export default async function Page() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 text-gray-900">
-      <div className="m-0 grid max-w-screen-xl grid-cols-6 rounded-lg bg-white shadow sm:m-10 md:grid-cols-12">
+    <div className="flex min-h-screen items-center justify-center bg-white text-gray-900 lg:bg-gray-100">
+      <div className="m-0 grid max-w-screen-xl grid-cols-6 rounded-lg bg-white shadow-none sm:m-10 md:grid-cols-12 lg:shadow">
         <div className="col-span-6 p-10">
           <Link href="/">
             <img src="/images/logo.png" className="mx-auto w-28" alt="logo" />
           </Link>
 
-          <div className="mt-8 px-16">
+          <div className="mt-8 px-1 lg:px-16">
             <h1 className="text-center text-xl font-bold xl:text-xl">Sign In</h1>
 
             <LoginForm />
@@ -29,7 +29,7 @@ export default async function Page() {
             </div>
           </div>
         </div>
-        <div className="col-span-6  md:block">
+        <div className="col-span-6 hidden md:block lg:block">
           <div className="flex h-full items-center justify-center">
             <img src="/images/retailer-login.png" className="w-3/4 rounded-r-lg" alt="logo" />
           </div>
