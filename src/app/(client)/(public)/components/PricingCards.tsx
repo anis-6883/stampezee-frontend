@@ -1,8 +1,22 @@
+'use client';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 export default function PricingCards({ item }: { item: any }) {
+  useEffect(() => {
+    AOS.init({
+      easing: 'ease-out-quad',
+      duration: 800,
+    });
+  }, []);
   return (
     <div>
       {/* Pricing Card */}
-      <div className="relative mx-auto flex h-full w-full max-w-lg flex-col rounded-lg border-gray-100 bg-white p-6 text-gray-900 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8">
+      <div
+        data-aos="fade-up"
+        data-aos-anchor-placement="top-center"
+        className="relative mx-auto flex h-full w-full max-w-lg flex-col rounded-lg border-gray-100 bg-white p-6 text-gray-900 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8"
+      >
         <h3 className="mb-4 text-2xl font-semibold">{item.plan_name}</h3>
         <div className="my-8 flex items-baseline">
           <span className="mr-2 text-3xl font-bold xl:text-5xl  xl:font-extrabold ">

@@ -5,6 +5,7 @@ import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
+
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -12,6 +13,7 @@ import { FcFaq } from 'react-icons/fc';
 import { IoBagAdd, IoPricetagsSharp } from 'react-icons/io5';
 import { MdOutlineContacts } from 'react-icons/md';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { Link as ScrollLink } from 'react-scroll';
 import { Button } from 'rizzui';
 import './HeaderStyle.css';
 
@@ -118,7 +120,7 @@ export default function HeaderContent() {
                       <li className="transition duration-300 ease-in-out hover:bg-gray-100">
                         <Link
                           onClick={() => routeCheck('')}
-                          href="/"
+                          href="/#how_work"
                           className={`block rounded py-3 pl-4 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                         >
                           <IoBagAdd className="mr-3 text-[20px]" />
@@ -170,15 +172,30 @@ export default function HeaderContent() {
                     className={`${sidBer ? 'h-full' : ''} mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                   >
                     <li className="w-max-content">
-                      <Link
-                        onClick={() => routeCheck('')}
-                        href="/"
-                        className={`w-max-content block rounded px-3 py-2 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                      <ScrollLink
+                        to="how_work"
+                        smooth={true}
+                        duration={500}
+                        spy={true}
+                        offset={-80}
+                        className={`w-max-content block cursor-pointer rounded px-3 py-2 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                       >
                         {checkActiveButton('') && <p className="mr-2 h-[.40rem] w-[.40rem] rounded-full bg-red-300"></p>} How It Works
-                      </Link>
+                      </ScrollLink>
                     </li>
-                    <li>
+                    <li className="w-max-content">
+                      <ScrollLink
+                        to="price"
+                        smooth={true}
+                        duration={500}
+                        spy={true}
+                        offset={-80}
+                        className={`w-max-content block cursor-pointer rounded px-3 py-2 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                      >
+                        {checkActiveButton('') && <p className="mr-2 h-[.40rem] w-[.40rem] rounded-full bg-red-300"></p>} Pricing
+                      </ScrollLink>
+                    </li>
+                    {/* <li>
                       <Link
                         onClick={() => routeCheck('/pricing')}
                         href="/pricing"
@@ -186,7 +203,7 @@ export default function HeaderContent() {
                       >
                         {checkActiveButton('/pricing') && <p className="mr-2 h-[.40rem] w-[.40rem] rounded-full bg-red-300"></p>} Pricing
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         href="/faqs"
@@ -214,9 +231,9 @@ export default function HeaderContent() {
 
             <div className="flex gap-2">
               {user ? (
-                <Button onClick={() => push('root/retailer/dashboard')} color="danger" className=" bg-[#EF4444] text-white">
+                <Link href="root/retailer/dashboard" className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white">
                   Dashboard
-                </Button>
+                </Link>
               ) : (
                 <Button
                   variant="outline"
