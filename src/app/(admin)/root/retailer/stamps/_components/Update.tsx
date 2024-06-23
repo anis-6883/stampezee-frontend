@@ -6,7 +6,7 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import StatusBar from '@/components/Formik/StatusBar';
 import { routes } from '@/config/routes';
-import { useBranchCategoryImageListQuery, useCreateStampMutation } from '@/features/retailer/stamp/stampApi';
+import { useBranchCategoryImageListQuery, useCreateStampMutation, useGetSingleStampsQuery } from '@/features/retailer/stamp/stampApi';
 import { IQueryType } from '@/types';
 import getChangedFormData from '@/utils/getChangedFormData';
 import { Form, Formik } from 'formik';
@@ -16,12 +16,17 @@ import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 
 export default function Update({ Id }: any) {
+  const [rewardType, setRewardType] = useState<string>('promotion');
   const [submitting, setSubmitting] = useState(false);
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
 
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery({});
+
+  const { data: stampData } = useGetSingleStampsQuery(Id);
+
+  console.log('stampData', stampData?.data);
   useEffect(() => {
     if (responseData) {
       // const transformedOptionsData = responseData.data.map((item: any) => ({
@@ -53,20 +58,20 @@ export default function Update({ Id }: any) {
   };
 
   const initialValues = {
-    branchId: '',
-    stampImageId: '',
-    categoryId: '',
-    title: '',
-    description: '',
-    rules: '',
-    noOfStampsToCollect: 0,
-    minPurchaseAmount: 0,
-    rewardType: '',
-    promotionReward: '',
-    discountReward: 0,
-    startedAt: '',
-    expiredAt: '',
-    status: true,
+    branchId: stampData?.data?.branchId ? stampData?.data?.branchId : '',
+    stampImageId: stampData?.data?.stampImageId ? stampData?.data?.stampImageId : '',
+    categoryId: stampData?.data?.categoryId ? stampData?.data?.categoryId : '',
+    title: stampData?.data?.title ? stampData?.data?.title : '',
+    description: stampData?.data?.description ? stampData?.data?.description : '',
+    rules: stampData?.data?.rules ? stampData?.data?.rules : '',
+    noOfStampsToCollect: stampData?.data?.noOfStampsToCollect ? stampData?.data?.noOfStampsToCollect : '',
+    minPurchaseAmount: stampData?.data?.minPurchaseAmount ? stampData?.data?.minPurchaseAmount : '',
+    // rewardType: '',
+    promotionReward: stampData?.data?.promotionReward ? stampData?.data?.promotionReward : '',
+    discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
+    startedAt: stampData?.data?.startedAt ? stampData?.data?.startedAt : '',
+    expiredAt: stampData?.data?.expiredAt ? stampData?.data?.expiredAt : '',
+    status: stampData?.data?.status ? stampData?.data?.status : true,
   };
 
   const validationSchema = Yup.object().shape({
@@ -106,66 +111,130 @@ export default function Update({ Id }: any) {
 
           return (
             <Form className="mt-5 grid gap-4">
-              <InputField name="title" label="Title" />
+              <div className="flex w-full gap-3">
+                <div className="w-1/2">
+                  <SelectField
+                    name="branchId"
+                    label="Branch"
+                    value={values?.branchId}
+                    options={optionsData?.branches.map((item: any) => ({
+                      label: item.name,
+                      value: item._id,
+                    }))}
+                    onChange={(option: { label: string; value: string }) => setFieldValue('branchId', option.value)}
+                  />
+                </div>
+
+                <div className="w-1/2">
+                  <SelectField
+                    name="categoryId"
+                    label="Category"
+                    value={values?.categoryId}
+                    options={optionsData?.categories?.map((item: any) => ({
+                      label: item.name,
+                      value: item._id,
+                    }))}
+                    onChange={(option: { label: string; value: string }) => setFieldValue('categoryId', option.value)}
+                  />
+                </div>
+              </div>
+
+              <InputField name="title" label="Stamp Name" placeholder="Stamp Name" />
               <InputTextarea
                 name="description"
                 label="Description"
                 placeholder="Write you message Description..."
                 setFieldValue={setFieldValue}
               />
-              <InputField name="rules" label="Rules" />
+              <h2 className="font-semibold">Default Stamps</h2>
+              <div className="mb-5 flex w-full flex-wrap justify-center gap-3 md:justify-center lg:justify-start">
+                {optionsData?.defaultImages?.map((item: any) => (
+                  <div key={item?._id} className="flex h-[180px] w-[180px] rounded bg-white p-6 shadow-md">
+                    <div>
+                      <img src="https://t4.ftcdn.net/jpg/05/26/52/11/360_F_526521105_hNPxIZsrIush3tB1vrQYqcX7yJWfptog.jpg" alt="" />
+                      <h3>{item?.title}</h3>
+                    </div>
+                    <input
+                      style={{ backgroundImage: 'none' }}
+                      type="radio"
+                      id="radio1"
+                      name="stampImageId"
+                      value={item?._id}
+                      checked={values?.stampImageId === item?._id}
+                      onChange={(e) => setFieldValue('stampImageId', e.target.value)}
+                      className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-3 checked:w-3 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <h2 className="font-semibold">Custom Stamps</h2>
+              <div className="flex w-full flex-wrap justify-center gap-3 md:justify-center lg:justify-start">
+                {optionsData?.customImages?.map((item: any) => (
+                  <div key={item?._id} className="flex h-[180px] w-[180px] rounded bg-white p-6 shadow-md">
+                    <div>
+                      <img src="https://t4.ftcdn.net/jpg/05/26/52/11/360_F_526521105_hNPxIZsrIush3tB1vrQYqcX7yJWfptog.jpg" alt="" />
+                      <h3>Stamp 1</h3>
+                    </div>
+                    <input
+                      style={{ backgroundImage: 'none' }}
+                      type="radio"
+                      id="radio1"
+                      name="stampImageId"
+                      value={item?._id}
+                      checked={values?.stampImageId === item?._id}
+                      onChange={(e) => setFieldValue('stampImageId', e.target.value)}
+                      className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
+                    />
+                  </div>
+                ))}
+              </div>
+              <StatusBar setFieldValue={setFieldValue} />
+              <InputField name="rules" label="Basic Rules" placeholder="Basic Rules" />
 
               <InputField name="noOfStampsToCollect" label="Number of Stamps to Collect" type="number" />
               <InputField name="minPurchaseAmount" label="Minimum Purchase Amount" type="number" />
-
-              <SelectField
-                name="branchId"
-                label="Branch"
-                options={optionsData?.branches.map((item: any) => ({
-                  label: item.name,
-                  value: item._id,
-                }))}
-                onChange={(option: { label: string; value: string }) => setFieldValue('branchId', option.value)}
-              />
-
-              <SelectField
-                name="categoryId"
-                label="Category"
-                options={optionsData?.categories.map((item: any) => ({
-                  label: item.name,
-                  value: item._id,
-                }))}
-                onChange={(option: { label: string; value: string }) => setFieldValue('categoryId', option.value)}
-              />
-              <SelectField
-                name="stampImageId"
-                label="Stamp Image"
-                options={optionsData?.stampImages.map((item: any) => ({
-                  label: item.title,
-                  value: item._id,
-                }))}
-                onChange={(option: { label: string; value: string }) => setFieldValue('stampImageId', option.value)}
-              />
-
-              <SelectField
-                name="rewardType"
-                label="Reward Type"
-                options={[
-                  { label: 'Promotion', value: 'promotion' },
-                  { label: 'Discount', value: 'discount' },
-                ]}
-                onChange={(option: { label: string; value: string }) => setFieldValue('rewardType', option.value)}
-              />
-              {touched.rewardType && values.rewardType == 'promotion' && <InputField name="promotionReward" label="Promotion Reward" />}
-              {touched.rewardType && values.rewardType == 'discount' && (
-                <InputField name="discountReward" label="Discount Reward" type="number" />
+              <div className="flex gap-3">
+                <div>
+                  <input
+                    style={{ backgroundImage: 'none' }}
+                    type="radio"
+                    id="radio1"
+                    name="discount"
+                    checked={rewardType === 'discount' ? true : false}
+                    onClick={() => setRewardType('discount')}
+                    className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
+                  />
+                  <label className="ml-1" htmlFor="">
+                    {' '}
+                    Discount
+                  </label>
+                </div>
+                <div>
+                  <input
+                    style={{ backgroundImage: 'none' }}
+                    type="radio"
+                    id="radio1"
+                    name="discount"
+                    onClick={() => setRewardType('promotion')}
+                    checked={rewardType === 'promotion' ? true : false}
+                    className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
+                  />
+                  <label className="ml-1" htmlFor="">
+                    {' '}
+                    Promotion{' '}
+                  </label>
+                </div>
+              </div>
+              {rewardType === 'discount' && (
+                <InputField name="discountReward" label="Product Reward" placeholder="Product Reward" type="number" />
               )}
+              {rewardType === 'promotion' && <InputField name="promotionReward" label="Product Reward" placeholder="Product Reward" />}
 
               <DateRangePicker startDate={values.startedAt} endDate={values.expiredAt} setFieldValue={setFieldValue} />
 
-              <StatusBar setFieldValue={setFieldValue} />
-              <div className="flex justify-end">
-                <SubmitButton isSubmitting={submitting} />
+              <div className="flex w-48 justify-end">
+                <SubmitButton text="Update" isSubmitting={submitting} />
               </div>
             </Form>
           );
