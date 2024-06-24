@@ -13,7 +13,6 @@ import { FcFaq } from 'react-icons/fc';
 import { IoBagAdd, IoPricetagsSharp } from 'react-icons/io5';
 import { MdOutlineContacts } from 'react-icons/md';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Link as ScrollLink } from 'react-scroll';
 import { Button } from 'rizzui';
 import './HeaderStyle.css';
 
@@ -121,7 +120,7 @@ export default function HeaderContent() {
                         <Link
                           onClick={() => routeCheck('')}
                           href="/#how_work"
-                          className={`block rounded py-3 pl-4 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('') ? 'text-red-500 after:absolute after:left-1/2 after:top-[100%] after:mt-0.5 after:block after:-translate-x-1/2 after:transform after:content-["-_"]' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                         >
                           <IoBagAdd className="mr-3 text-[20px]" />
                           How It Works
@@ -131,7 +130,7 @@ export default function HeaderContent() {
                         <Link
                           onClick={() => routeCheck('/pricing')}
                           href="/pricing"
-                          className={`block rounded py-3 pl-4 ${checkActiveButton('/pricing') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('/pricing') ? 'text-red-500 after:absolute after:left-1/2 after:top-[100%] after:mt-0.5 after:block after:-translate-x-1/2 after:transform after:content-["-_"]' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                         >
                           <IoPricetagsSharp className="mr-3 text-[20px]" />
                           Pricing
@@ -141,7 +140,7 @@ export default function HeaderContent() {
                         <Link
                           onClick={() => routeCheck('/faqs')}
                           href="/faqs"
-                          className={`block rounded py-3 pl-4 ${checkActiveButton('/faqs') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('/faqs') ? 'text-red-500 after:absolute after:left-1/2 after:top-[100%] after:mt-0.5 after:block after:-translate-x-1/2 after:transform after:content-["-_"]' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                         >
                           <FcFaq className="mr-3 text-[20px]" />
                           FAQ
@@ -151,12 +150,13 @@ export default function HeaderContent() {
                         <Link
                           onClick={() => routeCheck('/contact-us')}
                           href="/contact-us"
-                          className={`block rounded py-3 pl-4 ${checkActiveButton('/contact-us') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('/contact-us') ? 'text-red-500 after:absolute after:left-1/2 after:top-[100%] after:mt-0.5 after:block after:-translate-x-1/2 after:transform after:content-["-_"]' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                         >
                           <MdOutlineContacts className="mr-3 text-[20px]" />
                           Contact
                         </Link>
                       </li>
+
                       <li className="mt-5 flex w-full items-center justify-center text-center">
                         <button
                           type="button"
@@ -172,54 +172,39 @@ export default function HeaderContent() {
                     className={`${sidBer ? 'h-full' : ''} mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                   >
                     <li className="w-max-content">
-                      <ScrollLink
-                        to="how_work"
-                        smooth={true}
-                        duration={500}
-                        spy={true}
-                        offset={-80}
-                        className={`w-max-content block cursor-pointer rounded px-3 py-2 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                      <Link
+                        onClick={() => routeCheck('/')}
+                        href="/"
+                        className={`relative transition-all duration-150 ease-in ${checkActiveButton('/') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
                       >
-                        {checkActiveButton('') && <p className="mr-2 h-[.40rem] w-[.40rem] rounded-full bg-red-300"></p>} How It Works
-                      </ScrollLink>
+                        Home
+                      </Link>
                     </li>
                     <li className="w-max-content">
-                      <ScrollLink
-                        to="price"
-                        smooth={true}
-                        duration={500}
-                        spy={true}
-                        offset={-80}
-                        className={`w-max-content block cursor-pointer rounded px-3 py-2 ${checkActiveButton('') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
-                      >
-                        {checkActiveButton('') && <p className="mr-2 h-[.40rem] w-[.40rem] rounded-full bg-red-300"></p>} Pricing
-                      </ScrollLink>
-                    </li>
-                    {/* <li>
                       <Link
                         onClick={() => routeCheck('/pricing')}
                         href="/pricing"
-                        className={`block rounded px-3 py-2 ${checkActiveButton('/pricing') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                        className={`relative transition-all duration-150 ease-in ${checkActiveButton('/pricing') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
                       >
-                        {checkActiveButton('/pricing') && <p className="mr-2 h-[.40rem] w-[.40rem] rounded-full bg-red-300"></p>} Pricing
+                        Price
                       </Link>
-                    </li> */}
+                    </li>
                     <li>
                       <Link
                         href="/faqs"
                         onClick={() => routeCheck('/faqs')}
-                        className={`block rounded px-3 py-2 ${checkActiveButton('/faqs') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                        className={`relative transition-all duration-150 ease-in ${checkActiveButton('/faqs') ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-gray-500'}`}
                       >
-                        {checkActiveButton('/faqs') && <p className="mr-2 h-[.40rem] w-[.40rem] rounded-full bg-red-300"></p>} FAQ
+                        FAQ
                       </Link>
                     </li>
                     <li>
                       <Link
                         onClick={() => routeCheck('/contact-us')}
                         href="/contact-us"
-                        className={`block rounded px-3 py-2 ${checkActiveButton('/contact-us') ? 'text-red-500 hover:text-red-300' : 'hover:text-gray-500 '} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                        className={`relative transition-all duration-150 ease-in ${checkActiveButton('/contact-us') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
                       >
-                        {checkActiveButton('/contact-us') && <p className="mr-2 h-[.40rem] w-[.40rem] rounded-full bg-red-300"></p>} Contact
+                        Contact
                       </Link>
                     </li>
                   </ul>
