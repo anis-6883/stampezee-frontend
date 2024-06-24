@@ -1,6 +1,6 @@
-import { routes } from '@/config/routes';
-import Update from '../../_components/Update';
 import PageHeader from '@/components/page-header';
+import { routes } from '@/config/routes';
+import UpdateStamp from '../../_components/UpdateStamp';
 
 const pageHeader = {
   title: 'Manage Stamps',
@@ -24,7 +24,7 @@ export default function Page({ params }: any) {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <Update Id={id} />
+      <UpdateStamp Id={id} />
     </div>
   );
 }

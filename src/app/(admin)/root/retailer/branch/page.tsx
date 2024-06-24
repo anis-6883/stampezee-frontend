@@ -3,7 +3,7 @@ import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import Link from 'next/link';
 import { HiPlus } from 'react-icons/hi';
-import Button from '../../_components/Button';
+import Button from '../../../../../components/Formik/Button';
 import BranchTable from './_components/BranchTable';
 
 const pageHeader = {

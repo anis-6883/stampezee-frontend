@@ -1,16 +1,17 @@
 'use client';
-import { routes } from '@/config/routes';
-import Create from '../_components/Create';
 import PageHeader from '@/components/page-header';
+import { routes } from '@/config/routes';
+import CreateStamp from '../_components/CreateStamp';
 
 const pageHeader = {
-  title: 'Manage Stamps',
+  title: 'Create A Stamp',
   breadcrumb: [
     {
       href: routes.retailer.dashboard,
       name: 'Dashboard',
     },
     {
+      href: routes.retailer.stamp.home,
       name: 'Stamps',
     },
     {
@@ -21,10 +22,9 @@ const pageHeader = {
 
 export default function page() {
   return (
-    <div>
+    <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <hr />
-      <Create />
-    </div>
+      <CreateStamp />
+    </>
   );
 }

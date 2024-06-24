@@ -36,7 +36,7 @@ export const branchApi = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: (result, error, arg: any) => [{ type: 'branch', id: arg.id }],
+      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
     }),
     deleteBranch: builder.mutation({
       query: (id) => ({

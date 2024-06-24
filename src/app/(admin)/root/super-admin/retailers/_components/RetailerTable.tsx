@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
-import Button from '../../../_components/Button';
 
+import Button from '@/components/Formik/Button';
 import {
   useDeleteSuperAdminRetailerMutation,
   useGetAllRetailersQuery,

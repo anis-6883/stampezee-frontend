@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import * as Yup from 'yup';
-import Button from '../../../_components/Button';
+import Button from '../../../../../../components/Formik/Button';
 import MapComponent from './Map';
 
 export default function UpdateBranch({ branchId }: any) {
