@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@/app/(admin)/root/_components/Button';
+import Button from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
@@ -15,7 +15,7 @@ import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import ReactSelect from 'react-select';
-import { ActionIcon, FieldError, Modal, Title } from 'rizzui';
+import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function CreateUpdateModel({

@@ -16,6 +16,7 @@ export const stampApi = apiSlice.injectEndpoints({
       query: (id) => {
         return `/api/retailer/stamp/${id}`;
       },
+      providesTags: ['retailerStamp'],
     }),
     createStamp: builder.mutation<IResponse, any>({
       query: (newStamp) => ({

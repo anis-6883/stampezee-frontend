@@ -21,7 +21,6 @@ export default function InputTextarea({
         {({ field, meta }: { field: any; meta: any }) => (
           <Textarea
             {...field}
-            className="my-3"
             name={name}
             label={
               <span>

@@ -1,4 +1,4 @@
-import Button from '@/app/(admin)/root/_components/Button';
+import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerOtpVerifyMutation, useRetailerResendOtpMutation } from '@/features/auth/authApi';

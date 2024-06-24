@@ -1,26 +1,19 @@
 'use client';
 
+import { useGetGeneralSettingsQuery, useUpdateGeneralSettingsMutation } from '@/features/super-admin/general-settings/generalSettingsApi';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { FiCheckCircle } from 'react-icons/fi';
-import { PiSpinnerLight } from 'react-icons/pi';
+import { BsCheck2Circle } from 'react-icons/bs';
 import * as Yup from 'yup';
+import Button from '../../../../../../components/Formik/Button';
 import AboutUsForm from './AboutUsForm';
-import AppVersionControlForm from './AppVersionControlForm';
 import GeneralSettingsForm from './GeneralSettingsForm';
-import LogoAndIconForm from './LogoAndIconForm';
 import NotificationSettingsForm from './NotificationSettingsForm';
-import PopUpBannerSettings from './PopUpBannerSettings';
 import PrivacyAndPolicyForm from './PrivacyAndPolicyForm';
 import S3BucketForm from './S3BucketForm';
 import TabButtonItem from './TabButtonItem';
 import TermsAndConditionForm from './TermsAndConditionForm';
-import { shallowEqual, useSelector } from 'react-redux';
-import { RootState } from '@/features/store';
-import Button from '../../../_components/Button';
-import { useUpdateGeneralSettingsMutation, useGetGeneralSettingsQuery } from '@/features/super-admin/general-settings/generalSettingsApi';
-import { BsCheck2Circle } from 'react-icons/bs';
 
 export default function SettingsMainForm() {
   const { data: generalSetting, isLoading, isError } = useGetGeneralSettingsQuery(undefined);

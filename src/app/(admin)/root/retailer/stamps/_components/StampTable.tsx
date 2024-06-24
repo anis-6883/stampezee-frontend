@@ -5,15 +5,12 @@ import { routes } from '@/config/routes';
 import { useDeleteStampMutation, useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
 import { IQueryType } from '@/types';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
-
-import { HiPlus } from 'react-icons/hi2';
-import Button from '../../../_components/Button';
-import toast from 'react-hot-toast';
+import Button from '../../../../../../components/Formik/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 
 let popup = false;
@@ -109,9 +106,17 @@ export default function IndexTable() {
           {/* <button onClick={() => handleEdit(row.original)}>
             <HiOutlinePencil className="text-base" />
           </button> */}
-          <Link onClick={() => handleEdit(row.original)} href={routes.retailer.stamp.edit(row.original._id)}>
+          {/* <Link onClick={() => handleEdit(row.original)} href={routes.retailer.stamp.edit(row.original._id)}>
             <HiOutlinePencil className="text-base" />
-          </Link>
+          </Link> */}
+          <Button
+            color="warning"
+            preIcon={<HiOutlinePencil className="text-base" />}
+            onClick={() => {
+              handleEdit(row.original);
+              router.replace(routes.retailer.stamp.edit(row.original._id));
+            }}
+          />
           <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
         </div>
       ),
@@ -131,10 +136,6 @@ export default function IndexTable() {
 
   return (
     <>
-      <div className="mb-4 flex justify-end">
-        <Button onClick={() => router.push(routes.retailer.stamp.create)} text="Add New Stamp" preIcon={<HiPlus className="text-base" />} />
-      </div>
-
       <Table
         isFetching={isFetching}
         isLoading={isLoading}

@@ -14,7 +14,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
-import Button from '../../../_components/Button';
+import Button from '../../../../../../components/Formik/Button';
 
 export default function CreateUpdateModal({
   setFormData,

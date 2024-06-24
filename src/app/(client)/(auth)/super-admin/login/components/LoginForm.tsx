@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@/app/(admin)/root/_components/Button';
+import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
 import { routes } from '@/config/routes';

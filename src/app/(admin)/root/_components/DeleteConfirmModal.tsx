@@ -2,7 +2,7 @@ import { BsCheck2Circle, BsExclamationTriangle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { MdDoNotDisturb } from 'react-icons/md';
 import { ActionIcon, Modal } from 'rizzui';
-import Button from './Button';
+import Button from '../../../../components/Formik/Button';
 
 export default function DeleteConfirmModal({
   modalState = false,
