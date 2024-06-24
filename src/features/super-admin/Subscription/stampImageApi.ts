@@ -12,6 +12,10 @@ export const superAdminStampImageApi = apiSlice.injectEndpoints({
       providesTags: ['superAdminSubscription'],
     }),
 
+    getSubscription: builder.query({
+      query: () => '/api/subscription-plans',
+    }),
+
     updateSubscription: builder.mutation({
       query: ({ id, data }: any) => ({
         url: `api/secret-root/admin/super-admin/subscription/${id}`,
@@ -23,6 +27,6 @@ export const superAdminStampImageApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllSubscriptionQuery, useUpdateSubscriptionMutation } = superAdminStampImageApi;
+export const { useGetSubscriptionQuery, useGetAllSubscriptionQuery, useUpdateSubscriptionMutation } = superAdminStampImageApi;
 
 export default superAdminStampImageApi;
