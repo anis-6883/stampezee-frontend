@@ -50,5 +50,6 @@ export const apiSlice = createApi({
     'superAdminRetailerStampCategory',
     'superAdminRetailer',
     'superAdminSubscription',
+    'faq',
   ],
 });
