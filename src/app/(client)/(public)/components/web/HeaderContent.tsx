@@ -4,8 +4,6 @@ import { useGetOwnProfileQuery, useLogoutUserMutation } from '@/features/auth/au
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { Menu, Transition } from '@headlessui/react';
-import Image from 'next/image';
-
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -17,12 +15,11 @@ import { Button } from 'rizzui';
 import './HeaderStyle.css';
 
 export default function HeaderContent() {
+  const [logOut] = useLogoutUserMutation();
   const [sidBer, setSidBer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
   const { push } = useRouter();
-  const { authSlice }: any = useSelector((state) => state);
-
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user } = useSelector(
@@ -32,7 +29,8 @@ export default function HeaderContent() {
     shallowEqual
   );
   const {} = useGetOwnProfileQuery({});
-  const [logOut] = useLogoutUserMutation();
+
+  // Logout Handler
   const handleLogout = async () => {
     logOut(null)
       .then((res) => {
@@ -232,8 +230,8 @@ export default function HeaderContent() {
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
                     <Menu.Button className="ml-2">
-                      <Image
-                        src={user?.image ? user?.image : '/images/man.png'}
+                      <img
+                        src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/man.png'}
                         alt="author"
                         className="h-10 w-10 rounded-full p-1 ring-2 ring-red-300 dark:ring-red-500"
                         width={500}

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaTrashAlt } from 'react-icons/fa';
@@ -76,7 +75,7 @@ export default function ImageDropzoneSingle({
       >
         {value && preview ? (
           <div className="flex items-center gap-3">
-            <Image
+            <img
               src={preview}
               alt="Uploaded Image"
               width={0}
@@ -92,7 +91,7 @@ export default function ImageDropzoneSingle({
         ) : (
           <div className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-2">
             <input {...getInputProps()} />
-            <Image src="/images/upload.png" height={60} width={60} alt="upload" />
+            <img src="/images/upload.png" height={60} width={60} alt="upload" />
             {error ? (
               <p className="text-sm text-red-500">{error}</p>
             ) : (
