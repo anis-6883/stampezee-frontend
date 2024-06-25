@@ -13,6 +13,7 @@ import {
   useUpdateStampMutation,
 } from '@/features/retailer/stamp/stampApi';
 import { IQueryType } from '@/types';
+import getFormattedDate from '@/utils/get-formatted-date';
 import getChangedFormData from '@/utils/getChangedFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
@@ -80,7 +81,7 @@ export default function Update({ Id }: any) {
     rewardType: stampData?.data?.rewardType ? stampData?.data?.rewardType : '',
     promotionReward: stampData?.data?.promotionReward ? stampData?.data?.promotionReward : '',
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
-    validDateRange: stampData?.data?.startedAt + ' to ' + stampData?.data?.expiredAt || '',
+    validDateRange: getFormattedDate(stampData?.data?.startedAt) + ' to ' + getFormattedDate(stampData?.data?.expiredAt) || '',
   };
 
   const validationSchema = Yup.object().shape({
