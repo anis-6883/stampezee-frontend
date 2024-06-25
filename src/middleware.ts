@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { routes } from './config/routes';
 
-const adminProtectedRoutes = ['/root/super-admin/dashboard'];
+const adminProtectedRoutes = [routes.superAdmin.dashboard];
 const userProtectedRoutes = ['/root/retailer/dashboard'];
 
 export default async function middleware(req: NextRequest) {
@@ -16,7 +17,7 @@ export default async function middleware(req: NextRequest) {
 
   if (accessToken) {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/verify-token`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/web/verify-token`, {
         headers: {
           'x-api-key': process.env.NEXT_PUBLIC_API_KEY as string,
           Authorization: `Bearer ${accessToken}`,

@@ -5,30 +5,30 @@ export const subAdminApi = apiSlice.injectEndpoints({
     getAllSubAdmins: builder.query({
       query: (queries) => {
         const values = Object.values(queries);
-        if (values.length) return `/api/retailer/sub-admin/all?${new URLSearchParams(queries as any)}`;
-        return `/api/retailer/sub-admin/all`; // Ensure it returns a base URL if no queries are present
+        if (values.length) return `/api/web/retailer/sub-admin/all?${new URLSearchParams(queries as any)}`;
+        return `/api/web/retailer/sub-admin/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['subAdmin'],
     }),
     subAdminBranches: builder.query({
-      query: () => `/api/retailer/sub-admin/branches`,
+      query: () => `/api/web/retailer/sub-admin/branches`,
       providesTags: ['subAdminBranches'],
     }),
     createSubAdmin: builder.mutation({
       query: (newSubAdmin) => ({
-        url: 'api/retailer/sub-admin',
+        url: 'api/web/retailer/sub-admin',
         method: 'POST',
         body: newSubAdmin,
       }),
       invalidatesTags: ['subAdmin'],
     }),
     singleSubAdmin: builder.query({
-      query: (id) => `api/retailer/sub-admin/${id}`,
+      query: (id) => `api/web/retailer/sub-admin/${id}`,
       providesTags: ['subAdmin'],
     }),
     updateSubAdmin: builder.mutation({
       query: ({ id, data }: any) => ({
-        url: `api/retailer/sub-admin/${id}`,
+        url: `api/web/retailer/sub-admin/${id}`,
         method: 'PUT',
         body: data,
       }),
@@ -36,7 +36,7 @@ export const subAdminApi = apiSlice.injectEndpoints({
     }),
     updateSubAdminStatus: builder.mutation({
       query: ({ data, branchId }) => ({
-        url: `api/retailer/sub-admin/status/${branchId}`,
+        url: `api/web/retailer/sub-admin/status/${branchId}`,
         method: 'PUT',
         body: data,
       }),
@@ -44,7 +44,7 @@ export const subAdminApi = apiSlice.injectEndpoints({
     }),
     deleteSubAdmin: builder.mutation({
       query: (id) => ({
-        url: `api/retailer/sub-admin/${id}`,
+        url: `api/web/retailer/sub-admin/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['subAdmin'],

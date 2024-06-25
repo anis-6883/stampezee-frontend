@@ -7,20 +7,20 @@ export const stampApi = apiSlice.injectEndpoints({
       //   query: ({ page, limit }) => `api/retailer/stamp-/all?page=${page}&limit=${limit}`,
       query: (queries) => {
         const values = Object.values(queries);
-        if (values.length) return `/api/retailer/stamp/all?${new URLSearchParams(queries as any)}`;
-        return `/api/retailer/stamp-/all`; // Ensure it returns a base URL if no queries are present
+        if (values.length) return `/api/web/retailer/stamp/all?${new URLSearchParams(queries as any)}`;
+        return `/api/web/retailer/stamp-/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['retailerStamp'],
     }),
     getSingleStamps: builder.query<IResponse, any>({
       query: (id) => {
-        return `/api/retailer/stamp/${id}`;
+        return `/api/web/retailer/stamp/${id}`;
       },
       providesTags: ['retailerStamp'],
     }),
     createStamp: builder.mutation<IResponse, any>({
       query: (newStamp) => ({
-        url: '/api/retailer/stamp',
+        url: '/api/web/retailer/stamp',
         method: 'POST',
         body: newStamp,
       }),
@@ -28,7 +28,7 @@ export const stampApi = apiSlice.injectEndpoints({
     }),
     updateStamp: builder.mutation<IResponse, { id: string; formData: FormData }>({
       query: ({ id, formData }: any) => ({
-        url: `api/retailer/stamp/${id}`,
+        url: `/api/web/retailer/stamp/${id}`,
         method: 'PUT',
         body: formData,
       }),
@@ -36,7 +36,7 @@ export const stampApi = apiSlice.injectEndpoints({
     }),
     deleteStamp: builder.mutation<IResponse, any>({
       query: (id) => ({
-        url: `api/retailer/stamp/${id}`,
+        url: `/api/web/retailer/stamp/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['retailerStamp'],
@@ -44,11 +44,11 @@ export const stampApi = apiSlice.injectEndpoints({
 
     branchCategoryImageList: builder.query<any, any>({
       query: () => {
-        return `api/retailer/stamp/branch-category-image-list`;
+        return `/api/web/retailer/stamp/branch-category-image-list`;
       },
     }),
     singleBranch: builder.query<{ success: boolean }, { _id: string }>({
-      query: ({ _id }) => `/api/retailer/branch/${_id}`,
+      query: ({ _id }) => `/api/web/retailer/branch/${_id}`,
       providesTags: ['branches'],
     }),
   }),
