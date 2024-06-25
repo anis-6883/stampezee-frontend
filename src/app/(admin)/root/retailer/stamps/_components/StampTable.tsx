@@ -5,6 +5,7 @@ import { routes } from '@/config/routes';
 import { useDeleteStampMutation, useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
 import { IQueryType } from '@/types';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -15,7 +16,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 
 let popup = false;
 
-export default function IndexTable() {
+export default function StampTable() {
   const router = useRouter();
 
   const [deleteState, setDeleteState] = useState(false);
@@ -109,22 +110,14 @@ export default function IndexTable() {
           {/* <Link onClick={() => handleEdit(row.original)} href={routes.retailer.stamp.edit(row.original._id)}>
             <HiOutlinePencil className="text-base" />
           </Link> */}
-          <Button
-            color="warning"
-            preIcon={<HiOutlinePencil className="text-base" />}
-            onClick={() => {
-              handleEdit(row.original);
-              router.replace(routes.retailer.stamp.edit(row.original._id));
-            }}
-          />
+          <Link href={routes.retailer.stamp.edit(row.original._id)}>
+            <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+          </Link>
           <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
         </div>
       ),
     },
   ];
-  const handleEdit = (rowData: any) => {
-    router.push(routes.retailer.sub_admin.edit(rowData._id));
-  };
 
   // const handleDelete = async (rowData: any) => {
   //   if (popup) return;

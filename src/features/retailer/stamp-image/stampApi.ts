@@ -6,14 +6,14 @@ export const stampApi = apiSlice.injectEndpoints({
       //   query: ({ page, limit }) => `api/retailer/stamp-image/all?page=${page}&limit=${limit}`,
       query: (queries) => {
         const values = Object.values(queries);
-        if (values.length) return `/api/retailer/stamp-image/all?${new URLSearchParams(queries as any)}`;
-        return `/api/retailer/stamp-image/all`; // Ensure it returns a base URL if no queries are present
+        if (values.length) return `/api/web/retailer/stamp-image/all?${new URLSearchParams(queries as any)}`;
+        return `/api/web/retailer/stamp-image/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['retailerStamp'],
     }),
     createStampImage: builder.mutation({
       query: (newStampImage) => ({
-        url: '/api/retailer/stamp-image',
+        url: '/api/web/retailer/stamp-image',
         method: 'POST',
         body: newStampImage,
       }),
@@ -21,7 +21,7 @@ export const stampApi = apiSlice.injectEndpoints({
     }),
     updateStampImage: builder.mutation({
       query: ({ id, data }: any) => ({
-        url: `api/retailer/stamp-image/${id}`,
+        url: `/api/web/retailer/stamp-image/${id}`,
         method: 'PUT',
         body: data,
       }),
@@ -29,7 +29,7 @@ export const stampApi = apiSlice.injectEndpoints({
     }),
     updateStampStatus: builder.mutation({
       query: ({ data, branchId }) => ({
-        url: `api/retailer/stamp-image/status/${branchId}`,
+        url: `/api/web/retailer/stamp-image/status/${branchId}`,
         method: 'PUT',
         body: data,
       }),
@@ -37,7 +37,7 @@ export const stampApi = apiSlice.injectEndpoints({
     }),
     deleteStampImage: builder.mutation({
       query: (id) => ({
-        url: `api/retailer/stamp-image/${id}`,
+        url: `/api/web/retailer/stamp-image/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['retailerStamp'],

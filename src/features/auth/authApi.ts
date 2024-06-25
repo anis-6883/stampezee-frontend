@@ -5,14 +5,14 @@ export const authApi = apiSlice.injectEndpoints({
     logoutUser: builder.mutation({
       query: () => {
         return {
-          url: '/api/user-logout',
+          url: '/api/web/user-logout',
           method: 'POST',
         };
       },
     }),
 
     getOwnProfile: builder.query({
-      query: () => `/api/get-profile`,
+      query: () => `/api/web/get-profile`,
       providesTags: ['userOwnProfile'],
     }),
 
@@ -43,13 +43,13 @@ export const authApi = apiSlice.injectEndpoints({
 
     // retailer api start
     retailerGetProfile: builder.query({
-      query: () => `api/retailer/profile`,
+      query: () => `api/web/retailer/profile`,
       providesTags: ['retailerProfile'],
     }),
     retailerRegister: builder.mutation({
       query: (data) => {
         return {
-          url: `api/retailer/register`,
+          url: `api/web/retailer/register`,
           method: 'POST',
           body: data,
         };
@@ -58,7 +58,7 @@ export const authApi = apiSlice.injectEndpoints({
     retailerOtpVerify: builder.mutation({
       query: (data) => {
         return {
-          url: `api/retailer/otp-verify`,
+          url: `api/web/retailer/otp-verify`,
           method: 'POST',
           body: data,
         };
@@ -67,7 +67,7 @@ export const authApi = apiSlice.injectEndpoints({
     retailerResendOtp: builder.mutation({
       query: (data) => {
         return {
-          url: `api/retailer/resend-otp`,
+          url: `api/web/retailer/resend-otp`,
           method: 'POST',
           body: data,
         };
@@ -76,17 +76,9 @@ export const authApi = apiSlice.injectEndpoints({
     retailerLogin: builder.mutation({
       query: (data) => {
         return {
-          url: `/api/retailer/login`,
+          url: `/api/web/retailer/login`,
           method: 'POST',
           body: data,
-        };
-      },
-    }),
-    retailerLogout: builder.mutation({
-      query: () => {
-        return {
-          url: '/api/v1/retailer/logout',
-          method: 'POST',
         };
       },
     }),
@@ -99,7 +91,6 @@ export const {
   useSuperAdminLogoutMutation,
   useRetailerGetProfileQuery,
   useRetailerLoginMutation,
-  useRetailerLogoutMutation,
   useRetailerOtpVerifyMutation,
   useRetailerRegisterMutation,
   useGetOwnProfileQuery,

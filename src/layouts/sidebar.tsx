@@ -3,6 +3,7 @@
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
+import _ from 'lodash';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
@@ -16,6 +17,7 @@ import { menuItems } from './menu-items';
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
   const role = useSelector((state: RootState) => state.authSlice.role);
+  const user = useSelector((state: RootState) => state.authSlice.user);
 
   return (
     <aside
@@ -28,6 +30,18 @@ export default function Sidebar({ className }: { className?: string }) {
         <Link href={role === 'super_admin' ? routes.superAdmin.dashboard : routes.retailer.dashboard} aria-label="Site Logo">
           <img src="/images/logo.png" width={80} height={50} alt="logo" className="m-auto pt-2" />
         </Link>
+      </div>
+
+      <div className="mx-4 flex max-w-xs flex-col gap-8 overflow-hidden rounded-lg bg-[#F4F6F8] p-4 dark:bg-gray-800 sm:max-w-2xl sm:flex-row">
+        <img
+          className="ml-2 h-12 w-12 rounded object-cover sm:h-8"
+          src={user?.image ? user?.image : 'https://cdn.pixabay.com/photo/2020/04/12/10/57/store-5033746_640.png'}
+          alt="Store Image"
+        />
+        <div>
+          <h3 className="text-lg font-bold">{user?.fullName ? user?.fullName : 'Blessy J'}</h3>
+          <span className="tex-lg text-gray-500">{_.capitalize(role)}</span>
+        </div>
       </div>
 
       <SimpleBar className="h-[calc(100%-80px)]">
