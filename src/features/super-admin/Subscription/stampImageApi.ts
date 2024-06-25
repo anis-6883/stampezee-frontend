@@ -13,7 +13,7 @@ export const superAdminStampImageApi = apiSlice.injectEndpoints({
     }),
 
     getSubscription: builder.query({
-      query: () => '/api/subscription-plans',
+      query: () => '/api/web/subscription-plans',
     }),
 
     updateSubscription: builder.mutation({
@@ -24,9 +24,18 @@ export const superAdminStampImageApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['superAdminSubscription'],
     }),
+    createCheckOut: builder.mutation({
+      query: (data: any) => ({
+        url: `/api/web/subscription-plans/checkout`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['superAdminSubscription'],
+    }),
   }),
 });
 
-export const { useGetSubscriptionQuery, useGetAllSubscriptionQuery, useUpdateSubscriptionMutation } = superAdminStampImageApi;
+export const { useCreateCheckOutMutation, useGetSubscriptionQuery, useGetAllSubscriptionQuery, useUpdateSubscriptionMutation } =
+  superAdminStampImageApi;
 
 export default superAdminStampImageApi;

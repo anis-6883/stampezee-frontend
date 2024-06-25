@@ -4,7 +4,7 @@ import HeaderContent from './components/web/HeaderContent';
 
 export default function clientLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto w-full max-w-[1300px]">
+    <div className="">
       <HeaderContent />
       {children}
       <Footer />

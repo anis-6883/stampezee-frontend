@@ -4,7 +4,6 @@ import Table from '@/app/(admin)/root/_components/Table';
 import { routes } from '@/config/routes';
 import { useDeleteStampMutation, useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
 import { IQueryType } from '@/types';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -77,7 +76,7 @@ export default function StampTable() {
       accessorKey: 'stampImage',
       Cell: ({ row }: any) => (
         <div>
-          <Image
+          <img
             src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.stampImage?.image}`}
             width={50}
             height={50}

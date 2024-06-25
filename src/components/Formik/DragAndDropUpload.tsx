@@ -1,6 +1,5 @@
 import cn from '@/hooks/class-names';
 import { useFormikContext } from 'formik';
-import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaTrashAlt } from 'react-icons/fa';
@@ -90,7 +89,7 @@ export default function DragAndDropUpload({
       >
         {value && preview ? (
           <div className="relative flex items-center gap-3">
-            <Image
+            <img
               src={preview}
               alt="Uploaded Image"
               width={0}

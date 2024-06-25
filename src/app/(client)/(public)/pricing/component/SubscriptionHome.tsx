@@ -5,7 +5,7 @@ import { Loader } from 'rizzui';
 import PricingCards from './PricingCards';
 
 export const SubscriptionHome = () => {
-  const { data, isLoading, isFetching } = useGetSubscriptionQuery(undefined);
+  const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
   return (
     <div>

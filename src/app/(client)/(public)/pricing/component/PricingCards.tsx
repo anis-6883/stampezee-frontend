@@ -1,17 +1,21 @@
 'use client';
+import { setSubscription } from '@/features/subscription/subscriptionSlice';
 import 'aos/dist/aos.css';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'rizzui';
 export default function PricingCards({ item }: { item: any }) {
   const { authSlice }: any = useSelector((state) => state);
+  const dispatch = useDispatch();
   const router = useRouter();
   function checkLogin() {
     if (authSlice?.isLoggedIn === false) {
       toast.error('Please Login first');
+
       return;
     } else {
+      dispatch(setSubscription(item));
       router.push('/checkout');
     }
   }
