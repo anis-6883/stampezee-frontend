@@ -1,5 +1,6 @@
 import { routes } from '@/config/routes';
 import { BsShop } from 'react-icons/bs';
+import { FcFaq } from 'react-icons/fc';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { IoDiamondOutline, IoImageOutline } from 'react-icons/io5';
 import { LuBarChart3, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
@@ -48,6 +49,11 @@ export const menuItems: { [key: string]: any } = {
       name: 'Push Notifications',
       href: routes.superAdmin.notification,
       icon: <PiBellRinging />,
+    },
+    {
+      name: 'Faqs',
+      href: routes.superAdmin.faq.home,
+      icon: <FcFaq />,
     },
     {
       name: 'Billings',

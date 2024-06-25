@@ -35,7 +35,11 @@ export default function Sidebar({ className }: { className?: string }) {
       <div className="mx-4 flex max-w-xs flex-col gap-8 overflow-hidden rounded-lg bg-[#F4F6F8] p-4 dark:bg-gray-800 sm:max-w-2xl sm:flex-row">
         <img
           className="ml-2 h-12 w-12 rounded object-cover sm:h-8"
-          src={user?.image ? user?.image : 'https://cdn.pixabay.com/photo/2020/04/12/10/57/store-5033746_640.png'}
+          src={
+            user?.image
+              ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
+              : 'https://cdn.pixabay.com/photo/2020/04/12/10/57/store-5033746_640.png'
+          }
           alt="Store Image"
         />
         <div>
