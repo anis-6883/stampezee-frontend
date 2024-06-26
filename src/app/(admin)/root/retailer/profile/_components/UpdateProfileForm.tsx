@@ -1,17 +1,18 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
+import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery, useRetailerUpdateProfileMutation } from '@/features/auth/authApi';
-import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
+import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import ReactSelect, { OnChangeValue } from 'react-select';
+import ReactSelect from 'react-select';
 import { FieldError } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -19,7 +20,7 @@ export default function UpdateProfileForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [retailerUpdateProfile, { isSuccess, error }] = useRetailerUpdateProfileMutation();
-  const { data: retailerProfile } = useRetailerGetProfileQuery(null);
+  const { data: retailerProfile, isSuccess: isRetailerProfileSuccess } = useRetailerGetProfileQuery(null);
 
   useEffect(() => {
     if (error) {
@@ -52,6 +53,7 @@ export default function UpdateProfileForm() {
     city: retailerProfile?.data?.city || '',
     postalCode: retailerProfile?.data?.postalCode || '',
     address: retailerProfile?.data?.address || '',
+    image: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailerProfile?.data?.image}` || '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -69,8 +71,16 @@ export default function UpdateProfileForm() {
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
+    let objToFormData: FormData;
+    const isFile = (obj: any): obj is File => obj instanceof File;
+
+    if (!isFile(values?.image)) {
+      objToFormData = objectToFormData(values, ['image']);
+    } else {
+      objToFormData = objectToFormData(values);
+    }
     console.log('values: ', values);
-    retailerUpdateProfile(values);
+    retailerUpdateProfile(objToFormData);
   };
 
   return (
@@ -80,6 +90,14 @@ export default function UpdateProfileForm() {
           {({ errors, setFieldValue, touched, setFieldTouched, values }) => {
             return (
               <Form className="grid gap-4">
+                <DragAndDropUpload
+                  value={{ name: 'image', image: values.image }}
+                  onChange={(image: any) => setFieldValue('image', image)}
+                  className=" mx-auto "
+                  size={1024 * 1000}
+                  sizeText="1MB"
+                  isRounded={true}
+                />
                 <InputField name="storeName" label="Store Name" placeholder="Burger King" />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <InputField name="firstName" label="First Name" placeholder="John" />
@@ -110,15 +128,17 @@ export default function UpdateProfileForm() {
                         <span className="text-red-500"> *</span>
                       </p>
                     </div>
-                    <ReactSelect
-                      placeholder="Select your country"
-                      options={countryOptions}
-                      getOptionLabel={getOptionLabel}
-                      getOptionValue={(option) => option.label}
-                      defaultValue={countryOptions.filter((country) => country.label === 'Canada')}
-                      onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => setFieldValue('country', selectedOption?.label)}
-                      onBlur={() => setFieldTouched('country', true)}
-                    />
+                    {isRetailerProfileSuccess && (
+                      <ReactSelect
+                        placeholder="Select your country"
+                        options={countryOptions}
+                        getOptionLabel={getOptionLabel}
+                        getOptionValue={(option) => option.value}
+                        defaultValue={countryOptions.find((country) => country.label === (retailerProfile?.data?.country || 'Canada'))}
+                        onChange={(selectedOption) => setFieldValue('country', selectedOption?.label)}
+                        onBlur={() => setFieldTouched('country', true)}
+                      />
+                    )}
                     {touched.country && errors.country && <FieldError error={errors?.country as string} className="text-xs text-red-600" />}
                   </div>
                 </div>

@@ -54,6 +54,7 @@ export const authApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
+      invalidatesTags: ['userOwnProfile'],
     }),
     retailerRegister: builder.mutation({
       query: (data) => {
