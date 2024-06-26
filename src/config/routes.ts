@@ -1,6 +1,5 @@
 export const routes = {
   home: '/project-admin',
-  retailerAdminLogin: '/retailer/login',
   user: {
     profile: '/profile',
   },
@@ -31,6 +30,8 @@ export const routes = {
     settings: `/root/super-admin/settings`,
   },
   retailer: {
+    login: '/retailer/login',
+    register: '/retailer/register',
     dashboard: '/root/retailer/dashboard',
     profile: '/root/retailer/profile',
     branch: {

@@ -1,11 +1,11 @@
 'use client';
 
+import ChangePasswordModal from '@/components/changePasswordModal/ChangePasswordModal';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useLogoutUserMutation } from '@/features/auth/authApi';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -19,11 +19,13 @@ const menuItems = [
   },
   {
     name: 'Change Password',
-    href: '#',
+    // href: '#',
   },
 ];
 
 function DropdownMenu() {
+  const [createState, setCreateState] = useState(false);
+  const [formData, setFormData] = useState({});
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user, role } = useSelector((state: RootState) => state.authSlice);
@@ -39,7 +41,7 @@ function DropdownMenu() {
       if (role === 'super_admin') {
         replace(routes.superAdmin.login);
       } else {
-        replace(routes.retailerAdminLogin);
+        replace(routes.retailer.login);
       }
       dispatch(userLoggedOut(undefined));
     }
@@ -47,6 +49,7 @@ function DropdownMenu() {
 
   return (
     <div className="w-64 text-left rtl:text-right">
+      <ChangePasswordModal setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
       <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
         <Avatar
           src={
@@ -65,13 +68,13 @@ function DropdownMenu() {
       </div>
       <div className="grid px-3.5 py-3.5 font-medium text-gray-700">
         {menuItems.map((item) => (
-          <Link
+          <button
             key={item?.name ?? ''}
-            href={item?.href ?? ''}
+            onClick={() => setCreateState(true)}
             className="group my-0.5 flex items-center rounded-md px-2.5 py-2 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-50/50"
           >
             {item?.name ?? ''}
-          </Link>
+          </button>
         ))}
       </div>
       <div className="border-t border-gray-300 px-6 pb-6 pt-5">
