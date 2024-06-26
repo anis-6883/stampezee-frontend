@@ -46,6 +46,15 @@ export const authApi = apiSlice.injectEndpoints({
       query: () => `api/web/retailer/profile`,
       providesTags: ['retailerProfile'],
     }),
+    retailerUpdateProfile: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/web/retailer/profile`,
+          method: 'PUT',
+          body: data,
+        };
+      },
+    }),
     retailerRegister: builder.mutation({
       query: (data) => {
         return {
@@ -90,6 +99,7 @@ export const {
   useSuperAdminLoginMutation,
   useSuperAdminLogoutMutation,
   useRetailerGetProfileQuery,
+  useRetailerUpdateProfileMutation,
   useRetailerLoginMutation,
   useRetailerOtpVerifyMutation,
   useRetailerRegisterMutation,

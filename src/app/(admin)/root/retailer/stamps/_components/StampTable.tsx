@@ -28,7 +28,6 @@ export default function StampTable() {
     limit: query.pageSize,
     ...searchQuery,
   });
-  console.log(data?.data, 'useGetAllSubAdminsQuery');
 
   const [deleteStamp, { isSuccess, isError }] = useDeleteStampMutation();
 
@@ -62,15 +61,6 @@ export default function StampTable() {
       header: 'Title',
       accessorKey: 'title',
     },
-
-    {
-      header: 'Description',
-      accessorKey: 'description',
-    },
-    {
-      header: 'Branch',
-      accessorKey: 'branch.name',
-    },
     {
       header: 'Stamp Image',
       accessorKey: 'stampImage',
@@ -86,17 +76,13 @@ export default function StampTable() {
       ),
     },
     {
+      header: 'Branch',
+      accessorKey: 'branch.name',
+    },
+
+    {
       header: 'Category',
       accessorKey: 'category.name',
-    },
-    {
-      header: 'Reward Type',
-      accessorKey: 'rewardType',
-    },
-    {
-      header: 'Created At',
-      accessorKey: 'createdAt',
-      Cell: ({ row }: any) => <span>{formatDate(row.original.createdAt)}</span>,
     },
 
     {
