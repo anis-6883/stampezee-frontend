@@ -1,5 +1,5 @@
-import React from 'react';
+import StateCardView from './_components/StateCardView';
 
-export default function page() {
-  return <div>page super</div>;
+export default function Page() {
+  return <StateCardView className="mb-5 2xl:mb-8" />;
 }
