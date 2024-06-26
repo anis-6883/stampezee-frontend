@@ -32,9 +32,9 @@ export default function Sidebar({ className }: { className?: string }) {
         </Link>
       </div>
 
-      <div className="mx-4 flex max-w-xs flex-col gap-8 overflow-hidden rounded-lg bg-[#F4F6F8] p-4 dark:bg-gray-800 sm:max-w-2xl sm:flex-row">
+      <div className="mt-2 flex items-center justify-center gap-4 bg-[#F4F6F8] p-2">
         <img
-          className="ml-2 h-12 w-12 rounded object-cover sm:h-8"
+          className="h-12 w-12 rounded-full p-2"
           src={
             user?.image
               ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`

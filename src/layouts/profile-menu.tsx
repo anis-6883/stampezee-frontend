@@ -18,7 +18,7 @@ const menuItems = [
     href: '#',
   },
   {
-    name: 'Account Settings',
+    name: 'Change Password',
     href: '#',
   },
 ];
@@ -48,7 +48,14 @@ function DropdownMenu() {
   return (
     <div className="w-64 text-left rtl:text-right">
       <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
-        <Avatar src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp" name={user?.name ?? ''} />
+        <Avatar
+          src={
+            user?.image
+              ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
+              : 'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp'
+          }
+          name={user?.name ?? ''}
+        />
         <div className="ms-3">
           <Title as="h6" className="font-semibold">
             {user?.name ?? ''}
@@ -83,6 +90,7 @@ function DropdownMenu() {
 export default function ProfileMenu({ buttonClassName, avatarClassName }: { buttonClassName?: string; avatarClassName?: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { user } = useSelector((state: RootState) => state.authSlice);
 
   useEffect(() => {
     setIsOpen(false);
@@ -92,7 +100,15 @@ export default function ProfileMenu({ buttonClassName, avatarClassName }: { butt
     <Popover enableOverlay placement="bottom-start">
       <Popover.Trigger>
         <div className="w-12 cursor-pointer">
-          <Avatar name="Jane Doe" src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp" size="lg" />
+          <Avatar
+            name="Jane Doe"
+            src={
+              user?.image
+                ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
+                : 'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp'
+            }
+            size="lg"
+          />
         </div>
       </Popover.Trigger>
       <Popover.Content>{({ setOpen }) => <DropdownMenu />}</Popover.Content>
