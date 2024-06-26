@@ -89,7 +89,7 @@ export default function StateCardView({ className }: { className: string }) {
         <PiCaretLeftBold className="h-5 w-5" />
       </Button>
       <div className="w-full overflow-hidden">
-        <div ref={sliderEl} className="custom-scrollbar-x grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 2xl:gap-6 3xl:gap-8">
+        <div ref={sliderEl} className="custom-scrollbar-x 2xl:gap-6 grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 3xl:gap-8">
           <FileStatGrid className="min-w-[292px]" />
         </div>
       </div>

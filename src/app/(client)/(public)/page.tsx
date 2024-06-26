@@ -13,38 +13,29 @@ export default async function Page() {
   return (
     <div className="overflow-hidden">
       {/* rgba(22, 28, 36, 0.8),  */}
-      <div className="relative mx-auto mt-10  w-full">
-        <div className="h-[63vh] w-full bg-red-500 object-cover sm:h-[97vh]"></div>
-        <div className=" absolute inset-0"></div>
-        <div className="absolute inset-0  mx-auto  max-w-screen-xl items-center">
-          <div className="flex h-full items-center ">
-            <div className="absolute flex w-full items-center justify-between">
-              <div className="sm-p-0 w-full p-3 text-center sm:w-1/2 sm:text-left">
-                <h1 className="text-center text-4xl font-bold text-white sm:text-left sm:text-6xl">
-                  Revolutionize Your Customer Experience
-                </h1>
-                <br />
-                <div className="flex gap-3 text-4xl font-bold text-white sm:text-6xl">
-                  <p className="mt-2 text-lg font-medium">
-                    Engage, reward, and retain your customers with a touch of simplicity and technology and bring the future of loyalty
-                    programs to your business.
-                  </p>
-                </div>
-                <br />
-                <br />
-                <div className="MuiStack-root css-plpzdo" />
-
+      <div className="relative mx-auto mt-10 w-full">
+        <div className="h-[95vh] w-full bg-red-500 object-cover sm:h-[97vh]"></div>
+        <div className="absolute inset-0"></div>
+        <div className="absolute inset-0 mx-auto flex max-w-screen-xl items-center px-4 sm:px-6 lg:px-8">
+          <div className="flex w-full flex-col-reverse items-center justify-between sm:flex-row">
+            <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
+              <h1 className="text-3xl font-bold text-white sm:text-5xl">Revolutionize Your Customer Experience</h1>
+              <p className="mt-4 text-lg font-medium text-white sm:text-xl">
+                Engage, reward, and retain your customers with a touch of simplicity and technology, and bring the future of loyalty
+                programs to your business.
+              </p>
+              <div className="mt-8">
                 <a
                   href="/"
-                  className="dark:bg-primary-red rounded-full bg-white px-[40px] py-[20px] text-2xl font-bold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:w-full sm:max-w-md"
+                  className="dark:bg-primary-red rounded-full bg-white px-8 py-4 text-2xl font-bold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B]"
                 >
                   GET STARTED
                 </a>
               </div>
-              <div className="mt-6 hidden w-full justify-center sm:mt-0 sm:w-1/2 lg:flex">
-                <div className="h-[70%] w-[70%]">
-                  <Image src="/default/hero-image.png" alt="hero image" className="h-full w-full object-contain" />
-                </div>
+            </div>
+            <div className="mt-10 hidden justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex">
+              <div className="h-[55%] w-[55%] xl:h-[70%] xxl:w-[70%]">
+                <Image src="/default/hero-image.png" alt="hero image" className="h-full w-full " />
               </div>
             </div>
           </div>

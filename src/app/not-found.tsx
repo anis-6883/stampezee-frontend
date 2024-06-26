@@ -16,7 +16,7 @@ export default function NotFound() {
           <img
             src={'/not-found.png'}
             alt="not found"
-            className="mx-auto mb-8 aspect-[360/326] max-w-[256px] xs:max-w-[370px] lg:mb-12 2xl:mb-16"
+            className="2xl:mb-16 mx-auto mb-8 aspect-[360/326] max-w-[256px] xs:max-w-[370px] lg:mb-12"
           />
           <Title as="h1" className="text-[22px] font-bold leading-normal text-gray-1000 lg:text-3xl">
             Sorry, the page not found

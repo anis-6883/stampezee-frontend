@@ -3,13 +3,13 @@ import Image from '../Image';
 
 export default function Footer() {
   return (
-    <div className="container mx-auto max-w-screen-xl px-3 sm:px-5">
+    <div className="container mx-auto max-w-[1300px] px-3 sm:px-5">
       <footer className="container mx-auto">
         <hr className="mb-20 mt-10" />
         <div className="">
           <div className="flex flex-col items-center md:items-start ">
             <a className="w-[60px]" href="/">
-              <img alt="logo" width={60} height={60} src="images/logo.png" style={{ color: 'transparent' }} />
+              <img alt="logo" width={60} height={60} src="/images/logo.png" style={{ color: 'transparent' }} />
             </a>
           </div>
           <div className="mt-4 block font-medium">

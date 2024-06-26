@@ -58,7 +58,7 @@ export default function PricingCards({ item }: { item: any }) {
         </ul>
         <Button
           onClick={checkLogin}
-          className="dark:focus:ring-red absolute bottom-[51px] left-[10%] w-[80%] rounded-lg border-0 bg-red-500 px-5 py-2.5 text-center text-sm font-medium text-white transition-all duration-300 ease-in-out hover:bg-red-400 hover:text-black  focus:ring-4  focus:ring-transparent dark:text-white"
+          className="dark:focus:ring-red absolute bottom-[51px] left-[10%] w-[80%] rounded-lg border-0 bg-[#DF2828] px-5 py-2.5 text-center text-sm font-medium text-white transition-all duration-300 ease-in-out hover:bg-red-400 hover:text-black  focus:ring-4  focus:ring-transparent dark:text-white"
         >
           Get started
         </Button>
