@@ -55,7 +55,7 @@ export default function MetricCard({
 
           <div className={cn(icon && 'ps-3', contentClassName)}>
             <Text className={cn('mb-0.5 text-gray-500', titleClassName)}>{title}</Text>
-            <Text className={cn('font-lexend text-lg font-semibold text-gray-900 dark:text-gray-700 2xl:xl:text-xl', metricClassName)}>
+            <Text className={cn('font-lexend 2xl:xl:text-xl text-lg font-semibold text-gray-900 dark:text-gray-700', metricClassName)}>
               {metric}
             </Text>
 

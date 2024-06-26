@@ -7,6 +7,8 @@ import PricingCards from './PricingCards';
 export const SubscriptionHome = () => {
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
+  const subscription = data?.data.filter((item: any) => item.type === 'subscription');
+
   return (
     <div>
       <div className="relative mx-auto w-full">
@@ -54,7 +56,7 @@ export const SubscriptionHome = () => {
           <div className="mx-auto max-w-screen-xl">
             <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-4">
               {isLoading === false ? (
-                data?.data?.map((item: any) => <PricingCards key={item._id} item={item} />)
+                subscription?.map((item: any) => <PricingCards key={item._id} item={item} />)
               ) : (
                 <Loader variant="spinner" className="" />
               )}
