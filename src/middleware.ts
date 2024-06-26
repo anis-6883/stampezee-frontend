@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { routes } from './config/routes';
 
 const adminProtectedRoutes = [routes.superAdmin.dashboard];
-const userProtectedRoutes = ['/root/retailer/dashboard'];
+const userProtectedRoutes = [routes.retailer.dashboard];
 
 export default async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
@@ -28,13 +28,16 @@ export default async function middleware(req: NextRequest) {
 
       // If the token is invalid or there's no response, redirect to login
       if (!data || data.status === false) {
-        return NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
+        const response = NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
+        response.cookies.delete('act');
+        response.cookies.delete('rft');
+        return response;
       }
 
       const role = data.data.role;
 
       // Redirect to the dashboard upon login
-      if (pathname === '/retailer/login' || pathname === '/super-admin/login') {
+      if ([routes.retailer.login, routes.retailer.register, routes.superAdmin.login].includes(pathname)) {
         if (role === 'retailer') {
           return NextResponse.redirect(new URL('/root/retailer/dashboard', req.nextUrl));
         }
@@ -43,37 +46,19 @@ export default async function middleware(req: NextRequest) {
         }
       }
 
-      // Allow access to the home page after login
-      if (pathname === '/') {
-        return NextResponse.next();
+      // Access Control
+      if (role === 'retailer' && adminProtectedRoutes.includes(pathname)) {
+        return NextResponse.redirect(new URL('/root/retailer/dashboard', req.nextUrl));
       }
-
-      // Role-based redirection logic
-      if (
-        (role === 'retailer' && pathname.startsWith('/root/retailer')) ||
-        (role === 'super_admin' && pathname.startsWith('/root/super-admin'))
-      ) {
-        return NextResponse.next();
-      }
-
-      // If the user role does not match the required role for the path, redirect to login
-      if (
-        (role !== 'retailer' && pathname.startsWith('/root/retailer')) ||
-        (role !== 'super_admin' && pathname.startsWith('/root/super-admin'))
-      ) {
-        return NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
+      if (role === 'super_admin' && userProtectedRoutes.includes(pathname)) {
+        return NextResponse.redirect(new URL('/root/super-admin/dashboard', req.nextUrl));
       }
     } catch {
-      return NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
+      const response = NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
+      response.cookies.delete('act');
+      response.cookies.delete('rft');
+      return response;
     }
-  }
-
-  // Redirect to login if accessing protected routes without access token
-  if (pathname.startsWith('/root/retailer')) {
-    return NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
-  }
-  if (pathname.startsWith('/root/super-admin')) {
-    return NextResponse.redirect(new URL('/super-admin/login', req.nextUrl));
   }
 
   return NextResponse.next();
@@ -81,5 +66,5 @@ export default async function middleware(req: NextRequest) {
 
 // Routes Middleware should not run on
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|images|fonts|default|$).*)'],
 };

@@ -19,6 +19,12 @@ export default function Sidebar({ className }: { className?: string }) {
   const role = useSelector((state: RootState) => state.authSlice.role);
   const user = useSelector((state: RootState) => state.authSlice.user);
 
+  let fullName = user?.firstName + ' ' + user?.lastName;
+
+  if (fullName.length >= 18) {
+    fullName = user?.firstName + ' ' + user?.lastName.charAt(0).toUpperCase() + '.';
+  }
+
   return (
     <aside
       className={cn(
@@ -32,9 +38,9 @@ export default function Sidebar({ className }: { className?: string }) {
         </Link>
       </div>
 
-      <div className="mt-2 flex items-center justify-center gap-4 bg-[#F4F6F8] p-2">
+      <div className="mx-auto mt-4 flex w-[90%] items-center justify-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
         <img
-          className="h-12 w-12 rounded-full p-2"
+          className="h-14 w-14 rounded-full p-2"
           src={
             user?.image
               ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
@@ -43,8 +49,8 @@ export default function Sidebar({ className }: { className?: string }) {
           alt="Store Image"
         />
         <div>
-          <h3 className="text-lg font-bold">{user?.fullName ? user?.fullName : 'Blessy J'}</h3>
-          <span className="tex-lg text-gray-500">{_.capitalize(role)}</span>
+          <h3 className="text-lg font-bold">{fullName ? fullName : 'Blessy J'}</h3>
+          <span className="tex-lg text-gray-500">{_.startCase(_.toLower(role === 'super_admin' ? 'Super Admin' : role))}</span>
         </div>
       </div>
 

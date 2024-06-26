@@ -64,7 +64,7 @@ export default function SubAdminTable() {
               <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="w-14 rounded" />
             </div>
           ) : (
-            <img src={'/profile.png'} alt="image" className="w-14 rounded" />
+            <img src={'/images/profile.png'} alt="image" className="w-14 rounded" />
           )}
         </div>
       ),
