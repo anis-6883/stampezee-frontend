@@ -1,9 +1,8 @@
 import { routes } from '@/config/routes';
-import { BsShop } from 'react-icons/bs';
-import { FcFaq } from 'react-icons/fc';
+import { BsQuestionCircle, BsShop } from 'react-icons/bs';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { IoDiamondOutline, IoImageOutline } from 'react-icons/io5';
-import { LuBarChart3, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
+import { LuBarChart3, LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
 import { MdQrCodeScanner } from 'react-icons/md';
 import { PiBellRinging, PiCurrencyDollar, PiStamp, PiTreeStructure } from 'react-icons/pi';
 import { TbUserShield } from 'react-icons/tb';
@@ -11,9 +10,9 @@ import { TbUserShield } from 'react-icons/tb';
 export const menuItems: { [key: string]: any } = {
   super_admin: [
     {
-      name: 'Analytics',
+      name: 'Dashboard',
       href: routes.superAdmin.dashboard,
-      icon: <LuBarChart3 />,
+      icon: <LuLayoutDashboard />,
     },
     {
       name: 'Customers',
@@ -51,9 +50,9 @@ export const menuItems: { [key: string]: any } = {
       icon: <PiBellRinging />,
     },
     {
-      name: 'Faqs',
+      name: 'FAQs',
       href: routes.superAdmin.faq.home,
-      icon: <FcFaq />,
+      icon: <BsQuestionCircle />,
     },
     {
       name: 'Billings',
@@ -68,7 +67,7 @@ export const menuItems: { [key: string]: any } = {
   ],
   retailer: [
     {
-      name: 'Analytics',
+      name: 'Dashboard',
       href: routes.retailer.dashboard,
       icon: <LuBarChart3 />,
     },
