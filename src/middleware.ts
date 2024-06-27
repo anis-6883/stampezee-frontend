@@ -27,6 +27,8 @@ export default async function middleware(req: NextRequest) {
 
   const accessToken = req.cookies.get('act')?.value;
 
+  console.log('accessToken', accessToken);
+
   // No Access Token & Route is Protected, Redirect to Login
   if (!accessToken && isProtectedRoute) {
     return NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
@@ -42,6 +44,8 @@ export default async function middleware(req: NextRequest) {
       });
 
       const data: any = await response.json();
+
+      console.log(data);
 
       // If the token is invalid or there's no response, redirect to login
       if (!data || data.status === false) {
@@ -71,10 +75,11 @@ export default async function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL('/root/super-admin/dashboard', req.nextUrl));
       }
     } catch {
-      const response = NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
-      response.cookies.delete('act');
-      response.cookies.delete('rft');
-      return response;
+      console.log('first');
+      // const response = NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
+      // response.cookies.delete('act');
+      // response.cookies.delete('rft');
+      // return response;
     }
   }
 
