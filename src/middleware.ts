@@ -49,10 +49,11 @@ export default async function middleware(req: NextRequest) {
 
       // If the token is invalid or there's no response, redirect to login
       if (!data || data.status === false) {
-        const response = NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
-        response.cookies.delete('act');
-        response.cookies.delete('rft');
-        return response;
+        console.log('Invalid Token');
+        // const response = NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
+        // response.cookies.delete('act');
+        // response.cookies.delete('rft');
+        // return response;
       }
 
       const role = data.data.role;
