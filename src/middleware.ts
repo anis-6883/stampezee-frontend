@@ -26,7 +26,7 @@ export default async function middleware(req: NextRequest) {
   const isProtectedRoute = adminProtectedRoutes.includes(pathname) || userProtectedRoutes.includes(pathname);
 
   const accessToken = req.cookies.get('act')?.value;
-
+  console.log('cookies', req.cookies);
   console.log('accessToken', accessToken);
 
   // No Access Token & Route is Protected, Redirect to Login
