@@ -25,7 +25,6 @@ import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 
 export default function Update({ Id }: any) {
-  const [rewardType, setRewardType] = useState<string>('promotion');
   const [submitting, setSubmitting] = useState(false);
   const [createStamp] = useCreateStampMutation();
   const [updateStamp] = useUpdateStampMutation();
@@ -38,10 +37,6 @@ export default function Update({ Id }: any) {
 
   useEffect(() => {
     if (responseData) {
-      // const transformedOptionsData = responseData.data.map((item: any) => ({
-      //   label: item.name,
-      //   value: item._id,
-      // }));
       setOptionsData(responseData.data);
     }
   }, [responseData]);
@@ -53,7 +48,6 @@ export default function Update({ Id }: any) {
       setSubmitting(true);
       // Convert values object to getChangedFormData
       const changedData = getChangedFormData(values, initialValues, ['_id', 'validDateRange']);
-      changedData.rewardType = rewardType;
       changedData.startedAt = values?.validDateRange?.split('to')[0];
       changedData.expiredAt = values?.validDateRange?.split('to')[1];
 
@@ -112,17 +106,10 @@ export default function Update({ Id }: any) {
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={(values) => {
-          // same shape as initial values
-          console.log(values, 'value submit');
           handleSubmit(values);
         }}
       >
         {({ errors, touched, setFieldValue, values }) => {
-          // Object.keys(errors).forEach((key) => {
-          //   toast.error((errors as any)[key] as string);
-          // });
-          // console.log(errors, 'errors');
-
           return (
             <Form className="mt-5 grid gap-4">
               <div className="grid grid-cols-2 gap-x-5">
@@ -221,7 +208,7 @@ export default function Update({ Id }: any) {
                 </div>
               )}
               {errors?.stampImageId && <span className="text-red-600">Select a stamp image of custom or default stamp</span>}
-              {/* <StatusBar setFieldValue={setFieldValue} /> */}
+
               <div className="grid grid-cols-2 gap-x-5">
                 <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
                 <DateRangePicker label="Valid Date Range" name="validDateRange" />
@@ -236,15 +223,18 @@ export default function Update({ Id }: any) {
                 Reward Type <span className="text-red-600">*</span>
               </span>
               <div className="flex gap-3">
-                <div>
+                <div
+                  onClick={() => {
+                    setFieldValue('rewardType', 'discount');
+                  }}
+                >
                   <input
                     style={{ backgroundImage: 'none' }}
                     type="radio"
                     id="radio1"
                     name="discount"
-                    checked={rewardType === 'discount' ? true : false}
+                    checked={values.rewardType === 'discount' ? true : false}
                     onClick={() => {
-                      setRewardType('discount');
                       setFieldValue('rewardType', 'discount');
                     }}
                     className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
@@ -254,17 +244,20 @@ export default function Update({ Id }: any) {
                     Discount
                   </label>
                 </div>
-                <div>
+                <div
+                  onClick={() => {
+                    setFieldValue('rewardType', 'promotion');
+                  }}
+                >
                   <input
                     style={{ backgroundImage: 'none' }}
                     type="radio"
                     id="radio1"
                     name="discount"
                     onClick={() => {
-                      setRewardType('promotion');
                       setFieldValue('rewardType', 'promotion');
                     }}
-                    checked={rewardType === 'promotion' ? true : false}
+                    checked={values.rewardType === 'promotion' ? true : false}
                     className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
                   />
                   <label className="ml-1" htmlFor="">
@@ -273,12 +266,13 @@ export default function Update({ Id }: any) {
                   </label>
                 </div>
               </div>
-              {rewardType === 'discount' && (
+              {values.rewardType === 'discount' && (
                 <InputField name="discountReward" label="Product Reward" placeholder="Product Reward" type="number" />
               )}
-              {rewardType === 'promotion' && <InputField name="promotionReward" label="Product Reward" placeholder="Product Reward" />}
+              {values.rewardType === 'promotion' && (
+                <InputField name="promotionReward" label="Product Reward" placeholder="Product Reward" />
+              )}
 
-              {/* {(errors?.expiredAt || errors?.startedAt) && <span className="text-red-600">Select a valid date range</span>} */}
               <p className="text-end text-xs font-semibold">
                 Fields marked with <span className="text-red-600">*</span> are mandatory!
               </p>
