@@ -1,20 +1,25 @@
 'use client';
+
+import { useGetAllFaqsQuery } from '@/features/faqs/faqsApi';
 import { useState } from 'react';
 
-export default function Accordion({ faqData }: { faqData: any }) {
+export default function Accordion({}: { faqData: any }) {
   const [status, setStatus] = useState<string>('');
+  const { data: faqsData, isLoading: faqsLoading } = useGetAllFaqsQuery(undefined);
 
-  const handleClick = (id: string) => () => {
+  const handleClick = (id: string) => {
+    console.log('id', id);
     setStatus(status === id ? '' : id);
   };
 
+  console.log('status', status);
   return (
     <div id="accordion-collapse" data-accordion="collapse">
-      {faqData.map((item: any) => (
-        <div key={item.title} className="card my-5 rounded-lg bg-white shadow-lg">
+      {faqsData?.data?.map((item: any) => (
+        <div key={item?._id} className="card my-5 rounded-lg bg-white shadow-lg">
           <h2
             id="accordion-collapse-heading-1"
-            onClick={handleClick(item.title)}
+            onClick={() => handleClick(item?._id)}
             className={`cursor-pointer transition-all duration-500 hover:bg-gray-100`}
           >
             <button
@@ -24,10 +29,10 @@ export default function Accordion({ faqData }: { faqData: any }) {
               aria-expanded={status === '1'}
               aria-controls="accordion-collapse-body-1"
             >
-              <span>{item.title}</span>
+              <span>{item?.title}</span>
               <svg
                 data-accordion-icon=""
-                className={`h-3 w-3 shrink-0 ${status === '1' ? 'rotate-180' : ''}`}
+                className={`h-3 w-3 shrink-0 ${status === item?._id ? 'rotate-180 transition duration-300 ease-in-out' : 'transition duration-300 ease-in-out'}`}
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -39,11 +44,11 @@ export default function Accordion({ faqData }: { faqData: any }) {
           </h2>
           <div
             id="accordion-collapse-body-1"
-            className={`transition-max-height overflow-hidden duration-300 ease-in-out ${status === item.title ? 'max-h-96' : 'max-h-0'}`}
+            className={`transition-max-height overflow-hidden duration-300 ease-in-out ${status === item?._id ? 'max-h-96' : 'max-h-0'}`}
             aria-labelledby="accordion-collapse-heading-1"
           >
             <div className=" border-none p-5 dark:bg-gray-900">
-              <p className="mb-2 text-gray-500 dark:text-gray-400">{item.body}</p>
+              <p className="mb-2 text-gray-500 dark:text-gray-400">{item?.description}</p>
             </div>
           </div>
         </div>

@@ -89,22 +89,23 @@ export default function Footer() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col items-center sm:items-start">
+                  <div className="flex items-center justify-center sm:items-start">
                     {/* <img className="MuiBox-root css-0" src="/assets/images/home/app-store-badge.png" style={{ width: 200 }} />
                     <img className="MuiBox-root css-0" src="/assets/images/home/google-play-badge.png" style={{ width: 200 }} /> */}
 
                     <Link href="/" target="_blank">
-                      <Image src="/default/app-store-badge.png" alt="App Store Badge" className="mb-5 w-[200px]" />
+                      <Image src="/default/app-store-badge.png" alt="App Store Badge" className="h-[45px] w-[150px]" />
                     </Link>
                     <Link href="/" target="_blank">
-                      <Image src="/default/google-play-badge.png" alt="Google  Store Badge" className="w-[200px]" />
+                      <Image src="/default/google-play-badge.png" alt="Google  Store Badge" className="h-[45px] w-[150px]" />
                     </Link>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <p className="MuiTypography-root MuiTypography-body2 __className_4f5d18 css-1v7ytj3">© 2024. All rights reserved</p>
+          <hr className="my-2" />
+          <p className="my-3 text-center">© 2024. All rights reserved</p>
         </div>
       </footer>
     </div>

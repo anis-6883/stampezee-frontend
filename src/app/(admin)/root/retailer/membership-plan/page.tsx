@@ -1,0 +1,40 @@
+import { routes } from '@/config/routes';
+import { metaObject } from '@/config/site.config';
+import { ActiveSubscriptions } from './component/ActiveSubscriptions';
+import { InvoiceHistory } from './component/InvoiceHistory';
+import { NotificationStatus } from './component/NotificationStatus';
+import { Plans } from './component/Plans';
+
+const pageHeader = {
+  title: 'Manage Membership Plans',
+  breadcrumb: [
+    {
+      href: routes.retailer.dashboard,
+      name: 'Dashboard',
+    },
+    {
+      name: 'Membership Plan',
+    },
+  ],
+};
+
+export const metadata = { ...metaObject(pageHeader.title) };
+
+export default function Page() {
+  return (
+    <div>
+      <div className="">
+        <div className="grid-cols mx-auto grid bg-white lg:grid-cols-12 ">
+          <div className="-lg col-span-8 m-2 ">
+            <Plans />
+          </div>
+          <div className="col-span-4 m-2 mx-auto mt-4 w-[100%] rounded-lg p-5 shadow-lg lg:w-[80%] lg:p-2">
+            <InvoiceHistory />
+            <NotificationStatus />
+            <ActiveSubscriptions />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

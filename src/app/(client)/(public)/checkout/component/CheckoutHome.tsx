@@ -2,28 +2,11 @@
 
 import { RootState } from '@/features/store';
 import { useCreateCheckOutMutation, useGetSubscriptionQuery } from '@/features/super-admin/Subscription/stampImageApi';
+import { AddOn, Subscription } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Loader } from 'rizzui';
-
-interface Subscription {
-  _id: string;
-  title: string;
-  price: number;
-  duration: number;
-  descriptions: string[];
-  slug: string;
-  type: string;
-}
-
-interface AddOn {
-  _id: string;
-  title: string;
-  price: number;
-  slug: string;
-  descriptions: string[];
-}
 
 export const CheckoutHome = () => {
   const [selectedSub, setSelectedSub] = useState<Subscription | null>(null);
@@ -38,7 +21,6 @@ export const CheckoutHome = () => {
   const subscription = data?.data?.filter((item: Subscription) => item.type === 'subscription');
   const addOns = data?.data?.filter((item: Subscription) => item.type === 'addon');
   const { data: activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
-  console.log('checkOutRespons', checkOutRespons);
 
   useEffect(() => {
     if (checkOutRespons) {
