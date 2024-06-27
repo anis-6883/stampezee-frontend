@@ -102,7 +102,7 @@ export default function HeaderContent() {
             <div className="mr-3 ">
               <div
                 onClick={() => setSidBer(sidBer == true && !sidBer)}
-                className={`${sidBer ? 'fixed -top-2 left-0 h-[101vh] w-full overflow-hidden bg-[#14131385] transition-all duration-300 ease-in-out' : 'hidden'} z-10 items-center justify-between md:order-1 md:flex md:w-auto`}
+                className={`${sidBer ? 'fixed -top-2 left-0 h-[100vh] w-full overflow-hidden bg-[#14131385] transition-all duration-300 ease-in-out' : 'hidden'} z-10 items-center justify-between md:order-1 md:flex md:w-auto`}
                 id="navbar-cta"
               >
                 {sidBer ? (

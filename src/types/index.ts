@@ -354,3 +354,21 @@ export interface IAllBranchQueryArgs {
   limit: number;
 }
 // stamp image
+
+export interface Subscription {
+  _id: string;
+  title: string;
+  price: number;
+  duration: number;
+  descriptions: string[];
+  slug: string;
+  type: string;
+}
+
+export interface AddOn {
+  _id: string;
+  title: string;
+  price: number;
+  slug: string;
+  descriptions: string[];
+}
