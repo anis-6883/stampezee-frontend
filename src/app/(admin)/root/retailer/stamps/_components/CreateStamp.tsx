@@ -19,46 +19,12 @@ import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 
 export default function Create() {
-  const [rewardType, setRewardType] = useState<string>('promotion');
   const [submitting, setSubmitting] = useState(false);
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
 
   const { data: responseData, isLoading: responseIsLoading, isSuccess } = useBranchCategoryImageListQuery({});
-  useEffect(() => {
-    if (responseData) {
-      // const transformedOptionsData = responseData.data.map((item: any) => ({
-      //   label: item.name,
-      //   value: item._id,
-      // }));
-      setOptionsData(responseData.data);
-    }
-  }, [responseData]);
-
-  const router = useRouter();
-
-  const handleSubmit = async (values: any) => {
-    try {
-      setSubmitting(true);
-      // Convert values object to getChangedFormData
-      const changedData = getChangedFormData(values, initialValues, ['_id', 'validDateRange']);
-
-      changedData.rewardType = rewardType;
-      changedData.startedAt = values?.validDateRange?.split('to')[0];
-      changedData.expiredAt = values?.validDateRange?.split('to')[1];
-
-      const result = await createStamp(changedData).unwrap();
-      router.push(routes.retailer.stamp.home);
-      toast.success(result.data.message ?? 'Stamp created successfully!');
-    } catch (error: any) {
-      console.error('Failed to create Stamp:', error);
-      toast.error(error.data.message ?? 'Failed to create Stamp. Please try again.');
-      setSubmitting(false);
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   const initialValues = {
     branchId: '',
@@ -69,11 +35,40 @@ export default function Create() {
     rules: '',
     noOfStampsToCollect: 0,
     minPurchaseAmount: 0,
-    rewardType,
+    rewardType: '',
     promotionReward: '',
     discountReward: 0,
     validDateRange: '',
     status: true,
+  };
+
+  useEffect(() => {
+    if (responseData) {
+      setOptionsData(responseData.data);
+    }
+  }, [responseData]);
+
+  const router = useRouter();
+
+  const handleSubmit = async (values: any) => {
+    try {
+      setSubmitting(true);
+      // Convert values object to getChangedFormData
+      const changedData = getChangedFormData(values, initialValues, ['validDateRange']);
+
+      changedData.startedAt = values?.validDateRange?.split('to')[0];
+      changedData.expiredAt = values?.validDateRange?.split('to')[1];
+      console.log('changedData', changedData);
+      const result = await createStamp(changedData).unwrap();
+      router.push(routes.retailer.stamp.home);
+      toast.success(result.data.message ?? 'Stamp created successfully!');
+    } catch (error: any) {
+      console.error('Failed to create Stamp:', error);
+      toast.error(error.data.message ?? 'Failed to create Stamp. Please try again.');
+      setSubmitting(false);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const validationSchema = Yup.object().shape({
@@ -104,17 +99,10 @@ export default function Create() {
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={(values) => {
-          // same shape as initial values
-          console.log(values, 'value submit');
           handleSubmit(values);
         }}
       >
         {({ errors, touched, setFieldValue, values }) => {
-          // Object.keys(errors).forEach((key) => {
-          //   toast.error((errors as any)[key] as string);
-          // });
-          // console.log(errors, 'errors');
-
           return (
             <Form className="mt-5 grid gap-4">
               <div className="grid grid-cols-2 gap-x-5">
@@ -169,12 +157,12 @@ export default function Create() {
                       <input
                         style={{ backgroundImage: 'none' }}
                         type="radio"
-                        id="radio1"
+                        id="stampImageId"
                         name="stampImageId"
                         value={item?._id}
                         checked={values?.stampImageId === item?._id}
                         onChange={(e) => setFieldValue('stampImageId', e.target.value)}
-                        className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-3 checked:w-3 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
+                        className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
                       />
                     </div>
                   ))}
@@ -201,7 +189,7 @@ export default function Create() {
                       <input
                         style={{ backgroundImage: 'none' }}
                         type="radio"
-                        id="radio1"
+                        id="stampImageId"
                         name="stampImageId"
                         value={item?._id}
                         checked={values?.stampImageId === item?._id}
@@ -213,7 +201,7 @@ export default function Create() {
                 </div>
               )}
               {errors?.stampImageId && <span className="text-red-600">Select a stamp image of custom or default stamp</span>}
-              {/* <StatusBar setFieldValue={setFieldValue} /> */}
+
               <div className="grid grid-cols-2 gap-x-5">
                 <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
                 <DateRangePicker label="Valid Date Range" name="validDateRange" />
@@ -228,15 +216,20 @@ export default function Create() {
                 Reward Type <span className="text-red-600">*</span>
               </span>
               <div className="flex gap-3">
-                <div>
+                <div
+                  onClick={() => {
+                    setFieldValue('rewardType', 'discount');
+                  }}
+                  className="cursor-pointer"
+                >
                   <input
                     style={{ backgroundImage: 'none' }}
                     type="radio"
-                    id="radio1"
-                    name="discount"
-                    checked={rewardType === 'discount' ? true : false}
+                    id="rewardType"
+                    name="rewardType"
+                    checked={values.rewardType === 'discount' ? true : false}
+                    value={values.rewardType}
                     onClick={() => {
-                      setRewardType('discount');
                       setFieldValue('rewardType', 'discount');
                     }}
                     className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
@@ -246,17 +239,22 @@ export default function Create() {
                     Discount
                   </label>
                 </div>
-                <div>
+                <div
+                  onClick={() => {
+                    setFieldValue('rewardType', 'promotion');
+                  }}
+                  className="cursor-pointer"
+                >
                   <input
                     style={{ backgroundImage: 'none' }}
                     type="radio"
-                    id="radio1"
-                    name="discount"
+                    id="rewardType"
+                    name="rewardType"
+                    value={values.rewardType}
                     onClick={() => {
-                      setRewardType('promotion');
                       setFieldValue('rewardType', 'promotion');
                     }}
-                    checked={rewardType === 'promotion' ? true : false}
+                    checked={values.rewardType === 'promotion' ? true : false}
                     className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
                   />
                   <label className="ml-1" htmlFor="">
@@ -265,12 +263,13 @@ export default function Create() {
                   </label>
                 </div>
               </div>
-              {rewardType === 'discount' && (
+              {values.rewardType === 'discount' && (
                 <InputField name="discountReward" label="Product Reward" placeholder="Product Reward" type="number" />
               )}
-              {rewardType === 'promotion' && <InputField name="promotionReward" label="Product Reward" placeholder="Product Reward" />}
+              {values.rewardType === 'promotion' && (
+                <InputField name="promotionReward" label="Product Reward" placeholder="Product Reward" />
+              )}
 
-              {/* {(errors?.expiredAt || errors?.startedAt) && <span className="text-red-600">Select a valid date range</span>} */}
               <p className="text-end text-xs font-semibold">
                 Fields marked with <span className="text-red-600">*</span> are mandatory!
               </p>

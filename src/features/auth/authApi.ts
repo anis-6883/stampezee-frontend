@@ -65,6 +65,15 @@ export const authApi = apiSlice.injectEndpoints({
         };
       },
     }),
+    retailerChangePassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/web/retailer/change-password`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
     retailerOtpVerify: builder.mutation({
       query: (data) => {
         return {
@@ -107,4 +116,5 @@ export const {
   useGetOwnProfileQuery,
   useLogoutUserMutation,
   useRetailerResendOtpMutation,
+  useRetailerChangePasswordMutation,
 } = authApi;

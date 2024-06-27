@@ -49,8 +49,8 @@ export default function Sidebar({ className }: { className?: string }) {
           alt="Store Image"
         />
         <div>
-          <h3 className="text-lg font-bold">{fullName ? fullName : 'Blessy J'}</h3>
-          <span className="tex-lg text-gray-500">{_.startCase(_.toLower(role === 'super_admin' ? 'Super Admin' : role))}</span>
+          <h3 className="text-sm font-bold">{fullName ? fullName : 'Blessy J'}</h3>
+          <span className="tex-sm text-gray-500">{_.startCase(_.toLower(role === 'super_admin' ? 'Super Admin' : role))}</span>
         </div>
       </div>
 

@@ -1,6 +1,5 @@
 'use client';
 
-import ChangePasswordModal from '@/components/changePasswordModal/ChangePasswordModal';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useLogoutUserMutation } from '@/features/auth/authApi';
@@ -49,7 +48,7 @@ function DropdownMenu() {
 
   return (
     <div className="w-64 text-left rtl:text-right">
-      <ChangePasswordModal setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
+      {/* <ChangePasswordModal setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} /> */}
       <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
         <Avatar
           src={

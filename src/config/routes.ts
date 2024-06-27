@@ -34,6 +34,7 @@ export const routes = {
     register: '/retailer/register',
     dashboard: '/root/retailer/dashboard',
     profile: '/root/retailer/profile',
+    changePassword: '/root/retailer/change-password',
     branch: {
       home: `/root/retailer/branch`,
       create: `/root/retailer/branch/create`,

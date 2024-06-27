@@ -13,8 +13,6 @@ interface DateRangeProps {
 const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name }) => {
   const { values, setFieldValue }: any = useFormikContext();
 
-  console.log(values);
-
   return (
     <Field name={name}>
       {({ field, meta }: { field: any; meta: any }) => (
