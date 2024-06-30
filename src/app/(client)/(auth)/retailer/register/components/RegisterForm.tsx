@@ -6,6 +6,7 @@ import InputPassword from '@/components/Formik/InputPassword';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerRegisterMutation } from '@/features/auth/authApi';
+import { setAccessToken } from '@/features/auth/authSlice';
 import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
 import removeEmptyValues from '@/utils/removeEmptyValues';
@@ -14,6 +15,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { useDispatch } from 'react-redux';
 import ReactSelect, { OnChangeValue } from 'react-select';
 import { Checkbox, FieldError } from 'rizzui';
 import * as Yup from 'yup';
@@ -22,7 +24,8 @@ import OtpModal from './OtpModal';
 export default function RegisterForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalState, setModalState] = useState(false);
-  const [register, { isSuccess, error }] = useRetailerRegisterMutation();
+  const [register, { data: registerResponse, isSuccess, error }] = useRetailerRegisterMutation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (error) {
@@ -32,11 +35,14 @@ export default function RegisterForm() {
     }
 
     if (isSuccess) {
+      console.log('Register Response: ', registerResponse);
+      dispatch(setAccessToken(registerResponse.data.temp));
+
       setIsSubmitting(false);
       setModalState(true);
       toast.success('OTP sent on your email!');
     }
-  }, [error, isSuccess]);
+  }, [dispatch, error, isSuccess, registerResponse]);
 
   const countryOptions = countryData.map((country) => ({
     value: country.code,
@@ -77,7 +83,6 @@ export default function RegisterForm() {
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
-    console.log('values: ', removeEmptyValues(values));
     register(removeEmptyValues(values, ['isAgree']));
   };
 

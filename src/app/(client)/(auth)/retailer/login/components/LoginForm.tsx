@@ -3,11 +3,13 @@
 import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
+import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerLoginMutation } from '@/features/auth/authApi';
 import { userLoggedIn } from '@/features/auth/authSlice';
 import { Form, Formik } from 'formik';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -40,9 +42,23 @@ export default function LoginForm() {
     }
 
     if (loginSuccess) {
-      toast.success('Welcome to Retailer Panel!');
-      dispatch(userLoggedIn({ ...loginResponse?.data, isLoggedIn: true }));
-      replace(routes.retailer.dashboard);
+      dispatch(userLoggedIn(loginResponse?.data));
+
+      signIn('credentials', {
+        userData: JSON.stringify(loginResponse?.data),
+        redirect: false,
+      }).then((callback) => {
+        if (callback?.error) {
+          setIsSubmitting(false);
+          toast.error(callback?.error);
+        }
+        if (callback?.ok && !callback?.error) {
+          toast.success('Welcome to Retailer Panel!');
+          if (loginResponse?.data?.role === ROLE.RETAILER) {
+            replace(routes.retailer.dashboard);
+          }
+        }
+      });
     }
   }, [dispatch, loginError, loginResponse, loginSuccess, replace]);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetOwnProfileQuery, useLogoutUserMutation } from '@/features/auth/authApi';
+import { useLogoutUserMutation } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { Menu, Transition } from '@headlessui/react';
@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Drawer } from 'rizzui';
 import './HeaderStyle.css';
 
@@ -46,13 +46,7 @@ export default function HeaderContent() {
   const { push } = useRouter();
   const { replace } = useRouter();
   const dispatch = useDispatch();
-  const { user } = useSelector(
-    (state: RootState) => ({
-      user: state.authSlice.user,
-    }),
-    shallowEqual
-  );
-  const {} = useGetOwnProfileQuery({});
+  const { user, isLoggedIn } = useSelector((state: RootState) => state.authSlice);
 
   // Logout Handler
   const handleLogout = async () => {

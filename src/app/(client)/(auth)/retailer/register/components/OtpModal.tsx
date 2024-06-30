@@ -1,13 +1,17 @@
 import Button from '@/components/Formik/Button';
+import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerOtpVerifyMutation, useRetailerResendOtpMutation } from '@/features/auth/authApi';
+import { userLoggedIn } from '@/features/auth/authSlice';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { ImSpinner9 } from 'react-icons/im';
+import { useDispatch } from 'react-redux';
 import { ActionIcon, Modal, PinCode, Title } from 'rizzui';
 
 export default function OtpModal({ modalState, setModalState }: { setModalState: (state: boolean) => void; modalState: boolean }) {
@@ -15,9 +19,10 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resendOtpSubmitting, setResendOtpSubmitting] = useState(false);
   const [otpValidMsg, setOtpValidMsg] = useState('');
-  const [verifyEmail, { error: verifyError, isSuccess: verifySuccess }] = useRetailerOtpVerifyMutation();
+  const [verifyEmail, { data: verifyResponse, error: verifyError, isSuccess: verifySuccess }] = useRetailerOtpVerifyMutation();
   const [resendOtp, { error: resendError, isSuccess: resendSuccess }] = useRetailerResendOtpMutation();
   const { replace } = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (verifyError) {
@@ -28,10 +33,27 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
 
     if (verifySuccess) {
       setIsSubmitting(false);
-      toast.success('OTP verified successfully!');
+      dispatch(userLoggedIn(verifyResponse?.data));
+
+      signIn('credentials', {
+        userData: JSON.stringify(verifyResponse?.data),
+        redirect: false,
+      }).then((callback) => {
+        if (callback?.error) {
+          setIsSubmitting(false);
+          toast.error(callback?.error);
+        }
+        if (callback?.ok && !callback?.error) {
+          toast.success('OTP verified successfully!');
+          if (verifyResponse?.data?.role === ROLE.RETAILER) {
+            replace(routes.retailer.dashboard);
+          }
+        }
+      });
+
       replace(routes.retailer.dashboard);
     }
-  }, [replace, verifyError, verifySuccess]);
+  }, [dispatch, replace, verifyError, verifyResponse, verifySuccess]);
 
   useEffect(() => {
     if (resendError) {

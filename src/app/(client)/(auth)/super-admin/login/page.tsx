@@ -1,5 +1,10 @@
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth-options';
+import { ROLE } from '@/config/constants';
+import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
+import { getServerSession } from 'next-auth';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import LoginForm from './components/LoginForm';
 
 export const metadata = {
@@ -7,6 +12,12 @@ export const metadata = {
 };
 
 export default async function Page() {
+  const session = await getServerSession(authOptions);
+
+  if (session && session?.user?.role === ROLE.SUPER_ADMIN) {
+    redirect(routes.superAdmin.dashboard);
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 text-gray-900">
       <div className="m-0 grid max-w-screen-xl grid-cols-6 rounded-lg bg-white shadow sm:m-10 md:grid-cols-12">
