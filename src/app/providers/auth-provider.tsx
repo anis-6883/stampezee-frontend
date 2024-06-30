@@ -1,23 +1,21 @@
 'use client';
 
-import { useGetOwnProfileQuery } from '@/features/auth/authApi';
 import { userLoggedIn, userLoggedOut } from '@/features/auth/authSlice';
+import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-export default function AuthProvider({ children, tokenExist }: { children: React.ReactNode; tokenExist: boolean }): React.ReactNode {
+export default function AuthProvider({ children, session }: { children: React.ReactNode; session: any }): React.ReactNode {
   const dispatch = useDispatch();
-  const { data, isLoading, isError } = useGetOwnProfileQuery(undefined, {
-    skip: !tokenExist,
-  });
 
+  // User data and token update into redux state
   useEffect(() => {
-    if (tokenExist && !isLoading && !isError) {
-      dispatch(userLoggedIn({ ...data?.data, isLoggedIn: true }));
+    if (session) {
+      dispatch(userLoggedIn(session?.user));
     } else {
       dispatch(userLoggedOut(undefined));
     }
-  }, [data, dispatch, isError, isLoading, tokenExist]);
+  }, [dispatch, session]);
 
-  return <>{children}</>;
+  return <SessionProvider session={session}>{children}</SessionProvider>;
 }

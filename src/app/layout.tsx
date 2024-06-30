@@ -4,8 +4,9 @@ import GlobalDrawer from '@/components/drawer-views/container';
 import GlobalModal from '@/components/modal-views/container';
 import NextProgress from '@/components/next-progress';
 import { siteConfig } from '@/config/site.config';
-import { cookies } from 'next/headers';
+import { getServerSession } from 'next-auth';
 import { Toaster } from 'react-hot-toast';
+import { authOptions } from './api/auth/[...nextauth]/auth-options';
 import AuthProvider from './providers/auth-provider';
 import ReduxProvider from './providers/redux-provider';
 
@@ -19,13 +20,13 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const tokenExist = cookies().get('act')?.value ? true : false;
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning={true} className={poppins.className}>
       <body suppressHydrationWarning={true}>
         <ReduxProvider>
-          <AuthProvider tokenExist={tokenExist}>
+          <AuthProvider session={session}>
             <NextProgress />
             {children}
             <Toaster />

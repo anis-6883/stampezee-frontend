@@ -52,6 +52,7 @@ export interface IAuthState {
   user?: any | undefined;
   role: string;
   isLoggedIn: boolean;
+  accessToken: string | null;
 }
 
 export interface IQueryType {

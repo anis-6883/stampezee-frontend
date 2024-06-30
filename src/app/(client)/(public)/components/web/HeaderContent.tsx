@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetOwnProfileQuery, useLogoutUserMutation } from '@/features/auth/authApi';
+import { useLogoutUserMutation } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { Menu, Transition } from '@headlessui/react';
@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { FcFaq } from 'react-icons/fc';
 import { IoBagAdd, IoPricetagsSharp } from 'react-icons/io5';
 import { MdOutlineContacts } from 'react-icons/md';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'rizzui';
 import './HeaderStyle.css';
 
@@ -19,16 +19,9 @@ export default function HeaderContent() {
   const [sidBer, setSidBer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
-  const { push } = useRouter();
   const { replace } = useRouter();
   const dispatch = useDispatch();
-  const { user } = useSelector(
-    (state: RootState) => ({
-      user: state.authSlice.user,
-    }),
-    shallowEqual
-  );
-  const {} = useGetOwnProfileQuery({});
+  const { user, isLoggedIn } = useSelector((state: RootState) => state.authSlice);
 
   // Logout Handler
   const handleLogout = async () => {
@@ -206,7 +199,7 @@ export default function HeaderContent() {
                       </Link>
                     </li>
                     <div className="ms-2 flex gap-2">
-                      {user ? (
+                      {isLoggedIn ? (
                         <Link href="root/retailer/dashboard" className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white">
                           Dashboard
                         </Link>
@@ -218,7 +211,7 @@ export default function HeaderContent() {
                           Login
                         </Link>
                       )}
-                      {user && (
+                      {isLoggedIn && (
                         <Menu as="div" className="relative inline-block text-left">
                           <div>
                             <Menu.Button className="ml-2">

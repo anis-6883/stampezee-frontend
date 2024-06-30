@@ -1,1 +1,1 @@
-# Next.js Frontend Boilerplate
+# StampEzee Frontend

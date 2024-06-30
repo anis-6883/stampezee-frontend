@@ -3,11 +3,13 @@
 import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
+import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useSuperAdminLoginMutation } from '@/features/auth/authApi';
 import { userLoggedIn } from '@/features/auth/authSlice';
 import { Form, Formik } from 'formik';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -40,9 +42,23 @@ export default function LoginForm() {
     }
 
     if (loginSuccess) {
-      toast.success('Welcome to Admin Panel!');
-      dispatch(userLoggedIn({ ...loginResponse?.data, isLoggedIn: true }));
-      replace(routes.superAdmin.dashboard);
+      dispatch(userLoggedIn(loginResponse?.data));
+
+      signIn('credentials', {
+        userData: JSON.stringify(loginResponse?.data),
+        redirect: false,
+      }).then((callback) => {
+        if (callback?.error) {
+          setIsSubmitting(false);
+          toast.error(callback?.error);
+        }
+        if (callback?.ok && !callback?.error) {
+          toast.success('Welcome to Admin Panel!');
+          if (loginResponse?.data?.role === ROLE.SUPER_ADMIN) {
+            replace(routes.superAdmin.dashboard);
+          }
+        }
+      });
     }
   }, [dispatch, loginError, loginResponse, loginSuccess, replace]);
 

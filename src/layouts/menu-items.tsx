@@ -3,7 +3,6 @@ import { BsQuestionCircle, BsShop } from 'react-icons/bs';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { IoDiamondOutline, IoImageOutline } from 'react-icons/io5';
 import { LuBarChart3, LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
-import { MdQrCodeScanner } from 'react-icons/md';
 import { PiBellRinging, PiCurrencyDollar, PiStamp, PiTreeStructure } from 'react-icons/pi';
 import { TbArrowsExchange, TbUserShield } from 'react-icons/tb';
 
@@ -25,11 +24,6 @@ export const menuItems: { [key: string]: any } = {
       icon: <BsShop />,
     },
     {
-      name: 'Scans',
-      href: routes.superAdmin.scan,
-      icon: <MdQrCodeScanner />,
-    },
-    {
       name: 'Stamp Categories',
       href: routes.superAdmin.stampCategory.home,
       icon: <LuListChecks />,
@@ -43,11 +37,6 @@ export const menuItems: { [key: string]: any } = {
       name: 'Subscriptions',
       href: routes.superAdmin.subscription.home,
       icon: <IoDiamondOutline />,
-    },
-    {
-      name: 'Push Notifications',
-      href: routes.superAdmin.notification,
-      icon: <PiBellRinging />,
     },
     {
       name: 'FAQs',

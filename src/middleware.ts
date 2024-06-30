@@ -1,4 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { withAuth } from 'next-auth/middleware';
+import { NextResponse } from 'next/server';
+import { ROLE } from './config/constants';
 import { routes } from './config/routes';
 
 // function extractLinks(obj: any) {
@@ -18,76 +20,38 @@ import { routes } from './config/routes';
 //   return links;
 // }
 
-const adminProtectedRoutes = [routes.superAdmin.dashboard];
-const userProtectedRoutes = [routes.retailer.dashboard];
+const superAdminProtectedRoutes = [routes.superAdmin.dashboard];
+const retailerProtectedRoutes = [routes.retailer.dashboard];
 
-export default async function middleware(req: NextRequest) {
-  const pathname = req.nextUrl.pathname;
-  const isProtectedRoute = adminProtectedRoutes.includes(pathname) || userProtectedRoutes.includes(pathname);
+const middleware = withAuth(
+  function middleware(request) {
+    const token = request.nextauth?.token;
+    const pathname = request.nextUrl.pathname;
 
-  const accessToken = req.cookies.get('act')?.value;
-  console.log('cookies', req.cookies);
-  console.log('accessToken', accessToken);
+    // console.log('token: ', token);
+    // console.log('pathname: ', pathname);
 
-  // No Access Token & Route is Protected, Redirect to Login
-  if (!accessToken && isProtectedRoute) {
-    return NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
-  }
-
-  if (accessToken) {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/web/verify-token`, {
-        headers: {
-          'x-api-key': process.env.NEXT_PUBLIC_API_KEY as string,
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      const data: any = await response.json();
-
-      console.log(data);
-
-      // If the token is invalid or there's no response, redirect to login
-      if (!data || data.status === false) {
-        console.log('Invalid Token');
-        // const response = NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
-        // response.cookies.delete('act');
-        // response.cookies.delete('rft');
-        // return response;
-      }
-
-      const role = data.data.role;
-
-      // Redirect to the dashboard upon login
-      if ([routes.retailer.login, routes.retailer.register, routes.superAdmin.login].includes(pathname)) {
-        if (role === 'retailer') {
-          return NextResponse.redirect(new URL('/root/retailer/dashboard', req.nextUrl));
-        }
-        if (role === 'super_admin') {
-          return NextResponse.redirect(new URL('/root/super-admin/dashboard', req.nextUrl));
-        }
-      }
-
-      // Access Control
-      if (role === 'retailer' && adminProtectedRoutes.includes(pathname)) {
-        return NextResponse.redirect(new URL('/root/retailer/dashboard', req.nextUrl));
-      }
-      if (role === 'super_admin' && userProtectedRoutes.includes(pathname)) {
-        return NextResponse.redirect(new URL('/root/super-admin/dashboard', req.nextUrl));
-      }
-    } catch {
-      console.log('first');
-      // const response = NextResponse.redirect(new URL('/retailer/login', req.nextUrl));
-      // response.cookies.delete('act');
-      // response.cookies.delete('rft');
-      // return response;
+    if (!token && (superAdminProtectedRoutes.includes(pathname) || retailerProtectedRoutes.includes(pathname))) {
+      return NextResponse.redirect(new URL(routes.retailer.login, request.nextUrl));
     }
+
+    if (token && token?.role === ROLE.RETAILER && superAdminProtectedRoutes.includes(pathname)) {
+      return NextResponse.redirect(new URL(routes.retailer.dashboard, request.nextUrl));
+    }
+
+    if (token && token?.role === ROLE.SUPER_ADMIN && retailerProtectedRoutes.includes(pathname)) {
+      return NextResponse.redirect(new URL(routes.superAdmin.dashboard, request.nextUrl));
+    }
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => true,
+    },
   }
+);
 
-  return NextResponse.next();
-}
+export default middleware;
 
-// Routes Middleware should not run on
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|images|fonts|default|$).*)'],
 };
