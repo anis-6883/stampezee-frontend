@@ -2,7 +2,7 @@ import { IAuthState, IUser } from '@/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState: IAuthState = {
-  user: undefined,
+  user: null,
   isLoggedIn: false,
   role: '',
   accessToken: null,

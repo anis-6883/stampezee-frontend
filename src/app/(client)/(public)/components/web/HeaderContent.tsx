@@ -1,9 +1,10 @@
 'use client';
 
 import { useLogoutUserMutation } from '@/features/auth/authApi';
-import { setValue } from '@/features/auth/authSlice';
+import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { Menu, Transition } from '@headlessui/react';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -43,21 +44,18 @@ export default function HeaderContent() {
   const [drawerSate, setDrawerState] = useState({
     isOpen: false,
   });
-  const { push } = useRouter();
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user, isLoggedIn } = useSelector((state: RootState) => state.authSlice);
 
-  // Logout Handler
+  // Handle Logout Response
   const handleLogout = async () => {
-    logOut(null)
-      .then((res) => {
-        replace('/');
-        dispatch(setValue({ target: 'user', value: undefined }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(userLoggedOut(undefined));
+
+    await signOut({
+      redirect: false,
+      callbackUrl: '/',
+    });
   };
 
   useEffect(() => {
@@ -108,6 +106,7 @@ export default function HeaderContent() {
   function routeCheck(names: string) {
     setCurrentUrl(names);
   }
+
   return (
     <div>
       <nav className={`fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>
@@ -175,7 +174,7 @@ export default function HeaderContent() {
                         </li>
                       ))}
 
-                      {user ? (
+                      {isLoggedIn ? (
                         <li
                           onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
                           className=" transition duration-300 ease-in-out hover:bg-gray-100"
@@ -195,7 +194,7 @@ export default function HeaderContent() {
                         </li>
                       )}
 
-                      {user && (
+                      {isLoggedIn && (
                         <Menu as="div" className="relative inline-block text-left">
                           <div>
                             <Menu.Button className="ml-2">
@@ -227,7 +226,7 @@ export default function HeaderContent() {
                                 <p className="mt-2 font-semibold">{user?.email}</p>
                                 <hr className="mt-3" />
                                 <br />
-                                <Button onClick={() => handleLogout()} variant="flat" className="h-7 w-full bg-[#EF4444] text-white">
+                                <Button onClick={handleLogout} variant="flat" className="h-7 w-full bg-[#EF4444] text-white">
                                   Logout
                                 </Button>
                               </div>
@@ -285,7 +284,7 @@ export default function HeaderContent() {
                     </Link>
                   </li>
                   <div className="ms-2 flex gap-2">
-                    {user ? (
+                    {isLoggedIn ? (
                       <Link href="root/retailer/dashboard" className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white">
                         Dashboard
                       </Link>
@@ -297,7 +296,7 @@ export default function HeaderContent() {
                         Login
                       </Link>
                     )}
-                    {user && (
+                    {isLoggedIn && (
                       <Menu as="div" className="relative inline-block text-left">
                         <div>
                           <Menu.Button className="ml-2">
