@@ -4,7 +4,7 @@ import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { IoDiamondOutline, IoImageOutline } from 'react-icons/io5';
 import { LuBarChart3, LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
 import { PiBellRinging, PiCurrencyDollar, PiStamp, PiTreeStructure } from 'react-icons/pi';
-import { TbArrowsExchange, TbUserShield } from 'react-icons/tb';
+import { TbUserShield } from 'react-icons/tb';
 
 export const menuItems: { [key: string]: any } = {
   super_admin: [
@@ -99,11 +99,6 @@ export const menuItems: { [key: string]: any } = {
       name: 'Manage Profile',
       href: routes.retailer.profile,
       icon: <LuUserCog />,
-    },
-    {
-      name: 'Change Password',
-      href: routes.retailer.changePassword,
-      icon: <TbArrowsExchange />,
     },
   ],
 };

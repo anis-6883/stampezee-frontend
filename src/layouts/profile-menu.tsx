@@ -1,9 +1,11 @@
 'use client';
 
+import ChangePasswordModal from '@/components/changePasswordModal/ChangePasswordModal';
 import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { signOut } from 'next-auth/react';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,8 +22,7 @@ const menuItems = [
   },
 ];
 
-function DropdownMenu() {
-  const [createState, setCreateState] = useState(false);
+function DropdownMenu({ setOpen, setCreateState }: { setOpen: any; setCreateState: any }) {
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user, role } = useSelector((state: RootState) => state.authSlice);
@@ -40,7 +41,6 @@ function DropdownMenu() {
 
   return (
     <div className="w-64 text-left rtl:text-right">
-      {/* <ChangePasswordModal setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} /> */}
       <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
         <Avatar
           src={
@@ -58,15 +58,24 @@ function DropdownMenu() {
         </div>
       </div>
       <div className="grid px-3.5 py-3.5 font-medium text-gray-700">
-        {menuItems.map((item) => (
-          <button
-            key={item?.name ?? ''}
-            onClick={() => setCreateState(true)}
+        {user?.role === 'retailer' && (
+          <Link
+            href={routes.retailer.profile}
+            onClick={() => setOpen(false)}
             className="group my-0.5 flex items-center rounded-md px-2.5 py-2 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-50/50"
           >
-            {item?.name ?? ''}
-          </button>
-        ))}
+            My Profile
+          </Link>
+        )}
+        <button
+          onClick={() => {
+            setCreateState(true);
+            setOpen(false);
+          }}
+          className="group my-0.5 flex items-center rounded-md px-2.5 py-2 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-50/50"
+        >
+          Change Password
+        </button>
       </div>
       <div className="border-t border-gray-300 px-6 pb-6 pt-5">
         <Button
@@ -83,6 +92,8 @@ function DropdownMenu() {
 
 export default function ProfileMenu({ buttonClassName, avatarClassName }: { buttonClassName?: string; avatarClassName?: string }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [createState, setCreateState] = useState(false);
+  const [formData, setFormData] = useState({});
   const pathname = usePathname();
   const { user } = useSelector((state: RootState) => state.authSlice);
 
@@ -91,21 +102,24 @@ export default function ProfileMenu({ buttonClassName, avatarClassName }: { butt
   }, [pathname]);
 
   return (
-    <Popover enableOverlay placement="bottom-start">
-      <Popover.Trigger>
-        <div className="w-12 cursor-pointer">
-          <Avatar
-            name="Jane Doe"
-            src={
-              user?.image
-                ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
-                : 'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp'
-            }
-            size="lg"
-          />
-        </div>
-      </Popover.Trigger>
-      <Popover.Content>{({ setOpen }) => <DropdownMenu />}</Popover.Content>
-    </Popover>
+    <>
+      <Popover enableOverlay placement="bottom-start">
+        <Popover.Trigger>
+          <div className="w-12 cursor-pointer">
+            <Avatar
+              name="Jane Doe"
+              src={
+                user?.image
+                  ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
+                  : 'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp'
+              }
+              size="lg"
+            />
+          </div>
+        </Popover.Trigger>
+        <Popover.Content>{({ setOpen }) => <DropdownMenu setOpen={setOpen} setCreateState={setCreateState} />}</Popover.Content>
+      </Popover>
+      <ChangePasswordModal setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
+    </>
   );
 }
