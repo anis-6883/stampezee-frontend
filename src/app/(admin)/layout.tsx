@@ -2,7 +2,6 @@
 
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import HydrogenLayout from '@/layouts/layout';
-import { WiDaySnowThunderstorm } from 'react-icons/wi';
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
   const isMounted = useIsMounted();
@@ -11,7 +10,7 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
     return (
       <div className="flex h-screen items-center justify-center">
         <span>
-          <WiDaySnowThunderstorm className="animate-bounce text-6xl" />
+          <img src="/images/logo.png" className="mx-auto w-28 animate-bounce" alt="logo" />
         </span>
       </div>
     );

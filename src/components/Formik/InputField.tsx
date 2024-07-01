@@ -7,12 +7,14 @@ export default function InputField({
   placeholder,
   required = true,
   type = 'text',
+  prefix,
 }: {
   name: string;
   label: string;
   placeholder?: string;
   required?: boolean;
   type?: string;
+  prefix?: React.ReactNode;
 }) {
   return (
     <div className="w-full">
@@ -30,6 +32,7 @@ export default function InputField({
             autoComplete="off"
             // error={meta.touched && meta.error && <div className="mt-1 text-xs text-red-500">{meta.error}</div>}
             inputClassName={`${meta.touched && meta.error ? '!border-red-500 ring-0' : 'border-gray-200'}`}
+            prefix={prefix}
           />
         )}
       </Field>

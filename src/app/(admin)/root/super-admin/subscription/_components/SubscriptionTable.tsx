@@ -1,29 +1,17 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-
-import {
-  useDeleteSuperAdminStampImageMutation,
-  useUpdateSortingImageMutation,
-  useUpdateStampImageStatusMutation,
-} from '@/features/super-admin/stamp-image/stampImageApi';
-import { IQueryType } from '@/types';
-import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import { HiOutlinePencil } from 'react-icons/hi';
-import Button from '../../../../../../components/Formik/Button';
-
 import { useGetAllSubscriptionQuery } from '@/features/super-admin/Subscription/stampImageApi';
+import { IQueryType } from '@/types';
+import { useState } from 'react';
+import { HiOutlinePencil } from 'react-icons/hi';
 import { Badge } from 'rizzui';
-import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
+import Button from '../../../../../../components/Formik/Button';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function StampsImageTable() {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
-  const [deleteState, setDeleteState] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
-  const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllSubscriptionQuery({
@@ -31,30 +19,6 @@ export default function StampsImageTable() {
     limit: query.pageSize,
     ...searchQuery,
   });
-
-  const [deleteSuperAdminStampImage, { isSuccess, isError }] = useDeleteSuperAdminStampImageMutation();
-  const [updateStatus] = useUpdateStampImageStatusMutation();
-  const [sort] = useUpdateSortingImageMutation();
-
-  const handleDelete = async (rowData: any) => {
-    setDeleteState(true);
-    setDeleteId(rowData._id);
-  };
-
-  useEffect(() => {
-    if (isError) {
-      setDeleteSubmitting(false);
-      toast.error('Something went wrong. Please try again!');
-      setDeleteState(false);
-      setDeleteId(null);
-    }
-    if (isSuccess) {
-      setDeleteSubmitting(false);
-      toast.success('Stamps Image deleted successfully!');
-      setDeleteState(false);
-      setDeleteId(null);
-    }
-  }, [isSuccess, isError]);
 
   const structure = [
     {
@@ -70,14 +34,25 @@ export default function StampsImageTable() {
               <span className="font-semibold">Duration: </span>
               {row.original.duration} days
             </h2>
-            <h2>
-              <span className="font-semibold">Allowed Branch: </span>
-              {row.original.allowTotalBranch ? row.original.allowTotalBranch : 'N/A'}
-            </h2>
-            <h2>
-              <span className="font-semibold">Allowed Members: </span>
-              {row.original.allowTotalTeamMember ? row.original.allowTotalTeamMember : 'N/A'}
-            </h2>
+            {row.original.type === 'subscription' ? (
+              <>
+                <h2>
+                  <span className="font-semibold">Allowed Branch: </span>
+                  {row.original.allowTotalBranch ?? 'N/A'}
+                </h2>
+                <h2>
+                  <span className="font-semibold">Allowed Members: </span>
+                  {row.original.allowTotalTeamMember ?? 'N/A'}
+                </h2>
+              </>
+            ) : (
+              <>
+                <h2>
+                  <span className="font-semibold">Limit: </span>
+                  {row.original.limit ?? 'N/A'}
+                </h2>
+              </>
+            )}
           </div>
         </div>
       ),
@@ -94,7 +69,7 @@ export default function StampsImageTable() {
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <div>
-            <h2>${row?.original?.price}</h2>
+            <h2 className="font-medium">${row?.original?.price}</h2>
           </div>
         </div>
       ),
@@ -179,15 +154,6 @@ export default function StampsImageTable() {
         setQuery={setQuery}
         query={query}
         searchPlaceHolder="Search By Title"
-      />
-
-      <DeleteConfirmModal
-        deleteId={deleteId}
-        deleteHandler={deleteSuperAdminStampImage}
-        modalState={deleteState}
-        setModalState={setDeleteState}
-        isSubmitting={deleteSubmitting}
-        setIsSubmitting={setDeleteSubmitting}
       />
     </>
   );

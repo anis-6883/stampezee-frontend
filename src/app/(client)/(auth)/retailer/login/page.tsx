@@ -14,8 +14,9 @@ export const metadata = {
 export default async function Page() {
   const session = await getServerSession(authOptions);
 
-  if (session && session?.user?.role === ROLE.SUPER_ADMIN) {
-    redirect(routes.retailer.dashboard);
+  if (session) {
+    if (session?.user?.role === ROLE.RETAILER) redirect(routes.retailer.dashboard);
+    if (session?.user?.role === ROLE.SUPER_ADMIN) redirect(routes.superAdmin.dashboard);
   }
 
   return (

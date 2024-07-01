@@ -188,7 +188,7 @@ export default function HeaderContent() {
                         </li>
                       ) : (
                         <li className="py-4 pl-3">
-                          <Link href="root/retailer/dashboard" className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white">
+                          <Link href="root/retailer/dashboard" className=" my-auto rounded-xl bg-red-500 p-2 text-white">
                             Dashboard
                           </Link>
                         </li>
@@ -226,7 +226,7 @@ export default function HeaderContent() {
                                 <p className="mt-2 font-semibold">{user?.email}</p>
                                 <hr className="mt-3" />
                                 <br />
-                                <Button onClick={handleLogout} variant="flat" className="h-7 w-full bg-[#EF4444] text-white">
+                                <Button onClick={handleLogout} variant="flat" className="h-7 w-full bg-red-500 text-white">
                                   Logout
                                 </Button>
                               </div>
@@ -239,11 +239,12 @@ export default function HeaderContent() {
                       <hr className="border-t-1 border-gray-400" />
                     </div>
                     <div className="px-3 ">
-                      <p className="text-sm">COPYRIGHT © STAMPEZEE</p>
-                      <p className="pt-1 text-sm">ALL RIGHTS RESERVED.</p>
+                      <p className="text-sm">© Copyright {new Date().getFullYear()} StampEzee</p>
+                      <p className="pt-1 text-sm">All Rights Reserved</p>
                     </div>
                   </div>
                 </Drawer>
+
                 <ul
                   className={`${sidBer ? 'h-full' : ''} mt-4 flex flex-col items-center rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                 >
@@ -251,7 +252,7 @@ export default function HeaderContent() {
                     <Link
                       onClick={() => routeCheck('/')}
                       href="/"
-                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
+                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
                     >
                       Home
                     </Link>
@@ -260,7 +261,7 @@ export default function HeaderContent() {
                     <Link
                       onClick={() => routeCheck('/pricing')}
                       href="/pricing"
-                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/pricing') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
+                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/pricing') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
                       Price
                     </Link>
@@ -269,7 +270,7 @@ export default function HeaderContent() {
                     <Link
                       href="/faqs"
                       onClick={() => routeCheck('/faqs')}
-                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/faqs') ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-gray-500'}`}
+                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/faqs') ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
                       FAQ
                     </Link>
@@ -278,7 +279,7 @@ export default function HeaderContent() {
                     <Link
                       onClick={() => routeCheck('/contact-us')}
                       href="/contact-us"
-                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/contact-us') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
+                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/contact-us') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
                       Contact
                     </Link>
@@ -291,7 +292,7 @@ export default function HeaderContent() {
                     ) : (
                       <Link
                         href="/retailer/login"
-                        className={`relative  transition-all duration-150 ease-in ${checkActiveButton('/retailer/login') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
+                        className={`relative  transition-all duration-150 ease-in ${checkActiveButton('/retailer/login') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                       >
                         Login
                       </Link>

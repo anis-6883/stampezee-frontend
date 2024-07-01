@@ -14,17 +14,18 @@ export const metadata = {
 export default async function Page() {
   const session = await getServerSession(authOptions);
 
-  if (session && session?.user?.role === ROLE.SUPER_ADMIN) {
-    redirect(routes.retailer.dashboard);
+  if (session) {
+    if (session?.user?.role === ROLE.RETAILER) redirect(routes.retailer.dashboard);
+    if (session?.user?.role === ROLE.SUPER_ADMIN) redirect(routes.superAdmin.dashboard);
   }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 text-gray-900">
       <div className="m-0 max-w-2xl rounded-lg bg-white shadow">
         <div className="p-5">
-          <div>
+          <Link href="/">
             <img src="/images/logo.png" className="mx-auto w-24" alt="logo" />
-          </div>
+          </Link>
           <div className="mt-4 px-3">
             <h1 className="text-center text-xl font-bold xl:text-xl">Store Registration</h1>
 

@@ -12,6 +12,7 @@ export default function DragAndDropUpload({
   size,
   sizeText,
   isRounded = false,
+  uploadText = 'Upload Image',
 }: {
   className: string;
   value: any;
@@ -19,6 +20,7 @@ export default function DragAndDropUpload({
   size: number;
   sizeText: string;
   isRounded?: boolean;
+  uploadText?: string;
 }) {
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState<string>('');
@@ -132,7 +134,7 @@ export default function DragAndDropUpload({
                         <span> to upload!</span>
                       </div>
                     ) : (
-                      <span className="-mt-2 p-1 text-xs">Upload Image</span>
+                      <span className="-mt-2 p-1 text-xs">{uploadText}</span>
                     )}
                     <input id="file-upload" name="file-upload" type="file" className="sr-only" />
                   </label>

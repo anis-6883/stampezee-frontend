@@ -105,7 +105,7 @@ export default function Footer() {
             </div>
           </div>
           <hr className="my-2" />
-          <p className="my-3 text-center">© 2024. All rights reserved</p>
+          <p className="my-3 text-center">© Copyright {new Date().getFullYear()} StampEzee | All Rights Reserved.</p>
         </div>
       </footer>
     </div>
