@@ -67,7 +67,7 @@ export default function ForgotEmailInput({
       <Formik initialValues={initialValues} validationSchema={emailSchema} onSubmit={handleSubmit}>
         {() => (
           <Form>
-            <div className="mx-auto mt-8 w-full space-y-4 p-5">
+            <div className="mx-auto w-full space-y-4 p-5">
               <InputField name="email" label="Email" placeholder="retailer@email.com" />
 
               <p className="text-end text-xs font-semibold">

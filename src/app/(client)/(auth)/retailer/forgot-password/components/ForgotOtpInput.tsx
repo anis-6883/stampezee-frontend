@@ -1,6 +1,7 @@
 // import { useResendOtpMutation, useVerifyForgetPasswordOtpMutation } from '@/features/auth/authApi';
 import Button from '@/components/Formik/Button';
-import { useRetailerVerifyForgetPasswordOtpMutation } from '@/features/auth/authApi';
+import { SerializedError } from '@/features/api/apiSlice';
+import { useRetailerForgetResendOtpMutation, useRetailerVerifyForgetPasswordOtpMutation } from '@/features/auth/authApi';
 import { ErrorResponse, isFetchBaseQueryError } from '@/utils/check-base-query-error';
 import { SetStateAction } from 'jotai';
 import Link from 'next/link';
@@ -8,7 +9,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { HiOutlineArrowSmLeft } from 'react-icons/hi';
-import { PiSpinnerLight } from 'react-icons/pi';
+import { ImSpinner9 } from 'react-icons/im';
 import { PinCode } from 'rizzui';
 
 export default function ForgetOtpInput({
@@ -30,7 +31,7 @@ export default function ForgetOtpInput({
   const [retailerVerifyForgetPasswordOtp, { data: responseData, isSuccess, isError, error: verifyOtpError }] =
     useRetailerVerifyForgetPasswordOtpMutation();
 
-  //   const [resendOtp, { data: resendResponse, isSuccess: resendSuccess, isError: resendError }] = useResendOtpMutation();
+  const [retailerForgetResendOtp, { error: resendError, isSuccess: resendSuccess }] = useRetailerForgetResendOtpMutation();
 
   // Handle Otp Response
   useEffect(() => {
@@ -61,23 +62,19 @@ export default function ForgetOtpInput({
     }
   }, [isError, isSuccess, responseData, setCurrentStep, setCurrentTab, verifyOtpError]);
 
-  //   // Handle Resend Response
-  //   useEffect(() => {
-  //     if (resendError) {
-  //       setResendOtpSubmitting(false);
-  //       toast.error('Something went wrong! Try Again');
-  //     }
-
-  //     if (resendSuccess) {
-  //       if (!resendResponse?.status) {
-  //         setResendOtpSubmitting(false);
-  //         toast.error(resendResponse?.message);
-  //       } else {
-  //         setResendOtpSubmitting(false);
-  //         toast.success(resendResponse?.message);
-  //       }
-  //     }
-  //   }, [resendError, resendResponse, resendSuccess]);
+  // Handle Resend Response
+  useEffect(() => {
+    if (resendError) {
+      setResendOtpSubmitting(false);
+      console.log('resendError: ', resendError);
+      const myError = resendError as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+    if (!resendError && resendSuccess) {
+      setResendOtpSubmitting(false);
+      toast.success('OTP sent on your email!');
+    }
+  }, [resendError, resendSuccess]);
 
   // Handler Otp Submit
   const otpSubmitHandler = (e: React.FormEvent) => {
@@ -100,11 +97,8 @@ export default function ForgetOtpInput({
 
   // Handle Resend Otp Submit
   const handleResendOtp = () => {
-    // setResendOtpSubmitting(true);
-    // resendOtp({
-    //   phone: forgetPhone,
-    //   context: 'forget_code',
-    // });
+    setResendOtpSubmitting(true);
+    retailerForgetResendOtp(undefined);
   };
 
   return (
@@ -120,10 +114,10 @@ export default function ForgetOtpInput({
         <div>
           <PinCode length={6} setValue={(input) => setOtp(input)} />
         </div>
-        {otpValidMsg && <p className="text-error mt-4 px-1 text-center font-medium">{otpValidMsg}</p>}
+        {otpValidMsg && <p className="text-error mt-4 px-1 text-center font-medium text-danger">{otpValidMsg}</p>}
         <div className="mt-10 grid grid-cols-12 items-center">
           <div className="col-span-8">
-            <p className="flex select-none items-center">
+            <p className="flex select-none items-center font-medium">
               Didn{"'"}t get any otp yet?{' '}
               <span
                 className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-primary`}
@@ -131,7 +125,7 @@ export default function ForgetOtpInput({
               >
                 Resend OTP
               </span>
-              {resendOtpSubmitting && <PiSpinnerLight size={20} className="ml-1 animate-spin" />}
+              {resendOtpSubmitting && <ImSpinner9 size={20} className="ml-1 animate-spin" />}
             </p>
           </div>
         </div>

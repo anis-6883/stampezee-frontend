@@ -31,7 +31,7 @@ export default async function Page() {
 
             <LoginForm />
             <div className="mt-3">
-              <Link href="/retailer/forgot-password" className="text-primary">
+              <Link href="/retailer/forgot-password" className="text-sm font-medium">
                 Forgot Password?
               </Link>
             </div>

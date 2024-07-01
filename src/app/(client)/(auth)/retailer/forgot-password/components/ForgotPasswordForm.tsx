@@ -35,8 +35,8 @@ export default function ForgotPasswordForm({
   };
 
   const loginSchema = Yup.object().shape({
-    password: Yup.string().required('Required!'),
-    confirmPassword: Yup.string().required('Required!'),
+    password: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters'),
+    confirmPassword: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters'),
   });
 
   // Handle Forget Password Response
@@ -65,7 +65,12 @@ export default function ForgotPasswordForm({
 
   const handleSubmit = (values: { password: string; confirmPassword: string }) => {
     setSubmitting(true);
-    retailerChangeForgetPassword(values);
+    if (values?.password !== values?.confirmPassword) {
+      toast.error('Does not match new password and confirm password');
+      setSubmitting(false);
+    } else {
+      retailerChangeForgetPassword(values);
+    }
   };
 
   return (
@@ -73,12 +78,17 @@ export default function ForgotPasswordForm({
       <Formik initialValues={initialValues} validationSchema={loginSchema} onSubmit={handleSubmit}>
         {() => (
           <Form>
-            <div className="mx-auto mt-8 w-full space-y-4 p-5">
-              <InputPassword name="password" label="Password" placeholder="******" />
+            <div className="mx-auto w-full space-y-4 p-5">
+              <InputPassword name="password" label="New Password" placeholder="******" />
 
               <InputPassword name="confirmPassword" label="Confirm Password" placeholder="******" />
-              <p className="text-end text-xs font-semibold">
-                Fields marked with <span className="text-red-600">*</span> are mandatory!
+              <p className="flex flex-col text-end text-xs font-semibold">
+                <span className="text-end text-xs font-semibold">
+                  Fields marked with <span className="text-red-600">*</span> are mandatory!
+                </span>
+                <span>
+                  Password must be at least <span className="text-red-600">8 characters</span> long!
+                </span>
               </p>
               <Button
                 className="w-full"
