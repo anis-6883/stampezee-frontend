@@ -74,6 +74,41 @@ export const authApi = apiSlice.injectEndpoints({
         };
       },
     }),
+    retailerForgotPassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/web/retailer/forget-password`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    retailerVerifyForgetPasswordOtp: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/web/retailer/forget-password-otp-verify`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    retailerForgetResendOtp: builder.mutation({
+      query: () => {
+        return {
+          url: `api/web/retailer/resend-forget-password-otp`,
+          method: 'POST',
+        };
+      },
+    }),
+    retailerChangeForgetPassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/web/retailer/change-forget-password`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
     retailerOtpVerify: builder.mutation({
       query: (data) => {
         return {
@@ -117,4 +152,8 @@ export const {
   useLogoutUserMutation,
   useRetailerResendOtpMutation,
   useRetailerChangePasswordMutation,
+  useRetailerForgotPasswordMutation,
+  useRetailerVerifyForgetPasswordOtpMutation,
+  useRetailerChangeForgetPasswordMutation,
+  useRetailerForgetResendOtpMutation,
 } = authApi;

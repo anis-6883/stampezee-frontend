@@ -7,6 +7,7 @@ import PhoneNumber from '@/components/Formik/PhoneNumber';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery, useRetailerUpdateProfileMutation } from '@/features/auth/authApi';
 import countryData from '@/utils/get-country-list';
+import getChangedFormData from '@/utils/getChangedFormData';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
@@ -71,15 +72,17 @@ export default function UpdateProfileForm() {
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
+    const changeFormData = getChangedFormData(values, initialValues, ['email']);
+
     let objToFormData: FormData;
     const isFile = (obj: any): obj is File => obj instanceof File;
 
     if (!isFile(values?.image)) {
-      objToFormData = objectToFormData(values, ['image']);
+      objToFormData = objectToFormData(changeFormData, ['image']);
     } else {
-      objToFormData = objectToFormData(values);
+      objToFormData = objectToFormData(changeFormData);
     }
-    console.log('values: ', values);
+
     retailerUpdateProfile(objToFormData);
   };
 
@@ -150,7 +153,7 @@ export default function UpdateProfileForm() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <InputField name="email" label="Email" placeholder="john@email.com" />
+                  <InputField disabled={true} name="email" label="Email" placeholder="john@email.com" />
                   <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" />
                 </div>
 
