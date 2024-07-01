@@ -174,42 +174,6 @@ export default function HeaderContent() {
                           </Link>
                         </li>
                       ))}
-                      {/* <li
-                        onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
-                        className=" transition duration-300 ease-in-out hover:bg-gray-100"
-                      >
-                        <Link
-                          onClick={() => routeCheck('/pricing')}
-                          href="/pricing"
-                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('/pricing') ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
-                        >
-                          Price
-                        </Link>
-                      </li>
-                      <li
-                        onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
-                        className=" transition duration-300 ease-in-out hover:bg-gray-100"
-                      >
-                        <Link
-                          onClick={() => routeCheck('/faqs')}
-                          href="/faqs"
-                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('/faqs') ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
-                        >
-                          FAQ
-                        </Link>
-                      </li>
-                      <li
-                        onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
-                        className="mb-4 transition duration-300 ease-in-out hover:bg-gray-100"
-                      >
-                        <Link
-                          onClick={() => routeCheck('/contact-us')}
-                          href="/contact-us"
-                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('/contact-us') ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
-                        >
-                          Contact
-                        </Link>
-                      </li> */}
 
                       {user ? (
                         <li

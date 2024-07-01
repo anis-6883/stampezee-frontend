@@ -30,6 +30,11 @@ export default async function Page() {
             <h1 className="text-center text-xl font-bold xl:text-xl">Sign In</h1>
 
             <LoginForm />
+            <div className="mt-3">
+              <Link href="/retailer/forgot-password" className="text-primary">
+                Forgot Password?
+              </Link>
+            </div>
 
             <div className="mt-8 text-center">
               New Retailer?{' '}
