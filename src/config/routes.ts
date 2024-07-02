@@ -23,6 +23,11 @@ export const routes = {
       create: `/root/super-admin/retailers/create`,
       edit: (id: number | string) => `/root/super-admin/retailer/${id}/update`,
     },
+    coupon: {
+      home: `/root/super-admin/coupon`,
+      create: `/root/super-admin/coupon/create`,
+      edit: (id: number | string) => `/root/super-admin/coupon/${id}/update`,
+    },
     notification: `/root/super-admin/notification`,
     billing: `/root/super-admin/billing`,
     scan: `/root/super-admin/scan`,

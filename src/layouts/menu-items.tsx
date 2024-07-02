@@ -4,6 +4,7 @@ import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { IoDiamondOutline, IoImageOutline } from 'react-icons/io5';
 import { LuBarChart3, LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
 import { PiBellRinging, PiCurrencyDollar, PiStamp, PiTreeStructure } from 'react-icons/pi';
+import { RiCoupon4Line } from 'react-icons/ri';
 import { TbUserShield } from 'react-icons/tb';
 
 export const menuItems: { [key: string]: any } = {
@@ -29,7 +30,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuListChecks />,
     },
     {
-      name: 'Stamp Images',
+      name: 'Default Stamp Images',
       href: routes.superAdmin.stampImage.home,
       icon: <PiStamp />,
     },
@@ -37,6 +38,11 @@ export const menuItems: { [key: string]: any } = {
       name: 'Subscriptions',
       href: routes.superAdmin.subscription.home,
       icon: <IoDiamondOutline />,
+    },
+    {
+      name: 'Coupons',
+      href: routes.superAdmin.coupon.home,
+      icon: <RiCoupon4Line />,
     },
     {
       name: 'FAQs',
@@ -76,7 +82,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <PiStamp />,
     },
     {
-      name: 'Stamp Images',
+      name: 'Custom Stamp Images',
       href: routes.retailer.stampImage.home,
       icon: <IoImageOutline />,
     },

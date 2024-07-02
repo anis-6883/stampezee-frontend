@@ -13,7 +13,7 @@ export const authApi = apiSlice.injectEndpoints({
 
     getOwnProfile: builder.query({
       query: () => `/api/web/get-profile`,
-      providesTags: ['userOwnProfile'],
+      providesTags: ['userOwnProfile', 'superAdminProfile', 'retailerProfile'],
     }),
 
     // super-admin api start
@@ -37,8 +37,27 @@ export const authApi = apiSlice.injectEndpoints({
       invalidatesTags: ['superAdminProfile'],
     }),
     superAdminGetProfile: builder.query({
-      query: (id: string) => `/api/secret-root/admin/super-admin/profile`,
+      query: () => `/api/secret-root/admin/super-admin/profile`,
       providesTags: ['superAdminProfile'],
+    }),
+    superAdminUpdateProfile: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/api/secret-root/admin/super-admin/profile`,
+          method: 'PUT',
+          body: data,
+        };
+      },
+      invalidatesTags: ['superAdminProfile'],
+    }),
+    superAdminChangePassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/api/secret-root/admin/super-admin/change-password`,
+          method: 'POST',
+          body: data,
+        };
+      },
     }),
 
     // retailer api start
@@ -54,7 +73,7 @@ export const authApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['userOwnProfile'],
+      invalidatesTags: ['retailerProfile'],
     }),
     retailerRegister: builder.mutation({
       query: (data) => {
@@ -143,6 +162,8 @@ export const {
   useSuperAdminGetProfileQuery,
   useSuperAdminLoginMutation,
   useSuperAdminLogoutMutation,
+  useSuperAdminUpdateProfileMutation,
+  useSuperAdminChangePasswordMutation,
   useRetailerGetProfileQuery,
   useRetailerUpdateProfileMutation,
   useRetailerLoginMutation,

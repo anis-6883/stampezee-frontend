@@ -15,22 +15,27 @@ export const authOptions: NextAuthOptions = {
     maxAge: 60 * 60 * 24 * 30, // Expire in 30 Days
   },
   callbacks: {
-    async jwt({ token, user, account }: { token: any; user: any; account: any }) {
-      if (account?.provider === 'credentials') {
-        if (user) {
+    async jwt(data) {
+      if (data?.account?.provider === 'credentials') {
+        if (data?.user) {
           return {
-            email: token?.email,
-            ...user,
+            email: data?.token?.email,
+            ...data?.user,
           };
+        }
+      }
+      if (data?.trigger === 'update') {
+        if (data.session) {
+          return data.session;
         }
       }
 
       // Get Access Token
-      if (new Date().getTime() < token?.expiresIn) return token;
+      if (new Date().getTime() < data?.session?.expiresIn) return data?.token;
 
       // const role = token?.role === "user" ? "user" : "admin";
       // return await getAccessToken(token, role);
-      return token;
+      return data?.token;
     },
     async session({ session, token }) {
       return {
