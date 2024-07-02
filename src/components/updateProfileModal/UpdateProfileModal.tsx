@@ -8,6 +8,7 @@ import { setValue } from '@/features/auth/authSlice';
 import getChangedFormData from '@/utils/getChangedFormData';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -24,6 +25,7 @@ export default function UpdateProfileModal({
   setModalState: (state: boolean) => void;
 }) {
   const dispatch = useDispatch();
+  const { data: session, update } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data: superAdminProfile } = useSuperAdminGetProfileQuery(null);
@@ -68,7 +70,7 @@ export default function UpdateProfileModal({
       toast.success('Super admin profile updated successfully!');
       setIsSubmitting(false);
       setModalState(false);
-      console.log('updateProfileData', updateProfileData);
+      update({ ...session?.user, ...updateProfileData?.data });
       dispatch(
         setValue({
           target: 'user',
@@ -76,6 +78,7 @@ export default function UpdateProfileModal({
         })
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateProfileError, updateProfileSuccess, setModalState, updateProfileData, dispatch]);
 
   return (

@@ -185,7 +185,7 @@ export default function CouponTable() {
                 },
               }
             : {
-                data: data?.data.docs || [],
+                data: [],
                 pagination: {
                   totalDocuments: data?.data.totalDocs || 0,
                 },

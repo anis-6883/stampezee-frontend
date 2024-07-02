@@ -60,6 +60,15 @@ export default function CreateUpdateModel({
       then: () => Yup.number().required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
+    descriptions: Yup.string().when('type', {
+      is: 'subscription',
+      then: () =>
+        Yup.array()
+          .of(Yup.string().required('Array must contain a string'))
+          .min(1, 'Array must contain at least one string')
+          .required('Required!'),
+      otherwise: () => Yup.array().nullable(),
+    }),
   });
 
   // Submit Handler
@@ -70,7 +79,7 @@ export default function CreateUpdateModel({
     let objToFormData: FormData;
 
     if (formData?._id) {
-      const ignoreList = ['type'];
+      const ignoreList = [];
       if (values?.type === 'subscription') {
         ignoreList.push('limit');
       } else {
@@ -174,20 +183,22 @@ export default function CreateUpdateModel({
                                     label={`Description (${index + 1})`}
                                     name={`descriptions[${index}]`}
                                     placeholder="Write here..."
-                                    required={false}
+                                    required={true}
                                   />
                                 </div>
                               </div>
                             </div>
                           ))}
 
-                          <button
-                            type="button"
-                            className="flex cursor-pointer items-center justify-center rounded-lg bg-[#5534eb] px-3 py-1 text-white"
-                            onClick={() => arrayHelpers.push('')}
-                          >
-                            + Add
-                          </button>
+                          {formData?.type === 'subscription' && (
+                            <button
+                              type="button"
+                              className="flex cursor-pointer items-center justify-center rounded-lg bg-[#5534eb] px-3 py-1 text-white"
+                              onClick={() => arrayHelpers.push('')}
+                            >
+                              + Add
+                            </button>
+                          )}
                         </div>
                       )}
                     />
