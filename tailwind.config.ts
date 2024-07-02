@@ -6,7 +6,7 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}',
     './node_modules/rizzui/dist/*.{js,ts,jsx,tsx}', // must use this line to compile and generate our RizzUI components style
   ],
-  darkMode: ['class', '[data-theme="dark"]'],
+  darkMode: ['class'],
   theme: {
     screens: {
       xs: '480px',

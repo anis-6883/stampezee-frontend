@@ -1,3 +1,4 @@
+import { routes } from '@/config/routes';
 import Link from 'next/link';
 import Image from '../Image';
 
@@ -8,9 +9,9 @@ export default function Footer() {
         <hr className="mb-20 mt-10" />
         <div className="">
           <div className="flex flex-col items-center md:items-start ">
-            <a className="w-[60px]" href="/">
+            <Link className="w-[60px]" href={routes.publicRoutes.home}>
               <img alt="logo" width={60} height={60} src="/images/logo.png" style={{ color: 'transparent' }} />
-            </a>
+            </Link>
           </div>
           <div className="mt-4 block font-medium">
             <div className="mt-4 block font-medium">
@@ -18,12 +19,9 @@ export default function Footer() {
                 <div className="mt-4 block font-medium">
                   <div className="block text-lg font-bold">StampEzee</div>
                   <div className="block">
-                    <a className="mt-4 block font-medium" href="/#how-it-works">
-                      HOW IT WORKS
-                    </a>
-                    <a className="mt-4 block font-medium" href="/pricing/">
+                    <Link className="mt-4 block font-medium" href={routes.publicRoutes.pricing}>
                       PRICING
-                    </a>
+                    </Link>
                     <a className="mt-4 block font-medium" href="/faqs/">
                       FAQ
                     </a>
@@ -58,9 +56,9 @@ export default function Footer() {
                     <a className="mt-4 block font-medium" href="/privacy/">
                       PRIVACY POLICY
                     </a>
-                    <a className="mt-4 block font-medium" href="/contact-us/">
+                    <Link className="mt-4 block font-medium" href={routes.publicRoutes.contactUs}>
                       CONTACT US
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="mt-4 block font-medium">

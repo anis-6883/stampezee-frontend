@@ -1,28 +1,16 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
+import { routes } from '@/config/routes';
+import { RootState } from '@/features/store';
 import { setSubscription } from '@/features/subscription/subscriptionSlice';
 import 'aos/dist/aos.css';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
+import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'rizzui';
 
-export default function PricingCards({ item }: { item: any }) {
-  const { authSlice }: any = useSelector((state) => state);
-  const [modalState, setModalState] = useState(false);
+export default function PricingCard({ item, setModalState }: { item: any; setModalState: (state: boolean) => void }) {
+  const { isLoggedIn } = useSelector((state: RootState) => state.authSlice);
   const dispatch = useDispatch();
-  const router = useRouter();
-
-  function checkLogin() {
-    if (authSlice?.isLoggedIn === false) {
-      toast.error('Please Login first');
-      return;
-    } else {
-      dispatch(setSubscription(item));
-      router.push('/checkout');
-    }
-  }
 
   return (
     <div className="relative mx-auto flex h-full w-full max-w-lg flex-col rounded-lg border-gray-100 bg-white p-3 text-gray-900 opacity-80 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8">
@@ -61,12 +49,13 @@ export default function PricingCards({ item }: { item: any }) {
           </li>
         ))}
       </ul>
-      <Button
-        onClick={checkLogin}
-        className="dark:focus:ring-red absolute bottom-[51px] left-[10%] w-[80%] rounded-lg border-0 bg-[#DF2828] px-5 py-2.5 text-center text-sm font-medium text-white transition-all duration-300 ease-in-out hover:bg-red-500 focus:ring-4 focus:ring-transparent dark:text-white"
-      >
-        Get started
-      </Button>
+      {isLoggedIn ? (
+        <Link href={routes.privateRoutes.checkout}>
+          <Button onClick={() => dispatch(setSubscription(item))} color="danger" text="Get started" className="w-full" />
+        </Link>
+      ) : (
+        <Button onClick={() => setModalState(true)} color="danger" text="Get started" className="w-full" />
+      )}
     </div>
   );
 }

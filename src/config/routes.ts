@@ -1,4 +1,14 @@
 export const routes = {
+  publicRoutes: {
+    home: '/',
+    faqs: '/faqs',
+    pricing: '/pricing',
+    contactUs: '/contact-us',
+    retailerLogin: '/retailer/login',
+  },
+  privateRoutes: {
+    checkout: '/checkout',
+  },
   home: '/project-admin',
   user: {
     profile: '/profile',
