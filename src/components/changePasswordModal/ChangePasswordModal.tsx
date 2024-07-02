@@ -94,6 +94,9 @@ export default function ChangePasswordModal({
                     <span>
                       Fields marked with <span className="text-red-600">*</span> are mandatory!
                     </span>
+                    <span>
+                      Password must be at least <span className="text-red-600">8 characters</span> long!
+                    </span>
                   </p>
 
                   <div className="mt-2 flex justify-end">
