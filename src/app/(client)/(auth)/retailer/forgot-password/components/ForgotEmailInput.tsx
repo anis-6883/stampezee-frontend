@@ -1,6 +1,7 @@
 import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import { useRetailerForgotPasswordMutation } from '@/features/auth/authApi';
+import { setAccessToken } from '@/features/auth/authSlice';
 import { ErrorResponse, isFetchBaseQueryError } from '@/utils/check-base-query-error';
 import { Form, Formik } from 'formik';
 import Link from 'next/link';
@@ -8,6 +9,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { HiOutlineArrowSmLeft } from 'react-icons/hi';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 export default function ForgotEmailInput({
@@ -19,6 +21,7 @@ export default function ForgotEmailInput({
   setCurrentStep: any;
   setCurrentTab: any;
 }) {
+  const dispatch = useDispatch();
   const [submitting, setSubmitting] = useState(false);
 
   const [retailerForgotPassword, { data: forgetResponse, isSuccess: forgetSuccess, isError: forgetError, error: forgotPasswordError }] =
@@ -48,6 +51,7 @@ export default function ForgotEmailInput({
       setSubmitting(false);
 
       if (forgetResponse?.status) {
+        dispatch(setAccessToken(forgetResponse?.data?.temp));
         setCurrentStep((prev: number) => prev + 1);
         setCurrentTab((prev: number) => prev + 1);
         toast.success(forgetResponse?.message);
@@ -55,7 +59,7 @@ export default function ForgotEmailInput({
         toast.error(forgetResponse?.message);
       }
     }
-  }, [forgetError, forgetResponse, forgetSuccess, setCurrentStep, setCurrentTab, forgotPasswordError]);
+  }, [forgetError, forgetResponse, forgetSuccess, setCurrentStep, setCurrentTab, forgotPasswordError, dispatch]);
 
   const handleSubmit = (values: { email: string }) => {
     setSubmitting(true);
