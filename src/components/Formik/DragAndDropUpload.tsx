@@ -97,7 +97,7 @@ export default function DragAndDropUpload({
               width={0}
               height={0}
               sizes="100vw"
-              className={cn('z-30 h-[120px] w-[120px] rounded-md border border-gray-200 object-contain p-1', isRounded && 'rounded-full')}
+              className={cn('z-30 h-[120px] w-[120px] rounded-md border border-gray-200 object-contain p-2', isRounded && 'rounded-full')}
             />
             {/* {value && value.name && <p className="mt-2 text-[14px] font-bold text-gray-800">{value.name}</p>} */}
             {!isRounded ? (
@@ -107,7 +107,7 @@ export default function DragAndDropUpload({
             ) : (
               <FaTrashAlt
                 onClick={removeFile}
-                className="hover:fill-secondary-400 absolute right-2 top-0 z-50 h-4 w-4 transform cursor-pointer fill-red-500 transition-all duration-700 ease-in-out hover:scale-125"
+                className="hover:fill-secondary-400 absolute right-3 top-0 z-50 h-4 w-4 transform cursor-pointer fill-red-500 transition-all duration-700 ease-in-out hover:scale-125"
               />
             )}
           </div>

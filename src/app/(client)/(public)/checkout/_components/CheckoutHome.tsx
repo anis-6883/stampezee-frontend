@@ -1,14 +1,19 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
 import { RootState } from '@/features/store';
 import { useCreateCheckOutMutation, useGetSubscriptionQuery } from '@/features/super-admin/Subscription/stampImageApi';
 import { AddOn, Subscription } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { BsCheck2Circle } from 'react-icons/bs';
+import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
-import { Loader } from 'rizzui';
+import LoginAlert from './LoginAlert';
 
 export function CheckoutHome() {
+  const [modalState, setModalState] = useState(false);
+  const { isLoggedIn } = useSelector((state: RootState) => state.authSlice);
   const [selectedSub, setSelectedSub] = useState<Subscription | null>(null);
   const [selectedAddOns, setSelectedAddOns] = useState<Record<string, AddOn & { quantity: number }>>({});
 
@@ -70,9 +75,12 @@ export function CheckoutHome() {
     : 0;
 
   const handleCheckOut = () => {
-    if (subSlugs.length > 0) {
-      checkOut({ slugs: subSlugs });
+    if (!isLoggedIn) {
+      setModalState(true);
     }
+    // if (subSlugs.length > 0) {
+    //   checkOut({ slugs: subSlugs });
+    // }
   };
 
   return (
@@ -81,7 +89,7 @@ export function CheckoutHome() {
         <h1 className="mb-6 text-3xl font-bold">Checkout</h1>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <h2 className="mb-4 text-xl font-semibold">Plan</h2>
+            <h2 className="mb-4 text-xl font-semibold">Plans</h2>
             <p className="mb-6 text-gray-600">Select a subscription plan</p>
             <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
               <p className="font-medium text-blue-700">Change Plan</p>
@@ -93,17 +101,17 @@ export function CheckoutHome() {
                   onClick={() => handleSubscription(item)}
                   key={index}
                   className={`relative cursor-pointer rounded-lg border p-4 ${
-                    selectedSub?._id === item._id ? 'border-blue-600' : 'border'
-                  } hover:border-blue-600`}
+                    selectedSub?._id === item._id ? 'scale-105 border-2 border-red-600 ring-1 ring-red-400' : 'border'
+                  } hover:border-red-600`}
                 >
-                  <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
-                  <p className="mb-2 text-lg font-bold">
+                  <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
+                  <p className="mb-2 text-xl font-bold">
                     {item.price} CAD/{item.duration === 30 ? 'Month' : `${item.duration} Days`}
                   </p>
                   <ul className="text-gray-600">
                     {item.descriptions.map((info, idx) => (
                       <li className="flex items-center space-x-3" key={idx}>
-                        ✔ <span className="mx-1 my-1">{info}</span>
+                        <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
                       </li>
                     ))}
                   </ul>
@@ -111,7 +119,7 @@ export function CheckoutHome() {
               ))}
             </div>
             <div className="mt-6">
-              <h2 className="mb-4 text-xl font-semibold">Add-On</h2>
+              <h2 className="mb-4 text-xl font-semibold">Add-Ons</h2>
               <p className="mb-6 text-gray-600">Select additional services</p>
               <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
                 <p className="font-medium text-blue-700">Select Multiple Add on</p>
@@ -124,30 +132,16 @@ export function CheckoutHome() {
                       <div
                         onClick={() => handleAddOnSelect(addOn)}
                         className={`relative cursor-pointer rounded-lg border p-4 ${
-                          selectedAddOns[addOn._id] ? 'border-blue-600' : 'border'
-                        } hover:border-blue-600`}
+                          selectedAddOns[addOn._id] ? 'border-red-600 ring-1 ring-red-400' : 'border'
+                        } hover:border-red-600`}
                       >
-                        <h3 className="mb-2 text-xl font-semibold">{addOn.title}</h3>
-                        <p className="mb-2 text-lg font-bold">{addOn.price} CAD/mo</p>
-                        <ul className="text-gray-600">
-                          {addOn.descriptions.map((info, idx) => (
-                            <li className="flex items-center space-x-3" key={idx}>
-                              ✔ <span className="mx-1 my-1">{info}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
+                        <p className="mb-2 text-xl font-bold">{addOn.price} CAD/month</p>
                       </div>
                     ) : (
                       <div className={`relative cursor-not-allowed rounded-lg border p-4 opacity-50 `}>
-                        <h3 className="mb-2 text-xl font-semibold">{addOn.title}</h3>
-                        <p className="mb-2 text-lg font-bold">{addOn.price} CAD/mo</p>
-                        <ul className="text-gray-600">
-                          {addOn.descriptions.map((info, idx) => (
-                            <li className="flex items-center space-x-3" key={idx}>
-                              ✔ <span className="mx-1 my-1">{info}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
+                        <p className="mb-2 text-xl font-bold">{addOn.price} CAD/month</p>
                       </div>
                     )}
                   </div>
@@ -186,17 +180,19 @@ export function CheckoutHome() {
                 <span className="text-red-500">{subTotal.toFixed(2)} CAD</span>
               </div>
             </div>
-            <button
+
+            <Button
+              color="danger"
+              text="Checkout Confirm"
+              className="mt-5 w-full"
+              isSubmitting={checkOutLoading}
               onClick={handleCheckOut}
-              className="mt-4 flex w-full items-center justify-center gap-3 rounded bg-red-500 px-4 py-2 text-white"
-            >
-              <span>Complete Change Plan </span>
-              <span>{checkOutLoading && <Loader />}</span>
-            </button>
-            <button className="mt-2 w-full rounded bg-gray-300 px-4 py-2 text-gray-700">Cancel</button>
+              postIcon={<BsCheck2Circle className="text-base" />}
+            />
           </div>
         </div>
       </div>
+      <LoginAlert modalState={modalState} setModalState={setModalState} />
     </div>
   );
 }

@@ -130,17 +130,20 @@ export default function CreateUpdateModel({
             {({ values, errors, setFieldValue }) => {
               return (
                 <Form className="mt-5">
-                  <div className="my-5 flex justify-center">
-                    <DragAndDropUpload
-                      value={{ name: 'image', image: values.image }}
-                      onChange={(image: any) => setFieldValue('image', image)}
-                      className="mt-2"
-                      size={1024 * 1000}
-                      sizeText="1MB"
-                      isRounded={true}
-                      uploadText="Upload Logo"
-                    />
-                  </div>
+                  {formData?._id && formData?.type === 'subscription' && (
+                    <div className="my-5 flex justify-center">
+                      <DragAndDropUpload
+                        value={{ name: 'image', image: values.image }}
+                        onChange={(image: any) => setFieldValue('image', image)}
+                        className="mt-2"
+                        size={1024 * 1000}
+                        sizeText="1MB"
+                        isRounded={true}
+                        uploadText="Upload Logo"
+                      />
+                    </div>
+                  )}
+
                   <div className="flex gap-5">
                     <InputField name="title" label="Title" placeholder="Title" />
                     <InputField
