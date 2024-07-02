@@ -32,12 +32,12 @@ export default async function Page() {
 
             <LoginForm />
             <div className="mt-3">
-              <Link href="/retailer/forgot-password" className="text-sm font-medium">
+              <Link href="/retailer/forgot-password" className="text-xs font-semibold">
                 Forgot Password?
               </Link>
             </div>
 
-            <div className="mt-8 text-center">
+            <div className="mt-10 text-center">
               New Retailer?{' '}
               <Link href="/retailer/register" className="font-semibold">
                 Sign Up

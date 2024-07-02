@@ -6,11 +6,13 @@ export default function InputPassword({
   label,
   placeholder,
   required = true,
+  prefix,
 }: {
   name: string;
   label: string;
   placeholder?: string;
   required?: boolean;
+  prefix?: React.ReactNode;
 }) {
   return (
     <div className="w-full">
@@ -25,8 +27,9 @@ export default function InputPassword({
             }
             placeholder={placeholder}
             autoComplete="off"
+            prefix={prefix}
             // error={meta.touched && meta.error && <div className="mt-1 text-xs text-red-500">{meta.error}</div>}
-            inputClassName={`${meta.touched && meta.error ? '!border-red-500 ring-0' : 'border-gray-200'}`}
+            inputClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
           />
         )}
       </Field>

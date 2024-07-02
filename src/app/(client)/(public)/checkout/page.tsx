@@ -1,6 +1,6 @@
-import { CheckoutHome } from './component/CheckoutHome';
+import { CheckoutHome } from './_components/CheckoutHome';
 
-export default function page() {
+export default function Page() {
   return (
     <div>
       <CheckoutHome />

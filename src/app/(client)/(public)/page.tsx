@@ -1,5 +1,7 @@
+import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import 'aos/dist/aos.css';
+import Link from 'next/link';
 import { HeroCard } from './components/HeroCard';
 import Image from './components/Image';
 import Testimonial from './components/Testimonial';
@@ -25,12 +27,12 @@ export default async function Page() {
                 programs to your business.
               </p>
               <div className="mt-8">
-                <a
-                  href="/"
+                <Link
+                  href={routes.publicRoutes.pricing}
                   className="dark:bg-primary-red rounded-full bg-white px-8 py-4 text-2xl font-bold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B]"
                 >
                   GET STARTED
-                </a>
+                </Link>
               </div>
             </div>
             <div className="mt-10 hidden justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex">

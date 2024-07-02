@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { SlEnvolope, SlLock } from 'react-icons/sl';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
@@ -75,8 +76,8 @@ export default function LoginForm() {
       {() => (
         <Form>
           <div className="mx-auto mt-8 w-full space-y-4">
-            <InputField name="email" label="Email" placeholder="retailer@email.com" />
-            <InputPassword name="password" label="Password" placeholder="******" />
+            <InputField prefix={<SlEnvolope className="text-xl" />} name="email" label="Email" placeholder="retailer@email.com" />
+            <InputPassword prefix={<SlLock className="text-xl" />} name="password" label="Password" placeholder="********" />
 
             <p className="text-end text-xs font-semibold">
               Fields marked with <span className="text-red-600">*</span> are mandatory!

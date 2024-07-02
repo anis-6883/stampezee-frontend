@@ -113,7 +113,7 @@ export default function RegisterForm() {
                       setFieldValue('phone', value.slice(countryData.dialCode.length));
                     }}
                     errorClassName="text-red-600 text-xs mt-1"
-                    inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border-[2px]'} !h-[43px]`}
+                    inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border'} !h-[43px] !ring-0`}
                     labelClassName="!mb-1"
                   />
                   <div className="flex flex-col gap-1">
@@ -156,7 +156,7 @@ export default function RegisterForm() {
                     onChange={() => {
                       values.isAgree === 'yes' ? setFieldValue('isAgree', '') : setFieldValue('isAgree', 'yes');
                     }}
-                    inputClassName={`${errors.isAgree && touched.isAgree && '!border-red-500 ring-0'}`}
+                    inputClassName={`!ring-0 ${errors.isAgree && touched.isAgree && '!border-red-500 !ring-0'}`}
                     size="sm"
                     iconClassName="top-0"
                     onBlur={() => setFieldTouched('isAgree', true)}

@@ -7,7 +7,7 @@ const buttonStyles: Record<string, string> = {
   warning:
     'bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 text-white hover:bg-gradient-to-br focus:ring-orange-300 dark:shadow-orange-800/80 dark:focus:ring-orange-800',
   danger:
-    'bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white hover:bg-gradient-to-br focus:ring-red-300 dark:shadow-red-800/80 dark:focus:ring-red-800',
+    'bg-gradient-to-r from-red-500 via-red-600 to-red-600 text-white hover:bg-gradient-to-br focus:ring-red-300 dark:shadow-red-800/80 dark:focus:ring-red-800',
   outline: 'text-black border border-[#DC3545] hover:bg-gradient-to-br focus:ring-red-300 shadow-none',
 };
 

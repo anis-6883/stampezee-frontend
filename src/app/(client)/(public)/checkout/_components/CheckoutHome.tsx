@@ -8,14 +8,14 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Loader } from 'rizzui';
 
-export const CheckoutHome = () => {
+export function CheckoutHome() {
   const [selectedSub, setSelectedSub] = useState<Subscription | null>(null);
   const [selectedAddOns, setSelectedAddOns] = useState<Record<string, AddOn & { quantity: number }>>({});
 
   const selectedTotalAddons = Object.values(selectedAddOns).map((item) => item.slug);
   const subSlugs = [selectedSub?.slug, ...selectedTotalAddons];
   const { push } = useRouter();
-  const [checkOut, { isSuccess: checkOutSuccess, error: checkOutError, data: checkOutRespons, isLoading: checkOutLoading }] =
+  const [checkOut, { isSuccess: checkOutSuccess, error: checkOutError, data: checkOutResponse, isLoading: checkOutLoading }] =
     useCreateCheckOutMutation();
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
   const subscription = data?.data?.filter((item: Subscription) => item.type === 'subscription');
@@ -23,10 +23,10 @@ export const CheckoutHome = () => {
   const { data: activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
 
   useEffect(() => {
-    if (checkOutRespons) {
-      push(checkOutRespons.data.url);
+    if (checkOutResponse) {
+      push(checkOutResponse.data.url);
     }
-  }, [checkOutRespons, push]);
+  }, [checkOutResponse, push]);
 
   useEffect(() => {
     if (!isLoading && !selectedSub) {
@@ -199,4 +199,4 @@ export const CheckoutHome = () => {
       </div>
     </div>
   );
-};
+}

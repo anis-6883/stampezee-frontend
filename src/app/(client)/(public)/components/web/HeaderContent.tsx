@@ -1,52 +1,48 @@
 'use client';
 
-import { useLogoutUserMutation } from '@/features/auth/authApi';
+import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { Menu, Transition } from '@headlessui/react';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Drawer } from 'rizzui';
-import './HeaderStyle.css';
 
 const mobileMenuItems = [
   {
     id: 1,
     name: 'Home',
-    link: '/',
+    link: routes.publicRoutes.home,
   },
   {
     id: 2,
-    name: 'Price',
-    link: '/pricing',
+    name: 'Pricing',
+    link: routes.publicRoutes.pricing,
   },
   {
     id: 3,
     name: 'FAQ',
-    link: '/faqs',
+    link: routes.publicRoutes.faqs,
   },
   {
     id: 4,
-    name: 'Contact',
-    link: '/contact-us',
+    name: 'Contact Us',
+    link: routes.publicRoutes.contactUs,
   },
 ];
 
 export default function HeaderContent() {
-  const [logOut] = useLogoutUserMutation();
+  const pathname = usePathname();
+  const dispatch = useDispatch();
   const [sidBer, setSidBer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
-  const [drawerSate, setDrawerState] = useState({
-    isOpen: false,
-  });
-  const { replace } = useRouter();
-  const dispatch = useDispatch();
   const { user, isLoggedIn } = useSelector((state: RootState) => state.authSlice);
+  const [drawerSate, setDrawerState] = useState({ isOpen: false });
 
   // Handle Logout Response
   const handleLogout = async () => {
@@ -88,31 +84,12 @@ export default function HeaderContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /**
-   * Checks if the current URL path matches the provided path.
-   * @param path - The path to check against the current URL.
-   * @returns `true` if the current URL path matches the provided path, `false` otherwise.
-   */
-  function checkActiveButton(path: string) {
-    // Check if the current URL path matches the provided path
-    // If it does, return true, otherwise return false
-    if (currentUrl === path && currentUrl !== '') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function routeCheck(names: string) {
-    setCurrentUrl(names);
-  }
-
   return (
     <div>
       <nav className={`fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>
-        <div className={`${sidBer ? '' : ''} mx-auto flex max-w-[1300px] flex-wrap items-center justify-between p-2`}>
-          <Link onClick={() => routeCheck('/')} href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="/images/logo.png" className="h-12" alt="stamp-ezee Logo" />
+        <div className={`mx-auto flex max-w-[1300px] flex-wrap items-center justify-between p-2`}>
+          <Link href={routes.publicRoutes.home} className="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="/images/logo.png" className="h-14" alt="logo" />
             <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span>
           </Link>
           <div className="flex items-center space-x-3 md:order-2 md:space-x-0">
@@ -165,9 +142,8 @@ export default function HeaderContent() {
                           className="transition duration-300 ease-in-out hover:bg-gray-100"
                         >
                           <Link
-                            onClick={() => routeCheck(`${item.link}`)}
                             href={`${item.link}`}
-                            className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton(`${item.link}`) ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                            className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${pathname === item.link ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                           >
                             {item?.name}
                           </Link>
@@ -181,7 +157,7 @@ export default function HeaderContent() {
                         >
                           <Link
                             href="/retailer/login"
-                            className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('/retailer/login') ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                            className={`relative block items-center rounded py-3 pl-4 transition-all  duration-150 ease-in dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                           >
                             Login
                           </Link>
@@ -250,38 +226,34 @@ export default function HeaderContent() {
                 >
                   <li className="w-max-content">
                     <Link
-                      onClick={() => routeCheck('/')}
-                      href="/"
-                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
+                      href={routes.publicRoutes.home}
+                      className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
                     >
                       Home
                     </Link>
                   </li>
                   <li className="w-max-content">
                     <Link
-                      onClick={() => routeCheck('/pricing')}
-                      href="/pricing"
-                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/pricing') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                      href={routes.publicRoutes.pricing}
+                      className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.pricing ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
-                      Price
+                      Pricing
                     </Link>
                   </li>
                   <li>
                     <Link
                       href="/faqs"
-                      onClick={() => routeCheck('/faqs')}
-                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/faqs') ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                      className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.faqs ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
                       FAQ
                     </Link>
                   </li>
                   <li>
                     <Link
-                      onClick={() => routeCheck('/contact-us')}
-                      href="/contact-us"
-                      className={`relative transition-all duration-150 ease-in ${checkActiveButton('/contact-us') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                      href={routes.publicRoutes.contactUs}
+                      className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.contactUs ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
-                      Contact
+                      Contact Us
                     </Link>
                   </li>
                   <div className="ms-2 flex gap-2">
@@ -290,10 +262,7 @@ export default function HeaderContent() {
                         Dashboard
                       </Link>
                     ) : (
-                      <Link
-                        href="/retailer/login"
-                        className={`relative  transition-all duration-150 ease-in ${checkActiveButton('/retailer/login') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
-                      >
+                      <Link href="/retailer/login" className={`relative  transition-all duration-150 ease-in hover:text-red-500`}>
                         Login
                       </Link>
                     )}
@@ -319,7 +288,7 @@ export default function HeaderContent() {
                           leaveFrom="transform opacity-100 scale-100"
                           leaveTo="transform opacity-0 scale-95"
                         >
-                          <Menu.Items className=" absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white p-2 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white p-2 px-4 text-black shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div className="py-1">
                               <div className="flex gap-1">
                                 <h2 className="font-bold">
@@ -360,8 +329,6 @@ export default function HeaderContent() {
                 </ul>
               </div>
             </div>
-
-            {/* user menu section */}
           </div>
         </div>
       </nav>
