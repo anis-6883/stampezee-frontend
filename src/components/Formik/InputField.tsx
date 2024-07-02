@@ -9,6 +9,7 @@ export default function InputField({
   disabled = false,
   type = 'text',
   prefix,
+  className = '',
 }: {
   name: string;
   label: string;
@@ -17,6 +18,7 @@ export default function InputField({
   type?: string;
   prefix?: React.ReactNode;
   disabled?: boolean;
+  className?: string;
 }) {
   return (
     <div className="w-full">
@@ -36,6 +38,7 @@ export default function InputField({
             // error={meta.touched && meta.error && <div className="mt-1 text-xs text-red-500">{meta.error}</div>}
             inputClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
             prefix={prefix}
+            className={className}
           />
         )}
       </Field>

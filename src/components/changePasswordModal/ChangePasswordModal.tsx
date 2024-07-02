@@ -1,7 +1,7 @@
 'use client';
 
 import { SerializedError } from '@/features/api/apiSlice';
-import { useRetailerChangePasswordMutation } from '@/features/auth/authApi';
+import { useRetailerChangePasswordMutation, useSuperAdminChangePasswordMutation } from '@/features/auth/authApi';
 import { RootState } from '@/features/store';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
@@ -15,33 +15,44 @@ import Button from '../Formik/Button';
 import InputPassword from '../Formik/InputPassword';
 
 export default function ChangePasswordModal({
-  setFormData,
-  formData,
   modalState,
   setModalState,
 }: {
-  formData: any;
   modalState: boolean;
-  setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { role } = useSelector((state: RootState) => state.authSlice);
 
   const [retailerChangePassword, { isSuccess, error }] = useRetailerChangePasswordMutation();
+  const [superAdminChangePassword, { isSuccess: superAdminChangePasswordSuccess, error: superAdminChangePasswordError }] =
+    useSuperAdminChangePasswordMutation();
 
   useEffect(() => {
-    if (error) {
-      const myError = error as SerializedError;
-      setIsSubmitting(false);
-      toast.error(myError?.data?.message || 'Something went wrong!');
-    }
+    if (role === 'retailer') {
+      if (error) {
+        const myError = error as SerializedError;
+        setIsSubmitting(false);
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      }
 
-    if (isSuccess) {
-      setIsSubmitting(false);
-      toast.success('Retailer password updated successfully!');
+      if (isSuccess) {
+        setIsSubmitting(false);
+        toast.success('Retailer password updated successfully!');
+      }
+    } else {
+      if (superAdminChangePasswordError) {
+        const myError = superAdminChangePasswordError as SerializedError;
+        setIsSubmitting(false);
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      }
+
+      if (superAdminChangePasswordSuccess) {
+        setIsSubmitting(false);
+        toast.success('Super admin password updated successfully!');
+      }
     }
-  }, [error, isSuccess]);
+  }, [error, isSuccess, role, superAdminChangePasswordError, superAdminChangePasswordSuccess]);
 
   const initialValues = {
     oldPassword: '',
@@ -50,14 +61,33 @@ export default function ChangePasswordModal({
   };
 
   const validationSchema = Yup.object().shape({
-    oldPassword: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters'),
-    newPassword: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters'),
-    confirmPassword: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters'),
+    oldPassword:
+      role === 'retailer'
+        ? Yup.string().required('Required!').min(8, 'Password must be at least 8 characters')
+        : Yup.string().required('Required!').min(6, 'Password must be at least 8 characters'),
+    newPassword:
+      role === 'retailer'
+        ? Yup.string().required('Required!').min(8, 'Password must be at least 8 characters')
+        : Yup.string().required('Required!').min(6, 'Password must be at least 8 characters'),
+    confirmPassword:
+      role === 'retailer'
+        ? Yup.string().required('Required!').min(8, 'Password must be at least 8 characters')
+        : Yup.string().required('Required!').min(6, 'Password must be at least 8 characters'),
   });
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setIsSubmitting(true);
-    const result: any = await retailerChangePassword(values);
+    if (values?.newPassword !== values?.confirmPassword) {
+      toast.error('Does not match new password and confirm password');
+      setIsSubmitting(false);
+      return;
+    }
+    let result: any;
+    if (role === 'retailer') {
+      result = await retailerChangePassword(values);
+    } else {
+      result = await superAdminChangePassword(values);
+    }
     if (result?.data?.status) {
       resetForm();
       setModalState(false);
@@ -68,14 +98,13 @@ export default function ChangePasswordModal({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          <Title as="h4">{role === 'super_admin' ? 'Super Admin' : 'Retailer'} Change Password</Title>
+          <Title as="h4"> Change Password</Title>
 
           <ActionIcon
             size="sm"
             variant="text"
             onClick={() => {
               setModalState(false);
-              setFormData({});
             }}
           >
             <HiMiniXCircle className="text-2xl text-danger" />
