@@ -4,11 +4,13 @@ import { routes } from '@/config/routes';
 import { useGetOwnProfileQuery } from '@/features/auth/authApi';
 import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
+import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
+import { GiSandsOfTime } from 'react-icons/gi';
 import { PiCaretDownBold } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 import { Collapse, Title } from 'rizzui';
@@ -18,17 +20,19 @@ import { menuItems } from './menu-items';
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
-  const { data } = useSession();
+  const { data: session }: any = useSession();
   const role = useSelector((state: RootState) => state.authSlice.role);
   const user = useSelector((state: RootState) => state.authSlice.user);
 
   const { data: profileData, isSuccess, isLoading } = useGetOwnProfileQuery(null);
 
-  let fullName = profileData?.data?.firstName + ' ' + profileData?.data?.lastName;
+  let fullName = user?.firstName + ' ' + user?.lastName;
 
   if (fullName.length >= 18) {
-    fullName = profileData?.data?.firstName + ' ' + profileData?.data?.lastName.charAt(0).toUpperCase() + '.';
+    fullName = user?.firstName + ' ' + user?.lastName.charAt(0).toUpperCase() + '.';
   }
+
+  console.log('session', countDaysLeft(session?.user?.planValidAt));
 
   return (
     <aside
@@ -43,23 +47,31 @@ export default function Sidebar({ className }: { className?: string }) {
         </Link>
       </div>
 
-      {!isLoading && isSuccess && (
-        <div className="mx-auto mt-4 flex w-[90%] items-center justify-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
-          <img
-            className="h-14 w-14 rounded-full p-2"
-            src={
-              profileData?.data?.image
-                ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${profileData?.data?.image}`
-                : 'https://cdn.pixabay.com/photo/2020/04/12/10/57/store-5033746_640.png'
-            }
-            alt="Store Image"
-          />
-          <div>
-            <h3 className="text-sm font-bold">{fullName ? fullName : 'Blessy J'}</h3>
-            <span className="tex-sm text-gray-500">{_.startCase(_.toLower(role === 'super_admin' ? 'Super Admin' : role))}</span>
-          </div>
+      <div className="mx-auto mt-4 flex w-[90%] items-center  gap-4 rounded-lg bg-[#F4F6F8] p-3">
+        <img
+          className="h-14 w-14 rounded-full p-2"
+          src={
+            user?.image
+              ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
+              : 'https://cdn.pixabay.com/photo/2020/04/12/10/57/store-5033746_640.png'
+          }
+          alt="Store Image"
+        />
+        <div>
+          <h3 className="text-sm font-bold">{fullName ? fullName : 'Blessy J'}</h3>
+          <span className="tex-sm text-gray-500">{_.startCase(_.toLower(role === 'super_admin' ? 'Super Admin' : role))}</span>
         </div>
-      )}
+      </div>
+
+      <div className="mx-auto mt-4 flex w-[90%] items-center  gap-4 rounded-lg bg-[#F4F6F8] p-3">
+        <div className="flex items-center justify-center">
+          <GiSandsOfTime className=" text-lg" />
+          <span className="pl-3 font-medium">
+            {' '}
+            {countDaysLeft(session?.user?.planValidAt)} days left in {session?.user?.plan}
+          </span>
+        </div>
+      </div>
 
       <SimpleBar className="h-[calc(100%-80px)]">
         <div className="mt-4 pb-3 3xl:mt-6">

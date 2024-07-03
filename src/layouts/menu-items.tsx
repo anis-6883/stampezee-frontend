@@ -2,8 +2,9 @@ import { routes } from '@/config/routes';
 import { BsQuestionCircle, BsShop } from 'react-icons/bs';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { IoDiamondOutline, IoImageOutline } from 'react-icons/io5';
+import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { LuBarChart3, LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
-import { PiBellRinging, PiCurrencyDollar, PiStamp, PiTreeStructure } from 'react-icons/pi';
+import { PiBellRinging, PiCurrencyDollar, PiStamp } from 'react-icons/pi';
 import { RiCoupon4Line } from 'react-icons/ri';
 import { TbUserShield } from 'react-icons/tb';
 
@@ -99,7 +100,7 @@ export const menuItems: { [key: string]: any } = {
     {
       name: 'Branches',
       href: routes.retailer.branch.home,
-      icon: <PiTreeStructure />,
+      icon: <LiaMapMarkedAltSolid />,
     },
     {
       name: 'Manage Profile',

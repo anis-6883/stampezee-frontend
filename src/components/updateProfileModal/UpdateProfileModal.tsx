@@ -5,6 +5,7 @@ import InputField from '@/components/Formik/InputField';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useSuperAdminGetProfileQuery, useSuperAdminUpdateProfileMutation } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
+import { RootState } from '@/features/store';
 import getChangedFormData from '@/utils/getChangedFormData';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
@@ -13,7 +14,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import Button from '../Formik/Button';
 
@@ -27,6 +28,7 @@ export default function UpdateProfileModal({
   const dispatch = useDispatch();
   const { data: session, update } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { user } = useSelector((state: RootState) => state.authSlice);
 
   const { data: superAdminProfile } = useSuperAdminGetProfileQuery(null);
   const [superAdminUpdateProfile, { data: updateProfileData, isSuccess: updateProfileSuccess, error: updateProfileError }] =
@@ -74,7 +76,7 @@ export default function UpdateProfileModal({
       dispatch(
         setValue({
           target: 'user',
-          value: updateProfileData?.data,
+          value: { ...user, ...updateProfileData?.data },
         })
       );
     }

@@ -6,7 +6,7 @@ import { routes } from '@/config/routes';
 import { useGetOwnProfileQuery } from '@/features/auth/authApi';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -36,6 +36,7 @@ function DropdownMenu({
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user, role } = useSelector((state: RootState) => state.authSlice);
+  const { data: session } = useSession();
   const { data: profileData, isSuccess, isLoading } = useGetOwnProfileQuery(null);
 
   // Handle Logout Response
@@ -50,15 +51,15 @@ function DropdownMenu({
     replace(role === 'super_admin' ? routes.superAdmin.login : routes.retailer.login);
   };
 
-  let fullName = profileData?.data?.firstName + ' ' + profileData?.data?.lastName;
+  let fullName = user?.firstName + ' ' + user?.lastName;
 
   return (
     <div className="w-64 text-left rtl:text-right">
       <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
         <Avatar
           src={
-            profileData?.data?.image
-              ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${profileData?.data?.image}`
+            user?.image
+              ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
               : 'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp'
           }
           name={fullName ?? ''}
@@ -67,7 +68,7 @@ function DropdownMenu({
           <Title as="h6" className="font-semibold">
             {fullName ?? ''}
           </Title>
-          <Text className="text-gray-600">{profileData?.data?.email ?? ''}</Text>
+          <Text className="text-gray-600">{user?.email ?? ''}</Text>
         </div>
       </div>
       <div className="grid px-3.5 py-3.5 font-medium text-gray-700">
@@ -134,8 +135,8 @@ export default function ProfileMenu({ buttonClassName, avatarClassName }: { butt
             <Avatar
               name="Jane Doe"
               src={
-                profileData?.data?.image
-                  ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${profileData?.data?.image}`
+                user?.image
+                  ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
                   : 'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp'
               }
               size="lg"

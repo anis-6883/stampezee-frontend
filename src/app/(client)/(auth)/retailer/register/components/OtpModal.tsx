@@ -50,8 +50,6 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
           }
         }
       });
-
-      replace(routes.retailer.dashboard);
     }
   }, [dispatch, replace, verifyError, verifyResponse, verifySuccess]);
 
