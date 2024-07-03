@@ -1,4 +1,5 @@
 'use client';
+
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
@@ -14,11 +15,10 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 export const Plans = () => {
-  const { data, isLoading } = useGetSubscriptionQuery(undefined);
+  const { data } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
   const { subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
   const [selectedSub, setSelectedSub] = useState<Subscription | null>(null);
-  const [selectedAddOns, setSelectedAddOns] = useState<Record<string, AddOn & { quantity: number }>>({});
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -52,11 +52,15 @@ export const Plans = () => {
     subscriptions = data?.data?.filter((item: Subscription) => item.type === 'subscription');
   }
 
-  const blockedSubscriptions = data?.data?.filter((item: Subscription) => {
-    if (item?.slug === 'trial') return true;
-    if (item?.slug === session?.user?.plan) return true;
-    return false;
-  });
+  let blockedSubscriptions = [];
+
+  if (session?.user?.takeFreeTrial) {
+    blockedSubscriptions = data?.data?.filter((item: Subscription) => {
+      if (item?.slug === 'trial') return true;
+      if (item?.slug === session?.user?.plan) return true;
+      return false;
+    });
+  }
 
   const addons = data?.data.filter((item: any) => item?.type === 'addon');
 
@@ -123,32 +127,11 @@ export const Plans = () => {
         </div>
         <hr className="my-3" />
         <div className="flex items-center justify-end gap-2">
-          {/* <Button variant="outline">Cancel</Button> */}
           <Link href={routes.privateRoutes.checkout}>
             <Button className="text-white" color="primary" text="Confirm" postIcon={<BsCheck2Circle className="text-base" />} />
           </Link>
         </div>
       </div>
-      {/* <div className="rounded-md p-4 shadow-md">
-        <h2 className="my-4 text-xl font-semibold">Plans & Addons</h2>
-        <div className="grid-cols grid gap-4 lg:grid-cols-4">
-          {addons?.map((addon: any, index: any) => (
-            <div onClick={() => handleAddOnSelect(addon)} key={index}>
-              <div className={`relative cursor-pointer rounded-lg border p-4  hover:border-blue-600`}>
-                <h3 className="mb-2 text-lg font-semibold">{addon.title}</h3>
-                <p className="text-md mb-2 font-bold">{addon.price} CAD/mo</p>
-              </div>
-            </div>
-          ))}
-        </div>
-        <hr className="my-3" />
-        <div className="flex items-center justify-end gap-2">
-          <Button variant="outline">Cancel</Button>
-          <Button color="primary" className="text-white">
-            Confirm
-          </Button>
-        </div>
-      </div> */}
     </div>
   );
 };

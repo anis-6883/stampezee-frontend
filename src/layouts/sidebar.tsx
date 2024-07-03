@@ -63,15 +63,16 @@ export default function Sidebar({ className }: { className?: string }) {
         </div>
       </div>
 
-      <div className="mx-auto mt-4 flex w-[90%] items-center  gap-4 rounded-lg bg-[#F4F6F8] p-3">
-        <div className="flex items-center justify-center">
-          <GiSandsOfTime className=" text-lg" />
-          <span className="pl-3 font-medium">
-            {' '}
-            {countDaysLeft(session?.user?.planValidAt)} days left in {session?.user?.plan}
-          </span>
+      {session?.user?.plan && (
+        <div className="mx-auto mt-4 flex w-[90%] items-center  gap-4 rounded-lg bg-[#F4F6F8] p-3">
+          <div className="flex items-center justify-center">
+            <GiSandsOfTime className=" text-lg" />
+            <span className="pl-3 font-medium">
+              {countDaysLeft(session?.user?.planValidAt)} days left in {session?.user?.plan}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
       <SimpleBar className="h-[calc(100%-80px)]">
         <div className="mt-4 pb-3 3xl:mt-6">
