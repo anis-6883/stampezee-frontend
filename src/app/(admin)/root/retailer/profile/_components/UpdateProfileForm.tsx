@@ -7,6 +7,7 @@ import PhoneNumber from '@/components/Formik/PhoneNumber';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery, useRetailerUpdateProfileMutation } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
+import { RootState } from '@/features/store';
 import countryData from '@/utils/get-country-list';
 import getChangedFormData from '@/utils/getChangedFormData';
 import objectToFormData from '@/utils/objectToFormData';
@@ -15,7 +16,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactSelect from 'react-select';
 import { FieldError } from 'rizzui';
 import * as Yup from 'yup';
@@ -24,6 +25,7 @@ export default function UpdateProfileForm() {
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: session, update } = useSession();
+  const { user } = useSelector((state: RootState) => state.authSlice);
 
   const [retailerUpdateProfile, { data: updateRetailerProfile, isSuccess, error }] = useRetailerUpdateProfileMutation();
   const { data: retailerProfile, isSuccess: isRetailerProfileSuccess } = useRetailerGetProfileQuery(null);
@@ -92,7 +94,7 @@ export default function UpdateProfileForm() {
 
     const result: any = await retailerUpdateProfile(objToFormData);
 
-    dispatch(setValue({ target: 'user', value: result?.data?.data }));
+    dispatch(setValue({ target: 'user', value: { ...user, ...result?.data?.data } }));
   };
 
   return (

@@ -10,7 +10,7 @@ import { useRetailerLoginMutation } from '@/features/auth/authApi';
 import { userLoggedIn } from '@/features/auth/authSlice';
 import { Form, Formik } from 'formik';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -21,6 +21,10 @@ import * as Yup from 'yup';
 export default function LoginForm() {
   const { replace } = useRouter();
   const dispatch = useDispatch();
+
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('callback');
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [retailerLogin, { data: loginResponse, isSuccess: loginSuccess, error: loginError }] = useRetailerLoginMutation();
 
@@ -56,12 +60,16 @@ export default function LoginForm() {
         if (callback?.ok && !callback?.error) {
           toast.success('Welcome to Retailer Panel!');
           if (loginResponse?.data?.role === ROLE.RETAILER) {
-            replace(routes.retailer.dashboard);
+            if (searchQuery === 'checkout') {
+              replace(routes.privateRoutes.checkout);
+            } else {
+              replace(routes.retailer.dashboard);
+            }
           }
         }
       });
     }
-  }, [dispatch, loginError, loginResponse, loginSuccess, replace]);
+  }, [dispatch, loginError, loginResponse, loginSuccess, replace, searchQuery]);
 
   const handleSubmit = (values: { email: string; password: string }) => {
     setIsSubmitting(true);

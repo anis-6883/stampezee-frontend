@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: any = {
-  data: {
+  subscription: {
     _id: '6667f260136c8cd72c7af8a2',
     title: 'Pro',
     slug: 'pro',
@@ -15,6 +15,7 @@ const initialState: any = {
     image: null,
     status: true,
   },
+  addOns: [],
 };
 
 const subscriptionSlice = createSlice({
@@ -22,10 +23,21 @@ const subscriptionSlice = createSlice({
   initialState,
   reducers: {
     setSubscription: (state, action) => {
-      state.data = action.payload;
+      state.subscription = action.payload;
+    },
+    setAddOns: (state, action) => {
+      const newAddOns = state.addOns.find((item: any) => item._id === action.payload._id);
+      if (newAddOns) {
+        state.addOns = state.addOns.filter((item: any) => item._id !== newAddOns?._id);
+      } else {
+        state.addOns.push({ ...action.payload, isAddOnsSelect: true });
+      }
+    },
+    removeAddOns: (state, action) => {
+      state.addOns = state.addOns.filter((item: any) => item._id !== action.payload);
     },
   },
 });
 
-export const { setSubscription } = subscriptionSlice.actions;
+export const { setSubscription, setAddOns, removeAddOns } = subscriptionSlice.actions;
 export default subscriptionSlice;
