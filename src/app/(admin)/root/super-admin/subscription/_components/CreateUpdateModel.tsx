@@ -4,7 +4,7 @@ import Button from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useUpdateSubscriptionMutation } from '@/features/super-admin/Subscription/stampImageApi';
+import { useUpdateSubscriptionMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import getSubDetailsObject from '@/utils/get-subscription-details-object';
 import objectToFormData from '@/utils/objectToFormData';
 import { FieldArray, Form, Formik } from 'formik';

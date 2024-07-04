@@ -64,5 +64,7 @@ export const apiSlice = createApi({
     'superAdminRetailer',
     'superAdminSubscription',
     'faq',
+    'coupon',
+    'coupons',
   ],
 });

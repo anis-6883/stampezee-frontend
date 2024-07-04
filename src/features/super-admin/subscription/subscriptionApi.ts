@@ -1,7 +1,7 @@
 import { apiSlice } from '@/features/api/apiSlice';
 import { IPagination, IResponse } from '@/types';
 
-export const superAdminStampImageApi = apiSlice.injectEndpoints({
+export const subscriptionApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllSubscription: builder.query<IResponse, IPagination>({
       query: (queries) => {
@@ -36,6 +36,6 @@ export const superAdminStampImageApi = apiSlice.injectEndpoints({
 });
 
 export const { useCreateCheckOutMutation, useGetSubscriptionQuery, useGetAllSubscriptionQuery, useUpdateSubscriptionMutation } =
-  superAdminStampImageApi;
+  subscriptionApi;
 
-export default superAdminStampImageApi;
+export default subscriptionApi;

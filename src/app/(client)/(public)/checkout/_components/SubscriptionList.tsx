@@ -2,7 +2,7 @@
 
 import { RootState } from '@/features/store';
 import { setSubscription } from '@/features/subscription/subscriptionSlice';
-import { useGetSubscriptionQuery } from '@/features/super-admin/Subscription/stampImageApi';
+import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
 import { useSession } from 'next-auth/react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
