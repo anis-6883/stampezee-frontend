@@ -3,11 +3,14 @@
 import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import { routes } from '@/config/routes';
+import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
+import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { removeAddOns } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/Subscription/stampImageApi';
 import { AddOn } from '@/types';
 import { Form, Formik } from 'formik';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -16,28 +19,41 @@ import LoginAlert from './LoginAlert';
 
 export default function OrderSummary() {
   const dispatch = useDispatch();
-
+  const { data: session, update } = useSession();
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
   const [subTotal, setSubTotal] = useState<number>(0);
   const { subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
 
   const [modalState, setModalState] = useState(false);
-  const { isLoggedIn } = useSelector((state: RootState) => state.authSlice);
+  const { isLoggedIn, user, accessToken } = useSelector((state: RootState) => state.authSlice);
 
-  const subSlugs = [subscription.slug, ...addOns?.map((item: AddOn) => item.slug)];
+  const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
   const { push } = useRouter();
   const [checkOut, { isSuccess: checkOutSuccess, error: checkOutError, data: checkOutResponse, isLoading: checkOutLoading }] =
     useCreateCheckOutMutation();
+  const { data: profile, isSuccess: profileSuccess, refetch } = useRetailerGetProfileQuery(null);
 
   useEffect(() => {
     if (checkOutResponse) {
       if (subscription?.slug === 'trial') {
-        push(routes.retailer.dashboard);
+        refetch();
+        if (profileSuccess) {
+          console.log('profile?.data', profile?.data);
+          update({ ...session?.user, ...profile?.data });
+          dispatch(
+            setValue({
+              target: 'user',
+              value: { ...user, ...profile?.data },
+            })
+          );
+          push(routes.retailer.dashboard);
+        }
       } else {
         push(checkOutResponse.data.url);
       }
     }
-  }, [checkOutResponse, push, subscription]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkOutResponse, push, subscription, profileSuccess]);
 
   const handleCheckOut = () => {
     if (!isLoggedIn) {

@@ -1,17 +1,11 @@
 'use client';
 
-import { useGetOwnProfileQuery } from '@/features/auth/authApi';
-import { setValue } from '@/features/auth/authSlice';
-import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
-import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
 import { BsShop } from 'react-icons/bs';
 import { IoDiamondOutline } from 'react-icons/io5';
 import { LuUsers } from 'react-icons/lu';
 import { PiCaretLeftBold, PiCaretRightBold, PiCurrencyDollar } from 'react-icons/pi';
-import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
@@ -82,24 +76,7 @@ export function FileStatGrid({ className }: { className?: string }) {
 }
 
 export default function StateCardView({ className }: { className: string }) {
-  const dispatch = useDispatch();
-  const { data: session, update } = useSession();
-  const { user } = useSelector((state: RootState) => state.authSlice);
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
-  const { data: profile, isSuccess: profileSuccess } = useGetOwnProfileQuery(null);
-
-  useEffect(() => {
-    if (profileSuccess) {
-      update({ ...session?.user, ...profile?.data });
-      dispatch(
-        setValue({
-          target: 'user',
-          value: { ...user, ...profile?.data },
-        })
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile?.data, profileSuccess]);
 
   return (
     <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>

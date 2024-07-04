@@ -12,11 +12,21 @@ import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { PiCaretDownBold } from 'react-icons/pi';
+import { SlLock } from 'react-icons/sl';
 import { useSelector } from 'react-redux';
 import { Collapse, Title } from 'rizzui';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { menuItems } from './menu-items';
+
+const blockedMenuUrls = [
+  routes.retailer.customer.home,
+  routes.retailer.sub_admin.home,
+  routes.retailer.stamp.home,
+  routes.retailer.stampImage.home,
+  routes.retailer.notification.home,
+  routes.retailer.branch.home,
+];
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
@@ -31,8 +41,6 @@ export default function Sidebar({ className }: { className?: string }) {
   if (fullName.length >= 18) {
     fullName = user?.firstName + ' ' + user?.lastName.charAt(0).toUpperCase() + '.';
   }
-
-  console.log('session', countDaysLeft(session?.user?.planValidAt));
 
   return (
     <aside
@@ -64,14 +72,19 @@ export default function Sidebar({ className }: { className?: string }) {
       </div>
 
       {session?.user?.plan && (
-        <div className="mx-auto mt-4 flex w-[90%] items-center  gap-4 rounded-lg bg-[#F4F6F8] p-3">
-          <div className="flex items-center justify-center">
-            <GiSandsOfTime className=" text-lg" />
-            <span className="pl-3 font-medium">
-              {countDaysLeft(session?.user?.planValidAt)} days left in {session?.user?.plan}
-            </span>
+        <>
+          <div className="mx-auto mt-4 flex w-[90%] items-center gap-4  rounded-lg bg-[#F4F6F8] p-3 ">
+            <div className="flex items-center">
+              <p className="pl-3 text-center font-medium">Plan : {_.capitalize(session?.user?.plan)}</p>
+            </div>
           </div>
-        </div>
+          <div className="mx-auto mt-4 flex w-[90%] items-center  gap-4 rounded-lg bg-[#F4F6F8] p-3">
+            <div className="flex items-center justify-center">
+              <GiSandsOfTime className="text-lg" />
+              <span className="pl-3 font-medium">{countDaysLeft(session?.user?.planValidAt)} days left</span>
+            </div>
+          </div>
+        </>
       )}
 
       <SimpleBar className="h-[calc(100%-80px)]">
@@ -79,7 +92,7 @@ export default function Sidebar({ className }: { className?: string }) {
           {menuItems[role]?.map((item: any, index: number) => {
             const isActive =
               item.name === 'Dashboard'
-                ? pathname === '/admin'
+                ? pathname === '/root/retailer/dashboard'
                 : pathname === (item?.href as string) || pathname.includes(item?.href as string);
             const pathnameExistInDropdowns: any = item?.dropdownItems?.filter((dropdownItem: any) => dropdownItem.href === pathname);
             const isDropdownOpen = Boolean(pathnameExistInDropdowns?.length);
@@ -157,12 +170,15 @@ export default function Sidebar({ className }: { className?: string }) {
                         href={item?.href}
                         className={cn(
                           '2xl:mx-5 2xl:my-2 group relative mx-3 my-0.5 flex items-center justify-between rounded-md px-3 py-2 font-medium capitalize lg:my-1',
+                          role === 'retailer' && blockedMenuUrls.includes(item?.href) && !session?.user?.plan
+                            ? 'pointer-events-none cursor-not-allowed bg-gray-100'
+                            : '',
                           isActive
                             ? 'before:top-2/5 2xl:before:-start-5 text-primary before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-primary'
                             : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-700/90'
                         )}
                       >
-                        <div className="flex items-center truncate">
+                        <div className=" flex items-center truncate">
                           {item?.icon && (
                             <span
                               className={cn(
@@ -175,6 +191,11 @@ export default function Sidebar({ className }: { className?: string }) {
                           )}
                           <span className="truncate">{item.name}</span>
                         </div>
+                        {role === 'retailer' && blockedMenuUrls.includes(item?.href) && !session?.user?.plan && (
+                          <div className="text-end ">
+                            <SlLock className="text-lg" />
+                          </div>
+                        )}
                       </Link>
                     )}
                   </>

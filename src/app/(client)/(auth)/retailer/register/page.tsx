@@ -33,7 +33,7 @@ export default async function Page() {
 
             <div className="mt-5 text-center">
               Already have an account?{' '}
-              <Link href="/retailer/login" className="font-semibold">
+              <Link href={routes.publicRoutes.retailerLogin} className="font-semibold">
                 Sign In
               </Link>{' '}
               Here

@@ -5,7 +5,9 @@ import { setSubscription } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/Subscription/stampImageApi';
 import { Subscription } from '@/types';
 import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
+import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function SubscriptionList() {
@@ -25,21 +27,45 @@ export default function SubscriptionList() {
   } else {
     subscriptions = data?.data?.filter((item: Subscription) => item.type === 'subscription');
   }
+  let blockedSubscriptions = [];
 
-  const blockedSubscriptions = data?.data?.filter((item: Subscription) => {
-    if (item?.slug === 'trial') return true;
-    if (item?.slug === session?.user?.plan) return true;
-    return false;
-  });
+  if (session?.user?.takeFreeTrial) {
+    blockedSubscriptions = data?.data?.filter((item: Subscription) => {
+      if (item?.slug === 'trial') return true;
+      if (item?.slug === session?.user?.plan) return true;
+      return false;
+    });
+  }
 
   const handleSubscription = (plan: Subscription) => {
     dispatch(setSubscription(plan));
   };
 
+  useEffect(() => {
+    if (session?.user?.takeFreeTrial) {
+      const pursedSubscription = data?.data?.find((item: Subscription) => {
+        if (item?.type === 'subscription' && item?.slug === session?.user?.plan) {
+          return true;
+        }
+        return false;
+      });
+      dispatch(setSubscription(pursedSubscription));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user?.takeFreeTrial]);
+
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
       {blockedSubscriptions?.map((item: Subscription) => (
-        <div key={item._id} className={`relative cursor-not-allowed rounded-lg border p-4 opacity-50 `}>
+        <div key={item._id} className={`relative cursor-not-allowed rounded-lg border p-4`}>
+          {session?.user?.plan === item?.slug && (
+            <div className="absolute right-2 top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
+              <span className="font-medium">
+                <MdStar />
+              </span>
+              <span className="text-sm font-medium">Active</span>
+            </div>
+          )}
           <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
           <p className="mb-2 text-xl font-bold">
             {item.price} CAD/{item.duration === 30 ? 'Month' : `${item.duration} Days`}
