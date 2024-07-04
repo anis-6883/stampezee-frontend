@@ -11,7 +11,6 @@ export const generalSettingsApi = apiSlice.injectEndpoints({
           url: `/api/secret-root/admin/super-admin/settings`,
           method: 'PUT',
           body: data,
-          // credentials: 'include',
         };
       },
     }),

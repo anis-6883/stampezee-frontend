@@ -29,27 +29,25 @@ const SelectField: React.FC<SelectOptionProps> = ({
   value = null,
 }) => {
   return (
-    <>
-      <Field name={name}>
-        {({ field, meta }: { field: any; meta: any }) => (
-          <Select
-            label={
-              <span>
-                {label}
-                {required && <span className="text-red-500"> *</span>}
-              </span>
-            }
-            selectClassName={`${meta.touched && meta.error ? '!border-red-500 ring-0' : 'border-gray-200'}`}
-            labelClassName={labelClassName}
-            options={options}
-            value={options.find((option) => option.value === value)}
-            onChange={onChange}
-            disabled={disabled}
-            // error={meta.touched && meta.error && <div className="mt-1 text-xs text-red-500">{meta.error}</div>}
-          />
-        )}
-      </Field>
-    </>
+    <Field name={name}>
+      {({ field, meta }: { field: any; meta: any }) => (
+        <Select
+          label={
+            <span>
+              {label}
+              {required && <span className="text-red-500"> *</span>}
+            </span>
+          }
+          selectClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
+          labelClassName={labelClassName}
+          options={options}
+          value={options.find((option) => option.value === value)}
+          onChange={onChange}
+          disabled={disabled}
+          // error={meta.touched && meta.error && <div className="mt-1 text-xs text-red-500">{meta.error}</div>}
+        />
+      )}
+    </Field>
   );
 };
 

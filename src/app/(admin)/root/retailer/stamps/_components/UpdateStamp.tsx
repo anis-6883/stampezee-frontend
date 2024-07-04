@@ -6,13 +6,7 @@ import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
-import {
-  useBranchCategoryImageListQuery,
-  useCreateStampMutation,
-  useGetSingleStampsQuery,
-  useUpdateStampMutation,
-} from '@/features/retailer/stamp/stampApi';
-import { IQueryType } from '@/types';
+import { useBranchCategoryImageListQuery, useGetSingleStampsQuery, useUpdateStampMutation } from '@/features/retailer/stamp/stampApi';
 import getFormattedDate from '@/utils/get-formatted-date';
 import getChangedFormData from '@/utils/getChangedFormData';
 import { Form, Formik } from 'formik';
@@ -26,13 +20,9 @@ import StampImgSkeleton from './StampImgSkeleton';
 
 export default function Update({ Id }: any) {
   const [submitting, setSubmitting] = useState(false);
-  const [createStamp] = useCreateStampMutation();
   const [updateStamp] = useUpdateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
-  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
-
-  const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery({});
-
+  const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery(undefined);
   const { data: stampData } = useGetSingleStampsQuery(Id);
 
   useEffect(() => {
@@ -137,13 +127,7 @@ export default function Update({ Id }: any) {
               </div>
 
               <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
-              <InputTextarea
-                name="description"
-                required={false}
-                label="Description"
-                placeholder="Write here..."
-                setFieldValue={setFieldValue}
-              />
+              <InputTextarea name="description" required={false} label="Description" placeholder="Write here..." />
               <h2 className="font-medium">
                 Select Default Image <span className="text-red-600">*</span>
               </h2>

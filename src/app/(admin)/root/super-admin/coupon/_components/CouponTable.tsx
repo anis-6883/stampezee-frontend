@@ -2,12 +2,10 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
-import {
-  useDeleteSuperAdminRetailerMutation,
-  useGetAllRetailersQuery,
-  useUpdateRetailerStatusMutation,
-} from '@/features/super-admin/retailer/retailerApi';
+import { useDeleteCouponMutation, useGetAllCouponQuery, useUpdateCouponStatusMutation } from '@/features/super-admin/coupon/couponApi';
 import { IQueryType } from '@/types';
+import getFormattedDate from '@/utils/get-formatted-date';
+import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
@@ -17,7 +15,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function CouponTable() {
+export default function CouponTable({ offset }: { offset: number }) {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -25,19 +23,14 @@ export default function CouponTable() {
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllRetailersQuery({
+  const { data, isLoading, isFetching } = useGetAllCouponQuery({
     page: query.pageIndex + 1,
     limit: query.pageSize,
     ...searchQuery,
   });
 
-  if (!isLoading) {
-    console.log('Data: ', data);
-  }
-
-  const [deleteRetailer, { isSuccess, isError }] = useDeleteSuperAdminRetailerMutation();
-
-  const [updateStatus] = useUpdateRetailerStatusMutation();
+  const [deleteCoupon, { isSuccess, isError }] = useDeleteCouponMutation();
+  const [updateStatus] = useUpdateCouponStatusMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
@@ -61,56 +54,36 @@ export default function CouponTable() {
 
   const structure = [
     {
-      header: 'Info',
-      accessorKey: 'image',
+      header: 'Title',
+      accessorKey: 'title',
+    },
+    {
+      header: 'Code',
+      accessorKey: 'code',
+    },
+    {
+      header: 'Discount',
+      accessorKey: 'discountType',
       Cell: ({ row }: any) => (
-        <div className="flex gap-2">
-          <div>
-            {row.original.image ? (
-              <div>
-                <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="h-full w-20 rounded" />
-              </div>
-            ) : (
-              <img src={'/images/profile.png'} alt="image" className="h-full w-20 rounded" />
-            )}
-          </div>
-          <div>
-            <div className="text-md mx-auto text-start">
-              <p>
-                <span className="font-bold">Store Name:</span> {row?.original.storeName}
-              </p>
-              <p>
-                <span className="font-bold">Name:</span> {row?.original.firstName} {row?.original.lastName}
-              </p>
-              <p>
-                <span className="font-bold">Email:</span> {row?.original.email}
-              </p>
-              <p>
-                <span className="font-bold">Phone:</span> {row?.original.phone}
-              </p>
-            </div>
-          </div>
+        <div className="text-md mx-auto text-start">
+          <p>
+            <span className="font-bold">Type:</span> {row?.original.discountType}
+          </p>
+          <p>
+            <span className="font-bold">Amount:</span> {row?.original.discount}
+          </p>
         </div>
       ),
     },
     {
-      header: 'Address',
+      header: 'Validity Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Country:</span> {row?.original.country}
+            <span className="font-bold">Started At:</span> {convertDateByOffset(row?.original?.startedAt, offset)}
           </p>
           <p>
-            <span className="font-bold">City:</span> {row?.original.city}
-          </p>
-          <p>
-            <span className="font-bold">Province:</span> {row?.original.province}
-          </p>
-          <p>
-            <span className="font-bold">Postal Code:</span> {row?.original.postalCode}
-          </p>
-          <p>
-            <span className="font-bold">Address:</span> {row?.original.address}
+            <span className="font-bold">Expired At:</span> {convertDateByOffset(row?.original?.expiredAt, offset)}
           </p>
         </div>
       ),
@@ -120,15 +93,13 @@ export default function CouponTable() {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      size: 300,
     },
-
     {
       header: 'Status',
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         return <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />;
-
-        // return row?.original?.status ? <div>Yes</div> : <div>No</div>;
       },
       mantineTableHeadCellProps: {
         align: 'center',
@@ -148,6 +119,7 @@ export default function CouponTable() {
               setFormData({
                 ...row.original,
                 image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+                validDateRange: `${getFormattedDate(row?.original?.startedAt, offset)} to ${getFormattedDate(row?.original?.expiredAt, offset)}`,
               });
               setCreateState(true);
             }}
@@ -183,7 +155,7 @@ export default function CouponTable() {
                 },
               }
             : {
-                data: [],
+                data: data?.data.docs || [],
                 pagination: {
                   totalDocuments: data?.data.totalDocs || 0,
                 },
@@ -192,13 +164,13 @@ export default function CouponTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Name, Store, Email"
-        searchFieldWidth="270px"
+        searchPlaceHolder="Search By Title & Code"
+        searchFieldWidth="250px"
       />
 
       <DeleteConfirmModal
         deleteId={deleteId}
-        deleteHandler={deleteRetailer}
+        deleteHandler={deleteCoupon}
         modalState={deleteState}
         setModalState={setDeleteState}
         isSubmitting={deleteSubmitting}

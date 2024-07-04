@@ -13,7 +13,6 @@ export default function InputTextarea({
   ref?: any;
   required?: boolean;
   type?: string;
-  setFieldValue?: any;
 }) {
   return (
     <div>
@@ -28,7 +27,7 @@ export default function InputTextarea({
               </span>
             }
             placeholder={placeholder}
-            textareaClassName={`${meta.touched && meta.error ? '!border-red-500 ring-0' : 'border-gray-200'}`}
+            textareaClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
           />
         )}
       </Field>

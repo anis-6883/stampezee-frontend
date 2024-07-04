@@ -35,7 +35,7 @@ export default {
           900: 'rgb(var(--gray-900) / <alpha-value>)',
           1000: 'rgb(var(--gray-1000) / <alpha-value>)',
         },
-        primary: '#DC3545',
+        primary: '#3872FA',
         secondary: '#5C636A',
         warning: '#FFC107',
         success: '#198754',

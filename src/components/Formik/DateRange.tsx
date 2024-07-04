@@ -25,14 +25,14 @@ const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name 
               <div className="flex items-center">
                 <input
                   type="text"
-                  className={`h-10 w-full rounded-l-md border-[1px] placeholder:text-sm ${meta.touched && meta.error ? '!border-red-500' : 'border-[#9DC0FA]'}`}
+                  className={`h-10 w-full rounded-l-md border-[1px] placeholder:text-sm ${meta.touched && meta.error ? '!border-red-500' : '!border-gray-200'}`}
                   ref={ref}
                   placeholder="YYYY-MM-DD to YYYY-MM-DD"
                   aria-label="Select date range"
                 />
                 <div
                   onClick={() => setFieldValue(name, '')}
-                  className="border-r-none flex h-10 w-10 cursor-pointer items-center justify-center rounded-r-lg border border-slate-300 bg-gray-200 hover:border-slate-300 hover:bg-red-400 hover:text-white"
+                  className="border-r-none flex h-10 w-10 cursor-pointer items-center justify-center rounded-r-lg border border-gray-200 bg-gray-200 hover:border-slate-300 hover:bg-red-400 hover:text-white"
                 >
                   <MdOutlineClose className="text-xl" />
                 </div>

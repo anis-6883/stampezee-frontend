@@ -11,10 +11,10 @@ export const couponApi = apiSlice.injectEndpoints({
       providesTags: ['coupons'],
     }),
     createCoupon: builder.mutation({
-      query: (newCoupon) => ({
+      query: (data) => ({
         url: '/api/secret-root/admin/super-admin/coupon',
         method: 'POST',
-        body: newCoupon,
+        body: data,
       }),
       invalidatesTags: ['coupons'],
     }),

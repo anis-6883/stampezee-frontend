@@ -7,7 +7,6 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { useBranchCategoryImageListQuery, useCreateStampMutation } from '@/features/retailer/stamp/stampApi';
-import { IQueryType } from '@/types';
 import getChangedFormData from '@/utils/getChangedFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
@@ -22,9 +21,8 @@ export default function Create() {
   const [submitting, setSubmitting] = useState(false);
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
-  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
 
-  const { data: responseData, isLoading: responseIsLoading, isSuccess } = useBranchCategoryImageListQuery({});
+  const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery({});
 
   const initialValues = {
     branchId: '',
@@ -102,7 +100,7 @@ export default function Create() {
           handleSubmit(values);
         }}
       >
-        {({ errors, touched, setFieldValue, values }) => {
+        {({ errors, setFieldValue, values }) => {
           return (
             <Form className="mt-5 grid gap-4">
               <div className="grid grid-cols-2 gap-x-5">
@@ -130,13 +128,7 @@ export default function Create() {
               </div>
 
               <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
-              <InputTextarea
-                name="description"
-                required={false}
-                label="Description"
-                placeholder="Write here..."
-                setFieldValue={setFieldValue}
-              />
+              <InputTextarea name="description" required={false} label="Description" placeholder="Write here..." />
               <h2 className="font-medium">
                 Select Default Image <span className="text-red-600">*</span>
               </h2>
