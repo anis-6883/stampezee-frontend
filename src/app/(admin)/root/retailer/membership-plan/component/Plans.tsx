@@ -4,7 +4,7 @@ import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import { setAddOns, setSubscription } from '@/features/subscription/subscriptionSlice';
-import { useGetSubscriptionQuery } from '@/features/super-admin/Subscription/stampImageApi';
+import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn, Subscription } from '@/types';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';

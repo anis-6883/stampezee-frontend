@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetSubscriptionQuery } from '@/features/super-admin/Subscription/stampImageApi';
+import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Loader } from 'rizzui';
 import PricingCard from './PricingCard';
 

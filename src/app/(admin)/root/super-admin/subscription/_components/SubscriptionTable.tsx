@@ -1,7 +1,7 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-import { useGetAllSubscriptionQuery } from '@/features/super-admin/Subscription/stampImageApi';
+import { useGetAllSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { IQueryType } from '@/types';
 import { useState } from 'react';
 import { HiOutlinePencil } from 'react-icons/hi';

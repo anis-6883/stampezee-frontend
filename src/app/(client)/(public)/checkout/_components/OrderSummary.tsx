@@ -7,7 +7,7 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { removeAddOns } from '@/features/subscription/subscriptionSlice';
-import { useCreateCheckOutMutation } from '@/features/super-admin/Subscription/stampImageApi';
+import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn } from '@/types';
 import { Form, Formik } from 'formik';
 import { useSession } from 'next-auth/react';
