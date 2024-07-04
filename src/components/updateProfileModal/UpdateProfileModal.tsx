@@ -2,6 +2,7 @@
 
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
+import { ROLE } from '@/config/constants';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useSuperAdminGetProfileQuery, useSuperAdminUpdateProfileMutation } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
@@ -28,9 +29,9 @@ export default function UpdateProfileModal({
   const dispatch = useDispatch();
   const { data: session, update } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { user } = useSelector((state: RootState) => state.authSlice);
+  const { user, role } = useSelector((state: RootState) => state.authSlice);
 
-  const { data: superAdminProfile } = useSuperAdminGetProfileQuery(null);
+  const { data: superAdminProfile } = useSuperAdminGetProfileQuery(null, { skip: role !== ROLE.SUPER_ADMIN });
   const [superAdminUpdateProfile, { data: updateProfileData, isSuccess: updateProfileSuccess, error: updateProfileError }] =
     useSuperAdminUpdateProfileMutation();
 

@@ -364,6 +364,7 @@ export interface Subscription {
   descriptions: string[];
   slug: string;
   type: string;
+  image: string;
 }
 
 export interface AddOn {
