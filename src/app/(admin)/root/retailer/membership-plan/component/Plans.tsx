@@ -84,7 +84,6 @@ export const Plans = () => {
         <div className="grid-cols mb-3 grid gap-4 lg:grid-cols-4">
           {blockedSubscriptions?.map((plan: Subscription) => (
             <div key={plan?._id} className={`relative cursor-not-allowed rounded-lg border`}>
-              {/* Pricing Card */}
               {session?.user?.plan === plan?.slug && (
                 <div className="absolute right-2 top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
                   <span className="font-medium">
@@ -127,7 +126,6 @@ export const Plans = () => {
               key={index}
               className={`rounded-md  border hover:border-red-600 ${subscription?.slug === plan?.slug ? 'border-red-600 ring-1 ring-red-400' : 'border'}`}
             >
-              {/* Pricing Card */}
               <div className="relative mx-auto flex h-full w-full max-w-md cursor-pointer flex-col rounded-lg border-gray-100 bg-white p-3 text-gray-900 opacity-80 dark:bg-gray-800 dark:text-white xl:p-4">
                 <h3 className="mb-4 text-lg font-semibold">{plan.title}</h3>
                 <div className="text-md my-2 flex items-baseline">
