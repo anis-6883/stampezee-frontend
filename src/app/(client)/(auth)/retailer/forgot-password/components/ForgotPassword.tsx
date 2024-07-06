@@ -1,5 +1,6 @@
 'use client';
 
+import { routes } from '@/config/routes';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Button as RizButton, Stepper } from 'rizzui';
@@ -14,16 +15,16 @@ export default function ForgotPassword() {
   return (
     <section className="">
       <div className="w-[500px] text-gray-900">
-        <Link href="/">
+        <Link href={routes.publicRoutes.home}>
           <img src="/images/logo.png" className="mx-auto w-28 pb-5" alt="logo" />
         </Link>
 
         <h1 className="pb-6 text-center text-xl font-bold xl:text-xl">Forgot Password</h1>
 
         <Stepper currentIndex={currentStep} className="w-full">
-          <Stepper.Step title={<span className="text-gray-900">Step 1</span>} color="primary" />
-          <Stepper.Step title={<span className="text-gray-900">Step 2</span>} color="primary" />
-          <Stepper.Step title={<span className="text-gray-900">Step 3</span>} color="primary" />
+          <Stepper.Step title={<span className="text-gray-900">Step 1</span>} />
+          <Stepper.Step title={<span className="text-gray-900">Step 2</span>} />
+          <Stepper.Step title={<span className="text-gray-900">Step 3</span>} />
         </Stepper>
 
         <div className="mt-7 flex space-x-4">
@@ -42,7 +43,7 @@ export default function ForgotPassword() {
       <div className="card w-[500px] bg-white">
         <ForgotEmailInput currentTab={currentTab} setCurrentTab={setCurrentTab} setCurrentStep={setCurrentStep} />
         <ForgetOtpInput currentTab={currentTab} setCurrentTab={setCurrentTab} setCurrentStep={setCurrentStep} />
-        <ForgotPasswordForm currentTab={currentTab} setCurrentTab={setCurrentTab} setCurrentStep={setCurrentStep} />
+        <ForgotPasswordForm currentTab={currentTab} />
       </div>
     </section>
   );

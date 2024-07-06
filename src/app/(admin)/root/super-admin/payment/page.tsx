@@ -3,14 +3,14 @@ import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 
 const pageHeader = {
-  title: 'Manage Billings',
+  title: 'Manage Payments',
   breadcrumb: [
     {
       href: routes.retailer.dashboard,
       name: 'Dashboard',
     },
     {
-      name: 'Billings',
+      name: 'Payments',
     },
   ],
 };

@@ -3,26 +3,18 @@
 import ChangePasswordModal from '@/components/changePasswordModal/ChangePasswordModal';
 import UpdateProfileModal from '@/components/updateProfileModal/UpdateProfileModal';
 import { routes } from '@/config/routes';
-import { useGetOwnProfileQuery } from '@/features/auth/authApi';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
-import { signOut, useSession } from 'next-auth/react';
+import { countDaysLeft } from '@/utils';
+import _ from 'lodash';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { GiSandsOfTime } from 'react-icons/gi';
+import { IoDiamondOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Button, Popover, Text, Title } from 'rizzui';
-
-const menuItems = [
-  {
-    name: 'My Profile',
-    href: '#',
-  },
-  {
-    name: 'Change Password',
-    // href: '#',
-  },
-];
+import { Button, Popover, Title } from 'rizzui';
 
 function DropdownMenu({
   setOpen,
@@ -36,8 +28,6 @@ function DropdownMenu({
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user, role } = useSelector((state: RootState) => state.authSlice);
-  const { data: session } = useSession();
-  const { data: profileData, isSuccess, isLoading } = useGetOwnProfileQuery(null);
 
   // Handle Logout Response
   const handleLogout = async () => {
@@ -51,26 +41,31 @@ function DropdownMenu({
     replace(role === 'super_admin' ? routes.superAdmin.login : routes.retailer.login);
   };
 
-  let fullName = user?.firstName + ' ' + user?.lastName;
-
   return (
     <div className="w-64 text-left rtl:text-right">
-      <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
-        <Avatar
-          src={
-            user?.image
-              ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
-              : 'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp'
-          }
-          name={fullName ?? ''}
+      <div className="flex flex-col items-center justify-center gap-y-4 border-b border-gray-300 p-6">
+        <img
+          src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+          color="danger"
+          className="h-20 w-20 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+          alt="brand"
         />
-        <div className="ms-3">
-          <Title as="h6" className="font-semibold">
-            {fullName ?? ''}
-          </Title>
-          <Text className="text-gray-600">{user?.email ?? ''}</Text>
-        </div>
+        <Title as="h5" className="break-all text-center font-bold">
+          {user?.storeName && user?.storeName.length > 20 ? user?.storeName.slice(0, 20) + '...' : user?.storeName}
+        </Title>
       </div>
+      {user?.plan && (
+        <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
+          <div className="flex">
+            <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">Plan : </p>
+            <span className="pl-3 font-medium">{_.capitalize(user?.plan)}</span>
+          </div>
+          <div className="flex">
+            <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">Expire : </p>
+            <span className="pl-3 font-medium text-danger">{countDaysLeft(user?.planValidAt)} days left</span>
+          </div>
+        </div>
+      )}
       <div className="grid px-3.5 py-3.5 font-medium text-gray-700">
         {role === 'retailer' && (
           <Link
@@ -104,7 +99,7 @@ function DropdownMenu({
       </div>
       <div className="border-t border-gray-300 px-6 pb-6 pt-5">
         <Button
-          className="h-auto w-full justify-start p-0 font-medium text-gray-700 outline-none focus-within:text-gray-600 hover:text-gray-900 focus-visible:ring-0"
+          className="h-auto w-full justify-start p-0 font-medium text-danger outline-none focus-within:text-gray-600 hover:text-gray-900 focus-visible:ring-0"
           variant="text"
           onClick={handleLogout}
         >
@@ -115,31 +110,21 @@ function DropdownMenu({
   );
 }
 
-export default function ProfileMenu({ buttonClassName, avatarClassName }: { buttonClassName?: string; avatarClassName?: string }) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function ProfileMenu() {
   const [changePasswordModalState, setChangePasswordModalState] = useState(false);
   const [updateProfileModalState, setUpdateProfileModalState] = useState(false);
-  const pathname = usePathname();
   const { user } = useSelector((state: RootState) => state.authSlice);
-  const { data: profileData, isSuccess, isLoading } = useGetOwnProfileQuery(null);
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
 
   return (
     <>
       <Popover enableOverlay placement="bottom-start">
         <Popover.Trigger>
-          <div className="w-12 cursor-pointer">
-            <Avatar
-              name="Jane Doe"
-              src={
-                user?.image
-                  ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
-                  : 'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp'
-              }
-              size="lg"
+          <div className="cursor-pointer">
+            <img
+              src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+              color="danger"
+              className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+              alt="brand"
             />
           </div>
         </Popover.Trigger>

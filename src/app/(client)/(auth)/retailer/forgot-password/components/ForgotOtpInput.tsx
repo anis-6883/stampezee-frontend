@@ -1,5 +1,5 @@
-// import { useResendOtpMutation, useVerifyForgetPasswordOtpMutation } from '@/features/auth/authApi';
 import Button from '@/components/Formik/Button';
+import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerForgetResendOtpMutation, useRetailerVerifyForgetPasswordOtpMutation } from '@/features/auth/authApi';
 import { ErrorResponse, isFetchBaseQueryError } from '@/utils/check-base-query-error';
@@ -112,7 +112,7 @@ export default function ForgetOtpInput({
       </div>
       <form onSubmit={otpSubmitHandler}>
         <div>
-          <PinCode length={6} setValue={(input) => setOtp(input)} />
+          <PinCode length={6} setValue={(input) => setOtp(input)} type="number" />
         </div>
         {otpValidMsg && <p className="text-error mt-4 px-1 text-center font-medium text-danger">{otpValidMsg}</p>}
         <div className="mt-10 grid grid-cols-12 items-center">
@@ -120,7 +120,7 @@ export default function ForgetOtpInput({
             <p className="flex select-none items-center font-medium">
               Didn{"'"}t get any otp yet?{' '}
               <span
-                className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-primary`}
+                className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-danger`}
                 onClick={handleResendOtp}
               >
                 Resend OTP
@@ -130,11 +130,8 @@ export default function ForgetOtpInput({
           </div>
         </div>
         <div className="card-actions mt-5 justify-end">
-          {/* <button type="submit" className="btn btn-primary w-full" disabled={otpSubmitting}>
-            Next
-            {otpSubmitting && <PiSpinnerLight className="animate-spin text-base" />}
-          </button> */}
           <Button
+            color="danger"
             className="w-full"
             type="submit"
             text="Next"
@@ -144,8 +141,8 @@ export default function ForgetOtpInput({
         </div>
       </form>
       <div className="mt-5 flex select-none items-center justify-center">
-        <Link href="/" className="flex items-center transition-all duration-150 ease-in hover:text-primary">
-          <HiOutlineArrowSmLeft className="mr-3 text-xl" /> Go to Home
+        <Link href={routes.publicRoutes.retailerLogin} className="flex items-center transition-all duration-150 ease-in hover:text-danger">
+          <HiOutlineArrowSmLeft className="mr-3 text-xl" /> <span className="font-semibold">Go to Login</span>
         </Link>
       </div>
     </div>

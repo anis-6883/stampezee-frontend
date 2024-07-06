@@ -3,33 +3,23 @@
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
-import { setAddOns, setSubscription } from '@/features/subscription/subscriptionSlice';
+import { resetAddOns, setAddOns, setSubscription } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn, Subscription } from '@/types';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Plans = () => {
+  const dispatch = useDispatch();
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
   const { subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
-
-  const dispatch = useDispatch();
-  const router = useRouter();
-
-  const { user } = useSelector(
-    (state: RootState) => ({
-      user: state.authSlice.user,
-    }),
-    shallowEqual
-  );
 
   useEffect(() => {
     if (session?.user?.takeFreeTrial) {
@@ -41,10 +31,12 @@ export const Plans = () => {
       });
       dispatch(setSubscription(pursedSubscription));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session?.user?.takeFreeTrial]);
+  }, [data, dispatch, session]);
 
   const handleSubscription = (plan: Subscription) => {
+    if (plan.slug === 'trial') {
+      dispatch(resetAddOns());
+    }
     dispatch(setSubscription(plan));
   };
 
@@ -66,7 +58,6 @@ export const Plans = () => {
   }
 
   let blockedSubscriptions = [];
-
   if (session?.user?.takeFreeTrial) {
     blockedSubscriptions = data?.data?.filter((item: Subscription) => {
       if (item?.slug === 'trial') return true;
@@ -80,7 +71,7 @@ export const Plans = () => {
   return (
     <div className="mb-6">
       <div className="rounded-md p-8 shadow-md">
-        <h2 className="mb-4 text-xl font-semibold">Plans</h2>
+        <h2 className="mb-4 text-xl font-semibold">Select Plans</h2>
         <div className="grid-cols mb-3 grid gap-4 lg:grid-cols-4">
           {blockedSubscriptions?.map((plan: Subscription) => (
             <div key={plan?._id} className={`relative cursor-not-allowed rounded-lg border`}>
@@ -92,24 +83,19 @@ export const Plans = () => {
                   <span className="text-sm font-medium">Active</span>
                 </div>
               )}
-              <div className="relative mx-auto flex h-full w-full max-w-md flex-col rounded-lg border-gray-100 bg-white text-gray-900 opacity-80 dark:bg-gray-800 dark:text-white xl:p-4">
+              <div className="relative mx-auto flex h-full w-full max-w-md flex-col rounded-lg border-gray-100 bg-white opacity-80 dark:bg-gray-800 dark:text-white xl:p-4">
                 <h3 className="mb-4 text-lg font-semibold">{plan.title}</h3>
                 <div className="text-md my-2 flex items-baseline">
                   <span className="mr-1 text-xl  font-bold xl:font-extrabold ">
                     <sup className=" font-medium capitalize">CAD</sup>
                     {plan.price}
                   </span>
-                  <span className=" text-gray-500 dark:text-gray-400">
+                  <span>
                     /{plan?.duration === 30 ? 1 : plan?.duration} {plan?.duration === 30 ? 'mo' : 'Days'}
                   </span>
                 </div>
-                <img
-                  src={plan?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${plan?.image}` : '/images/layer.png'}
-                  alt="icon"
-                  className="mb-5 h-8 w-8"
-                />
 
-                <ul role="list" className="mb-[75px] space-y-4 text-left ">
+                <ul className="mb-[75px] space-y-4 text-left">
                   {plan?.descriptions.map((info: any) => (
                     <li className="flex items-center space-x-3" key={info}>
                       <IoCheckmarkDoneCircle className="text-2xl text-danger" />
@@ -120,34 +106,22 @@ export const Plans = () => {
               </div>
             </div>
           ))}
+
           {subscriptions?.map((plan: any, index: number) => (
             <div
               onClick={() => handleSubscription(plan)}
               key={index}
-              className={`rounded-md  border hover:border-red-600 ${subscription?.slug === plan?.slug ? 'border-red-600 ring-1 ring-red-400' : 'border'}`}
+              className={`rounded-md border hover:border-red-600 ${subscription?.slug === plan?.slug && 'border-red-600 ring-1 ring-red-400'}`}
             >
-              <div className="relative mx-auto flex h-full w-full max-w-md cursor-pointer flex-col rounded-lg border-gray-100 bg-white p-3 text-gray-900 opacity-80 dark:bg-gray-800 dark:text-white xl:p-4">
-                <h3 className="mb-4 text-lg font-semibold">{plan.title}</h3>
-                <div className="text-md my-2 flex items-baseline">
-                  <span className="mr-1 text-xl  font-bold xl:font-extrabold ">
-                    <sup className=" font-medium capitalize">CAD</sup>
-                    {plan.price}
-                  </span>
-                  <span className=" text-gray-500 dark:text-gray-400">
-                    /{plan?.duration === 30 ? 1 : plan?.duration} {plan?.duration === 30 ? 'mo' : 'Days'}
-                  </span>
-                </div>
-                <img
-                  src={plan?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${plan?.image}` : '/images/layer.png'}
-                  alt="icon"
-                  className="mb-5 h-8 w-8"
-                />
-
-                <ul role="list" className="mb-[75px] space-y-4 text-left ">
-                  {plan.descriptions.map((info: any) => (
-                    <li className="flex items-center space-x-3" key={info}>
-                      <IoCheckmarkDoneCircle className="text-2xl text-danger" />
-                      <span>{info}</span>
+              <div className="relative mx-auto flex h-full w-full max-w-md cursor-pointer flex-col rounded-lg border-gray-100 bg-white p-3 xl:p-4">
+                <h3 className="mb-3 text-lg font-semibold">{plan.title}</h3>
+                <p className="mb-2 text-xl font-bold">
+                  {plan.price} CAD/{plan.duration === 30 ? 'Month' : `${plan.duration} Days`}
+                </p>
+                <ul>
+                  {plan.descriptions.map((info: string, idx: number) => (
+                    <li className="flex items-center space-x-3" key={idx}>
+                      <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
                     </li>
                   ))}
                 </ul>
@@ -155,8 +129,10 @@ export const Plans = () => {
             </div>
           ))}
         </div>
+
         <hr className="my-6" />
-        <h2 className="text-xl font-semibold">Add-Ons</h2>
+
+        <h2 className="text-xl font-semibold">Select Add-Ons</h2>
         <div className="grid-cols mt-3 grid gap-4 lg:grid-cols-4">
           {addons?.map((addon: any, index: any) => (
             <div key={addon?._id}>
@@ -164,7 +140,7 @@ export const Plans = () => {
                 <div onClick={() => handleAddOnSelect(addon)} key={index}>
                   <div
                     className={`relative cursor-pointer rounded-lg border p-4  hover:border-red-600 ${
-                      addOns?.find((item: any) => item._id === addon._id)?.isAddOnsSelect ? 'border-red-600 ring-1 ring-blue-400' : 'border'
+                      addOns?.find((item: any) => item._id === addon._id)?.isAddOnsSelect ? 'border-red-600 ring-2 ring-danger' : 'border'
                     }`}
                   >
                     <h3 className="mb-4 text-lg font-semibold">{addon.title}</h3>
@@ -173,7 +149,7 @@ export const Plans = () => {
                         <sup className=" font-medium capitalize">CAD</sup>
                         {addon.price}
                       </span>
-                      <span className=" text-gray-500 dark:text-gray-400">
+                      <span>
                         /{addon?.duration === 30 ? 1 : addon?.duration} {addon?.duration === 30 ? 'mo' : 'Days'}
                       </span>
                     </div>
@@ -188,7 +164,7 @@ export const Plans = () => {
                         <sup className=" font-medium capitalize">CAD</sup>
                         {addon.price}
                       </span>
-                      <span className=" text-gray-500 dark:text-gray-400">
+                      <span>
                         /{addon?.duration === 30 ? 1 : addon?.duration} {addon?.duration === 30 ? 'mo' : 'Days'}
                       </span>
                     </div>
@@ -199,9 +175,9 @@ export const Plans = () => {
           ))}
         </div>
         <hr className="my-3" />
-        <div className="flex items-center justify-end gap-2">
+        <div className="mt-10 flex items-center justify-end gap-2">
           <Link href={routes.privateRoutes.checkout}>
-            <Button className="text-white" color="primary" text="Confirm" postIcon={<BsCheck2Circle className="text-base" />} />
+            <Button className="text-white" color="danger" text="Selection Confirm" postIcon={<BsCheck2Circle className="text-base" />} />
           </Link>
         </div>
       </div>

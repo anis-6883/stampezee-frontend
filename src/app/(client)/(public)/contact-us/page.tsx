@@ -1,4 +1,10 @@
-export default function page() {
+import { metaObject } from '@/config/site.config';
+
+export const metadata = {
+  ...metaObject('Contact Us'),
+};
+
+export default function Page() {
   return (
     <div>
       <div className="relative mx-auto w-full">

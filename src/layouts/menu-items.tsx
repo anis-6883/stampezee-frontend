@@ -1,9 +1,9 @@
 import { routes } from '@/config/routes';
-import { BsQuestionCircle, BsShop } from 'react-icons/bs';
+import { BsPatchCheck, BsQuestionCircle, BsShop } from 'react-icons/bs';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
-import { IoDiamondOutline, IoImageOutline } from 'react-icons/io5';
+import { IoDiamondOutline } from 'react-icons/io5';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
-import { LuBarChart3, LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
+import { LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
 import { PiBellRinging, PiCurrencyDollar, PiStamp } from 'react-icons/pi';
 import { RiCoupon4Line } from 'react-icons/ri';
 import { TbUserShield } from 'react-icons/tb';
@@ -16,24 +16,9 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuLayoutDashboard />,
     },
     {
-      name: 'Customers',
-      href: routes.superAdmin.customer,
-      icon: <LuUsers />,
-    },
-    {
       name: 'Retailers',
       href: routes.superAdmin.retailer.home,
       icon: <BsShop />,
-    },
-    {
-      name: 'Stamp Categories',
-      href: routes.superAdmin.stampCategory.home,
-      icon: <LuListChecks />,
-    },
-    {
-      name: 'Default Stamp Images',
-      href: routes.superAdmin.stampImage.home,
-      icon: <PiStamp />,
     },
     {
       name: 'Subscriptions',
@@ -46,14 +31,29 @@ export const menuItems: { [key: string]: any } = {
       icon: <RiCoupon4Line />,
     },
     {
+      name: 'Payments',
+      href: routes.superAdmin.payment,
+      icon: <PiCurrencyDollar />,
+    },
+    {
+      name: 'Customers',
+      href: routes.superAdmin.customer,
+      icon: <LuUsers />,
+    },
+    {
+      name: 'Stamp Categories',
+      href: routes.superAdmin.stampCategory.home,
+      icon: <LuListChecks />,
+    },
+    {
+      name: 'Default Stamp Images',
+      href: routes.superAdmin.stampImage.home,
+      icon: <BsPatchCheck />,
+    },
+    {
       name: 'FAQs',
       href: routes.superAdmin.faq.home,
       icon: <BsQuestionCircle />,
-    },
-    {
-      name: 'Billings',
-      href: routes.superAdmin.billing,
-      icon: <PiCurrencyDollar />,
     },
     {
       name: 'General Settings',
@@ -65,15 +65,20 @@ export const menuItems: { [key: string]: any } = {
     {
       name: 'Dashboard',
       href: routes.retailer.dashboard,
-      icon: <LuBarChart3 />,
+      icon: <LuLayoutDashboard />,
     },
     {
-      name: 'Customers',
-      href: routes.retailer.customer.home,
-      icon: <LuUsers />,
+      name: 'Plans & Billings',
+      href: routes.retailer.membershipPlan,
+      icon: <IoDiamondOutline />,
     },
     {
-      name: 'Sub-Admins',
+      name: 'Branches',
+      href: routes.retailer.branch.home,
+      icon: <LiaMapMarkedAltSolid />,
+    },
+    {
+      name: 'Sub-Admins (Team)',
       href: routes.retailer.sub_admin.home,
       icon: <TbUserShield />,
     },
@@ -83,24 +88,19 @@ export const menuItems: { [key: string]: any } = {
       icon: <PiStamp />,
     },
     {
+      name: 'Customers',
+      href: routes.retailer.customer.home,
+      icon: <LuUsers />,
+    },
+    {
       name: 'Custom Stamp Images',
       href: routes.retailer.stampImage.home,
-      icon: <IoImageOutline />,
+      icon: <BsPatchCheck />,
     },
     {
       name: 'Push Notifications',
       href: routes.retailer.notification.home,
       icon: <PiBellRinging />,
-    },
-    {
-      name: 'Membership Plans',
-      href: routes.retailer.membershipPlan,
-      icon: <IoDiamondOutline />,
-    },
-    {
-      name: 'Branches',
-      href: routes.retailer.branch.home,
-      icon: <LiaMapMarkedAltSolid />,
     },
     {
       name: 'Manage Profile',

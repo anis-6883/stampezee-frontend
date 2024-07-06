@@ -1,7 +1,6 @@
 'use client';
 
 import { routes } from '@/config/routes';
-import { useGetOwnProfileQuery } from '@/features/auth/authApi';
 import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
 import { countDaysLeft } from '@/utils';
@@ -11,6 +10,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
 import { GiSandsOfTime } from 'react-icons/gi';
+import { IoDiamondOutline } from 'react-icons/io5';
 import { PiCaretDownBold } from 'react-icons/pi';
 import { SlLock } from 'react-icons/sl';
 import { useSelector } from 'react-redux';
@@ -34,8 +34,6 @@ export default function Sidebar({ className }: { className?: string }) {
   const role = useSelector((state: RootState) => state.authSlice.role);
   const user = useSelector((state: RootState) => state.authSlice.user);
 
-  const { data: profileData, isSuccess, isLoading } = useGetOwnProfileQuery(null);
-
   let fullName = user?.firstName + ' ' + user?.lastName;
 
   if (fullName.length >= 18) {
@@ -55,45 +53,36 @@ export default function Sidebar({ className }: { className?: string }) {
         </Link>
       </div>
 
-      <div className="mx-auto mt-4 flex w-[90%] items-center  gap-4 rounded-lg bg-[#F4F6F8] p-3">
+      <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
         <img
-          className="h-14 w-14 rounded-full p-2"
-          src={
-            user?.image
-              ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
-              : 'https://cdn.pixabay.com/photo/2020/04/12/10/57/store-5033746_640.png'
-          }
-          alt="Store Image"
+          src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+          color="danger"
+          className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+          alt="brand"
         />
-        <div>
-          <h3 className="text-sm font-bold">{fullName ? fullName : 'Blessy J'}</h3>
-          <span className="tex-sm text-gray-500">{_.startCase(_.toLower(role === 'super_admin' ? 'Super Admin' : role))}</span>
-        </div>
+        <Title as="h6" className="break-all text-center font-bold">
+          {user?.storeName && user?.storeName.length > 20 ? user?.storeName.slice(0, 20) + '...' : user?.storeName}
+        </Title>
       </div>
 
       {session?.user?.plan && (
-        <>
-          <div className="mx-auto mt-4 flex w-[90%] items-center gap-4  rounded-lg bg-[#F4F6F8] p-3 ">
-            <div className="flex items-center">
-              <p className="pl-3 text-center font-medium">Plan : {_.capitalize(session?.user?.plan)}</p>
-            </div>
+        <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
+          <div className="flex">
+            <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">Plan : </p>
+            <span className="pl-3 font-medium">{_.capitalize(session?.user?.plan)}</span>
           </div>
-          <div className="mx-auto mt-4 flex w-[90%] items-center  gap-4 rounded-lg bg-[#F4F6F8] p-3">
-            <div className="flex items-center justify-center">
-              <GiSandsOfTime className="text-lg" />
-              <span className="pl-3 font-medium">{countDaysLeft(session?.user?.planValidAt)} days left</span>
-            </div>
+          <div className="flex">
+            <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">Expire : </p>
+            <span className="pl-3 font-medium text-danger">{countDaysLeft(session?.user?.planValidAt)} days left</span>
           </div>
-        </>
+        </div>
       )}
 
       <SimpleBar className="h-[calc(100%-80px)]">
         <div className="mt-4 pb-3 3xl:mt-6">
           {menuItems[role]?.map((item: any, index: number) => {
-            const isActive =
-              item.name === 'Dashboard'
-                ? pathname === '/root/retailer/dashboard'
-                : pathname === (item?.href as string) || pathname.includes(item?.href as string);
+            // const isActive = item.name === 'Dashboard'? pathname === '/root/retailer/dashboard' : pathname === (item?.href as string) || pathname.includes(item?.href as string);
+            const isActive = pathname === (item?.href as string) || pathname.includes(item?.href as string);
             const pathnameExistInDropdowns: any = item?.dropdownItems?.filter((dropdownItem: any) => dropdownItem.href === pathname);
             const isDropdownOpen = Boolean(pathnameExistInDropdowns?.length);
 
@@ -174,7 +163,7 @@ export default function Sidebar({ className }: { className?: string }) {
                             ? 'pointer-events-none cursor-not-allowed bg-gray-100'
                             : '',
                           isActive
-                            ? 'before:top-2/5 2xl:before:-start-5 text-primary before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-primary'
+                            ? 'before:top-2/5 2xl:before:-start-5 text-danger before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-danger'
                             : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-700/90'
                         )}
                       >
@@ -183,7 +172,7 @@ export default function Sidebar({ className }: { className?: string }) {
                             <span
                               className={cn(
                                 'me-2 inline-flex h-5 w-5 items-center justify-center rounded-md [&>svg]:h-[20px] [&>svg]:w-[20px]',
-                                isActive ? 'text-primary' : 'text-gray-800 dark:text-gray-500 dark:group-hover:text-gray-700'
+                                isActive ? 'text-danger' : 'text-gray-800 dark:text-gray-500 dark:group-hover:text-gray-700'
                               )}
                             >
                               {item?.icon}

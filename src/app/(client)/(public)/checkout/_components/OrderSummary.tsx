@@ -13,11 +13,14 @@ import { Form, Formik } from 'formik';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { ImBin } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginAlert from './LoginAlert';
 
 export default function OrderSummary() {
+  const { push } = useRouter();
   const dispatch = useDispatch();
   const { data: session, update } = useSession();
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
@@ -25,17 +28,16 @@ export default function OrderSummary() {
   const { subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
 
   const [modalState, setModalState] = useState(false);
-  const { isLoggedIn, user, accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { isLoggedIn, user } = useSelector((state: RootState) => state.authSlice);
 
   const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
-  const { push } = useRouter();
-  const [checkOut, { isSuccess: checkOutSuccess, error: checkOutError, data: checkOutResponse, isLoading: checkOutLoading }] =
-    useCreateCheckOutMutation();
+  const [checkOut, { data: checkOutResponse, isLoading: checkOutLoading }] = useCreateCheckOutMutation();
   const { data: profile, isSuccess: profileSuccess, refetch } = useRetailerGetProfileQuery(null);
 
   useEffect(() => {
     if (checkOutResponse) {
       if (subscription?.slug === 'trial') {
+        toast.success('Free trial activated!');
         refetch();
         if (profileSuccess) {
           console.log('profile?.data', profile?.data);
@@ -88,10 +90,10 @@ export default function OrderSummary() {
       <div className="rounded-lg border p-4">
         <h2 className="pb-2 text-lg font-medium">Coupon</h2>
         <hr className=" text-lg font-bold" />
-        <div className="mb-10">
+        <div className="my-5">
           <Formik initialValues={{ coupon: '' }} onSubmit={handleCoupon}>
             {() => (
-              <Form className="grid grid-cols-12 items-center justify-between gap-x-2">
+              <Form className="grid grid-cols-12 justify-between gap-x-2">
                 <div className="col-span-7">
                   <InputField label="" placeholder="X1Y2Z3" required={false} name="coupon" />
                 </div>
@@ -99,7 +101,7 @@ export default function OrderSummary() {
                   <Button
                     color="danger"
                     text="Apply"
-                    className="mt-4 w-full"
+                    className="w-full"
                     isSubmitting={isCouponSubmitting}
                     type="submit"
                     postIcon={<BsCheck2Circle className="text-base" />}
@@ -115,22 +117,19 @@ export default function OrderSummary() {
           <span>{subscription?.title}</span>
           <span className="text-red-500">{subscription ? subscription?.price : 0} CAD</span>
         </div>
+
         {addOns?.length > 0 && (
-          <>
-            {/* <h2 className="pb-2 text-lg font-medium">Add-Ons</h2>
-          <hr className="p-2 text-lg font-bold" /> */}
-            <div>
-              {addOns.map((addOn: AddOn, index: number) => (
-                <div key={index} className="mb-2 grid w-full grid-cols-5">
-                  <span className="col-span-2">{addOn.title}</span>
-                  <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
-                    Remove
-                  </button>
-                  <span className="justify-self-end">{addOn.price} CAD</span>
-                </div>
-              ))}
-            </div>
-          </>
+          <div>
+            {addOns.map((addOn: AddOn, index: number) => (
+              <div key={index} className="mb-2 grid w-full grid-cols-5 items-center gap-x-4">
+                <span className="col-span-2">{addOn.title}</span>
+                <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
+                  <ImBin />
+                </button>
+                <span className="justify-self-end">{addOn.price} CAD</span>
+              </div>
+            ))}
+          </div>
         )}
 
         <div className="mb-2 flex justify-between">

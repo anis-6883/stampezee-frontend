@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { IoAlertCircle } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
 import ReactSelect, { OnChangeValue } from 'react-select';
 import { Checkbox, FieldError } from 'rizzui';
@@ -95,12 +96,14 @@ export default function RegisterForm() {
               <Form className="grid gap-4">
                 <InputField name="storeName" label="Store Name" placeholder="Burger King" />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <InputField name="firstName" label="First Name" placeholder="John" />
-                  <InputField name="lastName" label="Last Name" placeholder="Doe" required={false} />
+                  <InputField name="firstName" label="First Name (Owner)" placeholder="John" />
+                  <InputField name="lastName" label="Last Name (Owner)" placeholder="Doe" required={false} />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <PhoneNumber
+                    enableSearch={true}
+                    name="phone"
                     label={
                       <p>
                         Phone Number <span className="text-red-600">*</span>
@@ -115,6 +118,7 @@ export default function RegisterForm() {
                     errorClassName="text-red-600 text-xs mt-1"
                     inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border'} !h-[43px] !ring-0`}
                     labelClassName="!mb-1"
+                    helperClassName="text-danger"
                   />
                   <div className="flex flex-col gap-1">
                     <div>
@@ -151,38 +155,44 @@ export default function RegisterForm() {
                   <InputPassword name="password" label="Password" placeholder="********" />
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <Checkbox
-                    onChange={() => {
-                      values.isAgree === 'yes' ? setFieldValue('isAgree', '') : setFieldValue('isAgree', 'yes');
-                    }}
-                    inputClassName={`!ring-0 ${errors.isAgree && touched.isAgree && '!border-red-500 !ring-0'}`}
-                    size="sm"
-                    iconClassName="top-0"
-                    onBlur={() => setFieldTouched('isAgree', true)}
-                  />{' '}
-                  <p className="text-xs font-medium">
-                    I Agree with the{' '}
-                    <Link href="/retailer/login" className="border-b-2">
-                      Terms of Use
-                    </Link>{' '}
-                    and{' '}
-                    <Link href="/retailer/login" className="border-b-2">
-                      Privacy Policy
-                    </Link>
-                  </p>
+                <div className="flex flex-col gap-y-1">
+                  <div className="flex items-center gap-3">
+                    <Checkbox
+                      onChange={() => {
+                        values.isAgree === 'yes' ? setFieldValue('isAgree', '') : setFieldValue('isAgree', 'yes');
+                      }}
+                      inputClassName={`!ring-0 checked:!bg-danger checked:!border-danger ${errors.isAgree && touched.isAgree && '!border-red-500 !ring-0'}`}
+                      size="sm"
+                      iconClassName="top-0"
+                      onBlur={() => setFieldTouched('isAgree', true)}
+                    />{' '}
+                    <p className="text-xs font-medium">
+                      I Agree with the{' '}
+                      <Link href="/retailer/login" className="border-b-2">
+                        Terms of Use
+                      </Link>{' '}
+                      and{' '}
+                      <Link href="/retailer/login" className="border-b-2">
+                        Privacy Policy
+                      </Link>
+                    </p>
+                  </div>
+                  {errors.isAgree && touched.isAgree && (
+                    <span className="flex items-center gap-x-1 text-danger">
+                      <IoAlertCircle className="text-lg" />
+                      <span>Required!</span>
+                    </span>
+                  )}
                 </div>
 
                 <p className="flex flex-col text-end text-xs font-semibold">
                   <span>
                     Fields marked with <span className="text-red-600">*</span> are mandatory!
                   </span>
-                  <span>
-                    Password must be at least <span className="text-red-600">8 characters</span> long!
-                  </span>
                 </p>
 
                 <Button
+                  color="danger"
                   className="w-full"
                   type="submit"
                   text="Submit"

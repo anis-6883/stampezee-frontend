@@ -1,15 +1,10 @@
 import { routes } from '@/config/routes';
-import { metaObject } from '@/config/site.config';
 import 'aos/dist/aos.css';
 import Link from 'next/link';
 import { HeroCard } from './components/HeroCard';
 import Image from './components/Image';
 import Testimonial from './components/Testimonial';
 import WorksCard from './components/WorksCard';
-
-export const metadata = {
-  ...metaObject('Home Page'),
-};
 
 export default async function Page() {
   return (

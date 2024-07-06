@@ -1,7 +1,7 @@
 'use client';
 
 import { RootState } from '@/features/store';
-import { setSubscription } from '@/features/subscription/subscriptionSlice';
+import { resetAddOns, setSubscription } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
 import { useSession } from 'next-auth/react';
@@ -14,8 +14,10 @@ export default function SubscriptionList() {
   const dispatch = useDispatch();
   const { data: session }: any = useSession();
   const { subscription } = useSelector((state: RootState) => state.subscriptionSlice);
-  const { data, isLoading } = useGetSubscriptionQuery(undefined);
+  const { data } = useGetSubscriptionQuery(undefined);
+
   let subscriptions = [];
+
   if (session?.user?.takeFreeTrial) {
     const newSubscriptions = data?.data?.filter((item: Subscription) => item.type === 'subscription');
 
@@ -27,6 +29,7 @@ export default function SubscriptionList() {
   } else {
     subscriptions = data?.data?.filter((item: Subscription) => item.type === 'subscription');
   }
+
   let blockedSubscriptions = [];
 
   if (session?.user?.takeFreeTrial) {
@@ -38,6 +41,9 @@ export default function SubscriptionList() {
   }
 
   const handleSubscription = (plan: Subscription) => {
+    if (plan.slug === 'trial') {
+      dispatch(resetAddOns());
+    }
     dispatch(setSubscription(plan));
   };
 
@@ -51,8 +57,7 @@ export default function SubscriptionList() {
       });
       dispatch(setSubscription(pursedSubscription));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session?.user?.takeFreeTrial]);
+  }, [data, dispatch, session]);
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -79,6 +84,7 @@ export default function SubscriptionList() {
           </ul>
         </div>
       ))}
+
       {subscriptions?.map((item: Subscription, index: number) => (
         <div
           onClick={() => handleSubscription(item)}

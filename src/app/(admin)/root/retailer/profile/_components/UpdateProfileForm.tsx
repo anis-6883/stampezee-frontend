@@ -114,12 +114,13 @@ export default function UpdateProfileForm() {
                 />
                 <InputField name="storeName" label="Store Name" placeholder="Burger King" />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <InputField name="firstName" label="First Name" placeholder="John" />
-                  <InputField name="lastName" label="Last Name" placeholder="Doe" required={false} />
+                  <InputField name="firstName" label="First Name (Owner)" placeholder="John" />
+                  <InputField name="lastName" label="Last Name (Owner)" placeholder="Doe" required={false} />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <PhoneNumber
+                    name="phone"
                     label={
                       <p>
                         Phone Number <span className="text-red-600">*</span>

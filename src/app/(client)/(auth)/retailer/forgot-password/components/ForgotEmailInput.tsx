@@ -1,5 +1,6 @@
 import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
+import { routes } from '@/config/routes';
 import { useRetailerForgotPasswordMutation } from '@/features/auth/authApi';
 import { setAccessToken } from '@/features/auth/authSlice';
 import { ErrorResponse, isFetchBaseQueryError } from '@/utils/check-base-query-error';
@@ -78,6 +79,7 @@ export default function ForgotEmailInput({
                 Fields marked with <span className="text-red-600">*</span> are mandatory!
               </p>
               <Button
+                color="danger"
                 className="w-full"
                 type="submit"
                 text="Next"
@@ -85,8 +87,11 @@ export default function ForgotEmailInput({
                 isSubmitting={submitting}
               />
               <div className="mt-5 flex select-none items-center justify-center py-3">
-                <Link href="/" className="flex items-center transition-all duration-150 ease-in hover:text-primary">
-                  <HiOutlineArrowSmLeft className="mr-3 text-xl" /> Go to Home
+                <Link
+                  href={routes.publicRoutes.retailerLogin}
+                  className="flex items-center transition-all duration-150 ease-in hover:text-danger"
+                >
+                  <HiOutlineArrowSmLeft className="mr-3 text-xl" /> <span className="font-semibold">Go to Login</span>
                 </Link>
               </div>
             </div>

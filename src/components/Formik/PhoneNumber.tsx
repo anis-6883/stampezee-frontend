@@ -1,5 +1,6 @@
-import { useFormikContext } from 'formik';
+import { Field, useFormikContext } from 'formik';
 import React from 'react';
+import { IoAlertCircle } from 'react-icons/io5';
 import type { PhoneInputProps } from 'react-phone-input-2';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -96,6 +97,7 @@ export interface PhoneNumberProps
   helperText?: React.ReactNode;
   className?: string;
   touched?: boolean;
+  name: string;
 }
 
 const PhoneNumber = ({
@@ -104,8 +106,6 @@ const PhoneNumber = ({
   variant = 'outline',
   label,
   helperText,
-  error,
-  touched,
   clearable,
   onClear,
   enableSearch,
@@ -117,60 +117,66 @@ const PhoneNumber = ({
   helperClassName,
   errorClassName,
   className,
+  name,
   ...props
 }: PhoneNumberProps) => {
-  const { setFieldTouched, values }: { setFieldTouched: any; values: any } = useFormikContext();
+  const { setFieldTouched, values }: any = useFormikContext();
 
   return (
-    <div className={cn('rizzui-phone-number', className)}>
-      {label && <label className={cn('block font-medium', labelStyles.size[size], labelClassName)}>{label}</label>}
+    <Field name={name}>
+      {({ field, meta }: { field: any; meta: any }) => (
+        <div className={cn('rizzui-phone-number', className)}>
+          {label && <label className={cn('block font-medium', labelStyles.size[size], labelClassName)}>{label}</label>}
 
-      <div className="group/phone-number relative">
-        <PhoneInput
-          inputClass={cn(
-            inputStyles.base,
-            inputStyles.size[size],
-            inputStyles.rounded[rounded],
-            inputStyles.variant[variant],
-            error && inputStyles.error,
-            inputClassName
+          <div className="group/phone-number relative">
+            <PhoneInput
+              inputClass={cn(
+                inputStyles.base,
+                inputStyles.size[size],
+                inputStyles.rounded[rounded],
+                inputStyles.variant[variant],
+                inputClassName
+              )}
+              buttonClass={cn(
+                buttonStyles.base,
+                buttonStyles.size[size],
+                // @ts-ignore
+                props.inputProps?.disabled && 'pointer-events-none',
+                // @ts-ignore
+                props.inputProps?.readOnly && 'pointer-events-none',
+                buttonClassName
+              )}
+              dropdownClass={cn(dropdownStyles.base, dropdownStyles.rounded[rounded], dropdownStyles.highlightListColor, dropdownClassName)}
+              searchClass={cn(dropdownStyles.searchBox, searchClassName)}
+              enableSearch={enableSearch}
+              disableSearchIcon
+              {...props}
+              onBlur={() => {
+                setFieldTouched('phone', true);
+              }}
+              value={`${values?.dialCode}${values?.phone}`}
+              // country={'+880'}
+            />
+
+            {clearable && (
+              <FieldClearButton size={size} onClick={onClear} className={cn(clearIconStyles.base, clearIconStyles.position[size])} />
+            )}
+          </div>
+
+          {meta.error && meta.touched && (
+            <FieldHelperText size={size} className={helperClassName}>
+              <span className="flex items-center gap-x-1">
+                <IoAlertCircle className="text-lg" />
+                <span>{meta.error}</span>
+              </span>
+            </FieldHelperText>
           )}
-          buttonClass={cn(
-            buttonStyles.base,
-            buttonStyles.size[size],
-            // @ts-ignore
-            props.inputProps?.disabled && 'pointer-events-none',
-            // @ts-ignore
-            props.inputProps?.readOnly && 'pointer-events-none',
-            buttonClassName
-          )}
-          dropdownClass={cn(dropdownStyles.base, dropdownStyles.rounded[rounded], dropdownStyles.highlightListColor, dropdownClassName)}
-          searchClass={cn(dropdownStyles.searchBox, searchClassName)}
-          enableSearch={enableSearch}
-          disableSearchIcon
-          {...props}
-          onBlur={() => {
-            setFieldTouched('phone', true);
-          }}
-          value={`${values?.dialCode}${values?.phone}`}
-          // country={'+880'}
-        />
-
-        {clearable && (
-          <FieldClearButton size={size} onClick={onClear} className={cn(clearIconStyles.base, clearIconStyles.position[size])} />
-        )}
-      </div>
-
-      {!error && helperText && (
-        <FieldHelperText size={size} className={helperClassName}>
-          {helperText}
-        </FieldHelperText>
+        </div>
       )}
-
-      {/* {touched && error && <FieldError size={size} error={error} className={errorClassName} />} */}
-    </div>
+    </Field>
   );
 };
 
 PhoneNumber.displayName = 'PhoneNumber';
+
 export default PhoneNumber;

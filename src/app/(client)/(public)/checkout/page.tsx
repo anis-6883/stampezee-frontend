@@ -1,6 +1,11 @@
+import { metaObject } from '@/config/site.config';
 import AddOnsList from './_components/AddOnsList';
 import OrderSummary from './_components/OrderSummary';
 import SubscriptionList from './_components/SubscriptionList';
+
+export const metadata = {
+  ...metaObject('Checkout'),
+};
 
 export default function Page() {
   return (

@@ -8,10 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function AddOnsList() {
   const dispatch = useDispatch();
-
   const { subscription, addOns: addOnsData } = useSelector((state: RootState) => state.subscriptionSlice);
-
-  const { data, isLoading } = useGetSubscriptionQuery(undefined);
+  const { data } = useGetSubscriptionQuery(undefined);
   const addOns = data?.data?.filter((item: Subscription) => item.type === 'addon');
 
   const handleAddOnSelect = (addOn: AddOn) => {
@@ -26,7 +24,7 @@ export default function AddOnsList() {
             <div
               onClick={() => handleAddOnSelect(addOn)}
               className={`relative cursor-pointer rounded-lg border p-4 ${
-                addOnsData?.find((item: any) => item._id === addOn._id)?.isAddOnsSelect ? 'border-red-600 ring-1 ring-red-400' : 'border'
+                addOnsData?.find((item: any) => item._id === addOn._id)?.isAddOnsSelect ? '!border-danger !ring-1 ring-danger' : 'border'
               } hover:border-red-600`}
             >
               <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>

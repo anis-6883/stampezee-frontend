@@ -12,15 +12,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { HiOutlineArrowSmLeft } from 'react-icons/hi';
 import * as Yup from 'yup';
 
-export default function ForgotPasswordForm({
-  currentTab,
-  setCurrentStep,
-  setCurrentTab,
-}: {
-  currentTab: number;
-  setCurrentStep: any;
-  setCurrentTab: any;
-}) {
+export default function ForgotPasswordForm({ currentTab }: { currentTab: number }) {
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
@@ -35,8 +27,8 @@ export default function ForgotPasswordForm({
   };
 
   const loginSchema = Yup.object().shape({
-    password: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters'),
-    confirmPassword: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters'),
+    password: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters!'),
+    confirmPassword: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters!'),
   });
 
   // Handle Forget Password Response
@@ -86,11 +78,9 @@ export default function ForgotPasswordForm({
                 <span className="text-end text-xs font-semibold">
                   Fields marked with <span className="text-red-600">*</span> are mandatory!
                 </span>
-                <span>
-                  Password must be at least <span className="text-red-600">8 characters</span> long!
-                </span>
               </p>
               <Button
+                color="danger"
                 className="w-full"
                 type="submit"
                 text="Next"
@@ -98,8 +88,11 @@ export default function ForgotPasswordForm({
                 isSubmitting={submitting}
               />
               <div className="mt-5 flex select-none items-center justify-center p-3">
-                <Link href="/" className="flex items-center transition-all duration-150 ease-in hover:text-primary">
-                  <HiOutlineArrowSmLeft className="mr-3 text-xl" /> Go to Home
+                <Link
+                  href={routes.publicRoutes.retailerLogin}
+                  className="flex items-center transition-all duration-150 ease-in hover:text-danger"
+                >
+                  <HiOutlineArrowSmLeft className="mr-3 text-xl" /> <span className="font-semibold">Go to Login</span>
                 </Link>
               </div>
             </div>

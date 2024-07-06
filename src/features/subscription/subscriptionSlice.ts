@@ -33,11 +33,14 @@ const subscriptionSlice = createSlice({
         state.addOns.push({ ...action.payload, isAddOnsSelect: true });
       }
     },
+    resetAddOns: (state) => {
+      state.addOns = [];
+    },
     removeAddOns: (state, action) => {
       state.addOns = state.addOns.filter((item: any) => item._id !== action.payload);
     },
   },
 });
 
-export const { setSubscription, setAddOns, removeAddOns } = subscriptionSlice.actions;
+export const { setSubscription, setAddOns, removeAddOns, resetAddOns } = subscriptionSlice.actions;
 export default subscriptionSlice;

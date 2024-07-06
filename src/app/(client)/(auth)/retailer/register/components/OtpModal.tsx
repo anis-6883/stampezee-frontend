@@ -44,7 +44,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
           toast.error(callback?.error);
         }
         if (callback?.ok && !callback?.error) {
-          toast.success('OTP verified successfully!');
+          toast.success(verifyResponse?.message || 'Otp verified & Login successfully!');
           if (verifyResponse?.data?.role === ROLE.RETAILER) {
             replace(routes.retailer.dashboard);
           }
@@ -105,7 +105,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
         <div className="grid gap-x-5 gap-y-6">
           <form onSubmit={otpSubmitHandler}>
             <div>
-              <PinCode inputClassName="text-lg" length={6} setValue={(input) => setOtp(input)} />
+              <PinCode inputClassName="text-lg" length={6} setValue={(input) => setOtp(input)} type="number" />
             </div>
             {otpValidMsg && <p className="mt-4 px-1 text-center font-medium text-danger">{otpValidMsg}</p>}
             <div className="mt-10 grid grid-cols-12 items-center">
@@ -113,7 +113,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
                 <p className="flex select-none items-center text-sm font-medium">
                   Didn{"'"}t get any otp yet?{' '}
                   <span
-                    className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-primary`}
+                    className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-danger`}
                     onClick={handleResendOtp}
                   >
                     Resend OTP
@@ -126,6 +126,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
 
             <div className="mt-10">
               <Button
+                color="danger"
                 className="w-full"
                 type="submit"
                 text="Submit"

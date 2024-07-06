@@ -3,7 +3,7 @@
 import { useGetAllFaqsQuery } from '@/features/faqs/faqsApi';
 import { useState } from 'react';
 
-export default function Accordion({}: { faqData: any }) {
+export default function Accordion() {
   const [status, setStatus] = useState<string>('');
   const { data: faqsData, isLoading: faqsLoading } = useGetAllFaqsQuery(undefined);
 

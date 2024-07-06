@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Input, Loader } from 'rizzui';
 
 export default function MapComponent() {
-  const { setFieldValue, errors, touched, values }: any = useFormikContext();
+  const { setFieldValue, values }: any = useFormikContext();
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyA0VpTwpD1F3VWNpyKWT84EQHqTYraMyC4', // Replace with your Google Maps API key
@@ -107,7 +107,7 @@ export default function MapComponent() {
               placeholder="Search for places..."
               ref={autocompleteRef}
               value={values.address}
-              inputClassName={`${meta.touched && meta.error ? '!border-red-500 ring-0' : 'border-gray-200'}`}
+              inputClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
             />
           )}
         </Field>

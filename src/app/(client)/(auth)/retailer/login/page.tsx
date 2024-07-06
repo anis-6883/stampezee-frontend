@@ -20,10 +20,10 @@ export default async function Page() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white text-gray-900 lg:bg-gray-100">
-      <div className="m-0 grid max-w-screen-xl grid-cols-6 rounded-lg bg-white shadow-none sm:m-10 md:grid-cols-12 lg:shadow">
-        <div className="col-span-6 p-10">
-          <Link href="/">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 text-gray-900">
+      <div className="m-10 grid w-full grid-cols-12 rounded-lg bg-white shadow md:max-w-6xl">
+        <div className="col-span-12 p-5 md:col-span-6">
+          <Link href={routes.publicRoutes.home}>
             <img src="/images/logo.png" className="mx-auto w-28" alt="logo" />
           </Link>
 
@@ -32,21 +32,21 @@ export default async function Page() {
 
             <LoginForm />
             <div className="mt-3">
-              <Link href={routes.publicRoutes.retailerForgotPassword} className="text-xs font-semibold">
+              <Link href={routes.publicRoutes.retailerForgotPassword} className="text-xs font-semibold text-danger">
                 Forgot Password?
               </Link>
             </div>
 
             <div className="mt-10 text-center">
               New Retailer?{' '}
-              <Link href={routes.publicRoutes.retailerRegister} className="font-semibold">
+              <Link href={routes.publicRoutes.retailerRegister} className="font-semibold text-danger">
                 Sign Up
               </Link>{' '}
               Here
             </div>
           </div>
         </div>
-        <div className="col-span-6 hidden md:block lg:block">
+        <div className="col-span-12 hidden md:col-span-6 md:block lg:block">
           <div className="flex h-full items-center justify-center">
             <img src="/images/retailer-login.png" className="w-3/4 rounded-r-lg" alt="logo" />
           </div>

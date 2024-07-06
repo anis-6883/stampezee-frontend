@@ -1,9 +1,9 @@
+import Button from '@/components/Formik/Button';
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import Link from 'next/link';
 import { HiPlus } from 'react-icons/hi';
-import Button from '../../../../../components/Formik/Button';
 import BranchTable from './_components/BranchTable';
 
 const pageHeader = {
@@ -27,7 +27,7 @@ export default function Page() {
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
       <div className="mb-5 flex justify-end">
         <Link href={routes.retailer.branch.create}>
-          <Button text="Add New Branch" preIcon={<HiPlus className="text-base" />} />
+          <Button color="danger" text="Add New Branch" preIcon={<HiPlus className="text-base" />} />
         </Link>
       </div>
 

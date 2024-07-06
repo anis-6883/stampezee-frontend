@@ -91,6 +91,7 @@ export default function LoginForm() {
               Fields marked with <span className="text-red-600">*</span> are mandatory!
             </p>
             <Button
+              color="danger"
               className="w-full"
               type="submit"
               text="Submit"

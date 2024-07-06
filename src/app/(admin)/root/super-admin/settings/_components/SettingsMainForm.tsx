@@ -149,7 +149,7 @@ export default function SettingsMainForm() {
             </div>
             <div className="mt-6 flex w-full justify-end">
               <Button
-                color="warning"
+                color="danger"
                 text="Update"
                 type="submit"
                 isSubmitting={isSubmitting}

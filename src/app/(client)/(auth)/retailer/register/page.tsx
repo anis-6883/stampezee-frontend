@@ -21,7 +21,7 @@ export default async function Page() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 text-gray-900">
-      <div className="m-0 max-w-2xl rounded-lg bg-white shadow">
+      <div className="m-10 w-full rounded-lg bg-white shadow md:max-w-2xl">
         <div className="p-5">
           <Link href="/">
             <img src="/images/logo.png" className="mx-auto w-24" alt="logo" />
@@ -33,7 +33,7 @@ export default async function Page() {
 
             <div className="mt-5 text-center">
               Already have an account?{' '}
-              <Link href={routes.publicRoutes.retailerLogin} className="font-semibold">
+              <Link href={routes.publicRoutes.retailerLogin} className="font-semibold text-danger">
                 Sign In
               </Link>{' '}
               Here

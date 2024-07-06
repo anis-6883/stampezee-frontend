@@ -1,4 +1,9 @@
+import { metaObject } from '@/config/site.config';
 import SubscriptionList from './_components/SubscriptionList';
+
+export const metadata = {
+  ...metaObject('Pricing'),
+};
 
 export default function Page() {
   return (

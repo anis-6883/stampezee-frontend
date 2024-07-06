@@ -1,5 +1,6 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import { routes } from '@/config/routes';
 import { useCreateBranchMutation } from '@/features/retailer/branch/branchApi';
@@ -10,8 +11,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import * as Yup from 'yup';
-import Button from '../../../../../../components/Formik/Button';
-import MapComponent from './Map';
+import Map from './Map';
 
 export default function CreateBranch() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,12 +65,18 @@ export default function CreateBranch() {
       {() => (
         <Form className="mt-5 grid gap-4">
           <InputField name="name" label="Name" placeholder="ex. Ring Road Branch" />
-          <MapComponent />
+          <Map />
           <p className="text-end text-xs font-semibold">
             Fields marked with <span className="text-red-600">*</span> are mandatory!
           </p>
           <div className="mt-2 flex justify-end">
-            <Button type="submit" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={isSubmitting} />
+            <Button
+              color="danger"
+              type="submit"
+              text="Submit"
+              postIcon={<BsCheck2Circle className="text-base" />}
+              isSubmitting={isSubmitting}
+            />
           </div>
         </Form>
       )}

@@ -27,15 +27,6 @@ export default function AppVersionControlForm() {
     <div className="flex flex-col gap-8">
       <FormBlockWrapper title="App Links">
         <div className="grid grid-cols-1 gap-4 gap-y-2 md:grid-cols-2">
-          {/* <Field name='iosAppLink'>
-            {({ field }: { field: any }) => <Input {...field} label={<span>iOS App Link</span>} placeholder='iOS App Link' />}
-          </Field> */}
-
-          {/* <Field name='androidAppLink'>
-            {({ field }: { field: any; meta: any }) => (
-              <Input {...field} label={<span>Android App Link</span>} placeholder='Android App Link' />
-            )}
-          </Field> */}
           <Input name="iosAppLink" required={false} />
           <Input name="androidAppLink" required={false} />
         </div>
@@ -45,15 +36,6 @@ export default function AppVersionControlForm() {
 
       <FormBlockWrapper title="Version Control (iOS)">
         <div className="grid grid-cols-1 gap-4 gap-y-6 md:grid-cols-2">
-          {/* <Field name='iosVersionName'>
-            {({ field }: { field: any }) => <Input {...field} label={<span>iOS Version Name</span>} placeholder='iOS Version Name' />}
-          </Field>
-
-          <Field name='iosVersionCode'>
-            {({ field }: { field: any; meta: any }) => (
-              <Input {...field} label={<span>iOS Version Code</span>} placeholder='iOS Version Code' />
-            )}
-          </Field> */}
           <Input name="iosVersionName" required={false} />
           <Input name="iosVersionCode" required={false} />
 
@@ -75,19 +57,6 @@ export default function AppVersionControlForm() {
             )}
           </Field>
 
-          {/* <Field name='iosAppUrl'>
-            {({ field }: { field: any; meta: any }) => <Input {...field} label={<span>iOS App Url</span>} placeholder='iOS App Url' />}
-          </Field>
-          <Field name='iosButtonText'>
-            {({ field }: { field: any; meta: any }) => (
-              <Input {...field} label={<span>iOS Button Text</span>} placeholder='iOS Button Text' />
-            )}
-          </Field>
-          <Field name='iosDescription'>
-            {({ field }: { field: any; meta: any }) => (
-              <Input {...field} label={<span>iOS Description</span>} placeholder='iOS Description' />
-            )}
-          </Field> */}
           <Input name="iosAppUrl" required={false} />
           <Input name="iosButtonText" required={false} />
           <Input name="iosDescription" required={false} />
@@ -98,17 +67,6 @@ export default function AppVersionControlForm() {
 
       <FormBlockWrapper title="Version Control (Android)">
         <div className="grid grid-cols-1 gap-4 gap-y-6 md:grid-cols-2">
-          {/* <Field name='androidVersionName'>
-            {({ field }: { field: any }) => (
-              <Input {...field} label={<span>Android Version Name</span>} placeholder='Android Version Name' />
-            )}
-          </Field>
-
-          <Field name='androidVersionCode'>
-            {({ field }: { field: any; meta: any }) => (
-              <Input {...field} label={<span>Android Version Code</span>} placeholder='Android Version Code' />
-            )}
-          </Field> */}
           <Input name="androidVersionName" required={false} />
           <Input name="androidVersionCode" required={false} />
 
@@ -129,22 +87,6 @@ export default function AppVersionControlForm() {
               />
             )}
           </Field>
-
-          {/* <Field name='androidAppUrl'>
-            {({ field }: { field: any; meta: any }) => (
-              <Input {...field} label={<span>Android App Url</span>} placeholder='Android App Url' />
-            )}
-          </Field>
-          <Field name='androidButtonText'>
-            {({ field }: { field: any; meta: any }) => (
-              <Input {...field} label={<span>Android Button Text</span>} placeholder='Android Button Text' />
-            )}
-          </Field>
-          <Field name='androidDescription'>
-            {({ field }: { field: any; meta: any }) => (
-              <Input {...field} label={<span>Android Description</span>} placeholder='Android Description' />
-            )}
-          </Field> */}
 
           <Input name="androidAppUrl" required={false} />
           <Input name="androidButtonText" required={false} />

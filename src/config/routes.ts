@@ -70,7 +70,7 @@ export const routes = {
         edit: (id: number | string) => `/root/super-admin/coupon/${id}/update`,
       },
       notification: `/root/super-admin/notification`,
-      billing: `/root/super-admin/billing`,
+      payment: `/root/super-admin/payment`,
       scan: `/root/super-admin/scan`,
       customer: `/root/super-admin/customer`,
       settings: `/root/super-admin/settings`,
@@ -106,7 +106,7 @@ export const routes = {
       edit: (id: number | string) => `/root/super-admin/coupon/${id}/update`,
     },
     notification: `/root/super-admin/notification`,
-    billing: `/root/super-admin/billing`,
+    payment: `/root/super-admin/payment`,
     scan: `/root/super-admin/scan`,
     customer: `/root/super-admin/customer`,
     settings: `/root/super-admin/settings`,
@@ -127,13 +127,11 @@ export const routes = {
       create: `/root/retailer/sub-admin/create`,
       edit: (id: number | string) => `/root/retailer/sub-admin/${id}/update`,
     },
-
     stamp: {
       home: `/root/retailer/stamps`,
       create: `/root/retailer/stamps/create`,
       edit: (id: number | string) => `/root/retailer/stamps/${id}/update`,
     },
-
     stampImage: {
       home: `/root/retailer/stamp-image`,
     },
