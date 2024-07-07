@@ -12,7 +12,7 @@ export const subAdminApi = apiSlice.injectEndpoints({
     }),
     subAdminBranches: builder.query({
       query: () => `/api/web/retailer/sub-admin/branches`,
-      providesTags: ['subAdminBranches'],
+      providesTags: ['subAdminBranches', 'branches'],
     }),
     createSubAdmin: builder.mutation({
       query: (newSubAdmin) => ({

@@ -4,10 +4,12 @@ import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
 import SelectField from '@/components/Formik/SelectField';
+import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateSubAdminMutation, useSubAdminBranchesQuery, useUpdateSubAdminMutation } from '@/features/retailer/sub-admin/subAdminApi';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -142,11 +144,18 @@ export default function CreateUpdateModal({
                   <SelectField
                     name="branchId"
                     label="Branch"
+                    disabled={branches?.data?.length === 0 ? true : false}
                     options={options}
                     onChange={(option: { label: string; value: string }) => setFieldValue('branchId', option.value)}
                     value={values.branchId}
                   />
-
+                  {branches?.data?.length === 0 && (
+                    <div className="text-center">
+                      <Link href={routes.privateRoutes.retailer.branch.create} className="text-xs font-semibold text-danger">
+                        Create Branch
+                      </Link>
+                    </div>
+                  )}
                   <div>
                     <p className="font-medium">Upload Image</p>
                     <DragAndDropUpload
@@ -163,7 +172,7 @@ export default function CreateUpdateModal({
                 </p>
                 <div className="mt-6 flex justify-end">
                   <Button
-                    color={formData?._id ? 'warning' : 'primary'}
+                    color={'danger'}
                     type="submit"
                     text={formData?._id ? 'Update' : 'Submit'}
                     postIcon={<BsCheck2Circle className="text-base" />}

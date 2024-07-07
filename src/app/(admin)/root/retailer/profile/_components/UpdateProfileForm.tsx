@@ -8,6 +8,7 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery, useRetailerUpdateProfileMutation } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
+import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
 import getChangedFormData from '@/utils/getChangedFormData';
 import objectToFormData from '@/utils/objectToFormData';
@@ -17,7 +18,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import ReactSelect from 'react-select';
+import ReactSelect, { OnChangeValue } from 'react-select';
 import { FieldError } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -63,7 +64,9 @@ export default function UpdateProfileForm() {
     city: retailerProfile?.data?.city || '',
     postalCode: retailerProfile?.data?.postalCode || '',
     address: retailerProfile?.data?.address || '',
-    image: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailerProfile?.data?.image}` || '',
+    image: retailerProfile?.data?.image
+      ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailerProfile?.data?.image}`
+      : '/images/stamp-logo.png',
   };
 
   const validationSchema = Yup.object().shape({
@@ -111,6 +114,7 @@ export default function UpdateProfileForm() {
                   size={1024 * 1000}
                   sizeText="1MB"
                   isRounded={true}
+                  brandText="Brand Logo"
                 />
                 <InputField name="storeName" label="Store Name" placeholder="Burger King" />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -120,6 +124,7 @@ export default function UpdateProfileForm() {
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <PhoneNumber
+                    enableSearch={true}
                     name="phone"
                     label={
                       <p>
@@ -143,14 +148,15 @@ export default function UpdateProfileForm() {
                         <span className="text-red-500"> *</span>
                       </p>
                     </div>
+
                     {isRetailerProfileSuccess && (
                       <ReactSelect
                         placeholder="Select your country"
                         options={countryOptions}
                         getOptionLabel={getOptionLabel}
-                        getOptionValue={(option) => option.value}
-                        defaultValue={countryOptions.find((country) => country.label === (retailerProfile?.data?.country || 'Canada'))}
-                        onChange={(selectedOption) => setFieldValue('country', selectedOption?.label)}
+                        getOptionValue={(option) => option.label}
+                        defaultValue={countryOptions.filter((country) => country.label === (retailerProfile?.data?.country || 'Canada'))}
+                        onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => setFieldValue('country', selectedOption?.label)}
                         onBlur={() => setFieldTouched('country', true)}
                       />
                     )}
@@ -176,7 +182,13 @@ export default function UpdateProfileForm() {
                 </p>
 
                 <div className="mt-2 flex justify-end">
-                  <Button type="submit" text="Update" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={isSubmitting} />
+                  <Button
+                    color="danger"
+                    type="submit"
+                    text="Update"
+                    postIcon={<BsCheck2Circle className="text-base" />}
+                    isSubmitting={isSubmitting}
+                  />
                 </div>
               </Form>
             );

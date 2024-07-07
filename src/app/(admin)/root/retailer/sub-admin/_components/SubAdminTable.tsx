@@ -134,7 +134,7 @@ export default function SubAdminTable() {
   return (
     <>
       <div className="mb-5 flex justify-end">
-        <Button text="Add New Sub-Admin" preIcon={<HiPlus className="text-base" />} onClick={() => setCreateState(true)} />
+        <Button color="danger" text="Add New Sub-Admin" preIcon={<HiPlus className="text-base" />} onClick={() => setCreateState(true)} />
       </div>
       <Table
         isFetching={isFetching}

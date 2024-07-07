@@ -4,15 +4,28 @@ import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { setSubscription } from '@/features/subscription/subscriptionSlice';
 import 'aos/dist/aos.css';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
+import { MdStar } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 
 export default function PricingCard({ item }: { item: any }) {
   const dispatch = useDispatch();
+  const { data: session }: any = useSession();
+
+  console.log('session price', session?.user?.plan, item?.slug);
 
   return (
     <div className="relative mx-auto flex h-full w-full max-w-lg flex-col justify-between rounded-lg border-gray-100 bg-white p-3 text-gray-900 opacity-80 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8">
+      {session?.user?.plan === item?.slug && (
+        <div className="absolute right-2 top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
+          <span className="font-medium">
+            <MdStar />
+          </span>
+          <span className="text-sm font-medium">Active</span>
+        </div>
+      )}
       <div>
         <h3 className="mb-4 text-xl font-semibold">{item.title}</h3>
         <div className="my-2 flex items-baseline">
@@ -40,9 +53,18 @@ export default function PricingCard({ item }: { item: any }) {
         </ul>
       </div>
       <div>
-        <Link href={routes.privateRoutes.checkout}>
-          <Button onClick={() => dispatch(setSubscription(item))} color="danger" text="Get started" className="w-full" />
-        </Link>
+        {session?.user?.plan === item?.slug ? (
+          <>
+            <Button color="danger" text="Get started" className="w-full cursor-not-allowed" />
+          </>
+        ) : (
+          <>
+            {' '}
+            <Link href={routes.privateRoutes.checkout}>
+              <Button onClick={() => dispatch(setSubscription(item))} color="danger" text="Get started" className="w-full" />
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
