@@ -6,7 +6,7 @@ import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/sub
 import { AddOn, Subscription } from '@/types';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function AddOnsList() {
+export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean }) {
   const dispatch = useDispatch();
   const { subscription, addOns: addOnsData } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data } = useGetSubscriptionQuery(undefined);
@@ -17,7 +17,7 @@ export default function AddOnsList() {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
       {addOns?.map((addOn: AddOn, index: number) => (
         <div key={index}>
           {subscription?.slug !== 'trial' ? (

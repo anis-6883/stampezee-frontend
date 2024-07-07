@@ -10,6 +10,7 @@ import { useBranchCategoryImageListQuery, useCreateStampMutation } from '@/featu
 import getChangedFormData from '@/utils/getChangedFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -22,6 +23,8 @@ export default function Create() {
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
 
+  const isAddons = false;
+
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery({});
 
   const initialValues = {
@@ -33,7 +36,7 @@ export default function Create() {
     rules: '',
     noOfStampsToCollect: 0,
     minPurchaseAmount: 0,
-    rewardType: '',
+    rewardType: 'discount',
     promotionReward: '',
     discountReward: 0,
     validDateRange: '',
@@ -54,6 +57,7 @@ export default function Create() {
       // Convert values object to getChangedFormData
       const changedData = getChangedFormData(values, initialValues, ['validDateRange']);
 
+      changedData.rewardType = values.rewardType;
       changedData.startedAt = values?.validDateRange?.split('to')[0];
       changedData.expiredAt = values?.validDateRange?.split('to')[1];
       console.log('changedData', changedData);
@@ -104,27 +108,45 @@ export default function Create() {
           return (
             <Form className="mt-5 grid gap-4">
               <div className="grid grid-cols-2 gap-x-5">
-                <SelectField
-                  name="branchId"
-                  label="Branch"
-                  value={values?.branchId}
-                  options={optionsData?.branches.map((item: any) => ({
-                    label: item.name,
-                    value: item._id,
-                  }))}
-                  onChange={(option: { label: string; value: string }) => setFieldValue('branchId', option.value)}
-                />
+                <div>
+                  <SelectField
+                    name="branchId"
+                    label="Branch"
+                    disabled={optionsData?.branches?.length === 0 ? true : false}
+                    value={values?.branchId}
+                    options={optionsData?.branches.map((item: any) => ({
+                      label: item.name,
+                      value: item._id,
+                    }))}
+                    onChange={(option: { label: string; value: string }) => setFieldValue('branchId', option.value)}
+                  />
+                  {optionsData?.branches?.length === 0 && (
+                    <div className="pt-3 text-center">
+                      <Link href={routes.privateRoutes.retailer.branch.create} className="text-xs font-semibold text-danger">
+                        Create Branch
+                      </Link>
+                    </div>
+                  )}
+                </div>
 
-                <SelectField
-                  name="categoryId"
-                  label="Category"
-                  value={values?.categoryId}
-                  options={optionsData?.categories?.map((item: any) => ({
-                    label: _.startCase(_.toLower(item.name)),
-                    value: item._id,
-                  }))}
-                  onChange={(option: { label: string; value: string }) => setFieldValue('categoryId', option.value)}
-                />
+                <div>
+                  <SelectField
+                    name="categoryId"
+                    label="Category"
+                    disabled={optionsData?.categories?.length === 0 ? true : false}
+                    value={values?.categoryId}
+                    options={optionsData?.categories?.map((item: any) => ({
+                      label: _.startCase(_.toLower(item.name)),
+                      value: item._id,
+                    }))}
+                    onChange={(option: { label: string; value: string }) => setFieldValue('categoryId', option.value)}
+                  />
+                  {optionsData?.categories?.length === 0 && (
+                    <div className=" pt-3 text-center text-danger">
+                      <span>No category added by super admin</span>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
@@ -135,16 +157,16 @@ export default function Create() {
               {responseIsLoading ? (
                 <StampImgSkeleton />
               ) : (
-                <div className="mb-5 flex w-full flex-wrap justify-center gap-3 md:justify-center lg:justify-start">
+                <div className="mb-5 flex w-full flex-wrap justify-center gap-4 md:justify-center lg:justify-start">
                   {optionsData?.defaultImages?.map((item: any) => (
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
                       key={item?._id}
-                      className="flex h-[180px] w-[180px] rounded bg-white p-6 shadow-md"
+                      className="flex h-[150px] w-[150px] rounded bg-white p-6 shadow-md"
                     >
                       <div>
-                        <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
-                        <h3 className="mt-1 text-center font-medium">{item?.title}</h3>
+                        <img className="object-center" src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
+                        <h3 className="mt-2 text-center font-medium">{item?.title}</h3>
                       </div>
                       <input
                         style={{ backgroundImage: 'none' }}
@@ -158,6 +180,12 @@ export default function Create() {
                       />
                     </div>
                   ))}
+                </div>
+              )}
+
+              {optionsData?.defaultImages?.length === 0 && (
+                <div className=" pt-3 text-center text-danger">
+                  <span>No default image by super admin</span>
                 </div>
               )}
 
@@ -172,11 +200,11 @@ export default function Create() {
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
                       key={item?._id}
-                      className="flex h-[180px] w-[180px] rounded bg-white p-6 shadow-md"
+                      className="flex h-[150px] w-[150px] rounded bg-white p-6 shadow-md"
                     >
                       <div>
                         <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
-                        <h3 className="mt-1 text-center font-medium">{item?.title}</h3>
+                        <h3 className="mt-2 text-center font-medium">{item?.title}</h3>
                       </div>
                       <input
                         style={{ backgroundImage: 'none' }}
@@ -192,7 +220,26 @@ export default function Create() {
                   ))}
                 </div>
               )}
-              {errors?.stampImageId && <span className="text-red-600">Select a stamp image of custom or default stamp</span>}
+
+              {!isAddons && (
+                <div className="border-l-4 border-red-400 bg-blue-50 p-4">
+                  <p className="mb-3 font-medium text-danger">No Add-ons</p>
+                  <Link href={routes.privateRoutes.retailer.membershipPlan} className="text-danger hover:cursor-pointer">
+                    Go to plans
+                  </Link>
+                </div>
+              )}
+
+              {optionsData?.customImages?.length === 0 && (
+                <div className=" pt-3 text-center text-danger">
+                  {/* <span>No Custom Image</span> */}
+                  <Link href={routes.privateRoutes.retailer.stampImage.home} className="mx-3 text-danger hover:cursor-pointer">
+                    Create custom image
+                  </Link>
+                </div>
+              )}
+
+              {errors?.stampImageId && <span className="text-red-600">Select one from custom or default stamp</span>}
 
               <div className="grid grid-cols-2 gap-x-5">
                 <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
@@ -226,7 +273,7 @@ export default function Create() {
                     }}
                     className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
                   />
-                  <label className="ml-1" htmlFor="">
+                  <label className="ml-1 cursor-pointer" htmlFor="">
                     {' '}
                     Discount
                   </label>
@@ -249,7 +296,7 @@ export default function Create() {
                     checked={values.rewardType === 'promotion' ? true : false}
                     className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
                   />
-                  <label className="ml-1" htmlFor="">
+                  <label className="ml-1 cursor-pointer" htmlFor="">
                     {' '}
                     Promotion{' '}
                   </label>

@@ -1,6 +1,7 @@
 'use client';
 
 import { Field } from 'formik';
+import { IoAlertCircle } from 'react-icons/io5';
 import { Select } from 'rizzui';
 interface SelectOptionProps {
   label?: string;
@@ -44,6 +45,17 @@ const SelectField: React.FC<SelectOptionProps> = ({
           value={options.find((option) => option.value === value)}
           onChange={onChange}
           disabled={disabled}
+          helperText={
+            meta.touched && meta.error ? (
+              <span className="flex items-center gap-x-1">
+                <IoAlertCircle className="text-lg" />
+                <span>{meta.error}</span>
+              </span>
+            ) : (
+              ''
+            )
+          }
+          helperClassName="text-danger"
           // error={meta.touched && meta.error && <div className="mt-1 text-xs text-red-500">{meta.error}</div>}
         />
       )}

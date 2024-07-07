@@ -138,7 +138,7 @@ export default function UpdateProfileForm() {
                       setFieldValue('phone', value.slice(countryData.dialCode.length));
                     }}
                     errorClassName="text-red-600 text-xs mt-1"
-                    inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border-[2px]'} !h-[43px]`}
+                    inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border'} !h-[43px]`}
                     labelClassName="!mb-1"
                   />
                   <div className="flex flex-col gap-1">

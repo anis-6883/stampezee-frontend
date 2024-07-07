@@ -68,6 +68,8 @@ export default function Update({ Id }: any) {
     validDateRange: getFormattedDate(stampData?.data?.startedAt) + ' to ' + getFormattedDate(stampData?.data?.expiredAt) || '',
   };
 
+  console.log(getFormattedDate(new Date(stampData?.data?.startedAt)));
+
   const validationSchema = Yup.object().shape({
     branchId: Yup.string().required('Required!'),
     stampImageId: Yup.string().required('Required!'),
