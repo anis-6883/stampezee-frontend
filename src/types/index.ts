@@ -365,6 +365,7 @@ export interface Subscription {
   slug: string;
   type: string;
   image: string;
+  isBlocked?: boolean;
 }
 
 export interface AddOn {

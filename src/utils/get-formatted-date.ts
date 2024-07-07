@@ -16,6 +16,7 @@
 import moment from 'moment';
 
 const getFormattedDate = (date: Date, offset?: number) => {
+  console.log('date');
   if (!date) return 'N/A';
   if (!offset) return 'N/A';
   return date ? moment.utc(date).utcOffset(Number(offset)).format('YYYY-MM-DD') : 'N/A';

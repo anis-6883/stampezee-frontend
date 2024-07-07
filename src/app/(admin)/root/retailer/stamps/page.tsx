@@ -28,7 +28,7 @@ export default function Page() {
 
       <div className="mb-5 flex justify-end">
         <Link href={routes.retailer.stamp.create}>
-          <Button text="Add New Stamp" preIcon={<HiPlus className="text-base" />} />
+          <Button color="danger" text="Add New Stamp" preIcon={<HiPlus className="text-base" />} />
         </Link>
       </div>
 

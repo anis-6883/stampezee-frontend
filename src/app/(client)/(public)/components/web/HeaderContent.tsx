@@ -1,16 +1,21 @@
 'use client';
 
+import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
+import { countDaysLeft } from '@/utils';
 import { Menu, Transition } from '@headlessui/react';
+import _ from 'lodash';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { GiSandsOfTime } from 'react-icons/gi';
+import { IoDiamondOutline, IoLogOutOutline } from 'react-icons/io5';
 import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Drawer } from 'rizzui';
+import { Button, Drawer, Title } from 'rizzui';
 
 const mobileMenuItems = [
   {
@@ -83,6 +88,12 @@ export default function HeaderContent() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  let fullName = user?.firstName + ' ' + user?.lastName;
+
+  if (fullName.length >= 18) {
+    fullName = user?.firstName + ' ' + user?.lastName.charAt(0).toUpperCase() + '.';
+  }
 
   return (
     <div>
@@ -194,12 +205,6 @@ export default function HeaderContent() {
                           >
                             <Menu.Items className=" absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white p-2 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <div className="py-1">
-                                <div className="flex gap-1">
-                                  <h2 className="font-bold">
-                                    {user?.firstName} {user?.lastName}
-                                  </h2>
-                                </div>
-                                <p className="mt-2 font-semibold">{user?.email}</p>
                                 <hr className="mt-3" />
                                 <br />
                                 <Button onClick={handleLogout} variant="flat" className="h-7 w-full bg-red-500 text-white">
@@ -288,18 +293,48 @@ export default function HeaderContent() {
                           leaveFrom="transform opacity-100 scale-100"
                           leaveTo="transform opacity-0 scale-95"
                         >
-                          <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white p-2 px-4 text-black shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Items className="absolute right-0 z-10 mt-2 w-72 origin-top-right rounded-md bg-white p-2 px-4 text-black shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div className="py-1">
-                              <div className="flex gap-1">
-                                <h2 className="font-bold">
-                                  {user?.firstName} {user?.lastName}
-                                </h2>
+                              <div className="mb-5 flex flex-col items-center justify-center gap-y-4 border-b border-gray-300 p-6">
+                                <img
+                                  src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+                                  color="danger"
+                                  className="h-16 w-16 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+                                  alt="brand"
+                                />
+                                {user?.role === ROLE.SUPER_ADMIN && (
+                                  <Title as="h5" className="break-all text-center font-bold">
+                                    {fullName}
+                                  </Title>
+                                )}
+
+                                {user?.role === ROLE.RETAILER && (
+                                  <Title as="h5" className="break-all text-center font-bold">
+                                    {user?.storeName && user?.storeName.length > 20
+                                      ? user?.storeName.slice(0, 20) + '...'
+                                      : user?.storeName}
+                                  </Title>
+                                )}
                               </div>
-                              <p className="mt-2 font-semibold">{user?.email}</p>
-                              <hr className="mt-3" />
-                              <br />
-                              <Button onClick={() => handleLogout()} variant="flat" className="h-7 w-full bg-[#EF4444] text-white">
-                                Logout
+                              {user?.plan && (
+                                <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
+                                  <div className="flex">
+                                    <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">Plan : </p>
+                                    <span className="pl-3 font-medium">{_.capitalize(user?.plan)}</span>
+                                  </div>
+                                  <div className="flex">
+                                    <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">Expire : </p>
+                                    <span className="pl-3 font-medium text-danger">{countDaysLeft(user?.planValidAt)} days left</span>
+                                  </div>
+                                </div>
+                              )}
+
+                              <Button
+                                onClick={() => handleLogout()}
+                                variant="flat"
+                                className="h-10 w-full bg-[#EF4444] text-base text-white"
+                              >
+                                Logout <IoLogOutOutline className="ml-2 text-xl" />
                               </Button>
                             </div>
                           </Menu.Items>

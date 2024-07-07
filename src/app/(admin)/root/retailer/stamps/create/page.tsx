@@ -1,6 +1,6 @@
-'use client';
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
+import { metaObject } from '@/config/site.config';
 import CreateStamp from '../_components/CreateStamp';
 
 const pageHeader = {
@@ -19,6 +19,8 @@ const pageHeader = {
     },
   ],
 };
+
+export const metadata = { ...metaObject(pageHeader.title) };
 
 export default function page() {
   return (
