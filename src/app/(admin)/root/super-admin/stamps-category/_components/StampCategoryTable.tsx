@@ -132,7 +132,12 @@ export default function StampCategoryTable() {
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
       <div className="mb-4 flex justify-end">
-        <Button onClick={() => setCreateState(true)} text="Add New Stamp Category" preIcon={<HiPlus className="text-base" />} />
+        <Button
+          color="danger"
+          onClick={() => setCreateState(true)}
+          text="Add New Stamp Category"
+          preIcon={<HiPlus className="text-base" />}
+        />
       </div>
       <Table
         isFetching={isFetching}
@@ -159,6 +164,7 @@ export default function StampCategoryTable() {
         sort={sort}
         sortContext="category"
         enableRowActions={false}
+        searchPlaceHolder="Search by Name"
       />
 
       <DeleteConfirmModal

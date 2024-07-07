@@ -123,7 +123,7 @@ export default function ProfileMenu() {
             <img
               src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
               color="danger"
-              className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+              className="h-12 w-12 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
               alt="brand"
             />
           </div>

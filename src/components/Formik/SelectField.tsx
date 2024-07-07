@@ -12,6 +12,7 @@ interface SelectOptionProps {
   onChange: any;
   required?: boolean;
   disabled?: boolean;
+  selectClassName?: string;
 }
 
 const defaultOptions = [
@@ -28,18 +29,20 @@ const SelectField: React.FC<SelectOptionProps> = ({
   required = true,
   disabled = false,
   value = null,
+  selectClassName,
 }) => {
   return (
     <Field name={name}>
       {({ field, meta }: { field: any; meta: any }) => (
         <Select
+          className="flex flex-col"
           label={
             <span>
               {label}
-              {required && <span className="text-red-500"> *</span>}
+              {required && <span className="h-fit text-red-500"> *</span>}
             </span>
           }
-          selectClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
+          selectClassName={`${selectClassName} ${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
           labelClassName={labelClassName}
           options={options}
           value={options.find((option) => option.value === value)}
@@ -56,7 +59,6 @@ const SelectField: React.FC<SelectOptionProps> = ({
             )
           }
           helperClassName="text-danger"
-          // error={meta.touched && meta.error && <div className="mt-1 text-xs text-red-500">{meta.error}</div>}
         />
       )}
     </Field>

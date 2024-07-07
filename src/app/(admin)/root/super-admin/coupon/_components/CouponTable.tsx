@@ -46,7 +46,7 @@ export default function CouponTable({ offset }: { offset: number }) {
     }
     if (isSuccess) {
       setDeleteSubmitting(false);
-      toast.success('Stamps Image deleted successfully!');
+      toast.success('Coupon deleted successfully!');
       setDeleteState(false);
       setDeleteId(null);
     }
@@ -70,7 +70,7 @@ export default function CouponTable({ offset }: { offset: number }) {
             <span className="font-bold">Type:</span> {row?.original.discountType}
           </p>
           <p>
-            <span className="font-bold">Amount:</span> {row?.original.discount}
+            <span className="font-bold">Amount:</span> {row?.original.discount} {row?.original.discountType === 'flat' ? 'CAD' : '%'}
           </p>
         </div>
       ),
@@ -141,7 +141,7 @@ export default function CouponTable({ offset }: { offset: number }) {
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
       <div className="mb-4 flex justify-end">
-        <Button onClick={() => setCreateState(true)} text="Add New Coupon" preIcon={<HiPlus className="text-base" />} />
+        <Button color="danger" onClick={() => setCreateState(true)} text="Add New Coupon" preIcon={<HiPlus className="text-base" />} />
       </div>
       <Table
         isFetching={isFetching}

@@ -71,7 +71,12 @@ export default function RegisterForm() {
     storeName: Yup.string().required('Required!'),
     firstName: Yup.string().required('Required!'),
     lastName: Yup.string(),
-    email: Yup.string().email('Invalid email').required('Required!'),
+    email: Yup.string()
+      .test('email', 'Provide valid email!', (value: any) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(value);
+      })
+      .required('Required!'),
     phone: Yup.string().required('Required!'),
     country: Yup.string().required('Required!'),
     province: Yup.string().required('Required!'),
@@ -106,7 +111,7 @@ export default function RegisterForm() {
                     name="phone"
                     label={
                       <p>
-                        Phone Number <span className="text-red-600">*</span>
+                        Phone Number <span className="text-danger">*</span>
                       </p>
                     }
                     country="ca"
@@ -116,7 +121,7 @@ export default function RegisterForm() {
                       setFieldValue('phone', value.slice(countryData.dialCode.length));
                     }}
                     errorClassName="text-red-600 text-xs mt-1"
-                    inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border'} !h-[43px] !ring-0`}
+                    inputClassName={`${errors?.phone && touched?.phone ? '!border-danger hover:!border-danger' : '!border-slate-300 !border'} !h-[43px] !ring-0`}
                     labelClassName="!mb-1"
                     helperClassName="text-danger"
                   />

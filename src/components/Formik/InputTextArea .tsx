@@ -1,4 +1,5 @@
 import { Field } from 'formik';
+import { IoAlertCircle } from 'react-icons/io5';
 import { Textarea } from 'rizzui';
 
 export default function InputTextarea({
@@ -28,6 +29,17 @@ export default function InputTextarea({
             }
             placeholder={placeholder}
             textareaClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
+            helperText={
+              meta.touched && meta.error ? (
+                <span className="flex items-center gap-x-1">
+                  <IoAlertCircle className="text-lg" />
+                  <span>{meta.error}</span>
+                </span>
+              ) : (
+                ''
+              )
+            }
+            helperClassName="text-danger"
           />
         )}
       </Field>
