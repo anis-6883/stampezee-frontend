@@ -84,22 +84,15 @@ export const Plans = () => {
                 </div>
               )}
               <div className="relative mx-auto flex h-full w-full max-w-md flex-col rounded-lg border-gray-100 bg-white opacity-80 dark:bg-gray-800 dark:text-white xl:p-4">
-                <h3 className="mb-4 text-lg font-semibold">{plan.title}</h3>
-                <div className="text-md my-2 flex items-baseline">
-                  <span className="mr-1 text-xl  font-bold xl:font-extrabold ">
-                    <sup className=" font-medium capitalize">CAD</sup>
-                    {plan.price}
-                  </span>
-                  <span>
-                    /{plan?.duration === 30 ? 1 : plan?.duration} {plan?.duration === 30 ? 'mo' : 'Days'}
-                  </span>
-                </div>
+                <h3 className="mb-3 text-lg font-semibold">{plan.title}</h3>
+                <p className="mb-2 text-xl font-bold">
+                  {plan.price} CAD/{plan.duration === 30 ? 'Month' : `${plan.duration} Days`}
+                </p>
 
-                <ul className="mb-[75px] space-y-4 text-left">
-                  {plan?.descriptions.map((info: any) => (
-                    <li className="flex items-center space-x-3" key={info}>
-                      <IoCheckmarkDoneCircle className="text-2xl text-danger" />
-                      <span>{info}</span>
+                <ul>
+                  {plan.descriptions.map((info: string, idx: number) => (
+                    <li className="flex items-center space-x-3" key={idx}>
+                      <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
                     </li>
                   ))}
                 </ul>

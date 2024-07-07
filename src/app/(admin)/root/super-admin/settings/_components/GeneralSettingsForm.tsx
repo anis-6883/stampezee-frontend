@@ -1,13 +1,9 @@
-import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
-import Input from '@/components/shared/Form/Input';
 import InputField from '@/components/Formik/InputField';
-import Select from '@/components/shared/Form/Select';
+import InputPassword from '@/components/Formik/InputPassword';
+import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
 import timeZoneData from '@/utils/get-timezone-list';
 import { Field } from 'formik';
-import { useEffect, useState } from 'react';
 import ReactSelect from 'react-select';
-import { Select as RizzSelect, Textarea } from 'rizzui';
-import InputPassword from '@/components/Formik/InputPassword';
 
 export default function GeneralSettingsForm({ setFieldValue, values }: { setFieldValue: any; values: any }) {
   return (

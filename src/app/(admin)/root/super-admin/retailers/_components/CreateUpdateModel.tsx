@@ -56,7 +56,12 @@ export default function CreateUpdateModel({
     storeName: Yup.string().required('Required!'),
     firstName: Yup.string().required('Required!'),
     lastName: Yup.string(),
-    email: Yup.string().email('Invalid email').required('Required!'),
+    email: Yup.string()
+      .test('email', 'Provide valid email!', (value: any) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(value);
+      })
+      .required('Required!'),
     phone: Yup.string().required('Required!'),
     country: Yup.string().required('Required!'),
     province: Yup.string().required('Required!'),
@@ -178,8 +183,9 @@ export default function CreateUpdateModel({
                         setFieldValue('phone', value.slice(countryData.dialCode.length));
                       }}
                       errorClassName="text-red-600 text-xs mt-1"
-                      inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border-[2px]'} !h-[43px]`}
+                      inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border'} !h-[43px]`}
                       labelClassName="!mb-1"
+                      helperClassName="text-danger"
                     />
                     <div className="flex flex-col gap-1">
                       <div>
@@ -228,13 +234,10 @@ export default function CreateUpdateModel({
                     <span>
                       Fields marked with <span className="text-red-600">*</span> are mandatory!
                     </span>
-                    <span>
-                      Password must be at least <span className="text-red-600">8 characters</span> long!
-                    </span>
                   </p>
                   <div className="flex justify-end">
                     <Button
-                      color={formData?._id ? 'warning' : 'primary'}
+                      color="danger"
                       type="submit"
                       text={formData?._id ? 'Update' : 'Submit'}
                       postIcon={<BsCheck2Circle className="text-base" />}

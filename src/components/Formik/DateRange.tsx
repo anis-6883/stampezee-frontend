@@ -3,14 +3,16 @@ import 'flatpickr/dist/themes/dark.css';
 import { Field, useFormikContext } from 'formik';
 import React from 'react';
 import Flatpickr from 'react-flatpickr';
+import { IoAlertCircle } from 'react-icons/io5';
 import { MdOutlineClose } from 'react-icons/md';
 
 interface DateRangeProps {
   label?: string;
   name: string;
+  enableTime?: boolean;
 }
 
-const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name }) => {
+const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name, enableTime = false }) => {
   const { values, setFieldValue }: any = useFormikContext();
 
   return (
@@ -18,7 +20,7 @@ const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name 
       {({ field, meta }: { field: any; meta: any }) => (
         <Flatpickr
           render={({ defaultValue, value, ...props }, ref) => (
-            <div>
+            <div className="flex flex-col gap-y-0.5">
               <p className="mb-1 font-medium">
                 {label} <span className="text-red-600">*</span>
               </p>
@@ -37,6 +39,12 @@ const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name 
                   <MdOutlineClose className="text-xl" />
                 </div>
               </div>
+              {meta.error && meta.touched && (
+                <span className="flex items-center gap-x-1 text-danger">
+                  <IoAlertCircle className="text-lg" />
+                  <span>{meta.error}</span>
+                </span>
+              )}
             </div>
           )}
           value={values[name]}
@@ -48,7 +56,8 @@ const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name 
             disableMobile: true,
             allowInput: false,
             mode: 'range',
-            dateFormat: 'Y-m-d',
+            dateFormat: enableTime ? 'Y-m-d H:i' : 'Y-m-d',
+            enableTime,
           }}
         />
       )}

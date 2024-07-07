@@ -1,9 +1,9 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import { SerializedError } from '@/features/api/apiSlice';
-
 import {
   useCreateSuperAdminStampImageMutation,
   useUpdateSuperAdminStampImageMutation,
@@ -16,7 +16,6 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
-import Button from '../../../../../../components/Formik/Button';
 
 export default function CreateUpdateModel({
   setFormData,
@@ -137,7 +136,7 @@ export default function CreateUpdateModel({
                 </p>
                 <div className="mt-6 flex justify-end">
                   <Button
-                    color={formData?._id ? 'warning' : 'primary'}
+                    color="danger"
                     type="submit"
                     text={formData?._id ? 'Update' : 'Submit'}
                     postIcon={<BsCheck2Circle className="text-base" />}

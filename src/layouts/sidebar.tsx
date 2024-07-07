@@ -1,5 +1,6 @@
 'use client';
 
+import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
@@ -55,22 +56,24 @@ export default function Sidebar({ className }: { className?: string }) {
         </Link>
       </div>
 
-      <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
-        <img
-          src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
-          color="danger"
-          className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
-          alt="brand"
-        />
-        <Title as="h6" className="break-all text-center font-bold">
-          {user?.storeName && user?.storeName.length > 20 ? user?.storeName.slice(0, 20) + '...' : user?.storeName}
-        </Title>
-      </div>
+      {session?.user?.role === ROLE.RETAILER && (
+        <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
+          <img
+            src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+            color="danger"
+            className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+            alt="brand"
+          />
+          <Title as="h6" className="break-all text-center font-bold">
+            {user?.storeName && user?.storeName.length > 20 ? user?.storeName.slice(0, 20) + '...' : user?.storeName}
+          </Title>
+        </div>
+      )}
 
       {session?.user?.plan && (
         <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
           <div className="flex">
-            <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">Plan : </p>
+            <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">Your Plan : </p>
             <span className="pl-3 font-medium">{_.capitalize(session?.user?.plan)}</span>
           </div>
           <div className="flex">

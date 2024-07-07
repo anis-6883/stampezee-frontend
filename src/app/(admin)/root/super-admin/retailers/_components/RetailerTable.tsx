@@ -1,7 +1,6 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-
 import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -33,12 +32,7 @@ export default function RetailerTable() {
     ...searchQuery,
   });
 
-  if (!isLoading) {
-    console.log('Data: ', data);
-  }
-
   const [deleteRetailer, { isSuccess, isError }] = useDeleteSuperAdminRetailerMutation();
-
   const [updateStatus] = useUpdateRetailerStatusMutation();
 
   const handleDelete = async (rowData: any) => {
@@ -55,7 +49,7 @@ export default function RetailerTable() {
     }
     if (isSuccess) {
       setDeleteSubmitting(false);
-      toast.success('Stamps Image deleted successfully!');
+      toast.success('Retailer deleted successfully!');
       setDeleteState(false);
       setDeleteId(null);
     }
@@ -171,7 +165,7 @@ export default function RetailerTable() {
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
       <div className="mb-4 flex justify-end">
-        <Button onClick={() => setCreateState(true)} text="Add New Retailer" preIcon={<HiPlus className="text-base" />} />
+        <Button color="danger" onClick={() => setCreateState(true)} text="Add New Retailer" preIcon={<HiPlus className="text-base" />} />
       </div>
       <Table
         isFetching={isFetching}

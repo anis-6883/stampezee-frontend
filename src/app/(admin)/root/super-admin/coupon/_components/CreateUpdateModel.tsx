@@ -43,28 +43,31 @@ export default function CreateUpdateModel({
     title: Yup.string().required('Required!'),
     code: Yup.string().required('Required!').min(6, 'At least 6 characters long!'),
     discountType: Yup.string().required('Required!'),
-    discount: Yup.string().required('Required!'),
+    discount: Yup.number()
+      .test('integer', 'Please enter an integer value', (value: any) => {
+        return !isNaN(parseFloat(value)) && isFinite(value);
+      })
+      .required('Required!'),
     validDateRange: Yup.string().required('Required!'),
   });
 
+  // Submit Handler
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
+    const filteredValues = removeEmptyValues(values, ['validDateRange']);
+    const dateRange = values.validDateRange.split('to').map((date: string) => date.trim());
+
+    filteredValues.startedAt = dateRange[0];
+    filteredValues.expiredAt = dateRange[1];
 
     if (formData?._id) {
-      const filteredValues = removeEmptyValues(values, ['validDateRange']);
-      const dateRange = values.validDateRange.split('to').map((date: string) => date.trim());
-      filteredValues.startedAt = dateRange[0];
-      filteredValues.expiredAt = dateRange[1];
       updateCoupon({ id: formData._id, formData: filteredValues });
     } else {
-      const filteredValues = removeEmptyValues(values, ['validDateRange']);
-      const dateRange = values.validDateRange.split('to').map((date: string) => date.trim());
-      filteredValues.startedAt = dateRange[0];
-      filteredValues.expiredAt = dateRange[1];
       createCoupon(filteredValues);
     }
   };
 
+  // Create Response Handler
   useEffect(() => {
     if (createError) {
       const myError = createError as SerializedError;
@@ -73,7 +76,6 @@ export default function CreateUpdateModel({
     }
 
     if (createSuccess) {
-      console.log('isSuccess', createSuccess);
       toast.success('Retailer created successfully!');
       setFormData({});
       setIsSubmitting(false);
@@ -82,6 +84,7 @@ export default function CreateUpdateModel({
     }
   }, [createError, createSuccess, setModalState, setFormData]);
 
+  // Update Response Handler
   useEffect(() => {
     if (updateError) {
       const myError = updateError as SerializedError;
@@ -90,7 +93,7 @@ export default function CreateUpdateModel({
     }
 
     if (updateSuccess) {
-      toast.success('Retailer Update successfully!');
+      toast.success('Coupon Update successfully!');
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
@@ -129,8 +132,9 @@ export default function CreateUpdateModel({
                     <InputField name="description" label="Description" placeholder="Write here..." required={false} />
                   </div>
 
-                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-x-3 md:grid-cols-2">
                     <SelectField
+                      // selectClassName=''
                       value={values?.discountType}
                       options={[
                         { label: 'Percentage', value: 'percentage' },
@@ -151,13 +155,10 @@ export default function CreateUpdateModel({
                     <span>
                       Fields marked with <span className="text-red-600">*</span> are mandatory!
                     </span>
-                    <span>
-                      Code must be at least <span className="text-red-600">6 characters</span> long!
-                    </span>
                   </p>
                   <div className="flex justify-end">
                     <Button
-                      color={formData?._id ? 'warning' : 'primary'}
+                      color="danger"
                       type="submit"
                       text={formData?._id ? 'Update' : 'Submit'}
                       postIcon={<BsCheck2Circle className="text-base" />}
