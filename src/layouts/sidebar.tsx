@@ -28,6 +28,8 @@ const blockedMenuUrls = [
   routes.retailer.branch.home,
 ];
 
+const addonsBlockedMenuUrls = [routes.retailer.stampImage.home, routes.retailer.notification.home];
+
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
   const { data: session }: any = useSession();
@@ -162,6 +164,9 @@ export default function Sidebar({ className }: { className?: string }) {
                           role === 'retailer' && blockedMenuUrls.includes(item?.href) && !session?.user?.plan
                             ? 'pointer-events-none cursor-not-allowed bg-gray-100'
                             : '',
+                          role === 'retailer' && addonsBlockedMenuUrls.includes(item?.href) && session?.user?.plan === 'trial'
+                            ? 'pointer-events-none cursor-not-allowed bg-gray-100'
+                            : '',
                           isActive
                             ? 'before:top-2/5 2xl:before:-start-5 text-danger before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-danger'
                             : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-700/90'
@@ -181,6 +186,11 @@ export default function Sidebar({ className }: { className?: string }) {
                           <span className="truncate">{item.name}</span>
                         </div>
                         {role === 'retailer' && blockedMenuUrls.includes(item?.href) && !session?.user?.plan && (
+                          <div className="text-end ">
+                            <SlLock className="text-lg" />
+                          </div>
+                        )}
+                        {role === 'retailer' && addonsBlockedMenuUrls.includes(item?.href) && session?.user?.plan === 'trial' && (
                           <div className="text-end ">
                             <SlLock className="text-lg" />
                           </div>

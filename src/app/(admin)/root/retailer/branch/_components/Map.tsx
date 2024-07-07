@@ -1,6 +1,7 @@
 import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import { Field, useFormikContext } from 'formik';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { IoAlertCircle } from 'react-icons/io5';
 import { Input, Loader } from 'rizzui';
 
 export default function MapComponent() {
@@ -107,6 +108,17 @@ export default function MapComponent() {
               placeholder="Search for places..."
               ref={autocompleteRef}
               value={values.address}
+              helperText={
+                meta.touched && meta.error ? (
+                  <span className="flex items-center gap-x-1">
+                    <IoAlertCircle className="text-lg" />
+                    <span>{meta.error}</span>
+                  </span>
+                ) : (
+                  ''
+                )
+              }
+              helperClassName="text-danger"
               inputClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
             />
           )}

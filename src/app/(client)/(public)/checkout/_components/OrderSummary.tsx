@@ -38,18 +38,15 @@ export default function OrderSummary() {
     if (checkOutResponse) {
       if (subscription?.slug === 'trial') {
         toast.success('Free trial activated!');
-        refetch();
-        if (profileSuccess) {
-          console.log('profile?.data', profile?.data);
-          update({ ...session?.user, ...profile?.data });
-          dispatch(
-            setValue({
-              target: 'user',
-              value: { ...user, ...profile?.data },
-            })
-          );
-          push(routes.retailer.dashboard);
-        }
+        console.log('checkOutResponse', checkOutResponse);
+        update({ ...session?.user, ...checkOutResponse?.data });
+        dispatch(
+          setValue({
+            target: 'user',
+            value: { ...user, ...profile?.data },
+          })
+        );
+        push(routes.retailer.dashboard);
       } else {
         push(checkOutResponse.data.url);
       }
