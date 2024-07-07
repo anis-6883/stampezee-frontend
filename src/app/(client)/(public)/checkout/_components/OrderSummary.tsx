@@ -3,11 +3,12 @@
 import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import { routes } from '@/config/routes';
+import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { removeAddOns } from '@/features/subscription/subscriptionSlice';
-import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
+import { useCreateCheckOutMutation, useCreateCouponMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn } from '@/types';
 import { Form, Formik } from 'formik';
 import { useSession } from 'next-auth/react';
@@ -22,8 +23,9 @@ import LoginAlert from './LoginAlert';
 export default function OrderSummary() {
   const { push } = useRouter();
   const dispatch = useDispatch();
-  const { data: session, update } = useSession();
+  const { data: session, update }: any = useSession();
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
+  const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [subTotal, setSubTotal] = useState<number>(0);
   const { subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
 
@@ -32,6 +34,7 @@ export default function OrderSummary() {
 
   const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
   const [checkOut, { data: checkOutResponse, isLoading: checkOutLoading }] = useCreateCheckOutMutation();
+  const [createCoupon, { data: couponResponse, error: couponError, isSuccess: couponSuccess }] = useCreateCouponMutation();
   const { data: profile, isSuccess: profileSuccess, refetch } = useRetailerGetProfileQuery(null);
 
   useEffect(() => {
@@ -63,7 +66,6 @@ export default function OrderSummary() {
     }
   };
 
-  const couponDiscount = 10;
   const discount = 10;
   const tax = 20;
   const handleRemoveAddOn = (addOnId: string) => {
@@ -71,28 +73,46 @@ export default function OrderSummary() {
   };
 
   useEffect(() => {
-    const total = subscription ? subscription.price + addOns.reduce((total: number, addOn: AddOn) => total + addOn.price, 0) : 0;
-    setSubTotal(total);
+    const total = subscription ? subscription.price + addOns?.reduce((total: number, addOn: AddOn) => total + addOn.price, 0) : 0;
+    if (total) {
+      setSubTotal(total ? total : 0);
+    }
   }, [addOns, subscription]);
+
+  useEffect(() => {
+    if (couponError) {
+      const myError = couponError as SerializedError;
+      setIsCouponSubmitting(false);
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+
+    if (couponSuccess) {
+      setIsCouponSubmitting(false);
+      const couponDiscount = (subTotal * couponResponse?.data?.discount) / 100;
+      console.log('couponDiscount', couponDiscount);
+      setCouponDiscount(couponDiscount);
+      setSubTotal((prev) => prev - couponDiscount);
+      toast.success(couponResponse?.message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [couponError, couponResponse?.data?.discount, couponResponse?.message, couponSuccess]);
 
   const handleCoupon = (values: any) => {
     setIsCouponSubmitting(true);
-    if (values.coupon === 'coupon1234') {
-      setSubTotal((prev) => prev - couponDiscount);
-      setIsCouponSubmitting(false);
-    }
+    createCoupon(values);
   };
+
   return (
     <>
       <div className="rounded-lg border p-4">
         <h2 className="pb-2 text-lg font-medium">Coupon</h2>
         <hr className=" text-lg font-bold" />
         <div className="my-5">
-          <Formik initialValues={{ coupon: '' }} onSubmit={handleCoupon}>
+          <Formik initialValues={{ code: '' }} onSubmit={handleCoupon}>
             {() => (
               <Form className="grid grid-cols-12 justify-between gap-x-2">
                 <div className="col-span-7">
-                  <InputField label="" placeholder="X1Y2Z3" required={false} name="coupon" />
+                  <InputField label="" placeholder="X1Y2Z3" required={false} name="code" />
                 </div>
                 <div className="col-span-5">
                   <Button
@@ -129,9 +149,36 @@ export default function OrderSummary() {
           </div>
         )}
 
+        {couponResponse?.status && (
+          <div className="mb-2 grid w-full grid-cols-5 items-center gap-x-3">
+            <span className="col-span-2">
+              {' '}
+              Coupon :
+              {`${couponResponse?.data?.title} ${couponResponse?.data?.discountType === 'percentage' ? `(${couponResponse?.data?.discount}%)` : ''}`}
+            </span>
+            <button onClick={() => {}} className="col-span-2 text-red-500">
+              <ImBin />
+            </button>
+            <span className="justify-self-end">
+              {couponResponse?.data?.discountType === 'percentage' ? couponDiscount?.toFixed(2) : couponResponse?.data?.discount} CAD
+            </span>
+          </div>
+
+          // <div className="mb-2 flex justify-between">
+          //   <span>
+          //     Coupon :{' '}
+          //     {`${couponResponse?.data?.title} ${couponResponse?.data?.discountType === 'percentage' ? `(${couponResponse?.data?.discount}%)` : ''}`}
+          //   </span>
+          //   <span className="text-red-500">
+          //     {couponResponse?.data?.discountType === 'percentage' ? couponDiscount?.toFixed(2) : couponResponse?.data?.discount}
+          //     CAD
+          //   </span>
+          // </div>
+        )}
+
         <div className="mb-2 flex justify-between">
           <span>Subtotal</span>
-          <span className="text-red-500">{subTotal.toFixed(2)} CAD</span>
+          <span className="text-red-500">{subTotal ? subTotal.toFixed(2) : 0} CAD</span>
         </div>
 
         {/* <div className="mb-2 flex justify-between">
@@ -144,10 +191,11 @@ export default function OrderSummary() {
       </div> */}
         <div className="flex justify-between text-xl font-bold">
           <span>Total</span>
-          <span className="text-red-500">{subTotal.toFixed(2)} CAD</span>
+          <span className="text-red-500">{subTotal ? subTotal.toFixed(2) : 0} CAD</span>
         </div>
       </div>
       <Button
+        disabled={session?.user?.plan && session?.user?.plan == subscription?.slug ? true : false}
         color="danger"
         text="Checkout Confirm"
         className="mt-5 w-full"

@@ -81,7 +81,13 @@ export const Plans = () => {
         <hr className="my-3" />
         <div className="mt-10 flex items-center justify-end gap-2">
           <Link href={routes.privateRoutes.checkout}>
-            <Button className="text-white" color="danger" text="Selection Confirm" postIcon={<BsCheck2Circle className="text-base" />} />
+            <Button
+              disabled={session?.user?.plan === subscription?.slug ? true : false}
+              className="text-white"
+              color="danger"
+              text="Selection Confirm"
+              postIcon={<BsCheck2Circle className="text-base" />}
+            />
           </Link>
         </div>
       </div>

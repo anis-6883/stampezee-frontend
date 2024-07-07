@@ -32,10 +32,23 @@ export const subscriptionApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['superAdminSubscription'],
     }),
+    createCoupon: builder.mutation({
+      query: (data: any) => ({
+        url: `/api/web/subscription-plans/coupon-validity-check`,
+        method: 'POST',
+        body: data,
+      }),
+      // invalidatesTags: ['superAdminSubscription'],
+    }),
   }),
 });
 
-export const { useCreateCheckOutMutation, useGetSubscriptionQuery, useGetAllSubscriptionQuery, useUpdateSubscriptionMutation } =
-  subscriptionApi;
+export const {
+  useCreateCheckOutMutation,
+  useGetSubscriptionQuery,
+  useGetAllSubscriptionQuery,
+  useUpdateSubscriptionMutation,
+  useCreateCouponMutation,
+} = subscriptionApi;
 
 export default subscriptionApi;

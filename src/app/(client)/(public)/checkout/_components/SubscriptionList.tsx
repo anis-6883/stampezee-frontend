@@ -9,13 +9,14 @@ import { useEffect, useState } from 'react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from 'rizzui';
 
 export default function SubscriptionList({ isMemberShip }: { isMemberShip?: boolean }) {
   const dispatch = useDispatch();
   const [plans, setPlans] = useState([]);
   const { data: session }: any = useSession();
   const { subscription } = useSelector((state: RootState) => state.subscriptionSlice);
-  const { data } = useGetSubscriptionQuery(undefined);
+  const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
   useEffect(() => {
     let transformPlans = [];
@@ -41,7 +42,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
       });
     }
     setPlans(transformPlans);
-  }, [data?.data, session?.user?.plan, session?.user?.takeFreeTrial]);
+  }, [data?.data, session?.user, session?.user?.plan, session?.user?.takeFreeTrial]);
 
   const handleSubscription = (plan: Subscription) => {
     if (plan.slug === 'trial') {
@@ -62,7 +63,11 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
     }
   }, [data, dispatch, session, subscription?.slug]);
 
-  return (
+  return isLoading ? (
+    <div>
+      <Loader variant="spinner" />
+    </div>
+  ) : (
     <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
       {plans?.map((item: Subscription, index: number) => {
         return item?.isBlocked ? (

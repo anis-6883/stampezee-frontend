@@ -18,7 +18,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 
-export default function Update({ Id }: any) {
+export default function Update({ Id, offset }: any) {
   const [submitting, setSubmitting] = useState(false);
   const [updateStamp] = useUpdateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
@@ -65,7 +65,8 @@ export default function Update({ Id }: any) {
     rewardType: stampData?.data?.rewardType ? stampData?.data?.rewardType : '',
     promotionReward: stampData?.data?.promotionReward ? stampData?.data?.promotionReward : '',
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
-    validDateRange: getFormattedDate(stampData?.data?.startedAt) + ' to ' + getFormattedDate(stampData?.data?.expiredAt) || '',
+    validDateRange:
+      `${getFormattedDate(stampData?.data?.startedAt, offset)} to ${getFormattedDate(stampData?.data?.expiredAt, offset)}` || '',
   };
 
   console.log(getFormattedDate(new Date(stampData?.data?.startedAt)));

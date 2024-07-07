@@ -1,5 +1,6 @@
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
+import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import UpdateStamp from '../../_components/UpdateStamp';
 
 const pageHeader = {
@@ -18,13 +19,14 @@ const pageHeader = {
   ],
 };
 
-export default function Page({ params }: any) {
+export default async function Page({ params }: any) {
   const { id } = params;
+  const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
 
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <UpdateStamp Id={id} />
+      <UpdateStamp Id={id} offset={data?.data?.general?.timezone?.value} />
     </div>
   );
 }

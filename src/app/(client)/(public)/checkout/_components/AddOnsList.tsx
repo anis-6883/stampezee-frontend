@@ -5,18 +5,23 @@ import { setAddOns } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn, Subscription } from '@/types';
 import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from 'rizzui';
 
 export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean }) {
   const dispatch = useDispatch();
   const { subscription, addOns: addOnsData } = useSelector((state: RootState) => state.subscriptionSlice);
-  const { data } = useGetSubscriptionQuery(undefined);
+  const { data, isLoading } = useGetSubscriptionQuery(undefined);
   const addOns = data?.data?.filter((item: Subscription) => item.type === 'addon');
 
   const handleAddOnSelect = (addOn: AddOn) => {
     dispatch(setAddOns(addOn));
   };
 
-  return (
+  return isLoading ? (
+    <div>
+      <Loader variant="spinner" />
+    </div>
+  ) : (
     <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
       {addOns?.map((addOn: AddOn, index: number) => (
         <div key={index}>

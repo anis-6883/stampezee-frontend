@@ -34,6 +34,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
     if (verifySuccess) {
       setIsSubmitting(false);
       dispatch(userLoggedIn(verifyResponse?.data));
+      toast.success(verifyResponse?.message || 'Otp verified & Login successfully!');
 
       signIn('credentials', {
         userData: JSON.stringify(verifyResponse?.data),
@@ -44,7 +45,6 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
           toast.error(callback?.error);
         }
         if (callback?.ok && !callback?.error) {
-          toast.success(verifyResponse?.message || 'Otp verified & Login successfully!');
           if (verifyResponse?.data?.role === ROLE.RETAILER) {
             replace(routes.retailer.dashboard);
           }
