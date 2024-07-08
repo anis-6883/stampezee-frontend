@@ -16,6 +16,9 @@ const initialState: any = {
     // status: true,
   },
   addOns: [],
+  coupon: null,
+  subTotal: 0,
+  couponDiscount: 0,
 };
 
 const subscriptionSlice = createSlice({
@@ -24,6 +27,7 @@ const subscriptionSlice = createSlice({
   reducers: {
     setSubscription: (state, action) => {
       state.subscription = action.payload;
+      calculateSubTotal(state);
     },
     setAddOns: (state, action) => {
       const newAddOns = state.addOns.find((item: any) => item._id === action.payload._id);
@@ -32,15 +36,44 @@ const subscriptionSlice = createSlice({
       } else {
         state.addOns.push({ ...action.payload, isAddOnsSelect: true });
       }
+      calculateSubTotal(state);
     },
     resetAddOns: (state) => {
       state.addOns = [];
+      calculateSubTotal(state);
     },
     removeAddOns: (state, action) => {
       state.addOns = state.addOns.filter((item: any) => item._id !== action.payload);
+      calculateSubTotal(state);
+    },
+    applyCoupon: (state, action) => {
+      state.coupon = action.payload;
+      calculateDiscount(state);
+      calculateSubTotal(state);
+    },
+    removeCoupon: (state) => {
+      state.coupon = null;
+      state.couponDiscount = 0;
+      calculateSubTotal(state);
     },
   },
 });
 
-export const { setSubscription, setAddOns, removeAddOns, resetAddOns } = subscriptionSlice.actions;
+const calculateSubTotal = (state: any) => {
+  const planPrice = state.subscription ? state.subscription.price : 0;
+  const addOnsPrice = state.addOns.reduce((total: number, addOn: any) => total + addOn.price, 0);
+  state.subTotal = planPrice + addOnsPrice - state.couponDiscount;
+};
+
+const calculateDiscount = (state: any) => {
+  if (state.coupon) {
+    if (state.coupon.discountType === 'percentage') {
+      state.couponDiscount = (state.subTotal * state.coupon.discount) / 100;
+    } else {
+      state.couponDiscount = state.coupon.discount;
+    }
+  }
+};
+
+export const { setSubscription, setAddOns, removeAddOns, resetAddOns, applyCoupon, removeCoupon } = subscriptionSlice.actions;
 export default subscriptionSlice;

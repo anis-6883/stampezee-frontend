@@ -7,7 +7,7 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
-import { removeAddOns } from '@/features/subscription/subscriptionSlice';
+import { applyCoupon, removeAddOns, removeCoupon } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation, useCreateCouponMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn } from '@/types';
 import { Form, Formik } from 'formik';
@@ -18,6 +18,7 @@ import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { ImBin } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
 import LoginAlert from './LoginAlert';
 
 export default function OrderSummary() {
@@ -25,23 +26,36 @@ export default function OrderSummary() {
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
-  const [couponDiscount, setCouponDiscount] = useState<number>(0);
-  const [subTotal, setSubTotal] = useState<number>(0);
-  const { subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
+  // const [isCouponItem, setIsCouponItem] = useState<boolean>(true);
+  // const [couponDiscount, setCouponDiscount] = useState<number>(0);
+  // const [subTotal, setSubTotal] = useState<number>(0);
+  const { subscription, addOns, coupon, couponDiscount, subTotal } = useSelector((state: RootState) => state.subscriptionSlice);
 
   const [modalState, setModalState] = useState(false);
   const { isLoggedIn, user } = useSelector((state: RootState) => state.authSlice);
 
   const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
-  const [checkOut, { data: checkOutResponse, isLoading: checkOutLoading }] = useCreateCheckOutMutation();
+  const [checkOut, { data: checkOutResponse, isLoading: checkOutLoading, error: checkoutError }] = useCreateCheckOutMutation();
   const [createCoupon, { data: couponResponse, error: couponError, isSuccess: couponSuccess }] = useCreateCouponMutation();
   const { data: profile, isSuccess: profileSuccess, refetch } = useRetailerGetProfileQuery(null);
 
+  const initialValues = {
+    code: '',
+  };
+
+  const validationSchema = Yup.object().shape({
+    code: Yup.string().required('Required!'),
+  });
+
   useEffect(() => {
+    // if (checkoutError) {
+    //   const myError = checkoutError as SerializedError;
+    //   toast.error(myError?.data?.message || 'Something went wrong!');
+    // }
+
     if (checkOutResponse) {
       if (subscription?.slug === 'trial') {
         toast.success('Free trial activated!');
-        console.log('checkOutResponse', checkOutResponse);
         update({ ...session?.user, ...checkOutResponse?.data });
         dispatch(
           setValue({
@@ -73,13 +87,6 @@ export default function OrderSummary() {
   };
 
   useEffect(() => {
-    const total = subscription ? subscription.price + addOns?.reduce((total: number, addOn: AddOn) => total + addOn.price, 0) : 0;
-    if (total) {
-      setSubTotal(total ? total : 0);
-    }
-  }, [addOns, subscription]);
-
-  useEffect(() => {
     if (couponError) {
       const myError = couponError as SerializedError;
       setIsCouponSubmitting(false);
@@ -88,14 +95,10 @@ export default function OrderSummary() {
 
     if (couponSuccess) {
       setIsCouponSubmitting(false);
-      const couponDiscount = (subTotal * couponResponse?.data?.discount) / 100;
-      console.log('couponDiscount', couponDiscount);
-      setCouponDiscount(couponDiscount);
-      setSubTotal((prev) => prev - couponDiscount);
       toast.success(couponResponse?.message);
+      dispatch(applyCoupon(couponResponse?.data));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [couponError, couponResponse?.data?.discount, couponResponse?.message, couponSuccess]);
+  }, [couponError, couponResponse?.data, couponResponse?.message, couponSuccess, dispatch]);
 
   const handleCoupon = (values: any) => {
     setIsCouponSubmitting(true);
@@ -108,14 +111,21 @@ export default function OrderSummary() {
         <h2 className="pb-2 text-lg font-medium">Coupon</h2>
         <hr className=" text-lg font-bold" />
         <div className="my-5">
-          <Formik initialValues={{ code: '' }} onSubmit={handleCoupon}>
+          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleCoupon}>
             {() => (
               <Form className="grid grid-cols-12 justify-between gap-x-2">
                 <div className="col-span-7">
-                  <InputField label="" placeholder="X1Y2Z3" required={false} name="code" />
+                  <InputField
+                    disabled={session?.user?.plan == subscription?.slug || subscription?.slug === 'trial' || coupon ? true : false}
+                    label=""
+                    placeholder="X1Y2Z3"
+                    required={false}
+                    name="code"
+                  />
                 </div>
                 <div className="col-span-5">
                   <Button
+                    disabled={session?.user?.plan == subscription?.slug || subscription?.slug === 'trial' || coupon ? true : false}
                     color="danger"
                     text="Apply"
                     className="w-full"
@@ -149,31 +159,23 @@ export default function OrderSummary() {
           </div>
         )}
 
-        {couponResponse?.status && (
-          <div className="mb-2 grid w-full grid-cols-5 items-center gap-x-3">
-            <span className="col-span-2">
-              {' '}
-              Coupon :
-              {`${couponResponse?.data?.title} ${couponResponse?.data?.discountType === 'percentage' ? `(${couponResponse?.data?.discount}%)` : ''}`}
+        {couponResponse?.status && coupon && (
+          <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+            <span className="col-span-6">
+              {`${coupon?.title} ${coupon?.discountType === 'percentage' ? `(${coupon?.discount}%)` : ''}`}
             </span>
-            <button onClick={() => {}} className="col-span-2 text-red-500">
+            <button
+              onClick={() => {
+                dispatch(removeCoupon());
+              }}
+              className="col-span-2 text-red-500"
+            >
               <ImBin />
             </button>
-            <span className="justify-self-end">
+            <span className="col-span-4 justify-self-end">
               {couponResponse?.data?.discountType === 'percentage' ? couponDiscount?.toFixed(2) : couponResponse?.data?.discount} CAD
             </span>
           </div>
-
-          // <div className="mb-2 flex justify-between">
-          //   <span>
-          //     Coupon :{' '}
-          //     {`${couponResponse?.data?.title} ${couponResponse?.data?.discountType === 'percentage' ? `(${couponResponse?.data?.discount}%)` : ''}`}
-          //   </span>
-          //   <span className="text-red-500">
-          //     {couponResponse?.data?.discountType === 'percentage' ? couponDiscount?.toFixed(2) : couponResponse?.data?.discount}
-          //     CAD
-          //   </span>
-          // </div>
         )}
 
         <div className="mb-2 flex justify-between">
@@ -195,7 +197,7 @@ export default function OrderSummary() {
         </div>
       </div>
       <Button
-        disabled={session?.user?.plan && session?.user?.plan == subscription?.slug ? true : false}
+        disabled={session?.user?.plan == subscription?.slug ? true : false}
         color="danger"
         text="Checkout Confirm"
         className="mt-5 w-full"
