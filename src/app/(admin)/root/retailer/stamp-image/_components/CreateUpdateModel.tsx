@@ -133,7 +133,7 @@ export default function CreateUpdateModel({
                 </p>
                 <div className="mt-6 flex justify-end">
                   <Button
-                    color={formData?._id ? 'warning' : 'primary'}
+                    color={'danger'}
                     type="submit"
                     text={formData?._id ? 'Update' : 'Submit'}
                     postIcon={<BsCheck2Circle className="text-base" />}

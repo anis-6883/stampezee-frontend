@@ -38,10 +38,15 @@ export const routes = {
         create: '/root/retailer/customer/create',
         edit: (id: number | string) => `/root/retailer/customer/update/${id}`,
       },
-      notification: {
-        home: `/root/retailer/notification`,
-        create: '/root/retailer/notification/create',
-        edit: (id: number | string) => `/root/retailer/notification/update/${id}`,
+      regularNotification: {
+        home: `/root/retailer/notification/regular`,
+        create: '/root/retailer/notification/regular/create',
+        edit: (id: number | string) => `/root/retailer/notification/regular/update/${id}`,
+      },
+      locationBasedNotification: {
+        home: `/root/retailer/notification/location-based`,
+        create: '/root/retailer/notification/regular/location-based/create',
+        edit: (id: number | string) => `/root/retailer/notification/regular/location-based/update/${id}`,
       },
       membershipPlan: `/root/retailer/membership-plan`,
     },

@@ -26,9 +26,7 @@ export default function OrderSummary() {
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
-  // const [isCouponItem, setIsCouponItem] = useState<boolean>(true);
-  // const [couponDiscount, setCouponDiscount] = useState<number>(0);
-  // const [subTotal, setSubTotal] = useState<number>(0);
+  const [code, setCode] = useState<string>('');
   const { subscription, addOns, coupon, couponDiscount, subTotal } = useSelector((state: RootState) => state.subscriptionSlice);
 
   const [modalState, setModalState] = useState(false);
@@ -76,7 +74,11 @@ export default function OrderSummary() {
       setModalState(true);
     }
     if (subSlugs.length > 0) {
-      checkOut({ slugs: subSlugs });
+      if (code) {
+        checkOut({ slugs: subSlugs, code });
+      } else {
+        checkOut({ slugs: subSlugs });
+      }
     }
   };
 
@@ -103,6 +105,7 @@ export default function OrderSummary() {
   const handleCoupon = (values: any) => {
     setIsCouponSubmitting(true);
     createCoupon(values);
+    setCode(values.code);
   };
 
   return (
@@ -148,12 +151,12 @@ export default function OrderSummary() {
         {addOns?.length > 0 && (
           <div>
             {addOns.map((addOn: AddOn, index: number) => (
-              <div key={index} className="mb-2 grid w-full grid-cols-5 items-center gap-x-4">
-                <span className="col-span-2">{addOn.title}</span>
+              <div key={index} className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-6">{addOn.title}</span>
                 <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
                   <ImBin />
                 </button>
-                <span className="justify-self-end">{addOn.price} CAD</span>
+                <span className="col-span-4 justify-self-end">{addOn.price} CAD</span>
               </div>
             ))}
           </div>
@@ -173,7 +176,7 @@ export default function OrderSummary() {
               <ImBin />
             </button>
             <span className="col-span-4 justify-self-end">
-              {couponResponse?.data?.discountType === 'percentage' ? couponDiscount?.toFixed(2) : couponResponse?.data?.discount} CAD
+              {coupon?.discountType === 'percentage' ? `-${couponDiscount?.toFixed(2)}` : `-${coupon?.discount}`} CAD
             </span>
           </div>
         )}

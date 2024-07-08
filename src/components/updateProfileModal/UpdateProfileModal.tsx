@@ -70,7 +70,7 @@ export default function UpdateProfileModal({
       setIsSubmitting(false);
     }
     if (updateProfileSuccess) {
-      toast.success('Super admin profile updated successfully!');
+      toast.success('Profile updated successfully!');
       setIsSubmitting(false);
       setModalState(false);
       update({ ...session?.user, ...updateProfileData?.data });
@@ -115,12 +115,14 @@ export default function UpdateProfileModal({
                 <InputField className="my-3" name="firstName" required={false} label="First Name" placeholder="Mr." />
                 <InputField name="lastName" required={false} label="Last Name" placeholder="Rohim" />
                 <InputField className="my-3" disabled={true} name="email" required={false} label="Email" placeholder="admin@email.com" />
-                {/* <p className="text-end text-xs font-semibold">
+
+                <p className="text-end text-xs font-semibold">
                   Fields marked with <span className="text-red-600">*</span> are mandatory!
-                </p> */}
+                </p>
+
                 <div className="mt-6 flex justify-end">
                   <Button
-                    color={'primary'}
+                    color="danger"
                     type="submit"
                     text={'Update'}
                     postIcon={<BsCheck2Circle className="text-base" />}

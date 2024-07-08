@@ -264,7 +264,13 @@ export default function Update({ Id, offset }: any) {
                 Fields marked with <span className="text-red-600">*</span> are mandatory!
               </p>
               <div className="mt-2 flex justify-end">
-                <Button type="submit" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={submitting} />
+                <Button
+                  color="danger"
+                  type="submit"
+                  text="Submit"
+                  postIcon={<BsCheck2Circle className="text-base" />}
+                  isSubmitting={submitting}
+                />
               </div>
             </Form>
           );

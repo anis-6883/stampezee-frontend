@@ -101,6 +101,16 @@ export const menuItems: { [key: string]: any } = {
       name: 'Push Notifications',
       href: routes.retailer.notification.home,
       icon: <PiBellRinging />,
+      dropdownItems: [
+        {
+          name: 'Regular',
+          href: routes.privateRoutes.retailer.regularNotification.home,
+        },
+        {
+          name: 'Location Based',
+          href: routes.privateRoutes.retailer.locationBasedNotification.home,
+        },
+      ],
     },
     {
       name: 'Manage Profile',
