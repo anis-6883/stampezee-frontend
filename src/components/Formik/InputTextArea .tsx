@@ -5,6 +5,7 @@ import { Textarea } from 'rizzui';
 export default function InputTextarea({
   name,
   label,
+  rows = 5,
   required = true,
   placeholder = 'Write you message...',
 }: {
@@ -14,6 +15,7 @@ export default function InputTextarea({
   ref?: any;
   required?: boolean;
   type?: string;
+  rows?: number;
 }) {
   return (
     <div>
@@ -22,6 +24,7 @@ export default function InputTextarea({
           <Textarea
             {...field}
             name={name}
+            rows={rows}
             label={
               <span>
                 {label} {required && <span className="text-red-600">*</span>}

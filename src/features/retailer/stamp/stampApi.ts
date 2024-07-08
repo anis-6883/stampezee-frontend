@@ -46,6 +46,7 @@ export const stampApi = apiSlice.injectEndpoints({
       query: () => {
         return `/api/web/retailer/stamp/branch-category-image-list`;
       },
+      providesTags: ['branches', 'superAdminRetailerStampCategory', 'retailerStamp'],
     }),
     singleBranch: builder.query<{ success: boolean }, { _id: string }>({
       query: ({ _id }) => `/api/web/retailer/branch/${_id}`,

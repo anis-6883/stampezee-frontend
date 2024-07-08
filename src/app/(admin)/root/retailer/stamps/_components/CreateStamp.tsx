@@ -230,10 +230,10 @@ export default function Create() {
                 </div>
               )}
 
-              {optionsData?.customImages?.length === 0 && (
-                <div className=" pt-3 text-center text-danger">
-                  {/* <span>No Custom Image</span> */}
-                  <Link href={routes.privateRoutes.retailer.stampImage.home} className="mx-3 text-danger hover:cursor-pointer">
+              {isAddons && optionsData?.customImages?.length === 0 && (
+                <div className="border-l-4 border-red-400 bg-blue-50 p-4">
+                  <p className="mb-3 font-medium text-danger">No custom image</p>
+                  <Link href={routes.privateRoutes.retailer.stampImage.home} className="text-danger hover:cursor-pointer">
                     Create custom image
                   </Link>
                 </div>
@@ -313,7 +313,13 @@ export default function Create() {
                 Fields marked with <span className="text-red-600">*</span> are mandatory!
               </p>
               <div className="mt-2 flex justify-end">
-                <Button type="submit" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={submitting} />
+                <Button
+                  color="danger"
+                  type="submit"
+                  text="Submit"
+                  postIcon={<BsCheck2Circle className="text-base" />}
+                  isSubmitting={submitting}
+                />
               </div>
             </Form>
           );

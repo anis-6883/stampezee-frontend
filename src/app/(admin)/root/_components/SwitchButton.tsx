@@ -1,15 +1,25 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { FcLock, FcUnlock } from 'react-icons/fc';
 import { Switch } from 'rizzui';
 
 export default function SwitchButton({ updateStatus, id, status }: { updateStatus: any; id: string; status: boolean }) {
   const [checked, setChecked] = React.useState<boolean>(true);
 
-  const handleUpdateStatus = () => {
+  const handleUpdateStatus = async () => {
     setChecked((prev) => !prev);
-    updateStatus({ branchId: id, data: { status: !checked } });
+    try {
+      const result = await updateStatus({ branchId: id, data: { status: !checked } });
+      if (result?.data?.status) {
+        toast.success('Status updated successfully');
+      } else {
+        toast.error('Something went wrong!');
+      }
+    } catch (err) {
+      toast.error('Something went wrong!');
+    }
   };
 
   useEffect(() => {

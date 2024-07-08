@@ -70,6 +70,20 @@ export default function Sidebar({ className }: { className?: string }) {
         </div>
       )}
 
+      {session?.user?.role === ROLE.SUPER_ADMIN && (
+        <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
+          <img
+            src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+            color="danger"
+            className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+            alt="brand"
+          />
+          <Title as="h6" className="break-all text-center font-bold">
+            {fullName}
+          </Title>
+        </div>
+      )}
+
       {session?.user?.plan && (
         <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
           <div className="flex">
@@ -104,7 +118,7 @@ export default function Sidebar({ className }: { className?: string }) {
                             className={cn(
                               '2xl:mx-5 2xl:my-2 group relative mx-3 flex cursor-pointer items-center justify-between rounded-md px-3 py-2 font-medium lg:my-1',
                               isDropdownOpen
-                                ? 'before:top-2/5 2xl:before:-start-5 text-primary before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-primary'
+                                ? 'before:top-2/5 2xl:before:-start-5 text-danger before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-primary'
                                 : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:text-gray-700/90 dark:hover:text-gray-700'
                             )}
                           >
@@ -113,7 +127,7 @@ export default function Sidebar({ className }: { className?: string }) {
                                 <span
                                   className={cn(
                                     'me-2 inline-flex h-5 w-5 items-center justify-center rounded-md [&>svg]:h-[20px] [&>svg]:w-[20px]',
-                                    isDropdownOpen ? 'text-primary' : 'text-gray-800 dark:text-gray-500 dark:group-hover:text-gray-700'
+                                    isDropdownOpen ? 'text-danger' : 'text-gray-800 dark:text-gray-500 dark:group-hover:text-gray-700'
                                   )}
                                 >
                                   {item?.icon}
@@ -142,7 +156,7 @@ export default function Sidebar({ className }: { className?: string }) {
                               className={cn(
                                 '2xl:mx-5 mx-3.5 mb-0.5 flex items-center justify-between rounded-md px-3.5 py-2 font-medium capitalize last-of-type:mb-1 lg:last-of-type:mb-2',
                                 isChildActive
-                                  ? 'text-primary'
+                                  ? 'text-danger'
                                   : 'text-gray-500 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900'
                               )}
                             >
@@ -150,7 +164,7 @@ export default function Sidebar({ className }: { className?: string }) {
                                 <span
                                   className={cn(
                                     'me-[18px] ms-1 inline-flex h-1 w-1 rounded-full bg-current transition-all duration-200',
-                                    isChildActive ? 'bg-primary ring-[1px] ring-primary' : 'opacity-40'
+                                    isChildActive ? 'bg-danger ring-[1px] ring-danger' : 'opacity-40'
                                   )}
                                 />{' '}
                                 <span className="truncate">{dropdownItem?.name}</span>

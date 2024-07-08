@@ -112,7 +112,7 @@ export default function StampsImageTable() {
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
       <div className="mb-4 flex justify-end">
-        <Button onClick={() => setCreateState(true)} text="Add New Stamp Image" preIcon={<HiPlus className="text-base" />} />
+        <Button color="danger" onClick={() => setCreateState(true)} text="Add New Stamp Image" preIcon={<HiPlus className="text-base" />} />
       </div>
 
       <Table
