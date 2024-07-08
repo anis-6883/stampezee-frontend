@@ -85,7 +85,7 @@ export default function CreateUpdateModel({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Update An Notification</Title> : <Title as="h4">Add New Notification</Title>}
+          {formData?._id ? <Title as="h4">Resend Notification</Title> : <Title as="h4">Send Notification</Title>}
 
           <ActionIcon
             size="sm"
@@ -102,7 +102,7 @@ export default function CreateUpdateModel({
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
             {({ setFieldValue, values }) => (
               <Form className="mt-5">
-                <InputField name="title" label="Title" placeholder="20% off all pizzas this week" />
+                <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
                 <div className="my-3">
                   <InputTextarea name="description" label="Description" placeholder="Write here..." />
                 </div>

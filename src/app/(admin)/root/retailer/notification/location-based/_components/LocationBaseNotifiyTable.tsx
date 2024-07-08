@@ -131,12 +131,7 @@ export default function LocationBaseNotifyTable() {
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
       <div className="mb-4 flex justify-end">
-        <Button
-          color="danger"
-          onClick={() => setCreateState(true)}
-          text="Add New Notification"
-          preIcon={<HiPlus className="text-base" />}
-        />
+        <Button color="danger" onClick={() => setCreateState(true)} text="Send Notification" preIcon={<HiPlus className="text-base" />} />
       </div>
       <Table
         isFetching={isFetching}
