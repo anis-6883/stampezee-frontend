@@ -12,7 +12,9 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoStorefrontOutline } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
+import { RiTeamLine } from 'react-icons/ri';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -127,7 +129,7 @@ export default function CreateUpdateModel({
         </div>
         <div>
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
-            {({ values, errors, setFieldValue }) => {
+            {({ values, setFieldValue }) => {
               return (
                 <Form className="mt-5">
                   {formData?._id && formData?.type === 'subscription' && (
@@ -156,10 +158,23 @@ export default function CreateUpdateModel({
                   </div>
                   <div className="my-3 flex gap-5">
                     {formData?.type === 'subscription' && (
-                      <InputField name="allowTotalBranch" label="Total Branch" type="number" placeholder="0" />
+                      <InputField
+                        name="allowTotalBranch"
+                        label="Total Branch"
+                        type="number"
+                        placeholder="0"
+                        prefix={<IoStorefrontOutline className="text-xl" />}
+                      />
                     )}
+
                     {formData?.type === 'subscription' && (
-                      <InputField name="allowTotalTeamMember" label="Total Team Member" type="number" placeholder="0" />
+                      <InputField
+                        name="allowTotalTeamMember"
+                        label="Total Team Member"
+                        type="number"
+                        placeholder="0"
+                        prefix={<RiTeamLine className="text-xl" />}
+                      />
                     )}
 
                     {formData?.type !== 'subscription' && <InputField name="limit" type="number" label="Limit" placeholder="0" />}

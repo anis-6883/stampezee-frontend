@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
+import { LuCircleDollarSign } from 'react-icons/lu';
+import { RiDiscountPercentLine } from 'react-icons/ri';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -36,6 +38,8 @@ export default function CreateUpdateModel({
     description: formData?.description || '',
     discountType: formData?.discountType || '',
     discount: formData?.discount || '',
+    limit: formData?.limit || '',
+    minPurchaseAmount: formData?.minPurchaseAmount || '',
     validDateRange: formData?.validDateRange || '',
   };
 
@@ -47,6 +51,19 @@ export default function CreateUpdateModel({
       .test('integer', 'Please enter an integer value', (value: any) => {
         return !isNaN(parseFloat(value)) && isFinite(value);
       })
+      .min(0, 'Value must be greater then or equal to 0')
+      .required('Required!'),
+    limit: Yup.number()
+      .test('integer', 'Please enter an integer value', (value: any) => {
+        return !isNaN(parseFloat(value)) && isFinite(value);
+      })
+      .min(1, 'Value must be greater then or equal to 1')
+      .required('Required!'),
+    minPurchaseAmount: Yup.number()
+      .test('integer', 'Please enter an integer value', (value: any) => {
+        return !isNaN(parseFloat(value)) && isFinite(value);
+      })
+      .min(0, 'Value must be greater then or equal to 0')
       .required('Required!'),
     validDateRange: Yup.string().required('Required!'),
   });
@@ -76,7 +93,7 @@ export default function CreateUpdateModel({
     }
 
     if (createSuccess) {
-      toast.success('Retailer created successfully!');
+      toast.success('Coupon created successfully!');
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
@@ -144,7 +161,24 @@ export default function CreateUpdateModel({
                       name="discountType"
                       label="Discount Type"
                     />
-                    <InputField type="number" name="discount" label="Discount Amount" placeholder="10" />
+                    <InputField
+                      type="number"
+                      name="discount"
+                      label="Discount Amount"
+                      placeholder="10"
+                      prefix={<RiDiscountPercentLine className="text-xl" />}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <InputField type="number" name="limit" label="Limit" placeholder="1" />
+                    <InputField
+                      type="number"
+                      name="minPurchaseAmount"
+                      label="Min Purchased Amount (CAD)"
+                      placeholder="5"
+                      prefix={<LuCircleDollarSign className="text-xl" />}
+                    />
                   </div>
 
                   <div className="grid grid-cols-1">
