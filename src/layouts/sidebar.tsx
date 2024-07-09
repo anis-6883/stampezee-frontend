@@ -21,15 +21,20 @@ import 'simplebar-react/dist/simplebar.min.css';
 import { menuItems } from './menu-items';
 
 const blockedMenuUrls = [
-  routes.retailer.customer.home,
-  routes.retailer.sub_admin.home,
-  routes.retailer.stamp.home,
-  routes.retailer.stampImage.home,
-  routes.retailer.notification.home,
-  routes.retailer.branch.home,
+  routes.privateRoutes.retailer.customer.home,
+  routes.privateRoutes.retailer.sub_admin.home,
+  routes.privateRoutes.retailer.stamp.home,
+  routes.privateRoutes.retailer.stampImage.home,
+  routes.privateRoutes.retailer.branch.home,
+  routes.privateRoutes.retailer.regularNotification.home,
+  routes.privateRoutes.retailer.locationBasedNotification.home,
 ];
 
-const addonsBlockedMenuUrls = [routes.retailer.stampImage.home, routes.retailer.notification.home];
+const addonsBlockedMenuUrls = [
+  routes.privateRoutes.retailer.stampImage.home,
+  routes.privateRoutes.retailer.regularNotification.home,
+  routes.privateRoutes.retailer.locationBasedNotification.home,
+];
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
@@ -155,6 +160,12 @@ export default function Sidebar({ className }: { className?: string }) {
                               key={dropdownItem?.name + index}
                               className={cn(
                                 '2xl:mx-5 mx-3.5 mb-0.5 flex items-center justify-between rounded-md px-3.5 py-2 font-medium capitalize last-of-type:mb-1 lg:last-of-type:mb-2',
+                                role === 'retailer' && addonsBlockedMenuUrls.includes(dropdownItem?.href) && session?.user?.plan === 'trial'
+                                  ? 'pointer-events-none cursor-not-allowed bg-gray-100'
+                                  : '',
+                                role === 'retailer' && blockedMenuUrls.includes(dropdownItem?.href) && !session?.user?.plan
+                                  ? 'pointer-events-none cursor-not-allowed bg-gray-100'
+                                  : '',
                                 isChildActive
                                   ? 'text-danger'
                                   : 'text-gray-500 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900'
@@ -169,6 +180,18 @@ export default function Sidebar({ className }: { className?: string }) {
                                 />{' '}
                                 <span className="truncate">{dropdownItem?.name}</span>
                               </div>
+                              {role === 'retailer' && blockedMenuUrls.includes(dropdownItem?.href) && !session?.user?.plan && (
+                                <div className="text-end ">
+                                  <SlLock className="text-lg" />
+                                </div>
+                              )}
+                              {role === 'retailer' &&
+                                addonsBlockedMenuUrls.includes(dropdownItem?.href) &&
+                                session?.user?.plan === 'trial' && (
+                                  <div className="text-end ">
+                                    <SlLock className="text-lg" />
+                                  </div>
+                                )}
                             </Link>
                           );
                         })}
