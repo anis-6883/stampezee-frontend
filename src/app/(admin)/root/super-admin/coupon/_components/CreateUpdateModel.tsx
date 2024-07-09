@@ -175,7 +175,7 @@ export default function CreateUpdateModel({
                     <InputField
                       type="number"
                       name="minPurchaseAmount"
-                      label="Min Purchased Amount (CAD)"
+                      label="Min. Purchased Amount (CAD)"
                       placeholder="5"
                       prefix={<LuCircleDollarSign className="text-xl" />}
                     />

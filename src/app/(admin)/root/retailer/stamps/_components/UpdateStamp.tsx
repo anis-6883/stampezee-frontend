@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { LuCircleDollarSign } from 'react-icons/lu';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 
@@ -36,7 +37,7 @@ export default function Update({ Id, offset }: any) {
   const handleSubmit = async (values: any) => {
     try {
       setSubmitting(true);
-      // Convert values object to getChangedFormData
+
       const changedData = getChangedFormData(values, initialValues, ['_id', 'validDateRange']);
       changedData.startedAt = values?.validDateRange?.split('to')[0];
       changedData.expiredAt = values?.validDateRange?.split('to')[1];
@@ -47,8 +48,6 @@ export default function Update({ Id, offset }: any) {
     } catch (error: any) {
       console.error('Failed to update Stamp:', error);
       toast.error(error.data.message ?? 'Failed to update Stamp. Please try again.');
-      setSubmitting(false);
-    } finally {
       setSubmitting(false);
     }
   };
@@ -68,8 +67,6 @@ export default function Update({ Id, offset }: any) {
     validDateRange:
       `${getFormattedDate(stampData?.data?.startedAt, offset)} to ${getFormattedDate(stampData?.data?.expiredAt, offset)}` || '',
   };
-
-  console.log(getFormattedDate(new Date(stampData?.data?.startedAt)));
 
   const validationSchema = Yup.object().shape({
     branchId: Yup.string().required('Required!'),
@@ -102,7 +99,7 @@ export default function Update({ Id, offset }: any) {
           handleSubmit(values);
         }}
       >
-        {({ errors, touched, setFieldValue, values }) => {
+        {({ errors, setFieldValue, values }) => {
           return (
             <Form className="mt-5 grid gap-4">
               <div className="grid grid-cols-2 gap-x-5">
@@ -203,7 +200,14 @@ export default function Update({ Id, offset }: any) {
 
               <div className="grid grid-cols-2 gap-x-5">
                 <InputField name="noOfStampsToCollect" label="Number of Stamps to Collect" type="number" />
-                <InputField name="minPurchaseAmount" required={false} label="Minimum Purchase Amount" type="number" />
+                <InputField
+                  name="minPurchaseAmount"
+                  required={false}
+                  label="Minimum Purchase Amount"
+                  type="number"
+                  prefix={<LuCircleDollarSign className="text-xl" />}
+                  placeholder="0"
+                />
               </div>
 
               <span className="font-medium">
@@ -226,10 +230,7 @@ export default function Update({ Id, offset }: any) {
                     }}
                     className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
                   />
-                  <label className="ml-1" htmlFor="">
-                    {' '}
-                    Discount
-                  </label>
+                  <label className="ml-1">Discount</label>
                 </div>
                 <div
                   onClick={() => {
@@ -247,10 +248,7 @@ export default function Update({ Id, offset }: any) {
                     checked={values.rewardType === 'promotion' ? true : false}
                     className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
                   />
-                  <label className="ml-1" htmlFor="">
-                    {' '}
-                    Promotion{' '}
-                  </label>
+                  <label className="ml-1">Promotion</label>
                 </div>
               </div>
               {values.rewardType === 'discount' && (
@@ -267,7 +265,7 @@ export default function Update({ Id, offset }: any) {
                 <Button
                   color="danger"
                   type="submit"
-                  text="Submit"
+                  text="Update"
                   postIcon={<BsCheck2Circle className="text-base" />}
                   isSubmitting={submitting}
                 />

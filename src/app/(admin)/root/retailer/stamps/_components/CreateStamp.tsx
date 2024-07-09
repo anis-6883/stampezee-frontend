@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { LuCircleDollarSign } from 'react-icons/lu';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 
@@ -248,7 +249,14 @@ export default function Create() {
 
               <div className="grid grid-cols-2 gap-x-5">
                 <InputField name="noOfStampsToCollect" label="Number of Stamps to Collect" type="number" />
-                <InputField name="minPurchaseAmount" required={false} label="Minimum Purchase Amount" type="number" />
+                <InputField
+                  name="minPurchaseAmount"
+                  required={false}
+                  label="Minimum Purchase Amount"
+                  type="number"
+                  prefix={<LuCircleDollarSign className="text-xl" />}
+                  placeholder="0"
+                />
               </div>
 
               <span className="font-medium">
@@ -273,10 +281,7 @@ export default function Create() {
                     }}
                     className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
                   />
-                  <label className="ml-1 cursor-pointer" htmlFor="">
-                    {' '}
-                    Discount
-                  </label>
+                  <label className="ml-1 cursor-pointer">Discount</label>
                 </div>
                 <div
                   onClick={() => {
@@ -296,10 +301,7 @@ export default function Create() {
                     checked={values.rewardType === 'promotion' ? true : false}
                     className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
                   />
-                  <label className="ml-1 cursor-pointer" htmlFor="">
-                    {' '}
-                    Promotion{' '}
-                  </label>
+                  <label className="ml-1 cursor-pointer">Promotion</label>
                 </div>
               </div>
               {values.rewardType === 'discount' && (

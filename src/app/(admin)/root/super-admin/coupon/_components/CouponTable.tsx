@@ -76,6 +76,21 @@ export default function CouponTable({ offset }: { offset: number }) {
       ),
     },
     {
+      header: 'Limit',
+      accessorKey: 'limit',
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">
+          <p>
+            <span className="font-bold">Limit:</span> {row?.original.limit}
+          </p>
+          <p>
+            <span className="font-bold">Min. Purchased Amount:</span> {row?.original.minPurchaseAmount}
+          </p>
+        </div>
+      ),
+      size: 200,
+    },
+    {
       header: 'Validity Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
