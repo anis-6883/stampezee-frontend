@@ -16,10 +16,10 @@ export default function Page() {
           <div className="lg:col-span-2">
             <h2 className="mb-4 text-xl font-semibold">Plans</h2>
             <p className="mb-6 text-gray-600">Select a subscription plan</p>
-            <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
+            {/* <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
               <p className="font-medium text-blue-700">Change Plan</p>
               <p className="text-blue-700">You will be billed immediately when switching plans</p>
-            </div>
+            </div> */}
             <SubscriptionList />
             <div className="mt-6">
               <h2 className="mb-4 text-xl font-semibold">Add-Ons</h2>

@@ -27,7 +27,9 @@ export default function OrderSummary() {
   const { data: session, update }: any = useSession();
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
   const [code, setCode] = useState<string>('');
-  const { subscription, addOns, coupon, couponDiscount, subTotal } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { subscription, addOns, coupon, couponDiscount, subTotal, downgradeRefund, activeSubscription, remainingBalance } = useSelector(
+    (state: RootState) => state.subscriptionSlice
+  );
 
   const [modalState, setModalState] = useState(false);
   const { isLoggedIn, user } = useSelector((state: RootState) => state.authSlice);
@@ -148,6 +150,13 @@ export default function OrderSummary() {
           <span className="text-red-500">{subscription ? subscription?.price : 0} CAD</span>
         </div>
 
+        {activeSubscription?.slug && (
+          <div className="mb-2 flex justify-between">
+            <span>Remaining Amount</span>
+            <span className="text-red-500">-{remainingBalance.toFixed(2)} CAD</span>
+          </div>
+        )}
+
         {addOns?.length > 0 && (
           <div>
             {addOns.map((addOn: AddOn, index: number) => (
@@ -183,7 +192,7 @@ export default function OrderSummary() {
 
         <div className="mb-2 flex justify-between">
           <span>Subtotal</span>
-          <span className="text-red-500">{subTotal ? subTotal.toFixed(2) : 0} CAD</span>
+          <span className="text-red-500">{subTotal ? Math.abs(subTotal.toFixed(2)) : 0} CAD</span>
         </div>
 
         {/* <div className="mb-2 flex justify-between">
@@ -196,9 +205,14 @@ export default function OrderSummary() {
       </div> */}
         <div className="flex justify-between text-xl font-bold">
           <span>Total</span>
-          <span className="text-red-500">{subTotal ? subTotal.toFixed(2) : 0} CAD</span>
+          <span className="text-red-500">{subTotal ? Math.abs(subTotal.toFixed(2)) : 0} CAD</span>
         </div>
       </div>
+      {subTotal > 0 && (
+        <div className="mt-3 rounded-lg border p-4">
+          <h2 className=" text-lg font-medium">We will be return {Math.abs(subTotal.toFixed(2))} CAD</h2>
+        </div>
+      )}
       <Button
         disabled={session?.user?.plan == subscription?.slug ? true : false}
         color="danger"

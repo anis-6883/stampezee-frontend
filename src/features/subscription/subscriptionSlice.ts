@@ -1,3 +1,4 @@
+import { calculateBalancePrice } from '@/utils';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: any = {
@@ -15,10 +16,14 @@ const initialState: any = {
     // image: null,
     // status: true,
   },
+  activeSubscription: {},
   addOns: [],
   coupon: null,
   subTotal: 0,
   couponDiscount: 0,
+  upgradeCost: 0,
+  downgradeRefund: 0,
+  remainingBalance: 0,
 };
 
 const subscriptionSlice = createSlice({
@@ -26,8 +31,19 @@ const subscriptionSlice = createSlice({
   initialState,
   reducers: {
     setSubscription: (state, action) => {
+      if (state?.activeSubscription?.slug) {
+        const remainingAmount = calculateBalancePrice(
+          state?.activeSubscription?.planStartAt,
+          state?.activeSubscription?.planValidAt,
+          state?.activeSubscription?.price
+        );
+        state.remainingBalance = remainingAmount;
+      }
       state.subscription = action.payload;
       calculateSubTotal(state);
+    },
+    setActiveSubscription: (state, action) => {
+      state.activeSubscription = action.payload;
     },
     setAddOns: (state, action) => {
       const newAddOns = state.addOns.find((item: any) => item._id === action.payload._id);
@@ -56,45 +72,76 @@ const subscriptionSlice = createSlice({
       state.couponDiscount = 0;
       calculateSubTotal(state);
     },
+    upgradePlan: (state, action) => {
+      const targetPlan = action.payload;
+      const upgradeCost = calculateUpgradeCost(state, targetPlan);
+      state.subscription = targetPlan;
+      state.upgradeCost = upgradeCost;
+      calculateSubTotal(state, 'upgrade');
+    },
+    downgradePlan: (state, action) => {
+      const targetPlan = action.payload;
+      const downgradeRefund = calculateDowngradeRefund(state, targetPlan);
+      state.subscription = targetPlan;
+      state.downgradeRefund = downgradeRefund;
+      calculateSubTotal(state, 'downgrade');
+    },
   },
 });
 
-const calculateSubTotal = (state: any) => {
+const calculateSubTotal = (state: any, planType?: string) => {
   const planPrice = state.subscription ? state.subscription.price : 0;
   const addOnsPrice = state.addOns.reduce((total: number, addOn: any) => total + addOn.price, 0);
-  state.subTotal = planPrice + addOnsPrice - state.couponDiscount;
+  if (planType === 'upgrade') {
+    state.subTotal = state.remainingBalance - (planPrice + 1 + addOnsPrice - state.couponDiscount);
+  } else if (planType === 'downgrade') {
+    state.subTotal = state.remainingBalance - (planPrice + 1 + addOnsPrice - state.couponDiscount);
+  } else {
+    state.subTotal = state.remainingBalance - (planPrice + addOnsPrice - state.couponDiscount);
+  }
 };
 
 const calculateDiscount = (state: any) => {
   if (state.coupon) {
     if (state.coupon.discountType === 'percentage') {
-      state.couponDiscount = (state.subTotal * state.coupon.discount) / 100;
+      state.couponDiscount = (Math.abs(state.subTotal) * state.coupon.discount) / 100;
     } else {
       state.couponDiscount = state.coupon.discount;
     }
   }
 };
 
-export const calculateConsumedPrice = (startDate: Date, expirationDate: Date, planPrice: number) => {
-  const start = new Date(startDate);
-  const end = new Date(expirationDate);
-  // const today = new Date('2024-07-23T10:16:45.281+00:00');
-
-  if (isNaN(start.getTime()) || isNaN(end.getTime()) || start >= end) {
-    throw 'Invalid start date or expiration date !';
-  }
-
-  const totalDuration = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-  const elapsedDuration = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-
-  // Ensure the elapsed duration is not negative or exceeding the total duration
-  const effectiveElapsedDuration = Math.min(Math.max(elapsedDuration, 0), totalDuration);
-  const consumedPrice = (effectiveElapsedDuration / totalDuration) * planPrice;
-
-  return Math.abs(consumedPrice);
-
-  // return parseFloat(consumedPrice.toFixed(2)); // Return the consumed price rounded to 2 decimal places
+const calculateUpgradeCost = (state: any, targetPlan: any) => {
+  const remainingAmount = calculateBalancePrice(
+    state?.activeSubscription?.planStartAt,
+    state?.activeSubscription?.planValidAt,
+    state?.activeSubscription?.price
+  );
+  state.remainingBalance = remainingAmount;
+  const upgradeCost = targetPlan.price - remainingAmount;
+  return upgradeCost;
 };
 
-export const { setSubscription, setAddOns, removeAddOns, resetAddOns, applyCoupon, removeCoupon } = subscriptionSlice.actions;
+const calculateDowngradeRefund = (state: any, targetPlan: any) => {
+  const remainingAmount = calculateBalancePrice(
+    state?.activeSubscription?.planStartAt,
+    state?.activeSubscription?.planValidAt,
+    state?.activeSubscription?.price
+  );
+  state.remainingBalance = remainingAmount;
+  const downgradeRefund = remainingAmount - targetPlan.price;
+  return downgradeRefund;
+};
+
+export const {
+  setSubscription,
+  setActiveSubscription,
+  setAddOns,
+  removeAddOns,
+  resetAddOns,
+  applyCoupon,
+  removeCoupon,
+  upgradePlan,
+  downgradePlan,
+} = subscriptionSlice.actions;
 export default subscriptionSlice;
