@@ -1,10 +1,10 @@
-import dynamic from 'next/dynamic';
 import QuillLoader from '@/components/reactQuill/QuillLoader';
 import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
+import dynamic from 'next/dynamic';
 
 const QuillEditor = dynamic(() => import('@/components/reactQuill/QuillEditor'), {
   ssr: false,
-  loading: () => <QuillLoader className="col-span-full h-[143px]" />,
+  loading: () => <QuillLoader className="col-span-full h-auto" />,
 });
 
 export default function TermsAndConditionForm({ values, setFieldValue }: { setFieldValue: any; values: any }) {
@@ -14,14 +14,14 @@ export default function TermsAndConditionForm({ values, setFieldValue }: { setFi
   };
 
   return (
-    <FormBlockWrapper title="Terms and Conditions">
-      <div className="grid h-[200px] grid-cols-1 gap-y-2">
+    <FormBlockWrapper title="Terms and Conditions" className="p-5">
+      <div className="grid grid-cols-1 gap-y-2">
         <QuillEditor
           value={values.page.terms}
           onChange={handleChange}
           label=""
           className="h-full"
-          labelClassName="font-medium text-gray-700  mb-1.5"
+          labelClassName="font-medium text-gray-700 mb-1.5"
         />
       </div>
     </FormBlockWrapper>

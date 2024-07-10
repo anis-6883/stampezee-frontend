@@ -16,7 +16,7 @@ export default function FormBlockWrapper({
         <h3 className="text-lg font-semibold">{title}</h3>
         {description ? <Text className="mt-1 text-sm text-gray-500">{description}</Text> : null}
       </header>
-      <div className="col-span-4 h-[250px] space-y-5">{children}</div>
+      <div className="col-span-4 space-y-5">{children}</div>
     </section>
   );
 }

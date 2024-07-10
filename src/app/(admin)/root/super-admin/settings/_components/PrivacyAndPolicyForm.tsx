@@ -1,10 +1,10 @@
-import dynamic from 'next/dynamic';
 import QuillLoader from '@/components/reactQuill/QuillLoader';
 import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
+import dynamic from 'next/dynamic';
 
 const QuillEditor = dynamic(() => import('@/components/reactQuill/QuillEditor'), {
   ssr: false,
-  loading: () => <QuillLoader className="col-span-full h-[143px]" />,
+  loading: () => <QuillLoader className="col-span-full h-auto" />,
 });
 
 export default function PrivacyAndPolicyForm({ values, setFieldValue }: { setFieldValue: any; values: any }) {
@@ -14,8 +14,8 @@ export default function PrivacyAndPolicyForm({ values, setFieldValue }: { setFie
   };
 
   return (
-    <FormBlockWrapper title="Privacy & Policy">
-      <div className="grid h-[200px] grid-cols-1 gap-y-2">
+    <FormBlockWrapper title="Privacy & Policy" className="p-5">
+      <div className="grid grid-cols-1 gap-y-2">
         <QuillEditor
           value={values.page.policy}
           onChange={handleChange}

@@ -8,7 +8,7 @@ import ReactSelect from 'react-select';
 export default function GeneralSettingsForm({ setFieldValue, values }: { setFieldValue: any; values: any }) {
   return (
     <div className="space-y-10">
-      <FormBlockWrapper title="Main Information">
+      <FormBlockWrapper title="Main Information" className="p-5">
         <div className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-3">
           <InputField name="general.companyName" label="Company Name" placeholder="company name" required={false} />
           <InputField name="general.siteTitle" label="Site Title" placeholder="site title" required={false} />

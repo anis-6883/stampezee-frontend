@@ -9,21 +9,18 @@ import * as Yup from 'yup';
 import Button from '../../../../../../components/Formik/Button';
 import AboutUsForm from './AboutUsForm';
 import GeneralSettingsForm from './GeneralSettingsForm';
+import GoogleMapForm from './GoogleMapForm';
 import NotificationSettingsForm from './NotificationSettingsForm';
 import PrivacyAndPolicyForm from './PrivacyAndPolicyForm';
 import S3BucketForm from './S3BucketForm';
+import StripeSettingsForm from './StripeSettingsForm';
 import TabButtonItem from './TabButtonItem';
 import TermsAndConditionForm from './TermsAndConditionForm';
 
 export default function SettingsMainForm() {
-  const { data: generalSetting, isLoading, isError } = useGetGeneralSettingsQuery(undefined);
-
+  const { data: generalSetting } = useGetGeneralSettingsQuery(undefined);
   const [updateGeneralSettings, { data: updatedData, isSuccess, isError: updatingError }] = useUpdateGeneralSettingsMutation();
-
   const [currentTab, setCurrentTab] = useState(0);
-  const [siteLogo, setSiteLogo] = useState(null);
-  const [siteIcon, setSiteIcon] = useState(null);
-  const [bannerImage, setBannerImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [initialValues, setInitialValues] = useState({
@@ -48,6 +45,16 @@ export default function SettingsMainForm() {
       awsSecretAccessKey: '',
       awsBucketName: '',
     },
+    stripe: {
+      stripeSecretKey: '',
+      planChangeCost: '',
+      refundableThreshold: '',
+      taxTitle: '',
+      taxCost: '',
+    },
+    googleMap: {
+      googleMapsApiKey: '',
+    },
     page: {
       aboutUs: '',
       policy: '',
@@ -62,8 +69,6 @@ export default function SettingsMainForm() {
     }
 
     if (isSuccess) {
-      // setSiteLogo(null);
-      // setSiteIcon(null);
       setIsSubmitting(false);
       setInitialValues((prevValues) => ({
         ...prevValues,
@@ -86,6 +91,8 @@ export default function SettingsMainForm() {
     'General Settings',
     'Notification Settings',
     'AWS S3 Bucket Settings',
+    'Stripe Settings & Threshold',
+    'Google Map',
     'Terms and Condition',
     'Privacy and Policy',
     'About Us',
@@ -114,48 +121,56 @@ export default function SettingsMainForm() {
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} enableReinitialize>
       {({ values, setFieldValue }) => (
         <Form>
-          <div>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
-              <div className="col-span-1 flex flex-col gap-y-3 md:col-span-3">
-                {tabs.map((tab, index) => (
-                  <TabButtonItem key={index} tab={tab} onClick={() => handleTabChange(index)} active={currentTab === index} />
-                ))}
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-12">
+            <div className="col-span-1 flex flex-col md:col-span-3">
+              {tabs.map((tab, index) => (
+                <TabButtonItem key={index} tab={tab} onClick={() => handleTabChange(index)} active={currentTab === index} />
+              ))}
+            </div>
+
+            <div className="col-span-1 w-full rounded-lg border border-gray-200 bg-white p-2 shadow md:col-span-9">
+              <div hidden={currentTab === 0 ? false : true}>
+                <GeneralSettingsForm setFieldValue={setFieldValue} values={values} />
               </div>
-              <div className="col-span-1 w-full rounded-lg border border-gray-200 bg-white p-5 shadow md:col-span-9">
-                <div hidden={currentTab === 0 ? false : true}>
-                  <GeneralSettingsForm setFieldValue={setFieldValue} values={values} />
-                </div>
 
-                <div hidden={currentTab === 1 ? false : true}>
-                  <NotificationSettingsForm />
-                </div>
+              <div hidden={currentTab === 1 ? false : true}>
+                <NotificationSettingsForm />
+              </div>
 
-                <div hidden={currentTab === 2 ? false : true}>
-                  <S3BucketForm />
-                </div>
+              <div hidden={currentTab === 2 ? false : true}>
+                <S3BucketForm />
+              </div>
 
-                <div hidden={currentTab === 3 ? false : true}>
-                  <TermsAndConditionForm values={values} setFieldValue={setFieldValue} />
-                </div>
+              <div hidden={currentTab === 3 ? false : true}>
+                <StripeSettingsForm />
+              </div>
 
-                <div hidden={currentTab === 4 ? false : true}>
-                  <PrivacyAndPolicyForm values={values} setFieldValue={setFieldValue} />
-                </div>
+              <div hidden={currentTab === 4 ? false : true}>
+                <GoogleMapForm />
+              </div>
 
-                <div hidden={currentTab === 5 ? false : true}>
-                  <AboutUsForm values={values} setFieldValue={setFieldValue} />
-                </div>
+              <div hidden={currentTab === 5 ? false : true}>
+                <TermsAndConditionForm values={values} setFieldValue={setFieldValue} />
+              </div>
+
+              <div hidden={currentTab === 6 ? false : true}>
+                <PrivacyAndPolicyForm values={values} setFieldValue={setFieldValue} />
+              </div>
+
+              <div hidden={currentTab === 7 ? false : true}>
+                <AboutUsForm values={values} setFieldValue={setFieldValue} />
               </div>
             </div>
-            <div className="mt-6 flex w-full justify-end">
-              <Button
-                color="danger"
-                text="Update"
-                type="submit"
-                isSubmitting={isSubmitting}
-                postIcon={<BsCheck2Circle className="text-base" />}
-              />
-            </div>
+          </div>
+
+          <div className="mt-6 flex w-full justify-end">
+            <Button
+              color="danger"
+              text="Update"
+              type="submit"
+              isSubmitting={isSubmitting}
+              postIcon={<BsCheck2Circle className="text-base" />}
+            />
           </div>
         </Form>
       )}
