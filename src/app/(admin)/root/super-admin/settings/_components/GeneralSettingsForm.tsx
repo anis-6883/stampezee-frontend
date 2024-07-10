@@ -3,6 +3,7 @@ import InputPassword from '@/components/Formik/InputPassword';
 import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
 import timeZoneData from '@/utils/get-timezone-list';
 import { Field } from 'formik';
+import { RiKey2Line } from 'react-icons/ri';
 import ReactSelect from 'react-select';
 
 export default function GeneralSettingsForm({ setFieldValue, values }: { setFieldValue: any; values: any }) {
@@ -43,8 +44,14 @@ export default function GeneralSettingsForm({ setFieldValue, values }: { setFiel
         </div>
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-3">
-          <InputField name="general.emailUsername" label="User Email" placeholder="example@gmail.com" required={false} />
-          <InputPassword name="general.emailPassword" label="Email Password" placeholder="******" required={false} />
+          <InputField name="general.emailUsername" label="Email Username" placeholder="example@gmail.com" required={false} />
+          <InputPassword
+            name="general.emailPassword"
+            label="Email Password"
+            placeholder="******"
+            required={false}
+            prefix={<RiKey2Line className="text-xl" />}
+          />
           <InputField name="general.contactEmail" label="Contact Email" placeholder="example@gmail.com" required={false} />
         </div>
 
