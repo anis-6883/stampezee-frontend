@@ -1,4 +1,5 @@
 import { metaObject } from '@/config/site.config';
+import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import AddOnsList from './_components/AddOnsList';
 import OrderSummary from './_components/OrderSummary';
 import SubscriptionList from './_components/SubscriptionList';
@@ -7,7 +8,9 @@ export const metadata = {
   ...metaObject('Checkout'),
 };
 
-export default function Page() {
+export default async function Page() {
+  const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
+
   return (
     <div className="mx-auto mt-20 w-full max-w-[1300px]">
       <div className="container mx-auto px-4 py-8">
@@ -33,7 +36,7 @@ export default function Page() {
           </div>
           <div>
             <h2 className="mb-4 text-xl font-semibold">Order Summary</h2>
-            <OrderSummary />
+            <OrderSummary stripeInfo={data?.data?.stripe} />
           </div>
         </div>
       </div>

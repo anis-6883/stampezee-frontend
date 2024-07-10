@@ -1,57 +1,287 @@
+// import { calculateBalancePrice } from '@/utils';
+// import { createSlice } from '@reduxjs/toolkit';
+
+// const initialState: any = {
+//   subscription: {
+//     // _id: '6667f260136c8cd72c7af8a2',
+//     // title: 'Pro',
+//     // slug: 'pro',
+//     // descriptions: ['Benefit 1', 'Benefit 2', 'tests', 'testse'],
+//     // price: 19.99,
+//     // duration: 30,
+//     // type: 'subscription',
+//     // limit: 10,
+//     // allowTotalBranch: 5,
+//     // allowTotalTeamMember: 5,
+//     // image: null,
+//     // status: true,
+//   },
+//   activeSubscription: {},
+//   addOns: [],
+//   coupon: null,
+//   subTotal: 0,
+//   total: 0,
+//   couponDiscount: 0,
+//   tax: 10,
+//   upgradeCost: 0,
+//   downgradeRefund: 0,
+//   remainingBalance: 0,
+// };
+
+// const subscriptionSlice = createSlice({
+//   name: 'subscription',
+//   initialState,
+//   reducers: {
+//     setSubscription: (state, action) => {
+//       if (state?.activeSubscription?.slug) {
+//         const remainingAmount = calculateBalancePrice(
+//           state?.activeSubscription?.planStartAt,
+//           state?.activeSubscription?.planValidAt,
+//           state?.activeSubscription?.price
+//         );
+//         state.remainingBalance = remainingAmount;
+//       }
+//       state.subscription = action.payload;
+//       calculateSubTotal(state);
+//     },
+//     setActiveSubscription: (state, action) => {
+//       state.activeSubscription = action.payload;
+//     },
+//     setAddOns: (state, action) => {
+//       const newAddOns = state.addOns.find((item: any) => item._id === action.payload._id);
+//       if (newAddOns) {
+//         state.addOns = state.addOns.filter((item: any) => item._id !== newAddOns?._id);
+//       } else {
+//         state.addOns.push({ ...action.payload, isAddOnsSelect: true });
+//       }
+//       calculateSubTotal(state);
+//     },
+//     resetAddOns: (state) => {
+//       state.addOns = [];
+//       calculateSubTotal(state);
+//     },
+//     removeAddOns: (state, action) => {
+//       state.addOns = state.addOns.filter((item: any) => item._id !== action.payload);
+//       calculateSubTotal(state);
+//     },
+//     applyCoupon: (state, action) => {
+//       state.coupon = action.payload;
+//       calculateDiscount(state);
+//       calculateSubTotal(state);
+//     },
+//     removeCoupon: (state) => {
+//       state.coupon = null;
+//       state.couponDiscount = 0;
+//       calculateSubTotal(state);
+//     },
+//     upgradePlan: (state, action) => {
+//       const targetPlan = action.payload;
+//       const upgradeCost = calculateUpgradeCost(state, targetPlan);
+//       state.subscription = targetPlan;
+//       state.upgradeCost = upgradeCost;
+//       calculateSubTotal(state, 'upgrade');
+//     },
+//     downgradePlan: (state, action) => {
+//       const targetPlan = action.payload;
+//       const downgradeRefund = calculateDowngradeRefund(state, targetPlan);
+//       state.subscription = targetPlan;
+//       state.downgradeRefund = downgradeRefund;
+//       calculateSubTotal(state, 'downgrade');
+//     },
+//   },
+// });
+
+// const calculateSubTotal = (state: any, planType?: string) => {
+//   const planPrice = state.subscription ? state.subscription.price : 0;
+//   const addOnsPrice = state.addOns.reduce((total: number, addOn: any) => total + addOn.price, 0);
+//   let subTotal = 0;
+//   if (planType === 'upgrade') {
+//     subTotal = planPrice + state?.activeSubscription?.planSwitchCharge + addOnsPrice - state.couponDiscount;
+//     state.subTotal = state.remainingBalance - subTotal;
+//     state.total = state.remainingBalance - (subTotal + state.tax);
+//   } else if (planType === 'downgrade') {
+//     subTotal = planPrice + state?.activeSubscription?.planSwitchCharge + addOnsPrice - state.couponDiscount;
+//     state.subTotal = state.remainingBalance - subTotal;
+//     state.total = state.remainingBalance - (subTotal + state.tax);
+//   } else {
+//     if (state?.activeSubscription?.slug !== 'trial') {
+//       subTotal = planPrice + state?.activeSubscription?.planSwitchCharge + addOnsPrice - state.couponDiscount;
+//       state.subTotal = state.remainingBalance - subTotal;
+//       state.total = state.remainingBalance - (subTotal + state.tax);
+//     } else {
+//       if (state?.subscription?.slug === 'trial') {
+//         state.total = state.remainingBalance - (planPrice + addOnsPrice - state.couponDiscount);
+//       } else {
+//         state.total = state.remainingBalance - (planPrice + addOnsPrice + state.tax - state.couponDiscount);
+//       }
+//       state.subTotal = planPrice + addOnsPrice - state.couponDiscount;
+//     }
+//   }
+// };
+
+// const calculateDiscount = (state: any) => {
+//   if (state.coupon) {
+//     if (state.coupon.discountType === 'percentage') {
+//       state.couponDiscount = (Math.abs(state.subTotal) * state.coupon.discount) / 100;
+//     } else {
+//       state.couponDiscount = state.coupon.discount;
+//     }
+//   }
+// };
+
+// const calculateUpgradeCost = (state: any, targetPlan: any) => {
+//   const remainingAmount = calculateBalancePrice(
+//     state?.activeSubscription?.planStartAt,
+//     state?.activeSubscription?.planValidAt,
+//     state?.activeSubscription?.price
+//   );
+//   state.remainingBalance = remainingAmount;
+//   const upgradeCost = targetPlan.price - remainingAmount;
+//   return upgradeCost;
+// };
+
+// const calculateDowngradeRefund = (state: any, targetPlan: any) => {
+//   const remainingAmount = calculateBalancePrice(
+//     state?.activeSubscription?.planStartAt,
+//     state?.activeSubscription?.planValidAt,
+//     state?.activeSubscription?.price
+//   );
+//   state.remainingBalance = remainingAmount;
+//   const downgradeRefund = remainingAmount - targetPlan.price;
+//   return downgradeRefund;
+// };
+
+// export const {
+//   setSubscription,
+//   setActiveSubscription,
+//   setAddOns,
+//   removeAddOns,
+//   resetAddOns,
+//   applyCoupon,
+//   removeCoupon,
+//   upgradePlan,
+//   downgradePlan,
+// } = subscriptionSlice.actions;
+// export default subscriptionSlice;
+
 import { calculateBalancePrice } from '@/utils';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: any = {
-  subscription: {
-    // _id: '6667f260136c8cd72c7af8a2',
-    // title: 'Pro',
-    // slug: 'pro',
-    // descriptions: ['Benefit 1', 'Benefit 2', 'tests', 'testse'],
-    // price: 19.99,
-    // duration: 30,
-    // type: 'subscription',
-    // limit: 10,
-    // allowTotalBranch: 5,
-    // allowTotalTeamMember: 5,
-    // image: null,
-    // status: true,
-  },
+  subscription: {},
   activeSubscription: {},
   addOns: [],
   coupon: null,
   subTotal: 0,
+  total: 0,
   couponDiscount: 0,
+  tax: 0,
+  taxPercentage: 10,
   upgradeCost: 0,
   downgradeRefund: 0,
   remainingBalance: 0,
+  planChangeCost: 1,
 };
 
+// Helper functions
+const calculateAddOnsPrice = (addOns: any[]) => {
+  return addOns.reduce((total: number, addOn: any) => total + addOn.price, 0);
+};
+
+const calculateSubTotalAmount = (planPrice: number, addOnsPrice: number, planSwitchCharge: number, couponDiscount: number) => {
+  return planPrice + planSwitchCharge + addOnsPrice - couponDiscount;
+};
+
+const calculateTotalAmount = (remainingBalance: number, subTotal: number, tax: number) => {
+  return remainingBalance - (subTotal + tax);
+};
+
+const calculateTaxAmount = (subTotal: number, taxPercentage: number) => {
+  return (subTotal * taxPercentage) / 100;
+};
+
+const updateBalance = (state: any) => {
+  if (state?.activeSubscription?.slug) {
+    state.remainingBalance = calculateBalancePrice(
+      state?.activeSubscription?.planStartAt,
+      state?.activeSubscription?.planValidAt,
+      state?.activeSubscription?.price
+    );
+  }
+};
+
+const calculateTax = (state: any) => {
+  state.tax = calculateTaxAmount(Math.abs(state.subTotal), state.taxPercentage);
+};
+
+const calculateDiscount = (state: any) => {
+  if (state.coupon) {
+    state.couponDiscount =
+      state.coupon.discountType === 'percentage' ? (Math.abs(state.subTotal) * state.coupon.discount) / 100 : state.coupon.discount;
+  }
+};
+
+const calculateUpgradeCost = (state: any, targetPlan: any) => {
+  updateBalance(state);
+  return targetPlan.price - state.remainingBalance;
+};
+
+const calculateDowngradeRefund = (state: any, targetPlan: any) => {
+  updateBalance(state);
+  return state.remainingBalance - targetPlan.price;
+};
+
+const calculateSubTotal = (state: any, planType?: string) => {
+  const planPrice = state.subscription?.price || 0;
+  const addOnsPrice = calculateAddOnsPrice(state.addOns);
+  const planSwitchCharge = state?.planChangeCost || 0;
+  const couponDiscount = state.couponDiscount || 0;
+  const remainingBalance = state.remainingBalance || 0;
+  let subTotal = 0;
+
+  if (
+    planType === 'upgrade' ||
+    planType === 'downgrade' ||
+    (state?.activeSubscription?.slug && state?.activeSubscription?.slug !== 'trial')
+  ) {
+    subTotal = calculateSubTotalAmount(planPrice, addOnsPrice, planSwitchCharge, couponDiscount);
+    state.subTotal = remainingBalance - subTotal;
+    calculateTax(state);
+    state.total = calculateTotalAmount(remainingBalance, subTotal, state.tax);
+  } else {
+    state.subTotal = planPrice + addOnsPrice - couponDiscount;
+    calculateTax(state);
+    state.total =
+      state?.subscription?.slug === 'trial'
+        ? remainingBalance - (planPrice + addOnsPrice - couponDiscount)
+        : remainingBalance - (planPrice + addOnsPrice + state.tax - couponDiscount);
+  }
+};
+
+// Redux slice
 const subscriptionSlice = createSlice({
   name: 'subscription',
   initialState,
   reducers: {
     setSubscription: (state, action) => {
-      if (state?.activeSubscription?.slug) {
-        const remainingAmount = calculateBalancePrice(
-          state?.activeSubscription?.planStartAt,
-          state?.activeSubscription?.planValidAt,
-          state?.activeSubscription?.price
-        );
-        state.remainingBalance = remainingAmount;
-      }
+      updateBalance(state);
       state.subscription = action.payload;
       calculateSubTotal(state);
     },
     setActiveSubscription: (state, action) => {
       state.activeSubscription = action.payload;
     },
+    setPlanChangeCost: (state, action) => {
+      state.planChangeCost = action.payload;
+    },
+    setTaxPercentage: (state, action) => {
+      state.taxPercentage = action.payload;
+    },
     setAddOns: (state, action) => {
-      const newAddOns = state.addOns.find((item: any) => item._id === action.payload._id);
-      if (newAddOns) {
-        state.addOns = state.addOns.filter((item: any) => item._id !== newAddOns?._id);
-      } else {
-        state.addOns.push({ ...action.payload, isAddOnsSelect: true });
-      }
+      const newAddOn = state.addOns.find((item: any) => item._id === action.payload._id);
+      state.addOns = newAddOn
+        ? state.addOns.filter((item: any) => item._id !== newAddOn._id)
+        : [...state.addOns, { ...action.payload, isAddOnsSelect: true }];
       calculateSubTotal(state);
     },
     resetAddOns: (state) => {
@@ -73,75 +303,30 @@ const subscriptionSlice = createSlice({
       calculateSubTotal(state);
     },
     upgradePlan: (state, action) => {
-      const targetPlan = action.payload;
-      const upgradeCost = calculateUpgradeCost(state, targetPlan);
-      state.subscription = targetPlan;
-      state.upgradeCost = upgradeCost;
+      state.upgradeCost = calculateUpgradeCost(state, action.payload);
+      state.subscription = action.payload;
       calculateSubTotal(state, 'upgrade');
     },
     downgradePlan: (state, action) => {
-      const targetPlan = action.payload;
-      const downgradeRefund = calculateDowngradeRefund(state, targetPlan);
-      state.subscription = targetPlan;
-      state.downgradeRefund = downgradeRefund;
+      state.downgradeRefund = calculateDowngradeRefund(state, action.payload);
+      state.subscription = action.payload;
       calculateSubTotal(state, 'downgrade');
     },
   },
 });
 
-const calculateSubTotal = (state: any, planType?: string) => {
-  const planPrice = state.subscription ? state.subscription.price : 0;
-  const addOnsPrice = state.addOns.reduce((total: number, addOn: any) => total + addOn.price, 0);
-  if (planType === 'upgrade') {
-    state.subTotal = state.remainingBalance - (planPrice + 1 + addOnsPrice - state.couponDiscount);
-  } else if (planType === 'downgrade') {
-    state.subTotal = state.remainingBalance - (planPrice + 1 + addOnsPrice - state.couponDiscount);
-  } else {
-    state.subTotal = state.remainingBalance - (planPrice + addOnsPrice - state.couponDiscount);
-  }
-};
-
-const calculateDiscount = (state: any) => {
-  if (state.coupon) {
-    if (state.coupon.discountType === 'percentage') {
-      state.couponDiscount = (Math.abs(state.subTotal) * state.coupon.discount) / 100;
-    } else {
-      state.couponDiscount = state.coupon.discount;
-    }
-  }
-};
-
-const calculateUpgradeCost = (state: any, targetPlan: any) => {
-  const remainingAmount = calculateBalancePrice(
-    state?.activeSubscription?.planStartAt,
-    state?.activeSubscription?.planValidAt,
-    state?.activeSubscription?.price
-  );
-  state.remainingBalance = remainingAmount;
-  const upgradeCost = targetPlan.price - remainingAmount;
-  return upgradeCost;
-};
-
-const calculateDowngradeRefund = (state: any, targetPlan: any) => {
-  const remainingAmount = calculateBalancePrice(
-    state?.activeSubscription?.planStartAt,
-    state?.activeSubscription?.planValidAt,
-    state?.activeSubscription?.price
-  );
-  state.remainingBalance = remainingAmount;
-  const downgradeRefund = remainingAmount - targetPlan.price;
-  return downgradeRefund;
-};
-
 export const {
   setSubscription,
   setActiveSubscription,
+  setPlanChangeCost,
+  setTaxPercentage,
   setAddOns,
-  removeAddOns,
   resetAddOns,
+  removeAddOns,
   applyCoupon,
   removeCoupon,
   upgradePlan,
   downgradePlan,
 } = subscriptionSlice.actions;
+
 export default subscriptionSlice;
