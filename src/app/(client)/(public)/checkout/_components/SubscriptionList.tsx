@@ -89,21 +89,18 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
     }
   }, [data, dispatch, session, subscription?.slug]);
 
-  console.log('downgradeRefund', downgradeRefund);
-
   return isLoading ? (
     <div>
       <Loader variant="spinner" />
     </div>
   ) : (
     <div>
-      {!session?.user?.plan ||
-        (session?.user?.plan === 'trial' && (
-          <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
-            <p className="font-medium text-blue-700">Change Plan</p>
-            <p className="text-blue-700">You will be billed immediately when switching plans</p>
-          </div>
-        ))}
+      {(!session?.user?.plan || session?.user?.plan === 'trial') && (
+        <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
+          <p className="font-medium text-blue-700">Change Plan</p>
+          <p className="text-blue-700">You will be billed immediately when switching plans</p>
+        </div>
+      )}
       {session?.user?.plan && session?.user?.plan !== 'trial' && (
         <div className="mb-6 border-l-4 border-yellow-400 bg-yellow-50 p-4">
           <p className="font-medium text-yellow-500">Upgrade or downgrade plan</p>

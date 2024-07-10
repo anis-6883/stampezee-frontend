@@ -175,7 +175,7 @@ export default function HeaderContent() {
                         </li>
                       ) : (
                         <li className="py-4 pl-3">
-                          <Link href="root/retailer/dashboard" className=" my-auto rounded-xl bg-red-500 p-2 text-white">
+                          <Link href="/root/retailer/dashboard" className=" my-auto rounded-xl bg-red-500 p-2 text-white">
                             Dashboard
                           </Link>
                         </li>
@@ -263,7 +263,7 @@ export default function HeaderContent() {
                   </li>
                   <div className="ms-2 flex gap-2">
                     {isLoggedIn ? (
-                      <Link href="root/retailer/dashboard" className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white">
+                      <Link href="/root/retailer/dashboard" className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white">
                         Dashboard
                       </Link>
                     ) : (
