@@ -7,9 +7,17 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
-import { applyCoupon, removeAddOns, removeCoupon, setPlanChangeCost, setTaxPercentage } from '@/features/subscription/subscriptionSlice';
+import {
+  applyCoupon,
+  removeAddOns,
+  removeCoupon,
+  setPlanChangeCost,
+  setTaxPercentage,
+  setTaxStatus,
+} from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation, useCreateCouponMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn } from '@/types';
+import { checkedMinPurchaseAmount } from '@/utils';
 import { Form, Formik } from 'formik';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -50,7 +58,8 @@ export default function OrderSummary({ stripeInfo }: any) {
   useEffect(() => {
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
     dispatch(setTaxPercentage(stripeInfo?.taxCost));
-  }, [dispatch, stripeInfo?.planChangeCost, stripeInfo?.taxCost]);
+    dispatch(setTaxStatus(stripeInfo?.taxStatus));
+  }, [dispatch, stripeInfo?.planChangeCost, stripeInfo?.taxCost, stripeInfo?.taxStatus]);
 
   useEffect(() => {
     // if (checkoutError) {
@@ -102,10 +111,22 @@ export default function OrderSummary({ stripeInfo }: any) {
 
     if (couponSuccess) {
       setIsCouponSubmitting(false);
-      toast.success(couponResponse?.message);
-      dispatch(applyCoupon(couponResponse?.data));
+      if (checkedMinPurchaseAmount(Math.abs(total), couponResponse?.data?.minPurchaseAmount)) {
+        toast.success(couponResponse?.message);
+        dispatch(applyCoupon(couponResponse?.data));
+      } else {
+        toast.error(`Min. ${couponResponse?.data?.minPurchaseAmount}CAD required to apply coupon!`);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [couponError, couponResponse?.data, couponResponse?.message, couponSuccess, dispatch]);
+
+  useEffect(() => {
+    if (!checkedMinPurchaseAmount(Math.abs(total), coupon?.minPurchaseAmount ? coupon?.minPurchaseAmount : 0)) {
+      toast.error(`Min. ${coupon?.minPurchaseAmount}CAD required to apply coupon!`);
+      dispatch(removeCoupon());
+    }
+  }, [coupon?.minPurchaseAmount, dispatch, total]);
 
   const handleCoupon = (values: any) => {
     setIsCouponSubmitting(true);
@@ -160,7 +181,7 @@ export default function OrderSummary({ stripeInfo }: any) {
             </div>
           </div>
         )}
-        {subscription?.slug !== activeSubscription?.slug ? (
+        {subscription?.slug !== activeSubscription?.slug || addOns?.length > 0 ? (
           <div>
             <h2 className="pb-2 text-lg font-medium">{addOns?.length > 0 ? 'Plan & Add-Ons' : 'Plan'}</h2>
             <hr className="p-2 text-lg font-bold" />
@@ -199,10 +220,10 @@ export default function OrderSummary({ stripeInfo }: any) {
 
             <div className="mb-2 flex justify-between">
               <span className="font-semibold">Subtotal</span>
-              <span className="text-red-500">{subTotal ? Math.abs(subTotal).toFixed(2) : 0} CAD</span>
+              <span className="text-red-500">{Math.abs(subTotal).toFixed(2)} CAD</span>
             </div>
             <hr className="p-2 text-lg font-bold" />
-            {subTotal !== 0 && (
+            {stripeInfo?.taxStatus === 'on' && (
               <div className="mb-2 flex justify-between">
                 <span>
                   <span className="font-semibold">{stripeInfo?.taxTitle}</span> ({stripeInfo?.taxCost}%)
@@ -211,7 +232,7 @@ export default function OrderSummary({ stripeInfo }: any) {
               </div>
             )}
 
-            {couponResponse?.status && coupon && (
+            {coupon && (
               <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
                 <span className="col-span-6">
                   <span className="font-semibold">Coupon:</span>{' '}
@@ -233,7 +254,7 @@ export default function OrderSummary({ stripeInfo }: any) {
 
             <div className="flex justify-between text-xl font-bold">
               <span>Total</span>
-              <span className="text-red-500">{total ? Math.abs(total).toFixed(2) : 0} CAD</span>
+              <span className="text-red-500">{Math.abs(total).toFixed(2)} CAD</span>
             </div>
           </div>
         ) : (
@@ -242,7 +263,7 @@ export default function OrderSummary({ stripeInfo }: any) {
       </div>
       {total > 0 && (
         <div className="mt-3 rounded-lg border p-4">
-          <h2 className=" text-lg font-medium">We will be return {Math.abs(total.toFixed(2))} CAD</h2>
+          <h2 className=" text-lg font-medium">We will be return {Math.abs(total).toFixed(2)} CAD</h2>
         </div>
       )}
       {Math.abs(total) < 1 && activeSubscription?.slug && activeSubscription?.slug !== 'trial' && (
@@ -252,7 +273,7 @@ export default function OrderSummary({ stripeInfo }: any) {
         </div>
       )}
       <Button
-        disabled={(session?.user?.plan == subscription?.slug && addOns?.length === 0) || Math.abs(total) < 1 ? true : false}
+        disabled={session?.user?.plan == subscription?.slug ? true : false}
         color="danger"
         text="Checkout Confirm"
         className="mt-5 w-full"
