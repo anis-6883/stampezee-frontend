@@ -223,7 +223,7 @@ export default function OrderSummary({ stripeInfo }: any) {
               <span className="text-red-500">{Math.abs(subTotal).toFixed(2)} CAD</span>
             </div>
             <hr className="p-2 text-lg font-bold" />
-            {stripeInfo?.taxStatus === 'on' && (
+            {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && (
               <div className="mb-2 flex justify-between">
                 <span>
                   <span className="font-semibold">{stripeInfo?.taxTitle}</span> ({stripeInfo?.taxCost}%)
