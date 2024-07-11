@@ -64,11 +64,7 @@ export const routes = {
       subscription: {
         home: `/root/super-admin/subscription`,
       },
-      retailer: {
-        home: `/root/super-admin/retailers`,
-        create: `/root/super-admin/retailers/create`,
-        edit: (id: number | string) => `/root/super-admin/retailer/${id}/update`,
-      },
+      retailer: '/root/super-admin/retailer',
       coupon: {
         home: `/root/super-admin/coupon`,
         create: `/root/super-admin/coupon/create`,
@@ -76,6 +72,7 @@ export const routes = {
       },
       notification: `/root/super-admin/notification`,
       payment: `/root/super-admin/payment`,
+      refund: `/root/super-admin/refund`,
       scan: `/root/super-admin/scan`,
       customer: `/root/super-admin/customer`,
       settings: `/root/super-admin/settings`,
@@ -100,11 +97,7 @@ export const routes = {
     subscription: {
       home: `/root/super-admin/subscription`,
     },
-    retailer: {
-      home: `/root/super-admin/retailers`,
-      create: `/root/super-admin/retailers/create`,
-      edit: (id: number | string) => `/root/super-admin/retailer/${id}/update`,
-    },
+    retailer: '/root/super-admin/retailer',
     coupon: {
       home: `/root/super-admin/coupon`,
       create: `/root/super-admin/coupon/create`,

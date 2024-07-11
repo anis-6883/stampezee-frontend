@@ -5,7 +5,7 @@ import { IoDiamondOutline } from 'react-icons/io5';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
 import { PiBellRinging, PiCurrencyDollar, PiStamp } from 'react-icons/pi';
-import { RiCoupon4Line } from 'react-icons/ri';
+import { RiCoupon4Line, RiRefund2Line } from 'react-icons/ri';
 import { TbUserShield } from 'react-icons/tb';
 
 export const menuItems: { [key: string]: any } = {
@@ -17,7 +17,7 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Retailers',
-      href: routes.superAdmin.retailer.home,
+      href: routes.privateRoutes.superAdmin.retailer,
       icon: <BsShop />,
     },
     {
@@ -32,8 +32,13 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Payments',
-      href: routes.superAdmin.payment,
+      href: routes.privateRoutes.superAdmin.payment,
       icon: <PiCurrencyDollar />,
+    },
+    {
+      name: 'Refunds',
+      href: routes.privateRoutes.superAdmin.refund,
+      icon: <RiRefund2Line />,
     },
     {
       name: 'Customers',

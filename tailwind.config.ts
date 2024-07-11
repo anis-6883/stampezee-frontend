@@ -37,7 +37,7 @@ export default {
         },
         primary: '#3872FA',
         secondary: '#5C636A',
-        warning: '#FFC107',
+        warning: '#FFA823',
         success: '#198754',
         danger: '#DC3545',
         info: '#0DCAF0',
