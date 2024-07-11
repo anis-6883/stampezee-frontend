@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 
 const CouponForm = () => {
   const dispatch = useDispatch();
-  const { coupon, total } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { coupon, total, subscription, activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
   const [createCoupon, { data: couponResponse, error: couponError, isSuccess: couponSuccess }] = useCreateCouponMutation();
 
@@ -25,12 +25,6 @@ const CouponForm = () => {
   const validationSchema = Yup.object().shape({
     code: Yup.string().required('Required!'),
   });
-
-  const handleCoupon = (values: any) => {
-    setIsCouponSubmitting(true);
-    createCoupon(values);
-    dispatch(setCode(values?.code));
-  };
 
   useEffect(() => {
     if (couponError) {
@@ -48,7 +42,8 @@ const CouponForm = () => {
         toast.error(`Min. ${couponResponse?.data?.minPurchaseAmount}CAD required to apply coupon!`);
       }
     }
-  }, [couponError, couponResponse?.data, couponResponse?.message, couponSuccess, dispatch, total]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [couponError, couponResponse?.data, couponResponse?.message, couponSuccess, dispatch]);
 
   useEffect(() => {
     if (!checkedMinPurchaseAmount(Math.abs(total), coupon?.minPurchaseAmount ? coupon?.minPurchaseAmount : 0)) {
@@ -57,16 +52,29 @@ const CouponForm = () => {
     }
   }, [coupon?.minPurchaseAmount, dispatch, total]);
 
+  const handleCoupon = (values: any) => {
+    setIsCouponSubmitting(true);
+    createCoupon(values);
+    dispatch(setCode(values.code));
+  };
+
   return (
     <div className="my-5">
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleCoupon}>
         {() => (
           <Form className="grid grid-cols-12 justify-between gap-x-2">
             <div className="col-span-7">
-              <InputField label="" placeholder="X1Y2Z3" required={false} name="code" />
+              <InputField
+                disabled={activeSubscription?.slug == subscription?.slug || subscription?.slug === 'trial' || coupon ? true : false}
+                label=""
+                placeholder="X1Y2Z3"
+                required={false}
+                name="code"
+              />
             </div>
             <div className="col-span-5">
               <Button
+                disabled={activeSubscription?.slug == subscription?.slug || subscription?.slug === 'trial' || coupon ? true : false}
                 color="danger"
                 text="Apply"
                 className="w-full"

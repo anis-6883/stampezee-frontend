@@ -26,7 +26,7 @@ export const Plans = ({ stripeInfo }: any) => {
   const dispatch = useDispatch();
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
-  const { subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { activeSubscription, subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
 
   useEffect(() => {
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
@@ -57,30 +57,6 @@ export const Plans = ({ stripeInfo }: any) => {
     dispatch(setAddOns(addOn));
   };
 
-  let subscriptions = [];
-  if (session?.user?.takeFreeTrial) {
-    const newSubscriptions = data?.data?.filter((item: Subscription) => item.type === 'subscription');
-
-    subscriptions = newSubscriptions?.filter((item: Subscription) => {
-      if (item?.slug === 'trial') return false;
-      if (item?.slug === session?.user?.plan) return false;
-      return true;
-    });
-  } else {
-    subscriptions = data?.data?.filter((item: Subscription) => item.type === 'subscription');
-  }
-
-  let blockedSubscriptions = [];
-  if (session?.user?.takeFreeTrial) {
-    blockedSubscriptions = data?.data?.filter((item: Subscription) => {
-      if (item?.slug === 'trial') return true;
-      if (item?.slug === session?.user?.plan) return true;
-      return false;
-    });
-  }
-
-  const addons = data?.data.filter((item: any) => item?.type === 'addon');
-
   return (
     <div className="mb-6">
       <div className="rounded-md p-8 shadow-md">
@@ -93,15 +69,27 @@ export const Plans = ({ stripeInfo }: any) => {
         <AddOnsList isMemberShip={true} />
         <hr className="my-3" />
         <div className="mt-10 flex items-center justify-end gap-2">
-          <Link href={routes.privateRoutes.checkout}>
-            <Button
-              disabled={session?.user?.plan === subscription?.slug ? true : false}
-              className="text-white"
-              color="danger"
-              text="Selection Confirm"
-              postIcon={<BsCheck2Circle className="text-base" />}
-            />
-          </Link>
+          {subscription?.slug === activeSubscription?.slug && addOns?.length > 0 ? (
+            <Link href={routes.privateRoutes.checkout}>
+              <Button
+                disabled={false}
+                className="text-white"
+                color="danger"
+                text="Selection Confirm"
+                postIcon={<BsCheck2Circle className="text-base" />}
+              />
+            </Link>
+          ) : (
+            <Link href={routes.privateRoutes.checkout}>
+              <Button
+                disabled={subscription?.slug === activeSubscription?.slug ? true : false}
+                className="text-white"
+                color="danger"
+                text="Selection Confirm"
+                postIcon={<BsCheck2Circle className="text-base" />}
+              />
+            </Link>
+          )}
         </div>
       </div>
     </div>

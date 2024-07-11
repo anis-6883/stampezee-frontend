@@ -31,6 +31,6 @@ export const checkedMinPurchaseAmount = (total: number, minPurchaseAmount: numbe
   if (typeof total !== 'number' || typeof minPurchaseAmount !== 'number') {
     throw 'Invalid total or minPurchaseAmount !';
   }
-  console.log(parseFloat(total.toFixed(2)));
+
   return parseFloat(total.toFixed(2)) >= minPurchaseAmount ? true : false;
 };

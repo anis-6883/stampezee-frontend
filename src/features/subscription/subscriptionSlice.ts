@@ -190,12 +190,18 @@ const calculateAddOnsPrice = (addOns: any[]) => {
   return addOns.reduce((total: number, addOn: any) => total + addOn.price, 0);
 };
 
-const calculateSubTotalAmount = (planPrice: number, addOnsPrice: number, planSwitchCharge: number, couponDiscount: number) => {
-  return planPrice + planSwitchCharge + addOnsPrice - couponDiscount;
+const calculateSubTotalAmount = (planPrice: number, addOnsPrice: number) => {
+  return planPrice + addOnsPrice;
 };
 
-const calculateTotalAmount = (remainingBalance: number, subTotal: number, tax: number) => {
-  return remainingBalance - (subTotal + tax);
+const calculateTotalAmount = (
+  remainingBalance: number,
+  subTotal: number,
+  tax: number,
+  planSwitchCharge: number,
+  couponDiscount: number
+) => {
+  return remainingBalance + couponDiscount - (subTotal + tax + planSwitchCharge);
 };
 
 const calculateTaxAmount = (subTotal: number, taxPercentage: number) => {
@@ -246,12 +252,20 @@ const calculateSubTotal = (state: any, planType?: string) => {
     planType === 'downgrade' ||
     (state?.activeSubscription?.slug && state?.activeSubscription?.slug !== 'trial')
   ) {
-    subTotal = calculateSubTotalAmount(planPrice, addOnsPrice, planSwitchCharge, couponDiscount);
-    state.subTotal = remainingBalance - subTotal;
-    if (state.taxStatus === 'on') {
-      calculateTax(state);
+    if (state?.activeSubscription?.slug === state?.subscription?.slug && state?.addOns?.length > 0) {
+      state.subTotal = addOnsPrice;
+      if (state.taxStatus === 'on') {
+        calculateTax(state);
+      }
+      state.total = state.subTotal + state.tax - couponDiscount;
+    } else {
+      subTotal = calculateSubTotalAmount(planPrice, addOnsPrice);
+      state.subTotal = remainingBalance - subTotal;
+      if (state.taxStatus === 'on') {
+        calculateTax(state);
+      }
+      state.total = calculateTotalAmount(remainingBalance, subTotal, state.tax, planSwitchCharge, couponDiscount);
     }
-    state.total = calculateTotalAmount(remainingBalance, subTotal, state.tax);
   } else {
     state.subTotal = planPrice + addOnsPrice;
     if (state.taxStatus === 'on') {
