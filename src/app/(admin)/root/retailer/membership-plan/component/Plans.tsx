@@ -5,7 +5,14 @@ import SubscriptionList from '@/app/(client)/(public)/checkout/_components/Subsc
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
-import { resetAddOns, setAddOns, setSubscription } from '@/features/subscription/subscriptionSlice';
+import {
+  resetAddOns,
+  setAddOns,
+  setPlanChangeCost,
+  setSubscription,
+  setTaxPercentage,
+  setTaxStatus,
+} from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn, Subscription } from '@/types';
 import 'aos/dist/aos.css';
@@ -15,11 +22,17 @@ import { useEffect } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const Plans = () => {
+export const Plans = ({ stripeInfo }: any) => {
   const dispatch = useDispatch();
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
   const { subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
+
+  useEffect(() => {
+    dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
+    dispatch(setTaxPercentage(stripeInfo?.taxCost));
+    dispatch(setTaxStatus(stripeInfo?.taxStatus));
+  }, [dispatch, stripeInfo?.planChangeCost, stripeInfo?.taxCost, stripeInfo?.taxStatus]);
 
   useEffect(() => {
     if (session?.user?.takeFreeTrial) {
