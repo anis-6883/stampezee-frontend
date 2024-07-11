@@ -172,11 +172,12 @@ const initialState: any = {
   activeSubscription: {},
   addOns: [],
   coupon: null,
+  code: '',
   subTotal: 0,
   total: 0,
   couponDiscount: 0,
   tax: 0,
-  taxPercentage: 10,
+  taxPercentage: 0,
   taxStatus: 'on',
   upgradeCost: 0,
   downgradeRefund: 0,
@@ -279,6 +280,9 @@ const subscriptionSlice = createSlice({
     setPlanChangeCost: (state, action) => {
       state.planChangeCost = action.payload;
     },
+    setCode: (state, action) => {
+      state.code = action.payload;
+    },
     setTaxPercentage: (state, action) => {
       state.taxPercentage = action.payload;
     },
@@ -336,6 +340,7 @@ export const {
   removeCoupon,
   upgradePlan,
   downgradePlan,
+  setCode,
 } = subscriptionSlice.actions;
 
 export default subscriptionSlice;
