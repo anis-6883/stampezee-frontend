@@ -1,12 +1,12 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
 import { useGetGeneralSettingsQuery, useUpdateGeneralSettingsMutation } from '@/features/super-admin/general-settings/generalSettingsApi';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import * as Yup from 'yup';
-import Button from '../../../../../../components/Formik/Button';
 import AboutUsForm from './AboutUsForm';
 import GeneralSettingsForm from './GeneralSettingsForm';
 import GoogleMapForm from './GoogleMapForm';
@@ -51,6 +51,7 @@ export default function SettingsMainForm() {
       refundableThreshold: '',
       taxTitle: '',
       taxCost: '',
+      taxStatus: 'on',
     },
     googleMap: {
       googleMapsApiKey: '',
