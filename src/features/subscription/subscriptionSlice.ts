@@ -177,6 +177,7 @@ const initialState: any = {
   couponDiscount: 0,
   tax: 0,
   taxPercentage: 10,
+  taxStatus: 'on',
   upgradeCost: 0,
   downgradeRefund: 0,
   remainingBalance: 0,
@@ -217,7 +218,7 @@ const calculateTax = (state: any) => {
 const calculateDiscount = (state: any) => {
   if (state.coupon) {
     state.couponDiscount =
-      state.coupon.discountType === 'percentage' ? (Math.abs(state.subTotal) * state.coupon.discount) / 100 : state.coupon.discount;
+      state.coupon.discountType === 'percentage' ? (Math.abs(state.total) * state.coupon.discount) / 100 : state.coupon.discount;
   }
 };
 
@@ -246,11 +247,15 @@ const calculateSubTotal = (state: any, planType?: string) => {
   ) {
     subTotal = calculateSubTotalAmount(planPrice, addOnsPrice, planSwitchCharge, couponDiscount);
     state.subTotal = remainingBalance - subTotal;
-    calculateTax(state);
+    if (state.taxStatus === 'on') {
+      calculateTax(state);
+    }
     state.total = calculateTotalAmount(remainingBalance, subTotal, state.tax);
   } else {
-    state.subTotal = planPrice + addOnsPrice - couponDiscount;
-    calculateTax(state);
+    state.subTotal = planPrice + addOnsPrice;
+    if (state.taxStatus === 'on') {
+      calculateTax(state);
+    }
     state.total =
       state?.subscription?.slug === 'trial'
         ? remainingBalance - (planPrice + addOnsPrice - couponDiscount)
@@ -276,6 +281,9 @@ const subscriptionSlice = createSlice({
     },
     setTaxPercentage: (state, action) => {
       state.taxPercentage = action.payload;
+    },
+    setTaxStatus: (state, action) => {
+      state.taxStatus = action.payload;
     },
     setAddOns: (state, action) => {
       const newAddOn = state.addOns.find((item: any) => item._id === action.payload._id);
@@ -320,6 +328,7 @@ export const {
   setActiveSubscription,
   setPlanChangeCost,
   setTaxPercentage,
+  setTaxStatus,
   setAddOns,
   resetAddOns,
   removeAddOns,

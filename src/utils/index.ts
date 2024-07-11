@@ -26,3 +26,11 @@ export const calculateBalancePrice = (startDate: Date, expirationDate: Date, pla
   return planPrice - consumedPrice;
   // return parseFloat(consumedPrice.toFixed(2)); // Return the consumed price rounded to 2 decimal places
 };
+
+export const checkedMinPurchaseAmount = (total: number, minPurchaseAmount: number) => {
+  if (typeof total !== 'number' || typeof minPurchaseAmount !== 'number') {
+    throw 'Invalid total or minPurchaseAmount !';
+  }
+  console.log(parseFloat(total.toFixed(2)));
+  return parseFloat(total.toFixed(2)) >= minPurchaseAmount ? true : false;
+};
