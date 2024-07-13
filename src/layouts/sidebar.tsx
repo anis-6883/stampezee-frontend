@@ -39,8 +39,7 @@ const addonsBlockedMenuUrls = [
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
   const { data: session }: any = useSession();
-  const role = useSelector((state: RootState) => state.authSlice.role);
-  const user = useSelector((state: RootState) => state.authSlice.user);
+  const { role, user } = useSelector((state: RootState) => state.authSlice);
 
   let fullName = user?.firstName + ' ' + user?.lastName;
 
@@ -105,7 +104,6 @@ export default function Sidebar({ className }: { className?: string }) {
       <SimpleBar className="h-[calc(100%-80px)]">
         <div className="mt-4 pb-3 3xl:mt-6">
           {menuItems[role]?.map((item: any, index: number) => {
-            // const isActive = item.name === 'Dashboard'? pathname === '/root/retailer/dashboard' : pathname === (item?.href as string) || pathname.includes(item?.href as string);
             const isActive = pathname === (item?.href as string) || pathname.includes(item?.href as string);
             const pathnameExistInDropdowns: any = item?.dropdownItems?.filter((dropdownItem: any) => dropdownItem.href === pathname);
             const isDropdownOpen = Boolean(pathnameExistInDropdowns?.length);
@@ -178,7 +176,10 @@ export default function Sidebar({ className }: { className?: string }) {
                                     isChildActive ? 'bg-danger ring-[1px] ring-danger' : 'opacity-40'
                                   )}
                                 />{' '}
-                                <span className="truncate">{dropdownItem?.name}</span>
+                                <span className="truncate">
+                                  {dropdownItem?.name} {dropdownItem.name === 'Regular' && `(${user?.totalRegularNotification || 0})`}
+                                  {dropdownItem.name === 'Location Based' && `(${user?.totalRegularNotification || 0})`}
+                                </span>
                               </div>
                               {role === 'retailer' && blockedMenuUrls.includes(dropdownItem?.href) && !session?.user?.plan && (
                                 <div className="text-end ">
@@ -223,7 +224,10 @@ export default function Sidebar({ className }: { className?: string }) {
                               {item?.icon}
                             </span>
                           )}
-                          <span className="truncate">{item.name}</span>
+                          <span className="truncate">
+                            {item.name} {item.name === 'Branches' && `(${user?.totalBranch || 0})`}
+                            {item.name === 'Custom Stamp Images' && `(${user?.totalCustomStamp || 0})`}
+                          </span>
                         </div>
                         {role === 'retailer' && blockedMenuUrls.includes(item?.href) && !session?.user?.plan && (
                           <div className="text-end ">

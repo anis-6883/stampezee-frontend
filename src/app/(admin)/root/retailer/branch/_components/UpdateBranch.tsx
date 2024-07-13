@@ -94,7 +94,7 @@ export default function UpdateBranch({ branchId }: any) {
           <MapComponent />
           <div className="mt-2 flex justify-end">
             <Button
-              color="warning"
+              color="danger"
               type="submit"
               text="Update"
               postIcon={<BsCheck2Circle className="text-base" />}
