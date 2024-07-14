@@ -1,15 +1,17 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { useAllBranchQuery, useDeleteBranchMutation, useUpdateBranchStatusMutation } from '@/features/retailer/branch/branchApi';
 import { IQueryType } from '@/types';
+import _ from 'lodash';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
-import Button from '../../../../../../components/Formik/Button';
+import { Badge } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 
@@ -57,6 +59,27 @@ export default function BranchTable() {
           {row?.original?.address.name.length > 60 ? `${row?.original?.address.name.substring(0, 60)}...` : row?.original?.address.name}
         </div>
       ),
+    },
+    {
+      header: 'Source',
+      accessorKey: 'source',
+      Cell: ({ row }: any) => (
+        <div className="flex items-center justify-center gap-2">
+          <div className="text-white">
+            {row?.original?.source === 'addon' ? (
+              <Badge className="!bg-danger">{_.capitalize(row?.original?.source)}</Badge>
+            ) : (
+              <Badge className="bg-primary">{_.capitalize(row?.original?.source)}</Badge>
+            )}
+          </div>
+        </div>
+      ),
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
     },
     {
       header: 'Status',
