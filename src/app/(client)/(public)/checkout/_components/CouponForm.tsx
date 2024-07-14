@@ -37,6 +37,7 @@ const CouponForm = () => {
       setIsCouponSubmitting(false);
       if (checkedMinPurchaseAmount(Math.abs(total), couponResponse?.data?.minPurchaseAmount)) {
         toast.success(couponResponse?.message);
+        console.log('couponResponse?.data', couponResponse?.data);
         dispatch(applyCoupon(couponResponse?.data));
       } else {
         toast.error(`Min. ${couponResponse?.data?.minPurchaseAmount}CAD required to apply coupon!`);
@@ -55,7 +56,9 @@ const CouponForm = () => {
   const handleCoupon = (values: any) => {
     setIsCouponSubmitting(true);
     createCoupon(values);
-    dispatch(setCode(values.code));
+    if (couponSuccess) {
+      dispatch(setCode(values.code));
+    }
   };
 
   return (

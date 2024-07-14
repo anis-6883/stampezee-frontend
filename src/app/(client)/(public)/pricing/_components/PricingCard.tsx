@@ -53,7 +53,7 @@ export default function PricingCard({ item }: { item: any }) {
         </ul>
       </div>
       <div>
-        {session?.user?.plan === item?.slug ? (
+        {session?.user?.plan === item?.slug || (session?.user?.takeFreeTrial === true && item?.slug === 'trial') ? (
           <>
             <Button color="danger" text="Get started" className="w-full cursor-not-allowed" />
           </>

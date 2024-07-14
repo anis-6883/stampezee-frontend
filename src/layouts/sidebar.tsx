@@ -36,6 +36,43 @@ const addonsBlockedMenuUrls = [
   routes.privateRoutes.retailer.locationBasedNotification.home,
 ];
 
+const lockedMenuNames = ['Branches', 'Custom Stamp Images', 'Regular', 'Location Based'];
+
+const checkedLocked = (role: string, url: string, menuName: string, user: any) => {
+  if (user?.plan) {
+    if (user?.plan === 'trial') {
+      return role === 'retailer' && addonsBlockedMenuUrls.includes(url);
+    }
+    if (lockedMenuNames?.indexOf(menuName) >= 0) {
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Branches') {
+        return role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalBranch === 0;
+      }
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Custom Stamp Images') {
+        return role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalCustomStamp === 0;
+      }
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Regular') {
+        return (
+          role === 'retailer' &&
+          blockedMenuUrls.includes(url) &&
+          lockedMenuNames?.includes(menuName) &&
+          user?.totalRegularNotification === 0
+        );
+      }
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Location Based') {
+        return (
+          role === 'retailer' &&
+          blockedMenuUrls.includes(url) &&
+          lockedMenuNames?.includes(menuName) &&
+          user?.totalLocationNotification === 0
+        );
+      }
+    }
+    return false;
+  } else {
+    return role === 'retailer' && blockedMenuUrls.includes(url);
+  }
+};
+
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
   const { data: session }: any = useSession();
@@ -47,10 +84,12 @@ export default function Sidebar({ className }: { className?: string }) {
     fullName = user?.firstName + ' ' + user?.lastName.charAt(0).toUpperCase() + '.';
   }
 
+  console.log('session', user);
+
   return (
     <aside
       className={cn(
-        '2xl:w-72 fixed bottom-0 start-0 z-50 h-full w-[270px] border-e-2 border-gray-100 bg-white dark:bg-gray-100/50',
+        '2xl:w-72 fixed bottom-0 start-0 z-50 h-full w-[290px] border-e-2 border-gray-100 bg-white dark:bg-gray-100/50',
         className
       )}
     >
@@ -158,10 +197,10 @@ export default function Sidebar({ className }: { className?: string }) {
                               key={dropdownItem?.name + index}
                               className={cn(
                                 '2xl:mx-5 mx-3.5 mb-0.5 flex items-center justify-between rounded-md px-3.5 py-2 font-medium capitalize last-of-type:mb-1 lg:last-of-type:mb-2',
-                                role === 'retailer' && addonsBlockedMenuUrls.includes(dropdownItem?.href) && session?.user?.plan === 'trial'
-                                  ? 'pointer-events-none cursor-not-allowed bg-gray-100'
-                                  : '',
-                                role === 'retailer' && blockedMenuUrls.includes(dropdownItem?.href) && !session?.user?.plan
+                                // role === 'retailer' && addonsBlockedMenuUrls.includes(dropdownItem?.href) && session?.user?.plan === 'trial'
+                                //   ? 'pointer-events-none cursor-not-allowed bg-gray-100'
+                                //   : '',
+                                checkedLocked(role, dropdownItem?.href, dropdownItem.name, session?.user)
                                   ? 'pointer-events-none cursor-not-allowed bg-gray-100'
                                   : '',
                                 isChildActive
@@ -181,18 +220,18 @@ export default function Sidebar({ className }: { className?: string }) {
                                   {dropdownItem.name === 'Location Based' && `(${user?.totalRegularNotification || 0})`}
                                 </span>
                               </div>
-                              {role === 'retailer' && blockedMenuUrls.includes(dropdownItem?.href) && !session?.user?.plan && (
+                              {checkedLocked(role, dropdownItem?.href, dropdownItem.name, session?.user) && (
                                 <div className="text-end ">
                                   <SlLock className="text-lg" />
                                 </div>
                               )}
-                              {role === 'retailer' &&
+                              {/* {role === 'retailer' &&
                                 addonsBlockedMenuUrls.includes(dropdownItem?.href) &&
                                 session?.user?.plan === 'trial' && (
                                   <div className="text-end ">
                                     <SlLock className="text-lg" />
                                   </div>
-                                )}
+                                )} */}
                             </Link>
                           );
                         })}
@@ -202,12 +241,12 @@ export default function Sidebar({ className }: { className?: string }) {
                         href={item?.href}
                         className={cn(
                           '2xl:mx-5 2xl:my-2 group relative mx-3 my-0.5 flex items-center justify-between rounded-md px-3 py-2 font-medium capitalize lg:my-1',
-                          role === 'retailer' && blockedMenuUrls.includes(item?.href) && !session?.user?.plan
+                          checkedLocked(role, item?.href, item.name, session?.user)
                             ? 'pointer-events-none cursor-not-allowed bg-gray-100'
                             : '',
-                          role === 'retailer' && addonsBlockedMenuUrls.includes(item?.href) && session?.user?.plan === 'trial'
-                            ? 'pointer-events-none cursor-not-allowed bg-gray-100'
-                            : '',
+                          // role === 'retailer' && addonsBlockedMenuUrls.includes(item?.href) && session?.user?.plan === 'trial'
+                          //   ? 'pointer-events-none cursor-not-allowed bg-gray-100'
+                          //   : '',
                           isActive
                             ? 'before:top-2/5 2xl:before:-start-5 text-danger before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-danger'
                             : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-700/90'
@@ -229,16 +268,16 @@ export default function Sidebar({ className }: { className?: string }) {
                             {item.name === 'Custom Stamp Images' && `(${user?.totalCustomStamp || 0})`}
                           </span>
                         </div>
-                        {role === 'retailer' && blockedMenuUrls.includes(item?.href) && !session?.user?.plan && (
+                        {checkedLocked(role, item?.href, item.name, session?.user) && (
                           <div className="text-end ">
                             <SlLock className="text-lg" />
                           </div>
                         )}
-                        {role === 'retailer' && addonsBlockedMenuUrls.includes(item?.href) && session?.user?.plan === 'trial' && (
+                        {/* {role === 'retailer' && addonsBlockedMenuUrls.includes(item?.href) && session?.user?.plan === 'trial' && (
                           <div className="text-end ">
                             <SlLock className="text-lg" />
                           </div>
-                        )}
+                        )} */}
                       </Link>
                     )}
                   </>

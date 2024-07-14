@@ -1,11 +1,13 @@
 import { metaObject } from '@/config/site.config';
+import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import SubscriptionList from './_components/SubscriptionList';
 
 export const metadata = {
   ...metaObject('Pricing'),
 };
 
-export default function Page() {
+export default async function Page() {
+  const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
   return (
     <div>
       <div className="relative mx-auto w-full">
@@ -49,7 +51,7 @@ export default function Page() {
           <p className="mb-4 text-2xl font-medium tracking-tight text-gray-900 dark:text-white">Our Plans</p>
         </div>
 
-        <SubscriptionList />
+        <SubscriptionList stripeInfo={data?.data?.stripe} />
       </div>
     </div>
   );

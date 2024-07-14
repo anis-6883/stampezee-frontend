@@ -84,7 +84,13 @@ export default function StampTable() {
       header: 'Category',
       accessorKey: 'category.name',
     },
-
+    {
+      header: 'Reward',
+      accessorKey: 'rewardType',
+      Cell: ({ row }: any) => (
+        <div>{row?.original?.rewardType === 'discount' ? `${row?.original?.discountReward}%` : row?.original?.promotionReward}</div>
+      ),
+    },
     {
       header: 'Actions',
       Cell: ({ row }: any) => (

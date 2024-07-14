@@ -4,6 +4,7 @@ import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
+import { resetState } from '@/features/subscription/subscriptionSlice';
 import { countDaysLeft } from '@/utils';
 import { Menu, Transition } from '@headlessui/react';
 import _ from 'lodash';
@@ -57,6 +58,7 @@ export default function HeaderContent() {
       redirect: false,
       callbackUrl: '/',
     });
+    dispatch(resetState());
   };
 
   useEffect(() => {
