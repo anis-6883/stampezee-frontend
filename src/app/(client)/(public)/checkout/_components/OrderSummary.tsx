@@ -78,6 +78,7 @@ export default function OrderSummary({ stripeInfo }: any) {
     }
     if (subSlugs.length > 0) {
       if (code) {
+        console.log({ code });
         checkOut({ slugs: subSlugs, code });
       } else {
         checkOut({ slugs: subSlugs });

@@ -1,5 +1,6 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
@@ -44,8 +45,8 @@ export default function OrderSession() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile?.data, profileSuccess, data?.data]);
   return (
-    <Link href="/root/retailer/dashboard" className="rounded-xl bg-red-500 px-4 py-2 text-white">
-      Go to Dashboard
+    <Link href="/root/retailer/dashboard">
+      <Button color="danger" text="Go to Dashboard" />
     </Link>
   );
 }

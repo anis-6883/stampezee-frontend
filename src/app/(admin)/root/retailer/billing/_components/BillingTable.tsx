@@ -4,6 +4,7 @@ import Table from '@/app/(admin)/root/_components/Table';
 import { useAllBillingQuery } from '@/features/retailer/billing/billingApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
+import { Box } from '@mantine/core';
 import _ from 'lodash';
 import { useState } from 'react';
 import { GiSandsOfTime } from 'react-icons/gi';
@@ -178,6 +179,20 @@ export default function BillingTable({ offset }: { offset: number }) {
     // },
   ];
 
+  const renderDetailPanel = ({ row }: any) => (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        gap: '16px',
+        padding: '16px',
+      }}
+    >
+      <Box sx={{ textAlign: 'center' }}>Hello {row?.original?.planSnapshot?.price}</Box>
+    </Box>
+  );
+
   return (
     <Table
       isFetching={isFetching}
@@ -203,6 +218,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       searchPlaceHolder="Search By Payment ID"
       searchFieldWidth="250px"
       enableRowNumbers={true}
+      renderDetailPanel={renderDetailPanel}
     />
   );
 }

@@ -14,6 +14,7 @@ export default function Table({
   enablePagination = true,
   enableRowActions = false,
   enableDnD = false,
+  renderDetailPanel,
   sort,
   sortContext,
   enableRowNumbers = false,
@@ -108,6 +109,7 @@ export default function Table({
         },
       }),
     }),
+    renderDetailPanel,
   });
 
   return <MantineReactTable table={table} />;
