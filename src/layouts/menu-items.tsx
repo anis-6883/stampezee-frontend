@@ -74,7 +74,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuLayoutDashboard />,
     },
     {
-      name: 'Membership Plans',
+      name: 'Plans & AddOns',
       href: routes.privateRoutes.retailer.membershipPlan,
       icon: <IoDiamondOutline />,
     },

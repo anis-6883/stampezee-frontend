@@ -1,5 +1,6 @@
 'use client';
 
+import CustomButton from '@/components/Formik/Button';
 import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
@@ -229,7 +230,7 @@ export default function HeaderContent() {
                 </Drawer>
 
                 <ul
-                  className={`${sidBer ? 'h-full' : ''} mt-4 flex flex-col items-center rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
+                  className={`${sidBer ? 'h-full' : ''} mt-4 flex flex-col items-center justify-center rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                 >
                   <li className="w-max-content">
                     <Link
@@ -263,10 +264,11 @@ export default function HeaderContent() {
                       Contact Us
                     </Link>
                   </li>
-                  <div className="ms-2 flex gap-2">
+                  <div className="ms-2 flex items-center justify-center gap-2">
                     {isLoggedIn ? (
-                      <Link href="/root/retailer/dashboard" className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white">
-                        Dashboard
+                      // className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white"
+                      <Link href="/root/retailer/dashboard">
+                        <CustomButton color="danger" text="Dashboard" className="!m-0" />
                       </Link>
                     ) : (
                       <Link href="/retailer/login" className={`relative  transition-all duration-150 ease-in hover:text-red-500`}>

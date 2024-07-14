@@ -84,8 +84,6 @@ export default function Sidebar({ className }: { className?: string }) {
     fullName = user?.firstName + ' ' + user?.lastName.charAt(0).toUpperCase() + '.';
   }
 
-  console.log('session', user);
-
   return (
     <aside
       className={cn(
@@ -197,9 +195,7 @@ export default function Sidebar({ className }: { className?: string }) {
                               key={dropdownItem?.name + index}
                               className={cn(
                                 '2xl:mx-5 mx-3.5 mb-0.5 flex items-center justify-between rounded-md px-3.5 py-2 font-medium capitalize last-of-type:mb-1 lg:last-of-type:mb-2',
-                                // role === 'retailer' && addonsBlockedMenuUrls.includes(dropdownItem?.href) && session?.user?.plan === 'trial'
-                                //   ? 'pointer-events-none cursor-not-allowed bg-gray-100'
-                                //   : '',
+
                                 checkedLocked(role, dropdownItem?.href, dropdownItem.name, session?.user)
                                   ? 'pointer-events-none cursor-not-allowed bg-gray-100'
                                   : '',
@@ -225,13 +221,6 @@ export default function Sidebar({ className }: { className?: string }) {
                                   <SlLock className="text-lg" />
                                 </div>
                               )}
-                              {/* {role === 'retailer' &&
-                                addonsBlockedMenuUrls.includes(dropdownItem?.href) &&
-                                session?.user?.plan === 'trial' && (
-                                  <div className="text-end ">
-                                    <SlLock className="text-lg" />
-                                  </div>
-                                )} */}
                             </Link>
                           );
                         })}
@@ -244,9 +233,6 @@ export default function Sidebar({ className }: { className?: string }) {
                           checkedLocked(role, item?.href, item.name, session?.user)
                             ? 'pointer-events-none cursor-not-allowed bg-gray-100'
                             : '',
-                          // role === 'retailer' && addonsBlockedMenuUrls.includes(item?.href) && session?.user?.plan === 'trial'
-                          //   ? 'pointer-events-none cursor-not-allowed bg-gray-100'
-                          //   : '',
                           isActive
                             ? 'before:top-2/5 2xl:before:-start-5 text-danger before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-danger'
                             : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-700/90'
@@ -264,8 +250,8 @@ export default function Sidebar({ className }: { className?: string }) {
                             </span>
                           )}
                           <span className="truncate">
-                            {item.name} {item.name === 'Branches' && `(${user?.totalBranch || 0})`}
-                            {item.name === 'Custom Stamp Images' && `(${user?.totalCustomStamp || 0})`}
+                            {item.name} {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
+                            {item.name === 'Custom Stamp Images' && `(${session?.user?.totalCustomStamp || 0})`}
                           </span>
                         </div>
                         {checkedLocked(role, item?.href, item.name, session?.user) && (
@@ -273,11 +259,6 @@ export default function Sidebar({ className }: { className?: string }) {
                             <SlLock className="text-lg" />
                           </div>
                         )}
-                        {/* {role === 'retailer' && addonsBlockedMenuUrls.includes(item?.href) && session?.user?.plan === 'trial' && (
-                          <div className="text-end ">
-                            <SlLock className="text-lg" />
-                          </div>
-                        )} */}
                       </Link>
                     )}
                   </>
