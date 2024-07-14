@@ -1,12 +1,63 @@
 'use client';
 
+import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
+import { setValue } from '@/features/auth/authSlice';
+import { RootState } from '@/features/store';
+import {
+  setActiveSubscription,
+  setPlanChangeCost,
+  setRemainingBalance,
+  setTaxPercentage,
+  setTaxStatus,
+} from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import { Subscription } from '@/types';
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from 'rizzui';
 import PricingCard from './PricingCard';
 
-export default function SubscriptionList() {
+export default function SubscriptionList({ stripeInfo }: any) {
+  const dispatch = useDispatch();
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
   const subscription = data?.data.filter((item: any) => item.type === 'subscription');
+
+  const { data: session, update }: any = useSession();
+  const { user, isLoggedIn, accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { data: profile, isSuccess: profileSuccess } = useRetailerGetProfileQuery(null, { skip: !accessToken });
+
+  useEffect(() => {
+    if (profileSuccess) {
+      update({ ...session?.user, ...profile?.data });
+      dispatch(
+        setValue({
+          target: 'user',
+          value: { ...user, ...profile?.data },
+        })
+      );
+      const activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan) || {};
+
+      let updateActiveSubscription = {};
+      if (activeSubscription) {
+        updateActiveSubscription = {
+          ...activeSubscription,
+          takeFreeTrial: session?.user?.takeFreeTrial,
+          planStartAt: session?.user?.planStartAt,
+          planValidAt: session?.user?.planValidAt,
+        };
+      }
+      dispatch(setActiveSubscription(updateActiveSubscription));
+      dispatch(setRemainingBalance());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile?.data, profileSuccess, data?.data]);
+
+  useEffect(() => {
+    dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
+    dispatch(setTaxPercentage(stripeInfo?.taxCost));
+    dispatch(setTaxStatus(stripeInfo?.taxStatus));
+  }, [dispatch, stripeInfo?.planChangeCost, stripeInfo?.taxCost, stripeInfo?.taxStatus]);
 
   return (
     <div>

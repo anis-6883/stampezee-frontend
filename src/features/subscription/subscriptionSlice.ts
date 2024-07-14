@@ -310,6 +310,9 @@ const subscriptionSlice = createSlice({
         : [...state.addOns, { ...action.payload, isAddOnsSelect: true }];
       calculateSubTotal(state);
     },
+    setRemainingBalance: (state) => {
+      updateBalance(state);
+    },
     resetAddOns: (state) => {
       state.addOns = [];
       calculateSubTotal(state);
@@ -338,6 +341,10 @@ const subscriptionSlice = createSlice({
       state.subscription = action.payload;
       calculateSubTotal(state, 'downgrade');
     },
+    resetState: (state) => {
+      const { planChangeCost, taxPercentage, taxStatus } = state;
+      Object.assign(state, initialState, { planChangeCost, taxPercentage, taxStatus });
+    },
   },
 });
 
@@ -348,6 +355,7 @@ export const {
   setTaxPercentage,
   setTaxStatus,
   setAddOns,
+  setRemainingBalance,
   resetAddOns,
   removeAddOns,
   applyCoupon,
@@ -355,6 +363,7 @@ export const {
   upgradePlan,
   downgradePlan,
   setCode,
+  resetState,
 } = subscriptionSlice.actions;
 
 export default subscriptionSlice;

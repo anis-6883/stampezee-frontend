@@ -3,16 +3,20 @@
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
+import { setActiveSubscription, setRemainingBalance } from '@/features/subscription/subscriptionSlice';
+import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import { Subscription } from '@/types';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function OrderSession() {
-  const { data: session, update } = useSession();
+  const { data: session, update }: any = useSession();
   const dispatch = useDispatch();
   const { user, isLoggedIn, accessToken } = useSelector((state: RootState) => state.authSlice);
   const { data: profile, isSuccess: profileSuccess } = useRetailerGetProfileQuery(null, { skip: !accessToken });
+  const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
   useEffect(() => {
     if (profileSuccess) {
@@ -23,9 +27,22 @@ export default function OrderSession() {
           value: { ...user, ...profile?.data },
         })
       );
+      const activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan) || {};
+      console.log('activeSubscription', session?.user?.plan);
+      let updateActiveSubscription = {};
+      if (activeSubscription) {
+        updateActiveSubscription = {
+          ...activeSubscription,
+          takeFreeTrial: session?.user?.takeFreeTrial,
+          planStartAt: session?.user?.planStartAt,
+          planValidAt: session?.user?.planValidAt,
+        };
+      }
+      dispatch(setActiveSubscription(updateActiveSubscription));
+      dispatch(setRemainingBalance());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile?.data, profileSuccess]);
+  }, [profile?.data, profileSuccess, data?.data]);
   return (
     <Link href="/root/retailer/dashboard" className="rounded-xl bg-red-500 px-4 py-2 text-white">
       Go to Dashboard

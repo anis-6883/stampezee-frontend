@@ -305,10 +305,10 @@ export default function Create() {
                 </div>
               </div>
               {values.rewardType === 'discount' && (
-                <InputField name="discountReward" label="Product Reward" placeholder="Product Reward" type="number" />
+                <InputField name="discountReward" label="Product Reward" placeholder="Ex. Get 1 Coke" type="number" />
               )}
               {values.rewardType === 'promotion' && (
-                <InputField name="promotionReward" label="Product Reward" placeholder="Product Reward" />
+                <InputField name="promotionReward" label="Product Reward" placeholder="Ex. Get 1 Coke" />
               )}
 
               <p className="text-end text-xs font-semibold">
