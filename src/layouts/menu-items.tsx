@@ -1,11 +1,12 @@
 import { routes } from '@/config/routes';
 import { BsPatchCheck, BsQuestionCircle, BsShop } from 'react-icons/bs';
+import { FaMoneyBillTransfer } from 'react-icons/fa6';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { IoDiamondOutline } from 'react-icons/io5';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
-import { PiBellRinging, PiCurrencyDollar, PiStamp } from 'react-icons/pi';
-import { RiCoupon4Line, RiRefund2Line } from 'react-icons/ri';
+import { PiBellRinging, PiStamp } from 'react-icons/pi';
+import { RiCoupon4Line, RiMoneyDollarCircleLine, RiRefund2Line } from 'react-icons/ri';
 import { TbUserShield } from 'react-icons/tb';
 
 export const menuItems: { [key: string]: any } = {
@@ -33,7 +34,7 @@ export const menuItems: { [key: string]: any } = {
     {
       name: 'Payments',
       href: routes.privateRoutes.superAdmin.payment,
-      icon: <PiCurrencyDollar />,
+      icon: <RiMoneyDollarCircleLine />,
     },
     {
       name: 'Refunds',
@@ -69,13 +70,18 @@ export const menuItems: { [key: string]: any } = {
   retailer: [
     {
       name: 'Dashboard',
-      href: routes.retailer.dashboard,
+      href: routes.privateRoutes.retailer.dashboard,
       icon: <LuLayoutDashboard />,
     },
     {
-      name: 'Plans & Billings',
-      href: routes.retailer.membershipPlan,
+      name: 'Membership Plans',
+      href: routes.privateRoutes.retailer.membershipPlan,
       icon: <IoDiamondOutline />,
+    },
+    {
+      name: 'Billing',
+      href: routes.privateRoutes.retailer.billing,
+      icon: <FaMoneyBillTransfer />,
     },
     {
       name: 'Branches',

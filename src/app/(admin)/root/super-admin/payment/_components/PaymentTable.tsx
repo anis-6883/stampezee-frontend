@@ -35,7 +35,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
                 />
               </div>
             ) : (
-              <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-20 rounded" />
+              <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-12 rounded" />
             )}
           </div>
           <div>

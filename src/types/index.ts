@@ -15,6 +15,7 @@ export interface ITableProps {
   sortContext?: string;
   searchPlaceHolder?: string;
   searchFieldWidth?: string;
+  enableRowNumbers?: boolean;
 }
 
 export interface ICountrySelect {

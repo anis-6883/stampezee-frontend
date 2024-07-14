@@ -49,6 +49,7 @@ export const routes = {
         edit: (id: number | string) => `/root/retailer/notification/regular/location-based/update/${id}`,
       },
       membershipPlan: `/root/retailer/membership-plan`,
+      billing: `/root/retailer/billing`,
     },
     superAdmin: {
       dashboard: '/root/super-admin/dashboard',

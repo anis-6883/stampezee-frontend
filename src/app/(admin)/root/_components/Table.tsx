@@ -16,6 +16,7 @@ export default function Table({
   enableDnD = false,
   sort,
   sortContext,
+  enableRowNumbers = false,
   searchPlaceHolder = 'Search',
   searchFieldWidth = '180px',
 }: ITableProps) {
@@ -80,6 +81,7 @@ export default function Table({
     enableColumnActions: false,
     onGlobalFilterChange: handleFilter,
     enableSorting: enableDnD,
+    enableRowNumbers: enableRowNumbers,
 
     ...(enableDnD && {
       enableRowDragging: true,
