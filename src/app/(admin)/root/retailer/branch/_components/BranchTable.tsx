@@ -10,9 +10,10 @@ import _ from 'lodash';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { FcLock, FcUnlock } from 'react-icons/fc';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
-import { Badge } from 'rizzui';
+import { Badge, Switch } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 
@@ -133,6 +134,39 @@ export default function BranchTable({ offset }: { offset: number }) {
 
   return (
     <>
+      <div className="my-3  max-w-56 rounded-md border-2 border-solid  p-3">
+        <div className="flex items-center justify-center pb-2">
+          <span className="font-semibold">Status</span>
+        </div>
+        <hr className="" />
+        <div className="flex items-center justify-center pt-2">
+          <div className="flex items-center justify-center space-x-2 pr-3">
+            <span className="font-medium">Active</span>
+            <Switch
+              checked={true}
+              switchClassName="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-blue-500/50 hover:bg-gradient-to-br focus:ring-blue-300"
+              switchKnobClassName="bg-light"
+              variant="flat"
+              labelClassName="select-none"
+              onIcon={<FcUnlock />}
+              // offIcon={<FcUnlock />}
+            />
+          </div>
+          <div className="flex items-center justify-end space-x-2">
+            <span className="font-medium">Inactive</span>
+
+            <Switch
+              checked={false}
+              switchClassName="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-blue-500/50 hover:bg-gradient-to-br focus:ring-blue-300"
+              switchKnobClassName="bg-light"
+              variant="flat"
+              labelClassName="select-none"
+              // onIcon={<FcUnlock />}
+              offIcon={<FcLock />}
+            />
+          </div>
+        </div>
+      </div>
       <Table
         isFetching={isFetching}
         isLoading={isLoading}
