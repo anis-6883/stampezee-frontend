@@ -3,6 +3,7 @@
 import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import { routes } from '@/config/routes';
+import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateBranchMutation } from '@/features/retailer/branch/branchApi';
 import { Branch } from '@/types';
 import { Form, Formik } from 'formik';
@@ -15,7 +16,7 @@ import Map from './Map';
 
 export default function CreateBranch() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [createBranch, { isError, isSuccess }] = useCreateBranchMutation();
+  const [createBranch, { error, isSuccess }] = useCreateBranchMutation();
   const router = useRouter();
 
   const initialValues = {
@@ -42,9 +43,10 @@ export default function CreateBranch() {
 
   // Handle Response
   useEffect(() => {
-    if (isError) {
+    if (error) {
       setIsSubmitting(false);
-      toast.error('Something went wrong. Please try again!');
+      const myError = error as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong. Please try again!');
     }
 
     if (isSuccess) {
@@ -52,7 +54,7 @@ export default function CreateBranch() {
       toast.success('Branch created successfully!');
       setIsSubmitting(false);
     }
-  }, [isError, isSuccess, router]);
+  }, [error, isSuccess, router]);
 
   return (
     <Formik

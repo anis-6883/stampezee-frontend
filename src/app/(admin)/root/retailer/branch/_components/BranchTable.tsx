@@ -5,6 +5,7 @@ import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { useAllBranchQuery, useDeleteBranchMutation, useUpdateBranchStatusMutation } from '@/features/retailer/branch/branchApi';
 import { IQueryType } from '@/types';
+import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -16,7 +17,7 @@ import { Badge, Switch } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 
-export default function BranchTable() {
+export default function BranchTable({ offset }: { offset: number }) {
   const [deleteBranch, { isSuccess, isError }] = useDeleteBranchMutation();
   const [updateStatus] = useUpdateBranchStatusMutation();
   const [modalState, setModalState] = useState(false);
@@ -83,6 +84,12 @@ export default function BranchTable() {
       },
     },
     {
+      header: 'Validity Date',
+      Cell: ({ row }: any) => (
+        <span className="font-bold text-danger">{countDaysLeft(row?.original?.enrollSubscription?.validityTo)} days left</span>
+      ),
+    },
+    {
       header: 'Status',
       accessorKey: 'status',
       Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
@@ -92,6 +99,7 @@ export default function BranchTable() {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      size: 100,
     },
     {
       header: 'Actions',
