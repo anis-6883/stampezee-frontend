@@ -2,6 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
 import {
   useDeleteSuperAdminStampImageMutation,
   useGetAllSuperAdminStampImagesQuery,
@@ -112,7 +113,8 @@ export default function StampsImageTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex justify-between">
+        <StatusIndicator />
         <Button color="danger" onClick={() => setCreateState(true)} text="Add New Stamp Image" preIcon={<HiPlus className="text-base" />} />
       </div>
 

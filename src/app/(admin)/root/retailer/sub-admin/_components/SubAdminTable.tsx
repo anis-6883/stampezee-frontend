@@ -1,6 +1,7 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
 import {
   useDeleteSubAdminMutation,
   useGetAllSubAdminsQuery,
@@ -133,7 +134,8 @@ export default function SubAdminTable() {
 
   return (
     <>
-      <div className="mb-5 flex justify-end">
+      <div className="mb-5 flex justify-between">
+        <StatusIndicator />
         <Button color="danger" text="Add New Sub-Admin" preIcon={<HiPlus className="text-base" />} onClick={() => setCreateState(true)} />
       </div>
       <Table

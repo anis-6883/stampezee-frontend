@@ -1,5 +1,6 @@
 import Button from '@/components/Formik/Button';
 import PageHeader from '@/components/page-header';
+import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
@@ -28,9 +29,10 @@ export default async function Page() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <div className="mb-5 flex justify-end">
+      <div className="mb-5 flex justify-between">
+        <StatusIndicator />
         <Link href={routes.retailer.branch.create}>
-          <Button color="danger" text="Add New Branch" preIcon={<HiPlus className="text-base" />} />
+          <Button className="!m-0" color="danger" text="Add New Branch" preIcon={<HiPlus className="text-base" />} />
         </Link>
       </div>
 

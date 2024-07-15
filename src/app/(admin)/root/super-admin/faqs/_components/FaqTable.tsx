@@ -1,6 +1,7 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
 import {
   useDeleteFaqMutation,
   useGetAllFaqQuery,
@@ -130,7 +131,8 @@ export default function FaqTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex justify-between">
+        <StatusIndicator />
         <Button color="danger" onClick={() => setCreateState(true)} text="Add New Faq" preIcon={<HiPlus className="text-base" />} />
       </div>
       <Table

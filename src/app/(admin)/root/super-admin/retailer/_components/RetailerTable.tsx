@@ -8,6 +8,7 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 
 import Button from '@/components/Formik/Button';
+import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
 import {
   useDeleteSuperAdminRetailerMutation,
   useGetAllRetailersQuery,
@@ -164,7 +165,8 @@ export default function RetailerTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex justify-between">
+        <StatusIndicator />
         <Button color="danger" onClick={() => setCreateState(true)} text="Add New Retailer" preIcon={<HiPlus className="text-base" />} />
       </div>
       <Table
