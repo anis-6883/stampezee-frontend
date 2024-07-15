@@ -280,7 +280,7 @@ export default function HeaderContent() {
                         <div>
                           <Menu.Button className="ml-2">
                             <img
-                              src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/man.png'}
+                              src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
                               alt="author"
                               className="h-10 w-10 rounded-full p-1 ring-2 ring-red-300 dark:ring-red-500"
                               width={500}
