@@ -1,23 +1,18 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { useDeleteStampMutation, useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
 import { IQueryType } from '@/types';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
-import Button from '../../../../../../components/Formik/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 
-let popup = false;
-
 export default function StampTable() {
-  const router = useRouter();
-
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
@@ -30,11 +25,6 @@ export default function StampTable() {
   });
 
   const [deleteStamp, { isSuccess, isError }] = useDeleteStampMutation();
-
-  const formatDate = (dateString: string): string => {
-    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
-  };
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
@@ -95,12 +85,6 @@ export default function StampTable() {
       header: 'Actions',
       Cell: ({ row }: any) => (
         <div className="flex gap-2">
-          {/* <button onClick={() => handleEdit(row.original)}>
-            <HiOutlinePencil className="text-base" />
-          </button> */}
-          {/* <Link onClick={() => handleEdit(row.original)} href={routes.retailer.stamp.edit(row.original._id)}>
-            <HiOutlinePencil className="text-base" />
-          </Link> */}
           <Link href={routes.retailer.stamp.edit(row.original._id)}>
             <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
           </Link>
@@ -109,14 +93,6 @@ export default function StampTable() {
       ),
     },
   ];
-
-  // const handleDelete = async (rowData: any) => {
-  //   if (popup) return;
-  //   toast((t) => {
-  //     popup = t.visible;
-  //     return AskConfirmation(t, () => deleteStamp({ id: rowData._id }));
-  //   });
-  // };
 
   return (
     <>
@@ -141,10 +117,6 @@ export default function StampTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        enableDnD={false}
-        // sort={sort}
-        sortContext="branchTable"
-        enableRowActions={false}
       />
 
       <DeleteConfirmModal
