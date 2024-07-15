@@ -138,7 +138,7 @@ export default function Sidebar({ className }: { className?: string }) {
         </div>
       )}
 
-      <SimpleBar className="h-[calc(100%-80px)]">
+      <SimpleBar className="h-[calc(100%-200px)]">
         <div className="mt-4 pb-3 3xl:mt-6">
           {menuItems[role]?.map((item: any, index: number) => {
             const isActive = pathname === (item?.href as string) || pathname.includes(item?.href as string);
