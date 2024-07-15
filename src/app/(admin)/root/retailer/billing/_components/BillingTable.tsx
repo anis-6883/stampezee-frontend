@@ -54,11 +54,11 @@ export default function BillingTable({ offset }: { offset: number }) {
     //   size: 150,
     // },
     {
-      header: 'EnrollId',
+      header: 'Enroll ID',
       accessorKey: 'enrollSubscriptionId',
     },
     {
-      header: 'Grand total (CAD)',
+      header: 'Grand Total (CAD)',
       accessorKey: 'amountTotal',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
@@ -175,6 +175,38 @@ export default function BillingTable({ offset }: { offset: number }) {
 
   const RenderDetailPanel = ({ row }: any) => {
     const total = row?.original?.amountTotal || 0;
+    const totalTax = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
+      if (item?.taxSnapshot?.taxCost) {
+        return acc + (item?.planSnapshot?.price * item?.taxSnapshot?.taxCost) / 100;
+      }
+      return acc;
+    }, 0);
+
+    const totalCouponDiscount = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
+      if (item?.couponSnapshot?.discount) {
+        if (item?.couponSnapshot?.discountType) {
+          return acc + (item?.planSnapshot?.price * item?.couponSnapshot?.discount) / 100;
+        } else {
+          return acc + item?.couponSnapshot?.discount;
+        }
+      }
+      return acc;
+    }, 0);
+
+    const upgradeOrDowngradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
+      if (item?.enrollStatus === 'upgrade' || item?.enrollStatus === 'downgrade') {
+        return true;
+      }
+      return false;
+    });
+
+    let remainingBalance = 0;
+    if (upgradeOrDowngradeEnroll) {
+      remainingBalance = upgradeOrDowngradeEnroll?.balanceInfo?.currentBalance;
+    }
+
+    console.log({ remainingBalance });
+
     return (
       <div className=" flex justify-center">
         <div className="w-[500px]">
@@ -199,6 +231,27 @@ export default function BillingTable({ offset }: { offset: number }) {
                 </div>
               </>
             ))}
+
+            {remainingBalance > 0 && (
+              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-6 font-medium">Remaining Balance</span>
+                <span className="col-span-4 justify-self-end font-semibold">-{parseFloat(remainingBalance.toFixed(2)).toFixed(2)} CAD</span>
+              </div>
+            )}
+
+            {totalTax > 0 && (
+              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-6 font-medium">VAT</span>
+                <span className="col-span-4 justify-self-end font-semibold">{parseFloat(totalTax).toFixed(2)} CAD</span>
+              </div>
+            )}
+
+            {totalCouponDiscount > 0 && (
+              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-6 font-medium">Coupon</span>
+                <span className="col-span-4 justify-self-end font-semibold">-{parseFloat(totalCouponDiscount).toFixed(2)} CAD</span>
+              </div>
+            )}
             <hr className="p-2 text-lg font-bold" />
             <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
               <span className="col-span-6 font-semibold">Total</span>

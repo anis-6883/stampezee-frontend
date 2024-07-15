@@ -377,3 +377,12 @@ export interface AddOn {
   slug: string;
   descriptions: string[];
 }
+
+export interface Coupon {
+  _id: string;
+  title: string;
+  discountType: string;
+  discount: number;
+  minPurchaseAmount: number;
+  limit: number;
+}

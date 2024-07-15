@@ -61,7 +61,7 @@ export default function OrderSummary({ stripeInfo }: any) {
         );
         push(routes.retailer.dashboard);
       } else {
-        push(checkOutResponse.data.url);
+        push(checkOutResponse?.data?.url);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
