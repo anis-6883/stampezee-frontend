@@ -2,7 +2,7 @@
 'use client';
 
 import { RootState } from '@/features/store';
-import { removeAddOns, removeCoupon } from '@/features/subscription/subscriptionSlice';
+import { removeAddOns, removeCode, removeCoupon } from '@/features/subscription/subscriptionSlice';
 import { AddOn } from '@/types';
 import { ImBin } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
@@ -77,6 +77,7 @@ const PlanAddOns = ({ stripeInfo }: { stripeInfo: any }) => {
           <button
             onClick={() => {
               dispatch(removeCoupon());
+              dispatch(removeCode());
             }}
             className="col-span-2 text-red-500"
           >
