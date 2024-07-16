@@ -54,16 +54,12 @@ export default function PaymentTable({ offset }: { offset: number }) {
       size: 150,
     },
     {
-      header: 'Plan',
-      accessorKey: 'planSnapshot.title',
-    },
-    {
-      header: 'Price(CAD)',
+      header: 'Grand Total(CAD)',
       accessorKey: 'price',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <div>
-            <h2 className="font-medium">${row?.original?.planSnapshot?.price}</h2>
+            <h2 className="font-medium">${row?.original?.amountTotal.toFixed(2)}</h2>
           </div>
         </div>
       ),
@@ -129,15 +125,10 @@ export default function PaymentTable({ offset }: { offset: number }) {
     //   //   size: 200,
     // },
     {
-      header: 'Validity Date',
+      header: 'Payment Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>
-            <span className="font-bold">Started At:</span> {convertDateByOffset(row?.original?.validityFrom, offset)}
-          </p>
-          <p>
-            <span className="font-bold">Expired At:</span> {convertDateByOffset(row?.original?.validityTo, offset)}
-          </p>
+          <p>{convertDateByOffset(row?.original?.createdAt, offset)}</p>
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -178,6 +169,102 @@ export default function PaymentTable({ offset }: { offset: number }) {
     // },
   ];
 
+  const RenderDetailPanel = ({ row }: any) => {
+    const total = row?.original?.amountTotal || 0;
+    const totalTax = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
+      if (item?.taxSnapshot?.taxCost) {
+        return acc + (item?.planSnapshot?.price * item?.taxSnapshot?.taxCost) / 100;
+      }
+      return acc;
+    }, 0);
+
+    const totalCouponDiscount = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
+      if (item?.couponSnapshot?.discount) {
+        if (item?.couponSnapshot?.discountType) {
+          return acc + (item?.planSnapshot?.price * item?.couponSnapshot?.discount) / 100;
+        } else {
+          return acc + item?.couponSnapshot?.discount;
+        }
+      }
+      return acc;
+    }, 0);
+
+    const upgradeOrDowngradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
+      if (item?.enrollStatus === 'upgrade' || item?.enrollStatus === 'downgrade') {
+        return true;
+      }
+      return false;
+    });
+
+    let remainingBalance = 0;
+    if (upgradeOrDowngradeEnroll) {
+      remainingBalance = upgradeOrDowngradeEnroll?.balanceInfo?.currentBalance;
+    }
+    const planChangeCost = upgradeOrDowngradeEnroll?.planChangeCost;
+
+    return (
+      <div className=" flex justify-center">
+        <div className="w-[500px]">
+          <h2 className="pb-2 text-center text-lg font-medium">Plan & Add-Ons</h2>
+          <hr className="p-2 text-lg font-bold" />
+
+          <div>
+            <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+              <span className="col-span-6 font-medium">Title</span>
+              <span className="col-span-4 justify-self-end font-medium">Price</span>
+              <span className="col-span-2 justify-self-end font-medium">Duration</span>
+            </div>
+            <hr className="p-2 text-lg font-bold" />
+            {row?.original?.enrollSubscriptions?.map((enroll: any, index: number) => (
+              <>
+                <div key={index} className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                  <span className="col-span-6">{enroll?.planSnapshot?.title}</span>
+                  <span className="col-span-4 justify-self-end">
+                    {enroll ? parseFloat(enroll?.planSnapshot?.price?.toFixed(2)).toFixed(2) : 0} CAD
+                  </span>
+                  <span className="col-span-2 justify-self-end">{enroll?.planSnapshot?.duration} days</span>
+                </div>
+              </>
+            ))}
+
+            {remainingBalance > 0 && (
+              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-6 font-medium">Remaining Balance</span>
+                <span className="col-span-4 justify-self-end font-semibold">-{parseFloat(remainingBalance.toFixed(2)).toFixed(2)} CAD</span>
+              </div>
+            )}
+
+            {totalTax > 0 && (
+              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-6 font-medium">VAT</span>
+                <span className="col-span-4 justify-self-end font-semibold">{parseFloat(totalTax).toFixed(2)} CAD</span>
+              </div>
+            )}
+
+            {planChangeCost > 0 && (
+              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-6 font-medium">Plan Change Cost</span>
+                <span className="col-span-4 justify-self-end font-semibold">{parseFloat(planChangeCost).toFixed(2)} CAD</span>
+              </div>
+            )}
+
+            {totalCouponDiscount > 0 && (
+              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-6 font-medium">Coupon</span>
+                <span className="col-span-4 justify-self-end font-semibold">-{parseFloat(totalCouponDiscount).toFixed(2)} CAD</span>
+              </div>
+            )}
+            <hr className="p-2 text-lg font-bold" />
+            <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+              <span className="col-span-6 font-semibold">Total</span>
+              <span className="col-span-4 justify-self-end font-semibold">{parseFloat(total).toFixed(2)} CAD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Table
       isFetching={isFetching}
@@ -202,6 +289,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
       query={query}
       searchPlaceHolder="Search By Payment ID"
       searchFieldWidth="250px"
+      renderDetailPanel={RenderDetailPanel}
     />
   );
 }

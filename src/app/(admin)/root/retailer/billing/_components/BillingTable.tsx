@@ -63,7 +63,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <div>
-            <h2 className="font-medium">${row?.original?.amountTotal}</h2>
+            <h2 className="font-medium">${row?.original?.amountTotal?.toFixed(2)}</h2>
           </div>
         </div>
       ),
@@ -204,8 +204,7 @@ export default function BillingTable({ offset }: { offset: number }) {
     if (upgradeOrDowngradeEnroll) {
       remainingBalance = upgradeOrDowngradeEnroll?.balanceInfo?.currentBalance;
     }
-
-    console.log({ remainingBalance });
+    const planChangeCost = upgradeOrDowngradeEnroll?.planChangeCost;
 
     return (
       <div className=" flex justify-center">
@@ -243,6 +242,13 @@ export default function BillingTable({ offset }: { offset: number }) {
               <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
                 <span className="col-span-6 font-medium">VAT</span>
                 <span className="col-span-4 justify-self-end font-semibold">{parseFloat(totalTax).toFixed(2)} CAD</span>
+              </div>
+            )}
+
+            {planChangeCost > 0 && (
+              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-6 font-medium">Plan Change Cost</span>
+                <span className="col-span-4 justify-self-end font-semibold">{parseFloat(planChangeCost).toFixed(2)} CAD</span>
               </div>
             )}
 
