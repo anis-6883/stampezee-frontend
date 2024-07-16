@@ -376,6 +376,7 @@ export interface AddOn {
   price: number;
   slug: string;
   descriptions: string[];
+  isAddOnsSelect?: boolean;
 }
 
 export interface Coupon {

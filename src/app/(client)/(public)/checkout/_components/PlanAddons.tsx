@@ -23,7 +23,7 @@ const PlanAddOns = ({ stripeInfo }: { stripeInfo: any }) => {
       <hr className="p-2 text-lg font-bold" />
       <div className="mb-2 flex justify-between">
         <span>{subscription?.title}</span>
-        <span className="text-red-500">{subscription ? parseFloat(subscription?.price).toFixed(2) : 0} CAD</span>
+        <span className="text-red-500">{subscription ? parseFloat(subscription?.price?.toFixed(2)).toFixed(2) : 0} CAD</span>
       </div>
 
       {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && (
@@ -52,7 +52,7 @@ const PlanAddOns = ({ stripeInfo }: { stripeInfo: any }) => {
         <span className="text-red-500">{Math.abs(subTotal).toFixed(2)} CAD</span>
       </div>
       <hr className="p-2 text-lg font-bold" />
-      {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && (
+      {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && total < 0 && (
         <div className="mb-2 flex justify-between">
           <span>
             <span className="font-semibold">{stripeInfo?.taxTitle}</span> ({stripeInfo?.taxCost}%)
