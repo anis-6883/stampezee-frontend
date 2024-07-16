@@ -4,6 +4,7 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import {
+  activeSubscription,
   setActiveSubscription,
   setPlanChangeCost,
   setRemainingBalance,
@@ -47,7 +48,7 @@ export default function SubscriptionList({ stripeInfo }: any) {
           planValidAt: session?.user?.planValidAt,
         };
       }
-      dispatch(setActiveSubscription(updateActiveSubscription));
+      dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
       dispatch(setRemainingBalance());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

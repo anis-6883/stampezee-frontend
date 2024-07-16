@@ -203,8 +203,8 @@ export default function PaymentTable({ offset }: { offset: number }) {
     const planChangeCost = upgradeOrDowngradeEnroll?.planChangeCost;
 
     return (
-      <div className=" flex justify-center">
-        <div className="w-[500px]">
+      <div className="flex flex-col justify-around space-x-6 p-3 md:flex-row">
+        <div className="mb-6 w-full md:mb-0 md:w-[500px]">
           <h2 className="pb-2 text-center text-lg font-medium">Plan & Add-Ons</h2>
           <hr className="p-2 text-lg font-bold" />
 
@@ -216,15 +216,13 @@ export default function PaymentTable({ offset }: { offset: number }) {
             </div>
             <hr className="p-2 text-lg font-bold" />
             {row?.original?.enrollSubscriptions?.map((enroll: any, index: number) => (
-              <>
-                <div key={index} className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-                  <span className="col-span-6">{enroll?.planSnapshot?.title}</span>
-                  <span className="col-span-4 justify-self-end">
-                    {enroll ? parseFloat(enroll?.planSnapshot?.price?.toFixed(2)).toFixed(2) : 0} CAD
-                  </span>
-                  <span className="col-span-2 justify-self-end">{enroll?.planSnapshot?.duration} days</span>
-                </div>
-              </>
+              <div key={index} className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-6">{enroll?.planSnapshot?.title}</span>
+                <span className="col-span-4 justify-self-end">
+                  {enroll ? parseFloat(enroll?.planSnapshot?.price?.toFixed(2)).toFixed(2) : 0} CAD
+                </span>
+                <span className="col-span-2 justify-self-end">{enroll?.planSnapshot?.duration} days</span>
+              </div>
             ))}
 
             {remainingBalance > 0 && (
@@ -259,6 +257,23 @@ export default function PaymentTable({ offset }: { offset: number }) {
               <span className="col-span-6 font-semibold">Total</span>
               <span className="col-span-4 justify-self-end font-semibold">{parseFloat(total).toFixed(2)} CAD</span>
             </div>
+          </div>
+        </div>
+        <div className="w-full md:w-[580px]">
+          <h2 className="pb-2 text-center text-lg font-medium">Payment Credentials</h2>
+          <hr className="p-2 text-lg font-bold" />
+          <div className="">
+            <p>
+              <span className="font-medium">Retailer ID :</span> {row?.original?.retailer?._id}
+            </p>
+            <p>
+              <span className="font-medium">Payment ID : </span>
+              {row?.original?.paymentId}
+            </p>
+            <p>
+              <span className="font-medium">Payment Intent ID : </span>
+              {row?.original?.paymentIntentId}
+            </p>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import Button from '@/components/Formik/Button';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
-import { setActiveSubscription, setRemainingBalance } from '@/features/subscription/subscriptionSlice';
+import { activeSubscription, setActiveSubscription, setRemainingBalance } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
 import { useSession } from 'next-auth/react';
@@ -28,7 +28,7 @@ export default function OrderSession() {
           value: { ...user, ...profile?.data },
         })
       );
-      const activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan) || {};
+      const activeSubscription: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan) || {};
       console.log('activeSubscription', session?.user?.plan);
       let updateActiveSubscription = {};
       if (activeSubscription) {
@@ -39,7 +39,7 @@ export default function OrderSession() {
           planValidAt: session?.user?.planValidAt,
         };
       }
-      dispatch(setActiveSubscription(updateActiveSubscription));
+      dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
       dispatch(setRemainingBalance());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

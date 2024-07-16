@@ -8,7 +8,7 @@ import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -29,6 +29,7 @@ function DropdownMenu({
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user, role } = useSelector((state: RootState) => state.authSlice);
+  const { data: session }: any = useSession();
 
   // Handle Logout Response
   const handleLogout = async () => {
@@ -78,15 +79,15 @@ function DropdownMenu({
         </div>
       )}
 
-      {user?.plan && (
+      {session?.user?.plan && (
         <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
           <div className="flex">
             <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">Plan : </p>
-            <span className="pl-3 font-medium">{_.capitalize(user?.plan)}</span>
+            <span className="pl-3 font-medium">{_.capitalize(session?.user?.plan)}</span>
           </div>
           <div className="flex">
             <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">Expire : </p>
-            <span className="pl-3 font-medium text-danger">{countDaysLeft(user?.planValidAt)} days left</span>
+            <span className="pl-3 font-medium text-danger">{countDaysLeft(session?.user?.planValidAt)} days left</span>
           </div>
         </div>
       )}

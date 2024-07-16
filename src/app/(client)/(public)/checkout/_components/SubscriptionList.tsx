@@ -1,7 +1,14 @@
 'use client';
 
 import { RootState } from '@/features/store';
-import { downgradePlan, resetAddOns, setActiveSubscription, setSubscription, upgradePlan } from '@/features/subscription/subscriptionSlice';
+import {
+  activeSubscription,
+  downgradePlan,
+  resetAddOns,
+  setActiveSubscription,
+  setSubscription,
+  upgradePlan,
+} from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
 import { useSession } from 'next-auth/react';
@@ -44,7 +51,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
       });
     }
     setPlans(transformPlans);
-    const activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan) || {};
+    const activeSubscription: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan) || {};
     let updateActiveSubscription = {};
     if (activeSubscription) {
       updateActiveSubscription = {
@@ -54,7 +61,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
         planValidAt: session?.user?.planValidAt,
       };
     }
-    dispatch(setActiveSubscription(updateActiveSubscription));
+    dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
   }, [data?.data, dispatch, session?.user, session?.user?.plan, session?.user?.takeFreeTrial]);
 
   const handleSubscription = (plan: Subscription) => {
