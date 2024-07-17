@@ -24,7 +24,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
   const dispatch = useDispatch();
   const [plans, setPlans] = useState([]);
   const { data: session }: any = useSession();
-  const { subscription, downgradeRefund } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { subscription, downgradeRefund, activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
   useEffect(() => {
@@ -51,9 +51,17 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
       });
     }
     setPlans(transformPlans);
-    const activeSubscription: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan) || {};
+    const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
     let updateActiveSubscription = {};
-    if (activeSubscription) {
+    if (activePlan) {
+      updateActiveSubscription = {
+        ...activePlan,
+        takeFreeTrial: session?.user?.takeFreeTrial,
+        planStartAt: session?.user?.planStartAt,
+        planValidAt: session?.user?.planValidAt,
+      };
+    } else {
+      console.log('fdhffh', activeSubscription);
       updateActiveSubscription = {
         ...activeSubscription,
         takeFreeTrial: session?.user?.takeFreeTrial,

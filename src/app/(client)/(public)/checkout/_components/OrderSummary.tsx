@@ -44,8 +44,6 @@ export default function OrderSummary({ stripeInfo }: any) {
     dispatch(setTaxStatus(stripeInfo?.taxStatus));
   }, [dispatch, stripeInfo?.planChangeCost, stripeInfo?.taxCost, stripeInfo?.taxStatus]);
 
-  console.log('checkOutResponse', checkOutResponse);
-
   useEffect(() => {
     if (checkoutError) {
       const myError = checkoutError as SerializedError;
