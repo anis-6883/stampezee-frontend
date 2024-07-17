@@ -156,6 +156,9 @@ const subscriptionSlice = createSlice({
     setSubscription: (state, action: PayloadAction<Subscription>) => {
       updateBalance(state);
       state.subscription = action.payload;
+      state.coupon = null;
+      state.code = '';
+      state.couponDiscount = 0;
       calculateSubTotal(state);
     },
     setActiveSubscription: (state, action: PayloadAction<activeSubscription>) => {
@@ -178,6 +181,9 @@ const subscriptionSlice = createSlice({
       state.addOns = newAddOn
         ? state.addOns.filter((item: any) => item._id !== newAddOn._id)
         : [...state.addOns, { ...action.payload, isAddOnsSelect: true }];
+      state.coupon = null;
+      state.code = '';
+      state.couponDiscount = 0;
       calculateSubTotal(state);
     },
     setRemainingBalance: (state) => {

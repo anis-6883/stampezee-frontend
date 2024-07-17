@@ -26,6 +26,7 @@ export default function SubscriptionList({ stripeInfo }: any) {
 
   const { data: session, update }: any = useSession();
   const { user, isLoggedIn, accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: profile, isSuccess: profileSuccess } = useRetailerGetProfileQuery(null, { skip: !accessToken });
 
   useEffect(() => {
@@ -37,10 +38,17 @@ export default function SubscriptionList({ stripeInfo }: any) {
           value: { ...user, ...profile?.data },
         })
       );
-      const activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan) || {};
+      const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
 
       let updateActiveSubscription = {};
-      if (activeSubscription) {
+      if (activePlan) {
+        updateActiveSubscription = {
+          ...activePlan,
+          takeFreeTrial: session?.user?.takeFreeTrial,
+          planStartAt: session?.user?.planStartAt,
+          planValidAt: session?.user?.planValidAt,
+        };
+      } else {
         updateActiveSubscription = {
           ...activeSubscription,
           takeFreeTrial: session?.user?.takeFreeTrial,
