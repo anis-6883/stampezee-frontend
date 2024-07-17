@@ -85,7 +85,9 @@ const updateBalance = (state: SubscriptionState) => {
 };
 
 const calculateTax = (state: SubscriptionState) => {
-  state.tax = calculateTaxAmount(Math.abs(state.subTotal), state.taxPercentage);
+  if (state.taxStatus === 'on') {
+    state.tax = calculateTaxAmount(Math.abs(state.subTotal), state.taxPercentage);
+  }
 };
 
 const calculateDiscount = (state: SubscriptionState) => {
@@ -120,25 +122,25 @@ const calculateSubTotal = (state: SubscriptionState, planType?: string) => {
     planType === 'downgrade' ||
     (state?.activeSubscription?.slug && state?.activeSubscription?.slug !== 'trial')
   ) {
+    // when buy just addons
     if (state?.activeSubscription?.slug === state?.subscription?.slug && state?.addOns?.length > 0) {
       state.subTotal = addOnsPrice;
-      if (state.taxStatus === 'on') {
-        calculateTax(state);
-      }
+      calculateTax(state);
       state.total = state.subTotal + state.tax - couponDiscount;
-    } else {
+    }
+    // upgrade or downgrade
+    else {
       subTotal = calculateSubTotalAmount(planPrice, addOnsPrice);
       state.subTotal = roundToTwoDecimals(remainingBalance - subTotal);
-      if (state.taxStatus === 'on') {
-        calculateTax(state);
-      }
-      state.total = calculateTotalAmount(remainingBalance, subTotal, state?.total < 0 ? 0 : state.tax, planSwitchCharge, couponDiscount);
-    }
-  } else {
-    state.subTotal = planPrice + addOnsPrice;
-    if (state.taxStatus === 'on') {
       calculateTax(state);
+      // do not add tax when get refund
+      state.total = calculateTotalAmount(remainingBalance, subTotal, state.subTotal > 0 ? 0 : state.tax, planSwitchCharge, couponDiscount);
     }
+  }
+  // when pick plans and addons at first time
+  else {
+    state.subTotal = planPrice + addOnsPrice;
+    calculateTax(state);
     state.total =
       state?.subscription?.slug === 'trial'
         ? roundToTwoDecimals(remainingBalance - (planPrice + addOnsPrice - couponDiscount))
