@@ -2,6 +2,7 @@ import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
+import RefundTable from './_components/RefundTable';
 
 const pageHeader = {
   title: 'Manage Refunds',
@@ -24,6 +25,7 @@ export default async function Page() {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
+      <RefundTable offset={data?.data?.general?.timezone?.value} />
     </div>
   );
 }

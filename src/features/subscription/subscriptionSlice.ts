@@ -154,8 +154,12 @@ const subscriptionSlice = createSlice({
   initialState,
   reducers: {
     setSubscription: (state, action: PayloadAction<Subscription>) => {
+      if (state?.subscription?.slug === action?.payload?.slug) {
+        state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
+      } else {
+        state.subscription = action.payload;
+      }
       updateBalance(state);
-      state.subscription = action.payload;
       state.coupon = null;
       state.code = '';
       state.couponDiscount = 0;
@@ -212,12 +216,20 @@ const subscriptionSlice = createSlice({
     },
     upgradePlan: (state, action: PayloadAction<Subscription>) => {
       state.upgradeCost = calculateUpgradeCost(state, action.payload);
-      state.subscription = action.payload;
+      if (state?.subscription?.slug === action?.payload?.slug) {
+        state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
+      } else {
+        state.subscription = action.payload;
+      }
       calculateSubTotal(state, 'upgrade');
     },
     downgradePlan: (state, action: PayloadAction<Subscription>) => {
       state.downgradeRefund = calculateDowngradeRefund(state, action.payload);
-      state.subscription = action.payload;
+      if (state?.subscription?.slug === action?.payload?.slug) {
+        state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
+      } else {
+        state.subscription = action.payload;
+      }
       calculateSubTotal(state, 'downgrade');
     },
     resetState: (state) => {

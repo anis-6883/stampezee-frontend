@@ -35,7 +35,7 @@ export default function SubscriptionList({ stripeInfo }: any) {
       dispatch(
         setValue({
           target: 'user',
-          value: { ...user, ...profile?.data },
+          value: { ...session?.user, ...profile?.data },
         })
       );
       const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);

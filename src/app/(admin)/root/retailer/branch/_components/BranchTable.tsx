@@ -10,9 +10,10 @@ import _ from 'lodash';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { FcLock, FcUnlock } from 'react-icons/fc';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
-import { Badge } from 'rizzui';
+import { Badge, Switch } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 
@@ -91,7 +92,22 @@ export default function BranchTable({ offset }: { offset: number }) {
     {
       header: 'Status',
       accessorKey: 'status',
-      Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
+      Cell: ({ row }: any) => {
+        return row?.original?.disabledBySystem ? (
+          <Switch
+            checked={false}
+            disabled={true}
+            switchClassName="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-blue-500/50 hover:bg-gradient-to-br focus:ring-blue-300"
+            switchKnobClassName="bg-light"
+            variant="flat"
+            labelClassName="select-none"
+            onIcon={<FcUnlock />}
+            offIcon={<FcLock />}
+          />
+        ) : (
+          <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />
+        );
+      },
       mantineTableHeadCellProps: {
         align: 'center',
       },
@@ -102,26 +118,37 @@ export default function BranchTable({ offset }: { offset: number }) {
     },
     {
       header: 'Actions',
-      Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
-          <Link href={routes.retailer.branch.edit(row.original._id)}>
-            <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
-          </Link>
+      Cell: ({ row }: any) => {
+        return row?.original?.disabledBySystem ? (
+          <div>
+            <div className="mb-2 flex items-center justify-center gap-2">
+              <Button disabled={true} color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
 
-          <Button
-            color="danger"
-            preIcon={
-              <ImBin
-                className="text-base"
-                onClick={() => {
-                  setModalState(true);
-                  setDeleteId(row.original._id);
-                }}
-              />
-            }
-          />
-        </div>
-      ),
+              <Button disabled={true} color="danger" preIcon={<ImBin className="text-base" />} />
+            </div>
+            <span className="font-semibold text-danger">Upgrade Your Plan</span>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center gap-2">
+            <Link href={routes.retailer.branch.edit(row.original._id)}>
+              <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+            </Link>
+
+            <Button
+              color="danger"
+              preIcon={
+                <ImBin
+                  className="text-base"
+                  onClick={() => {
+                    setModalState(true);
+                    setDeleteId(row.original._id);
+                  }}
+                />
+              }
+            />
+          </div>
+        );
+      },
       mantineTableHeadCellProps: {
         align: 'center',
       },

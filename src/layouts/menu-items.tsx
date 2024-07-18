@@ -84,6 +84,11 @@ export const menuItems: { [key: string]: any } = {
       icon: <FaMoneyBillTransfer />,
     },
     {
+      name: 'Refunds',
+      href: routes.privateRoutes.retailer.refund,
+      icon: <RiRefund2Line />,
+    },
+    {
       name: 'Branches',
       href: routes.retailer.branch.home,
       icon: <LiaMapMarkedAltSolid />,
