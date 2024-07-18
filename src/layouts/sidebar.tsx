@@ -87,7 +87,7 @@ export default function Sidebar({ className }: { className?: string }) {
   return (
     <aside
       className={cn(
-        '2xl:w-72 fixed bottom-0 start-0 z-50 h-full w-[290px] border-e-2 border-gray-100 bg-white dark:bg-gray-100/50',
+        '2xl:w-72 fixed bottom-0 start-0 z-50 h-full w-[290px] overflow-auto border-e-2 border-gray-100 bg-white dark:bg-gray-100/50',
         className
       )}
     >
@@ -138,8 +138,8 @@ export default function Sidebar({ className }: { className?: string }) {
         </div>
       )}
 
-      <SimpleBar className={`${role === ROLE.RETAILER && session?.user?.plan ? 'h-[calc(100%-60%)]' : 'h-[calc(100%-50%)]'}`}>
-        <div className="mt-4 pb-3 3xl:mt-6">
+      <SimpleBar>
+        <div className="mt-4  pb-3 3xl:mt-6">
           {menuItems[role]?.map((item: any, index: number) => {
             const isActive = pathname === (item?.href as string) || pathname.includes(item?.href as string);
             const pathnameExistInDropdowns: any = item?.dropdownItems?.filter((dropdownItem: any) => dropdownItem.href === pathname);
