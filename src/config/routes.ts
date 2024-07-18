@@ -50,6 +50,7 @@ export const routes = {
       },
       membershipPlan: `/root/retailer/membership-plan`,
       billing: `/root/retailer/billing`,
+      refund: `/root/retailer/refund`,
     },
     superAdmin: {
       dashboard: '/root/super-admin/dashboard',

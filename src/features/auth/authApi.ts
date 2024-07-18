@@ -39,6 +39,7 @@ export const authApi = apiSlice.injectEndpoints({
     superAdminGetProfile: builder.query({
       query: () => `/api/secret-root/admin/super-admin/profile`,
       providesTags: ['superAdminProfile'],
+      keepUnusedDataFor: 0,
     }),
     superAdminUpdateProfile: builder.mutation({
       query: (data) => {
@@ -64,6 +65,7 @@ export const authApi = apiSlice.injectEndpoints({
     retailerGetProfile: builder.query({
       query: () => `api/web/retailer/profile`,
       providesTags: ['retailerProfile'],
+      keepUnusedDataFor: 0,
     }),
     retailerUpdateProfile: builder.mutation({
       query: (data) => {
