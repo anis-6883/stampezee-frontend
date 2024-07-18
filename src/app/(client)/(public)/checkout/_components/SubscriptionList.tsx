@@ -61,7 +61,6 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
         planValidAt: session?.user?.planValidAt,
       };
     } else {
-      console.log('fdhffh', activeSubscription);
       updateActiveSubscription = {
         ...activeSubscription,
         takeFreeTrial: session?.user?.takeFreeTrial,
@@ -70,6 +69,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
       };
     }
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.data, dispatch, session?.user, session?.user?.plan, session?.user?.takeFreeTrial]);
 
   const handleSubscription = (plan: Subscription) => {
