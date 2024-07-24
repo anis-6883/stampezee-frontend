@@ -188,7 +188,7 @@ export default function OrderSummary({ stripeInfo }: any) {
         />
       ) : (
         <Button
-          disabled={subscription?.slug === activeSubscription?.slug ? true : false}
+          disabled={subscription?.slug === activeSubscription?.slug && Math.abs(total) < 1 ? true : false}
           color="danger"
           text="Checkout Confirm"
           className="mt-5 w-full"

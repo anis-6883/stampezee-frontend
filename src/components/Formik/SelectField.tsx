@@ -66,3 +66,26 @@ const SelectField: React.FC<SelectOptionProps> = ({
 };
 
 export default SelectField;
+
+// Example for use
+
+{
+  /* <div>
+                  <SelectField
+                    name="categoryId"
+                    label="Category"
+                    disabled={optionsData?.categories?.length === 0 ? true : false}
+                    value={values?.categoryId}
+                    options={optionsData?.categories?.map((item: any) => ({
+                      label: _.startCase(_.toLower(item.name)),
+                      value: item._id,
+                    }))}
+                    onChange={(option: { label: string; value: string }) => setFieldValue('categoryId', option.value)}
+                  />
+                  {optionsData?.categories?.length === 0 && (
+                    <div className=" pt-3 text-center text-danger">
+                      <span>No category added by super admin</span>
+                    </div>
+                  )}
+                </div> */
+}

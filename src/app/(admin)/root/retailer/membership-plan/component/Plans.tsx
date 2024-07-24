@@ -5,16 +5,9 @@ import SubscriptionList from '@/app/(client)/(public)/checkout/_components/Subsc
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
-import {
-  resetAddOns,
-  setAddOns,
-  setPlanChangeCost,
-  setSubscription,
-  setTaxPercentage,
-  setTaxStatus,
-} from '@/features/subscription/subscriptionSlice';
+import { setPlanChangeCost, setSubscription, setTaxPercentage, setTaxStatus } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
-import { AddOn, Subscription } from '@/types';
+import { Subscription } from '@/types';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -45,17 +38,6 @@ export const Plans = ({ stripeInfo }: any) => {
       dispatch(setSubscription(pursedSubscription));
     }
   }, [data, dispatch, session]);
-
-  const handleSubscription = (plan: Subscription) => {
-    if (plan.slug === 'trial') {
-      dispatch(resetAddOns());
-    }
-    dispatch(setSubscription(plan));
-  };
-
-  const handleAddOnSelect = (addOn: AddOn) => {
-    dispatch(setAddOns(addOn));
-  };
 
   return (
     <div className="mb-6">
