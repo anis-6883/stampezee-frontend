@@ -9,11 +9,9 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 
 import Button from '@/components/Formik/Button';
-import {
-  useDeleteSuperAdminRetailerMutation,
-  useGetAllRetailersQuery,
-  useUpdateRetailerStatusMutation,
-} from '@/features/super-admin/retailer/retailerApi';
+import { useGetAllCustomerBySuperAdminQuery } from '@/features/super-admin/customer/customerApi';
+import { useDeleteSuperAdminRetailerMutation, useUpdateRetailerStatusMutation } from '@/features/super-admin/retailer/retailerApi';
+import { HiPlus } from 'react-icons/hi2';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
@@ -26,7 +24,7 @@ export default function CustomerTable() {
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllRetailersQuery({
+  const { data, isLoading, isFetching } = useGetAllCustomerBySuperAdminQuery({
     page: query.pageIndex + 1,
     limit: query.pageSize,
     ...searchQuery,
@@ -78,10 +76,7 @@ export default function CustomerTable() {
           <div>
             <div className="text-md mx-auto text-start">
               <p>
-                <span className="font-bold">Store Name:</span> {row?.original.storeName}
-              </p>
-              <p>
-                <span className="font-bold">Name:</span> {row?.original.firstName} {row?.original.lastName}
+                <span className="font-bold">Name:</span> {row?.original.fullName}
               </p>
               <p>
                 <span className="font-bold">Email:</span> {row?.original.email}
@@ -101,18 +96,11 @@ export default function CustomerTable() {
           <p>
             <span className="font-bold">Country:</span> {row?.original.country}
           </p>
-          <p>
-            <span className="font-bold">City:</span> {row?.original.city}
-          </p>
-          <p>
-            <span className="font-bold">Province:</span> {row?.original.province}
-          </p>
-          <p>
-            <span className="font-bold">Postal Code:</span> {row?.original.postalCode}
-          </p>
-          <p>
-            <span className="font-bold">Address:</span> {row?.original.address}
-          </p>
+          {row?.original.address?.name && (
+            <p>
+              <span className="font-bold">Address:</span> {row?.original.address?.name}
+            </p>
+          )}
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -169,9 +157,9 @@ export default function CustomerTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      {/* <div className="mb-4 flex justify-end">
-        <Button onClick={() => setCreateState(true)} text="Add New Retailer" preIcon={<HiPlus className="text-base" />} />
-      </div> */}
+      <div className="mb-4 flex justify-end">
+        <Button color="danger" onClick={() => setCreateState(true)} text="Add New Customer" preIcon={<HiPlus className="text-base" />} />
+      </div>
       <Table
         isFetching={isFetching}
         isLoading={isLoading}
@@ -184,7 +172,7 @@ export default function CustomerTable() {
                 },
               }
             : {
-                data: [],
+                data: data?.data.docs || [],
                 pagination: {
                   totalDocuments: 0,
                 },

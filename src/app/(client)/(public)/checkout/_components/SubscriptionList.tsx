@@ -102,7 +102,8 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
       });
       dispatch(setSubscription(pursedSubscription));
     }
-  }, [data, dispatch, session?.user?.plan, session?.user?.takeFreeTrial, subscription?.slug]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, session?.user?.plan, session?.user?.takeFreeTrial]);
 
   return isLoading ? (
     <div>
