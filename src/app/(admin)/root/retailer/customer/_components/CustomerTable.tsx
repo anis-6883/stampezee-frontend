@@ -8,7 +8,6 @@ import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
-import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
 import Button from '../../../../../../components/Formik/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
@@ -132,7 +131,6 @@ export default function CustomerTable() {
     <>
       <div className="mb-5 flex justify-between">
         <StatusIndicator />
-        <Button color="danger" text="Add New Sub-Admin" preIcon={<HiPlus className="text-base" />} onClick={() => setCreateState(true)} />
       </div>
       <Table
         isFetching={isFetching}
