@@ -2,11 +2,13 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
-import { useAllRefundBySuperAdminQuery } from '@/features/super-admin/refund/refundApi';
+import { useAllRefundBySuperAdminQuery, useConfirmRefundBySuperAdminMutation } from '@/features/super-admin/refund/refundApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { FaRegPaperPlane } from 'react-icons/fa';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
@@ -23,7 +25,22 @@ export default function RefundTable({ offset }: { offset: number }) {
     limit: query.pageSize,
     ...searchQuery,
   });
+  const [confirmRefundBySuperAdmin, { isSuccess, isError }] = useConfirmRefundBySuperAdminMutation();
 
+  useEffect(() => {
+    if (isError) {
+      setRefundSubmitting(false);
+      toast.error('Something went wrong. Please try again!');
+      setRefundState(false);
+      setRefundId(null);
+    }
+    if (isSuccess) {
+      setRefundSubmitting(false);
+      toast.success('Refund completed successfully!');
+      setRefundState(false);
+      setRefundId(null);
+    }
+  }, [isSuccess, isError]);
   const structure = [
     {
       header: 'Plan',
@@ -48,10 +65,6 @@ export default function RefundTable({ offset }: { offset: number }) {
         align: 'center',
       },
       size: 300,
-    },
-    {
-      header: 'Enroll Status',
-      accessorKey: 'enrollsubscription.enrollStatus',
     },
     {
       header: 'Refund Amount (CAD)',
@@ -100,7 +113,13 @@ export default function RefundTable({ offset }: { offset: number }) {
       header: 'Actions',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
-          <Button onClick={() => handleRefund(row.original)} color="danger" text="Refund" />
+          <Button
+            className="!px-3 !py-2 !text-xs"
+            onClick={() => handleRefund(row.original)}
+            color="danger"
+            text="Refund"
+            preIcon={<FaRegPaperPlane className="text-base" />}
+          />
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -115,6 +134,50 @@ export default function RefundTable({ offset }: { offset: number }) {
   const handleRefund = (rowData: any) => {
     setRefundState(true);
     setRefundId(rowData._id);
+  };
+
+  const RenderDetailPanel = ({ row }: any) => {
+    return (
+      <div className="flex ">
+        <div className="flex w-28 flex-col justify-center gap-2 border-r-2">
+          <div className="mx-auto">
+            {row.original.enrollsubscription.retailer.image ? (
+              <div>
+                <img
+                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.enrollsubscription.retailer.image}`}
+                  alt="image"
+                  className="h-full w-12 rounded"
+                />
+              </div>
+            ) : (
+              <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-12 rounded" />
+            )}
+          </div>
+          <div>
+            <div className="text-md">
+              <p className="text-center font-semibold">
+                {row?.original.enrollsubscription.retailer.storeName}
+                {/* <span className="font-bold">Store Name:</span>  */}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="text-md ml-3 text-start">
+          <p>
+            <span className="font-bold">FullName:</span> {row?.original.enrollsubscription.retailer.fullName}
+          </p>
+          <p>
+            <span className="font-bold">Email:</span> {row?.original.enrollsubscription.retailer.email}
+          </p>
+          <p>
+            <span className="font-bold">Phone:</span> {row?.original.enrollsubscription.retailer.phone}
+          </p>
+          <p>
+            <span className="font-bold">Country:</span> {row?.original.enrollsubscription.retailer.country}
+          </p>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -142,10 +205,11 @@ export default function RefundTable({ offset }: { offset: number }) {
         query={query}
         searchPlaceHolder="Search By Payment ID"
         searchFieldWidth="250px"
+        renderDetailPanel={RenderDetailPanel}
       />
       <RefundConfirmModal
         refundId={refundId}
-        refundHandler={() => {}}
+        refundHandler={confirmRefundBySuperAdmin}
         modalState={refundState}
         setModalState={setRefundState}
         isSubmitting={refundSubmitting}

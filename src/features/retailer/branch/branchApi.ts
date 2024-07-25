@@ -9,6 +9,7 @@ export const branchApi = apiSlice.injectEndpoints({
         return `/api/web/retailer/branch/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['branches'],
+      keepUnusedDataFor: 0,
     }),
     singleBranch: builder.query({
       query: ({ _id }) => `/api/web/retailer/branch/${_id}`,
