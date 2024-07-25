@@ -68,5 +68,6 @@ export const apiSlice = createApi({
     'coupons',
     'payments',
     'billing',
+    'superAdminRefund',
   ],
 });

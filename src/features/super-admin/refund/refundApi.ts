@@ -8,9 +8,16 @@ export const refundApi = apiSlice.injectEndpoints({
         if (values.length) return `/api/secret-root/admin/super-admin/refund/all?${new URLSearchParams(queries as any)}`;
         return `/api/secret-root/admin/super-admin/refund/all`; // Ensure it returns a base URL if no queries are present
       },
-      //   providesTags: ['refund'],
+      providesTags: ['superAdminRefund'],
+    }),
+    confirmRefundBySuperAdmin: builder.mutation({
+      query: (id) => ({
+        url: `/api/secret-root/admin/super-admin/refund/confirm/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['superAdminRefund'],
     }),
   }),
 });
 
-export const { useAllRefundBySuperAdminQuery } = refundApi;
+export const { useAllRefundBySuperAdminQuery, useConfirmRefundBySuperAdminMutation } = refundApi;

@@ -7,6 +7,7 @@ import { useAllBranchQuery, useDeleteBranchMutation, useUpdateBranchStatusMutati
 import { IQueryType } from '@/types';
 import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -18,6 +19,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 
 export default function BranchTable({ offset }: { offset: number }) {
+  const { data: session }: any = useSession();
   const [deleteBranch, { isSuccess, isError }] = useDeleteBranchMutation();
   const [updateStatus] = useUpdateBranchStatusMutation();
   const [modalState, setModalState] = useState(false);
@@ -85,9 +87,13 @@ export default function BranchTable({ offset }: { offset: number }) {
     },
     {
       header: 'Validity Date',
-      Cell: ({ row }: any) => (
-        <span className="font-bold text-danger">{countDaysLeft(row?.original?.enrollSubscription?.validityTo)} days left</span>
-      ),
+      Cell: ({ row }: any) => {
+        return row?.original?.disabledBySystem ? (
+          <span className="font-bold text-danger">Expired</span>
+        ) : (
+          <span className="font-bold text-danger">{countDaysLeft(row?.original?.enrollSubscription?.validityTo)} days left</span>
+        );
+      },
     },
     {
       header: 'Status',
@@ -119,21 +125,35 @@ export default function BranchTable({ offset }: { offset: number }) {
     {
       header: 'Actions',
       Cell: ({ row }: any) => {
-        return row?.original?.disabledBySystem ? (
-          <div>
-            <div className="mb-2 flex items-center justify-center gap-2">
-              <Button disabled={true} color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+        const { source, enrollSubscription, disabledBySystem, _id } = row?.original || {};
+        const isAddonExpired = source === 'addon' && countDaysLeft(enrollSubscription?.validityTo) <= 0;
+        const isSystemDisabled = disabledBySystem;
+        const totalBranch = session?.user?.totalBranch;
+        const totalDisabledBySystem = data?.data.docs?.filter((item: any) => item?.disabledBySystem)?.length;
 
-              <Button disabled={true} color="danger" preIcon={<ImBin className="text-base" />} />
+        if (isAddonExpired) {
+          return <Button className="!px-3 !py-2 !text-xs" color="danger" text="Renew" />;
+        }
+
+        if (isSystemDisabled) {
+          return totalBranch >= totalDisabledBySystem ? (
+            <Button className="!px-3 !py-2 !text-xs" color="danger" text="Activate" />
+          ) : (
+            <div>
+              {/* <div className="mb-2 flex items-center justify-center gap-2">
+                <Button disabled color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+                <Button disabled color="danger" preIcon={<ImBin className="text-base" />} />
+              </div> */}
+              <span className="font-semibold text-danger">Upgrade Your Plan</span>
             </div>
-            <span className="font-semibold text-danger">Upgrade Your Plan</span>
-          </div>
-        ) : (
+          );
+        }
+
+        return (
           <div className="flex items-center justify-center gap-2">
-            <Link href={routes.retailer.branch.edit(row.original._id)}>
+            <Link href={routes.retailer.branch.edit(_id)}>
               <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
             </Link>
-
             <Button
               color="danger"
               preIcon={
@@ -141,7 +161,7 @@ export default function BranchTable({ offset }: { offset: number }) {
                   className="text-base"
                   onClick={() => {
                     setModalState(true);
-                    setDeleteId(row.original._id);
+                    setDeleteId(_id);
                   }}
                 />
               }
