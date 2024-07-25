@@ -3,7 +3,7 @@ import { Switch } from 'rizzui';
 
 export default function StatusIndicator() {
   return (
-    <div className="rounded-md border-2 border-solid">
+    <div className="rounded-md border border-solid">
       <div className="flex items-center justify-center gap-x-3 px-3">
         <span className="font-bold">Status: </span>
         <div className="flex items-center justify-center space-x-2 pr-3">

@@ -14,6 +14,7 @@ import toast from 'react-hot-toast';
 import { FcLock, FcUnlock } from 'react-icons/fc';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
+import { MdAutorenew } from 'react-icons/md';
 import { Badge, Switch } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
@@ -88,18 +89,28 @@ export default function BranchTable({ offset }: { offset: number }) {
     {
       header: 'Validity Date',
       Cell: ({ row }: any) => {
+        const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
+
         return row?.original?.disabledBySystem ? (
-          <span className="font-bold text-danger">Expired</span>
+          <span className="font-semibold text-danger">Expired</span>
         ) : (
-          <span className="font-bold text-danger">{countDaysLeft(row?.original?.enrollSubscription?.validityTo)} days left</span>
+          <span className="font-semibold text-danger">{countDays < 0 ? 'Expired' : `${countDays} days left`}</span>
         );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
       },
     },
     {
       header: 'Status',
       accessorKey: 'status',
       Cell: ({ row }: any) => {
-        return row?.original?.disabledBySystem ? (
+        const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
+
+        return row?.original?.disabledBySystem || countDays < 0 ? (
           <Switch
             checked={false}
             disabled={true}
@@ -126,26 +137,22 @@ export default function BranchTable({ offset }: { offset: number }) {
       header: 'Actions',
       Cell: ({ row }: any) => {
         const { source, enrollSubscription, disabledBySystem, _id } = row?.original || {};
-        const isAddonExpired = source === 'addon' && countDaysLeft(enrollSubscription?.validityTo) <= 0;
+        const isAddonExpired = source === 'addon' && countDaysLeft(enrollSubscription?.validityTo) < 0;
         const isSystemDisabled = disabledBySystem;
         const totalBranch = session?.user?.totalBranch;
         const totalDisabledBySystem = data?.data.docs?.filter((item: any) => item?.disabledBySystem)?.length;
 
         if (isAddonExpired) {
-          return <Button className="!px-3 !py-2 !text-xs" color="danger" text="Renew" />;
+          return (
+            <Button preIcon={<MdAutorenew className="text-base" />} className="!px-3 !py-2 !text-xs" color="danger" text="Renew Now" />
+          );
         }
 
         if (isSystemDisabled) {
           return totalBranch >= totalDisabledBySystem ? (
             <Button className="!px-3 !py-2 !text-xs" color="danger" text="Activate" />
           ) : (
-            <div>
-              {/* <div className="mb-2 flex items-center justify-center gap-2">
-                <Button disabled color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
-                <Button disabled color="danger" preIcon={<ImBin className="text-base" />} />
-              </div> */}
-              <span className="font-semibold text-danger">Upgrade Your Plan</span>
-            </div>
+            <span className="font-semibold text-danger">Upgrade Your Plan</span>
           );
         }
 
