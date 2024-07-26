@@ -1,7 +1,7 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-
+import Button from '@/components/Formik/Button';
 import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
 import {
   useDeleteStampImageMutation,
@@ -9,12 +9,12 @@ import {
   useUpdateStampStatusMutation,
 } from '@/features/retailer/stamp-image/stampApi';
 import { IQueryType } from '@/types';
+import { countDaysLeft } from '@/utils';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
-import Button from '../../../../../../components/Formik/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
@@ -74,6 +74,19 @@ export default function StampsImageTable() {
       header: 'Status',
       accessorKey: 'status',
       Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
+    {
+      header: 'Validity Date',
+      Cell: ({ row }: any) => {
+        const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
+        return <span className="font-semibold text-danger">{countDays < 0 ? 'Expired' : `${countDays} days left`}</span>;
+      },
       mantineTableHeadCellProps: {
         align: 'center',
       },
