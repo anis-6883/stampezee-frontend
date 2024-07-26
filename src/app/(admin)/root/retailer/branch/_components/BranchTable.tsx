@@ -3,7 +3,13 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
-import { useAllBranchQuery, useDeleteBranchMutation, useUpdateBranchStatusMutation } from '@/features/retailer/branch/branchApi';
+import {
+  useAllBranchQuery,
+  useDeleteBranchMutation,
+  useRenewBranchMutation,
+  useUpdateBranchStatusMutation,
+  useActivateBranchMutation,
+} from '@/features/retailer/branch/branchApi';
 import { IQueryType } from '@/types';
 import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
@@ -18,14 +24,30 @@ import { MdAutorenew } from 'react-icons/md';
 import { Badge, Switch } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
+import ActivateConfirmModal from '../../../_components/ActivateConfirmModal';
+import RenewConfirmModal from '../../../_components/RenewConfirmModal';
+import { useRouter } from 'next/navigation';
 
 export default function BranchTable({ offset }: { offset: number }) {
   const { data: session }: any = useSession();
+  const { push } = useRouter();
   const [deleteBranch, { isSuccess, isError }] = useDeleteBranchMutation();
   const [updateStatus] = useUpdateBranchStatusMutation();
+  const [activateBranch, { isSuccess: activateBranchSuccess, isError: activateBranchError }] = useActivateBranchMutation();
+  const [renewBranch, { isSuccess: renewBranchSuccess, isError: renewBranchError, data: renewResponse }] = useRenewBranchMutation();
+  // delete state
   const [modalState, setModalState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
+  // activate state
+  const [activateModalState, setActivateModalState] = useState(false);
+  const [activeId, setActiveId] = useState(null);
+  const [activeSubmitting, setActiveSubmitting] = useState(false);
+  // renew state
+  const [renewModalState, setRenewModalState] = useState(false);
+  const [renewId, setRenewId] = useState(null);
+  const [renewSubmitting, setRenewSubmitting] = useState(false);
+
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
 
   const searchQuery = query.search ? { search: query.search } : {};
@@ -50,6 +72,43 @@ export default function BranchTable({ offset }: { offset: number }) {
       setDeleteId(null);
     }
   }, [isSuccess, isError]);
+
+  // Handle Active Branch Response
+  useEffect(() => {
+    if (activateBranchError) {
+      setActiveSubmitting(false);
+      toast.error('Something went wrong. Please try again!');
+      setActivateModalState(false);
+      setActiveId(null);
+    }
+    if (activateBranchSuccess) {
+      setActiveSubmitting(false);
+      toast.success('Branch activated successfully!');
+      setActivateModalState(false);
+      setActiveId(null);
+    }
+  }, [activateBranchSuccess, activateBranchError]);
+
+  // Handle Renew Branch Response
+  useEffect(() => {
+    if (renewBranchError) {
+      setRenewSubmitting(false);
+      toast.error('Something went wrong. Please try again!');
+      setRenewModalState(false);
+      setRenewId(null);
+    }
+    if (renewBranchSuccess) {
+      setRenewSubmitting(false);
+
+      if (renewResponse?.data?.url) {
+        push(renewResponse?.data?.url);
+      } else {
+        toast.success(renewResponse?.message);
+      }
+      setRenewModalState(false);
+      setRenewId(null);
+    }
+  }, [renewBranchSuccess, renewBranchError, renewResponse]);
 
   const structure = [
     {
@@ -136,7 +195,7 @@ export default function BranchTable({ offset }: { offset: number }) {
     {
       header: 'Actions',
       Cell: ({ row }: any) => {
-        const { source, enrollSubscription, disabledBySystem, _id } = row?.original || {};
+        const { source, enrollSubscription, disabledBySystem, _id, enrollSubscriptionId } = row?.original || {};
         const isAddonExpired = source === 'addon' && countDaysLeft(enrollSubscription?.validityTo) < 0;
         const isSystemDisabled = disabledBySystem;
         const totalBranch = session?.user?.totalBranch;
@@ -144,13 +203,30 @@ export default function BranchTable({ offset }: { offset: number }) {
 
         if (isAddonExpired) {
           return (
-            <Button preIcon={<MdAutorenew className="text-base" />} className="!px-3 !py-2 !text-xs" color="danger" text="Renew Now" />
+            <Button
+              onClick={() => {
+                setRenewModalState(true);
+                setRenewId(enrollSubscriptionId);
+              }}
+              preIcon={<MdAutorenew className="text-base" />}
+              className="!px-3 !py-2 !text-xs"
+              color="danger"
+              text="Renew Now"
+            />
           );
         }
 
         if (isSystemDisabled) {
           return totalBranch >= totalDisabledBySystem ? (
-            <Button className="!px-3 !py-2 !text-xs" color="danger" text="Activate" />
+            <Button
+              onClick={() => {
+                setActivateModalState(true);
+                setActiveId(_id);
+              }}
+              className="!px-3 !py-2 !text-xs"
+              color="danger"
+              text="Activate"
+            />
           ) : (
             <span className="font-semibold text-danger">Upgrade Your Plan</span>
           );
@@ -209,6 +285,24 @@ export default function BranchTable({ offset }: { offset: number }) {
         setQuery={setQuery}
         query={query}
         searchPlaceHolder="Search By Name"
+      />
+
+      <ActivateConfirmModal
+        activateId={activeId}
+        activateHandler={activateBranch}
+        modalState={activateModalState}
+        setModalState={setActivateModalState}
+        isSubmitting={activeSubmitting}
+        setIsSubmitting={setActiveSubmitting}
+      />
+
+      <RenewConfirmModal
+        renewId={renewId}
+        renewHandler={renewBranch}
+        modalState={renewModalState}
+        setModalState={setRenewModalState}
+        isSubmitting={renewSubmitting}
+        setIsSubmitting={setRenewSubmitting}
       />
 
       <DeleteConfirmModal
