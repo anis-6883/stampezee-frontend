@@ -108,7 +108,7 @@ export default function BranchTable({ offset }: { offset: number }) {
       setRenewModalState(false);
       setRenewId(null);
     }
-  }, [renewBranchSuccess, renewBranchError]);
+  }, [renewBranchSuccess, renewBranchError, renewResponse]);
 
   const structure = [
     {
