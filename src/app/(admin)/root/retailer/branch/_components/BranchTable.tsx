@@ -4,29 +4,31 @@ import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import {
+  useActivateBranchMutation,
   useAllBranchQuery,
   useDeleteBranchMutation,
   useRenewBranchMutation,
   useUpdateBranchStatusMutation,
-  useActivateBranchMutation,
 } from '@/features/retailer/branch/branchApi';
-import { IQueryType } from '@/types';
+import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import { IQueryType, Subscription } from '@/types';
 import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FcLock, FcUnlock } from 'react-icons/fc';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
+import { IoPower } from 'react-icons/io5';
 import { MdAutorenew } from 'react-icons/md';
 import { Badge, Switch } from 'rizzui';
-import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
-import SwitchButton from '../../../_components/SwitchButton';
 import ActivateConfirmModal from '../../../_components/ActivateConfirmModal';
+import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import RenewConfirmModal from '../../../_components/RenewConfirmModal';
-import { useRouter } from 'next/navigation';
+import SwitchButton from '../../../_components/SwitchButton';
 
 export default function BranchTable({ offset }: { offset: number }) {
   const { data: session }: any = useSession();
@@ -48,7 +50,7 @@ export default function BranchTable({ offset }: { offset: number }) {
   const [renewId, setRenewId] = useState(null);
   const [renewSubmitting, setRenewSubmitting] = useState(false);
 
-  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
+  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 20, search: null });
 
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useAllBranchQuery({
@@ -56,6 +58,8 @@ export default function BranchTable({ offset }: { offset: number }) {
     limit: query.pageSize,
     ...searchQuery,
   });
+
+  const { data: subscriptionList } = useGetSubscriptionQuery(undefined);
 
   // Handle Delete Response
   useEffect(() => {
@@ -108,7 +112,7 @@ export default function BranchTable({ offset }: { offset: number }) {
       setRenewModalState(false);
       setRenewId(null);
     }
-  }, [renewBranchSuccess, renewBranchError, renewResponse]);
+  }, [renewBranchSuccess, renewBranchError, renewResponse, push]);
 
   const structure = [
     {
@@ -199,7 +203,9 @@ export default function BranchTable({ offset }: { offset: number }) {
         const isAddonExpired = source === 'addon' && countDaysLeft(enrollSubscription?.validityTo) < 0;
         const isSystemDisabled = disabledBySystem;
         const totalBranch = session?.user?.totalBranch;
-        const totalDisabledBySystem = data?.data.docs?.filter((item: any) => item?.disabledBySystem)?.length;
+        const totalDisabledBySystem = data?.data.docs?.filter((item: any) => item?.disabledBySystem === false)?.length;
+        const totalAllowBranch = subscriptionList?.data?.find((item: Subscription) => item.slug === session?.user?.plan)?.allowTotalBranch;
+        const remainingAllowBranch = totalAllowBranch - totalDisabledBySystem;
 
         if (isAddonExpired) {
           return (
@@ -209,7 +215,7 @@ export default function BranchTable({ offset }: { offset: number }) {
                 setRenewId(enrollSubscriptionId);
               }}
               preIcon={<MdAutorenew className="text-base" />}
-              className="!px-3 !py-2 !text-xs"
+              className="!m-0 !px-3 !py-2 !text-xs"
               color="danger"
               text="Renew Now"
             />
@@ -217,16 +223,19 @@ export default function BranchTable({ offset }: { offset: number }) {
         }
 
         if (isSystemDisabled) {
-          return totalBranch >= totalDisabledBySystem ? (
+          return totalAllowBranch > totalDisabledBySystem ? (
             <Button
+              preIcon={<IoPower className="text-base" />}
               onClick={() => {
                 setActivateModalState(true);
                 setActiveId(_id);
               }}
-              className="!px-3 !py-2 !text-xs"
+              className="!m-0 !px-3 !py-2 !text-xs"
               color="danger"
               text="Activate"
             />
+          ) : session?.user?.plan === 'advanced' ? (
+            <span className="font-semibold text-danger">Purchase Add-On & Replace</span>
           ) : (
             <span className="font-semibold text-danger">Upgrade Your Plan</span>
           );
@@ -239,15 +248,11 @@ export default function BranchTable({ offset }: { offset: number }) {
             </Link>
             <Button
               color="danger"
-              preIcon={
-                <ImBin
-                  className="text-base"
-                  onClick={() => {
-                    setModalState(true);
-                    setDeleteId(_id);
-                  }}
-                />
-              }
+              onClick={() => {
+                setModalState(true);
+                setDeleteId(_id);
+              }}
+              preIcon={<ImBin className="text-base" />}
             />
           </div>
         );

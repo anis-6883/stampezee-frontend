@@ -51,31 +51,59 @@ export default function CustomerTable() {
 
   const structure = [
     {
-      header: 'Image',
+      header: 'Info',
       accessorKey: 'image',
       Cell: ({ row }: any) => (
-        <div>
-          {row.original.image ? (
-            <div>
-              <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="w-14 rounded" />
+        <div className="flex gap-2">
+          <div>
+            {row.original.image ? (
+              <div>
+                <img
+                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.customer.image}`}
+                  alt="image"
+                  className="h-full w-20 rounded"
+                />
+              </div>
+            ) : (
+              <img src={'/images/profile.png'} alt="image" className="h-full w-20 rounded" />
+            )}
+          </div>
+          <div>
+            <div className="text-md mx-auto text-start">
+              <p>
+                <span className="font-bold">Name:</span> {row?.original.customer.fullName}
+              </p>
+              <p>
+                <span className="font-bold">Email:</span> {row?.original.customer.email}
+              </p>
+              <p>
+                <span className="font-bold">Phone:</span> {row?.original.customer.phone}
+              </p>
             </div>
-          ) : (
-            <img src={'/images/profile.png'} alt="image" className="w-14 rounded" />
-          )}
+          </div>
         </div>
       ),
     },
     {
-      header: 'First Name',
-      accessorKey: 'firstName',
-    },
-    {
-      header: 'Last Name',
-      accessorKey: 'lastName',
-    },
-    {
-      header: 'Email',
-      accessorKey: 'email',
+      header: 'Address',
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">
+          <p>
+            <span className="font-bold">Country:</span> {row?.original.customer.country}
+          </p>
+          {row?.original.customer.address?.name && (
+            <p>
+              <span className="font-bold">Address:</span> {row?.original.customer.address?.name}
+            </p>
+          )}
+        </div>
+      ),
+      mantineTableHeadCellProps: {
+        align: 'start',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
     },
     {
       header: 'Status',

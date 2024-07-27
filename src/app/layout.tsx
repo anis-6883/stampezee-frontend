@@ -10,10 +10,6 @@ import { authOptions } from './api/auth/[...nextauth]/auth-options';
 import AuthProvider from './providers/auth-provider';
 import ReduxProvider from './providers/redux-provider';
 
-// const NextProgress = dynamic(() => import('@/components/next-progress'), {
-//   ssr: false,
-// });
-
 export const metadata = {
   title: siteConfig.title,
   description: siteConfig.description,

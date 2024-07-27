@@ -6,25 +6,35 @@ import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator
 import {
   useDeleteStampImageMutation,
   useGetAllStampImagesQuery,
+  useRenewStampImageMutation,
   useUpdateStampStatusMutation,
 } from '@/features/retailer/stamp-image/stampApi';
 import { IQueryType } from '@/types';
 import { countDaysLeft } from '@/utils';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
+import { MdAutorenew } from 'react-icons/md';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
+import RenewConfirmModal from '../../../_components/RenewConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function StampsImageTable() {
+  const { push } = useRouter();
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
+  // renew state
+  const [renewModalState, setRenewModalState] = useState(false);
+  const [renewId, setRenewId] = useState(null);
+  const [renewSubmitting, setRenewSubmitting] = useState(false);
+
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllStampImagesQuery({
@@ -35,6 +45,8 @@ export default function StampsImageTable() {
 
   const [deleteStampImage, { isSuccess, isError }] = useDeleteStampImageMutation();
   const [updateStatus] = useUpdateStampStatusMutation();
+  const [renewStampImage, { isError: renewStampImageError, isSuccess: renewStampImageSuccess, data: renewResponse }] =
+    useRenewStampImageMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
@@ -55,6 +67,27 @@ export default function StampsImageTable() {
       setDeleteId(null);
     }
   }, [isSuccess, isError]);
+
+  // Handle Renew Stamp Image Response
+  useEffect(() => {
+    if (renewStampImageError) {
+      setRenewSubmitting(false);
+      toast.error('Something went wrong. Please try again!');
+      setRenewModalState(false);
+      setRenewId(null);
+    }
+    if (renewStampImageSuccess) {
+      setRenewSubmitting(false);
+
+      if (renewResponse?.data?.url) {
+        push(renewResponse?.data?.url);
+      } else {
+        toast.success(renewResponse?.message);
+      }
+      setRenewModalState(false);
+      setRenewId(null);
+    }
+  }, [renewStampImageSuccess, renewStampImageError, renewResponse, push]);
 
   const structure = [
     {
@@ -96,23 +129,39 @@ export default function StampsImageTable() {
     },
     {
       header: 'Actions',
-      Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
-          <Button
-            color="warning"
-            preIcon={<HiOutlinePencil className="text-base" />}
-            onClick={() => {
-              setFormData({
-                ...row.original,
-                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
-              });
-              setCreateState(true);
-            }}
-          />
+      Cell: ({ row }: any) => {
+        const { enrollSubscription } = row?.original || {};
+        const countDays = countDaysLeft(enrollSubscription?.validityTo);
 
-          <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
-        </div>
-      ),
+        return countDays < 0 ? (
+          <Button
+            onClick={() => {
+              setRenewModalState(true);
+              setRenewId(enrollSubscription?._id);
+            }}
+            preIcon={<MdAutorenew className="text-base" />}
+            className="!px-3 !py-2 !text-xs"
+            color="danger"
+            text="Renew Now"
+          />
+        ) : (
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              color="warning"
+              preIcon={<HiOutlinePencil className="text-base" />}
+              onClick={() => {
+                setFormData({
+                  ...row.original,
+                  image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+                });
+                setCreateState(true);
+              }}
+            />
+
+            <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+          </div>
+        );
+      },
       mantineTableHeadCellProps: {
         align: 'center',
       },
@@ -152,6 +201,15 @@ export default function StampsImageTable() {
         setQuery={setQuery}
         query={query}
         searchPlaceHolder="Search By Title"
+      />
+
+      <RenewConfirmModal
+        renewId={renewId}
+        renewHandler={renewStampImage}
+        modalState={renewModalState}
+        setModalState={setRenewModalState}
+        isSubmitting={renewSubmitting}
+        setIsSubmitting={setRenewSubmitting}
       />
 
       <DeleteConfirmModal

@@ -35,6 +35,13 @@ export const stampApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['retailerStamp'],
     }),
+    renewStampImage: builder.mutation({
+      query: (id) => ({
+        url: `/api/web/retailer/stamp-image/renew/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['retailerStamp'],
+    }),
     deleteStampImage: builder.mutation({
       query: (id) => ({
         url: `/api/web/retailer/stamp-image/${id}`,
@@ -51,6 +58,7 @@ export const {
   useUpdateStampImageMutation,
   useDeleteStampImageMutation,
   useUpdateStampStatusMutation,
+  useRenewStampImageMutation,
 } = stampApi;
 
 export default stampApi;

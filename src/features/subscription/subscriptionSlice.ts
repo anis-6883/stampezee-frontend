@@ -155,7 +155,11 @@ const subscriptionSlice = createSlice({
   reducers: {
     setSubscription: (state, action: PayloadAction<Subscription>) => {
       if (state?.subscription?.slug === action?.payload?.slug) {
-        state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
+        if (state.activeSubscription?.slug) {
+          state.subscription = state.activeSubscription;
+        } else {
+          state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
+        }
       } else {
         state.subscription = action.payload;
       }
@@ -217,7 +221,11 @@ const subscriptionSlice = createSlice({
     upgradePlan: (state, action: PayloadAction<Subscription>) => {
       state.upgradeCost = calculateUpgradeCost(state, action.payload);
       if (state?.subscription?.slug === action?.payload?.slug) {
-        state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
+        if (state.activeSubscription?.slug) {
+          state.subscription = state.activeSubscription;
+        } else {
+          state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
+        }
       } else {
         state.subscription = action.payload;
       }
@@ -226,7 +234,11 @@ const subscriptionSlice = createSlice({
     downgradePlan: (state, action: PayloadAction<Subscription>) => {
       state.downgradeRefund = calculateDowngradeRefund(state, action.payload);
       if (state?.subscription?.slug === action?.payload?.slug) {
-        state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
+        if (state.activeSubscription?.slug) {
+          state.subscription = state.activeSubscription;
+        } else {
+          state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
+        }
       } else {
         state.subscription = action.payload;
       }

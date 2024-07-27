@@ -10,6 +10,7 @@ import { useBranchCategoryImageListQuery, useCreateStampMutation } from '@/featu
 import getChangedFormData from '@/utils/getChangedFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -20,11 +21,12 @@ import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 
 export default function Create() {
+  const { data: session }: any = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
 
-  const isAddons = false;
+  const isAddons = session?.user?.totalCustomStamp > 0 ? true : false;
 
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery({});
 
@@ -151,7 +153,94 @@ export default function Create() {
               </div>
 
               <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
-              <InputTextarea name="description" required={false} label="Description" placeholder="Write here..." />
+
+              <div className="grid grid-cols-2 gap-x-5">
+                <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
+                <DateRangePicker label="Valid Date Range" name="validDateRange" />
+              </div>
+
+              <div className="grid grid-cols-2 gap-x-5">
+                <InputField name="noOfStampsToCollect" label="Number of Stamps to Collect" type="number" />
+                <InputField
+                  name="minPurchaseAmount"
+                  required={false}
+                  label="Minimum Purchase Amount"
+                  type="number"
+                  prefix={<LuCircleDollarSign className="text-xl" />}
+                  placeholder="0"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-x-5">
+                <div>
+                  <SelectField
+                    name="rewardType"
+                    label="Reward Type"
+                    value={values?.rewardType}
+                    options={[
+                      { id: 1, name: 'discount', value: 'discount' },
+                      { id: 2, name: 'promotion', value: 'promotion' },
+                    ].map((item: any) => ({
+                      label: _.startCase(_.toLower(item.name)),
+                      value: item.value,
+                    }))}
+                    onChange={(option: { label: string; value: string }) => setFieldValue('rewardType', option.value)}
+                  />
+                </div>
+
+                {/* <span className="font-medium">
+                Reward Type <span className="text-red-600">*</span>
+              </span>
+              <div className="flex gap-3">
+                <div
+                  onClick={() => {
+                    setFieldValue('rewardType', 'discount');
+                  }}
+                  className="cursor-pointer"
+                >
+                  <input
+                    style={{ backgroundImage: 'none' }}
+                    type="radio"
+                    id="rewardType"
+                    name="rewardType"
+                    checked={values.rewardType === 'discount' ? true : false}
+                    value={values.rewardType}
+                    onClick={() => {
+                      setFieldValue('rewardType', 'discount');
+                    }}
+                    className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
+                  />
+                  <label className="ml-1 cursor-pointer">Discount</label>
+                </div>
+                <div
+                  onClick={() => {
+                    setFieldValue('rewardType', 'promotion');
+                  }}
+                  className="cursor-pointer"
+                >
+                  <input
+                    style={{ backgroundImage: 'none' }}
+                    type="radio"
+                    id="rewardType"
+                    name="rewardType"
+                    value={values.rewardType}
+                    onClick={() => {
+                      setFieldValue('rewardType', 'promotion');
+                    }}
+                    checked={values.rewardType === 'promotion' ? true : false}
+                    className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
+                  />
+                  <label className="ml-1 cursor-pointer">Promotion</label>
+                </div>
+              </div> */}
+                {values.rewardType === 'discount' && (
+                  <InputField name="discountReward" label="Product Reward" placeholder="Ex. Get 1 Coke" type="number" />
+                )}
+                {values.rewardType === 'promotion' && (
+                  <InputField name="promotionReward" label="Product Reward" placeholder="Ex. Get 1 Coke" />
+                )}
+              </div>
+
               <h2 className="font-medium">
                 Select Default Image <span className="text-red-600">*</span>
               </h2>
@@ -242,74 +331,7 @@ export default function Create() {
 
               {errors?.stampImageId && <span className="text-red-600">Select one from custom or default stamp</span>}
 
-              <div className="grid grid-cols-2 gap-x-5">
-                <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
-                <DateRangePicker label="Valid Date Range" name="validDateRange" />
-              </div>
-
-              <div className="grid grid-cols-2 gap-x-5">
-                <InputField name="noOfStampsToCollect" label="Number of Stamps to Collect" type="number" />
-                <InputField
-                  name="minPurchaseAmount"
-                  required={false}
-                  label="Minimum Purchase Amount"
-                  type="number"
-                  prefix={<LuCircleDollarSign className="text-xl" />}
-                  placeholder="0"
-                />
-              </div>
-
-              <span className="font-medium">
-                Reward Type <span className="text-red-600">*</span>
-              </span>
-              <div className="flex gap-3">
-                <div
-                  onClick={() => {
-                    setFieldValue('rewardType', 'discount');
-                  }}
-                  className="cursor-pointer"
-                >
-                  <input
-                    style={{ backgroundImage: 'none' }}
-                    type="radio"
-                    id="rewardType"
-                    name="rewardType"
-                    checked={values.rewardType === 'discount' ? true : false}
-                    value={values.rewardType}
-                    onClick={() => {
-                      setFieldValue('rewardType', 'discount');
-                    }}
-                    className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
-                  />
-                  <label className="ml-1 cursor-pointer">Discount</label>
-                </div>
-                <div
-                  onClick={() => {
-                    setFieldValue('rewardType', 'promotion');
-                  }}
-                  className="cursor-pointer"
-                >
-                  <input
-                    style={{ backgroundImage: 'none' }}
-                    type="radio"
-                    id="rewardType"
-                    name="rewardType"
-                    value={values.rewardType}
-                    onClick={() => {
-                      setFieldValue('rewardType', 'promotion');
-                    }}
-                    checked={values.rewardType === 'promotion' ? true : false}
-                    className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
-                  />
-                  <label className="ml-1 cursor-pointer">Promotion</label>
-                </div>
-              </div>
-              {values.rewardType === 'discount' && (
-                <InputField name="discountReward" label="Product Reward" placeholder="Ex. Get 1 Coke" type="number" />
-              )}
-              {values.rewardType === 'promotion' && (
-                <InputField name="promotionReward" label="Product Reward" placeholder="Ex. Get 1 Coke" />
-              )}
+              <InputTextarea name="description" required={false} label="Description" placeholder="Write here..." />
 
               <p className="text-end text-xs font-semibold">
                 Fields marked with <span className="text-red-600">*</span> are mandatory!
