@@ -2,20 +2,6 @@ import { apiSlice } from '@/features/api/apiSlice';
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    logoutUser: builder.mutation({
-      query: () => {
-        return {
-          url: '/api/web/user-logout',
-          method: 'POST',
-        };
-      },
-    }),
-
-    getOwnProfile: builder.query({
-      query: () => `/api/web/get-profile`,
-      providesTags: ['userOwnProfile', 'superAdminProfile', 'retailerProfile'],
-    }),
-
     // super-admin api start
     superAdminLogin: builder.mutation({
       query: (data) => {
@@ -171,8 +157,6 @@ export const {
   useRetailerLoginMutation,
   useRetailerOtpVerifyMutation,
   useRetailerRegisterMutation,
-  useGetOwnProfileQuery,
-  useLogoutUserMutation,
   useRetailerResendOtpMutation,
   useRetailerChangePasswordMutation,
   useRetailerForgotPasswordMutation,

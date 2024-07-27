@@ -52,7 +52,7 @@ export default function Table({
     ...(enablePagination && {
       manualPagination: pagination,
       mantinePaginationProps: {
-        rowsPerPageOptions: ['10', '25', '50'],
+        rowsPerPageOptions: ['10', '20', '25', '50'],
         withEdges: false,
       },
       rowCount: pagination && pagination.totalDocuments,

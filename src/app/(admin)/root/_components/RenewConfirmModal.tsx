@@ -21,6 +21,7 @@ export default function RenewConfirmModal({
 }) {
   const handleRenew = () => {
     setIsSubmitting(true);
+    console.log({ renewId });
     if (renewId) {
       renewHandler(renewId);
       setModalState(false);

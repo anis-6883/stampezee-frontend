@@ -174,7 +174,7 @@ export default function CustomerTable() {
             : {
                 data: data?.data.docs || [],
                 pagination: {
-                  totalDocuments: 0,
+                  totalDocuments: data?.data.totalDocs || 0,
                 },
               }
         }
