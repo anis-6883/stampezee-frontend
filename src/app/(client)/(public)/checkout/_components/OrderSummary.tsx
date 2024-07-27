@@ -176,7 +176,7 @@ export default function OrderSummary({ stripeInfo }: any) {
         </div>
       )}
 
-      {subscription?.slug === activeSubscription?.slug && addOns?.length > 0 ? (
+      {subscription?.slug && subscription?.slug === activeSubscription?.slug && addOns?.length > 0 ? (
         <Button
           disabled={false}
           color="danger"
@@ -188,7 +188,7 @@ export default function OrderSummary({ stripeInfo }: any) {
         />
       ) : (
         <Button
-          disabled={subscription?.slug === activeSubscription?.slug && total < 1 ? true : false}
+          disabled={!subscription?.slug && subscription?.slug === activeSubscription?.slug && total < 1 ? true : false}
           color="danger"
           text="Checkout Confirm"
           className="mt-5 w-full"

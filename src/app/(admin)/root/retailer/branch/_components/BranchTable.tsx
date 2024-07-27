@@ -223,7 +223,7 @@ export default function BranchTable({ offset }: { offset: number }) {
         }
 
         if (isSystemDisabled) {
-          return totalAllowBranch > totalDisabledBySystem ? (
+          return totalAllowBranch >= totalDisabledBySystem ? (
             <Button
               preIcon={<IoPower className="text-base" />}
               onClick={() => {

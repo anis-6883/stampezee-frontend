@@ -11,6 +11,7 @@ const pageHeader = {
       name: 'Dashboard',
     },
     {
+      href: routes.retailer.stamp.home,
       name: 'Stamps',
     },
     {

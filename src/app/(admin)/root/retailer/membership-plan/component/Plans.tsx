@@ -51,7 +51,7 @@ export const Plans = ({ stripeInfo }: any) => {
         <AddOnsList isMemberShip={true} />
         <hr className="my-3" />
         <div className="mt-10 flex items-center justify-end gap-2">
-          {subscription?.slug === activeSubscription?.slug && addOns?.length > 0 ? (
+          {subscription?.slug && subscription?.slug === activeSubscription?.slug && addOns?.length > 0 ? (
             <Link href={routes.privateRoutes.checkout}>
               <Button
                 disabled={false}
@@ -64,7 +64,7 @@ export const Plans = ({ stripeInfo }: any) => {
           ) : (
             <Link href={routes.privateRoutes.checkout}>
               <Button
-                disabled={subscription?.slug === activeSubscription?.slug ? true : false}
+                disabled={!subscription?.slug && subscription?.slug === activeSubscription?.slug ? true : false}
                 className="text-white"
                 color="danger"
                 text="Selection Confirm"
