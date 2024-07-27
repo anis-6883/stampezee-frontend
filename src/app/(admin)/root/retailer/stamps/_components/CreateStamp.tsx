@@ -278,10 +278,11 @@ export default function Create() {
                   <span>No default image by super admin</span>
                 </div>
               )}
-
-              <h2 className="font-medium">
-                Select Custom Image <span className="text-red-600">*</span>
-              </h2>
+              {optionsData?.customImages?.length > 0 && (
+                <h2 className="font-medium">
+                  Select Custom Image <span className="text-red-600">*</span>
+                </h2>
+              )}
               {responseIsLoading ? (
                 <StampImgSkeleton />
               ) : (
