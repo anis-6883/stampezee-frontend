@@ -46,6 +46,13 @@ export const branchApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
     }),
+    convertToAddOnBranch: builder.mutation({
+      query: (id) => ({
+        url: `/api/web/retailer/branch/convert-to-addon/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
+    }),
     renewBranch: builder.mutation({
       query: (id) => ({
         url: `/api/web/retailer/branch/renew/${id}`,
@@ -72,4 +79,5 @@ export const {
   useUpdateBranchStatusMutation,
   useActivateBranchMutation,
   useRenewBranchMutation,
+  useConvertToAddOnBranchMutation,
 } = branchApi;

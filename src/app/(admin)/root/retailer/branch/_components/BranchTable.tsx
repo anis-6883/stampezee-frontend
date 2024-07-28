@@ -5,6 +5,7 @@ import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import {
   useActivateBranchMutation,
+  useConvertToAddOnBranchMutation,
   useAllBranchQuery,
   useDeleteBranchMutation,
   useRenewBranchMutation,
@@ -22,6 +23,7 @@ import toast from 'react-hot-toast';
 import { FcLock, FcUnlock } from 'react-icons/fc';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
+import { SiConvertio } from 'react-icons/si';
 import { IoPower } from 'react-icons/io5';
 import { MdAutorenew } from 'react-icons/md';
 import { Badge, Switch } from 'rizzui';
@@ -29,6 +31,8 @@ import ActivateConfirmModal from '../../../_components/ActivateConfirmModal';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import RenewConfirmModal from '../../../_components/RenewConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
+import ConvertToAddOnModal from '../../../_components/ConvertToAddOnModal';
+import { SerializedError } from '@/features/api/apiSlice';
 
 export default function BranchTable({ offset }: { offset: number }) {
   const { data: session }: any = useSession();
@@ -36,6 +40,8 @@ export default function BranchTable({ offset }: { offset: number }) {
   const [deleteBranch, { isSuccess, isError }] = useDeleteBranchMutation();
   const [updateStatus] = useUpdateBranchStatusMutation();
   const [activateBranch, { isSuccess: activateBranchSuccess, isError: activateBranchError }] = useActivateBranchMutation();
+  const [convertToAddOnBranch, { isSuccess: convertToAddonBranchSuccess, isError: convertToAddonBranchError, error: convertAddOnError }] =
+    useConvertToAddOnBranchMutation();
   const [renewBranch, { isSuccess: renewBranchSuccess, isError: renewBranchError, data: renewResponse }] = useRenewBranchMutation();
   // delete state
   const [modalState, setModalState] = useState(false);
@@ -45,6 +51,10 @@ export default function BranchTable({ offset }: { offset: number }) {
   const [activateModalState, setActivateModalState] = useState(false);
   const [activeId, setActiveId] = useState(null);
   const [activeSubmitting, setActiveSubmitting] = useState(false);
+  // convert to add-on state
+  const [convertModalState, setConvertModalState] = useState(false);
+  const [convertId, setConvertId] = useState(null);
+  const [convertSubmitting, setConvertSubmitting] = useState(false);
   // renew state
   const [renewModalState, setRenewModalState] = useState(false);
   const [renewId, setRenewId] = useState(null);
@@ -92,6 +102,23 @@ export default function BranchTable({ offset }: { offset: number }) {
       setActiveId(null);
     }
   }, [activateBranchSuccess, activateBranchError]);
+
+  // Handle Convert To Add-on Branch Response
+  useEffect(() => {
+    const myError = convertAddOnError as SerializedError;
+    if (convertToAddonBranchError) {
+      setConvertSubmitting(false);
+      toast.error(myError?.data?.message || 'Something went wrong. Please try again!');
+      setConvertModalState(false);
+      setConvertId(null);
+    }
+    if (convertToAddonBranchSuccess) {
+      setConvertSubmitting(false);
+      toast.success('Branch source convert to add-on successfully!');
+      setConvertModalState(false);
+      setConvertId(null);
+    }
+  }, [convertToAddonBranchSuccess, convertToAddonBranchError, convertAddOnError]);
 
   // Handle Renew Branch Response
   useEffect(() => {
@@ -237,7 +264,17 @@ export default function BranchTable({ offset }: { offset: number }) {
               text="Activate"
             />
           ) : session?.user?.plan === 'advanced' ? (
-            <span className="font-semibold text-danger">Purchase Add-On & Replace</span>
+            // <span className="font-semibold text-danger">Purchase Add-On & Replace</span>
+            <Button
+              preIcon={<SiConvertio className="text-base" />}
+              onClick={() => {
+                setConvertModalState(true);
+                setConvertId(_id);
+              }}
+              className="!m-0 !px-3 !py-2 !text-xs"
+              color="danger"
+              text="Convert To Add-On"
+            />
           ) : (
             <span className="font-semibold text-danger">Upgrade Your Plan</span>
           );
@@ -301,6 +338,15 @@ export default function BranchTable({ offset }: { offset: number }) {
         setModalState={setActivateModalState}
         isSubmitting={activeSubmitting}
         setIsSubmitting={setActiveSubmitting}
+      />
+
+      <ConvertToAddOnModal
+        convertId={convertId}
+        convertHandler={convertToAddOnBranch}
+        modalState={convertModalState}
+        setModalState={setConvertModalState}
+        isSubmitting={convertSubmitting}
+        setIsSubmitting={setConvertSubmitting}
       />
 
       <RenewConfirmModal
