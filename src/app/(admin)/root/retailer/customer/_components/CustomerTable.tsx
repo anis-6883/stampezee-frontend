@@ -1,7 +1,7 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
+import Button from '@/components/Formik/Button';
 import { useGetAllCustomerQuery } from '@/features/retailer/customer/customerApi';
 import { useDeleteSubAdminMutation, useUpdateSubAdminStatusMutation } from '@/features/retailer/sub-admin/subAdminApi';
 import { IQueryType } from '@/types';
@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
-import Button from '../../../../../../components/Formik/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 
@@ -157,9 +156,6 @@ export default function CustomerTable() {
 
   return (
     <>
-      <div className="mb-5 flex justify-between">
-        <StatusIndicator />
-      </div>
       <Table
         isFetching={isFetching}
         isLoading={isLoading}

@@ -5,6 +5,7 @@ import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { IoDiamondOutline } from 'react-icons/io5';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
+import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { PiBellRinging, PiStamp } from 'react-icons/pi';
 import { RiCoupon4Line, RiMoneyDollarCircleLine, RiRefund2Line } from 'react-icons/ri';
 import { TbUserShield } from 'react-icons/tb';
@@ -13,7 +14,7 @@ export const menuItems: { [key: string]: any } = {
   super_admin: [
     {
       name: 'Dashboard',
-      href: routes.superAdmin.dashboard,
+      href: routes.privateRoutes.superAdmin.dashboard,
       icon: <LuLayoutDashboard />,
     },
     {
@@ -23,12 +24,12 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Subscriptions',
-      href: routes.superAdmin.subscription.home,
+      href: routes.privateRoutes.superAdmin.subscription.home,
       icon: <IoDiamondOutline />,
     },
     {
       name: 'Coupons',
-      href: routes.superAdmin.coupon.home,
+      href: routes.privateRoutes.superAdmin.coupon.home,
       icon: <RiCoupon4Line />,
     },
     {
@@ -43,27 +44,27 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Customers',
-      href: routes.superAdmin.customer,
+      href: routes.privateRoutes.superAdmin.customer,
       icon: <LuUsers />,
     },
     {
       name: 'Stamp Categories',
-      href: routes.superAdmin.stampCategory.home,
+      href: routes.privateRoutes.superAdmin.stampCategory.home,
       icon: <LuListChecks />,
     },
     {
       name: 'Default Stamp Images',
-      href: routes.superAdmin.stampImage.home,
+      href: routes.privateRoutes.superAdmin.stampImage.home,
       icon: <BsPatchCheck />,
     },
     {
       name: 'FAQs',
-      href: routes.superAdmin.faq.home,
+      href: routes.privateRoutes.superAdmin.faq.home,
       icon: <BsQuestionCircle />,
     },
     {
       name: 'General Settings',
-      href: routes.superAdmin.settings,
+      href: routes.privateRoutes.superAdmin.settings,
       icon: <HiOutlineCog8Tooth />,
     },
   ],
@@ -90,27 +91,32 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Branches',
-      href: routes.retailer.branch.home,
+      href: routes.privateRoutes.retailer.branch.home,
       icon: <LiaMapMarkedAltSolid />,
     },
     {
       name: 'Sub-Admins (Team)',
-      href: routes.retailer.sub_admin.home,
+      href: routes.privateRoutes.retailer.sub_admin.home,
       icon: <TbUserShield />,
     },
     {
       name: 'Stamps',
-      href: routes.retailer.stamp.home,
+      href: routes.privateRoutes.retailer.stamp.home,
       icon: <PiStamp />,
     },
     {
+      name: 'Scans',
+      href: routes.privateRoutes.retailer.scan,
+      icon: <MdOutlineQrCodeScanner />,
+    },
+    {
       name: 'Customers',
-      href: routes.retailer.customer.home,
+      href: routes.privateRoutes.retailer.customer.home,
       icon: <LuUsers />,
     },
     {
       name: 'Custom Stamp Images',
-      href: routes.retailer.stampImage.home,
+      href: routes.privateRoutes.retailer.stampImage.home,
       icon: <BsPatchCheck />,
     },
     {
@@ -130,7 +136,7 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Manage Profile',
-      href: routes.retailer.profile,
+      href: routes.privateRoutes.retailer.profile,
       icon: <LuUserCog />,
     },
   ],
