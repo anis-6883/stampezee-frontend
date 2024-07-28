@@ -1,5 +1,6 @@
 'use client';
 
+import { Skeleton } from '@/components/ui/skeleton';
 import cn from '@/hooks/class-names';
 import { Text } from 'rizzui';
 
@@ -26,6 +27,7 @@ type MetricCardTypes = {
   metricClassName?: string;
   chartClassName?: string;
   className?: string;
+  isLoading?: boolean;
 };
 
 export default function MetricCard({
@@ -42,6 +44,7 @@ export default function MetricCard({
   metricClassName,
   chartClassName,
   children,
+  isLoading = false,
 }: React.PropsWithChildren<MetricCardTypes>) {
   return (
     <div className={cn(metricCardClasses.base, metricCardClasses.rounded[rounded], className)}>
@@ -56,7 +59,7 @@ export default function MetricCard({
           <div className={cn(icon && 'ps-3', contentClassName)}>
             <Text className={cn('mb-0.5 text-gray-500', titleClassName)}>{title}</Text>
             <Text className={cn('font-lexend 2xl:xl:text-xl text-lg font-semibold text-gray-900 dark:text-gray-700', metricClassName)}>
-              {metric}
+              {isLoading ? <Skeleton className="h-5 w-28 rounded" /> : metric}
             </Text>
 
             {info ? info : null}
