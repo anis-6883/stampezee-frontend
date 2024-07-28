@@ -1,5 +1,6 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
@@ -16,7 +17,6 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
-import Button from '../../../../../../components/Formik/Button';
 
 export default function CreateUpdateModel({
   setFormData,

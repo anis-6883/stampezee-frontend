@@ -5,6 +5,7 @@ import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
+import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 import { RootState } from '@/features/store';
 import { removeAddOns, setPlanChangeCost, setTaxPercentage, setTaxStatus } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
@@ -27,16 +28,18 @@ export default function OrderSummary({ stripeInfo }: any) {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
-  const { code, subscription, addOns, coupon, couponDiscount, subTotal, total, tax, activeSubscription, remainingBalance } = useSelector(
+  const { code, subscription, addOns, subTotal, total, tax, activeSubscription, planChangeType } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
   const [modalState, setModalState] = useState(false);
   const [modalState2, setModalState2] = useState(false);
-  const { isLoggedIn, user } = useSelector((state: RootState) => state.authSlice);
+  const { isLoggedIn, user, accessToken } = useSelector((state: RootState) => state.authSlice);
 
   const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
   const [checkOut, { data: checkOutResponse, isLoading: checkOutLoading, error: checkoutError }] = useCreateCheckOutMutation();
   const { data: profile, isSuccess: profileSuccess, refetch } = useRetailerGetProfileQuery(null, { skip: !isLoggedIn });
+
+  const { data: branches } = useAllBranchQuery({ page: 1, limit: 30 }, { skip: !accessToken });
 
   useEffect(() => {
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
@@ -86,6 +89,11 @@ export default function OrderSummary({ stripeInfo }: any) {
   }, [checkOutResponse, push, profileSuccess, checkoutError]);
 
   const handleCheckOut = () => {
+    // const allowTotalBranch = subscription?.allowTotalBranch || 0;
+    // const activeTotalBranch = branches?.data?.docs?.filter((item: any) => !item?.disabledBySystem && item?.source === 'subscription');
+
+    // const disabledTotalBranch = activeTotalBranch?.length - allowTotalBranch;
+
     if (!isLoggedIn) {
       setModalState(true);
       return;
@@ -94,6 +102,10 @@ export default function OrderSummary({ stripeInfo }: any) {
       checkOut({ slugs: addOns?.map((item: AddOn) => item.slug) });
       return;
     }
+    // if (planChangeType === 'downgrade' && disabledTotalBranch > 0) {
+    //   setModalState2(true);
+    //   return;
+    // }
     if (subSlugs.length > 0) {
       if (code) {
         checkOut({ slugs: subSlugs, code });

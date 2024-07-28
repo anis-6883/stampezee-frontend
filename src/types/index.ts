@@ -36,6 +36,7 @@ export interface IPagination {
   hasNext?: boolean;
   hasPrev?: boolean;
   totalDocs?: number;
+  type?: string;
 }
 
 export interface IOption {
@@ -368,6 +369,7 @@ export interface Subscription {
   type: string;
   image: string;
   isBlocked?: boolean;
+  allowTotalBranch?: number;
 }
 
 export interface AddOn {

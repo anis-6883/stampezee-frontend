@@ -69,5 +69,6 @@ export const apiSlice = createApi({
     'payments',
     'billing',
     'superAdminRefund',
+    'notification',
   ],
 });

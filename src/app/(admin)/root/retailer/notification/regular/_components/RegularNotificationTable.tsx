@@ -1,18 +1,12 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-import {
-  useDeleteFaqMutation,
-  useGetAllFaqQuery,
-  useUpdateFaqStatusMutation,
-  useUpdateSortingFaqMutation,
-} from '@/features/super-admin/faq/faqApi';
+import { useGetAllNotificationQuery } from '@/features/retailer/notification/notificationApi';
+import { useDeleteFaqMutation, useUpdateFaqStatusMutation, useUpdateSortingFaqMutation } from '@/features/super-admin/faq/faqApi';
 import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
-import { ImBin } from 'react-icons/im';
 
 import DeleteConfirmModal from '@/app/(admin)/root/_components/DeleteConfirmModal';
 import SwitchButton from '@/app/(admin)/root/_components/SwitchButton';
@@ -34,9 +28,10 @@ export default function RegularNotificationTable() {
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllFaqQuery({
+  const { data, isLoading, isFetching } = useGetAllNotificationQuery({
     page: query.pageIndex + 1,
     limit: query.pageSize,
+    type: 'all',
     ...searchQuery,
   });
 
@@ -100,32 +95,32 @@ export default function RegularNotificationTable() {
       },
       size: 10,
     },
-    {
-      header: 'Actions',
-      Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
-          <Button
-            color="warning"
-            preIcon={<HiOutlinePencil className="text-base" />}
-            onClick={() => {
-              setFormData({
-                ...row.original,
-              });
-              setCreateState(true);
-            }}
-          />
+    // {
+    //   header: 'Actions',
+    //   Cell: ({ row }: any) => (
+    //     <div className="flex items-center justify-center gap-2">
+    //       <Button
+    //         color="warning"
+    //         preIcon={<HiOutlinePencil className="text-base" />}
+    //         onClick={() => {
+    //           setFormData({
+    //             ...row.original,
+    //           });
+    //           setCreateState(true);
+    //         }}
+    //       />
 
-          <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
-        </div>
-      ),
-      mantineTableHeadCellProps: {
-        align: 'center',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
-      size: 20,
-    },
+    //       <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+    //     </div>
+    //   ),
+    //   mantineTableHeadCellProps: {
+    //     align: 'center',
+    //   },
+    //   mantineTableBodyCellProps: {
+    //     align: 'center',
+    //   },
+    //   size: 20,
+    // },
   ];
 
   return (
@@ -155,10 +150,6 @@ export default function RegularNotificationTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        enableDnD={true}
-        sort={updateSortingFaq}
-        sortContext="faq"
-        enableRowActions={false}
         searchPlaceHolder="Search by Title"
       />
 

@@ -4,9 +4,13 @@ import Button from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
+import SelectField from '@/components/Formik/SelectField';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useCreateFaqMutation, useUpdateFaqMutation } from '@/features/super-admin/faq/faqApi';
+import { useCreateNotificationMutation } from '@/features/retailer/notification/notificationApi';
+import { useUpdateFaqMutation } from '@/features/super-admin/faq/faqApi';
+import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
@@ -27,13 +31,14 @@ export default function CreateUpdateModel({
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [createFaq, { isSuccess: createSuccess, error: createError }] = useCreateFaqMutation();
+  const [createNotification, { isSuccess: createSuccess, error: createError }] = useCreateNotificationMutation();
   const [updateFaq, { isSuccess: updateSuccess, error: updateError }] = useUpdateFaqMutation();
 
   const initialValues = {
     title: formData?.title || '',
     description: formData?.description || '',
     image: '',
+    imageType: '',
   };
 
   const validationSchema = Yup.object({
@@ -44,10 +49,23 @@ export default function CreateUpdateModel({
   const submitHandler = async (values: any) => {
     setIsSubmitting(true);
 
+    const isFile = (obj: any): obj is File => obj instanceof File;
+
+    let objToFormData: FormData;
+
     if (formData?._id) {
-      updateFaq({ id: formData._id, formData: values });
+      const ignoreList = [];
+      if (!isFile(values?.image)) ignoreList.push('image');
+
+      objToFormData = objectToFormData(values, ignoreList);
+      // updateFaq({ id: formData._id, formData: objToFormData });
     } else {
-      createFaq(values);
+      if (!values?.imageType) {
+        objToFormData = objectToFormData(values, ['image', 'imageType']);
+      } else {
+        objToFormData = objectToFormData(values);
+      }
+      createNotification(objToFormData);
     }
   };
 
@@ -59,7 +77,7 @@ export default function CreateUpdateModel({
       setIsSubmitting(false);
     }
     if (createSuccess) {
-      toast.success('Faq created successfully!');
+      toast.success('Notification created successfully!');
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
@@ -107,16 +125,41 @@ export default function CreateUpdateModel({
                   <InputTextarea name="description" label="Description" placeholder="Write here..." />
                 </div>
 
-                <div className="my-4">
-                  <p className="font-medium">Attach Image</p>
-                  <DragAndDropUpload
-                    value={{ name: 'image', image: values.image }}
-                    onChange={(image: any) => setFieldValue('image', image)}
-                    className="mt-2"
-                    size={1024 * 1000}
-                    sizeText="1MB"
+                <div className="my-3">
+                  <SelectField
+                    name="imageType"
+                    required={false}
+                    label="Image Type"
+                    value={values?.imageType}
+                    options={[
+                      { id: 1, name: 'url', value: 'url' },
+                      { id: 2, name: 'image', value: 'image' },
+                    ].map((item: any) => ({
+                      label: _.startCase(_.toLower(item.name)),
+                      value: item.value,
+                    }))}
+                    onChange={(option: { label: string; value: string }) => setFieldValue('imageType', option.value)}
                   />
                 </div>
+
+                {values?.imageType === 'image' && (
+                  <div className="my-4">
+                    <p className="font-medium">Attach Image</p>
+                    <DragAndDropUpload
+                      value={{ name: 'image', image: values.image }}
+                      onChange={(image: any) => setFieldValue('image', image)}
+                      className="mt-2"
+                      size={1024 * 1000}
+                      sizeText="1MB"
+                    />
+                  </div>
+                )}
+
+                {values?.imageType === 'url' && (
+                  <div className="my-4">
+                    <InputField required={false} name="image" label="Image URL" placeholder="https://picsum.photos/200" />
+                  </div>
+                )}
 
                 <p className=" text-end text-xs font-semibold">
                   Fields marked with <span className="text-red-600">*</span> are mandatory!

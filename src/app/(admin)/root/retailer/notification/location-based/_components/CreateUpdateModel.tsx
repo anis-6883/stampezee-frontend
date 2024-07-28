@@ -1,12 +1,17 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
+import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
+import SelectField from '@/components/Formik/SelectField';
 import RangeSlider from '@/components/range-slider';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useCreateFaqMutation, useUpdateFaqMutation } from '@/features/super-admin/faq/faqApi';
+import { useCreateNotificationByLocationMutation } from '@/features/retailer/notification/notificationApi';
+import { useUpdateFaqMutation } from '@/features/super-admin/faq/faqApi';
+import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
@@ -42,12 +47,18 @@ export default function CreateUpdateModel({
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [createFaq, { isSuccess: createSuccess, error: createError }] = useCreateFaqMutation();
+  const [createNotificationByLocation, { isSuccess: createSuccess, error: createError }] = useCreateNotificationByLocationMutation();
   const [updateFaq, { isSuccess: updateSuccess, error: updateError }] = useUpdateFaqMutation();
 
   const initialValues = {
     title: formData?.title || '',
     description: formData?.description || '',
+    imageType: '',
+    image: '',
+    address: '',
+    longitude: '',
+    latitude: '',
+    radius: 0,
   };
 
   const validationSchema = Yup.object({
@@ -57,11 +68,26 @@ export default function CreateUpdateModel({
 
   const submitHandler = async (values: any) => {
     setIsSubmitting(true);
+    const isFile = (obj: any): obj is File => obj instanceof File;
+
+    let objToFormData: FormData;
 
     if (formData?._id) {
-      updateFaq({ id: formData._id, formData: values });
+      const ignoreList = [];
+      if (!isFile(values?.image)) ignoreList.push('image');
+
+      objToFormData = objectToFormData(values, ignoreList);
+      // updateFaq({ id: formData._id, formData: objToFormData });
     } else {
-      createFaq(values);
+      if (!values?.imageType) {
+        objToFormData = objectToFormData(values, ['image', 'imageType']);
+      } else {
+        objToFormData = objectToFormData(values);
+      }
+      // for (let [key, value] of objToFormData) {
+      //   console.log(`${key}: ${value}`);
+      // }
+      createNotificationByLocation(objToFormData);
     }
   };
 
@@ -73,7 +99,7 @@ export default function CreateUpdateModel({
       setIsSubmitting(false);
     }
     if (createSuccess) {
-      toast.success('Faq created successfully!');
+      toast.success('Notification send successfully!');
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
@@ -120,19 +146,59 @@ export default function CreateUpdateModel({
                 <div className="my-3">
                   <InputTextarea rows={4} name="description" label="Description" placeholder="Write here..." />
                 </div>
-                <div className="pt-5">
+
+                <div className=" h-full">
+                  <MapComponent />
+                </div>
+
+                <div className="py-5">
                   <span className=" font-medium">Radius</span>
                   <RangeSlider
                     className="mt-3"
+                    onChange={(value: any) => setFieldValue('radius', value[1] - value[0])}
                     range
                     marks={generateRangeObject(0, 100, 5)}
                     step={5}
                     // defaultValue={[1, 100]}
                   />
                 </div>
-                <div className="mt-10 h-full">
-                  <MapComponent />
+
+                <div className="my-3">
+                  <SelectField
+                    name="imageType"
+                    required={false}
+                    label="Image Type"
+                    value={values?.imageType}
+                    options={[
+                      { id: 1, name: 'url', value: 'url' },
+                      { id: 2, name: 'image', value: 'image' },
+                    ].map((item: any) => ({
+                      label: _.startCase(_.toLower(item.name)),
+                      value: item.value,
+                    }))}
+                    onChange={(option: { label: string; value: string }) => setFieldValue('imageType', option.value)}
+                  />
                 </div>
+
+                {values?.imageType === 'image' && (
+                  <div className="my-4">
+                    <p className="font-medium">Attach Image</p>
+                    <DragAndDropUpload
+                      value={{ name: 'image', image: values.image }}
+                      onChange={(image: any) => setFieldValue('image', image)}
+                      className="mt-2"
+                      size={1024 * 1000}
+                      sizeText="1MB"
+                    />
+                  </div>
+                )}
+
+                {values?.imageType === 'url' && (
+                  <div className="my-4">
+                    <InputField required={false} name="image" label="Image URL" placeholder="https://picsum.photos/200" />
+                  </div>
+                )}
+
                 <p className="mt-4 text-end text-xs font-semibold">
                   Fields marked with <span className="text-red-600">*</span> are mandatory!
                 </p>

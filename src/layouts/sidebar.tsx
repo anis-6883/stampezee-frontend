@@ -28,6 +28,7 @@ const blockedMenuUrls = [
   routes.privateRoutes.retailer.branch.home,
   routes.privateRoutes.retailer.regularNotification.home,
   routes.privateRoutes.retailer.locationBasedNotification.home,
+  routes.privateRoutes.retailer.scan,
 ];
 
 const addonsBlockedMenuUrls = [
