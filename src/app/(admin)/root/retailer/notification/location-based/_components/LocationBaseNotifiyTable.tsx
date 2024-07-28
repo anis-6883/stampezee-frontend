@@ -157,10 +157,6 @@ export default function LocationBaseNotifyTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        enableDnD={true}
-        sort={updateSortingFaq}
-        sortContext="faq"
-        enableRowActions={false}
         searchPlaceHolder="Search by Title"
       />
 
