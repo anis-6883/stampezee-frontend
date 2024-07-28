@@ -203,7 +203,9 @@ export default function BranchTable({ offset }: { offset: number }) {
         const isAddonExpired = source === 'addon' && countDaysLeft(enrollSubscription?.validityTo) < 0;
         const isSystemDisabled = disabledBySystem;
         const totalBranch = session?.user?.totalBranch;
-        const totalDisabledBySystem = data?.data.docs?.filter((item: any) => item?.disabledBySystem === false)?.length;
+        const totalDisabledBySystem = data?.data.docs?.filter(
+          (item: any) => item?.disabledBySystem === false && item?.source === 'subscription'
+        )?.length;
         const totalAllowBranch = subscriptionList?.data?.find((item: Subscription) => item.slug === session?.user?.plan)?.allowTotalBranch;
         const remainingAllowBranch = totalAllowBranch - totalDisabledBySystem;
 
@@ -223,7 +225,7 @@ export default function BranchTable({ offset }: { offset: number }) {
         }
 
         if (isSystemDisabled) {
-          return totalAllowBranch >= totalDisabledBySystem ? (
+          return totalAllowBranch > totalDisabledBySystem ? (
             <Button
               preIcon={<IoPower className="text-base" />}
               onClick={() => {

@@ -24,6 +24,7 @@ interface SubscriptionState {
   downgradeRefund: number;
   remainingBalance: number;
   planChangeCost: number;
+  planChangeType: string;
 }
 
 const initialState: SubscriptionState = {
@@ -42,6 +43,7 @@ const initialState: SubscriptionState = {
   downgradeRefund: 0,
   remainingBalance: 0,
   planChangeCost: 1,
+  planChangeType: '',
 };
 
 // Helper functions
@@ -220,6 +222,7 @@ const subscriptionSlice = createSlice({
     },
     upgradePlan: (state, action: PayloadAction<Subscription>) => {
       state.upgradeCost = calculateUpgradeCost(state, action.payload);
+      state.planChangeType = 'upgrade';
       if (state?.subscription?.slug === action?.payload?.slug) {
         if (state.activeSubscription?.slug) {
           state.subscription = state.activeSubscription;
@@ -233,6 +236,7 @@ const subscriptionSlice = createSlice({
     },
     downgradePlan: (state, action: PayloadAction<Subscription>) => {
       state.downgradeRefund = calculateDowngradeRefund(state, action.payload);
+      state.planChangeType = 'downgrade';
       if (state?.subscription?.slug === action?.payload?.slug) {
         if (state.activeSubscription?.slug) {
           state.subscription = state.activeSubscription;
