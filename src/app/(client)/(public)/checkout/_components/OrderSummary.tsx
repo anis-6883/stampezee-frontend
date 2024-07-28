@@ -23,6 +23,7 @@ import GoToBranch from './GoToBranch';
 import LoginAlert from './LoginAlert';
 import OrderBalance from './OrderBalance';
 import PlanAddOns from './PlanAddons';
+import BranchDisableModal from './BranchDisableModal';
 
 export default function OrderSummary({ stripeInfo }: any) {
   const { push } = useRouter();
@@ -33,6 +34,12 @@ export default function OrderSummary({ stripeInfo }: any) {
   );
   const [modalState, setModalState] = useState(false);
   const [modalState2, setModalState2] = useState(false);
+
+  const [branchDisableModalState, setBranchDisableModalState] = useState(false);
+  const [disableBranchOptions, setDisableBranchOptions] = useState([]);
+  const [totalDisabledBranch, setTotalDisabledBranch] = useState<number>(0);
+  const [selectdBranches, setSelectdBranches] = useState<string[]>([]);
+
   const { isLoggedIn, user, accessToken } = useSelector((state: RootState) => state.authSlice);
 
   const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
@@ -40,6 +47,15 @@ export default function OrderSummary({ stripeInfo }: any) {
   const { data: profile, isSuccess: profileSuccess, refetch } = useRetailerGetProfileQuery(null, { skip: !isLoggedIn });
 
   const { data: branches } = useAllBranchQuery({ page: 1, limit: 30 }, { skip: !accessToken });
+
+  useEffect(() => {
+    const activeTotalBranch = branches?.data?.docs?.filter((item: any) => !item?.disabledBySystem && item?.source === 'subscription');
+    const disableBranchOptions = activeTotalBranch?.map((item: any) => ({ value: item?._id, title: item?.name }));
+    const allowTotalBranch = subscription?.allowTotalBranch || 0;
+    const disabledTotalBranch = activeTotalBranch?.length - allowTotalBranch;
+    setDisableBranchOptions(disableBranchOptions);
+    setTotalDisabledBranch(disabledTotalBranch);
+  }, [branches, subscription]);
 
   useEffect(() => {
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
@@ -89,11 +105,6 @@ export default function OrderSummary({ stripeInfo }: any) {
   }, [checkOutResponse, push, profileSuccess, checkoutError]);
 
   const handleCheckOut = () => {
-    // const allowTotalBranch = subscription?.allowTotalBranch || 0;
-    // const activeTotalBranch = branches?.data?.docs?.filter((item: any) => !item?.disabledBySystem && item?.source === 'subscription');
-
-    // const disabledTotalBranch = activeTotalBranch?.length - allowTotalBranch;
-
     if (!isLoggedIn) {
       setModalState(true);
       return;
@@ -102,10 +113,15 @@ export default function OrderSummary({ stripeInfo }: any) {
       checkOut({ slugs: addOns?.map((item: AddOn) => item.slug) });
       return;
     }
-    // if (planChangeType === 'downgrade' && disabledTotalBranch > 0) {
-    //   setModalState2(true);
-    //   return;
-    // }
+    if (planChangeType === 'downgrade' && totalDisabledBranch > 0) {
+      if (selectdBranches?.length) {
+        checkOut({ slugs: subSlugs, branchIds: selectdBranches });
+      } else {
+        setBranchDisableModalState(true);
+      }
+
+      return;
+    }
     if (subSlugs.length > 0) {
       if (code) {
         checkOut({ slugs: subSlugs, code });
@@ -211,6 +227,14 @@ export default function OrderSummary({ stripeInfo }: any) {
       )}
 
       <LoginAlert modalState={modalState} setModalState={setModalState} />
+      <BranchDisableModal
+        selectdBranches={selectdBranches}
+        setSelectdBranches={setSelectdBranches}
+        totalDisabledBranch={totalDisabledBranch}
+        options={disableBranchOptions}
+        modalState={branchDisableModalState}
+        setModalState={setBranchDisableModalState}
+      />
       <GoToBranch modalState={modalState2} setModalState={setModalState2} message={myError?.data?.message} />
     </>
   );
