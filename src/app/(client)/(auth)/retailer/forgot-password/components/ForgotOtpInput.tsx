@@ -2,6 +2,7 @@ import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerForgetResendOtpMutation, useRetailerVerifyForgetPasswordOtpMutation } from '@/features/auth/authApi';
+import { useTimer } from '@/hooks/use-timer';
 import { ErrorResponse, isFetchBaseQueryError } from '@/utils/check-base-query-error';
 import { SetStateAction } from 'jotai';
 import Link from 'next/link';
@@ -33,6 +34,13 @@ export default function ForgetOtpInput({
 
   const [retailerForgetResendOtp, { error: resendError, isSuccess: resendSuccess }] = useRetailerForgetResendOtpMutation();
 
+  const { reset, timer } = useTimer(120);
+
+  useEffect(() => {
+    if (currentTab === 1) {
+      reset();
+    }
+  }, [currentTab]);
   // Handle Otp Response
   useEffect(() => {
     if (isError) {
@@ -73,6 +81,7 @@ export default function ForgetOtpInput({
     if (!resendError && resendSuccess) {
       setResendOtpSubmitting(false);
       toast.success('OTP sent on your email!');
+      reset();
     }
   }, [resendError, resendSuccess]);
 
@@ -104,11 +113,11 @@ export default function ForgetOtpInput({
   return (
     <div className={`card-body p-3 ${currentTab === 1 ? '' : 'hidden'}`}>
       <h2 className="mb-5 text-center text-xl font-semibold">Verify OTP</h2>
-
       <div className="label mb-4">
         <span className="text-sm font-semibold ">
           We sent an OTP to your Email. You have 2 minutes to complete this verification. Thank you!
         </span>
+        {timer > 0 && <span className="ml-40 font-bold text-danger">{timer} sec</span>}
       </div>
       <form onSubmit={otpSubmitHandler}>
         <div>
