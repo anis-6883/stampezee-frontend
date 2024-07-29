@@ -1,10 +1,7 @@
 import Button from '@/components/Formik/Button';
-import { routes } from '@/config/routes';
 import Link from 'next/link';
-import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { LiaCheckCircle } from 'react-icons/lia';
 import { LuCheckCircle } from 'react-icons/lu';
 import { Modal } from 'rizzui';
 
@@ -19,23 +16,28 @@ export default function BranchDisableModal({
   totalDisabledBranch = 0,
   options = [],
   modalState = false,
-  selectdBranches = [],
+  selectedBranches = [],
   setModalState,
-  setSelectdBranches,
+  setSelectedBranches,
 }: {
   modalState?: boolean;
   setModalState: (state: boolean) => void;
-  setSelectdBranches: any;
+  setSelectedBranches: any;
   options: BranchDisableOption[];
-  selectdBranches: string[];
+  selectedBranches: string[];
   totalDisabledBranch: number;
 }) {
   const handleDisableBranch = () => {
-    if (selectdBranches?.length !== totalDisabledBranch) {
+    if (selectedBranches?.length !== totalDisabledBranch) {
       toast.error(`You Should Select ${totalDisabledBranch} branches`);
       return;
     }
     setModalState(false);
+  };
+
+  const checkDisableBranch = (item: any) => {
+    const isExist = selectedBranches.includes(item.value);
+    return !isExist && selectedBranches?.length >= totalDisabledBranch;
   };
 
   return (
@@ -48,35 +50,39 @@ export default function BranchDisableModal({
           </Link>
         </div>
 
-        <p className="mt-5 text-center text-base font-medium">If you want to downgrade? You should disable given branches.</p>
+        <p className="mt-5 text-center text-base font-medium">
+          For downgrading, you must <span className="font-bold text-danger">select {totalDisabledBranch} branch/s</span> to disable by the
+          system!
+        </p>
         <p className="mt-2 text-end text-base font-medium">
-          {selectdBranches?.length} / {totalDisabledBranch}
+          {selectedBranches?.length} / {totalDisabledBranch}
         </p>
         <div className="my-5">
           <CheckboxGroup
-            values={selectdBranches}
-            setValues={setSelectdBranches}
+            values={selectedBranches}
+            setValues={setSelectedBranches}
             className="mx-auto grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3"
           >
             {options.map((item) => (
-              <AdvancedCheckbox key={item.value} name="payment" value={item.value} inputClassName="[&:checked~span_.icon]:block">
+              <AdvancedCheckbox
+                disabled={checkDisableBranch(item)}
+                key={item.value}
+                name="branch"
+                value={item.value}
+                contentClassName={`rounded-lg border hover:border-danger ${selectedBranches.includes(item.value) ? '!border-danger ring-1 !ring-danger' : '!ring-0'}`}
+                inputClassName="[&:checked~span_.icon]:block"
+              >
                 <span className="flex justify-between">
                   <Text as="b">{item.title}</Text>
-                  <LuCheckCircle className="icon hidden h-5 w-5 text-secondary" />
+                  <LuCheckCircle className="icon hidden h-5 w-5 text-danger" />
                 </span>
               </AdvancedCheckbox>
             ))}
           </CheckboxGroup>
         </div>
         <div className="mt-4 flex justify-center gap-2">
-          <Button onClick={handleDisableBranch} color="danger" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} />
+          <Button onClick={handleDisableBranch} color="danger" text="Confirm" postIcon={<BsCheck2Circle className="text-base" />} />
         </div>
-        {/* <p className="mt-5 text-center text-base font-medium">{message}</p>
-        <div className="mt-10 flex justify-center gap-2">
-          <Link href={routes.privateRoutes.retailer.branch.home}>
-            <Button color="danger" text="Go to Branch Page" postIcon={<BsCheck2Circle className="text-base" />} />
-          </Link>
-        </div> */}
       </div>
     </Modal>
   );

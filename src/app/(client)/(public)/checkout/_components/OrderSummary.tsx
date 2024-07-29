@@ -15,15 +15,17 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { CiEdit } from 'react-icons/ci';
 import { ImBin } from 'react-icons/im';
+import { MdBlock } from 'react-icons/md';
 import { RiRefund2Line } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
+import { Badge } from 'rizzui';
+import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
-import GoToBranch from './GoToBranch';
 import LoginAlert from './LoginAlert';
 import OrderBalance from './OrderBalance';
 import PlanAddOns from './PlanAddons';
-import BranchDisableModal from './BranchDisableModal';
 
 export default function OrderSummary({ stripeInfo }: any) {
   const { push } = useRouter();
@@ -38,7 +40,7 @@ export default function OrderSummary({ stripeInfo }: any) {
   const [branchDisableModalState, setBranchDisableModalState] = useState(false);
   const [disableBranchOptions, setDisableBranchOptions] = useState([]);
   const [totalDisabledBranch, setTotalDisabledBranch] = useState<number>(0);
-  const [selectdBranches, setSelectdBranches] = useState<string[]>([]);
+  const [selectedBranches, setSelectedBranches] = useState<string[]>([]);
 
   const { isLoggedIn, user, accessToken } = useSelector((state: RootState) => state.authSlice);
 
@@ -98,6 +100,7 @@ export default function OrderSummary({ stripeInfo }: any) {
             })
           );
           push(routes.retailer.dashboard);
+          setSelectedBranches([]);
         }
       }
     }
@@ -114,8 +117,8 @@ export default function OrderSummary({ stripeInfo }: any) {
       return;
     }
     if (planChangeType === 'downgrade' && totalDisabledBranch > 0) {
-      if (selectdBranches?.length) {
-        checkOut({ slugs: subSlugs, branchIds: selectdBranches });
+      if (selectedBranches?.length === totalDisabledBranch) {
+        checkOut({ slugs: subSlugs, branchIds: selectedBranches });
       } else {
         setBranchDisableModalState(true);
       }
@@ -135,7 +138,9 @@ export default function OrderSummary({ stripeInfo }: any) {
     dispatch(removeAddOns(addOnId));
   };
 
-  const myError = checkoutError as SerializedError;
+  // const myError = checkoutError as SerializedError;
+
+  const disabledBranchItems = disableBranchOptions?.filter((item: any) => selectedBranches?.includes(item?.value));
 
   return (
     <>
@@ -190,7 +195,7 @@ export default function OrderSummary({ stripeInfo }: any) {
 
       {total > 0 && subscription?.slug !== activeSubscription?.slug && (
         <div className="mt-3 rounded-lg border border-danger p-3">
-          <h2 className=" flex items-center gap-x-1 text-sm font-semibold">
+          <h2 className="flex items-center gap-x-1 text-sm font-semibold">
             <RiRefund2Line className="text-xl" />
             You will get back <span className="text-lg font-bold text-danger">{Math.abs(total).toFixed(2)}</span> CAD!
           </h2>
@@ -201,6 +206,30 @@ export default function OrderSummary({ stripeInfo }: any) {
         <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
           <p className="font-medium text-yellow-500">Purchase Alert!</p>
           <p className="text-yellow-500">Your order needs to be at least 1 CAD. Please add more items to continue</p>
+        </div>
+      )}
+
+      {selectedBranches?.length > 0 && (
+        <div className="mt-3 rounded-lg border border-danger p-3">
+          <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">
+            <MdBlock className="text-xl" /> Disable Branch/s:
+          </p>
+          <div>
+            {disabledBranchItems?.map((item: any) => (
+              <Badge className="m-1 bg-danger" key={item?.value}>
+                <span className="text-white">{item?.title}</span>
+              </Badge>
+            ))}
+          </div>
+          <div className="mt-2 flex justify-end">
+            <Button
+              color="danger"
+              text="Edit"
+              className="!m-0 !px-3 !py-2 !text-xs"
+              onClick={() => setBranchDisableModalState(true)}
+              postIcon={<CiEdit className="text-base" />}
+            />
+          </div>
         </div>
       )}
 
@@ -228,14 +257,14 @@ export default function OrderSummary({ stripeInfo }: any) {
 
       <LoginAlert modalState={modalState} setModalState={setModalState} />
       <BranchDisableModal
-        selectdBranches={selectdBranches}
-        setSelectdBranches={setSelectdBranches}
+        selectedBranches={selectedBranches}
+        setSelectedBranches={setSelectedBranches}
         totalDisabledBranch={totalDisabledBranch}
         options={disableBranchOptions}
         modalState={branchDisableModalState}
         setModalState={setBranchDisableModalState}
       />
-      <GoToBranch modalState={modalState2} setModalState={setModalState2} message={myError?.data?.message} />
+      {/* <GoToBranch modalState={modalState2} setModalState={setModalState2} message={myError?.data?.message} /> */}
     </>
   );
 }
