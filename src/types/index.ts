@@ -49,6 +49,7 @@ export type IResponse = {
   message: string;
   pagination?: IPagination;
   data: any;
+  notificationLimit?: number;
 };
 
 export interface IAuthState {

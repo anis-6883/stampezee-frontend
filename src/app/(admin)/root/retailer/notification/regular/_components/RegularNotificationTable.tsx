@@ -4,18 +4,14 @@ import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import { useGetAllNotificationQuery } from '@/features/retailer/notification/notificationApi';
 import { IQueryType } from '@/types';
+import { convertDateByOffset } from '@/utils/getFormatDate';
+import { Skeleton } from '@mantine/core';
 import { useState } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
+import { IoAlarmOutline } from 'react-icons/io5';
 import CreateUpdateModel from './CreateUpdateModel';
 
-function capitalizeWords(input: string): string {
-  return input
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-}
-
-export default function RegularNotificationTable() {
+export default function RegularNotificationTable({ offset }: { offset: number }) {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
@@ -29,12 +25,26 @@ export default function RegularNotificationTable() {
 
   const structure = [
     {
+      header: 'Image',
+      accessorKey: 'image',
+      enableSorting: false,
+      Cell: ({ row }: any) => (
+        <div>
+          <img
+            src={row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : '/images/no-img.png'}
+            alt="image"
+            className="h-10 w-10 rounded-full"
+          />
+        </div>
+      ),
+    },
+    {
       header: 'Title',
       accessorKey: 'title',
       enableSorting: false,
       Cell: ({ row }: any) => (
         <div>
-          <p>{capitalizeWords(row?.original?.title)}</p>
+          <p>{row?.original?.title}</p>
         </div>
       ),
     },
@@ -51,10 +61,33 @@ export default function RegularNotificationTable() {
       ),
     },
     {
+      header: 'Send Time',
+      Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original?.createdAt, offset)}</div>,
+      mantineTableHeadCellProps: {
+        align: 'start',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+      size: 150,
+    },
+    {
       header: 'Actions',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
-          <Button className="!m-0 !px-3 !py-2 !text-xs" text="Resend" color="danger" preIcon={<FaRegPaperPlane className="text-base" />} />
+          <Button
+            className="!m-0 !px-3 !py-2 !text-xs"
+            text="Resend"
+            color="danger"
+            preIcon={<FaRegPaperPlane className="text-base" />}
+            onClick={() => {
+              setFormData({
+                ...row.original,
+                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+              });
+              setCreateState(true);
+            }}
+          />
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -70,8 +103,20 @@ export default function RegularNotificationTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex justify-between">
+        <div className="flex items-center gap-x-2 rounded-lg border border-light px-3">
+          <IoAlarmOutline className="text-xl" />
+          <h2 className="flex items-center gap-x-1 font-semibold">
+            Regular Notification Send Limit:
+            {isLoading ? (
+              <Skeleton className="h-4 w-4 rounded" />
+            ) : (
+              <span className="font-bold text-danger">{data?.data?.notificationLimit}</span>
+            )}
+          </h2>
+        </div>
         <Button
+          className="!m-0"
           color="danger"
           onClick={() => setCreateState(true)}
           text="Send Notification"

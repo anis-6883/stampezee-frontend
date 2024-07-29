@@ -213,10 +213,7 @@ export default function Sidebar({ className }: { className?: string }) {
                                     isChildActive ? 'bg-danger ring-[1px] ring-danger' : 'opacity-40'
                                   )}
                                 />{' '}
-                                <span className="truncate">
-                                  {dropdownItem?.name} {dropdownItem.name === 'Regular' && `(${user?.totalRegularNotification || 0})`}
-                                  {dropdownItem.name === 'Location Based' && `(${user?.totalRegularNotification || 0})`}
-                                </span>
+                                <span className="truncate">{dropdownItem?.name}</span>
                               </div>
                               {checkedLocked(role, dropdownItem?.href, dropdownItem.name, session?.user) && (
                                 <div className="text-end ">

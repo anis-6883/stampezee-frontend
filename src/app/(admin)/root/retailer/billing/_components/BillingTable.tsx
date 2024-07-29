@@ -79,7 +79,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 250,
+      size: 150,
     },
   ];
 

@@ -108,7 +108,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 250,
+      size: 150,
     },
   ];
 

@@ -1,10 +1,10 @@
-import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
+import { Circle, GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import { Field, useFormikContext } from 'formik';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { IoAlertCircle } from 'react-icons/io5';
 import { Input, Loader } from 'rizzui';
 
-export default function MapComponent() {
+export default function MapComponent({ circle = false, radius }: { circle?: boolean; radius?: number }) {
   const { setFieldValue, values }: any = useFormikContext();
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -91,6 +91,15 @@ export default function MapComponent() {
     }
   }, [map, values]);
 
+  const defaultOptions = {
+    strokeOpacity: 0.5,
+    strokeWeight: 2,
+    fillOpacity: 0.05,
+    strokeColor: '#DC3545',
+    fillColor: '#DC3545',
+    setDraggable: true,
+  };
+
   return isLoaded ? (
     <div>
       <StandaloneSearchBox onLoad={onSearchBoxLoad} onPlacesChanged={onPlacesChanged}>
@@ -129,13 +138,18 @@ export default function MapComponent() {
           width: '100%',
           height: '400px',
         }}
-        zoom={15}
+        zoom={13}
         center={selectedLocation}
         onLoad={onLoad}
         onUnmount={onUnmount}
         onClick={handleMapClick}
       >
-        {selectedLocation && <Marker position={selectedLocation} />}
+        {selectedLocation && (
+          <>
+            <Marker position={selectedLocation} />
+            {circle && radius && <Circle center={selectedLocation} radius={radius * 1000} options={defaultOptions} />}
+          </>
+        )}
       </GoogleMap>
     </div>
   ) : (

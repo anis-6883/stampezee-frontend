@@ -50,12 +50,12 @@ export default function CreateUpdateModel({
   const initialValues = {
     title: formData?.title || '',
     description: formData?.description || '',
-    imageType: '',
-    image: '',
-    address: '',
-    longitude: '',
-    latitude: '',
-    radius: 0,
+    image: formData?.image || '',
+    imageType: formData?.image ? 'image' : '',
+    address: formData?.address || '',
+    longitude: formData?.longitude || '',
+    latitude: formData?.latitude || '',
+    radius: formData?.radius || 1,
   };
 
   const validationSchema = Yup.object({
@@ -75,6 +75,7 @@ export default function CreateUpdateModel({
       if (!isFile(values?.image)) ignoreList.push('image');
 
       objToFormData = objectToFormData(values, ignoreList);
+      createNotificationByLocation(objToFormData);
     } else {
       if (!values?.imageType) {
         objToFormData = objectToFormData(values, ['image', 'imageType']);
@@ -119,78 +120,82 @@ export default function CreateUpdateModel({
         </div>
         <div>
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
-            {({ setFieldValue, values }) => (
-              <Form className="mt-5">
-                <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
-                <div className="my-3">
-                  <InputTextarea rows={4} name="description" label="Description" placeholder="Write here..." />
-                </div>
+            {({ setFieldValue, values }) => {
+              console.log({ values });
 
-                <div className=" h-full">
-                  <MapComponent />
-                </div>
+              return (
+                <Form className="mt-5">
+                  <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
+                  <div className="my-3">
+                    <InputTextarea rows={4} name="description" label="Description" placeholder="Write here..." />
+                  </div>
 
-                <div className="py-5">
-                  <span className=" font-medium">Radius</span>
-                  <RangeSlider
-                    className="mt-3"
-                    onChange={(value: any) => setFieldValue('radius', value[1] - value[0])}
-                    range
-                    marks={generateRangeObject(0, 100, 5)}
-                    step={5}
-                  />
-                </div>
+                  <div className=" h-full">
+                    <MapComponent circle={true} radius={values.radius <= 0 ? 1 : values.radius} />
+                  </div>
 
-                <div className="my-3">
-                  <SelectField
-                    name="imageType"
-                    required={false}
-                    label="Image Type"
-                    value={values?.imageType}
-                    options={[
-                      { id: 1, name: 'url', value: 'url' },
-                      { id: 2, name: 'image', value: 'image' },
-                    ].map((item: any) => ({
-                      label: _.startCase(_.toLower(item.name)),
-                      value: item.value,
-                    }))}
-                    onChange={(option: { label: string; value: string }) => setFieldValue('imageType', option.value)}
-                  />
-                </div>
-
-                {values?.imageType === 'image' && (
-                  <div className="my-4">
-                    <p className="font-medium">Attach Image</p>
-                    <DragAndDropUpload
-                      value={{ name: 'image', image: values.image }}
-                      onChange={(image: any) => setFieldValue('image', image)}
-                      className="mt-2"
-                      size={1024 * 1000}
-                      sizeText="1MB"
+                  <div className="py-5">
+                    <span className=" font-medium">Radius</span>
+                    <RangeSlider
+                      className="mt-3"
+                      onChange={(value: any) => setFieldValue('radius', value[1] - value[0] <= 0 ? 1 : value[1] - value[0])}
+                      range
+                      marks={generateRangeObject(0, 100, 5)}
+                      step={5}
                     />
                   </div>
-                )}
 
-                {values?.imageType === 'url' && (
-                  <div className="my-4">
-                    <InputField required={false} name="image" label="Image URL" placeholder="https://picsum.photos/200" />
+                  <div className="my-3">
+                    <SelectField
+                      name="imageType"
+                      required={false}
+                      label="Image Type"
+                      value={values?.imageType}
+                      options={[
+                        { id: 1, name: 'url', value: 'url' },
+                        { id: 2, name: 'image', value: 'image' },
+                      ].map((item: any) => ({
+                        label: _.startCase(_.toLower(item.name)),
+                        value: item.value,
+                      }))}
+                      onChange={(option: { label: string; value: string }) => setFieldValue('imageType', option.value)}
+                    />
                   </div>
-                )}
 
-                <p className="mt-4 text-end text-xs font-semibold">
-                  Fields marked with <span className="text-red-600">*</span> are mandatory!
-                </p>
-                <div className="mt-6 flex justify-end">
-                  <Button
-                    color="danger"
-                    type="submit"
-                    text={formData?._id ? 'Resend' : 'Send'}
-                    postIcon={<FaRegPaperPlane className="text-base" />}
-                    isSubmitting={isSubmitting}
-                  />
-                </div>
-              </Form>
-            )}
+                  {values?.imageType === 'image' && (
+                    <div className="my-4">
+                      <p className="font-medium">Attach Image</p>
+                      <DragAndDropUpload
+                        value={{ name: 'image', image: values.image }}
+                        onChange={(image: any) => setFieldValue('image', image)}
+                        className="mt-2"
+                        size={1024 * 1000}
+                        sizeText="1MB"
+                      />
+                    </div>
+                  )}
+
+                  {values?.imageType === 'url' && (
+                    <div className="my-4">
+                      <InputField required={false} name="image" label="Image URL" placeholder="https://picsum.photos/200" />
+                    </div>
+                  )}
+
+                  <p className="mt-4 text-end text-xs font-semibold">
+                    Fields marked with <span className="text-red-600">*</span> are mandatory!
+                  </p>
+                  <div className="mt-6 flex justify-end">
+                    <Button
+                      color="danger"
+                      type="submit"
+                      text={formData?._id ? 'Resend' : 'Send'}
+                      postIcon={<FaRegPaperPlane className="text-base" />}
+                      isSubmitting={isSubmitting}
+                    />
+                  </div>
+                </Form>
+              );
+            }}
           </Formik>
         </div>
       </div>

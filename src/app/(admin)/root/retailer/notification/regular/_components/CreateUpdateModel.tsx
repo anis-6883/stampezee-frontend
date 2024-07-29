@@ -34,8 +34,8 @@ export default function CreateUpdateModel({
   const initialValues = {
     title: formData?.title || '',
     description: formData?.description || '',
-    image: '',
-    imageType: '',
+    image: formData?.image || '',
+    imageType: formData?.image ? 'image' : '',
   };
 
   const validationSchema = Yup.object({
@@ -55,6 +55,7 @@ export default function CreateUpdateModel({
       if (!isFile(values?.image)) ignoreList.push('image');
 
       objToFormData = objectToFormData(values, ignoreList);
+      createNotification(objToFormData);
     } else {
       if (!values?.imageType) {
         objToFormData = objectToFormData(values, ['image', 'imageType']);
@@ -71,6 +72,7 @@ export default function CreateUpdateModel({
       const myError = createError as SerializedError;
       toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
       setIsSubmitting(false);
+      setModalState(false);
     }
     if (createSuccess) {
       toast.success('Notification created successfully!');

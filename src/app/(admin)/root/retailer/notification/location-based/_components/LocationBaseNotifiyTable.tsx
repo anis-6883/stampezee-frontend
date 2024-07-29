@@ -2,20 +2,16 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useGetAllNotificationQuery } from '@/features/retailer/notification/notificationApi';
 import { IQueryType } from '@/types';
+import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useState } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
+import { IoAlarmOutline } from 'react-icons/io5';
 import CreateUpdateModel from './CreateUpdateModel';
 
-function capitalizeWords(input: string): string {
-  return input
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-}
-
-export default function LocationBaseNotifyTable() {
+export default function LocationBaseNotifyTable({ offset }: { offset: number }) {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
@@ -29,14 +25,24 @@ export default function LocationBaseNotifyTable() {
 
   const structure = [
     {
-      header: 'Title',
-      accessorKey: 'title',
+      header: 'Image',
+      accessorKey: 'image',
       enableSorting: false,
       Cell: ({ row }: any) => (
         <div>
-          <p>{capitalizeWords(row?.original?.title)}</p>
+          <img
+            src={row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : '/images/no-img.png'}
+            alt="image"
+            className="h-10 w-10 rounded-full"
+          />
         </div>
       ),
+    },
+    {
+      header: 'Title',
+      accessorKey: 'title',
+      enableSorting: false,
+      Cell: ({ row }: any) => <div>{row?.original?.title}</div>,
     },
     {
       header: 'Description',
@@ -51,18 +57,44 @@ export default function LocationBaseNotifyTable() {
       ),
     },
     {
+      header: 'Send Time',
+      Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original?.createdAt, offset)}</div>,
+      mantineTableHeadCellProps: {
+        align: 'start',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+      size: 150,
+    },
+    {
       header: 'Address',
       accessorKey: 'address.name',
     },
     {
-      header: 'Radius',
+      header: 'Radius(km)',
       accessorKey: 'radius',
     },
     {
       header: 'Actions',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
-          <Button className="!m-0 !px-3 !py-2 !text-xs" text="Resend" color="danger" preIcon={<FaRegPaperPlane className="text-base" />} />
+          <Button
+            onClick={() => {
+              setFormData({
+                ...row.original,
+                address: row.original?.address?.name,
+                longitude: row.original?.address?.loc?.coordinates[0]?.toString() || '',
+                latitude: row.original?.address?.loc?.coordinates[1]?.toString() || '',
+                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+              });
+              setCreateState(true);
+            }}
+            className="!m-0 !px-3 !py-2 !text-xs"
+            text="Resend"
+            color="danger"
+            preIcon={<FaRegPaperPlane className="text-base" />}
+          />
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -78,8 +110,20 @@ export default function LocationBaseNotifyTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex justify-between">
+        <div className="flex items-center gap-x-2 rounded-lg border border-light px-3">
+          <IoAlarmOutline className="text-xl" />
+          <h2 className="flex items-center gap-x-1 font-semibold">
+            Location Based Notification Send Limit:
+            {isLoading ? (
+              <Skeleton className="h-4 w-4 rounded" />
+            ) : (
+              <span className="font-bold text-danger">{data?.data?.notificationLimit}</span>
+            )}
+          </h2>
+        </div>
         <Button
+          className="!m-0"
           color="danger"
           onClick={() => setCreateState(true)}
           text="Send Notification"
