@@ -20,39 +20,6 @@ export default function BillingTable({ offset }: { offset: number }) {
   });
 
   const structure = [
-    // {
-    //   header: 'Retailer',
-    //   accessorKey: 'retailer.storeName',
-    //   Cell: ({ row }: any) => (
-    //     <div className="flex flex-col justify-center gap-2">
-    //       <div className="m-auto">
-    //         {row.original.retailer.image ? (
-    //           <div>
-    //             <img
-    //               src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.retailer.image}`}
-    //               alt="image"
-    //               className="h-full w-12 rounded"
-    //             />
-    //           </div>
-    //         ) : (
-    //           <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-20 rounded" />
-    //         )}
-    //       </div>
-    //       <div>
-    //         <div className="text-md mx-auto">
-    //           <p className="text-center font-semibold">
-    //             {row?.original.retailer.storeName}
-    //             {/* <span className="font-bold">Store Name:</span>  */}
-    //           </p>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   ),
-    //   mantineTableHeadCellProps: {
-    //     align: 'center',
-    //   },
-    //   size: 150,
-    // },
     {
       header: 'Enroll ID',
       accessorKey: 'enrollSubscriptionId',
@@ -99,35 +66,6 @@ export default function BillingTable({ offset }: { offset: number }) {
         align: 'center',
       },
     },
-    // {
-    //   header: 'Discount',
-    //   accessorKey: 'discountType',
-    //   Cell: ({ row }: any) => (
-    //     <div className="text-md mx-auto text-start">
-    //       <p>
-    //         <span className="font-bold">Type:</span> {row?.original.discountType}
-    //       </p>
-    //       <p>
-    //         <span className="font-bold">Amount:</span> {row?.original.discount} {row?.original.discountType === 'flat' ? 'CAD' : '%'}
-    //       </p>
-    //     </div>
-    //   ),
-    // },
-    // {
-    //   header: 'Limit',
-    //   accessorKey: 'limit',
-    //   Cell: ({ row }: any) => (
-    //     <div className="text-md mx-auto text-start">
-    //       <p>
-    //         <span className="font-bold">Limit:</span> {row?.original.limit}
-    //       </p>
-    //       <p>
-    //         <span className="font-bold">Min. Purchased Amount:</span> {row?.original.minPurchaseAmount}
-    //       </p>
-    //     </div>
-    //   ),
-    //   //   size: 200,
-    // },
     {
       header: 'Payment Date',
       Cell: ({ row }: any) => (
@@ -143,37 +81,9 @@ export default function BillingTable({ offset }: { offset: number }) {
       },
       size: 250,
     },
-
-    // {
-    //   header: 'Actions',
-    //   Cell: ({ row }: any) => (
-    //     <div className="flex items-center justify-center gap-2">
-    //       <Button
-    //         color="warning"
-    //         preIcon={<HiOutlinePencil className="text-base" />}
-    //         onClick={() => {
-    //           setFormData({
-    //             ...row.original,
-    //             image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
-    //             validDateRange: `${getFormattedDate(row?.original?.startedAt, offset)} to ${getFormattedDate(row?.original?.expiredAt, offset)}`,
-    //           });
-    //           setCreateState(true);
-    //         }}
-    //       />
-
-    //       <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
-    //     </div>
-    //   ),
-    //   mantineTableHeadCellProps: {
-    //     align: 'center',
-    //   },
-    //   mantineTableBodyCellProps: {
-    //     align: 'center',
-    //   },
-    // },
   ];
 
-  const RenderDetailPanel = ({ row }: any) => {
+  const renderDetailPanel = ({ row }: any) => {
     const total = row?.original?.amountTotal || 0;
     const totalTax = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
       if (item?.taxSnapshot?.taxCost) {
@@ -294,7 +204,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       searchPlaceHolder="Search By Payment ID"
       searchFieldWidth="250px"
       enableRowNumbers={true}
-      renderDetailPanel={RenderDetailPanel}
+      renderDetailPanel={renderDetailPanel}
     />
   );
 }

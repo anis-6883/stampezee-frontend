@@ -1,16 +1,11 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-import { useGetAllNotificationQuery } from '@/features/retailer/notification/notificationApi';
-import { useDeleteFaqMutation, useUpdateFaqStatusMutation, useUpdateSortingFaqMutation } from '@/features/super-admin/faq/faqApi';
-import { IQueryType } from '@/types';
-import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import { HiPlus } from 'react-icons/hi2';
-
-import DeleteConfirmModal from '@/app/(admin)/root/_components/DeleteConfirmModal';
-import SwitchButton from '@/app/(admin)/root/_components/SwitchButton';
 import Button from '@/components/Formik/Button';
+import { useGetAllNotificationQuery } from '@/features/retailer/notification/notificationApi';
+import { IQueryType } from '@/types';
+import { useState } from 'react';
+import { FaRegPaperPlane } from 'react-icons/fa';
 import CreateUpdateModel from './CreateUpdateModel';
 
 function capitalizeWords(input: string): string {
@@ -23,9 +18,6 @@ function capitalizeWords(input: string): string {
 export default function RegularNotificationTable() {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
-  const [deleteState, setDeleteState] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
-  const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllNotificationQuery({
@@ -34,30 +26,6 @@ export default function RegularNotificationTable() {
     type: 'all',
     ...searchQuery,
   });
-
-  const [deleteFaq, { isSuccess, isError }] = useDeleteFaqMutation();
-  const [updateFaqStatus] = useUpdateFaqStatusMutation();
-  const [updateSortingFaq] = useUpdateSortingFaqMutation();
-
-  const handleDelete = async (rowData: any) => {
-    setDeleteState(true);
-    setDeleteId(rowData._id);
-  };
-
-  useEffect(() => {
-    if (isError) {
-      setDeleteSubmitting(false);
-      toast.error('Something went wrong. Please try again!');
-      setDeleteState(false);
-      setDeleteId(null);
-    }
-    if (isSuccess) {
-      setDeleteSubmitting(false);
-      toast.success('Faq deleted successfully!');
-      setDeleteState(false);
-      setDeleteId(null);
-    }
-  }, [isSuccess, isError]);
 
   const structure = [
     {
@@ -83,51 +51,32 @@ export default function RegularNotificationTable() {
       ),
     },
     {
-      header: 'Status',
-      accessorKey: 'status',
-      enableSorting: false,
-      Cell: ({ row }: any) => <SwitchButton updateStatus={updateFaqStatus} id={row?.original?._id} status={row?.original?.status} />,
+      header: 'Actions',
+      Cell: ({ row }: any) => (
+        <div className="flex items-center justify-center gap-2">
+          <Button className="!m-0 !px-3 !py-2 !text-xs" text="Resend" color="danger" preIcon={<FaRegPaperPlane className="text-base" />} />
+        </div>
+      ),
       mantineTableHeadCellProps: {
         align: 'center',
       },
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 10,
+      size: 20,
     },
-    // {
-    //   header: 'Actions',
-    //   Cell: ({ row }: any) => (
-    //     <div className="flex items-center justify-center gap-2">
-    //       <Button
-    //         color="warning"
-    //         preIcon={<HiOutlinePencil className="text-base" />}
-    //         onClick={() => {
-    //           setFormData({
-    //             ...row.original,
-    //           });
-    //           setCreateState(true);
-    //         }}
-    //       />
-
-    //       <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
-    //     </div>
-    //   ),
-    //   mantineTableHeadCellProps: {
-    //     align: 'center',
-    //   },
-    //   mantineTableBodyCellProps: {
-    //     align: 'center',
-    //   },
-    //   size: 20,
-    // },
   ];
 
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
       <div className="mb-4 flex justify-end">
-        <Button color="danger" onClick={() => setCreateState(true)} text="Send Notification" preIcon={<HiPlus className="text-base" />} />
+        <Button
+          color="danger"
+          onClick={() => setCreateState(true)}
+          text="Send Notification"
+          preIcon={<FaRegPaperPlane className="text-base" />}
+        />
       </div>
       <Table
         isFetching={isFetching}
@@ -151,15 +100,6 @@ export default function RegularNotificationTable() {
         setQuery={setQuery}
         query={query}
         searchPlaceHolder="Search by Title"
-      />
-
-      <DeleteConfirmModal
-        deleteId={deleteId}
-        deleteHandler={deleteFaq}
-        modalState={deleteState}
-        setModalState={setDeleteState}
-        isSubmitting={deleteSubmitting}
-        setIsSubmitting={setDeleteSubmitting}
       />
     </>
   );

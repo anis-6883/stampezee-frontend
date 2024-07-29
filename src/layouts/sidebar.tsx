@@ -79,10 +79,11 @@ export default function Sidebar({ className }: { className?: string }) {
   const { data: session }: any = useSession();
   const { role, user } = useSelector((state: RootState) => state.authSlice);
 
-  let fullName = user?.firstName + ' ' + user?.lastName;
+  let fullName = user?.firstName + ' ' + user?.lastName ?? '';
 
   if (fullName.length >= 18) {
-    fullName = user?.firstName + ' ' + user?.lastName.charAt(0).toUpperCase() + '.';
+    const lastName = user?.lastName ? user?.lastName.charAt(0).toUpperCase() : '';
+    fullName = user?.firstName + ' ' + lastName + '.';
   }
 
   return (

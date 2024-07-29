@@ -8,7 +8,6 @@ import SelectField from '@/components/Formik/SelectField';
 import RangeSlider from '@/components/range-slider';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateNotificationByLocationMutation } from '@/features/retailer/notification/notificationApi';
-import { useUpdateFaqMutation } from '@/features/super-admin/faq/faqApi';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
@@ -46,9 +45,7 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [createNotificationByLocation, { isSuccess: createSuccess, error: createError }] = useCreateNotificationByLocationMutation();
-  const [updateFaq, { isSuccess: updateSuccess, error: updateError }] = useUpdateFaqMutation();
 
   const initialValues = {
     title: formData?.title || '',
@@ -64,6 +61,7 @@ export default function CreateUpdateModel({
   const validationSchema = Yup.object({
     title: Yup.string().required('Required!'),
     description: Yup.string().required('Required!'),
+    address: Yup.string().required('Required!'),
   });
 
   const submitHandler = async (values: any) => {
@@ -77,16 +75,12 @@ export default function CreateUpdateModel({
       if (!isFile(values?.image)) ignoreList.push('image');
 
       objToFormData = objectToFormData(values, ignoreList);
-      // updateFaq({ id: formData._id, formData: objToFormData });
     } else {
       if (!values?.imageType) {
         objToFormData = objectToFormData(values, ['image', 'imageType']);
       } else {
         objToFormData = objectToFormData(values);
       }
-      // for (let [key, value] of objToFormData) {
-      //   console.log(`${key}: ${value}`);
-      // }
       createNotificationByLocation(objToFormData);
     }
   };
@@ -105,21 +99,6 @@ export default function CreateUpdateModel({
       setModalState(false);
     }
   }, [createError, createSuccess, setFormData, setModalState]);
-
-  // Handle Update Response
-  useEffect(() => {
-    if (updateError) {
-      const myError = updateError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
-      setIsSubmitting(false);
-    }
-    if (updateSuccess) {
-      toast.success('Faq updated successfully!');
-      setFormData({});
-      setIsSubmitting(false);
-      setModalState(false);
-    }
-  }, [setFormData, setModalState, updateError, updateSuccess]);
 
   return (
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="700px">
@@ -159,7 +138,6 @@ export default function CreateUpdateModel({
                     range
                     marks={generateRangeObject(0, 100, 5)}
                     step={5}
-                    // defaultValue={[1, 100]}
                   />
                 </div>
 

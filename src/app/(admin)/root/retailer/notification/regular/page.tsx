@@ -11,7 +11,7 @@ const pageHeader = {
       name: 'Dashboard',
     },
     {
-      name: 'Notification',
+      name: 'Regular Notification',
     },
   ],
 };

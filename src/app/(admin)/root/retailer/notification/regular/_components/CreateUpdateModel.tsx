@@ -7,7 +7,6 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateNotificationMutation } from '@/features/retailer/notification/notificationApi';
-import { useUpdateFaqMutation } from '@/features/super-admin/faq/faqApi';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
@@ -30,9 +29,7 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [createNotification, { isSuccess: createSuccess, error: createError }] = useCreateNotificationMutation();
-  const [updateFaq, { isSuccess: updateSuccess, error: updateError }] = useUpdateFaqMutation();
 
   const initialValues = {
     title: formData?.title || '',
@@ -58,7 +55,6 @@ export default function CreateUpdateModel({
       if (!isFile(values?.image)) ignoreList.push('image');
 
       objToFormData = objectToFormData(values, ignoreList);
-      // updateFaq({ id: formData._id, formData: objToFormData });
     } else {
       if (!values?.imageType) {
         objToFormData = objectToFormData(values, ['image', 'imageType']);
@@ -83,21 +79,6 @@ export default function CreateUpdateModel({
       setModalState(false);
     }
   }, [createError, createSuccess, setFormData, setModalState]);
-
-  // Handle Update Response
-  useEffect(() => {
-    if (updateError) {
-      const myError = updateError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
-      setIsSubmitting(false);
-    }
-    if (updateSuccess) {
-      toast.success('Faq updated successfully!');
-      setFormData({});
-      setIsSubmitting(false);
-      setModalState(false);
-    }
-  }, [setFormData, setModalState, updateError, updateSuccess]);
 
   return (
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
