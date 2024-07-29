@@ -4,6 +4,7 @@ import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerOtpVerifyMutation, useRetailerResendOtpMutation } from '@/features/auth/authApi';
 import { userLoggedIn } from '@/features/auth/authSlice';
+import { useTimer } from '@/hooks/use-timer';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { SetStateAction, useEffect, useState } from 'react';
@@ -23,6 +24,13 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
   const [resendOtp, { error: resendError, isSuccess: resendSuccess }] = useRetailerResendOtpMutation();
   const { replace } = useRouter();
   const dispatch = useDispatch();
+  const { reset, timer } = useTimer(120);
+
+  useEffect(() => {
+    if (modalState) {
+      reset();
+    }
+  }, [modalState]);
 
   useEffect(() => {
     if (verifyError) {
@@ -63,6 +71,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
     if (!resendError && resendSuccess) {
       setResendOtpSubmitting(false);
       toast.success('OTP sent on your email!');
+      reset();
     }
   }, [resendError, resendSuccess]);
 
@@ -95,6 +104,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
           <Title as="h3">OTP Verification!</Title>
+          {timer > 0 && <span className="font-bold text-danger">{timer} sec</span>}
           <ActionIcon size="sm" variant="text" onClick={() => setModalState(false)}>
             <HiMiniXCircle className="text-2xl text-danger" />
           </ActionIcon>
