@@ -57,21 +57,18 @@ export default function Create() {
   const handleSubmit = async (values: any) => {
     try {
       setSubmitting(true);
-      // Convert values object to getChangedFormData
       const changedData = getChangedFormData(values, initialValues, ['validDateRange']);
 
       changedData.rewardType = values.rewardType;
       changedData.startedAt = values?.validDateRange?.split('to')[0];
       changedData.expiredAt = values?.validDateRange?.split('to')[1];
-      console.log('changedData', changedData);
+
       const result = await createStamp(changedData).unwrap();
       router.push(routes.retailer.stamp.home);
-      toast.success(result.data.message ?? 'Stamp created successfully!');
+      toast.success(result.data.message || 'Stamp created successfully!');
     } catch (error: any) {
       console.error('Failed to create Stamp:', error);
-      toast.error(error.data.message ?? 'Failed to create Stamp. Please try again.');
-      setSubmitting(false);
-    } finally {
+      toast.error(error.data.message || 'Failed to create Stamp. Please try again.');
       setSubmitting(false);
     }
   };
@@ -188,56 +185,11 @@ export default function Create() {
                   />
                 </div>
 
-                {/* <span className="font-medium">
-                Reward Type <span className="text-red-600">*</span>
-              </span>
-              <div className="flex gap-3">
-                <div
-                  onClick={() => {
-                    setFieldValue('rewardType', 'discount');
-                  }}
-                  className="cursor-pointer"
-                >
-                  <input
-                    style={{ backgroundImage: 'none' }}
-                    type="radio"
-                    id="rewardType"
-                    name="rewardType"
-                    checked={values.rewardType === 'discount' ? true : false}
-                    value={values.rewardType}
-                    onClick={() => {
-                      setFieldValue('rewardType', 'discount');
-                    }}
-                    className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
-                  />
-                  <label className="ml-1 cursor-pointer">Discount</label>
-                </div>
-                <div
-                  onClick={() => {
-                    setFieldValue('rewardType', 'promotion');
-                  }}
-                  className="cursor-pointer"
-                >
-                  <input
-                    style={{ backgroundImage: 'none' }}
-                    type="radio"
-                    id="rewardType"
-                    name="rewardType"
-                    value={values.rewardType}
-                    onClick={() => {
-                      setFieldValue('rewardType', 'promotion');
-                    }}
-                    checked={values.rewardType === 'promotion' ? true : false}
-                    className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
-                  />
-                  <label className="ml-1 cursor-pointer">Promotion</label>
-                </div>
-              </div> */}
                 {values.rewardType === 'discount' && (
-                  <InputField name="discountReward" label="Product Reward" placeholder="Ex. Get 1 Coke" type="number" />
+                  <InputField name="discountReward" label="Discount Reward" placeholder="Ex. Get 1 Coke" type="number" />
                 )}
                 {values.rewardType === 'promotion' && (
-                  <InputField name="promotionReward" label="Product Reward" placeholder="Ex. Get 1 Coke" />
+                  <InputField name="promotionReward" label="Promotion Reward" placeholder="Ex. Get 1 Coke" />
                 )}
               </div>
 

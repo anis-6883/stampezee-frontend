@@ -95,7 +95,8 @@ export default function HeaderContent() {
   let fullName = user?.firstName + ' ' + user?.lastName;
 
   if (fullName.length >= 18) {
-    fullName = user?.firstName + ' ' + user?.lastName.charAt(0).toUpperCase() + '.';
+    const lastName = user?.lastName ? user?.lastName.charAt(0).toUpperCase() : '';
+    fullName = user?.firstName + ' ' + lastName + '.';
   }
 
   return (

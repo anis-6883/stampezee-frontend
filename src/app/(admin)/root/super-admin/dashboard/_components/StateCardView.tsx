@@ -109,7 +109,7 @@ export default function StateCardView({ className }: { className: string }) {
             metric={totalVerifiedRetailer}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading}
+            isLoading={isLoading || isError}
           />
           <MetricCard
             icon={<LuUsers className="text-2xl" />}
@@ -118,7 +118,7 @@ export default function StateCardView({ className }: { className: string }) {
             metric={totalVerifiedCustomer}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading}
+            isLoading={isLoading || isError}
           />
           <MetricCard
             icon={<PiCalendarPlusDuotone className="text-2xl" />}
@@ -127,7 +127,7 @@ export default function StateCardView({ className }: { className: string }) {
             metric={newRetailerThisMonth}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading}
+            isLoading={isLoading || isError}
           />
           <MetricCard
             icon={<PiCalendarPlusDuotone className="text-2xl" />}
@@ -136,7 +136,7 @@ export default function StateCardView({ className }: { className: string }) {
             metric={newCustomerThisMonth}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading}
+            isLoading={isLoading || isError}
           />
         </div>
       </div>

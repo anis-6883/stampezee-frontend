@@ -1,23 +1,19 @@
 'use client';
 
-import Button from '@/components/Formik/Button';
 import { useGetAllCustomerQuery } from '@/features/retailer/customer/customerApi';
-import { useDeleteSubAdminMutation, useUpdateSubAdminStatusMutation } from '@/features/retailer/sub-admin/subAdminApi';
+import { useDeleteSubAdminMutation } from '@/features/retailer/sub-admin/subAdminApi';
 import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { HiOutlinePencil } from 'react-icons/hi';
-import { ImBin } from 'react-icons/im';
+import { BsShop } from 'react-icons/bs';
+import { LuUser } from 'react-icons/lu';
+import { MdOutlineQrCodeScanner } from 'react-icons/md';
+import { Tab } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
-import SwitchButton from '../../../_components/SwitchButton';
+import Table from '../../../_components/Table';
 
 export default function ScanTable() {
-  const [formData, setFormData] = useState({});
   const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
-  const [createState, setCreateState] = useState(false);
-  const [updateStatus] = useUpdateSubAdminStatusMutation();
-
-  // Deletion State
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
@@ -49,33 +45,14 @@ export default function ScanTable() {
 
   const structure = [
     {
-      header: 'Info',
+      header: 'Stamp Title',
       accessorKey: 'image',
       Cell: ({ row }: any) => (
         <div className="flex gap-2">
           <div>
-            {row.original.image ? (
-              <div>
-                <img
-                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.customer.image}`}
-                  alt="image"
-                  className="h-full w-20 rounded"
-                />
-              </div>
-            ) : (
-              <img src={'/images/profile.png'} alt="image" className="h-full w-20 rounded" />
-            )}
-          </div>
-          <div>
             <div className="text-md mx-auto text-start">
               <p>
                 <span className="font-bold">Name:</span> {row?.original.customer.fullName}
-              </p>
-              <p>
-                <span className="font-bold">Email:</span> {row?.original.customer.email}
-              </p>
-              <p>
-                <span className="font-bold">Phone:</span> {row?.original.customer.phone}
               </p>
             </div>
           </div>
@@ -83,17 +60,38 @@ export default function ScanTable() {
       ),
     },
     {
-      header: 'Address',
+      header: 'Scan Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>
-            <span className="font-bold">Country:</span> {row?.original.customer.country}
-          </p>
-          {row?.original.customer.address?.name && (
-            <p>
-              <span className="font-bold">Address:</span> {row?.original.customer.address?.name}
-            </p>
-          )}
+          <p>{row?.original.customer.country}</p>
+        </div>
+      ),
+      mantineTableHeadCellProps: {
+        align: 'start',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
+    {
+      header: 'Branch',
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">
+          <p>{row?.original.customer.country}</p>
+        </div>
+      ),
+      mantineTableHeadCellProps: {
+        align: 'start',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
+    {
+      header: 'Scanned By',
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">
+          <p>{row?.original.customer.country}</p>
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -105,47 +103,13 @@ export default function ScanTable() {
     },
     {
       header: 'Status',
-      accessorKey: 'status',
-      Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
-      mantineTableHeadCellProps: {
-        align: 'center',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
-    },
-    {
-      header: 'Actions',
       Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
-          <Button
-            color="warning"
-            preIcon={<HiOutlinePencil className="text-base" />}
-            onClick={() => {
-              setFormData({
-                ...row.original,
-                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
-              });
-              setCreateState(true);
-            }}
-          />
-
-          <Button
-            color="danger"
-            preIcon={
-              <ImBin
-                className="text-base"
-                onClick={() => {
-                  setDeleteState(true);
-                  setDeleteId(row.original._id);
-                }}
-              />
-            }
-          />
+        <div className="text-md mx-auto text-start">
+          <p>{row?.original.customer.country}</p>
         </div>
       ),
       mantineTableHeadCellProps: {
-        align: 'center',
+        align: 'start',
       },
       mantineTableBodyCellProps: {
         align: 'center',
@@ -153,9 +117,123 @@ export default function ScanTable() {
     },
   ];
 
+  const renderDetailPanel = ({ row }: any) => {
+    const total = row?.original?.amountTotal || 0;
+
+    return (
+      <div className=" mx-20 flex justify-start">
+        <div className="">
+          <Tab>
+            <Tab.List>
+              <Tab.ListItem>
+                <MdOutlineQrCodeScanner className="text-xl" /> <span className="font-semibold">Offer & Scan</span>
+              </Tab.ListItem>
+              <Tab.ListItem>
+                <BsShop className="text-xl" /> <span className="font-semibold">Branch</span>
+              </Tab.ListItem>
+              <Tab.ListItem>
+                <LuUser className="text-xl" /> <span className="font-semibold">Customer</span>
+              </Tab.ListItem>
+            </Tab.List>
+            <Tab.Panels>
+              <Tab.Panel>
+                <div>
+                  <table className="w-full text-left text-sm text-gray-500">
+                    <tbody>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Scan Time</td>
+                        <td className="px-6 py-4">$2999</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Stamp Title</td>
+                        <td className="px-6 py-4">$2999</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Stamp Category</td>
+                        <td className="px-6 py-4">$1999</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">No of Stamp to Collect</td>
+                        <td className="px-6 py-4">$99</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Basic Rules</td>
+                        <td className="px-6 py-4">$99</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Min. Purchase Amount:</td>
+                        <td className="px-6 py-4">$99</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Reward Type:</td>
+                        <td className="px-6 py-4">$99</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Reward:</td>
+                        <td className="px-6 py-4">$99</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                <div>
+                  <table className="w-full text-left text-sm text-gray-500">
+                    <tbody>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Branch Name</td>
+                        <td className="px-6 py-4">$2999</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Branch Address</td>
+                        <td className="px-6 py-4">$2999</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Sub-Admin Name</td>
+                        <td className="px-6 py-4">$1999</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Sub-Admin Email</td>
+                        <td className="px-6 py-4">$99</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                <div>
+                  <table className="w-full text-left text-sm text-gray-500">
+                    <tbody>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Name</td>
+                        <td className="px-6 py-4">$2999</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Email</td>
+                        <td className="px-6 py-4">$2999</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Phone</td>
+                        <td className="px-6 py-4">$1999</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Country</td>
+                        <td className="px-6 py-4">$99</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </Tab.Panel>
+            </Tab.Panels>
+          </Tab>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
-      {/* <Table
+      <Table
         isFetching={isFetching}
         isLoading={isLoading}
         response={
@@ -176,8 +254,10 @@ export default function ScanTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Name"
-      /> */}
+        searchPlaceHolder="Search By Customer Name & Email"
+        searchFieldWidth="300px"
+        renderDetailPanel={renderDetailPanel}
+      />
 
       <DeleteConfirmModal
         deleteId={deleteId}
