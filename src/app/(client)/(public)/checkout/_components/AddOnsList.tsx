@@ -1,11 +1,12 @@
 'use client';
 
+import { Skeleton } from '@/components/ui/skeleton';
 import { RootState } from '@/features/store';
 import { setAddOns } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn, Subscription } from '@/types';
+import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from 'rizzui';
 
 export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean }) {
   const dispatch = useDispatch();
@@ -18,8 +19,11 @@ export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean })
   };
 
   return isLoading ? (
-    <div>
-      <Loader variant="spinner" />
+    <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
+      <Skeleton className="w-68 h-40 rounded" />
+      <Skeleton className="w-68 h-40 rounded" />
+      <Skeleton className="w-68 h-40 rounded" />
+      <Skeleton className="w-68 h-40 rounded" />
     </div>
   ) : (
     <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
@@ -34,11 +38,25 @@ export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean })
             >
               <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
               <p className="mb-2 text-xl font-bold">{addOn.price} CAD/month</p>
+              <ul className="text-gray-600">
+                {addOn.descriptions.map((info, idx) => (
+                  <li className="flex items-center space-x-3" key={idx}>
+                    <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           ) : (
             <div className={`relative cursor-not-allowed rounded-lg border p-4 opacity-50 `}>
               <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
               <p className="mb-2 text-xl font-bold">{addOn.price} CAD/month</p>
+              <ul className="text-gray-600">
+                {addOn.descriptions.map((info, idx) => (
+                  <li className="flex items-center space-x-3" key={idx}>
+                    <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </div>

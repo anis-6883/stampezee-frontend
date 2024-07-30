@@ -1,4 +1,5 @@
 import { metaObject } from '@/config/site.config';
+import ContactForm from './_component/ContactForm';
 
 export const metadata = {
   ...metaObject('Contact Us'),
@@ -43,32 +44,10 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="mx-auto max-w-screen-xl px-5 py-16">
-        <div className="">
-          <div className="">
-            <div className="mb-5" style={{ opacity: 1, transform: 'none' }}>
-              <h3 className="text-[#212B36 text-2xl font-bold">
-                Feel free to contact us. <br />
-                Well be glad to hear from you, buddy.
-              </h3>
-            </div>
-            <div style={{ opacity: 1, transform: 'none' }}>
-              {/* <a
-                className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedInherit MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorInherit MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedInherit MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorInherit MuiButton-disableElevation css-z05i20"
-                tabIndex={0}
-                href="https://us18.list-manage.com/contact-form?u=08485944993f4b04168d7f89c&form_id=48c3da2c3ded7cda6bf687eb5a2f1b61"
-              >
-                Go to Contact Form
-                <span className="MuiTouchRipple-root css-w0pj6f" />
-              </a> */}
-              <button
-                type="button"
-                className="dark:hover:bg[#454F5B] bg-primary-red dark:bg-primary-red mt-3 rounded-lg px-4 py-2 text-center text-sm font-medium text-white duration-300 ease-in-out hover:bg-[#454F5B] focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-[#454F5B]"
-              >
-                Go to Contact Form
-              </button>
-            </div>
-          </div>
+      <div className="mx-auto my-10 max-w-screen-xl">
+        <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
+          <h2>Write To Us</h2>
+          <ContactForm />
         </div>
       </div>
     </div>

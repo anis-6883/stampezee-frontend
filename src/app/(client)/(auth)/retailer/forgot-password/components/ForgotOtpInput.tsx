@@ -118,7 +118,6 @@ export default function ForgetOtpInput({
         <span className="text-sm font-semibold ">
           We sent an OTP to your Email. You have 2 minutes to complete this verification. Thank you!
         </span>
-        {timer > 0 && <span className="ml-40 font-bold text-danger">{timer} sec</span>}
       </div>
       <form onSubmit={otpSubmitHandler}>
         <div>
@@ -128,13 +127,17 @@ export default function ForgetOtpInput({
         <div className="mt-10 grid grid-cols-12 items-center">
           <div className="col-span-8">
             <p className="flex select-none items-center font-medium">
-              Didn{"'"}t get any otp yet?{' '}
-              <span
-                className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-danger`}
-                onClick={handleResendOtp}
-              >
-                Resend OTP
-              </span>
+              Didn{"'"}t get any otp yet?
+              {timer > 0 ? (
+                <span className="ml-1 font-bold text-danger">{timer} sec</span>
+              ) : (
+                <span
+                  className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-danger`}
+                  onClick={handleResendOtp}
+                >
+                  Resend OTP
+                </span>
+              )}
               {resendOtpSubmitting && <ImSpinner9 size={20} className="ml-1 animate-spin" />}
             </p>
           </div>

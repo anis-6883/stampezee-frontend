@@ -208,15 +208,13 @@ export default function CreateUpdateModel({
                             </div>
                           ))}
 
-                          {formData?.type === 'subscription' && (
-                            <button
-                              type="button"
-                              className="flex cursor-pointer items-center justify-center rounded-lg bg-danger px-3 py-1 text-white"
-                              onClick={() => arrayHelpers.push('')}
-                            >
-                              + Add
-                            </button>
-                          )}
+                          <button
+                            type="button"
+                            className="flex cursor-pointer items-center justify-center rounded-lg bg-danger px-3 py-1 text-white"
+                            onClick={() => arrayHelpers.push('')}
+                          >
+                            + Add
+                          </button>
                         </div>
                       )}
                     />
