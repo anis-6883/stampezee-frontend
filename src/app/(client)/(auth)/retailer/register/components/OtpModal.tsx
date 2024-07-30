@@ -30,7 +30,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
     if (modalState) {
       reset();
     }
-  }, [modalState]);
+  }, [modalState, reset]);
 
   useEffect(() => {
     if (verifyError) {
@@ -73,7 +73,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
       toast.success('OTP sent on your email!');
       reset();
     }
-  }, [resendError, resendSuccess]);
+  }, [resendError, resendSuccess, reset]);
 
   // Handler Otp Submit
   const otpSubmitHandler = (e: React.FormEvent) => {
@@ -104,7 +104,6 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
           <Title as="h3">OTP Verification!</Title>
-          {timer > 0 && <span className="font-bold text-danger">{timer} sec</span>}
           <ActionIcon size="sm" variant="text" onClick={() => setModalState(false)}>
             <HiMiniXCircle className="text-2xl text-danger" />
           </ActionIcon>
@@ -121,13 +120,17 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
             <div className="mt-10 grid grid-cols-12 items-center">
               <div className="col-span-8">
                 <p className="flex select-none items-center text-sm font-medium">
-                  Didn{"'"}t get any otp yet?{' '}
-                  <span
-                    className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-danger`}
-                    onClick={handleResendOtp}
-                  >
-                    Resend OTP
-                  </span>
+                  Didn{"'"}t get any otp yet?
+                  {timer > 0 ? (
+                    <span className="ml-1 font-bold text-danger">{timer} sec</span>
+                  ) : (
+                    <span
+                      className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-danger`}
+                      onClick={handleResendOtp}
+                    >
+                      Resend OTP
+                    </span>
+                  )}
                   {resendOtpSubmitting && <ImSpinner9 size={20} className="ml-1 animate-spin" />}
                 </p>
               </div>

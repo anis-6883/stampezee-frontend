@@ -13,10 +13,10 @@ import {
 } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
+import { Skeleton } from '@mantine/core';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from 'rizzui';
 import PricingCard from './PricingCard';
 
 export default function SubscriptionList({ stripeInfo }: any) {
@@ -71,13 +71,18 @@ export default function SubscriptionList({ stripeInfo }: any) {
   return (
     <div>
       <div className="mx-auto max-w-screen-xl">
-        <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-4">
-          {isLoading === false ? (
-            subscription?.map((item: any) => <PricingCard key={item._id} item={item} />)
-          ) : (
-            <Loader variant="spinner" />
-          )}
-        </div>
+        {isLoading ? (
+          <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-4">
+            <Skeleton className="w-68 h-96 rounded" />
+            <Skeleton className="w-68 h-96 rounded" />
+            <Skeleton className="w-68 h-96 rounded" />
+            <Skeleton className="w-68 h-96 rounded" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-4">
+            {subscription?.map((item: any) => <PricingCard key={item._id} item={item} />)}
+          </div>
+        )}
       </div>
     </div>
   );

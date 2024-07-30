@@ -1,5 +1,6 @@
 'use client';
 
+import { Skeleton } from '@/components/ui/skeleton';
 import { RootState } from '@/features/store';
 import {
   activeSubscription,
@@ -16,7 +17,6 @@ import { useEffect, useState } from 'react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from 'rizzui';
 
 const packages = ['basic', 'pro', 'advanced'];
 
@@ -105,11 +105,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, session?.user?.plan, session?.user?.takeFreeTrial]);
 
-  return isLoading ? (
-    <div>
-      <Loader variant="spinner" />
-    </div>
-  ) : (
+  return (
     <div>
       {(!session?.user?.plan || session?.user?.plan === 'trial') && (
         <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
@@ -123,53 +119,63 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
           <p className="text-yellow-500">You will be charged 1 CAD when switching plans</p>
         </div>
       )}
-      <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
-        {plans?.map((item: Subscription, index: number) => {
-          return item?.isBlocked ? (
-            <div key={item._id} className={`relative cursor-not-allowed rounded-lg border p-4`}>
-              {session?.user?.plan === item?.slug && (
-                <div className="absolute right-2 top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
-                  <span className="font-medium">
-                    <MdStar />
-                  </span>
-                  <span className="text-sm font-medium">Active</span>
-                </div>
-              )}
-              <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
-              <p className="mb-2 text-xl font-bold">
-                {item.price} CAD/{item.duration === 30 ? 'Month' : `${item.duration} Days`}
-              </p>
-              <ul className="text-gray-600">
-                {item.descriptions.map((info, idx) => (
-                  <li className="flex items-center space-x-3" key={idx}>
-                    <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <div
-              onClick={() => handleSubscription(item)}
-              key={index}
-              className={`relative cursor-pointer rounded-lg border p-4 ${
-                subscription?._id === item._id ? 'scale-105 border-2 border-red-600 ring-1 ring-red-400' : 'border'
-              } hover:border-red-600`}
-            >
-              <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
-              <p className="mb-2 text-xl font-bold">
-                {item.price} CAD/{item.duration === 30 ? 'Month' : `${item.duration} Days`}
-              </p>
-              <ul className="text-gray-600">
-                {item.descriptions.map((info, idx) => (
-                  <li className="flex items-center space-x-3" key={idx}>
-                    <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
+
+      {isLoading ? (
+        <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
+          <Skeleton className="w-68 h-48 rounded" />
+          <Skeleton className="w-68 h-48 rounded" />
+          <Skeleton className="w-68 h-48 rounded" />
+          <Skeleton className="w-68 h-48 rounded" />
+        </div>
+      ) : (
+        <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
+          {plans?.map((item: Subscription, index: number) => {
+            return item?.isBlocked ? (
+              <div key={item._id} className={`relative cursor-not-allowed rounded-lg border p-4`}>
+                {session?.user?.plan === item?.slug && (
+                  <div className="absolute right-2 top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
+                    <span className="font-medium">
+                      <MdStar />
+                    </span>
+                    <span className="text-sm font-medium">Active</span>
+                  </div>
+                )}
+                <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
+                <p className="mb-2 text-xl font-bold">
+                  {item.price} CAD/{item.duration === 30 ? 'Month' : `${item.duration} Days`}
+                </p>
+                <ul className="text-gray-600">
+                  {item.descriptions.map((info, idx) => (
+                    <li className="flex items-center space-x-3" key={idx}>
+                      <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div
+                onClick={() => handleSubscription(item)}
+                key={index}
+                className={`relative cursor-pointer rounded-lg border p-4 ${
+                  subscription?._id === item._id ? 'scale-105 border-2 border-red-600 ring-1 ring-red-400' : 'border'
+                } hover:border-red-600`}
+              >
+                <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
+                <p className="mb-2 text-xl font-bold">
+                  {item.price} CAD/{item.duration === 30 ? 'Month' : `${item.duration} Days`}
+                </p>
+                <ul className="text-gray-600">
+                  {item.descriptions.map((info, idx) => (
+                    <li className="flex items-center space-x-3" key={idx}>
+                      <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

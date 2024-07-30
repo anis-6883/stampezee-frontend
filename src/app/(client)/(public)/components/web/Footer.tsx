@@ -1,8 +1,19 @@
+'use client';
+
 import { routes } from '@/config/routes';
 import Link from 'next/link';
+import { useState } from 'react';
 import Image from '../Image';
 
 export default function Footer() {
+  const [email, setEmail] = useState<string>('');
+
+  const handleNewsletter = () => {
+    console.log('email', email);
+
+    setEmail('');
+  };
+
   return (
     <div className="container mx-auto max-w-[1300px] px-3 sm:px-5">
       <footer className="container mx-auto">
@@ -74,13 +85,14 @@ export default function Footer() {
                         placeholder="Email Address"
                         className="w-[60%] rounded-md border-0 border-gray-300 bg-transparent px-4 py-2 outline-none focus:border-none focus:shadow-none focus:outline-none sm:w-full "
                         type="email"
-                        defaultValue=""
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
                         style={{
                           boxShadow: '0 0 #0000',
                         }}
                       />
                       <div className="rounded-full bg-[#E55555] px-4 py-2 text-sm font-bold text-white">
-                        <button className="" type="button">
+                        <button onClick={handleNewsletter} className="" type="button">
                           SUBMIT
                           <span className="" />
                         </button>
