@@ -4,7 +4,7 @@ export const dashboardApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getDashboardCalc: builder.query({
       query: () => `/api/secret-root/admin/super-admin/dashboard/calc`,
-      providesTags: ['super-admin/dashboard'],
+      providesTags: ['super-adminDashboard'],
       keepUnusedDataFor: 5,
     }),
   }),

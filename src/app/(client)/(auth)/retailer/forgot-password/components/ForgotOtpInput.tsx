@@ -41,6 +41,7 @@ export default function ForgetOtpInput({
       reset();
     }
   }, [currentTab, reset]);
+
   // Handle Otp Response
   useEffect(() => {
     if (isError) {

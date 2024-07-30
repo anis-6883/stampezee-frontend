@@ -8,7 +8,7 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
 
 import Button from '@/components/Formik/Button';
-import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
+import StatusIndicator from '@/components/shared/StatusIndicator';
 import {
   useDeleteSuperAdminRetailerMutation,
   useGetAllRetailersQuery,

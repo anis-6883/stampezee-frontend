@@ -1,7 +1,8 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
+import Button from '@/components/Formik/Button';
+import StatusIndicator from '@/components/shared/StatusIndicator';
 import {
   useDeleteSubAdminMutation,
   useGetAllSubAdminsQuery,
@@ -13,7 +14,6 @@ import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
-import Button from '../../../../../../components/Formik/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModal from './CreateUpdateModal';
@@ -62,10 +62,10 @@ export default function SubAdminTable() {
         <div>
           {row.original.image ? (
             <div>
-              <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="w-14 rounded" />
+              <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="w-12 rounded" />
             </div>
           ) : (
-            <img src={'/images/profile.png'} alt="image" className="w-14 rounded" />
+            <img src={'/images/profile.png'} alt="image" className="w-12 rounded" />
           )}
         </div>
       ),
@@ -81,6 +81,10 @@ export default function SubAdminTable() {
     {
       header: 'Email',
       accessorKey: 'email',
+    },
+    {
+      header: 'Branch',
+      accessorKey: 'branch.name',
     },
     {
       header: 'Status',

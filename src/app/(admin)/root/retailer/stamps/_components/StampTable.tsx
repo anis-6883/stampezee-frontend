@@ -50,6 +50,7 @@ export default function StampTable() {
     {
       header: 'Title',
       accessorKey: 'title',
+      size: 300,
     },
     {
       header: 'Stamp Image',
@@ -117,6 +118,7 @@ export default function StampTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
+        searchPlaceHolder="Search by Title"
       />
 
       <DeleteConfirmModal
