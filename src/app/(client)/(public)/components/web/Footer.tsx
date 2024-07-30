@@ -1,17 +1,37 @@
 'use client';
 
 import { routes } from '@/config/routes';
+import { SerializedError } from '@/features/api/apiSlice';
+import { useCreateNewsletterMutation } from '@/features/newsletter/newsletterApi';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import Image from '../Image';
 
 export default function Footer() {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
+  const [createNewsletter, { error: newsletterError, isSuccess: newsletterSuccess }] = useCreateNewsletterMutation();
+
+  // Newsletter Response Handler
+  useEffect(() => {
+    if (newsletterError) {
+      const myError = newsletterError as SerializedError;
+      setIsSubmitting(false);
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+
+    if (newsletterSuccess) {
+      toast.success('Thank you for subscribing!');
+      setEmail('');
+      setIsSubmitting(false);
+    }
+  }, [newsletterError, newsletterSuccess]);
 
   const handleNewsletter = () => {
-    console.log('email', email);
-
-    setEmail('');
+    if (email) {
+      createNewsletter({ email });
+    }
   };
 
   return (

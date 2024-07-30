@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { IoDiamondOutline } from 'react-icons/io5';
+import { TbBrandCashapp } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Popover, Title } from 'rizzui';
 
@@ -29,6 +30,7 @@ function DropdownMenu({
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user, role } = useSelector((state: RootState) => state.authSlice);
+  const { activeSubscription, remainingBalance } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: session }: any = useSession();
 
   // Handle Logout Response
@@ -89,6 +91,14 @@ function DropdownMenu({
           <div className="flex">
             <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">Expire : </p>
             <span className="pl-3 font-medium text-danger">{countDaysLeft(session?.user?.planValidAt)} days left</span>
+          </div>
+          <div className="flex">
+            <TbBrandCashapp className="text-xl" /> <p className="pl-3 text-center font-semibold">Current : </p>
+            <span className="pl-3 font-medium text-danger">{remainingBalance.toFixed(2)} CAD</span>
+          </div>
+          <div className="flex">
+            <TbBrandCashapp className="text-xl" /> <p className="pl-3 text-center font-semibold">Usage : </p>
+            <span className="pl-3 font-medium text-danger">{Math.abs(remainingBalance - activeSubscription?.price).toFixed(2)} CAD</span>
           </div>
         </div>
       )}
