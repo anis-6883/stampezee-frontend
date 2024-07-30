@@ -9,14 +9,18 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { SlEnvolope } from 'react-icons/sl';
 import * as Yup from 'yup';
+import axios from 'axios';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
-const ContactForm = () => {
+const ContactForm = ({ token }: { token: string }) => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const initialValues = {
     name: '',
     email: '',
     dialCode: '+1',
     phone: '',
-    description: '',
+    message: '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -27,10 +31,29 @@ const ContactForm = () => {
         return emailRegex.test(value);
       })
       .required('Required!'),
-    description: Yup.string().required('Required!'),
+    message: Yup.string().required('Required!'),
   });
-  const handleSubmit = (values: any) => {
-    console.log('values', values);
+  const handleSubmit = async (values: any, { resetForm }: any) => {
+    setIsSubmitting(true);
+    try {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/web/contact/submit`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
+        },
+      });
+      toast.success(res?.data?.message);
+      setIsSubmitting(false);
+      if (res?.data?.status) {
+        resetForm();
+      }
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message || 'Something went wrong!');
+      setIsSubmitting(false);
+    }
   };
   return (
     <div>
@@ -59,7 +82,7 @@ const ContactForm = () => {
             </div>
 
             <div className="my-3">
-              <InputTextarea name="description" label="Description" placeholder="Write here..." />
+              <InputTextarea name="message" label="Description" placeholder="Write here..." />
             </div>
 
             <div className="mt-6 flex justify-end">
@@ -68,7 +91,7 @@ const ContactForm = () => {
                 type="submit"
                 text={'Submit'}
                 postIcon={<BsCheck2Circle className="text-base" />}
-                isSubmitting={false}
+                isSubmitting={isSubmitting}
               />
             </div>
           </Form>
