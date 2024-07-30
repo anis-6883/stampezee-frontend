@@ -58,7 +58,7 @@ export default async function Page() {
         <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
           <h1 className=" text-xl font-bold xl:text-xl">Connect with us</h1>
 
-          <ContactForm />
+          <ContactForm token={encryptedString} />
         </div>
       </div>
     </div>
