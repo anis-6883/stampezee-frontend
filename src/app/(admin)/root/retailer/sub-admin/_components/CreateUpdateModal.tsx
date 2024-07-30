@@ -37,9 +37,9 @@ export default function CreateUpdateModal({
 
   useEffect(() => {
     if (branches) {
-      const transformedOptions = branches?.data.map((item: any) => ({
-        label: item.name,
-        value: item._id,
+      const transformedOptions = branches?.data.map((branch: any) => ({
+        label: branch.name,
+        value: branch._id,
       }));
       setOptions(transformedOptions);
     }

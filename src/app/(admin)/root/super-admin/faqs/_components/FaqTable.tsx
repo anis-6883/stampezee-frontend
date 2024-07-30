@@ -1,7 +1,7 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
+import StatusIndicator from '@/components/shared/StatusIndicator';
 import {
   useDeleteFaqMutation,
   useGetAllFaqQuery,

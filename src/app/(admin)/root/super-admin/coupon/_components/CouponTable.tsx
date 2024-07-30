@@ -2,7 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
-import StatusIndicator from '@/components/shared/StatusIndicator/StatusIndicator';
+import StatusIndicator from '@/components/shared/StatusIndicator';
 import { useDeleteCouponMutation, useGetAllCouponQuery, useUpdateCouponStatusMutation } from '@/features/super-admin/coupon/couponApi';
 import { IQueryType } from '@/types';
 import getFormattedDate from '@/utils/get-formatted-date';

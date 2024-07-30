@@ -40,7 +40,8 @@ export default function ForgetOtpInput({
     if (currentTab === 1) {
       reset();
     }
-  }, [currentTab]);
+  }, [currentTab, reset]);
+
   // Handle Otp Response
   useEffect(() => {
     if (isError) {
@@ -83,7 +84,7 @@ export default function ForgetOtpInput({
       toast.success('OTP sent on your email!');
       reset();
     }
-  }, [resendError, resendSuccess]);
+  }, [resendError, resendSuccess, reset]);
 
   // Handler Otp Submit
   const otpSubmitHandler = (e: React.FormEvent) => {

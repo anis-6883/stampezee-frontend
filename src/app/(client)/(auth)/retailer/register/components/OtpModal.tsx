@@ -30,7 +30,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
     if (modalState) {
       reset();
     }
-  }, [modalState]);
+  }, [modalState, reset]);
 
   useEffect(() => {
     if (verifyError) {
@@ -73,7 +73,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
       toast.success('OTP sent on your email!');
       reset();
     }
-  }, [resendError, resendSuccess]);
+  }, [resendError, resendSuccess, reset]);
 
   // Handler Otp Submit
   const otpSubmitHandler = (e: React.FormEvent) => {
