@@ -24,7 +24,6 @@ import { Badge } from 'rizzui';
 import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
 import LoginAlert from './LoginAlert';
-import OrderBalance from './OrderBalance';
 import PlanAddOns from './PlanAddons';
 
 export default function OrderSummary({ stripeInfo }: any) {
@@ -148,8 +147,6 @@ export default function OrderSummary({ stripeInfo }: any) {
         <h2 className="pb-2 text-lg font-medium">Coupon</h2>
         <hr className=" text-lg font-bold" />
         <CouponForm />
-
-        {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && <OrderBalance />}
 
         {subscription?.slug === activeSubscription?.slug && addOns?.length > 0 && (
           <div>

@@ -1,6 +1,7 @@
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import AddOnsList from './_components/AddOnsList';
+import OrderBalance from './_components/OrderBalance';
 import OrderSummary from './_components/OrderSummary';
 import SubscriptionList from './_components/SubscriptionList';
 
@@ -35,6 +36,7 @@ export default async function Page() {
             </div>
           </div>
           <div>
+            <OrderBalance />
             <h2 className="mb-4 text-xl font-semibold">Order Summary</h2>
             <OrderSummary stripeInfo={data?.data?.stripe} />
           </div>

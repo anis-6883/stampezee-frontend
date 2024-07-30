@@ -1,11 +1,21 @@
 import { metaObject } from '@/config/site.config';
+import Cryptr from 'cryptr';
+import macaddress from 'macaddress';
 import ContactForm from './_component/ContactForm';
 
 export const metadata = {
   ...metaObject('Contact Us'),
 };
 
-export default function Page() {
+export default async function Page() {
+  const cryptr = new Cryptr(process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string, {
+    encoding: 'base64',
+    pbkdf2Iterations: 10000,
+    saltLength: 12,
+  });
+  const mac = await macaddress.one();
+  const encryptedString = cryptr.encrypt(mac);
+
   return (
     <div>
       <div className="relative mx-auto w-full">
@@ -46,7 +56,8 @@ export default function Page() {
       </div>
       <div className="mx-auto my-10 max-w-screen-xl">
         <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
-          <h2>Write To Us</h2>
+          <h1 className=" text-xl font-bold xl:text-xl">Connect with us</h1>
+
           <ContactForm />
         </div>
       </div>
