@@ -1,8 +1,9 @@
 'use client';
 
-import { useGetAllCustomerQuery } from '@/features/retailer/customer/customerApi';
+import { useRetailerAllScanDetailsQuery } from '@/features/retailer/scan/scanApi';
 import { useDeleteSubAdminMutation } from '@/features/retailer/sub-admin/subAdminApi';
 import { IQueryType } from '@/types';
+import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsShop } from 'react-icons/bs';
@@ -12,7 +13,7 @@ import { Tab } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import Table from '../../../_components/Table';
 
-export default function ScanTable() {
+export default function ScanTable({ offset }: { offset: number }) {
   const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -21,7 +22,7 @@ export default function ScanTable() {
   // Query State
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllCustomerQuery({
+  const { data, isLoading, isFetching } = useRetailerAllScanDetailsQuery({
     page: query.pageIndex + 1,
     limit: query.pageSize,
     ...searchQuery,
@@ -46,73 +47,28 @@ export default function ScanTable() {
   const structure = [
     {
       header: 'Stamp Title',
-      accessorKey: 'image',
-      Cell: ({ row }: any) => (
-        <div className="flex gap-2">
-          <div>
-            <div className="text-md mx-auto text-start">
-              <p>
-                <span className="font-bold">Name:</span> {row?.original.customer.fullName}
-              </p>
-            </div>
-          </div>
-        </div>
-      ),
+      accessorKey: 'offer.title',
     },
     {
       header: 'Scan Date',
-      Cell: ({ row }: any) => (
-        <div className="text-md mx-auto text-start">
-          <p>{row?.original.customer.country}</p>
-        </div>
-      ),
-      mantineTableHeadCellProps: {
-        align: 'start',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
+      Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original.scan.time, offset)}</div>,
     },
     {
       header: 'Branch',
-      Cell: ({ row }: any) => (
-        <div className="text-md mx-auto text-start">
-          <p>{row?.original.customer.country}</p>
-        </div>
-      ),
-      mantineTableHeadCellProps: {
-        align: 'start',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
+      accessorKey: 'branch.name',
     },
     {
       header: 'Scanned By',
-      Cell: ({ row }: any) => (
-        <div className="text-md mx-auto text-start">
-          <p>{row?.original.customer.country}</p>
-        </div>
-      ),
-      mantineTableHeadCellProps: {
-        align: 'start',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
+      accessorKey: 'subAdmin.fullName',
     },
     {
       header: 'Status',
-      Cell: ({ row }: any) => (
-        <div className="text-md mx-auto text-start">
-          <p>{row?.original.customer.country}</p>
-        </div>
-      ),
-      mantineTableHeadCellProps: {
-        align: 'start',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
+      Cell: ({ row }: any) => {
+        const display = row?.original?.scan?.rewardCollected
+          ? 'Reward Collected'
+          : `${row?.original.scan.stampNumber} / ${row?.original?.offer?.noOfStampsToCollect}`;
+
+        return <div>{display}</div>;
       },
     },
   ];
@@ -142,35 +98,39 @@ export default function ScanTable() {
                     <tbody>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Scan Time</td>
-                        <td className="px-6 py-4">$2999</td>
+                        <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, offset)}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Stamp Title</td>
-                        <td className="px-6 py-4">$2999</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.title}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Stamp Category</td>
-                        <td className="px-6 py-4">$1999</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.category}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">No of Stamp to Collect</td>
-                        <td className="px-6 py-4">$99</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.noOfStampsToCollect}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Basic Rules</td>
-                        <td className="px-6 py-4">$99</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.rules}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Min. Purchase Amount:</td>
-                        <td className="px-6 py-4">$99</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.minPurchaseAmount}CAD</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Reward Type:</td>
-                        <td className="px-6 py-4">$99</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.rewardType}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Reward:</td>
-                        <td className="px-6 py-4">$99</td>
+                        <td className="px-6 py-4">
+                          {row?.original?.offer?.rewardType === 'discount'
+                            ? `${row?.original?.offer?.discountReward}%`
+                            : row?.original?.offer?.promotionReward}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -182,19 +142,19 @@ export default function ScanTable() {
                     <tbody>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Branch Name</td>
-                        <td className="px-6 py-4">$2999</td>
+                        <td className="px-6 py-4">{row?.original?.branch?.name}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Branch Address</td>
-                        <td className="px-6 py-4">$2999</td>
+                        <td className="px-6 py-4">{row?.original?.branch?.address}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Sub-Admin Name</td>
-                        <td className="px-6 py-4">$1999</td>
+                        <td className="px-6 py-4">{row?.original?.subAdmin?.fullName}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Sub-Admin Email</td>
-                        <td className="px-6 py-4">$99</td>
+                        <td className="px-6 py-4">{row?.original?.subAdmin?.email}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -206,19 +166,19 @@ export default function ScanTable() {
                     <tbody>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Name</td>
-                        <td className="px-6 py-4">$2999</td>
+                        <td className="px-6 py-4">{row?.original?.customer?.fullName}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Email</td>
-                        <td className="px-6 py-4">$2999</td>
+                        <td className="px-6 py-4">{row?.original?.customer?.email}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Phone</td>
-                        <td className="px-6 py-4">$1999</td>
+                        <td className="px-6 py-4">{`${row?.original?.customer?.dialCode}${row?.original?.customer?.phone}`}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Country</td>
-                        <td className="px-6 py-4">$99</td>
+                        <td className="px-6 py-4">{row?.original?.customer?.country}</td>
                       </tr>
                     </tbody>
                   </table>
