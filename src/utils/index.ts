@@ -59,8 +59,8 @@ export const isCheckoutButtonDisabled = ({
   if (planChangeType === 'upgrade' && Math.abs(total) < 1) {
     return true;
   }
-  if (planChangeType === 'downgrade' && total < 1) {
-    return true;
-  }
+  // if (planChangeType === 'downgrade' && total > 1) {
+  //   return true;
+  // }
   return false;
 };
