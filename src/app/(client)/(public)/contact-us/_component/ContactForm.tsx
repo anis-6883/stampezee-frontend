@@ -4,14 +4,14 @@ import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
+import axios from 'axios';
 import { Form, Formik } from 'formik';
-import { BsCheck2Circle } from 'react-icons/bs';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { FaRegPaperPlane } from 'react-icons/fa';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { SlEnvolope } from 'react-icons/sl';
 import * as Yup from 'yup';
-import axios from 'axios';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
 
 const ContactForm = ({ token }: { token: string }) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -82,15 +82,21 @@ const ContactForm = ({ token }: { token: string }) => {
             </div>
 
             <div className="my-3">
-              <InputTextarea name="message" label="Description" placeholder="Write here..." />
+              <InputTextarea name="message" label="Message" placeholder="Write here..." />
             </div>
+
+            <p className="flex flex-col text-end text-xs font-semibold">
+              <span>
+                Fields marked with <span className="text-red-600">*</span> are mandatory!
+              </span>
+            </p>
 
             <div className="mt-6 flex justify-end">
               <Button
                 color="danger"
                 type="submit"
-                text={'Submit'}
-                postIcon={<BsCheck2Circle className="text-base" />}
+                text={'Send'}
+                postIcon={<FaRegPaperPlane className="text-base" />}
                 isSubmitting={isSubmitting}
               />
             </div>

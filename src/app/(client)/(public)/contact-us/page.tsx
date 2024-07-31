@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default async function Page() {
-  const cryptr = new Cryptr(process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string, {
+  const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string, {
     encoding: 'base64',
     pbkdf2Iterations: 10000,
     saltLength: 12,

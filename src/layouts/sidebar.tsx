@@ -4,6 +4,8 @@ import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
+import { useIsMounted } from '@/hooks/use-is-mounted';
+import { useWindowScroll } from '@/hooks/use-window-scroll';
 import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
@@ -75,6 +77,8 @@ const checkedLocked = (role: string, url: string, menuName: string, user: any) =
 };
 
 export default function Sidebar({ className }: { className?: string }) {
+  const isMounted = useIsMounted();
+  const windowScroll = useWindowScroll();
   const pathname = usePathname();
   const { data: session }: any = useSession();
   const { role, user } = useSelector((state: RootState) => state.authSlice);
@@ -93,7 +97,13 @@ export default function Sidebar({ className }: { className?: string }) {
         className
       )}
     >
-      <div className="2xl:px-6 2xl:pt-2 sticky top-0 z-40 bg-gray-0/10 px-6 pb-2 pt-2 dark:bg-gray-100/5">
+      <div
+        // 2xl:px-6 2xl:pt-2 sticky top-0 z-40 bg-gray-0/10 px-6 pb-2 pt-2 dark:bg-gray-100/5
+        className={cn(
+          '2xl:py-5 sticky top-0 z-50 flex items-center justify-center bg-gray-0/80 px-4 py-4 backdrop-blur-xl dark:bg-gray-50/50 md:px-5 lg:px-6 3xl:px-8 4xl:px-10',
+          ((isMounted && windowScroll.y) as number) > 2 ? 'card-shadow' : ''
+        )}
+      >
         <Link href={role === 'super_admin' ? routes.superAdmin.dashboard : routes.retailer.dashboard} aria-label="Site Logo">
           <img src="/images/logo.png" width={80} height={50} alt="logo" className="m-auto pt-2" />
         </Link>

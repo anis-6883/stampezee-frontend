@@ -70,7 +70,7 @@ const PlanAddOns = ({ stripeInfo }: { stripeInfo: any }) => {
 
       {coupon && (
         <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-          <span className="col-span-6">
+          <span className="col-span-7">
             <span className="font-semibold">Coupon:</span>{' '}
             {`${coupon?.title.length > 10 ? `${coupon?.title.slice(0, 10)}...` : coupon?.title} ${coupon?.discountType === 'percentage' ? `(${coupon?.discount}%)` : ''}`}
           </span>
@@ -79,7 +79,7 @@ const PlanAddOns = ({ stripeInfo }: { stripeInfo: any }) => {
               dispatch(removeCoupon());
               dispatch(removeCode());
             }}
-            className="col-span-2 text-red-500"
+            className="col-span-1 text-red-500"
           >
             <ImBin />
           </button>

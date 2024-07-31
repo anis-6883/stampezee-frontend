@@ -93,10 +93,10 @@ const calculateTax = (state: SubscriptionState) => {
 };
 
 const calculateDiscount = (state: SubscriptionState) => {
-  if (state.coupon) {
+  if (state?.coupon && state?.subscription?.slug) {
     state.couponDiscount =
       state.coupon.discountType === 'percentage'
-        ? roundToTwoDecimals((Math.abs(state.total) * state.coupon.discount) / 100)
+        ? roundToTwoDecimals((Math.abs(state?.subscription?.price) * state.coupon.discount) / 100)
         : roundToTwoDecimals(state.coupon.discount);
   }
 };
@@ -166,9 +166,6 @@ const subscriptionSlice = createSlice({
         state.subscription = action.payload;
       }
       updateBalance(state);
-      state.coupon = null;
-      state.code = '';
-      state.couponDiscount = 0;
       calculateSubTotal(state);
     },
     setActiveSubscription: (state, action: PayloadAction<activeSubscription>) => {
@@ -191,9 +188,6 @@ const subscriptionSlice = createSlice({
       state.addOns = newAddOn
         ? state.addOns.filter((item: any) => item._id !== newAddOn._id)
         : [...state.addOns, { ...action.payload, isAddOnsSelect: true }];
-      state.coupon = null;
-      state.code = '';
-      state.couponDiscount = 0;
       calculateSubTotal(state);
     },
     setRemainingBalance: (state) => {

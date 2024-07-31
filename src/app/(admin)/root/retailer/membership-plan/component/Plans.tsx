@@ -8,6 +8,7 @@ import { RootState } from '@/features/store';
 import { setPlanChangeCost, setSubscription, setTaxPercentage, setTaxStatus } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
+import { isCheckoutButtonDisabled } from '@/utils';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -19,7 +20,7 @@ export const Plans = ({ stripeInfo }: any) => {
   const dispatch = useDispatch();
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
-  const { activeSubscription, subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { activeSubscription, subscription, addOns, planChangeType, total } = useSelector((state: RootState) => state.subscriptionSlice);
 
   useEffect(() => {
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
@@ -51,27 +52,21 @@ export const Plans = ({ stripeInfo }: any) => {
         <AddOnsList isMemberShip={true} />
         <hr className="my-3" />
         <div className="mt-10 flex items-center justify-end gap-2">
-          {subscription?.slug && subscription?.slug === activeSubscription?.slug && addOns?.length > 0 ? (
-            <Link href={routes.privateRoutes.checkout}>
-              <Button
-                disabled={false}
-                className="text-white"
-                color="danger"
-                text="Selection Confirm"
-                postIcon={<BsCheck2Circle className="text-base" />}
-              />
-            </Link>
-          ) : (
-            <Link href={routes.privateRoutes.checkout}>
-              <Button
-                disabled={!subscription?.slug && subscription?.slug === activeSubscription?.slug ? true : false}
-                className="text-white"
-                color="danger"
-                text="Selection Confirm"
-                postIcon={<BsCheck2Circle className="text-base" />}
-              />
-            </Link>
-          )}
+          <Link href={routes.privateRoutes.checkout}>
+            <Button
+              disabled={isCheckoutButtonDisabled({
+                plan: subscription,
+                activePlan: activeSubscription,
+                totalAddOn: addOns?.length,
+                planChangeType,
+                total,
+              })}
+              className="text-white"
+              color="danger"
+              text="Selection Confirm"
+              postIcon={<BsCheck2Circle className="text-base" />}
+            />
+          </Link>
         </div>
       </div>
     </div>

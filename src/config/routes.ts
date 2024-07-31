@@ -78,6 +78,7 @@ export const routes = {
       refund: `/root/super-admin/refund`,
       scan: `/root/super-admin/scan`,
       customer: `/root/super-admin/customer`,
+      contact: `/root/super-admin/contact`,
       settings: `/root/super-admin/settings`,
     },
   },

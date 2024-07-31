@@ -14,8 +14,6 @@ export default function PricingCard({ item }: { item: any }) {
   const dispatch = useDispatch();
   const { data: session }: any = useSession();
 
-  console.log('session price', session?.user?.plan, item?.slug);
-
   return (
     <div className="relative mx-auto flex h-full w-full max-w-lg flex-col justify-between rounded-lg border-gray-100 bg-white p-3 text-gray-900 opacity-80 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8">
       {session?.user?.plan === item?.slug && (
