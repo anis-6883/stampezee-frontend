@@ -10,6 +10,7 @@ import { RootState } from '@/features/store';
 import { removeAddOns, setPlanChangeCost, setTaxPercentage, setTaxStatus } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn } from '@/types';
+import { isCheckoutButtonDisabled } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -34,7 +35,6 @@ export default function OrderSummary({ stripeInfo }: any) {
     (state: RootState) => state.subscriptionSlice
   );
   const [modalState, setModalState] = useState(false);
-  const [modalState2, setModalState2] = useState(false);
 
   const [branchDisableModalState, setBranchDisableModalState] = useState(false);
   const [disableBranchOptions, setDisableBranchOptions] = useState([]);
@@ -67,12 +67,7 @@ export default function OrderSummary({ stripeInfo }: any) {
   useEffect(() => {
     if (checkoutError) {
       const myError = checkoutError as SerializedError;
-      // Keep it as it is....😂
-      if (myError?.data?.message.startsWith('You have to inactive')) {
-        setModalState2(true);
-      } else {
-        toast.error(myError?.data?.message || 'Something went wrong!');
-      }
+      toast.error(myError?.data?.message || 'Something went wrong!');
     }
 
     if (checkOutResponse) {
@@ -136,8 +131,6 @@ export default function OrderSummary({ stripeInfo }: any) {
   const handleRemoveAddOn = (addOnId: string) => {
     dispatch(removeAddOns(addOnId));
   };
-
-  // const myError = checkoutError as SerializedError;
 
   const disabledBranchItems = disableBranchOptions?.filter((item: any) => selectedBranches?.includes(item?.value));
 
@@ -229,28 +222,21 @@ export default function OrderSummary({ stripeInfo }: any) {
           </div>
         </div>
       )}
-
-      {subscription?.slug && subscription?.slug === activeSubscription?.slug && addOns?.length > 0 ? (
-        <Button
-          disabled={false}
-          color="danger"
-          text="Checkout Confirm"
-          className="mt-5 w-full"
-          isSubmitting={checkOutLoading}
-          onClick={handleCheckOut}
-          postIcon={<BsCheck2Circle className="text-base" />}
-        />
-      ) : (
-        <Button
-          disabled={!subscription?.slug && subscription?.slug === activeSubscription?.slug && total < 1 ? true : false}
-          color="danger"
-          text="Checkout Confirm"
-          className="mt-5 w-full"
-          isSubmitting={checkOutLoading}
-          onClick={handleCheckOut}
-          postIcon={<BsCheck2Circle className="text-base" />}
-        />
-      )}
+      <Button
+        disabled={isCheckoutButtonDisabled({
+          plan: subscription,
+          activePlan: activeSubscription,
+          totalAddOn: addOns?.length,
+          planChangeType,
+          total,
+        })}
+        color="danger"
+        text="Checkout Confirm"
+        className="mt-5 w-full"
+        isSubmitting={checkOutLoading}
+        onClick={handleCheckOut}
+        postIcon={<BsCheck2Circle className="text-base" />}
+      />
 
       <LoginAlert modalState={modalState} setModalState={setModalState} />
       <BranchDisableModal
@@ -261,7 +247,6 @@ export default function OrderSummary({ stripeInfo }: any) {
         modalState={branchDisableModalState}
         setModalState={setBranchDisableModalState}
       />
-      {/* <GoToBranch modalState={modalState2} setModalState={setModalState2} message={myError?.data?.message} /> */}
     </>
   );
 }

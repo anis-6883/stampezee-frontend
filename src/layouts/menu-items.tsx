@@ -7,7 +7,7 @@ import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
 import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { PiBellRinging, PiStamp } from 'react-icons/pi';
-import { RiCoupon4Line, RiMoneyDollarCircleLine, RiRefund2Line } from 'react-icons/ri';
+import { RiContactsLine, RiCoupon4Line, RiMoneyDollarCircleLine, RiRefund2Line } from 'react-icons/ri';
 import { TbUserShield } from 'react-icons/tb';
 
 export const menuItems: { [key: string]: any } = {
@@ -61,6 +61,11 @@ export const menuItems: { [key: string]: any } = {
       name: 'FAQs',
       href: routes.privateRoutes.superAdmin.faq.home,
       icon: <BsQuestionCircle />,
+    },
+    {
+      name: 'Contacts',
+      href: routes.privateRoutes.superAdmin.contact,
+      icon: <RiContactsLine />,
     },
     {
       name: 'General Settings',

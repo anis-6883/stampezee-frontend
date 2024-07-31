@@ -1,3 +1,5 @@
+import { activeSubscription } from '@/features/subscription/subscriptionSlice';
+import { Subscription } from '@/types';
 import moment from 'moment';
 
 export const countDaysLeft = (date: Date) => {
@@ -33,4 +35,32 @@ export const checkedMinPurchaseAmount = (total: number, minPurchaseAmount: numbe
   }
 
   return parseFloat(total.toFixed(2)) >= minPurchaseAmount ? true : false;
+};
+
+export const isCheckoutButtonDisabled = ({
+  plan,
+  activePlan,
+  totalAddOn,
+  planChangeType,
+  total,
+}: {
+  plan: Subscription;
+  activePlan: activeSubscription;
+  totalAddOn: number;
+  planChangeType: string;
+  total: number;
+}) => {
+  if (!plan?.slug || activePlan?.slug === plan?.slug) {
+    if (plan?.slug && plan?.slug !== 'trial' && plan?.slug === activePlan?.slug && totalAddOn > 0) {
+      return false;
+    }
+    return true;
+  }
+  if (planChangeType === 'upgrade' && Math.abs(total) < 1) {
+    return true;
+  }
+  if (planChangeType === 'downgrade' && total < 1) {
+    return true;
+  }
+  return false;
 };

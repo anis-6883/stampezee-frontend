@@ -133,7 +133,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
             return item?.isBlocked ? (
               <div key={item._id} className={`relative cursor-not-allowed rounded-lg border p-4`}>
                 {session?.user?.plan === item?.slug && (
-                  <div className="absolute right-2 top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
+                  <div className="absolute right-2 top-2  flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
                     <span className="font-medium">
                       <MdStar />
                     </span>
