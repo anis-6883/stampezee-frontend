@@ -1,19 +1,34 @@
 'use client';
 
+import { Skeleton } from '@/components/ui/skeleton';
 import { useGetAllFaqsQuery } from '@/features/faqs/faqsApi';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Accordion() {
   const [status, setStatus] = useState<string>('');
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [maxHeight, setMaxHeight] = useState<string>('0px');
   const { data: faqsData, isLoading: faqsLoading } = useGetAllFaqsQuery(undefined);
 
   const handleClick = (id: string) => {
-    console.log('id', id);
     setStatus(status === id ? '' : id);
   };
 
-  console.log('status', status);
-  return (
+  useEffect(() => {
+    if (contentRef.current) {
+      setMaxHeight(status ? `${contentRef.current.scrollHeight}px` : '0px');
+    }
+  }, [status]);
+
+  return faqsLoading ? (
+    <div className="flex flex-col gap-3">
+      <Skeleton className="w-68 h-14 rounded" />
+      <Skeleton className="w-68 h-14 rounded" />
+      <Skeleton className="w-68 h-14 rounded" />
+      <Skeleton className="w-68 h-14 rounded" />
+      <Skeleton className="w-68 h-14 rounded" />
+    </div>
+  ) : (
     <div id="accordion-collapse" data-accordion="collapse">
       {faqsData?.data?.map((item: any) => (
         <div key={item?._id} className="card my-5 rounded-lg bg-white shadow-lg">
@@ -44,11 +59,13 @@ export default function Accordion() {
           </h2>
           <div
             id="accordion-collapse-body-1"
-            className={`transition-max-height overflow-hidden duration-300 ease-in-out ${status === item?._id ? 'max-h-96' : 'max-h-0'}`}
+            ref={contentRef}
+            style={{ maxHeight: status === item?._id ? maxHeight : 0 }}
+            className={`transition-max-height overflow-hidden duration-500 ease-in-out ${status === item?._id ? 'max-h-96' : 'max-h-0'}`}
             aria-labelledby="accordion-collapse-heading-1"
           >
             <div className=" border-none p-5 dark:bg-gray-900">
-              <p className="mb-2 text-gray-500 dark:text-gray-400">{item?.description}</p>
+              <p className="mb-2 pb-4 text-gray-500 dark:text-gray-400">{item?.description}</p>
             </div>
           </div>
         </div>

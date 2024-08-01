@@ -5,6 +5,7 @@ import { metaObject } from '@/config/site.config';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { IoHomeOutline } from 'react-icons/io5';
 import LoginForm from './components/LoginForm';
 
 export const metadata = {
@@ -23,6 +24,9 @@ export default async function Page() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100 text-gray-900">
       <div className="m-10 grid w-full grid-cols-12 rounded-lg bg-white shadow md:max-w-6xl">
         <div className="col-span-12 p-5 md:col-span-6">
+          <Link href={routes.publicRoutes.home}>
+            <IoHomeOutline className="text-lg text-danger" />
+          </Link>
           <Link href={routes.publicRoutes.home}>
             <img src="/images/logo.png" className="mx-auto w-28" alt="logo" />
           </Link>

@@ -79,7 +79,7 @@ export default function SubscriptionList({ stripeInfo }: any) {
             <Skeleton className="w-68 h-96 rounded" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {subscription?.map((item: any) => <PricingCard key={item._id} item={item} />)}
           </div>
         )}
