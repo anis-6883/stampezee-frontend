@@ -164,7 +164,7 @@ export default function HeaderContent() {
                         </li>
                       ))}
 
-                      {isLoggedIn ? (
+                      {!isLoggedIn ? (
                         <li
                           onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
                           className=" transition duration-300 ease-in-out hover:bg-gray-100"

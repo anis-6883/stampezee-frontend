@@ -1,6 +1,7 @@
 'use client';
 
 import { routes } from '@/config/routes';
+
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateNewsletterMutation } from '@/features/newsletter/newsletterApi';
 import Link from 'next/link';
@@ -49,50 +50,50 @@ export default function Footer() {
               <div className="grid grid-cols-1 gap-4 text-center md:grid-cols-2 md:text-left lg:grid-cols-4">
                 <div className="mt-4 block font-medium">
                   <div className="block text-lg font-bold">StampEzee</div>
-                  <div className="block">
-                    <Link className="mt-4 block font-medium" href={routes.publicRoutes.pricing}>
+                  <div className="flex flex-col">
+                    <Link className="mt-4 w-fit font-medium" href={routes.publicRoutes.pricing}>
                       PRICING
                     </Link>
-                    <a className="mt-4 block font-medium" href="/faqs/">
+                    <Link className="mt-4 w-fit font-medium" href="/faqs/">
                       FAQ
-                    </a>
-                    <a className="mt-4 block font-medium" href="/contact-us/">
+                    </Link>
+                    <Link className="mt-4 w-fit font-medium" href="/contact-us/">
                       CONTACT
-                    </a>
+                    </Link>
                   </div>
                 </div>
-                <div className="mt-4 block font-medium">
+                <div className="mt-4  font-medium">
                   <div className="block text-lg font-bold">Socials</div>
-                  <div className="MuiStack-root css-yd8sa2">
-                    <a className="mt-4 block font-medium" href="#">
+                  <div className="MuiStack-root css-yd8sa2 flex flex-col">
+                    <Link className="mt-4 w-fit font-medium" href="#">
                       FACEBOOK
-                    </a>
-                    <a className="mt-4 block font-medium" href="#">
+                    </Link>
+                    <Link className="mt-4 w-fit font-medium" href="#">
                       INSTAGRAM
-                    </a>
-                    <a className="mt-4 block font-medium" href="#">
+                    </Link>
+                    <Link className="mt-4 w-fit font-medium" href="#">
                       TIKTOK
-                    </a>
-                    <a className="mt-4 block font-medium" href="#">
+                    </Link>
+                    <Link className="mt-4 w-fit font-medium" href="#">
                       LINKEDIN
-                    </a>
+                    </Link>
                   </div>
                 </div>
-                <div className="mt-4 block font-medium">
+                <div className="mt-4 font-medium">
                   <div className="block text-lg font-bold">Contact</div>
-                  <div className="MuiStack-root css-yd8sa2">
-                    <a className="mt-4 block font-medium" href="/terms-and-conditions/">
+                  <div className="MuiStack-root css-yd8sa2 flex flex-col">
+                    <Link className="mt-4 w-fit font-medium" href="/terms-and-conditions/">
                       T&amp;C
-                    </a>
-                    <a className="mt-4 block font-medium" href="/privacy/">
+                    </Link>
+                    <Link className="mt-4 w-fit font-medium" href="/privacy/">
                       PRIVACY POLICY
-                    </a>
-                    <Link className="mt-4 block font-medium" href={routes.publicRoutes.contactUs}>
+                    </Link>
+                    <Link className="mt-4 w-fit font-medium" href={routes.publicRoutes.contactUs}>
                       CONTACT US
                     </Link>
                   </div>
                 </div>
-                <div className="mt-4 block font-medium">
+                <div className="mt-4 flex flex-col font-medium">
                   <div className="block text-lg font-semibold">JOIN OUR NEWSLETTER</div>
                   <div className="">
                     <div
@@ -120,8 +121,8 @@ export default function Footer() {
                     </div>
                   </div>
                   <div className="flex items-center justify-center sm:items-start">
-                    {/* <img className="MuiBox-root css-0" src="/assets/images/home/app-store-badge.png" style={{ width: 200 }} />
-                    <img className="MuiBox-root css-0" src="/assets/images/home/google-play-badge.png" style={{ width: 200 }} /> */}
+                    {/* <img className="MuiBox-root css-0" src="/Linkssets/images/home/Linkpp-store-badge.png" style={{ width: 200 }} />
+                    <img className="MuiBox-root css-0" src="/Linkssets/images/home/google-play-badge.png" style={{ width: 200 }} /> */}
 
                     <Link href="/" target="_blank">
                       <Image src="/default/app-store-badge.png" alt="App Store Badge" className="h-[45px] w-[150px]" />
