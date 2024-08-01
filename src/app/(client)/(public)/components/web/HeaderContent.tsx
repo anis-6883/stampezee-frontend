@@ -6,18 +6,16 @@ import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { resetState } from '@/features/subscription/subscriptionSlice';
-import { countDaysLeft } from '@/utils';
 import { Menu, Transition } from '@headlessui/react';
-import _ from 'lodash';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { GiSandsOfTime } from 'react-icons/gi';
-import { IoDiamondOutline, IoLogOutOutline } from 'react-icons/io5';
+import { IoLogOutOutline } from 'react-icons/io5';
 import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Drawer, Title } from 'rizzui';
+import BalanceCard from '../BalanceCard';
 
 const mobileMenuItems = [
   {
@@ -45,6 +43,7 @@ const mobileMenuItems = [
 export default function HeaderContent() {
   const pathname = usePathname();
   const dispatch = useDispatch();
+  const { data: session }: any = useSession();
   const [sidBer, setSidBer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
@@ -321,18 +320,7 @@ export default function HeaderContent() {
                                   </Title>
                                 )}
                               </div>
-                              {user?.plan && (
-                                <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
-                                  <div className="flex">
-                                    <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">Plan : </p>
-                                    <span className="pl-3 font-medium">{_.capitalize(user?.plan)}</span>
-                                  </div>
-                                  <div className="flex">
-                                    <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">Expire : </p>
-                                    <span className="pl-3 font-medium text-danger">{countDaysLeft(user?.planValidAt)} days left</span>
-                                  </div>
-                                </div>
-                              )}
+                              {session?.user?.plan && <BalanceCard />}
 
                               <Button
                                 onClick={() => handleLogout()}

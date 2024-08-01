@@ -1,16 +1,12 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-import Button from '@/components/Formik/Button';
 import { useGetAllContactBySuperAdminQuery } from '@/features/super-admin/contact/contactApi';
 import { useDeleteSuperAdminRetailerMutation, useUpdateRetailerStatusMutation } from '@/features/super-admin/retailer/retailerApi';
 import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { HiOutlinePencil } from 'react-icons/hi';
-import { ImBin } from 'react-icons/im';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
-import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function ContactTable() {
@@ -66,49 +62,56 @@ export default function ContactTable() {
     },
     {
       header: 'Phone',
-      accessorKey: 'name',
-    },
-    {
-      header: 'Status',
-      accessorKey: 'status',
+      accessorKey: 'phone',
       Cell: ({ row }: any) => {
-        return <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />;
-
-        // return row?.original?.status ? <div>Yes</div> : <div>No</div>;
-      },
-      mantineTableHeadCellProps: {
-        align: 'center',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
+        return <div>{`${row?.original?.dialCode} ${row?.original?.phone}`} </div>;
       },
     },
     {
-      header: 'Actions',
-      Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
-          <Button
-            color="warning"
-            preIcon={<HiOutlinePencil className="text-base" />}
-            onClick={() => {
-              setFormData({
-                ...row.original,
-                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
-              });
-              setCreateState(true);
-            }}
-          />
-
-          <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
-        </div>
-      ),
-      mantineTableHeadCellProps: {
-        align: 'center',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
+      header: 'Message',
+      accessorKey: 'message',
     },
+    // {
+    //   header: 'Status',
+    //   accessorKey: 'status',
+    //   Cell: ({ row }: any) => {
+    //     return <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />;
+
+    //     // return row?.original?.status ? <div>Yes</div> : <div>No</div>;
+    //   },
+    //   mantineTableHeadCellProps: {
+    //     align: 'center',
+    //   },
+    //   mantineTableBodyCellProps: {
+    //     align: 'center',
+    //   },
+    // },
+    // {
+    //   header: 'Actions',
+    //   Cell: ({ row }: any) => (
+    //     <div className="flex items-center justify-center gap-2">
+    //       <Button
+    //         color="warning"
+    //         preIcon={<HiOutlinePencil className="text-base" />}
+    //         onClick={() => {
+    //           setFormData({
+    //             ...row.original,
+    //             image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+    //           });
+    //           setCreateState(true);
+    //         }}
+    //       />
+
+    //       <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+    //     </div>
+    //   ),
+    //   mantineTableHeadCellProps: {
+    //     align: 'center',
+    //   },
+    //   mantineTableBodyCellProps: {
+    //     align: 'center',
+    //   },
+    // },
   ];
 
   return (

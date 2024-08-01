@@ -1,20 +1,16 @@
 'use client';
 
+import BalanceCard from '@/app/(client)/(public)/components/BalanceCard';
 import ChangePasswordModal from '@/components/changePasswordModal/ChangePasswordModal';
 import UpdateProfileModal from '@/components/updateProfileModal/UpdateProfileModal';
 import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
-import { countDaysLeft } from '@/utils';
-import _ from 'lodash';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { GiSandsOfTime } from 'react-icons/gi';
-import { IoDiamondOutline } from 'react-icons/io5';
-import { TbBrandCashapp } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Popover, Title } from 'rizzui';
 
@@ -30,7 +26,6 @@ function DropdownMenu({
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user, role } = useSelector((state: RootState) => state.authSlice);
-  const { activeSubscription, remainingBalance } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: session }: any = useSession();
 
   // Handle Logout Response
@@ -82,26 +77,7 @@ function DropdownMenu({
         </div>
       )}
 
-      {session?.user?.plan && (
-        <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
-          <div className="flex">
-            <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">Plan : </p>
-            <span className="pl-3 font-medium">{_.capitalize(session?.user?.plan)}</span>
-          </div>
-          <div className="flex">
-            <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">Expire : </p>
-            <span className="pl-3 font-medium text-danger">{countDaysLeft(session?.user?.planValidAt)} days left</span>
-          </div>
-          <div className="flex">
-            <TbBrandCashapp className="text-xl" /> <p className="pl-3 text-center font-semibold">Current : </p>
-            <span className="pl-3 font-medium text-danger">{remainingBalance.toFixed(2)} CAD</span>
-          </div>
-          <div className="flex">
-            <TbBrandCashapp className="text-xl" /> <p className="pl-3 text-center font-semibold">Usage : </p>
-            <span className="pl-3 font-medium text-danger">{Math.abs(remainingBalance - activeSubscription?.price).toFixed(2)} CAD</span>
-          </div>
-        </div>
-      )}
+      {session?.user?.plan && <BalanceCard />}
       <div className="grid px-3.5 py-3.5 font-medium text-gray-700">
         {role === 'retailer' && (
           <Link
