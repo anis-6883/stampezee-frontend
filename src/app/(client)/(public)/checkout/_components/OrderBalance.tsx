@@ -2,9 +2,11 @@
 'use client';
 
 import { RootState } from '@/features/store';
+import { useSession } from 'next-auth/react';
 import { useSelector } from 'react-redux';
 
 const OrderBalance = () => {
+  const { data: session }: any = useSession();
   const { activeSubscription, remainingBalance } = useSelector((state: RootState) => state.subscriptionSlice);
 
   return (
@@ -19,7 +21,7 @@ const OrderBalance = () => {
           </div>
           <div className="mb-2 flex justify-between">
             <span>Usage Amount</span>
-            <span className="text-red-500">{Math.abs(remainingBalance - activeSubscription?.price).toFixed(2)} CAD</span>
+            <span className="text-red-500">{Math.abs(remainingBalance - session?.user?.planPayment).toFixed(2)} CAD</span>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 import { RootState } from '@/features/store';
-import { removeAddOns, setPlanChangeCost, setTaxPercentage, setTaxStatus } from '@/features/subscription/subscriptionSlice';
+import { removeAddOns, resetState, setPlanChangeCost, setTaxPercentage, setTaxStatus } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn } from '@/types';
 import { isCheckoutButtonDisabled } from '@/utils';
@@ -97,6 +97,7 @@ export default function OrderSummary({ stripeInfo }: any) {
           setSelectedBranches([]);
         }
       }
+      dispatch(resetState());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkOutResponse, push, profileSuccess, checkoutError]);

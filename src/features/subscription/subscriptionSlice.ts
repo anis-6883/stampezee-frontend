@@ -6,6 +6,7 @@ export interface activeSubscription extends Subscription {
   planStartAt?: Date;
   planValidAt?: Date;
   takeFreeTrial?: string;
+  planPayment?: number;
 }
 
 interface SubscriptionState {
@@ -48,7 +49,7 @@ const initialState: SubscriptionState = {
 
 // Helper functions
 
-const roundToTwoDecimals = (value: number) => {
+export const roundToTwoDecimals = (value: number) => {
   return parseFloat(value.toFixed(2));
 };
 
@@ -80,7 +81,7 @@ const updateBalance = (state: SubscriptionState) => {
       calculateBalancePrice(
         state?.activeSubscription?.planStartAt as Date,
         state?.activeSubscription?.planValidAt as Date,
-        state?.activeSubscription?.price
+        state?.activeSubscription?.planPayment as number
       )
     );
   }

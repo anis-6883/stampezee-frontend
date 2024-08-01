@@ -1,19 +1,16 @@
 'use client';
 
+import BalanceCard from '@/app/(client)/(public)/components/BalanceCard';
 import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import { useWindowScroll } from '@/hooks/use-window-scroll';
-import { countDaysLeft } from '@/utils';
-import _ from 'lodash';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
-import { GiSandsOfTime } from 'react-icons/gi';
-import { IoDiamondOutline } from 'react-icons/io5';
 import { PiCaretDownBold } from 'react-icons/pi';
 import { SlLock } from 'react-icons/sl';
 import { useSelector } from 'react-redux';
@@ -137,18 +134,7 @@ export default function Sidebar({ className }: { className?: string }) {
         </div>
       )}
 
-      {session?.user?.plan && (
-        <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
-          <div className="flex">
-            <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">Your Plan : </p>
-            <span className="pl-3 font-medium">{_.capitalize(session?.user?.plan)}</span>
-          </div>
-          <div className="flex">
-            <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">Expire : </p>
-            <span className="pl-3 font-medium text-danger">{countDaysLeft(session?.user?.planValidAt)} days left</span>
-          </div>
-        </div>
-      )}
+      {session?.user?.plan && <BalanceCard />}
 
       <SimpleBar>
         <div className="mt-4  pb-3 3xl:mt-6">

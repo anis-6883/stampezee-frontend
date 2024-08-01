@@ -53,13 +53,12 @@ const CouponForm = () => {
     }
   }, [coupon?.minPurchaseAmount, dispatch, total]);
 
-  const handleCoupon = async (values: any, { resetForm }: any) => {
+  const handleCoupon = async (values: any) => {
     setIsCouponSubmitting(true);
     const { data }: any = await createCoupon(values);
 
     if (data?.status) {
       dispatch(setCode(values.code));
-      resetForm();
     }
   };
 

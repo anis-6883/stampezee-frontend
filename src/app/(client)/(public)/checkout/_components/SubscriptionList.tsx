@@ -59,6 +59,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
         takeFreeTrial: session?.user?.takeFreeTrial,
         planStartAt: session?.user?.planStartAt,
         planValidAt: session?.user?.planValidAt,
+        planPayment: session?.user?.planPayment,
       };
     } else {
       updateActiveSubscription = {
@@ -66,6 +67,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
         takeFreeTrial: session?.user?.takeFreeTrial,
         planStartAt: session?.user?.planStartAt,
         planValidAt: session?.user?.planValidAt,
+        planPayment: session?.user?.planPayment,
       };
     }
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
