@@ -26,6 +26,7 @@ interface SubscriptionState {
   remainingBalance: number;
   planChangeCost: number;
   planChangeType: string;
+  refundableThreshold: number;
 }
 
 const initialState: SubscriptionState = {
@@ -45,6 +46,7 @@ const initialState: SubscriptionState = {
   remainingBalance: 0,
   planChangeCost: 1,
   planChangeType: '',
+  refundableThreshold: 0,
 };
 
 // Helper functions
@@ -175,6 +177,9 @@ const subscriptionSlice = createSlice({
     setPlanChangeCost: (state, action: PayloadAction<number>) => {
       state.planChangeCost = action.payload;
     },
+    setRefundableThreshold: (state, action: PayloadAction<number>) => {
+      state.refundableThreshold = action.payload;
+    },
     setCode: (state, action: PayloadAction<string>) => {
       state.code = action.payload;
     },
@@ -254,6 +259,7 @@ export const {
   setSubscription,
   setActiveSubscription,
   setPlanChangeCost,
+  setRefundableThreshold,
   setTaxPercentage,
   setTaxStatus,
   setAddOns,

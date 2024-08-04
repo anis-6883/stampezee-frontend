@@ -24,7 +24,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
   const dispatch = useDispatch();
   const [plans, setPlans] = useState([]);
   const { data: session }: any = useSession();
-  const { subscription, downgradeRefund, activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { subscription, downgradeRefund, activeSubscription, planChangeCost } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
   useEffect(() => {
@@ -118,7 +118,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
       {session?.user?.plan && session?.user?.plan !== 'trial' && (
         <div className="mb-6 border-l-4 border-yellow-400 bg-yellow-50 p-4">
           <p className="font-medium text-yellow-500">Upgrade or downgrade plan</p>
-          <p className="text-yellow-500">You will be charged 1 CAD when switching plans</p>
+          <p className="text-yellow-500">You will be charged {planChangeCost} CAD when switching plans</p>
         </div>
       )}
 

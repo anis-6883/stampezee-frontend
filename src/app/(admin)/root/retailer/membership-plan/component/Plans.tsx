@@ -60,6 +60,7 @@ export const Plans = ({ stripeInfo }: any) => {
                 totalAddOn: addOns?.length,
                 planChangeType,
                 total,
+                refundableThreshold: 1,
               })}
               className="text-white"
               color="danger"

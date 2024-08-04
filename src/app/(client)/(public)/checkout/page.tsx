@@ -11,7 +11,7 @@ export const metadata = {
 
 export default async function Page() {
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
-
+  console.log('dta', data?.data);
   return (
     <div className="mx-auto mt-20 w-full max-w-[1300px]">
       <div className="container mx-auto px-4 py-8">
