@@ -43,12 +43,14 @@ export const isCheckoutButtonDisabled = ({
   totalAddOn,
   planChangeType,
   total,
+  refundableThreshold,
 }: {
   plan: Subscription;
   activePlan: activeSubscription;
   totalAddOn: number;
   planChangeType: string;
   total: number;
+  refundableThreshold: number;
 }) => {
   if (!plan?.slug || activePlan?.slug === plan?.slug) {
     if (plan?.slug && plan?.slug !== 'trial' && plan?.slug === activePlan?.slug && totalAddOn > 0) {
@@ -56,7 +58,7 @@ export const isCheckoutButtonDisabled = ({
     }
     return true;
   }
-  if (Math.abs(total) < 1 && activePlan?.slug && activePlan?.slug !== 'trial') {
+  if (Math.abs(total) < refundableThreshold && activePlan?.slug && activePlan?.slug !== 'trial') {
     return true;
   }
   // if (planChangeType === 'downgrade' && total > 1) {

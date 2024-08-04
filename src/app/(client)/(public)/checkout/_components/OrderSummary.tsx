@@ -7,7 +7,14 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 import { RootState } from '@/features/store';
-import { removeAddOns, resetState, setPlanChangeCost, setTaxPercentage, setTaxStatus } from '@/features/subscription/subscriptionSlice';
+import {
+  removeAddOns,
+  resetState,
+  setPlanChangeCost,
+  setRefundableThreshold,
+  setTaxPercentage,
+  setTaxStatus,
+} from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn } from '@/types';
 import { isCheckoutButtonDisabled } from '@/utils';
@@ -62,7 +69,8 @@ export default function OrderSummary({ stripeInfo }: any) {
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
     dispatch(setTaxPercentage(stripeInfo?.taxCost));
     dispatch(setTaxStatus(stripeInfo?.taxStatus));
-  }, [dispatch, stripeInfo?.planChangeCost, stripeInfo?.taxCost, stripeInfo?.taxStatus]);
+    dispatch(setRefundableThreshold(stripeInfo?.refundableThreshold));
+  }, [dispatch, stripeInfo?.planChangeCost, stripeInfo?.taxCost, stripeInfo?.taxStatus, stripeInfo?.refundableThreshold]);
 
   useEffect(() => {
     if (checkoutError) {
@@ -193,12 +201,17 @@ export default function OrderSummary({ stripeInfo }: any) {
         </div>
       )}
 
-      {Math.abs(total) < 1 && activeSubscription?.slug && activeSubscription?.slug !== 'trial' && (
-        <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
-          <p className="font-medium text-yellow-500">Purchase Alert!</p>
-          <p className="text-yellow-500">Your order needs to be at least 1 CAD. Please add more items to continue</p>
-        </div>
-      )}
+      {Math.abs(total) < stripeInfo?.refundableThreshold &&
+        activeSubscription?.slug &&
+        subscription?.slug !== activeSubscription?.slug &&
+        activeSubscription?.slug !== 'trial' && (
+          <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
+            <p className="font-medium text-yellow-500">Purchase Alert!</p>
+            <p className="text-yellow-500">
+              Your order needs to be at least {stripeInfo?.refundableThreshold} CAD. Please add more items to continue
+            </p>
+          </div>
+        )}
 
       {selectedBranches?.length > 0 && (
         <div className="mt-3 rounded-lg border border-danger p-3">
@@ -230,6 +243,7 @@ export default function OrderSummary({ stripeInfo }: any) {
           totalAddOn: addOns?.length,
           planChangeType,
           total,
+          refundableThreshold: stripeInfo?.refundableThreshold,
         })}
         color="danger"
         text="Checkout Confirm"

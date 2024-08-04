@@ -115,7 +115,7 @@ function DropdownMenu({
           variant="text"
           onClick={handleLogout}
         >
-          Sign Out
+          Logout
         </Button>
       </div>
     </div>

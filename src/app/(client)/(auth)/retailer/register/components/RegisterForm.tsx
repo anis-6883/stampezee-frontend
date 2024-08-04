@@ -68,9 +68,13 @@ export default function RegisterForm() {
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string().required('Required!'),
-    firstName: Yup.string().required('Required!'),
-    lastName: Yup.string(),
+    storeName: Yup.string()
+      .required('Required!')
+      .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, 'No spaces allowed'),
+    firstName: Yup.string()
+      .required('Required!')
+      .matches(/^[A-Za-z]+$/, 'Must be a valid name without numbers'),
+    lastName: Yup.string().matches(/^[A-Za-z]+$/, 'Must be a valid name without numbers'),
     email: Yup.string()
       .test('email', 'Provide valid email!', (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -79,10 +83,18 @@ export default function RegisterForm() {
       .required('Required!'),
     phone: Yup.string().required('Required!'),
     country: Yup.string().required('Required!'),
-    province: Yup.string().required('Required!'),
-    city: Yup.string().required('Required!'),
-    postalCode: Yup.string().required('Required!'),
-    address: Yup.string().required('Required!'),
+    province: Yup.string()
+      .required('Required!')
+      .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, 'No spaces allowed'),
+    city: Yup.string()
+      .required('Required!')
+      .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, 'No spaces allowed'),
+    postalCode: Yup.string()
+      .required('Required!')
+      .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, 'No spaces allowed'),
+    address: Yup.string()
+      .required('Required!')
+      .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, 'No spaces allowed'),
     isAgree: Yup.string().required('Required!'),
     password: Yup.string().required('Required!').min(8, 'At least 8 characters long!'),
   });
