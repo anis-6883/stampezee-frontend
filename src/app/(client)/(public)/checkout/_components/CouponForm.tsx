@@ -23,7 +23,7 @@ const CouponForm = () => {
 
   const initialValues = { code: '' };
   const validationSchema = Yup.object().shape({
-    code: Yup.string().required('Required!'),
+    code: Yup.string().required(''),
   });
 
   useEffect(() => {

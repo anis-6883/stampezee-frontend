@@ -80,7 +80,7 @@ export default function DragAndDropUpload({
   };
 
   return (
-    <div {...getRootProps({ className: className })}>
+    <div className={className}>
       <input {...getInputProps()} />
       {value && preview ? (
         <div className="relative flex items-center gap-3">
@@ -111,7 +111,10 @@ export default function DragAndDropUpload({
             isRounded && 'h-[120px] w-[120px] gap-0 rounded-full'
           )}
         >
-          <MdCloudUpload className={cn('text-4xl text-danger', isRounded && 'text-4xl')} />
+          <div {...getRootProps({ className: className })}>
+            <MdCloudUpload className={cn('text-4xl text-danger', isRounded && 'text-4xl')} />
+          </div>
+
           {error ? (
             <p className="text-sm text-danger">{error}</p>
           ) : (
@@ -121,7 +124,10 @@ export default function DragAndDropUpload({
                   {!isRounded ? (
                     <div>
                       <span>Drag and drop</span>
-                      <span className="text-danger"> or browse</span>
+                      <span {...getRootProps({ className: className })} className="text-danger">
+                        {' '}
+                        or browse
+                      </span>
                       <span> to upload!</span>
                     </div>
                   ) : (

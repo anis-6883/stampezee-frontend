@@ -161,13 +161,23 @@ export default function CreateUpdateModel({
                       name="discountType"
                       label="Discount Type"
                     />
-                    <InputField
-                      type="number"
-                      name="discount"
-                      label="Discount Amount"
-                      placeholder="10"
-                      prefix={<RiDiscountPercentLine className="text-xl" />}
-                    />
+                    {values.discountType === 'percentage' ? (
+                      <InputField
+                        type="number"
+                        name="discount"
+                        label="Discount Amount"
+                        placeholder="10"
+                        prefix={<RiDiscountPercentLine className="text-xl" />}
+                      />
+                    ) : (
+                      <InputField
+                        type="number"
+                        name="discount"
+                        label="Discount Amount"
+                        placeholder="10"
+                        prefix={<LuCircleDollarSign className="text-xl" />}
+                      />
+                    )}
                   </div>
 
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
