@@ -51,6 +51,7 @@
     "react-scroll": "^1.9.0",
     "react-select": "^5.8.0",
     "react-use": "^17.5.0",
+    "recharts": "^2.12.7",
     "rizzui": "^0.8.4",
     "simplebar-react": "^3.2.4",
     "tailwind-merge": "^2.3.0",
