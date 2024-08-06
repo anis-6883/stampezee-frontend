@@ -28,6 +28,23 @@ export default function RegisterForm() {
   const [register, { data: registerResponse, isSuccess, error }] = useRetailerRegisterMutation();
   const dispatch = useDispatch();
 
+  // const [country, setCountry] = useState('');
+
+  // useEffect(() => {
+  //   const fetchCountry = async () => {
+  //     try {
+  //       const { latitude, longitude } : any = await getUserLocation();
+  //       const response = await fetch(`/api/getCountryFromCoords?latitude=${latitude}&longitude=${longitude}`);
+  //       const data: any = await response.json();
+  //       setCountry(data.country);
+  //     } catch (error) {
+  //       console.error('Error fetching country information:', error);
+  //     }
+  //   };
+
+  //   fetchCountry();
+  // }, []);
+
   useEffect(() => {
     if (error) {
       const myError = error as SerializedError;
@@ -89,12 +106,8 @@ export default function RegisterForm() {
     city: Yup.string()
       .required('Required!')
       .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, 'No spaces allowed'),
-    postalCode: Yup.string()
-      .required('Required!')
-      .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, 'No spaces allowed'),
-    address: Yup.string()
-      .required('Required!')
-      .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, 'No spaces allowed'),
+    postalCode: Yup.string().required('Required!'),
+    address: Yup.string().required('Required!'),
     isAgree: Yup.string().required('Required!'),
     password: Yup.string().required('Required!').min(8, 'At least 8 characters long!'),
   });
@@ -233,3 +246,23 @@ const getOptionLabel = (option: any): any => (
     <span className="ml-2">{option.label}</span>
   </div>
 );
+
+const getUserLocation = () => {
+  return new Promise((resolve, reject) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    } else {
+      reject(new Error('Geolocation is not supported by this browser.'));
+    }
+  });
+};

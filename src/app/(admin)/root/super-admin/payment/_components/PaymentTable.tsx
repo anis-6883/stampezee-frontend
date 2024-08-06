@@ -123,7 +123,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
 
     const totalCouponDiscount = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
       if (item?.couponSnapshot?.discount) {
-        if (item?.couponSnapshot?.discountType) {
+        if (item?.couponSnapshot?.discountType === 'percentage') {
           return acc + (item?.planSnapshot?.price * item?.couponSnapshot?.discount) / 100;
         } else {
           return acc + item?.couponSnapshot?.discount;
