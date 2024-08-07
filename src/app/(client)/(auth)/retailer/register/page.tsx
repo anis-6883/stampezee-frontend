@@ -23,9 +23,12 @@ export default async function Page() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100 text-gray-900">
       <div className="m-10 w-full rounded-lg bg-white shadow md:max-w-2xl">
         <div className="p-5">
-          <Link href="/">
-            <img src="/images/logo.png" className="mx-auto w-24" alt="logo" />
-          </Link>
+          <div className="mx-auto w-24">
+            <Link href="/">
+              <img src="/images/logo.png" alt="logo" />
+            </Link>
+          </div>
+
           <div className="mt-4 px-3">
             <h1 className="text-center text-xl font-bold xl:text-xl">Store Registration</h1>
 

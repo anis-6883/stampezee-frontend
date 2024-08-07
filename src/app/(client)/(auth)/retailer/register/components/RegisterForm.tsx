@@ -8,6 +8,7 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerRegisterMutation } from '@/features/auth/authApi';
 import { setAccessToken } from '@/features/auth/authSlice';
 import { ICountrySelect } from '@/types';
+import { getCountryByTimezone, getPhoneCodeByTimezone } from '@/utils/get-country-by-timezone';
 import countryData from '@/utils/get-country-list';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
@@ -28,22 +29,11 @@ export default function RegisterForm() {
   const [register, { data: registerResponse, isSuccess, error }] = useRetailerRegisterMutation();
   const dispatch = useDispatch();
 
-  // const [country, setCountry] = useState('');
+  const [countryInfo, setCountryInfo] = useState({ country: '', dialCode: '' });
 
-  // useEffect(() => {
-  //   const fetchCountry = async () => {
-  //     try {
-  //       const { latitude, longitude } : any = await getUserLocation();
-  //       const response = await fetch(`/api/getCountryFromCoords?latitude=${latitude}&longitude=${longitude}`);
-  //       const data: any = await response.json();
-  //       setCountry(data.country);
-  //     } catch (error) {
-  //       console.error('Error fetching country information:', error);
-  //     }
-  //   };
-
-  //   fetchCountry();
-  // }, []);
+  useEffect(() => {
+    setCountryInfo({ country: getCountryByTimezone(), dialCode: getPhoneCodeByTimezone() });
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -73,9 +63,9 @@ export default function RegisterForm() {
     firstName: '',
     lastName: '',
     email: '',
-    dialCode: '+1',
+    dialCode: countryInfo?.dialCode,
     phone: '',
-    country: 'Canada',
+    country: countryInfo?.country,
     province: '',
     city: '',
     postalCode: '',
@@ -120,7 +110,7 @@ export default function RegisterForm() {
   return (
     <div>
       <div className="mt-8">
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+        <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
           {({ errors, setFieldValue, touched, setFieldTouched, values }) => {
             return (
               <Form className="grid gap-4">
@@ -157,15 +147,28 @@ export default function RegisterForm() {
                         <span className="text-red-500"> *</span>
                       </p>
                     </div>
-                    <ReactSelect
-                      placeholder="Select your country"
-                      options={countryOptions}
-                      getOptionLabel={getOptionLabel}
-                      getOptionValue={(option) => option.label}
-                      defaultValue={countryOptions.filter((country) => country.label === 'Canada')}
-                      onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => setFieldValue('country', selectedOption?.label)}
-                      onBlur={() => setFieldTouched('country', true)}
-                    />
+                    {countryInfo?.country && (
+                      <ReactSelect
+                        placeholder="Select your country"
+                        options={countryOptions}
+                        getOptionLabel={getOptionLabel}
+                        getOptionValue={(option) => option.label}
+                        defaultValue={countryOptions.filter((country) => country.label === countryInfo?.country)}
+                        onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => setFieldValue('country', selectedOption?.label)}
+                        onBlur={() => setFieldTouched('country', true)}
+                      />
+                    )}
+                    {countryInfo?.country === '' && (
+                      <ReactSelect
+                        placeholder="Select your country"
+                        options={countryOptions}
+                        getOptionLabel={getOptionLabel}
+                        getOptionValue={(option) => option.label}
+                        defaultValue={countryOptions.filter((country) => country.label === 'Canada')}
+                        onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => setFieldValue('country', selectedOption?.label)}
+                        onBlur={() => setFieldTouched('country', true)}
+                      />
+                    )}
                     {touched.country && errors.country && <FieldError error={errors.country} className="text-xs text-red-600" />}
                   </div>
                 </div>
@@ -198,11 +201,11 @@ export default function RegisterForm() {
                     />{' '}
                     <p className="text-xs font-medium">
                       I Agree with the{' '}
-                      <Link href="/retailer/login" className="border-b-2">
+                      <Link href="/terms" className="border-b-2">
                         Terms of Use
                       </Link>{' '}
                       and{' '}
-                      <Link href="/retailer/login" className="border-b-2">
+                      <Link href="/privacy-policy" className="border-b-2">
                         Privacy Policy
                       </Link>
                     </p>
@@ -246,23 +249,3 @@ const getOptionLabel = (option: any): any => (
     <span className="ml-2">{option.label}</span>
   </div>
 );
-
-const getUserLocation = () => {
-  return new Promise((resolve, reject) => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          resolve({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    } else {
-      reject(new Error('Geolocation is not supported by this browser.'));
-    }
-  });
-};
