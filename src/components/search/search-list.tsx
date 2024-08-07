@@ -16,7 +16,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
 
   let menuItemsFiltered = pageLinks[role];
   if (searchText.length > 0) {
-    menuItemsFiltered = pageLinks.filter((item: any) => {
+    menuItemsFiltered = menuItemsFiltered?.filter((item: any) => {
       const label = item.name;
       return label.match(searchText.toLowerCase()) || (label.toLowerCase().match(searchText.toLowerCase()) && label);
     });
