@@ -3,10 +3,11 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
+import { SerializedError } from '@/features/api/apiSlice';
 import {
   useActivateBranchMutation,
-  useConvertToAddOnBranchMutation,
   useAllBranchQuery,
+  useConvertToAddOnBranchMutation,
   useDeleteBranchMutation,
   useRenewBranchMutation,
   useUpdateBranchStatusMutation,
@@ -23,16 +24,15 @@ import toast from 'react-hot-toast';
 import { FcLock, FcUnlock } from 'react-icons/fc';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
-import { SiConvertio } from 'react-icons/si';
 import { IoPower } from 'react-icons/io5';
 import { MdAutorenew } from 'react-icons/md';
+import { SiConvertio } from 'react-icons/si';
 import { Badge, Switch } from 'rizzui';
 import ActivateConfirmModal from '../../../_components/ActivateConfirmModal';
+import ConvertToAddOnModal from '../../../_components/ConvertToAddOnModal';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import RenewConfirmModal from '../../../_components/RenewConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
-import ConvertToAddOnModal from '../../../_components/ConvertToAddOnModal';
-import { SerializedError } from '@/features/api/apiSlice';
 
 export default function BranchTable({ offset }: { offset: number }) {
   const { data: session }: any = useSession();
@@ -329,6 +329,7 @@ export default function BranchTable({ offset }: { offset: number }) {
         setQuery={setQuery}
         query={query}
         searchPlaceHolder="Search By Name"
+        enableRowNumbers={true}
       />
 
       <ActivateConfirmModal

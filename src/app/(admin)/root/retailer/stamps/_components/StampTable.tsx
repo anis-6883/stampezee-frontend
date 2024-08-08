@@ -3,19 +3,28 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
-import { useDeleteStampMutation, useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
+import { useDeleteStampMutation, useGetAllStampsQuery, usePublishStampMutation } from '@/features/retailer/stamp/stampApi';
 import { IQueryType } from '@/types';
+import { convertDateByOffset } from '@/utils/getFormatDate';
+import _ from 'lodash';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { ImBin } from 'react-icons/im';
+import { IoCheckmarkCircle } from 'react-icons/io5';
+import { Badge } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
+import StampPublishedModal from './StampPublishedModal';
 
-export default function StampTable() {
+export default function StampTable({ offset }: { offset: number }) {
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
+
+  const [publishState, setPublishState] = useState(false);
+  const [publishId, setPublishId] = useState(null);
+  const [publishSubmitting, setPublishSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllStampsQuery({
@@ -25,12 +34,19 @@ export default function StampTable() {
   });
 
   const [deleteStamp, { isSuccess, isError }] = useDeleteStampMutation();
+  const [publishStamp, { isSuccess: publishStampSuccess, isError: publishStampError }] = usePublishStampMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
     setDeleteId(rowData._id);
   };
 
+  const handlePublishStamp = async (rowData: any) => {
+    setPublishState(true);
+    setPublishId(rowData?._id);
+  };
+
+  // delete handler
   useEffect(() => {
     if (isError) {
       setDeleteSubmitting(false);
@@ -46,34 +62,80 @@ export default function StampTable() {
     }
   }, [isSuccess, isError]);
 
+  // publish handler
+  useEffect(() => {
+    if (publishStampError) {
+      setPublishSubmitting(false);
+      toast.error('Something went wrong. Please try again!');
+    }
+    if (publishStampSuccess) {
+      setPublishSubmitting(false);
+      toast.success('Stamp Published successfully!');
+    }
+  }, [publishStampSuccess, publishStampError]);
+
   const structure = [
+    // {
+    //   header: 'Title',
+    //   accessorKey: 'title',
+    //   size: 300,
+    // },
+    // {
+    //   header: 'Stamp Image',
+    //   accessorKey: 'stampImage',
+    //   Cell: ({ row }: any) => (
+    //     <div>
+    //       <img
+    //         src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.stampImage?.image}`}
+    //         width={50}
+    //         height={50}
+    //         alt="Picture of the author"
+    //       />
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   header: 'Branch',
+    //   accessorKey: 'branch.name',
+    // },
+
+    // {
+    //   header: 'Category',
+    //   accessorKey: 'category.name',
+    // },
     {
-      header: 'Title',
-      accessorKey: 'title',
-      size: 300,
-    },
-    {
-      header: 'Stamp Image',
-      accessorKey: 'stampImage',
+      header: 'Info',
+      accessorKey: 'image',
       Cell: ({ row }: any) => (
-        <div>
-          <img
-            src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.stampImage?.image}`}
-            width={50}
-            height={50}
-            alt="Picture of the author"
-          />
+        <div className="flex gap-2">
+          <div>
+            {row.original?.stampImage?.image ? (
+              <div>
+                <img
+                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original?.stampImage?.image}`}
+                  alt="image"
+                  className="h-full w-12 rounded"
+                />
+              </div>
+            ) : (
+              <img src={'/images/profile.png'} alt="image" className="h-full w-20 rounded" />
+            )}
+          </div>
+          <div>
+            <div className="text-md mx-auto text-start">
+              <p>
+                <span className="font-bold">Title:</span> {row?.original.title}
+              </p>
+              <p>
+                <span className="font-bold">Category:</span> {row?.original?.category?.name}
+              </p>
+              <p>
+                <span className="font-bold">Branch:</span> {row?.original?.branch?.name}
+              </p>
+            </div>
+          </div>
         </div>
       ),
-    },
-    {
-      header: 'Branch',
-      accessorKey: 'branch.name',
-    },
-
-    {
-      header: 'Category',
-      accessorKey: 'category.name',
     },
     {
       header: 'Reward',
@@ -83,15 +145,70 @@ export default function StampTable() {
       ),
     },
     {
-      header: 'Actions',
+      header: 'Validity Date',
+      Cell: ({ row }: any) => {
+        return row?.original?.hasValidity ? (
+          <div className="text-md mx-auto text-start">
+            <p>
+              <span className="font-bold">Started At:</span> {convertDateByOffset(row?.original?.startedAt, offset)}
+            </p>
+            <p>
+              <span className="font-bold">Expired At:</span> {convertDateByOffset(row?.original?.expiredAt, offset)}
+            </p>
+          </div>
+        ) : (
+          <div className="text-md mx-auto text-start font-bold">No Expiration</div>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'start',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+      size: 300,
+    },
+    {
+      header: 'Publish Status',
+      accessorKey: 'isPublished',
       Cell: ({ row }: any) => (
-        <div className="flex gap-2">
-          <Link href={routes.retailer.stamp.edit(row.original._id)}>
-            <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
-          </Link>
-          <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+        <div className="flex items-center justify-center gap-2">
+          <div className="text-white">
+            {!row?.original?.isPublished ? (
+              <Button onClick={() => handlePublishStamp(row?.original)} color="danger" text="Published" />
+            ) : (
+              <Badge className="!bg-success">
+                <IoCheckmarkCircle className="text-xl" /> {_.capitalize('published')}
+              </Badge>
+            )}
+          </div>
         </div>
       ),
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
+    {
+      header: 'Actions',
+      Cell: ({ row }: any) => {
+        return row?.original?.isPublished ? (
+          <div className="flex gap-2">
+            <Button disabled color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+
+            <Button disabled color="danger" preIcon={<ImBin className="text-base" />} />
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <Link href={routes.retailer.stamp.edit(row.original._id)}>
+              <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+            </Link>
+            <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+          </div>
+        );
+      },
     },
   ];
 
@@ -119,6 +236,15 @@ export default function StampTable() {
         setQuery={setQuery}
         query={query}
         searchPlaceHolder="Search by Title"
+      />
+
+      <StampPublishedModal
+        publishId={publishId}
+        publishHandler={publishStamp}
+        modalState={publishState}
+        setModalState={setPublishState}
+        isSubmitting={publishSubmitting}
+        setIsSubmitting={setPublishSubmitting}
       />
 
       <DeleteConfirmModal

@@ -44,6 +44,7 @@ export default function Create() {
     discountReward: 0,
     validDateRange: '',
     status: true,
+    hasValidity: true,
   };
 
   useEffect(() => {
@@ -60,8 +61,12 @@ export default function Create() {
       const changedData = getChangedFormData(values, initialValues, ['validDateRange']);
 
       changedData.rewardType = values.rewardType;
-      changedData.startedAt = values?.validDateRange?.split('to')[0];
-      changedData.expiredAt = values?.validDateRange?.split('to')[1];
+      if (values.hasValidity) {
+        changedData.startedAt = values?.validDateRange?.split('to')[0];
+        changedData.expiredAt = values?.validDateRange?.split('to')[1];
+      }
+      changedData.isPublished = false;
+      changedData.hasValidity = values.hasValidity;
 
       const result = await createStamp(changedData).unwrap();
       router.push(routes.retailer.stamp.home);
@@ -79,6 +84,7 @@ export default function Create() {
     categoryId: Yup.string().required('Required!'),
     title: Yup.string().required('Required!'),
     rules: Yup.string().required('Required!'),
+    hasValidity: Yup.boolean().required('Required!'),
     noOfStampsToCollect: Yup.number().min(1, 'Number of stamps to collect must be at least 1').required('This field is required'),
     rewardType: Yup.mixed().oneOf(['promotion', 'discount']).required('Reward type is required'),
     promotionReward: Yup.string().when('rewardType', {
@@ -91,7 +97,7 @@ export default function Create() {
       then: () => Yup.number().required('Required!'),
       otherwise: () => Yup.number(),
     }),
-    validDateRange: Yup.string().required('Required!'),
+    // validDateRange: Yup.string().required('Required!'),
   });
 
   return (
@@ -149,11 +155,28 @@ export default function Create() {
                 </div>
               </div>
 
-              <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
+              <div className="grid grid-cols-2 gap-x-5">
+                <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
+                <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
+              </div>
 
               <div className="grid grid-cols-2 gap-x-5">
-                <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
-                <DateRangePicker label="Valid Date Range" name="validDateRange" />
+                <div>
+                  <SelectField
+                    name="hasValidity"
+                    label="Validity Period"
+                    value={values?.hasValidity}
+                    options={[
+                      { id: 1, name: 'no expiration', value: false },
+                      { id: 2, name: 'expiration', value: true },
+                    ].map((item: any) => ({
+                      label: _.startCase(_.toLower(item.name)),
+                      value: item.value,
+                    }))}
+                    onChange={(option: { label: string; value: boolean }) => setFieldValue('hasValidity', option.value)}
+                  />
+                </div>
+                {values?.hasValidity && <DateRangePicker label="Valid Date Range" name="validDateRange" />}
               </div>
 
               <div className="grid grid-cols-2 gap-x-5">
