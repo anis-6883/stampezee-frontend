@@ -4,7 +4,7 @@ import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
 import Link from 'next/link';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { PiFileTextDuotone, PiMagnifyingGlassBold, PiXBold } from 'react-icons/pi';
+import { PiMagnifyingGlassBold, PiXBold } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 import { ActionIcon, Button, Empty, Input, SearchNotFoundIcon, Title } from 'rizzui';
 import { pageLinks } from './page-links.data';
@@ -76,7 +76,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
           )}
         </>
 
-        {menuItemsFiltered.map((item: { name: string; href?: string }, index: number) => {
+        {menuItemsFiltered.map((item: { name: string; href?: string; icon: any }, index: number) => {
           return (
             <Fragment key={item.name + '-' + index}>
               {item.href ? (
@@ -85,7 +85,8 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
                   className="relative my-0.5 flex items-center rounded-lg px-3 py-2 text-sm hover:bg-gray-100 focus:outline-none focus-visible:bg-gray-100 dark:hover:bg-gray-50/50 dark:hover:backdrop-blur-lg"
                 >
                   <span className="inline-flex items-center justify-center rounded-md border border-gray-300 p-2 text-gray-500">
-                    <PiFileTextDuotone className="h-5 w-5" />
+                    {/* <PiFileTextDuotone className="h-5 w-5" /> */}
+                    {item?.icon}
                   </span>
 
                   <span className="ms-3 grid gap-0.5">

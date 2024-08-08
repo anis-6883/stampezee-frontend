@@ -1,6 +1,7 @@
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
+import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import Link from 'next/link';
 import { HiPlus } from 'react-icons/hi2';
 import Button from '../../../../../components/Formik/Button';
@@ -21,7 +22,8 @@ const pageHeader = {
 
 export const metadata = { ...metaObject(pageHeader.title) };
 
-export default function Page() {
+export default async function Page() {
+  const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
@@ -32,7 +34,7 @@ export default function Page() {
         </Link>
       </div>
 
-      <StampTable />
+      <StampTable offset={data?.data?.general?.timezone?.value} />
     </>
   );
 }

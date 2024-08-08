@@ -39,8 +39,11 @@ export default function Update({ Id, offset }: any) {
       setSubmitting(true);
 
       const changedData = getChangedFormData(values, initialValues, ['_id', 'validDateRange']);
-      changedData.startedAt = values?.validDateRange?.split('to')[0];
-      changedData.expiredAt = values?.validDateRange?.split('to')[1];
+      if (values.hasValidity) {
+        changedData.startedAt = values?.validDateRange?.split('to')[0];
+        changedData.expiredAt = values?.validDateRange?.split('to')[1];
+      }
+      changedData.hasValidity = values.hasValidity;
 
       const result = await updateStamp({ formData: changedData, id: Id }).unwrap();
       router.push(routes.retailer.stamp.home);
@@ -64,6 +67,7 @@ export default function Update({ Id, offset }: any) {
     rewardType: stampData?.data?.rewardType ? stampData?.data?.rewardType : '',
     promotionReward: stampData?.data?.promotionReward ? stampData?.data?.promotionReward : '',
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
+    hasValidity: stampData?.data?.hasValidity,
     validDateRange:
       `${getFormattedDate(stampData?.data?.startedAt, offset)} to ${getFormattedDate(stampData?.data?.expiredAt, offset)}` || '',
   };
@@ -126,11 +130,28 @@ export default function Update({ Id, offset }: any) {
                 />
               </div>
 
-              <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
+              <div className="grid grid-cols-2 gap-x-5">
+                <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
+                <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
+              </div>
 
               <div className="grid grid-cols-2 gap-x-5">
-                <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
-                <DateRangePicker label="Valid Date Range" name="validDateRange" />
+                <div>
+                  <SelectField
+                    name="hasValidity"
+                    label="Validity Period"
+                    value={values?.hasValidity}
+                    options={[
+                      { id: 1, name: 'no expiration', value: false },
+                      { id: 2, name: 'expiration', value: true },
+                    ].map((item: any) => ({
+                      label: _.startCase(_.toLower(item.name)),
+                      value: item.value,
+                    }))}
+                    onChange={(option: { label: string; value: boolean }) => setFieldValue('hasValidity', option.value)}
+                  />
+                </div>
+                {values?.hasValidity && <DateRangePicker label="Valid Date Range" name="validDateRange" />}
               </div>
 
               <div className="grid grid-cols-2 gap-x-5">
