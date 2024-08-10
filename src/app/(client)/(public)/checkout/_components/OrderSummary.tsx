@@ -88,7 +88,7 @@ export default function OrderSummary({ stripeInfo }: any) {
             value: { ...user, ...profile?.data },
           })
         );
-        push(routes.retailer.dashboard);
+        push(routes.privateRoutes.retailer.dashboard);
       } else {
         if (checkOutResponse?.data?.url) {
           push(checkOutResponse?.data?.url);
@@ -101,7 +101,7 @@ export default function OrderSummary({ stripeInfo }: any) {
               value: { ...user, ...profile?.data },
             })
           );
-          push(routes.retailer.dashboard);
+          push(routes.privateRoutes.retailer.dashboard);
           setSelectedBranches([]);
         }
       }

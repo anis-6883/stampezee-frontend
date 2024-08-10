@@ -12,7 +12,7 @@ const pageHeader = {
   title: 'Manage Branches',
   breadcrumb: [
     {
-      href: routes.retailer.dashboard,
+      href: routes.privateRoutes.retailer.dashboard,
       name: 'Dashboard',
     },
     {
@@ -31,7 +31,7 @@ export default async function Page() {
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
       <div className="mb-5 flex justify-between">
         <StatusIndicator />
-        <Link href={routes.retailer.branch.create}>
+        <Link href={routes.privateRoutes.retailer.branch.create}>
           <Button className="!m-0" color="danger" text="Add New Branch" preIcon={<HiPlus className="text-base" />} />
         </Link>
       </div>

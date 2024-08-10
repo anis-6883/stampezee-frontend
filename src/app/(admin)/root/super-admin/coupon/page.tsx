@@ -8,7 +8,7 @@ const pageHeader = {
   title: 'Manage Coupons',
   breadcrumb: [
     {
-      href: routes.superAdmin.dashboard,
+      href: routes.privateRoutes.superAdmin.dashboard,
       name: 'Dashboard',
     },
     {

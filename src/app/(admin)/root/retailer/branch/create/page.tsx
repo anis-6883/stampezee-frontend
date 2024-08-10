@@ -7,11 +7,11 @@ const pageHeader = {
   title: 'Add New Branch',
   breadcrumb: [
     {
-      href: routes.retailer.dashboard,
+      href: routes.privateRoutes.retailer.dashboard,
       name: 'Dashboard',
     },
     {
-      href: routes.retailer.branch.home,
+      href: routes.privateRoutes.retailer.branch.home,
       name: 'Branches',
     },
     {

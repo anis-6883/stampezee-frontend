@@ -7,7 +7,7 @@ const pageHeader = {
   title: 'Manage Profile',
   breadcrumb: [
     {
-      href: routes.retailer.dashboard,
+      href: routes.privateRoutes.retailer.dashboard,
       name: 'Dashboard',
     },
     {

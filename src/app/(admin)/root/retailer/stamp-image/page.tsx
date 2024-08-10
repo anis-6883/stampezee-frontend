@@ -4,10 +4,10 @@ import { metaObject } from '@/config/site.config';
 import StampsImageTable from './_components/StampsImageTable';
 
 const pageHeader = {
-  title: 'Manage Stamps Image',
+  title: 'Manage Custom Stamp Image',
   breadcrumb: [
     {
-      href: routes.retailer.dashboard,
+      href: routes.privateRoutes.retailer.dashboard,
       name: 'Dashboard',
     },
     {

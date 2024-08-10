@@ -7,7 +7,7 @@ const pageHeader = {
   title: 'Manage Customers',
   breadcrumb: [
     {
-      href: routes.retailer.dashboard,
+      href: routes.privateRoutes.retailer.dashboard,
       name: 'Dashboard',
     },
     {

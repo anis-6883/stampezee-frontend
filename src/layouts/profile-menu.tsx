@@ -34,10 +34,10 @@ function DropdownMenu({
 
     await signOut({
       redirect: false,
-      callbackUrl: role === 'super_admin' ? routes.superAdmin.login : routes.retailer.login,
+      callbackUrl: role === 'super_admin' ? routes.publicRoutes.superAdminLogin : routes.publicRoutes.retailerLogin,
     });
 
-    replace(role === 'super_admin' ? routes.superAdmin.login : routes.retailer.login);
+    replace(role === 'super_admin' ? routes.publicRoutes.superAdminLogin : routes.publicRoutes.retailerLogin);
   };
 
   let fullName = user?.firstName + ' ' + user?.lastName;

@@ -42,7 +42,7 @@ export default function Create() {
     minPurchaseAmount: 0,
     rewardType: 'discount',
     promotionReward: '',
-    discountReward: 0,
+    discountReward: 2,
     validDateRange: '',
     status: true,
     hasValidity: true,
@@ -68,9 +68,10 @@ export default function Create() {
       }
       changedData.isPublished = false;
       changedData.hasValidity = values.hasValidity;
+      changedData.discountReward = values?.discountReward;
 
       const result = await createStamp(changedData).unwrap();
-      router.push(routes.retailer.stamp.home);
+      router.push(routes.privateRoutes.retailer.stamp.home);
       toast.success(result.data.message || 'Stamp created successfully!');
     } catch (error: any) {
       console.error('Failed to create Stamp:', error);
@@ -95,7 +96,7 @@ export default function Create() {
     }),
     discountReward: Yup.string().when('rewardType', {
       is: 'discount',
-      then: () => Yup.number().required('Required!'),
+      then: () => Yup.number().required('Required!').min(1, 'Discount must be greater than zero!'),
       otherwise: () => Yup.number(),
     }),
     // validDateRange: Yup.string().required('Required!'),

@@ -29,15 +29,15 @@ const middleware = withAuth(
     const pathname = request.nextUrl.pathname;
 
     if (!token && (superAdminProtectedRoutes.includes(pathname) || retailerProtectedRoutes.includes(pathname))) {
-      return NextResponse.redirect(new URL(routes.retailer.login, request.nextUrl));
+      return NextResponse.redirect(new URL(routes.publicRoutes.retailerLogin, request.nextUrl));
     }
 
     if (token && token?.role === ROLE.RETAILER && superAdminProtectedRoutes.includes(pathname)) {
-      return NextResponse.redirect(new URL(routes.retailer.dashboard, request.nextUrl));
+      return NextResponse.redirect(new URL(routes.privateRoutes.retailer.dashboard, request.nextUrl));
     }
 
     if (token && token?.role === ROLE.SUPER_ADMIN && retailerProtectedRoutes.includes(pathname)) {
-      return NextResponse.redirect(new URL(routes.superAdmin.dashboard, request.nextUrl));
+      return NextResponse.redirect(new URL(routes.privateRoutes.superAdmin.dashboard, request.nextUrl));
     }
   },
   {
