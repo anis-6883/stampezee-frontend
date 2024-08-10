@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { LuCircleDollarSign } from 'react-icons/lu';
+import { RiDiscountPercentLine } from 'react-icons/ri';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 
@@ -209,7 +210,13 @@ export default function Create() {
                 </div>
 
                 {values.rewardType === 'discount' && (
-                  <InputField name="discountReward" label="Discount Reward" placeholder="Ex. Get 1 Coke" type="number" />
+                  <InputField
+                    name="discountReward"
+                    label="Discount Reward"
+                    placeholder="Ex. Get 1 Coke"
+                    type="number"
+                    prefix={<RiDiscountPercentLine className="text-xl" />}
+                  />
                 )}
                 {values.rewardType === 'promotion' && (
                   <InputField name="promotionReward" label="Promotion Reward" placeholder="Ex. Get 1 Coke" />
@@ -227,7 +234,7 @@ export default function Create() {
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
                       key={item?._id}
-                      className="flex h-[150px] w-[150px] rounded bg-white p-6 shadow-md"
+                      className="flex w-[150px] rounded bg-white px-6 py-3 shadow-md"
                     >
                       <div>
                         <img className="object-center" src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
@@ -261,12 +268,12 @@ export default function Create() {
               {responseIsLoading ? (
                 <StampImgSkeleton />
               ) : (
-                <div className="flex w-full flex-wrap justify-center gap-3 md:justify-center lg:justify-start">
+                <div className="flex w-full flex-wrap justify-center gap-4 md:justify-center lg:justify-start">
                   {optionsData?.customImages?.map((item: any) => (
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
                       key={item?._id}
-                      className="flex h-[150px] w-[150px] rounded bg-white p-6 shadow-md"
+                      className="flex w-[150px] rounded bg-white px-6 py-3 shadow-md"
                     >
                       <div>
                         <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />

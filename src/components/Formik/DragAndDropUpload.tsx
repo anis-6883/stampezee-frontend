@@ -80,7 +80,7 @@ export default function DragAndDropUpload({
   };
 
   return (
-    <div className={className}>
+    <div {...getRootProps({ className: className })}>
       <input {...getInputProps()} />
       {value && preview ? (
         <div className="relative flex items-center gap-3">
@@ -111,7 +111,7 @@ export default function DragAndDropUpload({
             isRounded && 'h-[120px] w-[120px] gap-0 rounded-full'
           )}
         >
-          <div {...getRootProps({ className: className })}>
+          <div className={className}>
             <MdCloudUpload className={cn('text-4xl text-danger', isRounded && 'text-4xl')} />
           </div>
 

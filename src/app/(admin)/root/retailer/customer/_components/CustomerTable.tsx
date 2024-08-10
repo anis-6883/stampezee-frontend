@@ -2,9 +2,12 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import { routes } from '@/config/routes';
 import { useGetAllCustomerQuery } from '@/features/retailer/customer/customerApi';
 import { useDeleteSubAdminMutation, useUpdateSubAdminStatusMutation } from '@/features/retailer/sub-admin/subAdminApi';
 import { IQueryType } from '@/types';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
@@ -13,6 +16,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 
 export default function CustomerTable() {
+  const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
   const [createState, setCreateState] = useState(false);
@@ -47,6 +51,10 @@ export default function CustomerTable() {
       setDeleteId(null);
     }
   }, [isSuccess, isError]);
+
+  if (!session?.user?.plan) {
+    return redirect(routes.privateRoutes.retailer.dashboard);
+  }
 
   const structure = [
     {

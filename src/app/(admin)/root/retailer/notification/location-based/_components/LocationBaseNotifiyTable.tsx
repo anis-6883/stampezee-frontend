@@ -3,15 +3,19 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { routes } from '@/config/routes';
 import { useGetAllNotificationQuery } from '@/features/retailer/notification/notificationApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
 import { IoAlarmOutline } from 'react-icons/io5';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function LocationBaseNotifyTable({ offset }: { offset: number }) {
+  const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
@@ -22,6 +26,10 @@ export default function LocationBaseNotifyTable({ offset }: { offset: number }) 
     type: 'location',
     ...searchQuery,
   });
+
+  if (session?.user?.totalLocationNotification === 0) {
+    redirect(routes?.privateRoutes?.retailer?.dashboard);
+  }
 
   const structure = [
     {

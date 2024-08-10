@@ -82,10 +82,10 @@ export default function Footer() {
                 <div className="mt-4 font-medium">
                   <div className="block text-lg font-bold">Contact</div>
                   <div className="MuiStack-root css-yd8sa2 flex flex-col">
-                    <Link className="mt-4 w-fit font-medium" href="/terms-and-conditions/">
+                    <Link className="mt-4 w-fit font-medium" href="/terms" target="_blank">
                       T&amp;C
                     </Link>
-                    <Link className="mt-4 w-fit font-medium" href="/privacy/">
+                    <Link className="mt-4 w-fit font-medium" href="/privacy-policy" target="_blank">
                       PRIVACY POLICY
                     </Link>
                     <Link className="mt-4 w-fit font-medium" href={routes.publicRoutes.contactUs}>

@@ -3,11 +3,18 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
-import { useDeleteStampMutation, useGetAllStampsQuery, usePublishStampMutation } from '@/features/retailer/stamp/stampApi';
+import {
+  useDeleteStampMutation,
+  useGetAllStampsQuery,
+  usePublishStampMutation,
+  useUpdateStampStatusMutation,
+} from '@/features/retailer/stamp/stampApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
@@ -15,9 +22,11 @@ import { ImBin } from 'react-icons/im';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
+import SwitchButton from '../../../_components/SwitchButton';
 import StampPublishedModal from './StampPublishedModal';
 
 export default function StampTable({ offset }: { offset: number }) {
+  const { data: session }: any = useSession();
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
@@ -34,6 +43,7 @@ export default function StampTable({ offset }: { offset: number }) {
   });
 
   const [deleteStamp, { isSuccess, isError }] = useDeleteStampMutation();
+  const [updateStampStatus] = useUpdateStampStatusMutation();
   const [publishStamp, { isSuccess: publishStampSuccess, isError: publishStampError }] = usePublishStampMutation();
 
   const handleDelete = async (rowData: any) => {
@@ -74,35 +84,11 @@ export default function StampTable({ offset }: { offset: number }) {
     }
   }, [publishStampSuccess, publishStampError]);
 
-  const structure = [
-    // {
-    //   header: 'Title',
-    //   accessorKey: 'title',
-    //   size: 300,
-    // },
-    // {
-    //   header: 'Stamp Image',
-    //   accessorKey: 'stampImage',
-    //   Cell: ({ row }: any) => (
-    //     <div>
-    //       <img
-    //         src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.stampImage?.image}`}
-    //         width={50}
-    //         height={50}
-    //         alt="Picture of the author"
-    //       />
-    //     </div>
-    //   ),
-    // },
-    // {
-    //   header: 'Branch',
-    //   accessorKey: 'branch.name',
-    // },
+  if (!session?.user?.plan) {
+    return redirect(routes.privateRoutes.retailer.dashboard);
+  }
 
-    // {
-    //   header: 'Category',
-    //   accessorKey: 'category.name',
-    // },
+  const structure = [
     {
       header: 'Info',
       accessorKey: 'image',
@@ -169,7 +155,7 @@ export default function StampTable({ offset }: { offset: number }) {
       size: 300,
     },
     {
-      header: 'Publish Status',
+      header: 'Publish',
       accessorKey: 'isPublished',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
@@ -192,13 +178,25 @@ export default function StampTable({ offset }: { offset: number }) {
       },
     },
     {
+      header: 'Status',
+      accessorKey: 'status',
+      Cell: ({ row }: any) => {
+        return <SwitchButton updateStatus={updateStampStatus} id={row?.original?._id} status={row?.original?.status} />;
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
+    {
       header: 'Actions',
       Cell: ({ row }: any) => {
         return row?.original?.isPublished ? (
           <div className="flex gap-2">
             <Button disabled color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
-
-            <Button disabled color="danger" preIcon={<ImBin className="text-base" />} />
+            <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
           </div>
         ) : (
           <div className="flex gap-2">
