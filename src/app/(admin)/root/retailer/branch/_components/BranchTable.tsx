@@ -286,7 +286,7 @@ export default function BranchTable({ offset }: { offset: number }) {
 
         return (
           <div className="flex items-center justify-center gap-2">
-            <Link href={routes.retailer.branch.edit(_id)}>
+            <Link href={routes.privateRoutes.retailer.branch.edit(_id)}>
               <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
             </Link>
             <Button

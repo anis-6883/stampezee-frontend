@@ -48,7 +48,7 @@ export default function ForgotPasswordForm({ currentTab }: { currentTab: number 
 
       if (forgetResponse?.status) {
         toast.success(forgetResponse?.message);
-        router.push(routes.retailer.login);
+        router.push(routes.publicRoutes.retailerLogin);
       } else {
         toast.error(forgetResponse?.message);
       }

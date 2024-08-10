@@ -101,7 +101,7 @@ export default function Sidebar({ className }: { className?: string }) {
           ((isMounted && windowScroll.y) as number) > 2 ? 'card-shadow' : ''
         )}
       >
-        <Link href={role === 'super_admin' ? routes.superAdmin.dashboard : routes.retailer.dashboard} aria-label="Site Logo">
+        <Link href={role === 'super_admin' ? routes.privateRoutes.superAdmin.dashboard : routes.retailer.dashboard} aria-label="Site Logo">
           <img src="/images/logo.png" width={80} height={50} alt="logo" className="m-auto pt-2" />
         </Link>
       </div>

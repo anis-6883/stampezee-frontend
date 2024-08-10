@@ -54,7 +54,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
         }
         if (callback?.ok && !callback?.error) {
           if (verifyResponse?.data?.role === ROLE.RETAILER) {
-            replace(routes.retailer.dashboard);
+            replace(routes.privateRoutes.retailer.dashboard);
           }
         }
       });

@@ -7,7 +7,7 @@ const pageHeader = {
   title: 'Manage Sub-Admins',
   breadcrumb: [
     {
-      href: routes.retailer.dashboard,
+      href: routes.privateRoutes.retailer.dashboard,
       name: 'Dashboard',
     },
     {

@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 
 const CouponForm = () => {
   const dispatch = useDispatch();
-  const { coupon, total, subscription, activeSubscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { coupon, total, subscription, activeSubscription, planChangeType } = useSelector((state: RootState) => state.subscriptionSlice);
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
   const [createCoupon, { data: couponResponse, error: couponError, isSuccess: couponSuccess }] = useCreateCouponMutation();
 
@@ -78,7 +78,14 @@ const CouponForm = () => {
             </div>
             <div className="col-span-5">
               <Button
-                disabled={activeSubscription?.slug == subscription?.slug || subscription?.slug === 'trial' || coupon ? true : false}
+                disabled={
+                  activeSubscription?.slug == subscription?.slug ||
+                  subscription?.slug === 'trial' ||
+                  coupon ||
+                  planChangeType === 'downgrade'
+                    ? true
+                    : false
+                }
                 color="danger"
                 text="Apply"
                 className="w-full"

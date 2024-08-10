@@ -56,7 +56,7 @@ export default function LoginForm() {
         if (callback?.ok && !callback?.error) {
           toast.success('Welcome to Admin Panel!');
           if (loginResponse?.data?.role === ROLE.SUPER_ADMIN) {
-            replace(routes.superAdmin.dashboard);
+            replace(routes.privateRoutes.superAdmin.dashboard);
           }
         }
       });

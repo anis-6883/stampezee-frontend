@@ -11,7 +11,7 @@ const pageHeader = {
   title: 'Manage Stamps',
   breadcrumb: [
     {
-      href: routes.retailer.dashboard,
+      href: routes.privateRoutes.retailer.dashboard,
       name: 'Dashboard',
     },
     {
@@ -29,7 +29,7 @@ export default async function Page() {
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
 
       <div className="mb-5 flex justify-end">
-        <Link href={routes.retailer.stamp.create}>
+        <Link href={routes.privateRoutes.retailer.stamp.create}>
           <Button color="danger" text="Add New Stamp" preIcon={<HiPlus className="text-base" />} />
         </Link>
       </div>

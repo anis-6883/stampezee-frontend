@@ -47,7 +47,7 @@ export default function Update({ Id, offset }: any) {
       changedData.hasValidity = values.hasValidity;
 
       const result = await updateStamp({ formData: changedData, id: Id }).unwrap();
-      router.push(routes.retailer.stamp.home);
+      router.push(routes.privateRoutes.retailer.stamp.home);
       toast.success(result.data.message ?? 'Stamp updated successfully!');
     } catch (error: any) {
       console.error('Failed to update Stamp:', error);

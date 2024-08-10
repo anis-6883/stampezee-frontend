@@ -15,8 +15,8 @@ export default async function Page() {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    if (session?.user?.role === ROLE.RETAILER) redirect(routes.retailer.dashboard);
-    if (session?.user?.role === ROLE.SUPER_ADMIN) redirect(routes.superAdmin.dashboard);
+    if (session?.user?.role === ROLE.RETAILER) redirect(routes.privateRoutes.retailer.dashboard);
+    if (session?.user?.role === ROLE.SUPER_ADMIN) redirect(routes.privateRoutes.superAdmin.dashboard);
   }
 
   return (

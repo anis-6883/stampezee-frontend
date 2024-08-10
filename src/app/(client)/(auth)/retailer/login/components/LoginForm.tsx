@@ -63,7 +63,7 @@ export default function LoginForm() {
             if (searchQuery === 'checkout') {
               replace(routes.privateRoutes.checkout);
             } else {
-              replace(routes.retailer.dashboard);
+              replace(routes.privateRoutes.retailer.dashboard);
             }
           }
         }

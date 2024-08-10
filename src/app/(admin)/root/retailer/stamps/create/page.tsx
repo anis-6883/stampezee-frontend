@@ -7,11 +7,11 @@ const pageHeader = {
   title: 'Create A Stamp',
   breadcrumb: [
     {
-      href: routes.retailer.dashboard,
+      href: routes.privateRoutes.retailer.dashboard,
       name: 'Dashboard',
     },
     {
-      href: routes.retailer.stamp.home,
+      href: routes.privateRoutes.retailer.stamp.home,
       name: 'Stamps',
     },
     {

@@ -50,7 +50,7 @@ export default function CreateBranch() {
     }
 
     if (isSuccess) {
-      router.push(routes.retailer.branch.home);
+      router.push(routes.privateRoutes.retailer.branch.home);
       toast.success('Branch created successfully!');
       setIsSubmitting(false);
     }

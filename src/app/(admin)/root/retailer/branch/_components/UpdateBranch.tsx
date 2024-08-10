@@ -80,7 +80,7 @@ export default function UpdateBranch({ branchId }: any) {
     }
 
     if (isSuccess) {
-      router.push(routes.retailer.branch.home);
+      router.push(routes.privateRoutes.retailer.branch.home);
       toast.success('Branch updated successfully!');
       setIsSubmitting(false);
     }

@@ -93,14 +93,14 @@ export default function StampTable({ offset }: { offset: number }) {
       header: 'Info',
       accessorKey: 'image',
       Cell: ({ row }: any) => (
-        <div className="flex gap-2">
+        <div className="flex items-center gap-3">
           <div>
             {row.original?.stampImage?.image ? (
               <div>
                 <img
                   src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original?.stampImage?.image}`}
                   alt="image"
-                  className="h-full w-12 rounded"
+                  className="h-full w-16 rounded"
                 />
               </div>
             ) : (
@@ -113,22 +113,38 @@ export default function StampTable({ offset }: { offset: number }) {
                 <span className="font-bold">Title:</span> {row?.original.title}
               </p>
               <p>
-                <span className="font-bold">Category:</span> {row?.original?.category?.name}
+                <span className="font-bold">Category:</span> {_.startCase(_.toLower(row?.original?.category?.name))}
               </p>
               <p>
                 <span className="font-bold">Branch:</span> {row?.original?.branch?.name}
+              </p>
+              <p>
+                <span className="font-bold">NoOfStampsToCollect:</span> {row?.original?.noOfStampsToCollect}
               </p>
             </div>
           </div>
         </div>
       ),
+      size: 250,
     },
     {
       header: 'Reward',
       accessorKey: 'rewardType',
       Cell: ({ row }: any) => (
-        <div>{row?.original?.rewardType === 'discount' ? `${row?.original?.discountReward}%` : row?.original?.promotionReward}</div>
+        <div className="text-md mx-auto text-start">
+          <p>
+            <span className="font-bold">Reward type:</span> {row?.original?.rewardType}
+          </p>
+          <p>
+            <span className="font-bold">Reward:</span>{' '}
+            {row?.original?.rewardType === 'discount' ? `${row?.original?.discountReward}%` : row?.original?.promotionReward}
+          </p>
+          <p>
+            <span className="font-bold">MinPurchaseAmount:</span> {row?.original?.minPurchaseAmount} CAD
+          </p>
+        </div>
       ),
+      size: 250,
     },
     {
       header: 'Validity Date',
@@ -158,10 +174,10 @@ export default function StampTable({ offset }: { offset: number }) {
       header: 'Publish',
       accessorKey: 'isPublished',
       Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center gap-2">
           <div className="text-white">
             {!row?.original?.isPublished ? (
-              <Button onClick={() => handlePublishStamp(row?.original)} color="danger" text="Published" />
+              <Button onClick={() => handlePublishStamp(row?.original)} color="danger" text="Publish Now" />
             ) : (
               <Badge className="!bg-success">
                 <IoCheckmarkCircle className="text-xl" /> {_.capitalize('published')}
@@ -170,12 +186,6 @@ export default function StampTable({ offset }: { offset: number }) {
           </div>
         </div>
       ),
-      mantineTableHeadCellProps: {
-        align: 'center',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
     },
     {
       header: 'Status',
@@ -184,10 +194,10 @@ export default function StampTable({ offset }: { offset: number }) {
         return <SwitchButton updateStatus={updateStampStatus} id={row?.original?._id} status={row?.original?.status} />;
       },
       mantineTableHeadCellProps: {
-        align: 'center',
+        align: 'start',
       },
       mantineTableBodyCellProps: {
-        align: 'center',
+        align: 'start',
       },
     },
     {
@@ -200,7 +210,7 @@ export default function StampTable({ offset }: { offset: number }) {
           </div>
         ) : (
           <div className="flex gap-2">
-            <Link href={routes.retailer.stamp.edit(row.original._id)}>
+            <Link href={routes.privateRoutes.retailer.stamp.edit(row.original._id)}>
               <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
             </Link>
             <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
