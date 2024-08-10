@@ -13,7 +13,7 @@ export const authOptions: NextAuthOptions = {
     maxAge: 60 * 60 * 24 * 30, // Expire in 30 Days
   },
   callbacks: {
-    async jwt(data) {
+    async jwt(data: any) {
       if (data?.account?.provider === 'credentials') {
         if (data?.user) {
           return {
@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
       }
 
       // Get Access Token
-      if (new Date().getTime() < data?.session?.expiresIn) return data?.token;
+      if (new Date().getTime() < data?.token?.expiresIn) return data?.token;
 
       return await getAccessToken(data?.token);
     },
