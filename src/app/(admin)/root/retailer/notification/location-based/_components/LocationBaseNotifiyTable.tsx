@@ -14,7 +14,7 @@ import { FaRegPaperPlane } from 'react-icons/fa';
 import { IoAlarmOutline } from 'react-icons/io5';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function LocationBaseNotifyTable({ offset }: { offset: number }) {
+export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { offset: number; googleMapsApiKey: string }) {
   const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
@@ -117,7 +117,13 @@ export default function LocationBaseNotifyTable({ offset }: { offset: number }) 
 
   return (
     <>
-      <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
+      <CreateUpdateModel
+        googleMapsApiKey={googleMapsApiKey}
+        setFormData={setFormData}
+        formData={formData}
+        modalState={createState}
+        setModalState={setCreateState}
+      />
       <div className="mb-4 flex justify-between">
         <div className="flex items-center gap-x-2 rounded-lg border border-light px-3">
           <IoAlarmOutline className="text-xl" />

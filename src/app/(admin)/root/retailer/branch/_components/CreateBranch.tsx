@@ -14,7 +14,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import * as Yup from 'yup';
 import Map from './Map';
 
-export default function CreateBranch() {
+export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createBranch, { error, isSuccess }] = useCreateBranchMutation();
   const router = useRouter();
@@ -67,7 +67,7 @@ export default function CreateBranch() {
       {() => (
         <Form className="mt-5 grid gap-4">
           <InputField name="name" label="Name" placeholder="ex. Ring Road Branch" />
-          <Map />
+          <Map googleMapsApiKey={googleMapsApiKey} />
           <p className="text-end text-xs font-semibold">
             Fields marked with <span className="text-red-600">*</span> are mandatory!
           </p>

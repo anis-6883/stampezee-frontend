@@ -38,11 +38,13 @@ export default function CreateUpdateModel({
   formData,
   modalState,
   setModalState,
+  googleMapsApiKey,
 }: {
   formData: any;
   modalState: boolean;
   setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
+  googleMapsApiKey: string;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createNotificationByLocation, { isSuccess: createSuccess, error: createError }] = useCreateNotificationByLocationMutation();
@@ -131,7 +133,7 @@ export default function CreateUpdateModel({
                   </div>
 
                   <div className=" h-full">
-                    <MapComponent circle={true} radius={values.radius <= 0 ? 1 : values.radius} />
+                    <MapComponent googleMapsApiKey={googleMapsApiKey} circle={true} radius={values.radius <= 0 ? 1 : values.radius} />
                   </div>
 
                   <div className="py-5">
