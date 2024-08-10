@@ -18,7 +18,7 @@ import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FcLock, FcUnlock } from 'react-icons/fc';
@@ -140,6 +140,10 @@ export default function BranchTable({ offset }: { offset: number }) {
       setRenewId(null);
     }
   }, [renewBranchSuccess, renewBranchError, renewResponse, push]);
+
+  if (session?.user?.totalBranch === 0) {
+    return redirect(routes.privateRoutes.retailer.dashboard);
+  }
 
   const structure = [
     {

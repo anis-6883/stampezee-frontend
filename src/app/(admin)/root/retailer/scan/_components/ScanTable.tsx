@@ -1,9 +1,12 @@
 'use client';
 
+import { routes } from '@/config/routes';
 import { useRetailerAllScanDetailsQuery } from '@/features/retailer/scan/scanApi';
 import { useDeleteSubAdminMutation } from '@/features/retailer/sub-admin/subAdminApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsShop } from 'react-icons/bs';
@@ -14,6 +17,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import Table from '../../../_components/Table';
 
 export default function ScanTable({ offset }: { offset: number }) {
+  const { data: session }: any = useSession();
   const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -43,6 +47,10 @@ export default function ScanTable({ offset }: { offset: number }) {
       setDeleteId(null);
     }
   }, [isSuccess, isError]);
+
+  if (!session?.user?.plan) {
+    return redirect(routes.privateRoutes.retailer.dashboard);
+  }
 
   const structure = [
     {

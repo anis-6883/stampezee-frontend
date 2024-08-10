@@ -2,16 +2,20 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import { routes } from '@/config/routes';
 import { useGetAllNotificationQuery } from '@/features/retailer/notification/notificationApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import { Skeleton } from '@mantine/core';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
 import { IoAlarmOutline } from 'react-icons/io5';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function RegularNotificationTable({ offset }: { offset: number }) {
+  const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
@@ -22,6 +26,10 @@ export default function RegularNotificationTable({ offset }: { offset: number })
     type: 'all',
     ...searchQuery,
   });
+
+  if (session?.user?.totalRegularNotification === 0) {
+    redirect(routes?.privateRoutes?.retailer?.dashboard);
+  }
 
   const structure = [
     {

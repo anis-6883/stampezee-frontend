@@ -132,10 +132,12 @@ export const menuItems: { [key: string]: any } = {
         {
           name: 'Regular',
           href: routes.privateRoutes.retailer.regularNotification.home,
+          icon: <PiBellRinging />,
         },
         {
           name: 'Location Based',
           href: routes.privateRoutes.retailer.locationBasedNotification.home,
+          icon: <PiBellRinging />,
         },
       ],
     },

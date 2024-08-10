@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { LuCircleDollarSign } from 'react-icons/lu';
+import { RiDiscountPercentLine } from 'react-icons/ri';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 
@@ -184,7 +185,13 @@ export default function Update({ Id, offset }: any) {
                 </div>
 
                 {values.rewardType === 'discount' && (
-                  <InputField name="discountReward" label="Discount Reward" placeholder="Ex. Get 1 Coke" type="number" />
+                  <InputField
+                    name="discountReward"
+                    label="Discount Reward"
+                    placeholder="Ex. Get 1 Coke"
+                    type="number"
+                    prefix={<RiDiscountPercentLine className="text-xl" />}
+                  />
                 )}
                 {values.rewardType === 'promotion' && (
                   <InputField name="promotionReward" label="Promotion Reward" placeholder="Ex. Get 1 Coke" />
