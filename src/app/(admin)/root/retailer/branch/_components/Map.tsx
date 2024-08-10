@@ -4,11 +4,20 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { IoAlertCircle } from 'react-icons/io5';
 import { Input, Loader } from 'rizzui';
 
-export default function MapComponent({ circle = false, radius }: { circle?: boolean; radius?: number }) {
+export default function MapComponent({
+  circle = false,
+  radius,
+  googleMapsApiKey,
+}: {
+  circle?: boolean;
+  radius?: number;
+  googleMapsApiKey: string;
+}) {
   const { setFieldValue, values }: any = useFormikContext();
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyA0VpTwpD1F3VWNpyKWT84EQHqTYraMyC4', // Replace with your Google Maps API key
+    googleMapsApiKey: googleMapsApiKey, // Replace with your Google Maps API key
     libraries: ['places'], // Add 'places' library
   });
 

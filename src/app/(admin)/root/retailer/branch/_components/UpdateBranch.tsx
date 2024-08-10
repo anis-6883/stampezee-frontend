@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 import Button from '../../../../../../components/Formik/Button';
 import MapComponent from './Map';
 
-export default function UpdateBranch({ branchId }: any) {
+export default function UpdateBranch({ branchId, googleMapsApiKey }: any) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [updateBranch, { isSuccess, isError }] = useUpdateBranchMutation();
   const {
@@ -91,7 +91,7 @@ export default function UpdateBranch({ branchId }: any) {
       {() => (
         <Form className="mt-5 grid gap-4">
           <InputField name="name" label="Name" placeholder="ex. Ring Road Branch" />
-          <MapComponent />
+          <MapComponent googleMapsApiKey={googleMapsApiKey} />
           <div className="mt-2 flex justify-end">
             <Button
               color="danger"
