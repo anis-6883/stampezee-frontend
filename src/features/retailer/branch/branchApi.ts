@@ -29,7 +29,7 @@ export const branchApi = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
+      invalidatesTags: (result, error, arg: any) => ['branches', 'subAdmin', { type: 'branch', id: arg.id }],
     }),
     updateBranchStatus: builder.mutation({
       query: ({ data, branchId }) => ({
@@ -65,7 +65,7 @@ export const branchApi = apiSlice.injectEndpoints({
         url: `/api/web/retailer/branch/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
+      invalidatesTags: (result, error, arg: any) => ['branches', 'subAdmin', { type: 'branch', id: arg.id }],
     }),
   }),
 });

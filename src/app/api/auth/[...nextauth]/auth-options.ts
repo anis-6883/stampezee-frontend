@@ -1,11 +1,9 @@
-// import getAccessToken from "@/utils/axios/getAccessToken";
-// import { mahaScoreBackendUrl } from "@/utils/axios/getAxios";
 import { routes } from '@/config/routes';
+import getAccessToken from '@/utils/axios/getAccessToken';
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
-  // debug: true,
   pages: {
     signIn: routes.retailer.login,
     error: routes.retailer.login,
@@ -33,9 +31,7 @@ export const authOptions: NextAuthOptions = {
       // Get Access Token
       if (new Date().getTime() < data?.session?.expiresIn) return data?.token;
 
-      // const role = token?.role === "user" ? "user" : "admin";
-      // return await getAccessToken(token, role);
-      return data?.token;
+      return await getAccessToken(data?.token);
     },
     async session({ session, token }) {
       return {
