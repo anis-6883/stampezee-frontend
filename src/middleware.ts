@@ -28,16 +28,21 @@ const middleware = withAuth(
     const token = request.nextauth?.token;
     const pathname = request.nextUrl.pathname;
 
-    if (!token && (superAdminProtectedRoutes.includes(pathname) || retailerProtectedRoutes.includes(pathname))) {
+    const isSuperAdminProtected = superAdminProtectedRoutes.includes(pathname);
+    const isRetailerProtected = retailerProtectedRoutes.includes(pathname);
+
+    if (!token && (isSuperAdminProtected || isRetailerProtected)) {
       return NextResponse.redirect(new URL(routes.publicRoutes.retailerLogin, request.nextUrl));
     }
 
-    if (token && token?.role === ROLE.RETAILER && superAdminProtectedRoutes.includes(pathname)) {
-      return NextResponse.redirect(new URL(routes.privateRoutes.retailer.dashboard, request.nextUrl));
-    }
+    if (token) {
+      if (token.role === ROLE.RETAILER && isSuperAdminProtected) {
+        return NextResponse.redirect(new URL(routes.privateRoutes.retailer.dashboard, request.nextUrl));
+      }
 
-    if (token && token?.role === ROLE.SUPER_ADMIN && retailerProtectedRoutes.includes(pathname)) {
-      return NextResponse.redirect(new URL(routes.privateRoutes.superAdmin.dashboard, request.nextUrl));
+      if (token.role === ROLE.SUPER_ADMIN && isRetailerProtected) {
+        return NextResponse.redirect(new URL(routes.privateRoutes.superAdmin.dashboard, request.nextUrl));
+      }
     }
   },
   {

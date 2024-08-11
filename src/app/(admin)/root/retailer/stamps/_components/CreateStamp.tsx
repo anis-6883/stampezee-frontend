@@ -302,19 +302,25 @@ export default function Create() {
 
               {!isAddons && (
                 <div className="border-l-4 border-red-400 bg-blue-50 p-4">
-                  <p className="mb-3 font-medium text-danger">No Add-ons</p>
-                  <Link href={routes.privateRoutes.retailer.membershipPlan} className="text-danger hover:cursor-pointer">
-                    Go to plans
-                  </Link>
+                  <p className="mb-3 font-semibold">Attach your Custom Stamp Image!</p>
+                  <p>
+                    Purchase Custom Stamp AddOn.{' '}
+                    <Link href={routes.privateRoutes.retailer.membershipPlan} className="font-semibold text-danger hover:cursor-pointer">
+                      Click Here
+                    </Link>
+                  </p>
                 </div>
               )}
 
               {isAddons && optionsData?.customImages?.length === 0 && (
                 <div className="border-l-4 border-red-400 bg-blue-50 p-4">
-                  <p className="mb-3 font-medium text-danger">No custom image</p>
-                  <Link href={routes.privateRoutes.retailer.stampImage.home} className="text-danger hover:cursor-pointer">
-                    Create custom image
-                  </Link>
+                  <p className="mb-3 text-sm font-semibold">There is no active custom image available!</p>
+                  <p>
+                    Create or Active Custom Stamp.{' '}
+                    <Link href={routes.privateRoutes.retailer.stampImage.home} className="font-semibold text-danger hover:cursor-pointer">
+                      Click Here
+                    </Link>
+                  </p>
                 </div>
               )}
 

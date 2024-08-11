@@ -1,5 +1,6 @@
 import PageHeader from '@/components/page-header';
 import { metaObject } from '@/config/site.config';
+import BranchStatsTable from './_components/BranchStatsTable';
 import StateCardView from './_components/StateCardView';
 
 const pageHeader = {
@@ -13,6 +14,7 @@ export default function Page() {
     <>
       <PageHeader title={pageHeader.title} />
       <StateCardView className="2xl:mb-8 mb-5" />
+      <BranchStatsTable />
     </>
   );
 }

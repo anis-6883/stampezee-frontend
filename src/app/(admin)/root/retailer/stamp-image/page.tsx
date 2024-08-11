@@ -11,7 +11,7 @@ const pageHeader = {
       name: 'Dashboard',
     },
     {
-      name: 'Stamps-Image',
+      name: 'Manage Custom Stamp',
     },
   ],
 };

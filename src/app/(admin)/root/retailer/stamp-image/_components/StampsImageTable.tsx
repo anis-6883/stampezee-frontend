@@ -8,7 +8,7 @@ import {
   useDeleteStampImageMutation,
   useGetAllStampImagesQuery,
   useRenewStampImageMutation,
-  useUpdateStampStatusMutation,
+  useUpdateStampImageStatusMutation,
 } from '@/features/retailer/stamp-image/stampApi';
 import { IQueryType } from '@/types';
 import { countDaysLeft } from '@/utils';
@@ -47,7 +47,7 @@ export default function StampsImageTable() {
   });
 
   const [deleteStampImage, { isSuccess, isError }] = useDeleteStampImageMutation();
-  const [updateStatus] = useUpdateStampStatusMutation();
+  const [updateStatus] = useUpdateStampImageStatusMutation();
   const [renewStampImage, { isError: renewStampImageError, isSuccess: renewStampImageSuccess, data: renewResponse }] =
     useRenewStampImageMutation();
 
