@@ -15,7 +15,7 @@ export default function PrivacyAndPolicyForm({ values, setFieldValue }: { setFie
 
   return (
     <FormBlockWrapper title="Privacy & Policy" className="p-5">
-      <div className="grid grid-cols-1 gap-y-2">
+      <div className="grid grid-cols-1 gap-y-2 overflow-hidden">
         <QuillEditor
           value={values.page.policy}
           onChange={handleChange}

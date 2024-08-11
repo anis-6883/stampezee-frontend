@@ -5,7 +5,9 @@ import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 import { BsShop } from 'react-icons/bs';
 import { IoDiamondOutline } from 'react-icons/io5';
-import { LuUsers } from 'react-icons/lu';
+import { LiaAwardSolid } from 'react-icons/lia';
+import { LuCircleDollarSign, LuUsers } from 'react-icons/lu';
+import { MdShoppingCartCheckout } from 'react-icons/md';
 import { PiCaretLeftBold, PiCaretRightBold, PiCurrencyDollar, PiStamp } from 'react-icons/pi';
 import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
@@ -99,7 +101,7 @@ export default function StateCardView({ className }: { className: string }) {
       <div className="w-full overflow-hidden">
         <div ref={sliderEl} className="custom-scrollbar-x 2xl:gap-6 grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 3xl:gap-8">
           <MetricCard
-            icon={<BsShop className="text-2xl" />}
+            icon={<MdShoppingCartCheckout className="text-2xl" />}
             key={1}
             title={'Total Orders'}
             metric={totalOrders}
@@ -107,8 +109,9 @@ export default function StateCardView({ className }: { className: string }) {
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
+
           <MetricCard
-            icon={<BsShop className="text-2xl" />}
+            icon={<LuCircleDollarSign className="text-2xl" />}
             key={1}
             title={'Total Amount'}
             metric={totalAmount}
@@ -117,7 +120,7 @@ export default function StateCardView({ className }: { className: string }) {
             isLoading={isLoading || isError}
           />
           <MetricCard
-            icon={<BsShop className="text-2xl" />}
+            icon={<LiaAwardSolid className="text-2xl" />}
             key={1}
             title={'Total Reward Collected'}
             metric={totalRewardCollected}

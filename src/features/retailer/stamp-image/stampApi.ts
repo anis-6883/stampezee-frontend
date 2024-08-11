@@ -1,6 +1,6 @@
 import { apiSlice } from '@/features/api/apiSlice';
 
-export const stampApi = apiSlice.injectEndpoints({
+export const stampImageApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllStampImages: builder.query({
       //   query: ({ page, limit }) => `api/retailer/stamp-image/all?page=${page}&limit=${limit}`,
@@ -27,7 +27,7 @@ export const stampApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['retailerStamp'],
     }),
-    updateStampStatus: builder.mutation({
+    updateStampImageStatus: builder.mutation({
       query: ({ data, branchId }) => ({
         url: `/api/web/retailer/stamp-image/status/${branchId}`,
         method: 'PUT',
@@ -57,8 +57,8 @@ export const {
   useCreateStampImageMutation,
   useUpdateStampImageMutation,
   useDeleteStampImageMutation,
-  useUpdateStampStatusMutation,
+  useUpdateStampImageStatusMutation,
   useRenewStampImageMutation,
-} = stampApi;
+} = stampImageApi;
 
-export default stampApi;
+export default stampImageApi;

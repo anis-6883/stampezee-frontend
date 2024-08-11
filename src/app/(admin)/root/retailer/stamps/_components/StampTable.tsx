@@ -119,13 +119,13 @@ export default function StampTable({ offset }: { offset: number }) {
                 <span className="font-bold">Branch:</span> {row?.original?.branch?.name}
               </p>
               <p>
-                <span className="font-bold">NoOfStampsToCollect:</span> {row?.original?.noOfStampsToCollect}
+                <span className="font-bold">No. Of Stamps To Collect:</span> {row?.original?.noOfStampsToCollect}
               </p>
             </div>
           </div>
         </div>
       ),
-      size: 250,
+      size: 300,
     },
     {
       header: 'Reward',
@@ -133,14 +133,14 @@ export default function StampTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Reward type:</span> {row?.original?.rewardType}
+            <span className="font-bold">Reward Type:</span> {row?.original?.rewardType}
           </p>
           <p>
             <span className="font-bold">Reward:</span>{' '}
             {row?.original?.rewardType === 'discount' ? `${row?.original?.discountReward}%` : row?.original?.promotionReward}
           </p>
           <p>
-            <span className="font-bold">MinPurchaseAmount:</span> {row?.original?.minPurchaseAmount} CAD
+            <span className="font-bold">Min. Purchase Amount:</span> {row?.original?.minPurchaseAmount} CAD
           </p>
         </div>
       ),
@@ -174,10 +174,10 @@ export default function StampTable({ offset }: { offset: number }) {
       header: 'Publish',
       accessorKey: 'isPublished',
       Cell: ({ row }: any) => (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-center gap-2">
           <div className="text-white">
             {!row?.original?.isPublished ? (
-              <Button onClick={() => handlePublishStamp(row?.original)} color="danger" text="Publish Now" />
+              <Button className="!m-0" onClick={() => handlePublishStamp(row?.original)} color="danger" text="Publish Now" />
             ) : (
               <Badge className="!bg-success">
                 <IoCheckmarkCircle className="text-xl" /> {_.capitalize('published')}
@@ -186,6 +186,12 @@ export default function StampTable({ offset }: { offset: number }) {
           </div>
         </div>
       ),
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
     },
     {
       header: 'Status',

@@ -22,8 +22,6 @@ export const metadata = { ...metaObject(pageHeader.title) };
 export default async function Page() {
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
 
-  console.log('data', data?.data?.googleMap?.googleMapsApiKey);
-
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
