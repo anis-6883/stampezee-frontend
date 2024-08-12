@@ -107,13 +107,6 @@ export default function BillingTable({ offset }: { offset: number }) {
       totalTax = (Math.abs(totalPurchasedAmount) * vatPercentage) / 100;
     }
 
-    // const totalTax = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
-    //   if (item?.taxSnapshot?.taxCost) {
-    //     return acc + (item?.planSnapshot?.price * item?.taxSnapshot?.taxCost) / 100;
-    //   }
-    //   return acc;
-    // }, 0);
-
     const totalCouponDiscount = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
       if (item?.couponSnapshot?.discount) {
         if (item?.couponSnapshot?.discountType === 'percentage') {
