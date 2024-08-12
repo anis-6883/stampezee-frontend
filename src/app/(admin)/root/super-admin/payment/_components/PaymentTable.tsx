@@ -114,12 +114,27 @@ export default function PaymentTable({ offset }: { offset: number }) {
 
   const RenderDetailPanel = ({ row }: any) => {
     const total = row?.original?.amountTotal || 0;
-    const totalTax = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
-      if (item?.taxSnapshot?.taxCost) {
-        return acc + (item?.planSnapshot?.price * item?.taxSnapshot?.taxCost) / 100;
+    const totalPurchasedAmount = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => acc + item?.planSnapshot?.price, 0);
+    let totalTax: number = 0;
+    let remainingBalance = 0;
+    const vatPercentage = row?.original?.enrollSubscriptions[0]?.taxSnapshot?.taxCost;
+
+    const upgradeOrDowngradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
+      if (item?.enrollStatus === 'upgrade' || item?.enrollStatus === 'downgrade') {
+        return true;
       }
-      return acc;
-    }, 0);
+      return false;
+    });
+
+    if (upgradeOrDowngradeEnroll) {
+      remainingBalance = upgradeOrDowngradeEnroll?.balanceInfo?.currentBalance;
+    }
+
+    if (upgradeOrDowngradeEnroll) {
+      totalTax = (Math.abs(totalPurchasedAmount - remainingBalance) * vatPercentage) / 100;
+    } else {
+      totalTax = (Math.abs(totalPurchasedAmount) * vatPercentage) / 100;
+    }
 
     const totalCouponDiscount = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
       if (item?.couponSnapshot?.discount) {
@@ -132,17 +147,6 @@ export default function PaymentTable({ offset }: { offset: number }) {
       return acc;
     }, 0);
 
-    const upgradeOrDowngradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
-      if (item?.enrollStatus === 'upgrade' || item?.enrollStatus === 'downgrade') {
-        return true;
-      }
-      return false;
-    });
-
-    let remainingBalance = 0;
-    if (upgradeOrDowngradeEnroll) {
-      remainingBalance = upgradeOrDowngradeEnroll?.balanceInfo?.currentBalance;
-    }
     const planChangeCost = upgradeOrDowngradeEnroll?.planChangeCost;
 
     return (
@@ -177,8 +181,8 @@ export default function PaymentTable({ offset }: { offset: number }) {
 
             {totalTax > 0 && (
               <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-                <span className="col-span-6 font-medium">VAT</span>
-                <span className="col-span-4 justify-self-end font-semibold">{parseFloat(totalTax).toFixed(2)} CAD</span>
+                <span className="col-span-6 font-medium">VAT ({vatPercentage}%)</span>
+                <span className="col-span-4 justify-self-end font-semibold">{totalTax.toFixed(2)} CAD</span>
               </div>
             )}
 
