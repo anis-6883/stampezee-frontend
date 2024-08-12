@@ -11,12 +11,14 @@ export default function DeleteConfirmModal({
   setModalState,
   isSubmitting,
   setIsSubmitting,
+  isBranch = false,
 }: {
   modalState?: boolean;
   deleteId: string | null;
   deleteHandler: (id: string) => void;
   setModalState: (state: boolean) => void;
   isSubmitting?: boolean;
+  isBranch?: boolean;
   setIsSubmitting: (state: boolean) => void;
 }) {
   const handleDelete = () => {
@@ -40,26 +42,28 @@ export default function DeleteConfirmModal({
           </ActionIcon>
         </div>
         <p className="text-base font-medium">Do you want to delete it ?</p>
-        <div className="my-3">
-          <div
-            className="mb-4 flex items-center rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-gray-800 dark:text-red-400"
-            role="alert"
-          >
-            <svg
-              className="me-3 inline h-4 w-4 flex-shrink-0"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
+        {isBranch && (
+          <div className="my-3">
+            <div
+              className="mb-4 flex items-center rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-gray-800 dark:text-red-400"
+              role="alert"
             >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-            </svg>
-            <span className="sr-only">Info</span>
-            <div>
-              <span className="font-medium">Warning!</span> Deleting this branch will also remove the associated Super Admin and stamp.
+              <svg
+                className="me-3 inline h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+              </svg>
+              <span className="sr-only">Info</span>
+              <div>
+                <span className="font-medium">Warning!</span> Deleting this branch will also remove the associated Super Admin and stamp.
+              </div>
             </div>
           </div>
-        </div>
+        )}
         <div className="mt-10 flex justify-end gap-2">
           <Button color="danger" onClick={() => setModalState(false)} text="Not Now" postIcon={<MdDoNotDisturb className="text-base" />} />
           <Button

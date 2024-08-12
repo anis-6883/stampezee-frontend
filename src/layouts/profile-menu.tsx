@@ -81,7 +81,7 @@ function DropdownMenu({
       <div className="grid px-3.5 py-3.5 font-medium text-gray-700">
         {role === 'retailer' && (
           <Link
-            href={routes.retailer.profile}
+            href={routes.privateRoutes.retailer.profile}
             onClick={() => setOpen(false)}
             className="group my-0.5 flex items-center rounded-md px-2.5 py-2 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-50/50"
           >
@@ -131,7 +131,7 @@ export default function ProfileMenu() {
     <>
       <Popover enableOverlay placement="bottom-start">
         <Popover.Trigger>
-          <div className="cursor-pointer">
+          <div className="m-auto cursor-pointer">
             <img
               src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
               color="danger"

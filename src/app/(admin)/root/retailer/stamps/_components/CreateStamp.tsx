@@ -16,8 +16,9 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { IoAlertCircle } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
-import { RiDiscountPercentLine } from 'react-icons/ri';
+import { RiDiscountPercentLine, RiDrinks2Fill } from 'react-icons/ri';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 
@@ -220,7 +221,12 @@ export default function Create() {
                   />
                 )}
                 {values.rewardType === 'promotion' && (
-                  <InputField name="promotionReward" label="Promotion Reward" placeholder="Ex. Get 1 Coke" />
+                  <InputField
+                    name="promotionReward"
+                    label="Promotion Reward"
+                    placeholder="Ex. Get 1 Coke"
+                    prefix={<RiDrinks2Fill className="text-xl" />}
+                  />
                 )}
               </div>
 
@@ -324,7 +330,12 @@ export default function Create() {
                 </div>
               )}
 
-              {errors?.stampImageId && <span className="text-red-600">Select one from custom or default stamp</span>}
+              {errors?.stampImageId && (
+                <div className="flex items-center gap-x-1 text-danger">
+                  <IoAlertCircle className="text-lg" />
+                  <span>Select one from custom or default stamp is required!</span>
+                </div>
+              )}
 
               <InputTextarea name="description" required={false} label="Description" placeholder="Write here..." />
 

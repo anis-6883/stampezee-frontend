@@ -52,7 +52,8 @@ export default function BranchStatsTable() {
                         <tr>
                           <td colSpan={6}>
                             <Skeleton className="my-3 h-8 w-full rounded" />
-                            <Skeleton className="h-8 w-full rounded" />
+                            <Skeleton className="my-3 h-8 w-full rounded" />
+                            <Skeleton className="mb-3 h-8 w-full rounded" />
                           </td>
                         </tr>
                       </tbody>

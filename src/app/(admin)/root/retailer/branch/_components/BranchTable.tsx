@@ -370,6 +370,7 @@ export default function BranchTable({ offset }: { offset: number }) {
         setModalState={setModalState}
         isSubmitting={deleteSubmitting}
         setIsSubmitting={setDeleteSubmitting}
+        isBranch={true}
       />
     </>
   );
