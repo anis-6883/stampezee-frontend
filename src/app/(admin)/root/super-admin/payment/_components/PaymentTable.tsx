@@ -54,6 +54,19 @@ export default function PaymentTable({ offset }: { offset: number }) {
       size: 150,
     },
     {
+      header: 'Enroll Status',
+      accessorKey: 'enrollSubscriptionId',
+      Cell: ({ row }: any) => {
+        const upgradeOrDowngradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
+          if (item?.enrollStatus === 'upgrade' || item?.enrollStatus === 'downgrade') {
+            return true;
+          }
+          return false;
+        });
+        return <div>{upgradeOrDowngradeEnroll?.enrollStatus ? upgradeOrDowngradeEnroll?.enrollStatus : 'purchase'}</div>;
+      },
+    },
+    {
       header: 'Grand Total(CAD)',
       accessorKey: 'price',
       Cell: ({ row }: any) => (
@@ -117,7 +130,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
     const totalPurchasedAmount = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => acc + item?.planSnapshot?.price, 0);
     let totalTax: number = 0;
     let remainingBalance = 0;
-    const vatPercentage = row?.original?.enrollSubscriptions[0]?.taxSnapshot?.taxCost;
+    let vatPercentage = row?.original?.enrollSubscriptions[0]?.taxSnapshot?.taxCost;
 
     const upgradeOrDowngradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
       if (item?.enrollStatus === 'upgrade' || item?.enrollStatus === 'downgrade') {
@@ -125,6 +138,16 @@ export default function PaymentTable({ offset }: { offset: number }) {
       }
       return false;
     });
+
+    const downGradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
+      if (item?.enrollStatus === 'downgrade') {
+        return true;
+      }
+      return false;
+    });
+    if (downGradeEnroll && row?.original?.enrollSubscriptions[1]?.taxSnapshot?.taxTitle) {
+      vatPercentage = row?.original?.enrollSubscriptions[1]?.taxSnapshot?.taxCost;
+    }
 
     if (upgradeOrDowngradeEnroll) {
       remainingBalance = upgradeOrDowngradeEnroll?.balanceInfo?.currentBalance;
