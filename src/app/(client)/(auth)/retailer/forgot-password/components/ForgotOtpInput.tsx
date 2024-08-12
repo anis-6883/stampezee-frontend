@@ -129,7 +129,9 @@ export default function ForgetOtpInput({
             <p className="flex select-none items-center font-medium">
               Didn{"'"}t get any otp yet?
               {timer > 0 ? (
-                <span className="ml-1 font-bold text-danger">{timer} sec</span>
+                <span className="ml-1 font-bold text-danger">
+                  {`${Math.floor(timer / 60)}`.padStart(2, '0') + ':' + `${timer % 60}`.padStart(2, '0')}
+                </span>
               ) : (
                 <span
                   className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-danger`}

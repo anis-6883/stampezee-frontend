@@ -126,7 +126,7 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Push Notifications',
-      href: routes.retailer.notification.home,
+      href: routes.privateRoutes.retailer.regularNotification.home,
       icon: <PiBellRinging />,
       dropdownItems: [
         {

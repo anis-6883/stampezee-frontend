@@ -5,8 +5,8 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
   pages: {
-    signIn: routes.retailer.login,
-    error: routes.retailer.login,
+    signIn: routes.publicRoutes.retailerLogin,
+    error: routes.publicRoutes.retailerLogin,
   },
   session: {
     strategy: 'jwt',
