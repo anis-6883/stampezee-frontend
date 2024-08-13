@@ -679,3 +679,7 @@ div[style='z-index: 1000001;'],
   /* Ensure content within the container doesn't overflow */
   overflow: hidden;
 }
+
+input#react-select-5-input:focus {
+  box-shadow: none !important;
+}

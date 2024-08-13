@@ -1,13 +1,24 @@
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
 import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
+import { Skeleton } from '@/components/ui/skeleton';
 import timeZoneData from '@/utils/get-timezone-list';
 import { Field } from 'formik';
 import { RiKey2Line } from 'react-icons/ri';
 import ReactSelect from 'react-select';
 
-export default function GeneralSettingsForm({ setFieldValue, values }: { setFieldValue: any; values: any }) {
-  return (
+export default function GeneralSettingsForm({
+  setFieldValue,
+  values,
+  generalSettingLoading,
+}: {
+  setFieldValue: any;
+  values: any;
+  generalSettingLoading: boolean;
+}) {
+  return generalSettingLoading ? (
+    <Skeleton className="w-68 h-80 rounded" />
+  ) : (
     <div className="space-y-10">
       <FormBlockWrapper title="Main Information" className="p-5">
         <div className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-3">
