@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import * as Yup from 'yup';
-import AboutUsForm from './AboutUsForm';
 import GeneralSettingsForm from './GeneralSettingsForm';
 import GoogleMapForm from './GoogleMapForm';
 import NotificationSettingsForm from './NotificationSettingsForm';
@@ -18,7 +17,7 @@ import TabButtonItem from './TabButtonItem';
 import TermsAndConditionForm from './TermsAndConditionForm';
 
 export default function SettingsMainForm() {
-  const { data: generalSetting } = useGetGeneralSettingsQuery(undefined);
+  const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined);
   const [updateGeneralSettings, { data: updatedData, isSuccess, isError: updatingError }] = useUpdateGeneralSettingsMutation();
   const [currentTab, setCurrentTab] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,7 +56,6 @@ export default function SettingsMainForm() {
       googleMapsApiKey: '',
     },
     page: {
-      aboutUs: '',
       policy: '',
       terms: '',
     },
@@ -96,7 +94,6 @@ export default function SettingsMainForm() {
     'Google Map',
     'Terms and Condition',
     'Privacy and Policy',
-    'About Us',
   ];
 
   const handleTabChange = (tab: number) => {
@@ -131,7 +128,7 @@ export default function SettingsMainForm() {
 
             <div className="col-span-1 w-full rounded-lg border border-gray-200 bg-white p-2 shadow md:col-span-9">
               <div hidden={currentTab === 0 ? false : true}>
-                <GeneralSettingsForm setFieldValue={setFieldValue} values={values} />
+                <GeneralSettingsForm setFieldValue={setFieldValue} values={values} generalSettingLoading={generalSettingLoading} />
               </div>
 
               <div hidden={currentTab === 1 ? false : true}>
@@ -156,10 +153,6 @@ export default function SettingsMainForm() {
 
               <div hidden={currentTab === 6 ? false : true}>
                 <PrivacyAndPolicyForm values={values} setFieldValue={setFieldValue} />
-              </div>
-
-              <div hidden={currentTab === 7 ? false : true}>
-                <AboutUsForm values={values} setFieldValue={setFieldValue} />
               </div>
             </div>
           </div>

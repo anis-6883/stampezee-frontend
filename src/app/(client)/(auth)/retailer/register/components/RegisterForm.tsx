@@ -150,23 +150,45 @@ export default function RegisterForm() {
                     {countryInfo?.country && (
                       <ReactSelect
                         placeholder="Select your country"
+                        isSearchable
                         options={countryOptions}
                         getOptionLabel={getOptionLabel}
                         getOptionValue={(option) => option.label}
                         defaultValue={countryOptions.filter((country) => country.label === countryInfo?.country)}
                         onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => setFieldValue('country', selectedOption?.label)}
                         onBlur={() => setFieldTouched('country', true)}
+                        styles={{
+                          control: (base) => ({
+                            ...base,
+                            boxShadow: 'none !important',
+                          }),
+                          input: (base) => ({
+                            ...base,
+                            boxShadow: 'none !important',
+                          }),
+                        }}
                       />
                     )}
                     {countryInfo?.country === '' && (
                       <ReactSelect
                         placeholder="Select your country"
+                        isSearchable
                         options={countryOptions}
                         getOptionLabel={getOptionLabel}
                         getOptionValue={(option) => option.label}
                         defaultValue={countryOptions.filter((country) => country.label === 'Canada')}
                         onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => setFieldValue('country', selectedOption?.label)}
                         onBlur={() => setFieldTouched('country', true)}
+                        styles={{
+                          control: (base) => ({
+                            ...base,
+                            boxShadow: 'none !important',
+                          }),
+                          input: (base) => ({
+                            ...base,
+                            boxShadow: 'none !important',
+                          }),
+                        }}
                       />
                     )}
                     {touched.country && errors.country && <FieldError error={errors.country} className="text-xs text-red-600" />}

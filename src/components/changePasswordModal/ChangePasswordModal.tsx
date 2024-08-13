@@ -129,7 +129,13 @@ export default function ChangePasswordModal({
                   </p>
 
                   <div className="mt-2 flex justify-end">
-                    <Button type="submit" text="Update" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={isSubmitting} />
+                    <Button
+                      type="submit"
+                      color="danger"
+                      text="Update"
+                      postIcon={<BsCheck2Circle className="text-base" />}
+                      isSubmitting={isSubmitting}
+                    />
                   </div>
                 </Form>
               );
