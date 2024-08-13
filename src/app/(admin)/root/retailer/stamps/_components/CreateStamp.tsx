@@ -21,12 +21,20 @@ import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine, RiDrinks2Fill } from 'react-icons/ri';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
+import StampPublishedModal from './StampPublishedModal';
 
 export default function Create() {
   const { data: session }: any = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
+  const [submitAction, setSubmitAction] = useState<string | null>(null);
+
+  const [publishState, setPublishState] = useState(false);
+
+  const [publishSubmitting, setPublishSubmitting] = useState(false);
+
+  const [values, setValues] = useState({});
 
   const isAddons = session?.user?.totalCustomStamp > 0 ? true : false;
 
@@ -67,7 +75,12 @@ export default function Create() {
         changedData.startedAt = values?.validDateRange?.split('to')[0];
         changedData.expiredAt = values?.validDateRange?.split('to')[1];
       }
-      changedData.isPublished = false;
+      if (submitAction === 'draft') {
+        changedData.isPublished = false;
+      } else {
+        changedData.isPublished = true;
+      }
+
       changedData.hasValidity = values.hasValidity;
       changedData.discountReward = values?.discountReward;
 
@@ -100,7 +113,7 @@ export default function Create() {
       then: () => Yup.number().required('Required!').min(1, 'Discount must be greater than zero!'),
       otherwise: () => Yup.number(),
     }),
-    // validDateRange: Yup.string().required('Required!'),
+    validDateRange: Yup.string().required('Required!'),
   });
 
   return (
@@ -110,7 +123,26 @@ export default function Create() {
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={(values) => {
-          handleSubmit(values);
+          if (submitAction === 'draft') {
+            handleSubmit(values);
+          } else {
+            const changedData = getChangedFormData(values, initialValues, ['validDateRange']);
+
+            changedData.rewardType = values.rewardType;
+            if (values.hasValidity) {
+              changedData.startedAt = values?.validDateRange?.split('to')[0];
+              changedData.expiredAt = values?.validDateRange?.split('to')[1];
+            }
+            if (submitAction === 'draft') {
+              changedData.isPublished = false;
+            } else {
+              changedData.isPublished = true;
+            }
+
+            changedData.hasValidity = values.hasValidity;
+            changedData.discountReward = values?.discountReward;
+            setValues(changedData);
+          }
         }}
       >
         {({ errors, setFieldValue, values }) => {
@@ -346,15 +378,36 @@ export default function Create() {
                 <Button
                   color="danger"
                   type="submit"
-                  text="Submit"
+                  text="Draft"
                   postIcon={<BsCheck2Circle className="text-base" />}
                   isSubmitting={submitting}
+                  onClick={() => setSubmitAction('draft')}
+                />
+                <Button
+                  color="danger"
+                  type="submit"
+                  text="Publish"
+                  postIcon={<BsCheck2Circle className="text-base" />}
+                  // isSubmitting={publishSubmitting}
+                  onClick={() => {
+                    setSubmitAction('publish');
+                    setPublishState(true);
+                  }}
                 />
               </div>
             </Form>
           );
         }}
       </Formik>
+
+      <StampPublishedModal
+        publishHandler={createStamp}
+        modalState={publishState}
+        setModalState={setPublishState}
+        isSubmitting={publishSubmitting}
+        setIsSubmitting={setPublishSubmitting}
+        values={values}
+      />
     </div>
   );
 }
