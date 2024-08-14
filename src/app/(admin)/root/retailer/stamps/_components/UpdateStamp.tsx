@@ -14,7 +14,7 @@ import _ from 'lodash';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { BsCheck2Circle } from 'react-icons/bs';
+import { BsCheck2Circle, BsPencil } from 'react-icons/bs';
 import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine } from 'react-icons/ri';
 import * as Yup from 'yup';
@@ -313,16 +313,15 @@ export default function Update({ Id, offset }: any) {
                   color="danger"
                   type="submit"
                   text="Update"
-                  postIcon={<BsCheck2Circle className="text-base" />}
+                  postIcon={<BsPencil className="text-base" />}
                   isSubmitting={submitting}
                   onClick={() => setSubmitAction('draft')}
                 />
                 <Button
-                  color="danger"
+                  color="outline"
                   type="submit"
                   text="Publish"
                   postIcon={<BsCheck2Circle className="text-base" />}
-                  // isSubmitting={publishSubmitting}
                   onClick={() => {
                     setSubmitAction('publish');
                     setPublishState(true);

@@ -18,7 +18,36 @@ export const customerApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['superAdminCustomer'],
     }),
+    updateCustomerBySuperAdmin: builder.mutation({
+      query: ({ formData, id }) => ({
+        url: `/api/secret-root/admin/super-admin/manage-customer/${id}`,
+        method: 'PUT',
+        body: formData,
+      }),
+      invalidatesTags: ['superAdminCustomer'],
+    }),
+    deleteCustomerBySuperAdmin: builder.mutation({
+      query: (id) => ({
+        url: `/api/secret-root/admin/super-admin/manage-customer/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['superAdminCustomer'],
+    }),
+    customerStatusUpdateBySuperAdmin: builder.mutation({
+      query: ({ data, branchId }) => ({
+        url: `/api/secret-root/admin/super-admin/manage-customer/status/${branchId}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['superAdminCustomer'],
+    }),
   }),
 });
 
-export const { useGetAllCustomerBySuperAdminQuery, useCreateCustomerBySuperAdminMutation } = customerApi;
+export const {
+  useGetAllCustomerBySuperAdminQuery,
+  useCreateCustomerBySuperAdminMutation,
+  useUpdateCustomerBySuperAdminMutation,
+  useDeleteCustomerBySuperAdminMutation,
+  useCustomerStatusUpdateBySuperAdminMutation,
+} = customerApi;
