@@ -7,8 +7,8 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useSuperAdminGetProfileQuery, useSuperAdminUpdateProfileMutation } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
-import getChangedFormData from '@/utils/getChangedFormData';
 import objectToFormData from '@/utils/objectToFormData';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -49,7 +49,7 @@ export default function UpdateProfileModal({
 
   const submitHandler = async (values: any) => {
     setIsSubmitting(true);
-    const changeFormData = getChangedFormData(values, initialValues, ['email']);
+    const changeFormData = removeEmptyValues(values, ['email']);
     const isFile = (obj: any): obj is File => obj instanceof File;
 
     let objToFormData: FormData;

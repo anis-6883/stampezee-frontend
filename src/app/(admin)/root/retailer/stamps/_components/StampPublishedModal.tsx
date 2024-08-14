@@ -1,6 +1,5 @@
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
-import getChangedFormData from '@/utils/getChangedFormData';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle, BsExclamationTriangle } from 'react-icons/bs';
@@ -60,7 +59,9 @@ export default function StampPublishedModal({
             <HiMiniXCircle className="text-2xl text-danger" />
           </ActionIcon>
         </div>
-        <p className="text-base font-medium">Do you want to publish it ?</p>
+        <p className="text-base font-medium">
+          Do you want to publish it ? Once published, this stamp <span className="text-danger">can{"'"}t be edited!</span>
+        </p>
         <div className="mt-10 flex justify-end gap-2">
           <Button color="danger" onClick={() => setModalState(false)} text="Not Now" postIcon={<MdDoNotDisturb className="text-base" />} />
           <Button

@@ -10,7 +10,8 @@ const buttonStyles: Record<string, string> = {
     'bg-gradient-to-r from-red-500 via-red-600 to-red-600 text-white hover:bg-gradient-to-br focus:ring-red-300 dark:shadow-red-800/80 dark:focus:ring-red-800',
   disabled:
     'bg-gradient-to-r from-gray-500 via-gray-600 to-gray-600 text-white hover:bg-gradient-to-br focus:ring-gray-300 dark:shadow-gray-800/80 dark:focus:ring-gray-800',
-  outline: 'text-black border border-[#DC3545] hover:bg-gradient-to-br focus:ring-red-300 shadow-none',
+  outline:
+    'text-black border border-[#DC3545] hover:bg-gradient-to-br hover:from-red-500 hover:via-red-600 hover:to-red-600 hover:text-white focus:ring-red-300 shadow-none',
 };
 
 interface ButtonProps {

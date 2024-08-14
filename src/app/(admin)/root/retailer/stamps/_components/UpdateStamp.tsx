@@ -8,7 +8,7 @@ import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { useBranchCategoryImageListQuery, useGetSingleStampsQuery, useUpdateStampMutation } from '@/features/retailer/stamp/stampApi';
 import getFormattedDate from '@/utils/get-formatted-date';
-import getChangedFormData from '@/utils/getChangedFormData';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
@@ -49,12 +49,21 @@ export default function Update({ Id, offset }: any) {
     try {
       setSubmitting(true);
 
-      const changedData = getChangedFormData(values, initialValues, ['_id', 'validDateRange']);
+      const changedData = removeEmptyValues(values, ['_id', 'validDateRange']);
       if (values.hasValidity) {
-        changedData.startedAt = values?.validDateRange?.split('to')[0];
-        changedData.expiredAt = values?.validDateRange?.split('to')[1];
+        if (values?.validDateRange?.includes('to')) {
+          changedData.startedAt = values?.validDateRange?.split('to')[0];
+          changedData.expiredAt = values?.validDateRange?.split('to')[1];
+        } else {
+          changedData.startedAt = values?.validDateRange;
+          changedData.expiredAt = values?.validDateRange;
+        }
       }
-      changedData.hasValidity = values.hasValidity;
+      if (submitAction === 'draft') {
+        changedData.isPublished = false;
+      } else {
+        changedData.isPublished = true;
+      }
 
       const result = await updateStamp({ formData: changedData, id: Id }).unwrap();
       router.push(routes.privateRoutes.retailer.stamp.home);
@@ -114,21 +123,21 @@ export default function Update({ Id, offset }: any) {
           if (submitAction === 'draft') {
             handleSubmit(values);
           } else {
-            const changedData = getChangedFormData(values, initialValues, ['validDateRange']);
-
-            changedData.rewardType = values.rewardType;
+            const changedData = removeEmptyValues(values, ['validDateRange']);
             if (values.hasValidity) {
-              changedData.startedAt = values?.validDateRange?.split('to')[0];
-              changedData.expiredAt = values?.validDateRange?.split('to')[1];
+              if (values?.validDateRange?.includes('to')) {
+                changedData.startedAt = values?.validDateRange?.split('to')[0];
+                changedData.expiredAt = values?.validDateRange?.split('to')[1];
+              } else {
+                changedData.startedAt = values?.validDateRange;
+                changedData.expiredAt = values?.validDateRange;
+              }
             }
             if (submitAction === 'draft') {
               changedData.isPublished = false;
             } else {
               changedData.isPublished = true;
             }
-
-            changedData.hasValidity = values.hasValidity;
-            changedData.discountReward = values?.discountReward;
             setValues(changedData);
           }
         }}
