@@ -8,9 +8,17 @@ export const customerApi = apiSlice.injectEndpoints({
         if (values.length) return `/api/secret-root/admin/super-admin/manage-customer/all?${new URLSearchParams(queries as any)}`;
         return `/api/secret-root/admin/super-admin/manage-customer/all`; // Ensure it returns a base URL if no queries are present
       },
-      //   providesTags: ['subAdmin'],
+      providesTags: ['superAdminCustomer'],
+    }),
+    createCustomerBySuperAdmin: builder.mutation({
+      query: (newCustomer) => ({
+        url: '/api/secret-root/admin/super-admin/manage-customer/create',
+        method: 'POST',
+        body: newCustomer,
+      }),
+      invalidatesTags: ['superAdminCustomer'],
     }),
   }),
 });
 
-export const { useGetAllCustomerBySuperAdminQuery } = customerApi;
+export const { useGetAllCustomerBySuperAdminQuery, useCreateCustomerBySuperAdminMutation } = customerApi;

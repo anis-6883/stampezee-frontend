@@ -3,7 +3,7 @@
 import InputField from '@/components/Formik/InputField';
 import { routes } from '@/config/routes';
 import { useSingleBranchQuery, useUpdateBranchMutation } from '@/features/retailer/branch/branchApi';
-import getChangedFormData from '@/utils/getChangedFormData';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -67,7 +67,7 @@ export default function UpdateBranch({ branchId, googleMapsApiKey }: any) {
       longitude: String(values.longitude),
       latitude: String(values.latitude),
     };
-    const changedData = getChangedFormData(parsedValues, formData, ['_id']);
+    const changedData = removeEmptyValues(parsedValues, ['_id']);
 
     updateBranch({ data: changedData, branchId: branchId }).unwrap();
   };

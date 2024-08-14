@@ -10,8 +10,8 @@ import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
-import getChangedFormData from '@/utils/getChangedFormData';
 import objectToFormData from '@/utils/objectToFormData';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -84,7 +84,7 @@ export default function UpdateProfileForm() {
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
-    const changeFormData = getChangedFormData(values, initialValues, ['email']);
+    const changeFormData = removeEmptyValues(values, ['email']);
 
     let objToFormData: FormData;
     const isFile = (obj: any): obj is File => obj instanceof File;

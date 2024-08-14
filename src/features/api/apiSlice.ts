@@ -69,5 +69,6 @@ export const apiSlice = createApi({
     'notification',
     'super-adminDashboard',
     'retailerScanDetails',
+    'superAdminCustomer',
   ],
 });

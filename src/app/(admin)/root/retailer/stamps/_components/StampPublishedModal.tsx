@@ -1,4 +1,7 @@
 import Button from '@/components/Formik/Button';
+import { routes } from '@/config/routes';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import { BsCheck2Circle, BsExclamationTriangle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { MdDoNotDisturb } from 'react-icons/md';
@@ -11,18 +14,35 @@ export default function StampPublishedModal({
   setModalState,
   isSubmitting,
   setIsSubmitting,
+  values,
+  stampId,
 }: {
   modalState?: boolean;
-  publishId: string | null;
-  publishHandler: (id: string) => void;
+  publishId?: string | null;
+  publishHandler: any;
   setModalState: (state: boolean) => void;
   isSubmitting?: boolean;
+  values?: any;
+  stampId?: any;
   setIsSubmitting: (state: boolean) => void;
 }) {
-  const handlePublish = () => {
+  const router = useRouter();
+  const handlePublish = async () => {
     setIsSubmitting(true);
     if (publishId) {
       publishHandler(publishId);
+      setModalState(false);
+    } else {
+      if (stampId) {
+        const result = await publishHandler({ formData: values, id: stampId }).unwrap();
+        router.push(routes.privateRoutes.retailer.stamp.home);
+        toast.success(result.data.message ?? 'Stamp updated successfully!');
+      } else {
+        const result = await publishHandler(values).unwrap();
+        router.push(routes.privateRoutes.retailer.stamp.home);
+        toast.success(result.data.message || 'Stamp created successfully!');
+      }
+
       setModalState(false);
     }
   };
@@ -39,7 +59,9 @@ export default function StampPublishedModal({
             <HiMiniXCircle className="text-2xl text-danger" />
           </ActionIcon>
         </div>
-        <p className="text-base font-medium">Do you want to publish it ?</p>
+        <p className="text-base font-medium">
+          Do you want to publish it ? Once published, this stamp <span className="text-danger">can{"'"}t be edited!</span>
+        </p>
         <div className="mt-10 flex justify-end gap-2">
           <Button color="danger" onClick={() => setModalState(false)} text="Not Now" postIcon={<MdDoNotDisturb className="text-base" />} />
           <Button

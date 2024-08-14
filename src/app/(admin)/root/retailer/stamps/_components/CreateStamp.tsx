@@ -7,7 +7,7 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { useBranchCategoryImageListQuery, useCreateStampMutation } from '@/features/retailer/stamp/stampApi';
-import getChangedFormData from '@/utils/getChangedFormData';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
@@ -18,18 +18,22 @@ import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { IoAlertCircle } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
-import { RiDiscountPercentLine, RiDrinks2Fill } from 'react-icons/ri';
+import { RiDiscountPercentLine, RiDraftLine, RiDrinks2Fill } from 'react-icons/ri';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
+import StampPublishedModal from './StampPublishedModal';
 
 export default function Create() {
   const { data: session }: any = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
+  const [submitAction, setSubmitAction] = useState<string | null>(null);
+  const [publishState, setPublishState] = useState(false);
+  const [publishSubmitting, setPublishSubmitting] = useState(false);
+  const [values, setValues] = useState({});
 
   const isAddons = session?.user?.totalCustomStamp > 0 ? true : false;
-
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery({});
 
   const initialValues = {
@@ -39,13 +43,12 @@ export default function Create() {
     title: '',
     description: '',
     rules: '',
-    noOfStampsToCollect: 0,
+    noOfStampsToCollect: 10,
     minPurchaseAmount: 0,
     rewardType: 'discount',
     promotionReward: '',
     discountReward: 2,
     validDateRange: '',
-    status: true,
     hasValidity: true,
   };
 
@@ -60,23 +63,29 @@ export default function Create() {
   const handleSubmit = async (values: any) => {
     try {
       setSubmitting(true);
-      const changedData = getChangedFormData(values, initialValues, ['validDateRange']);
+      const changedData = removeEmptyValues(values, ['validDateRange']);
 
-      changedData.rewardType = values.rewardType;
       if (values.hasValidity) {
-        changedData.startedAt = values?.validDateRange?.split('to')[0];
-        changedData.expiredAt = values?.validDateRange?.split('to')[1];
+        if (values?.validDateRange?.includes('to')) {
+          changedData.startedAt = values?.validDateRange?.split('to')[0];
+          changedData.expiredAt = values?.validDateRange?.split('to')[1];
+        } else {
+          changedData.startedAt = values?.validDateRange;
+          changedData.expiredAt = values?.validDateRange;
+        }
       }
-      changedData.isPublished = false;
-      changedData.hasValidity = values.hasValidity;
-      changedData.discountReward = values?.discountReward;
+      if (submitAction === 'draft') {
+        changedData.isPublished = false;
+      } else {
+        changedData.isPublished = true;
+      }
 
       const result = await createStamp(changedData).unwrap();
       router.push(routes.privateRoutes.retailer.stamp.home);
       toast.success(result.data.message || 'Stamp created successfully!');
     } catch (error: any) {
       console.error('Failed to create Stamp:', error);
-      toast.error(error.data.message || 'Failed to create Stamp. Please try again.');
+      toast.error(error?.data?.message || 'Failed to create Stamp. Please try again.');
       setSubmitting(false);
     }
   };
@@ -100,7 +109,11 @@ export default function Create() {
       then: () => Yup.number().required('Required!').min(1, 'Discount must be greater than zero!'),
       otherwise: () => Yup.number(),
     }),
-    // validDateRange: Yup.string().required('Required!'),
+    validDateRange: Yup.string().when('hasValidity', {
+      is: true,
+      then: () => Yup.string().required('Required!'),
+      otherwise: () => Yup.string(),
+    }),
   });
 
   return (
@@ -109,11 +122,32 @@ export default function Create() {
         initialValues={initialValues}
         validationSchema={validationSchema}
         enableReinitialize
-        onSubmit={(values) => {
-          handleSubmit(values);
+        onSubmit={(values: any) => {
+          if (submitAction === 'draft') {
+            handleSubmit(values);
+          } else {
+            setPublishState(true);
+            const filteredValues = removeEmptyValues(values, ['validDateRange']);
+
+            if (values.hasValidity) {
+              if (values?.validDateRange?.includes('to')) {
+                filteredValues.startedAt = values?.validDateRange?.split('to')[0];
+                filteredValues.expiredAt = values?.validDateRange?.split('to')[1];
+              } else {
+                filteredValues.startedAt = values?.validDateRange;
+                filteredValues.expiredAt = values?.validDateRange?.split('to');
+              }
+            }
+            if (submitAction === 'draft') {
+              filteredValues.isPublished = false;
+            } else {
+              filteredValues.isPublished = true;
+            }
+            setValues(filteredValues);
+          }
         }}
       >
-        {({ errors, setFieldValue, values }) => {
+        {({ errors, setFieldValue, values, touched }) => {
           return (
             <Form className="mt-5 grid gap-4">
               <div className="grid grid-cols-2 gap-x-5">
@@ -241,7 +275,7 @@ export default function Create() {
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
                       key={item?._id}
-                      className="flex w-[150px] rounded bg-white px-6 py-3 shadow-md"
+                      className={`flex w-[150px] rounded bg-white px-6 py-3 shadow-md ${errors?.stampImageId && touched?.stampImageId && 'ring-2 ring-danger'}`}
                     >
                       <div>
                         <img className="object-center" src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
@@ -283,7 +317,7 @@ export default function Create() {
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
                       key={item?._id}
-                      className="flex w-[150px] rounded bg-white px-6 py-3 shadow-md"
+                      className={`flex w-[150px] rounded bg-white px-6 py-3 shadow-md ${errors?.stampImageId && touched?.stampImageId && 'ring-2 ring-danger'}`}
                     >
                       <div>
                         <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
@@ -330,31 +364,55 @@ export default function Create() {
                 </div>
               )}
 
-              {errors?.stampImageId && (
+              {errors?.stampImageId && touched?.stampImageId && (
                 <div className="flex items-center gap-x-1 text-danger">
                   <IoAlertCircle className="text-lg" />
-                  <span>Select one from custom or default stamp is required!</span>
+                  <span>Select one from default or custom stamp is required!</span>
                 </div>
               )}
 
               <InputTextarea name="description" required={false} label="Description" placeholder="Write here..." />
 
-              <p className="text-end text-xs font-semibold">
-                Fields marked with <span className="text-red-600">*</span> are mandatory!
+              <p className="mt-4 flex flex-col text-end text-xs font-semibold">
+                <span>
+                  Fields marked with <span className="text-red-600">*</span> are mandatory!
+                </span>
+                <span>Need double-click to select a single date!</span>
               </p>
+
               <div className="mt-2 flex justify-end">
                 <Button
                   color="danger"
                   type="submit"
-                  text="Submit"
-                  postIcon={<BsCheck2Circle className="text-base" />}
+                  text="Draft"
+                  postIcon={<RiDraftLine className="text-base" />}
                   isSubmitting={submitting}
+                  onClick={() => setSubmitAction('draft')}
+                />
+                <Button
+                  color="outline"
+                  type="submit"
+                  text="Publish"
+                  postIcon={<BsCheck2Circle className="text-base" />}
+                  // isSubmitting={publishSubmitting}
+                  onClick={() => {
+                    setSubmitAction('publish');
+                  }}
                 />
               </div>
             </Form>
           );
         }}
       </Formik>
+
+      <StampPublishedModal
+        publishHandler={createStamp}
+        modalState={publishState}
+        setModalState={setPublishState}
+        isSubmitting={publishSubmitting}
+        setIsSubmitting={setPublishSubmitting}
+        values={values}
+      />
     </div>
   );
 }

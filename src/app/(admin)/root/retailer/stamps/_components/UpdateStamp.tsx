@@ -8,7 +8,7 @@ import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { useBranchCategoryImageListQuery, useGetSingleStampsQuery, useUpdateStampMutation } from '@/features/retailer/stamp/stampApi';
 import getFormattedDate from '@/utils/get-formatted-date';
-import getChangedFormData from '@/utils/getChangedFormData';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
@@ -19,9 +19,19 @@ import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine } from 'react-icons/ri';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
+import StampPublishedModal from './StampPublishedModal';
 
 export default function Update({ Id, offset }: any) {
   const [submitting, setSubmitting] = useState(false);
+
+  const [submitAction, setSubmitAction] = useState<string | null>(null);
+
+  const [publishState, setPublishState] = useState(false);
+
+  const [publishSubmitting, setPublishSubmitting] = useState(false);
+
+  const [values, setValues] = useState({});
+
   const [updateStamp] = useUpdateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery(undefined);
@@ -39,12 +49,21 @@ export default function Update({ Id, offset }: any) {
     try {
       setSubmitting(true);
 
-      const changedData = getChangedFormData(values, initialValues, ['_id', 'validDateRange']);
+      const changedData = removeEmptyValues(values, ['_id', 'validDateRange']);
       if (values.hasValidity) {
-        changedData.startedAt = values?.validDateRange?.split('to')[0];
-        changedData.expiredAt = values?.validDateRange?.split('to')[1];
+        if (values?.validDateRange?.includes('to')) {
+          changedData.startedAt = values?.validDateRange?.split('to')[0];
+          changedData.expiredAt = values?.validDateRange?.split('to')[1];
+        } else {
+          changedData.startedAt = values?.validDateRange;
+          changedData.expiredAt = values?.validDateRange;
+        }
       }
-      changedData.hasValidity = values.hasValidity;
+      if (submitAction === 'draft') {
+        changedData.isPublished = false;
+      } else {
+        changedData.isPublished = true;
+      }
 
       const result = await updateStamp({ formData: changedData, id: Id }).unwrap();
       router.push(routes.privateRoutes.retailer.stamp.home);
@@ -101,7 +120,26 @@ export default function Update({ Id, offset }: any) {
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={(values) => {
-          handleSubmit(values);
+          if (submitAction === 'draft') {
+            handleSubmit(values);
+          } else {
+            const changedData = removeEmptyValues(values, ['validDateRange']);
+            if (values.hasValidity) {
+              if (values?.validDateRange?.includes('to')) {
+                changedData.startedAt = values?.validDateRange?.split('to')[0];
+                changedData.expiredAt = values?.validDateRange?.split('to')[1];
+              } else {
+                changedData.startedAt = values?.validDateRange;
+                changedData.expiredAt = values?.validDateRange;
+              }
+            }
+            if (submitAction === 'draft') {
+              changedData.isPublished = false;
+            } else {
+              changedData.isPublished = true;
+            }
+            setValues(changedData);
+          }
         }}
       >
         {({ errors, setFieldValue, values }) => {
@@ -277,12 +315,33 @@ export default function Update({ Id, offset }: any) {
                   text="Update"
                   postIcon={<BsCheck2Circle className="text-base" />}
                   isSubmitting={submitting}
+                  onClick={() => setSubmitAction('draft')}
+                />
+                <Button
+                  color="danger"
+                  type="submit"
+                  text="Publish"
+                  postIcon={<BsCheck2Circle className="text-base" />}
+                  // isSubmitting={publishSubmitting}
+                  onClick={() => {
+                    setSubmitAction('publish');
+                    setPublishState(true);
+                  }}
                 />
               </div>
             </Form>
           );
         }}
       </Formik>
+      <StampPublishedModal
+        publishHandler={updateStamp}
+        modalState={publishState}
+        setModalState={setPublishState}
+        isSubmitting={publishSubmitting}
+        setIsSubmitting={setPublishSubmitting}
+        values={values}
+        stampId={Id}
+      />
     </div>
   );
 }

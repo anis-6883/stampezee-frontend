@@ -199,6 +199,7 @@ export default function CreateUpdateModel({
                     <span>
                       Fields marked with <span className="text-red-600">*</span> are mandatory!
                     </span>
+                    <span>Need double-click to select a single date!</span>
                   </p>
                   <div className="flex justify-end">
                     <Button

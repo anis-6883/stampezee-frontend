@@ -20,10 +20,18 @@ const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name,
       {({ field, meta }: { field: any; meta: any }) => (
         <Flatpickr
           render={({ defaultValue, value, ...props }, ref) => (
-            <div className="flex flex-col gap-y-0.5">
-              <p className="mb-1 font-medium">
-                {label} <span className="text-red-600">*</span>
-              </p>
+            <div className=" flex flex-col gap-y-0.5">
+              <div className=" flex gap-1">
+                {/* <Tooltip className=" text-white" showArrow={true} content={'Double click for single date!'} placement="left-end">
+                  <span className="cursor-pointer">
+                    <IoInformationCircle className="text-base" />
+                  </span>
+                </Tooltip> */}
+                <p className="mb-1 font-medium">
+                  {label} <span className="text-red-600">*</span>
+                  {/* <span>(Double click for single date!)</span> */}
+                </p>
+              </div>
               <div className="flex items-center">
                 <input
                   type="text"
@@ -50,7 +58,6 @@ const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name,
           value={values[name]}
           options={{
             onChange: function (_, selectedDates) {
-              console.log('selectedDates: ', selectedDates);
               setFieldValue(name, selectedDates);
             },
             disableMobile: true,
