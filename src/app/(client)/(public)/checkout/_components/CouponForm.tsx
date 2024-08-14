@@ -35,7 +35,7 @@ const CouponForm = () => {
 
     if (couponSuccess) {
       setIsCouponSubmitting(false);
-      if (checkedMinPurchaseAmount(Math.abs(total), couponResponse?.data?.minPurchaseAmount)) {
+      if (checkedMinPurchaseAmount(Math.abs(subscription?.price), couponResponse?.data?.minPurchaseAmount)) {
         toast.success(couponResponse?.message);
 
         dispatch(applyCoupon(couponResponse?.data));
@@ -47,11 +47,11 @@ const CouponForm = () => {
   }, [couponError, couponResponse?.data, couponResponse?.message, couponSuccess, dispatch]);
 
   useEffect(() => {
-    if (!checkedMinPurchaseAmount(Math.abs(total), coupon?.minPurchaseAmount ? coupon?.minPurchaseAmount : 0)) {
+    if (!checkedMinPurchaseAmount(Math.abs(subscription?.price), coupon?.minPurchaseAmount ? coupon?.minPurchaseAmount : 0)) {
       toast.error(`Min. ${coupon?.minPurchaseAmount}CAD required to apply coupon!`);
       dispatch(removeCoupon());
     }
-  }, [coupon?.minPurchaseAmount, dispatch, total]);
+  }, [coupon?.minPurchaseAmount, dispatch, subscription]);
 
   const handleCoupon = async (values: any) => {
     setIsCouponSubmitting(true);

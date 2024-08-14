@@ -2,8 +2,11 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
-import { useGetAllCustomerBySuperAdminQuery } from '@/features/super-admin/customer/customerApi';
-import { useDeleteSuperAdminRetailerMutation, useUpdateRetailerStatusMutation } from '@/features/super-admin/retailer/retailerApi';
+import {
+  useCustomerStatusUpdateBySuperAdminMutation,
+  useDeleteCustomerBySuperAdminMutation,
+  useGetAllCustomerBySuperAdminQuery,
+} from '@/features/super-admin/customer/customerApi';
 import { IQueryType } from '@/types';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -32,9 +35,9 @@ export default function CustomerTable() {
     console.log('Data: ', data);
   }
 
-  const [deleteRetailer, { isSuccess, isError }] = useDeleteSuperAdminRetailerMutation();
+  const [deleteCustomerBySuperAdmin, { isSuccess, isError }] = useDeleteCustomerBySuperAdminMutation();
 
-  const [updateStatus] = useUpdateRetailerStatusMutation();
+  const [customerStatusUpdateBySuperAdmin] = useCustomerStatusUpdateBySuperAdminMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
@@ -50,7 +53,7 @@ export default function CustomerTable() {
     }
     if (isSuccess) {
       setDeleteSubmitting(false);
-      toast.success('Stamps Image deleted successfully!');
+      toast.success('Customer deleted successfully!');
       setDeleteState(false);
       setDeleteId(null);
     }
@@ -86,6 +89,7 @@ export default function CustomerTable() {
           </div>
         </div>
       ),
+      size: 250,
     },
     {
       header: 'Address',
@@ -113,7 +117,7 @@ export default function CustomerTable() {
       header: 'Status',
       accessorKey: 'status',
       Cell: ({ row }: any) => {
-        return <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />;
+        return <SwitchButton updateStatus={customerStatusUpdateBySuperAdmin} id={row?.original?._id} status={row?.original?.status} />;
 
         // return row?.original?.status ? <div>Yes</div> : <div>No</div>;
       },
@@ -185,7 +189,7 @@ export default function CustomerTable() {
 
       <DeleteConfirmModal
         deleteId={deleteId}
-        deleteHandler={deleteRetailer}
+        deleteHandler={deleteCustomerBySuperAdmin}
         modalState={deleteState}
         setModalState={setDeleteState}
         isSubmitting={deleteSubmitting}
