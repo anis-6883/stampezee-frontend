@@ -52,6 +52,7 @@ export const isCheckoutButtonDisabled = ({
   total: number;
   refundableThreshold: number;
 }) => {
+  console.log('planChangeType', planChangeType);
   if (!plan?.slug || activePlan?.slug === plan?.slug) {
     if (plan?.slug && plan?.slug !== 'trial' && plan?.slug === activePlan?.slug && totalAddOn > 0) {
       return false;
@@ -59,6 +60,9 @@ export const isCheckoutButtonDisabled = ({
     return true;
   }
   if (Math.abs(total) < refundableThreshold && activePlan?.slug && activePlan?.slug !== 'trial') {
+    return true;
+  }
+  if (Math.abs(total) < refundableThreshold && !planChangeType) {
     return true;
   }
   // if (planChangeType === 'downgrade' && total > 1) {

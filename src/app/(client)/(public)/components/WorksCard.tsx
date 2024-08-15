@@ -17,8 +17,8 @@ export default function WorksCard({ image, title, description }: { image: string
         <div data-aos="fade-up-right">
           <Image src={image} className="mx-auto h-[150px] w-[150px]" alt="image" />
         </div>
-        <div className="text-primary-black mb-2 text-2xl font-bold">{title}</div>
-        <p className="text-primary-black text-[1.2rem] font-[600] leading-8">{description}</p>
+        <div className="text-primary-black mb-2 text-xl font-bold sm:text-3xl">{title}</div>
+        <p className="text-primary-black text-balance text-base font-bold sm:text-xl">{description}</p>
       </div>
     </div>
   );

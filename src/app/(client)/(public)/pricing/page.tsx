@@ -15,8 +15,8 @@ export default async function Page() {
         <div className="pricing-hero absolute inset-0"></div>
         <div className="absolute inset-0  mx-auto  max-w-screen-xl items-center">
           <div className="flex h-full items-center justify-center sm:ml-3 sm:block">
-            <div className="bottom-[28%] sm:absolute">
-              <div className="mb-3 text-center text-[3rem] font-bold leading-10 text-[#DF2828] sm:text-left md:text-[4rem]">
+            <div className="bottom-[28%]  sm:absolute">
+              <div className="text-center text-[2.5rem] font-bold leading-10 text-[#DF2828] sm:mb-3 sm:text-left md:text-[4rem]">
                 <span style={{ opacity: 1, transform: 'none' }}>E</span>
                 <span style={{ opacity: 1, transform: 'none' }}>x</span>
                 <span style={{ opacity: 1, transform: 'none' }}>p</span>
@@ -47,8 +47,8 @@ export default async function Page() {
       </div>
       <div className=" ms-px-0 container  mx-auto mt-16 max-w-screen-xl px-5">
         <div className="mx-auto  text-start">
-          <h2 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Subscriptions</h2>
-          <p className="mb-4 text-2xl font-medium tracking-tight text-gray-900 dark:text-white">Our Plans</p>
+          <h2 className="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Subscriptions</h2>
+          <p className="mb-4 text-xl font-medium tracking-tight text-gray-900 dark:text-white sm:text-2xl">Our Plans</p>
         </div>
 
         <SubscriptionList stripeInfo={data?.data?.stripe} />

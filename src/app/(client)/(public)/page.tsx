@@ -16,15 +16,15 @@ export default async function Page() {
         <div className="absolute inset-0 mx-auto flex max-w-screen-xl items-center px-4 sm:px-6 lg:px-8">
           <div className="flex w-full flex-col-reverse items-center justify-between sm:flex-row">
             <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
-              <h1 className="text-3xl font-bold text-white sm:text-5xl">Revolutionize Your Customer Experience</h1>
-              <p className="mt-4 text-lg font-medium text-white sm:text-xl">
+              <h1 className="text-3xl font-bold text-white sm:text-4xl">Revolutionize Your Customer Experience</h1>
+              <p className="mt-4 text-balance text-base font-medium text-white sm:text-xl">
                 Engage, reward, and retain your customers with a touch of simplicity and technology, and bring the future of loyalty
                 programs to your business.
               </p>
               <div className="mt-8">
                 <Link
                   href={routes.publicRoutes.pricing}
-                  className="dark:bg-primary-red rounded-full bg-white px-8 py-4 text-2xl font-bold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B]"
+                  className="dark:bg-primary-red rounded-full bg-white px-8 py-4 text-lg font-bold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:text-2xl"
                 >
                   GET STARTED
                 </Link>
@@ -44,7 +44,7 @@ export default async function Page() {
       {/* How It Works start */}
       <section id="how_work" className=" bg-[#FCE8E8] py-10">
         <div className="container mx-auto px-4">
-          <div className="text-primary-black mb-7 text-center text-5xl font-bold">How It Works?</div>
+          <div className="text-primary-black mb-7 text-center text-3xl font-bold sm:text-4xl">How It Works?</div>
           <div className=" block items-center justify-between md:flex">
             <WorksCard
               image="/default/flex.svg"
@@ -63,7 +63,7 @@ export default async function Page() {
         <div>
           <div className="mt-5 text-center">
             <p className="text-primary-black mb-7 text-[1.2rem] font-[600] leading-8">TESTIMONIALS</p>
-            <div className="text-primary-black mb-7 text-center text-5xl font-bold">Read What Others Have to Say</div>
+            <div className="text-primary-black mb-7 text-center text-3xl font-bold sm:text-4xl">Read What Others Have to Say?</div>
           </div>
           <div>
             <div className="container mx-auto grid max-w-screen-xl grid-cols-1  gap-3 p-3 md:grid-cols-2 md:p-0 lg:grid-cols-3">

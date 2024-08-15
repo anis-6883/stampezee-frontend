@@ -65,7 +65,7 @@ export default function Accordion() {
             aria-labelledby="accordion-collapse-heading-1"
           >
             <div className=" border-none p-5 dark:bg-gray-900">
-              <p className="mb-2 pb-4 text-gray-500 dark:text-gray-400">{item?.description}</p>
+              <p className="mb-2 text-pretty pb-4 text-gray-500 dark:text-gray-400">{item?.description}</p>
             </div>
           </div>
         </div>

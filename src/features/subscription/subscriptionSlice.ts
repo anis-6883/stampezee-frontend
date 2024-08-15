@@ -170,6 +170,10 @@ const subscriptionSlice = createSlice({
       }
       updateBalance(state);
       calculateSubTotal(state);
+      if (state?.coupon) {
+        calculateDiscount(state);
+        calculateSubTotal(state);
+      }
     },
     setActiveSubscription: (state, action: PayloadAction<activeSubscription>) => {
       state.activeSubscription = action.payload;

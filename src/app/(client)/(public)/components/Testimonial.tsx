@@ -15,7 +15,7 @@ export default function Testimonial({
         <div className=" my-6 flex max-w-sm flex-col rounded-3xl shadow-lg">
           <div className="flex flex-col items-center justify-center rounded-3xl bg-[#FCE8E8] p-8 dark:bg-violet-600 dark:text-gray-50">
             <img src={image} alt="" className="-mt-16 mb-2 h-16 w-16 rounded-full bg-cover bg-center dark:bg-[#FCE8E8] " />
-            <p className="text-[2rem] font-bold  leading-tight">{name}</p>
+            <p className="text-2xl font-bold leading-tight sm:text-3xl">{name}</p>
             <p className="text-[1rem] text-sm font-[400] leading-tight">{position}</p>
             <p className="mt-3 text-center text-[1.1rem] text-sm font-[400]">{description}</p>
           </div>
