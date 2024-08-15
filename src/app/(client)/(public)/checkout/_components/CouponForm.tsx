@@ -40,7 +40,9 @@ const CouponForm = () => {
 
         dispatch(applyCoupon(couponResponse?.data));
       } else {
-        toast.error(`Min. ${couponResponse?.data?.minPurchaseAmount}CAD required to apply coupon!`);
+        if (couponResponse?.data?.minPurchaseAmount) {
+          toast.error(`Min. ${couponResponse?.data?.minPurchaseAmount}CAD required to apply coupon!`);
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +53,8 @@ const CouponForm = () => {
       toast.error(`Min. ${coupon?.minPurchaseAmount}CAD required to apply coupon!`);
       dispatch(removeCoupon());
     }
-  }, [coupon?.minPurchaseAmount, dispatch, subscription]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subscription]);
 
   const handleCoupon = async (values: any) => {
     setIsCouponSubmitting(true);

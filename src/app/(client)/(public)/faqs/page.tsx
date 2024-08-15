@@ -49,7 +49,7 @@ export default function Page() {
         </div>
       </div>
       <div className="md-px-0 container mx-auto mt-10 max-w-screen-xl px-3">
-        <h1 className="text-[2rem] font-bold  leading-tight">Frequently asked questions</h1>
+        <h1 className="text-xl font-bold leading-tight  sm:text-[2rem]">Frequently asked questions</h1>
       </div>
 
       <div className="md-px-0 container mx-auto mt-10 max-w-screen-xl px-3">

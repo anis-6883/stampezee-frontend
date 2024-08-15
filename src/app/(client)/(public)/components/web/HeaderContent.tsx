@@ -206,10 +206,30 @@ export default function HeaderContent() {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className=" absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white p-2 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Items className=" absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white p-2 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <div className="py-1">
-                                <hr className="mt-3" />
-                                <br />
+                                <div className="mb-5 flex flex-col items-center justify-center gap-y-4 border-b border-gray-300 p-6">
+                                  <img
+                                    src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+                                    color="danger"
+                                    className="h-16 w-16 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+                                    alt="brand"
+                                  />
+                                  {user?.role === ROLE.SUPER_ADMIN && (
+                                    <Title as="h5" className="break-all text-center font-bold">
+                                      {fullName}
+                                    </Title>
+                                  )}
+
+                                  {user?.role === ROLE.RETAILER && (
+                                    <Title as="h5" className="break-all text-center font-bold">
+                                      {user?.storeName && user?.storeName.length > 20
+                                        ? user?.storeName.slice(0, 20) + '...'
+                                        : user?.storeName}
+                                    </Title>
+                                  )}
+                                </div>
+
                                 <Button onClick={handleLogout} variant="flat" className="h-7 w-full bg-red-500 text-white">
                                   Logout
                                 </Button>

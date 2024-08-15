@@ -78,7 +78,7 @@ export default function CreateUpdateModel({
     let objToFormData: FormData;
 
     if (formData?._id) {
-      const ignoreList = [];
+      const ignoreList = ['email'];
       if (!isFile(values?.image)) ignoreList.push('image');
 
       objToFormData = objectToFormData(values, ignoreList);
@@ -226,7 +226,7 @@ export default function CreateUpdateModel({
                   </div>
 
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                    <InputField name="email" label="Email" placeholder="john@email.com" />
+                    <InputField disabled={formData?._id ? true : false} name="email" label="Email" placeholder="john@email.com" />
                     {!formData._id && <InputPassword name="password" label="Password" placeholder="********" />}
                   </div>
 

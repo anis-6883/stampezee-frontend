@@ -183,7 +183,7 @@ export default function CustomerTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Name, Store, Email"
+        searchPlaceHolder="Search By Name, Email"
         searchFieldWidth="270px"
       />
 

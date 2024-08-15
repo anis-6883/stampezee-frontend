@@ -18,7 +18,7 @@ export default async function Page() {
 
   return (
     <div>
-      {/* <div className="relative mx-auto w-full">
+      <div className="relative mx-auto w-full">
         <img src="default/hero.jpg" alt="hero image" className="h-[36vh] w-full object-cover sm:h-[63vh]" />
         <div className="css-dcyb5u absolute inset-0"></div>
         <div className="absolute inset-0  mx-auto  max-w-screen-xl items-center">
@@ -53,8 +53,8 @@ export default async function Page() {
             </div>
           </div>
         </div>
-      </div> */}
-      <div className="relative h-[63vh] w-full text-center">
+      </div>
+      {/* <div className="relative h-[63vh] w-full text-center">
         <img className="absolute inset-0 h-full w-full  object-cover" src="default/hero.jpg" alt="" />
 
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
@@ -90,8 +90,8 @@ export default async function Page() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="mx-auto my-10 max-w-screen-xl">
+      </div> */}
+      <div className="mx-3 my-10 max-w-screen-xl sm:mx-auto">
         <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
           <h1 className=" text-xl font-bold xl:text-xl">Connect with us</h1>
 

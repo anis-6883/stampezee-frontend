@@ -7,6 +7,8 @@ import { useCreateNewsletterMutation } from '@/features/newsletter/newsletterApi
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { BsCheck2Circle } from 'react-icons/bs';
+import { ImSpinner9 } from 'react-icons/im';
 import Image from '../Image';
 
 export default function Footer() {
@@ -29,7 +31,9 @@ export default function Footer() {
     }
   }, [newsletterError, newsletterSuccess]);
 
-  const handleNewsletter = () => {
+  const handleNewsletter = (e: any) => {
+    e.preventDefault();
+    setIsSubmitting(true);
     if (email) {
       createNewsletter({ email });
     }
@@ -49,22 +53,22 @@ export default function Footer() {
             <div className="mt-4 block font-medium">
               <div className="grid grid-cols-1 gap-4 text-center md:grid-cols-2 md:text-left lg:grid-cols-4">
                 <div className="mt-4 block font-medium">
-                  <div className="block text-lg font-bold">StampEzee</div>
-                  <div className="flex flex-col">
+                  <div className="block text-lg font-bold  sm:text-xl">StampEzee</div>
+                  <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
                     <Link className="mt-4 w-fit font-medium" href={routes.publicRoutes.pricing}>
                       PRICING
                     </Link>
                     <Link className="mt-4 w-fit font-medium" href="/faqs/">
                       FAQ
                     </Link>
-                    <Link className="mt-4 w-fit font-medium" href="/contact-us/">
+                    {/* <Link className="mt-4 w-fit font-medium" href="/contact-us/">
                       CONTACT
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
                 <div className="mt-4  font-medium">
-                  <div className="block text-lg font-bold">Socials</div>
-                  <div className="MuiStack-root css-yd8sa2 flex flex-col">
+                  <div className="block text-lg font-bold  sm:text-xl">Socials</div>
+                  <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
                     <Link className="mt-4 w-fit font-medium" href="#">
                       FACEBOOK
                     </Link>
@@ -80,29 +84,31 @@ export default function Footer() {
                   </div>
                 </div>
                 <div className="mt-4 font-medium">
-                  <div className="block text-lg font-bold">Contact</div>
-                  <div className="MuiStack-root css-yd8sa2 flex flex-col">
-                    <Link className="mt-4 w-fit font-medium" href="/terms" target="_blank">
-                      T&amp;C
-                    </Link>
+                  <div className="block text-lg font-bold  sm:text-xl">Contact</div>
+                  <div className="MuiStack-root css-yd8sa2 flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
                     <Link className="mt-4 w-fit font-medium" href="/privacy-policy" target="_blank">
                       PRIVACY POLICY
                     </Link>
                     <Link className="mt-4 w-fit font-medium" href={routes.publicRoutes.contactUs}>
                       CONTACT US
                     </Link>
+                    <Link className="mt-4 w-fit font-medium" href="/terms" target="_blank">
+                      T&amp;C
+                    </Link>
                   </div>
                 </div>
                 <div className="mt-4 flex flex-col font-medium">
-                  <div className="block text-lg font-semibold">JOIN OUR NEWSLETTER</div>
-                  <div className="">
-                    <div
+                  <div className="block text-lg font-bold  sm:text-xl">JOIN OUR NEWSLETTER</div>
+                  <div className="text-xs sm:text-sm">
+                    <form
+                      onSubmit={handleNewsletter}
                       className=" m-0 mb-6 mt-5 flex items-center justify-center rounded-full bg-[#FFDBDB] p-3"
                       style={{ width: '100%' }}
                     >
                       <input
                         aria-invalid="false"
                         id=":r0:"
+                        required
                         placeholder="Email Address"
                         className="w-[60%] rounded-md border-0 border-gray-300 bg-transparent px-4 py-2 outline-none focus:border-none focus:shadow-none focus:outline-none sm:w-full "
                         type="email"
@@ -113,12 +119,12 @@ export default function Footer() {
                         }}
                       />
                       <div className="rounded-full bg-[#E55555] px-4 py-2 text-sm font-bold text-white">
-                        <button onClick={handleNewsletter} className="" type="button">
-                          SUBMIT
-                          <span className="" />
+                        <button disabled={isSubmitting} className="flex items-center justify-center gap-1" type="submit">
+                          <span className="text-sm">SUBMIT</span>{' '}
+                          {isSubmitting ? <ImSpinner9 className="animate-spin text-base" /> : <BsCheck2Circle className="text-base" />}
                         </button>
                       </div>
-                    </div>
+                    </form>
                   </div>
                   <div className="flex items-center justify-center sm:items-start">
                     {/* <img className="MuiBox-root css-0" src="/Linkssets/images/home/Linkpp-store-badge.png" style={{ width: 200 }} />
