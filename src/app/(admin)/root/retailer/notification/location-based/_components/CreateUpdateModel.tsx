@@ -140,7 +140,7 @@ export default function CreateUpdateModel({
                     <span className=" font-medium">Radius</span>
                     <RangeSlider
                       className="mt-3"
-                      onChange={(value: any) => setFieldValue('radius', value[1] - value[0] <= 0 ? 1 : value[1] - value[0])}
+                      onChange={(value: any) => setFieldValue('radius', value <= 0 ? 1 : value)}
                       marks={generateRangeObject(0, 100, 5)}
                       step={5}
                     />

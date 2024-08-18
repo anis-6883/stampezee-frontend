@@ -91,10 +91,9 @@ export default async function Page() {
           </div>
         </div>
       </div> */}
-      <div className="mx-3 my-10 max-w-screen-xl sm:mx-auto">
+      <div className="mx-4 my-10 max-w-screen-xl xl:mx-auto">
         <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
           <h1 className=" text-xl font-bold xl:text-xl">Connect with us</h1>
-
           <ContactForm token={encryptedString} />
         </div>
       </div>
