@@ -42,7 +42,7 @@ export default function Footer() {
   return (
     <div className="container mx-auto max-w-[1300px] px-3 sm:px-5">
       <footer className="container mx-auto">
-        <hr className="mb-20 mt-10" />
+        <hr className="mb-8 mt-10" />
         <div className="">
           <div className="flex flex-col items-center md:items-start ">
             <Link className="w-[60px]" href={routes.publicRoutes.home}>

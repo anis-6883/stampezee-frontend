@@ -68,7 +68,7 @@ export default function RetailerTable() {
                 <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="h-full w-20 rounded" />
               </div>
             ) : (
-              <img src={'/images/profile.png'} alt="image" className="h-full w-20 rounded" />
+              <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-20 rounded" />
             )}
           </div>
           <div>
