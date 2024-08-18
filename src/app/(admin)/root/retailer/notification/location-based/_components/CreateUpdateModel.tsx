@@ -121,7 +121,7 @@ export default function CreateUpdateModel({
           </ActionIcon>
         </div>
         <div>
-          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
+          <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
             {({ setFieldValue, values }) => {
               console.log({ values });
 
@@ -140,6 +140,7 @@ export default function CreateUpdateModel({
                     <span className=" font-medium">Radius</span>
                     <RangeSlider
                       className="mt-3"
+                      value={values?.radius}
                       onChange={(value: any) => setFieldValue('radius', value <= 0 ? 1 : value)}
                       marks={generateRangeObject(0, 100, 5)}
                       step={5}

@@ -236,7 +236,7 @@ export default function Sidebar({ className }: { className?: string }) {
                             : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-700/90'
                         )}
                       >
-                        <div className=" flex items-center truncate">
+                        <div className="flex items-center truncate">
                           {item?.icon && (
                             <span
                               className={cn(
