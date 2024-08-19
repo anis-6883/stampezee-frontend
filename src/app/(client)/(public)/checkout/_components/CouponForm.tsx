@@ -7,7 +7,7 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { RootState } from '@/features/store';
 import { applyCoupon, removeCoupon, setCode } from '@/features/subscription/subscriptionSlice';
 import { useCreateCouponMutation } from '@/features/super-admin/subscription/subscriptionApi';
-import { checkedMinPurchaseAmount } from '@/utils';
+import { checkedMinPurchaseAmount, isCheckCouponDisabled } from '@/utils';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -20,7 +20,7 @@ const CouponForm = () => {
   const { coupon, total, subscription, activeSubscription, planChangeType } = useSelector((state: RootState) => state.subscriptionSlice);
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
   const [createCoupon, { data: couponResponse, error: couponError, isSuccess: couponSuccess }] = useCreateCouponMutation();
-
+  const { isLoggedIn } = useSelector((state: RootState) => state?.authSlice);
   const initialValues = { code: '' };
   const validationSchema = Yup.object().shape({
     code: Yup.string().required(''),
@@ -72,7 +72,7 @@ const CouponForm = () => {
           <Form className="grid grid-cols-12 justify-between gap-x-2">
             <div className="col-span-7">
               <InputField
-                disabled={activeSubscription?.slug == subscription?.slug || subscription?.slug === 'trial' || coupon ? true : false}
+                disabled={isCheckCouponDisabled({ activeSubscription, subscription, isLoggedIn, coupon, planChangeType })}
                 label=""
                 placeholder="X1Y2Z3"
                 required={false}
@@ -81,14 +81,7 @@ const CouponForm = () => {
             </div>
             <div className="col-span-5">
               <Button
-                disabled={
-                  activeSubscription?.slug == subscription?.slug ||
-                  subscription?.slug === 'trial' ||
-                  coupon ||
-                  planChangeType === 'downgrade'
-                    ? true
-                    : false
-                }
+                disabled={isCheckCouponDisabled({ activeSubscription, subscription, isLoggedIn, coupon, planChangeType })}
                 color="danger"
                 text="Apply"
                 className="w-full"
