@@ -88,14 +88,16 @@ export default function StampsImageTable() {
         <div className="flex items-center gap-2">
           <div>
             {row?.original?.slug === 'trial' ? (
-              <h2 className="font-medium">${row?.original?.price}</h2>
+              <h2>
+                <span className="font-semibold">Original Price: </span>${row?.original?.price?.toFixed(2)}
+              </h2>
             ) : (
               <>
                 <h2>
-                  <span className="font-semibold">Original Price: </span>${row?.original?.originalPrice}
+                  <span className="font-semibold">Original Price: </span>${row?.original?.originalPrice?.toFixed(2)}
                 </h2>
                 <h2>
-                  <span className="font-semibold">Tax Price: </span>${row?.original?.taxPrice}
+                  <span className="font-semibold">Tax Price: </span>${row?.original?.taxPrice?.toFixed(2)}
                 </h2>
               </>
             )}

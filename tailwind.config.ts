@@ -41,7 +41,7 @@ export default {
         success: '#198754',
         danger: '#DC3545',
         info: '#0DCAF0',
-        light: '#D3D4D5',
+        light: '#FFFFFF',
       },
       fontFamily: {
         poppins: ['var(--font-poppins)'],

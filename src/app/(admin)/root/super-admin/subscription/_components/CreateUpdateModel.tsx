@@ -11,9 +11,10 @@ import { FieldArray, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle, BsPatchCheck } from 'react-icons/bs';
+import { HiOutlineReceiptTax } from 'react-icons/hi';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { IoStorefrontOutline } from 'react-icons/io5';
-import { LuCircleDollarSign } from 'react-icons/lu';
+import { LuCircleDollarSign, LuPackage } from 'react-icons/lu';
 import { RiTeamLine } from 'react-icons/ri';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
@@ -84,6 +85,11 @@ export default function CreateUpdateModel({
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalTeamMember: Yup.string().when('type', {
+      is: 'subscription',
+      then: () => Yup.number().required('Required!'),
+      otherwise: () => Yup.number().nullable(),
+    }),
+    allowTotalStamp: Yup.string().when('type', {
       is: 'subscription',
       then: () => Yup.number().required('Required!'),
       otherwise: () => Yup.number().nullable(),
@@ -184,6 +190,7 @@ export default function CreateUpdateModel({
                       disabled={formData?.slug === 'trial' ? true : false}
                       label="Product ID"
                       placeholder="prod_"
+                      prefix={<LuPackage className="text-xl" />}
                     />
                   </div>
                   <div className="my-3 flex gap-5">
@@ -209,7 +216,7 @@ export default function CreateUpdateModel({
                       label="Price (Include Tax)"
                       type="number"
                       placeholder="9.99"
-                      prefix={<LuCircleDollarSign className="text-xl" />}
+                      prefix={<HiOutlineReceiptTax className="text-xl" />}
                     />
                     <InputField
                       name="taxPriceId"

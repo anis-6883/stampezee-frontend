@@ -119,8 +119,8 @@ export default function SettingsMainForm() {
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} enableReinitialize>
       {({ values, setFieldValue }) => (
         <Form>
-          <div className="grid grid-cols-1 gap-2 md:grid-cols-12">
-            <div className="col-span-1 flex flex-col md:col-span-3">
+          <div className="grid grid-cols-1 gap-x-6 md:grid-cols-12">
+            <div className="col-span-1 flex flex-col gap-y-3 md:col-span-3">
               {tabs.map((tab, index) => (
                 <TabButtonItem key={index} tab={tab} onClick={() => handleTabChange(index)} active={currentTab === index} />
               ))}
