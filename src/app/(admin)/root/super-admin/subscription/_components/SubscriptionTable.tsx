@@ -1,12 +1,12 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import Button from '@/components/Formik/Button';
 import { useGetAllSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { IQueryType } from '@/types';
 import { useState } from 'react';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { Badge } from 'rizzui';
-import Button from '../../../../../../components/Formik/Button';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function StampsImageTable() {
@@ -22,18 +22,31 @@ export default function StampsImageTable() {
 
   const structure = [
     {
-      header: 'Title',
+      header: 'Product',
       accessorKey: 'title',
+      Cell: ({ row }: any) => (
+        <div className="flex flex-col">
+          <p>
+            <span className="font-semibold">Title: </span>
+            {row?.original?.title}
+          </p>
+          <p>
+            <span className="font-semibold">ID: </span>
+            {row?.original?.productId ?? 'N/A'}
+          </p>
+          <p>
+            <span className="font-semibold">Duration: </span>
+            {row.original.duration} days
+          </p>
+        </div>
+      ),
+      size: 200,
     },
     {
       header: 'Info',
       Cell: ({ row }: any) => (
         <div className="">
           <div>
-            <h2>
-              <span className="font-semibold">Duration: </span>
-              {row.original.duration} days
-            </h2>
             {row.original.type === 'subscription' ? (
               <>
                 <h2>
@@ -43,6 +56,10 @@ export default function StampsImageTable() {
                 <h2>
                   <span className="font-semibold">Allowed Members: </span>
                   {row.original.allowTotalTeamMember ?? 'N/A'}
+                </h2>
+                <h2>
+                  <span className="font-semibold">Allowed Stamp: </span>
+                  {row.original.allowTotalStamp ?? 'N/A'}
                 </h2>
               </>
             ) : (
@@ -62,23 +79,29 @@ export default function StampsImageTable() {
       mantineTableBodyCellProps: {
         align: 'start',
       },
+      size: 250,
     },
     {
       header: 'Price(CAD)',
       accessorKey: 'price',
       Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center gap-2">
           <div>
-            <h2 className="font-medium">${row?.original?.price}</h2>
+            {row?.original?.slug === 'trial' ? (
+              <h2 className="font-medium">${row?.original?.price}</h2>
+            ) : (
+              <>
+                <h2>
+                  <span className="font-semibold">Original Price: </span>${row?.original?.originalPrice}
+                </h2>
+                <h2>
+                  <span className="font-semibold">Tax Price: </span>${row?.original?.taxPrice}
+                </h2>
+              </>
+            )}
           </div>
         </div>
       ),
-      mantineTableHeadCellProps: {
-        align: 'center',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
     },
     {
       header: 'Type',
@@ -154,6 +177,7 @@ export default function StampsImageTable() {
         setQuery={setQuery}
         query={query}
         searchPlaceHolder="Search By Title"
+        enableRowNumbers={true}
       />
     </>
   );

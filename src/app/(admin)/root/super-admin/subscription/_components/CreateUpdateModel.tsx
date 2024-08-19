@@ -10,7 +10,7 @@ import objectToFormData from '@/utils/objectToFormData';
 import { FieldArray, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { BsCheck2Circle } from 'react-icons/bs';
+import { BsCheck2Circle, BsPatchCheck } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { IoStorefrontOutline } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
@@ -34,18 +34,49 @@ export default function CreateUpdateModel({
 
   const initialValues = {
     title: formData?.title || '',
+    productId: formData?.productId || '',
     image: formData?.image || null,
     allowTotalTeamMember: formData?.allowTotalTeamMember || null,
     allowTotalBranch: formData?.allowTotalBranch || null,
+    allowTotalStamp: formData?.allowTotalStamp || null,
     limit: formData?.limit || null,
-    price: formData?.price || 0,
+    originalPrice: formData?.originalPrice || 0,
+    originalPriceId: formData?.originalPriceId || '',
+    taxPrice: formData?.taxPrice || 0,
+    taxPriceId: formData?.taxPriceId || '',
     descriptions: formData?.descriptions || getSubDetailsObject(false),
     type: formData?.type || 'subscription',
+    slug: formData?.slug || '',
   };
 
   const validationSchema = Yup.object({
     title: Yup.string().required('Required!'),
-    price: Yup.mixed().required('Required!'),
+    slug: Yup.string().required('Required!'),
+    productId: Yup.string().when('slug', {
+      is: 'trial',
+      then: () => Yup.string().nullable(),
+      otherwise: () => Yup.string().required('Required!'),
+    }),
+    originalPrice: Yup.string().when('slug', {
+      is: 'trial',
+      then: () => Yup.number().nullable(),
+      otherwise: () => Yup.number().required('Required!'),
+    }),
+    originalPriceId: Yup.string().when('slug', {
+      is: 'trial',
+      then: () => Yup.string().nullable(),
+      otherwise: () => Yup.string().required('Required!'),
+    }),
+    taxPrice: Yup.string().when('slug', {
+      is: 'trial',
+      then: () => Yup.number().nullable(),
+      otherwise: () => Yup.number().required('Required!'),
+    }),
+    taxPriceId: Yup.string().when('slug', {
+      is: 'trial',
+      then: () => Yup.string().nullable(),
+      otherwise: () => Yup.string().required('Required!'),
+    }),
     type: Yup.mixed().oneOf(['subscription', 'addon']).required('Required!'),
     allowTotalBranch: Yup.string().when('type', {
       is: 'subscription',
@@ -111,7 +142,7 @@ export default function CreateUpdateModel({
   }, [setFormData, setModalState, updateError, updateSuccess]);
 
   return (
-    <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
+    <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="650px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
           {formData?._id ? <Title as="h4">Update A Subscription</Title> : <Title as="h4">Add New Subscription</Title>}
@@ -149,11 +180,42 @@ export default function CreateUpdateModel({
                   <div className="flex gap-5">
                     <InputField name="title" label="Title" placeholder="Title" />
                     <InputField
-                      name="price"
-                      label="Price (CAD)"
+                      name="productId"
+                      disabled={formData?.slug === 'trial' ? true : false}
+                      label="Product ID"
+                      placeholder="prod_"
+                    />
+                  </div>
+                  <div className="my-3 flex gap-5">
+                    <InputField
+                      name="originalPrice"
+                      disabled={formData?.slug === 'trial' ? true : false}
+                      label="Price (Original)"
                       type="number"
-                      placeholder="999"
+                      placeholder="9.99"
                       prefix={<LuCircleDollarSign className="text-xl" />}
+                    />
+                    <InputField
+                      name="originalPriceId"
+                      disabled={formData?.slug === 'trial' ? true : false}
+                      label="Price ID (Original)"
+                      placeholder="price_"
+                    />
+                  </div>
+                  <div className="my-3 flex gap-5">
+                    <InputField
+                      name="taxPrice"
+                      disabled={formData?.slug === 'trial' ? true : false}
+                      label="Price (Include Tax)"
+                      type="number"
+                      placeholder="9.99"
+                      prefix={<LuCircleDollarSign className="text-xl" />}
+                    />
+                    <InputField
+                      name="taxPriceId"
+                      disabled={formData?.slug === 'trial' ? true : false}
+                      label="Price ID (Include Tax)"
+                      placeholder="price_"
                     />
                   </div>
                   <div className="my-3 flex gap-5">
@@ -174,6 +236,16 @@ export default function CreateUpdateModel({
                         type="number"
                         placeholder="0"
                         prefix={<RiTeamLine className="text-xl" />}
+                      />
+                    )}
+
+                    {formData?.type === 'subscription' && (
+                      <InputField
+                        name="allowTotalStamp"
+                        label="Total Stamp"
+                        type="number"
+                        placeholder="0"
+                        prefix={<BsPatchCheck className="text-xl" />}
                       />
                     )}
 
