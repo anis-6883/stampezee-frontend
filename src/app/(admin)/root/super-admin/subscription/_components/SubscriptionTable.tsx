@@ -2,8 +2,10 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import { routes } from '@/config/routes';
 import { useGetAllSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { IQueryType } from '@/types';
+import Link from 'next/link';
 import { useState } from 'react';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { Badge } from 'rizzui';
@@ -130,18 +132,20 @@ export default function StampsImageTable() {
       header: 'Actions',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
-          <Button
-            color="warning"
-            preIcon={<HiOutlinePencil className="text-base" />}
-            onClick={() => {
-              setFormData({
-                ...row.original,
-                descriptions: row.original.descriptions,
-                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
-              });
-              setCreateState(true);
-            }}
-          />
+          <Link href={routes?.privateRoutes?.superAdmin?.subscription?.edit(row?.original?._id)}>
+            <Button
+              color="warning"
+              preIcon={<HiOutlinePencil className="text-base" />}
+              // onClick={() => {
+              //   setFormData({
+              //     ...row.original,
+              //     descriptions: row.original.descriptions,
+              //     image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+              //   });
+              // setCreateState(true);
+              // }}
+            />
+          </Link>
         </div>
       ),
       mantineTableHeadCellProps: {

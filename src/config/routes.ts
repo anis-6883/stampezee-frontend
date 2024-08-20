@@ -66,6 +66,7 @@ export const routes = {
       },
       subscription: {
         home: `/root/super-admin/subscription`,
+        edit: (id: number | string) => `/root/super-admin/subscription/${id}/update`,
       },
       retailer: '/root/super-admin/retailer',
       coupon: {

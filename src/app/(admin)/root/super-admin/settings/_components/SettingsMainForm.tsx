@@ -6,6 +6,10 @@ import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { FaAws, FaCcStripe } from 'react-icons/fa6';
+import { HiOutlineCog8Tooth } from 'react-icons/hi2';
+import { LiaMapMarkedAltSolid } from 'react-icons/lia';
+import { PiBellRinging, PiNoteDuotone, PiWarningBold } from 'react-icons/pi';
 import * as Yup from 'yup';
 import GeneralSettingsForm from './GeneralSettingsForm';
 import GoogleMapForm from './GoogleMapForm';
@@ -87,13 +91,34 @@ export default function SettingsMainForm() {
   }, [generalSetting]);
 
   const tabs = [
-    'General Settings',
-    'Notification Settings',
-    'AWS S3 Bucket Settings',
-    'Stripe Settings & Threshold',
-    'Google Map',
-    'Terms and Condition',
-    'Privacy and Policy',
+    {
+      name: 'General Settings',
+      icon: <HiOutlineCog8Tooth className="text-xl" />,
+    },
+    {
+      name: 'Notification Settings',
+      icon: <PiBellRinging className="text-xl" />,
+    },
+    {
+      name: 'AWS S3 Bucket Settings',
+      icon: <FaAws className="text-xl" />,
+    },
+    {
+      name: 'Stripe Settings & Threshold',
+      icon: <FaCcStripe className="text-xl" />,
+    },
+    {
+      name: 'Google Map',
+      icon: <LiaMapMarkedAltSolid className="text-xl" />,
+    },
+    {
+      name: 'Terms and Condition',
+      icon: <PiWarningBold className="text-xl" />,
+    },
+    {
+      name: 'Privacy and Policy',
+      icon: <PiNoteDuotone className="text-xl" />,
+    },
   ];
 
   const handleTabChange = (tab: number) => {
@@ -121,8 +146,14 @@ export default function SettingsMainForm() {
         <Form>
           <div className="grid grid-cols-1 gap-x-6 md:grid-cols-12">
             <div className="col-span-1 flex flex-col gap-y-3 md:col-span-3">
-              {tabs.map((tab, index) => (
-                <TabButtonItem key={index} tab={tab} onClick={() => handleTabChange(index)} active={currentTab === index} />
+              {tabs.map((tab: any, index) => (
+                <TabButtonItem
+                  key={index}
+                  tab={tab?.name}
+                  icon={tab?.icon}
+                  onClick={() => handleTabChange(index)}
+                  active={currentTab === index}
+                />
               ))}
             </div>
 
