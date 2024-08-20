@@ -17,7 +17,7 @@ import {
 } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn } from '@/types';
-import { isCheckoutButtonDisabled } from '@/utils';
+import { hasCheckedPurchaseAlert, isCheckoutButtonDisabled } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -201,17 +201,14 @@ export default function OrderSummary({ stripeInfo }: any) {
         </div>
       )}
 
-      {Math.abs(total) < stripeInfo?.refundableThreshold &&
-        activeSubscription?.slug &&
-        subscription?.slug !== activeSubscription?.slug &&
-        activeSubscription?.slug !== 'trial' && (
-          <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
-            <p className="font-medium text-yellow-500">Purchase Alert!</p>
-            <p className="text-yellow-500">
-              Your order needs to be at least {stripeInfo?.refundableThreshold} CAD. Please add more items to continue
-            </p>
-          </div>
-        )}
+      {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold: stripeInfo?.refundableThreshold }) && (
+        <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
+          <p className="font-medium text-yellow-500">Purchase Alert!</p>
+          <p className="text-yellow-500">
+            Your order needs to be at least {stripeInfo?.refundableThreshold} CAD. Please add more items to continue
+          </p>
+        </div>
+      )}
 
       {selectedBranches?.length > 0 && (
         <div className="mt-3 rounded-lg border border-danger p-3">

@@ -52,7 +52,6 @@ export const isCheckoutButtonDisabled = ({
   total: number;
   refundableThreshold: number;
 }) => {
-  console.log('planChangeType', planChangeType);
   if (!plan?.slug || activePlan?.slug === plan?.slug) {
     if (plan?.slug && plan?.slug !== 'trial' && plan?.slug === activePlan?.slug && totalAddOn > 0) {
       return false;
@@ -62,11 +61,59 @@ export const isCheckoutButtonDisabled = ({
   if (Math.abs(total) < refundableThreshold && activePlan?.slug && activePlan?.slug !== 'trial') {
     return true;
   }
-  if (Math.abs(total) < refundableThreshold && !planChangeType) {
+  if (Math.abs(total) < refundableThreshold && !planChangeType && plan?.slug !== 'trial') {
     return true;
   }
   // if (planChangeType === 'downgrade' && total > 1) {
   //   return true;
   // }
+  return false;
+};
+
+export const isCheckCouponDisabled = ({
+  subscription,
+  activeSubscription,
+  coupon,
+  isLoggedIn,
+  planChangeType,
+}: {
+  subscription: Subscription;
+  activeSubscription: activeSubscription;
+  coupon: any;
+  isLoggedIn: boolean;
+  planChangeType: string;
+}) => {
+  if (!isLoggedIn) {
+    return true;
+  }
+  if (activeSubscription?.slug == subscription?.slug || subscription?.slug === 'trial' || coupon || planChangeType === 'downgrade') {
+    return true;
+  }
+
+  return false;
+};
+
+export const hasCheckedPurchaseAlert = ({
+  subscription,
+  activeSubscription,
+  total,
+  refundableThreshold,
+}: {
+  subscription: Subscription;
+  activeSubscription: activeSubscription;
+  total: number;
+  refundableThreshold: number;
+}) => {
+  if (
+    Math.abs(total) < refundableThreshold &&
+    activeSubscription?.slug &&
+    subscription?.slug !== activeSubscription?.slug &&
+    activeSubscription?.slug !== 'trial'
+  ) {
+    return true;
+  }
+  if (subscription?.slug && subscription?.slug !== 'trial' && Math.abs(total) < refundableThreshold) {
+    return true;
+  }
   return false;
 };
