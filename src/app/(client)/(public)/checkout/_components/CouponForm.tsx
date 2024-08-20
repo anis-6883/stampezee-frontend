@@ -49,7 +49,7 @@ const CouponForm = () => {
   }, [couponError, couponResponse?.data, couponResponse?.message, couponSuccess, dispatch]);
 
   useEffect(() => {
-    if (!checkedMinPurchaseAmount(Math.abs(subscription?.price), coupon?.minPurchaseAmount ? coupon?.minPurchaseAmount : 0)) {
+    if (coupon?.minPurchaseAmount && !checkedMinPurchaseAmount(Math.abs(subscription?.price), coupon?.minPurchaseAmount)) {
       toast.error(`Min. ${coupon?.minPurchaseAmount}CAD required to apply coupon!`);
       dispatch(removeCoupon());
     }
