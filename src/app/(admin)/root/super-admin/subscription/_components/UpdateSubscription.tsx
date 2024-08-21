@@ -12,11 +12,14 @@ import { FieldArray, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle, BsPatchCheck } from 'react-icons/bs';
+import { FaRegMoneyBillAlt } from 'react-icons/fa';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { IoStorefrontOutline } from 'react-icons/io5';
+import { LiaCoinsSolid } from 'react-icons/lia';
 import { RiTeamLine } from 'react-icons/ri';
+import { TbFileDescription } from 'react-icons/tb';
 import ReactSelect from 'react-select';
-import { FieldError } from 'rizzui';
+import { Badge, FieldError } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function UpdateSubscription({ id }: { id: any }) {
@@ -133,7 +136,7 @@ export default function UpdateSubscription({ id }: { id: any }) {
     <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
       {({ values, setFieldValue, touched, errors }: { values: any; setFieldValue: any; touched: any; errors: any }) => {
         return (
-          <Form className="mt-5">
+          <Form>
             {formData?._id && formData?.type === 'subscription' && (
               <div className="my-5 flex justify-center">
                 <DragAndDropUpload
@@ -144,6 +147,7 @@ export default function UpdateSubscription({ id }: { id: any }) {
                   sizeText="1MB"
                   isRounded={true}
                   uploadText="Upload Logo"
+                  brandText="Logo"
                 />
               </div>
             )}
@@ -208,9 +212,14 @@ export default function UpdateSubscription({ id }: { id: any }) {
                             )}
                             <div className="flex-grow">
                               <div className="flex flex-col rounded-lg border p-3">
-                                <span className="my-3 font-medium">
-                                  {`Price (${index + 1})`} <span className="text-red-600">*</span>
-                                </span>
+                                <div className="my-2">
+                                  <Badge size="sm" className="bg-danger text-white">
+                                    {index + 1}
+                                  </Badge>
+                                </div>
+                                <p className="mb-2 font-medium">
+                                  Country <span className="text-red-600">*</span>
+                                </p>
                                 {formData?.prices?.length > 0 ? (
                                   <ReactSelect
                                     placeholder="Select your country"
@@ -277,6 +286,7 @@ export default function UpdateSubscription({ id }: { id: any }) {
                                     name={`prices[${index}].currency`}
                                     label="Currency"
                                     placeholder="CAD"
+                                    prefix={<FaRegMoneyBillAlt className="text-xl" />}
                                   />
                                   <InputField
                                     type="number"
@@ -284,6 +294,7 @@ export default function UpdateSubscription({ id }: { id: any }) {
                                     name={`prices[${index}].amount`}
                                     label="Amount"
                                     placeholder="9.99"
+                                    prefix={<LiaCoinsSolid className="text-xl" />}
                                   />
                                 </div>
                               </div>
@@ -296,7 +307,7 @@ export default function UpdateSubscription({ id }: { id: any }) {
                           className="flex cursor-pointer items-center justify-center rounded-lg bg-danger px-3 py-1 text-white"
                           onClick={() => arrayHelpers.push({ country: '', currency: '', amount: 0 })}
                         >
-                          + Add
+                          + Add Price
                         </button>
                       </div>
                     )}
@@ -305,43 +316,53 @@ export default function UpdateSubscription({ id }: { id: any }) {
               </div>
 
               <div className="relative grid grid-cols-1 gap-5">
-                <FieldArray
-                  name="descriptions"
-                  render={(arrayHelpers) => (
-                    <div>
-                      {values?.descriptions?.map((des: any, index: number) => (
-                        <div key={des.id} className="z-1 relative mb-4 flex items-center gap-2">
-                          {index !== 0 && (
-                            <div
-                              className="absolute right-0 top-0 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-red-500 text-white"
-                              onClick={() => arrayHelpers.remove(index)}
-                            >
-                              -
-                            </div>
-                          )}
-                          <div className="flex-grow">
-                            <div className="flex flex-col">
-                              <InputField
-                                label={`Description (${index + 1})`}
-                                name={`descriptions[${index}]`}
-                                placeholder="Write here..."
-                                required={true}
-                              />
+                <div>
+                  <p className="mb-2 font-medium">
+                    Descriptions <span className="text-red-600">*</span>
+                  </p>
+                  <FieldArray
+                    name="descriptions"
+                    render={(arrayHelpers) => (
+                      <div>
+                        {values?.descriptions?.map((des: any, index: number) => (
+                          <div key={des.id} className="z-1 relative mb-4 flex items-center gap-2">
+                            {index !== 0 && (
+                              <div
+                                className="absolute right-0 top-0 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-red-500 text-white"
+                                onClick={() => arrayHelpers.remove(index)}
+                              >
+                                <HiMiniXCircle className="text-2xl" />
+                              </div>
+                            )}
+                            <div className="flex-grow">
+                              <div className="flex flex-col">
+                                <InputField
+                                  label={
+                                    <Badge size="sm" className="bg-danger text-white">
+                                      {index + 1}
+                                    </Badge>
+                                  }
+                                  name={`descriptions[${index}]`}
+                                  placeholder="Write here..."
+                                  required={false}
+                                  prefix={<TbFileDescription className="text-xl" />}
+                                />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
 
-                      <button
-                        type="button"
-                        className="flex cursor-pointer items-center justify-center rounded-lg bg-danger px-3 py-1 text-white"
-                        onClick={() => arrayHelpers.push('')}
-                      >
-                        + Add
-                      </button>
-                    </div>
-                  )}
-                />
+                        <button
+                          type="button"
+                          className="flex cursor-pointer items-center justify-center rounded-lg bg-danger px-3 py-1 text-white"
+                          onClick={() => arrayHelpers.push('')}
+                        >
+                          + Add More
+                        </button>
+                      </div>
+                    )}
+                  />
+                </div>
               </div>
             </div>
 

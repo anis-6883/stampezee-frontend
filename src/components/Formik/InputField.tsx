@@ -13,7 +13,7 @@ export default function InputField({
   className = '',
 }: {
   name: string;
-  label: string;
+  label: string | React.ReactNode;
   placeholder?: string;
   required?: boolean;
   type?: string;
