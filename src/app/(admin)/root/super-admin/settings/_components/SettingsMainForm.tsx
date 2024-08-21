@@ -20,6 +20,27 @@ import StripeSettingsForm from './StripeSettingsForm';
 import TabButtonItem from './TabButtonItem';
 import TermsAndConditionForm from './TermsAndConditionForm';
 
+function updateProperties(target: any, source: any) {
+  // List of fields to exclude from the update
+  const excludeFields = ['_id', 'createdAt', 'updatedAt'];
+
+  for (const key in source) {
+    if (source.hasOwnProperty(key) && target.hasOwnProperty(key)) {
+      if (excludeFields.includes(key)) {
+        continue; // Skip updating excluded fields
+      }
+
+      if (typeof source[key] === 'object' && !Array.isArray(source[key]) && source[key] !== null) {
+        // If the key is an object, recurse into it
+        updateProperties(target[key], source[key]);
+      } else {
+        // Otherwise, update the property in the target object
+        target[key] = source[key];
+      }
+    }
+  }
+}
+
 export default function SettingsMainForm() {
   const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined);
   const [updateGeneralSettings, { data: updatedData, isSuccess, isError: updatingError }] = useUpdateGeneralSettingsMutation();
@@ -55,6 +76,7 @@ export default function SettingsMainForm() {
       taxTitle: '',
       taxCost: '',
       taxStatus: 'on',
+      allowCurrencies: [],
     },
     googleMap: {
       googleMapsApiKey: '',
@@ -63,6 +85,24 @@ export default function SettingsMainForm() {
       policy: '',
       terms: '',
     },
+  });
+
+  const validationSchema = Yup.object().shape({
+    stripe: Yup.object().shape({
+      allowCurrencies: Yup.array()
+        .of(
+          Yup.object().shape({
+            country: Yup.string().required(),
+            currency: Yup.string().required(),
+          })
+        )
+        .min(1, 'At least one currency must be selected')
+        .test(
+          'includes-USD',
+          'USD currency must be included',
+          (value) => value && value.some((currencyObj) => currencyObj.currency === 'USD')
+        ),
+    }),
   });
 
   useEffect(() => {
@@ -83,9 +123,50 @@ export default function SettingsMainForm() {
 
   useEffect(() => {
     if (generalSetting) {
+      const updatedGeneralSetting = {
+        general: {
+          timezone: generalSetting?.data?.general?.timezone || {},
+          companyName: generalSetting?.data?.general?.companyName || '',
+          siteTitle: generalSetting?.data?.general?.siteTitle || '',
+          androidDownloadLink: generalSetting?.data?.general?.androidDownloadLink || '',
+          iosDownloadLink: generalSetting?.data?.general?.iosDownloadLink || '',
+          contactEmail: generalSetting?.data?.general?.contactEmail || '',
+          emailUsername: generalSetting?.data?.general?.emailUsername || '',
+          emailPassword: generalSetting?.data?.general?.emailPassword || '',
+        },
+
+        notification: {
+          firebaseServerKey: generalSetting?.data?.notification?.firebaseServerKey || '',
+          firebaseTopics: generalSetting?.data?.notification?.firebaseTopics || '',
+        },
+        s3Bucket: {
+          awsRegion: generalSetting?.data?.s3Bucket?.awsRegion || '',
+          awsAccessKeyId: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
+          awsSecretAccessKey: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
+          awsBucketName: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
+        },
+        stripe: {
+          stripeSecretKey: generalSetting?.data?.stripe?.stripeSecretKey || '',
+          planChangeCost: generalSetting?.data?.stripe?.planChangeCost || '',
+          refundableThreshold: generalSetting?.data?.stripe?.refundableThreshold || '',
+          taxTitle: generalSetting?.data?.stripe?.taxTitle || '',
+          taxCost: generalSetting?.data?.stripe?.taxCost || '',
+          taxStatus: generalSetting?.data?.stripe?.taxStatus || 'on',
+          allowCurrencies:
+            generalSetting?.data?.stripe?.allowCurrencies?.map((item: any) => ({ country: item?.country, currency: item?.currency })) || [],
+        },
+        googleMap: {
+          googleMapsApiKey: generalSetting?.data?.googleMap?.googleMapsApiKey || '',
+        },
+        page: {
+          policy: generalSetting?.data?.page?.policy || '',
+          terms: generalSetting?.data?.page?.terms || '',
+        },
+      };
+
       setInitialValues((prevValues) => ({
         ...prevValues,
-        ...generalSetting?.data,
+        ...(updatedGeneralSetting as object),
       }));
     }
   }, [generalSetting]);
@@ -125,80 +206,73 @@ export default function SettingsMainForm() {
     setCurrentTab(tab);
   };
 
-  const validationSchema = Yup.object().shape({
-    contactEmail: Yup.string().email('Invalid Email!'),
-  });
-
   // Submit Handler
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
-
-    delete values?._id;
-    delete values?.createdAt;
-    delete values?.updatedAt;
-
     updateGeneralSettings(values);
   };
 
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} enableReinitialize>
-      {({ values, setFieldValue }) => (
-        <Form>
-          <div className="grid grid-cols-1 gap-x-6 md:grid-cols-12">
-            <div className="col-span-1 flex flex-col gap-y-3 md:col-span-3">
-              {tabs.map((tab: any, index) => (
-                <TabButtonItem
-                  key={index}
-                  tab={tab?.name}
-                  icon={tab?.icon}
-                  onClick={() => handleTabChange(index)}
-                  active={currentTab === index}
-                />
-              ))}
+      {({ values, setFieldValue, errors, touched }) => {
+        return (
+          <Form>
+            <div className="grid grid-cols-1 gap-x-6 md:grid-cols-12">
+              <div className="col-span-1 flex flex-col gap-y-3 md:col-span-3">
+                {tabs.map((tab: any, index) => (
+                  <TabButtonItem
+                    key={index}
+                    tab={tab?.name}
+                    icon={tab?.icon}
+                    onClick={() => handleTabChange(index)}
+                    active={currentTab === index}
+                  />
+                ))}
+              </div>
+
+              <div className="col-span-1 w-full rounded-lg border border-gray-200 bg-white p-2 shadow md:col-span-9">
+                <div hidden={currentTab === 0 ? false : true}>
+                  <GeneralSettingsForm setFieldValue={setFieldValue} values={values} generalSettingLoading={generalSettingLoading} />
+                </div>
+
+                <div hidden={currentTab === 1 ? false : true}>
+                  <NotificationSettingsForm />
+                </div>
+
+                <div hidden={currentTab === 2 ? false : true}>
+                  <S3BucketForm />
+                </div>
+
+                <div hidden={currentTab === 3 ? false : true}>
+                  <StripeSettingsForm generalSettingLoading={generalSettingLoading} />
+                </div>
+
+                <div hidden={currentTab === 4 ? false : true}>
+                  <GoogleMapForm />
+                </div>
+
+                <div hidden={currentTab === 5 ? false : true}>
+                  <TermsAndConditionForm values={values} setFieldValue={setFieldValue} />
+                </div>
+
+                <div hidden={currentTab === 6 ? false : true}>
+                  <PrivacyAndPolicyForm values={values} setFieldValue={setFieldValue} />
+                </div>
+              </div>
             </div>
 
-            <div className="col-span-1 w-full rounded-lg border border-gray-200 bg-white p-2 shadow md:col-span-9">
-              <div hidden={currentTab === 0 ? false : true}>
-                <GeneralSettingsForm setFieldValue={setFieldValue} values={values} generalSettingLoading={generalSettingLoading} />
-              </div>
-
-              <div hidden={currentTab === 1 ? false : true}>
-                <NotificationSettingsForm />
-              </div>
-
-              <div hidden={currentTab === 2 ? false : true}>
-                <S3BucketForm />
-              </div>
-
-              <div hidden={currentTab === 3 ? false : true}>
-                <StripeSettingsForm />
-              </div>
-
-              <div hidden={currentTab === 4 ? false : true}>
-                <GoogleMapForm />
-              </div>
-
-              <div hidden={currentTab === 5 ? false : true}>
-                <TermsAndConditionForm values={values} setFieldValue={setFieldValue} />
-              </div>
-
-              <div hidden={currentTab === 6 ? false : true}>
-                <PrivacyAndPolicyForm values={values} setFieldValue={setFieldValue} />
-              </div>
+            <div className="mt-6 flex w-full justify-end">
+              <Button
+                color="danger"
+                text="Update"
+                type="submit"
+                isSubmitting={isSubmitting}
+                postIcon={<BsCheck2Circle className="text-base" />}
+              />
             </div>
-          </div>
-
-          <div className="mt-6 flex w-full justify-end">
-            <Button
-              color="danger"
-              text="Update"
-              type="submit"
-              isSubmitting={isSubmitting}
-              postIcon={<BsCheck2Circle className="text-base" />}
-            />
-          </div>
-        </Form>
-      )}
+          </Form>
+        );
+      }}
     </Formik>
   );
 }

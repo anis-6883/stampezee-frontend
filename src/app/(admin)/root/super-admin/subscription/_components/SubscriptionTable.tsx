@@ -33,10 +33,6 @@ export default function StampsImageTable() {
             {row?.original?.title}
           </p>
           <p>
-            <span className="font-semibold">ID: </span>
-            {row?.original?.productId ?? 'N/A'}
-          </p>
-          <p>
             <span className="font-semibold">Duration: </span>
             {row.original.duration} days
           </p>
@@ -84,25 +80,16 @@ export default function StampsImageTable() {
       size: 250,
     },
     {
-      header: 'Price(CAD)',
+      header: 'Prices',
       accessorKey: 'price',
       Cell: ({ row }: any) => (
         <div className="flex items-center gap-2">
-          <div>
-            {row?.original?.slug === 'trial' ? (
-              <h2>
-                <span className="font-semibold">Original Price: </span>${row?.original?.price?.toFixed(2)}
-              </h2>
-            ) : (
-              <>
-                <h2>
-                  <span className="font-semibold">Original Price: </span>${row?.original?.originalPrice?.toFixed(2)}
-                </h2>
-                <h2>
-                  <span className="font-semibold">Tax Price: </span>${row?.original?.taxPrice?.toFixed(2)}
-                </h2>
-              </>
-            )}
+          <div className="flex flex-wrap gap-2">
+            {row?.original?.prices?.map((price: any) => (
+              <div key={price?._id}>
+                <Badge variant="outline" className="border-danger text-danger">{`${price?.amount} ${price?.currency}`}</Badge>
+              </div>
+            ))}
           </div>
         </div>
       ),
@@ -133,18 +120,7 @@ export default function StampsImageTable() {
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Link href={routes?.privateRoutes?.superAdmin?.subscription?.edit(row?.original?._id)}>
-            <Button
-              color="warning"
-              preIcon={<HiOutlinePencil className="text-base" />}
-              // onClick={() => {
-              //   setFormData({
-              //     ...row.original,
-              //     descriptions: row.original.descriptions,
-              //     image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
-              //   });
-              // setCreateState(true);
-              // }}
-            />
+            <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
           </Link>
         </div>
       ),

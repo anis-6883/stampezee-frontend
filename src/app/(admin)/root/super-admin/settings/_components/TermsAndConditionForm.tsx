@@ -15,12 +15,12 @@ export default function TermsAndConditionForm({ values, setFieldValue }: { setFi
 
   return (
     <FormBlockWrapper title="Terms and Conditions" className="p-5">
-      <div className="grid grid-cols-1 gap-y-2 overflow-hidden">
+      <div className="grid grid-cols-1 gap-y-2 ">
         <QuillEditor
           value={values.page.terms}
           onChange={handleChange}
           label=""
-          className="h-full"
+          className="h-[250px]"
           labelClassName="font-medium text-gray-700 mb-1.5"
         />
       </div>

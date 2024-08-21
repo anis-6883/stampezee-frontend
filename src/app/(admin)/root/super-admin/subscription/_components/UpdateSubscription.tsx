@@ -3,9 +3,10 @@
 import Button from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
+import { Skeleton } from '@/components/ui/skeleton';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useGetSingleSubscriptionQuery, useUpdateSubscriptionMutation } from '@/features/super-admin/subscription/subscriptionApi';
-import { countries } from '@/utils/get-country-currency-list';
+import countryData from '@/utils/get-country-list';
 import getSubDetailsObject from '@/utils/get-subscription-details-object';
 import objectToFormData from '@/utils/objectToFormData';
 import { FieldArray, Form, Formik } from 'formik';
@@ -17,6 +18,7 @@ import { HiMiniXCircle } from 'react-icons/hi2';
 import { IoStorefrontOutline } from 'react-icons/io5';
 import { LiaCoinsSolid } from 'react-icons/lia';
 import { RiTeamLine } from 'react-icons/ri';
+import { RxLapTimer } from 'react-icons/rx';
 import { TbFileDescription } from 'react-icons/tb';
 import ReactSelect from 'react-select';
 import { Badge, FieldError } from 'rizzui';
@@ -29,9 +31,10 @@ export default function UpdateSubscription({ id }: { id: any }) {
 
   const formData: any = data?.data;
 
-  const countryOptions = countries.map((country) => ({
-    value: country.currency_code,
-    label: country.country,
+  const countryOptions = countryData.map((country) => ({
+    value: country.currency,
+    label: `${country.country} (${country?.currency})`,
+    flag: country.flag,
   }));
 
   const initialValues = {
@@ -47,7 +50,7 @@ export default function UpdateSubscription({ id }: { id: any }) {
     prices:
       formData?.prices?.length > 0
         ? formData?.prices?.map((item: any) => ({ country: item?.country, currency: item?.currency, amount: item?.amount }))
-        : [{ country: '', currency: '', amount: 0 }],
+        : [{ country: 'United States (USD)', currency: 'USD', amount: 0 }],
   };
 
   const priceSchema = Yup.object({
@@ -129,9 +132,14 @@ export default function UpdateSubscription({ id }: { id: any }) {
   }, [updateError, updateSuccess]);
 
   if (isLoading) {
-    return <div>Loading....</div>;
+    return (
+      <div className="grid gap-4">
+        <Skeleton className="h-8 w-full" />
+        <Skeleton className="h-8 w-full" />
+        <Skeleton className="h-8 w-full" />
+      </div>
+    );
   }
-
   return (
     <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
       {({ values, setFieldValue, touched, errors }: { values: any; setFieldValue: any; touched: any; errors: any }) => {
@@ -152,7 +160,7 @@ export default function UpdateSubscription({ id }: { id: any }) {
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <div>
                 <InputField name="title" label="Title" placeholder="Title" />
                 {formData?.type === 'subscription' && (
@@ -189,7 +197,14 @@ export default function UpdateSubscription({ id }: { id: any }) {
                 )}
 
                 {formData?.type !== 'subscription' && (
-                  <InputField className="my-3" name="limit" type="number" label="Limit" placeholder="0" />
+                  <InputField
+                    className="my-3"
+                    name="limit"
+                    type="number"
+                    label="Limit"
+                    placeholder="0"
+                    prefix={<RxLapTimer className="text-xl" />}
+                  />
                 )}
 
                 <p className="mb-2 font-medium">
@@ -220,21 +235,24 @@ export default function UpdateSubscription({ id }: { id: any }) {
                                 <p className="mb-2 font-medium">
                                   Country <span className="text-red-600">*</span>
                                 </p>
-                                {formData?.prices?.length > 0 ? (
+                                {values?.prices?.length > 0 ? (
                                   <ReactSelect
                                     placeholder="Select your country"
                                     menuPlacement="top"
+                                    isDisabled={index === 0}
                                     isSearchable
                                     name={`prices[${index}].country`}
                                     options={countryOptions}
-                                    // getOptionLabel={getOptionLabel}
-                                    // getOptionValue={(option) => option.label}
-                                    defaultValue={countryOptions.filter((country) => country.label === formData?.prices[index]?.country)}
+                                    getOptionLabel={getOptionLabel}
+                                    getOptionValue={(option) => option.label}
+                                    defaultValue={countryOptions.filter((country) => country.label === `${values?.prices[index]?.country}`)}
                                     onChange={(selectedOption) =>
-                                      setFieldValue(`prices[${index}]`, { country: selectedOption?.label, currency: selectedOption?.value })
+                                      setFieldValue(`prices[${index}]`, {
+                                        country: selectedOption?.label,
+                                        currency: selectedOption?.value,
+                                        amount: values?.prices[index]?.amount,
+                                      })
                                     }
-                                    // onBlur={() => setFieldTouched('country', true)}
-
                                     styles={{
                                       control: (base) => ({
                                         ...base,
@@ -251,16 +269,17 @@ export default function UpdateSubscription({ id }: { id: any }) {
                                     placeholder="Select your country"
                                     menuPlacement="top"
                                     isSearchable
-                                    name={`prices[${index}]`}
+                                    name={`prices[${index}].country`}
                                     options={countryOptions}
-                                    // getOptionLabel={getOptionLabel}
-                                    // getOptionValue={(option) => option.label}
-                                    //   defaultValue={countryOptions.filter((country) => country.label === formData?.prices[index]?.country)}
+                                    getOptionLabel={getOptionLabel}
+                                    getOptionValue={(option) => option.label}
                                     onChange={(selectedOption) =>
-                                      setFieldValue(`prices[${index}]`, { country: selectedOption?.label, currency: selectedOption?.value })
+                                      setFieldValue(`prices[${index}]`, {
+                                        country: selectedOption?.label,
+                                        currency: selectedOption?.value,
+                                        amount: values?.prices[index]?.amount,
+                                      })
                                     }
-                                    // onBlur={() => setFieldTouched('country', true)}
-
                                     styles={{
                                       control: (base) => ({
                                         ...base,
@@ -386,3 +405,10 @@ export default function UpdateSubscription({ id }: { id: any }) {
     </Formik>
   );
 }
+
+const getOptionLabel = (option: any): any => (
+  <div className="flex ">
+    <img src={option.flag} alt={option.label} style={{ width: '20px', marginLeft: '5px' }} />
+    <span className="ml-2">{option.label}</span>
+  </div>
+);
