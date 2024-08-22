@@ -74,6 +74,9 @@ export const routes = {
         create: `/root/super-admin/coupon/create`,
         edit: (id: number | string) => `/root/super-admin/coupon/${id}/update`,
       },
+      currencyExchange: {
+        home: `/root/super-admin/currency-exchange`,
+      },
       notification: `/root/super-admin/notification`,
       payment: `/root/super-admin/payment`,
       refund: `/root/super-admin/refund`,

@@ -2,10 +2,8 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
-import { routes } from '@/config/routes';
 import { useGetAllSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { IQueryType } from '@/types';
-import Link from 'next/link';
 import { useState } from 'react';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { Badge } from 'rizzui';
@@ -80,17 +78,11 @@ export default function StampsImageTable() {
       size: 250,
     },
     {
-      header: 'Prices',
+      header: 'Price (USD)',
       accessorKey: 'price',
       Cell: ({ row }: any) => (
         <div className="flex items-center gap-2">
-          <div className="flex flex-wrap gap-2">
-            {row?.original?.prices?.map((price: any) => (
-              <div key={price?._id}>
-                <Badge variant="outline" className="border-danger text-danger">{`${price?.amount} ${price?.currency}`}</Badge>
-              </div>
-            ))}
-          </div>
+          <span className="font-semibold">${row?.original?.price}</span>
         </div>
       ),
     },
@@ -118,10 +110,24 @@ export default function StampsImageTable() {
     {
       header: 'Actions',
       Cell: ({ row }: any) => (
+        // <div className="flex items-center justify-center gap-2">
+        //   <Link href={routes?.privateRoutes?.superAdmin?.subscription?.edit(row?.original?._id)}>
+        //     <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+        //   </Link>
+        // </div>
         <div className="flex items-center justify-center gap-2">
-          <Link href={routes?.privateRoutes?.superAdmin?.subscription?.edit(row?.original?._id)}>
-            <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
-          </Link>
+          <Button
+            color="warning"
+            preIcon={<HiOutlinePencil className="text-base" />}
+            onClick={() => {
+              setFormData({
+                ...row.original,
+                descriptions: row.original.descriptions,
+                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+              });
+              setCreateState(true);
+            }}
+          />
         </div>
       ),
       mantineTableHeadCellProps: {

@@ -5,6 +5,7 @@ import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SerializedError } from '@/features/api/apiSlice';
+import { useGetGeneralSettingsQuery } from '@/features/super-admin/general-settings/generalSettingsApi';
 import { useGetSingleSubscriptionQuery, useUpdateSubscriptionMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import countryData from '@/utils/get-country-list';
 import getSubDetailsObject from '@/utils/get-subscription-details-object';
@@ -26,16 +27,29 @@ import * as Yup from 'yup';
 
 export default function UpdateSubscription({ id }: { id: any }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined);
   const [updateSubscription, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubscriptionMutation();
   const { data, isLoading } = useGetSingleSubscriptionQuery(id);
 
   const formData: any = data?.data;
 
-  const countryOptions = countryData.map((country) => ({
+  let countryOptions = countryData.map((country) => ({
     value: country.currency,
     label: `${country.country} (${country?.currency})`,
     flag: country.flag,
   }));
+
+  if (!generalSettingLoading) {
+    countryOptions = generalSetting?.data?.stripe?.allowCurrencies?.reduce((acc: any, currency: any) => {
+      countryOptions?.map((country: any) => {
+        if (country?.label === currency?.country) {
+          acc?.push(country);
+        }
+      });
+
+      return acc;
+    }, []);
+  }
 
   const initialValues = {
     title: formData?.title || '',
@@ -102,6 +116,8 @@ export default function UpdateSubscription({ id }: { id: any }) {
 
     let objToFormData: FormData;
 
+    console.log('values', values);
+
     if (formData?._id) {
       const ignoreList = [];
       if (values?.type === 'subscription') {
@@ -143,6 +159,11 @@ export default function UpdateSubscription({ id }: { id: any }) {
   return (
     <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
       {({ values, setFieldValue, touched, errors }: { values: any; setFieldValue: any; touched: any; errors: any }) => {
+        // countryOptions = countryOptions?.reduce((acc: any, country: any) => {
+        //   values?.prices?.filter;
+
+        //   return acc;
+        // }, []);
         return (
           <Form>
             {formData?._id && formData?.type === 'subscription' && (
@@ -239,7 +260,7 @@ export default function UpdateSubscription({ id }: { id: any }) {
                                   <ReactSelect
                                     placeholder="Select your country"
                                     menuPlacement="top"
-                                    isDisabled={index === 0}
+                                    // isDisabled={index === 0}
                                     isSearchable
                                     name={`prices[${index}].country`}
                                     options={countryOptions}
@@ -323,7 +344,10 @@ export default function UpdateSubscription({ id }: { id: any }) {
 
                         <button
                           type="button"
-                          className="flex cursor-pointer items-center justify-center rounded-lg bg-danger px-3 py-1 text-white"
+                          disabled={
+                            !generalSettingLoading && generalSetting?.data?.stripe?.allowCurrencies?.length === values?.prices?.length
+                          }
+                          className={`flex ${!generalSettingLoading && generalSetting?.data?.stripe?.allowCurrencies?.length === values?.prices?.length ? 'bg-gray-500' : 'cursor-pointer bg-danger'} items-center justify-center rounded-lg px-3 py-1 text-white`}
                           onClick={() => arrayHelpers.push({ country: '', currency: '', amount: 0 })}
                         >
                           + Add Price

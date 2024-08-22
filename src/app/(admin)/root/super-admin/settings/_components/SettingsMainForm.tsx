@@ -10,7 +10,6 @@ import { FaAws, FaCcStripe } from 'react-icons/fa6';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { PiBellRinging, PiNoteDuotone, PiWarningBold } from 'react-icons/pi';
-import * as Yup from 'yup';
 import GeneralSettingsForm from './GeneralSettingsForm';
 import GoogleMapForm from './GoogleMapForm';
 import NotificationSettingsForm from './NotificationSettingsForm';
@@ -19,27 +18,6 @@ import S3BucketForm from './S3BucketForm';
 import StripeSettingsForm from './StripeSettingsForm';
 import TabButtonItem from './TabButtonItem';
 import TermsAndConditionForm from './TermsAndConditionForm';
-
-function updateProperties(target: any, source: any) {
-  // List of fields to exclude from the update
-  const excludeFields = ['_id', 'createdAt', 'updatedAt'];
-
-  for (const key in source) {
-    if (source.hasOwnProperty(key) && target.hasOwnProperty(key)) {
-      if (excludeFields.includes(key)) {
-        continue; // Skip updating excluded fields
-      }
-
-      if (typeof source[key] === 'object' && !Array.isArray(source[key]) && source[key] !== null) {
-        // If the key is an object, recurse into it
-        updateProperties(target[key], source[key]);
-      } else {
-        // Otherwise, update the property in the target object
-        target[key] = source[key];
-      }
-    }
-  }
-}
 
 export default function SettingsMainForm() {
   const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined);
@@ -76,7 +54,7 @@ export default function SettingsMainForm() {
       taxTitle: '',
       taxCost: '',
       taxStatus: 'on',
-      allowCurrencies: [],
+      defaultCurrency: { country: '', currency: '' },
     },
     googleMap: {
       googleMapsApiKey: '',
@@ -87,24 +65,6 @@ export default function SettingsMainForm() {
     },
   });
 
-  const validationSchema = Yup.object().shape({
-    stripe: Yup.object().shape({
-      allowCurrencies: Yup.array()
-        .of(
-          Yup.object().shape({
-            country: Yup.string().required(),
-            currency: Yup.string().required(),
-          })
-        )
-        .min(1, 'At least one currency must be selected')
-        .test(
-          'includes-USD',
-          'USD currency must be included',
-          (value) => value && value.some((currencyObj) => currencyObj.currency === 'USD')
-        ),
-    }),
-  });
-
   useEffect(() => {
     if (updatingError) {
       setIsSubmitting(false);
@@ -113,10 +73,6 @@ export default function SettingsMainForm() {
 
     if (isSuccess) {
       setIsSubmitting(false);
-      setInitialValues((prevValues) => ({
-        ...prevValues,
-        ...(updatedData as { data: any }).data,
-      }));
       toast.success('General Setting Updated Successfully!');
     }
   }, [isSuccess, updatedData, updatingError]);
@@ -152,8 +108,7 @@ export default function SettingsMainForm() {
           taxTitle: generalSetting?.data?.stripe?.taxTitle || '',
           taxCost: generalSetting?.data?.stripe?.taxCost || '',
           taxStatus: generalSetting?.data?.stripe?.taxStatus || 'on',
-          allowCurrencies:
-            generalSetting?.data?.stripe?.allowCurrencies?.map((item: any) => ({ country: item?.country, currency: item?.currency })) || [],
+          defaultCurrency: generalSetting?.data?.stripe?.defaultCurrency || {},
         },
         googleMap: {
           googleMapsApiKey: generalSetting?.data?.googleMap?.googleMapsApiKey || '',
@@ -164,10 +119,7 @@ export default function SettingsMainForm() {
         },
       };
 
-      setInitialValues((prevValues) => ({
-        ...prevValues,
-        ...(updatedGeneralSetting as object),
-      }));
+      setInitialValues(updatedGeneralSetting);
     }
   }, [generalSetting]);
 
@@ -213,8 +165,8 @@ export default function SettingsMainForm() {
   };
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} enableReinitialize>
-      {({ values, setFieldValue, errors, touched }) => {
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
+      {({ values, setFieldValue }) => {
         return (
           <Form>
             <div className="grid grid-cols-1 gap-x-6 md:grid-cols-12">
@@ -244,7 +196,7 @@ export default function SettingsMainForm() {
                 </div>
 
                 <div hidden={currentTab === 3 ? false : true}>
-                  <StripeSettingsForm generalSettingLoading={generalSettingLoading} />
+                  <StripeSettingsForm />
                 </div>
 
                 <div hidden={currentTab === 4 ? false : true}>

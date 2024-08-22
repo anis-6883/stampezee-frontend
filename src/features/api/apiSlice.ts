@@ -63,6 +63,7 @@ export const apiSlice = createApi({
     'faq',
     'coupon',
     'coupons',
+    'currency',
     'payments',
     'billing',
     'superAdminRefund',
