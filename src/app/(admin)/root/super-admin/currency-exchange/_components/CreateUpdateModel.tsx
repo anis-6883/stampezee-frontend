@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
-import { LuCircleDollarSign } from 'react-icons/lu';
+import { LiaCoinsSolid } from 'react-icons/lia';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -92,7 +92,7 @@ export default function CreateUpdateModel({
       <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="700px">
         <div className="m-auto px-7 pb-8 pt-6">
           <div className="mb-7 flex items-center justify-between">
-            {formData?._id ? <Title as="h4">Update A Coupon</Title> : <Title as="h4">Add New Coupon</Title>}
+            {formData?._id ? <Title as="h4">Update A Currency</Title> : <Title as="h4">Add New Currency</Title>}
 
             <ActionIcon
               size="sm"
@@ -116,7 +116,7 @@ export default function CreateUpdateModel({
                       name="exchangeRate"
                       label="Exchange Rate"
                       placeholder="10"
-                      prefix={<LuCircleDollarSign className="text-xl" />}
+                      prefix={<LiaCoinsSolid className="text-xl" />}
                     />
                   </div>
 

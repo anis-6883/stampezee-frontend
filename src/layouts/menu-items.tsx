@@ -27,11 +27,7 @@ export const menuItems: { [key: string]: any } = {
       href: routes.privateRoutes.superAdmin.subscription.home,
       icon: <IoDiamondOutline />,
     },
-    {
-      name: 'Currency Exchange',
-      href: routes.privateRoutes.superAdmin.currencyExchange?.home,
-      icon: <MdOutlineCurrencyExchange />,
-    },
+
     {
       name: 'Coupons',
       href: routes.privateRoutes.superAdmin.coupon.home,
@@ -51,6 +47,11 @@ export const menuItems: { [key: string]: any } = {
       name: 'Customers',
       href: routes.privateRoutes.superAdmin.customer,
       icon: <LuUsers />,
+    },
+    {
+      name: 'Currency Exchange',
+      href: routes.privateRoutes.superAdmin.currencyExchange?.home,
+      icon: <MdOutlineCurrencyExchange />,
     },
     {
       name: 'Stamp Categories',

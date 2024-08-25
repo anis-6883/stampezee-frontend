@@ -5,14 +5,14 @@ import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import CurrencyTable from './_components/CurrencyTable';
 
 const pageHeader = {
-  title: 'Manage Currency',
+  title: 'Manage Currency Exchange Rate',
   breadcrumb: [
     {
       href: routes.privateRoutes.superAdmin.dashboard,
       name: 'Dashboard',
     },
     {
-      name: 'Currencies',
+      name: 'Currency Exchange Rate',
     },
   ],
 };
