@@ -4,6 +4,7 @@ export const generalSettingsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getGeneralSettings: builder.query({
       query: () => '/api/secret-root/admin/super-admin/settings',
+      keepUnusedDataFor: 0,
     }),
     updateGeneralSettings: builder.mutation({
       query: (data) => {

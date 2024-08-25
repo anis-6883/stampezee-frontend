@@ -2,6 +2,7 @@
 
 import Button from '@/components/Formik/Button';
 import { useGetGeneralSettingsQuery, useUpdateGeneralSettingsMutation } from '@/features/super-admin/general-settings/generalSettingsApi';
+import { IGeneralSetting, IGeneralSettingData } from '@/types';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -19,13 +20,57 @@ import StripeSettingsForm from './StripeSettingsForm';
 import TabButtonItem from './TabButtonItem';
 import TermsAndConditionForm from './TermsAndConditionForm';
 
+function updateGeneralSetting(generalSetting: IGeneralSetting) {
+  const updatedObject = {
+    general: {
+      timezone: generalSetting?.data?.general?.timezone || {},
+      companyName: generalSetting?.data?.general?.companyName || '',
+      siteTitle: generalSetting?.data?.general?.siteTitle || '',
+      androidDownloadLink: generalSetting?.data?.general?.androidDownloadLink || '',
+      iosDownloadLink: generalSetting?.data?.general?.iosDownloadLink || '',
+      contactEmail: generalSetting?.data?.general?.contactEmail || '',
+      emailUsername: generalSetting?.data?.general?.emailUsername || '',
+      emailPassword: generalSetting?.data?.general?.emailPassword || '',
+    },
+
+    notification: {
+      firebaseServerKey: generalSetting?.data?.notification?.firebaseServerKey || '',
+      firebaseTopics: generalSetting?.data?.notification?.firebaseTopics || '',
+    },
+    s3Bucket: {
+      awsRegion: generalSetting?.data?.s3Bucket?.awsRegion || '',
+      awsAccessKeyId: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
+      awsSecretAccessKey: generalSetting?.data?.s3Bucket?.awsSecretAccessKey || '',
+      awsBucketName: generalSetting?.data?.s3Bucket?.awsBucketName || '',
+    },
+    stripe: {
+      stripeSecretKey: generalSetting?.data?.stripe?.stripeSecretKey || '',
+      planChangeCost: generalSetting?.data?.stripe?.planChangeCost || '',
+      refundableThreshold: generalSetting?.data?.stripe?.refundableThreshold || '',
+      taxTitle: generalSetting?.data?.stripe?.taxTitle || '',
+      taxCost: generalSetting?.data?.stripe?.taxCost || '',
+      taxStatus: generalSetting?.data?.stripe?.taxStatus || 'on',
+      defaultCurrency: generalSetting?.data?.stripe?.defaultCurrency || {},
+    },
+    googleMap: {
+      googleMapsApiKey: generalSetting?.data?.googleMap?.googleMapsApiKey || '',
+    },
+    page: {
+      policy: generalSetting?.data?.page?.policy || '',
+      terms: generalSetting?.data?.page?.terms || '',
+    },
+  };
+
+  return updatedObject;
+}
+
 export default function SettingsMainForm() {
   const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined);
   const [updateGeneralSettings, { data: updatedData, isSuccess, isError: updatingError }] = useUpdateGeneralSettingsMutation();
   const [currentTab, setCurrentTab] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues, setInitialValues] = useState<IGeneralSettingData>({
     general: {
       timezone: {},
       companyName: '',
@@ -73,53 +118,54 @@ export default function SettingsMainForm() {
 
     if (isSuccess) {
       setIsSubmitting(false);
+      setInitialValues(updateGeneralSetting(updatedData));
       toast.success('General Setting Updated Successfully!');
     }
   }, [isSuccess, updatedData, updatingError]);
 
   useEffect(() => {
     if (generalSetting) {
-      const updatedGeneralSetting = {
-        general: {
-          timezone: generalSetting?.data?.general?.timezone || {},
-          companyName: generalSetting?.data?.general?.companyName || '',
-          siteTitle: generalSetting?.data?.general?.siteTitle || '',
-          androidDownloadLink: generalSetting?.data?.general?.androidDownloadLink || '',
-          iosDownloadLink: generalSetting?.data?.general?.iosDownloadLink || '',
-          contactEmail: generalSetting?.data?.general?.contactEmail || '',
-          emailUsername: generalSetting?.data?.general?.emailUsername || '',
-          emailPassword: generalSetting?.data?.general?.emailPassword || '',
-        },
+      // const updatedGeneralSetting = {
+      //   general: {
+      //     timezone: generalSetting?.data?.general?.timezone || {},
+      //     companyName: generalSetting?.data?.general?.companyName || '',
+      //     siteTitle: generalSetting?.data?.general?.siteTitle || '',
+      //     androidDownloadLink: generalSetting?.data?.general?.androidDownloadLink || '',
+      //     iosDownloadLink: generalSetting?.data?.general?.iosDownloadLink || '',
+      //     contactEmail: generalSetting?.data?.general?.contactEmail || '',
+      //     emailUsername: generalSetting?.data?.general?.emailUsername || '',
+      //     emailPassword: generalSetting?.data?.general?.emailPassword || '',
+      //   },
 
-        notification: {
-          firebaseServerKey: generalSetting?.data?.notification?.firebaseServerKey || '',
-          firebaseTopics: generalSetting?.data?.notification?.firebaseTopics || '',
-        },
-        s3Bucket: {
-          awsRegion: generalSetting?.data?.s3Bucket?.awsRegion || '',
-          awsAccessKeyId: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
-          awsSecretAccessKey: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
-          awsBucketName: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
-        },
-        stripe: {
-          stripeSecretKey: generalSetting?.data?.stripe?.stripeSecretKey || '',
-          planChangeCost: generalSetting?.data?.stripe?.planChangeCost || '',
-          refundableThreshold: generalSetting?.data?.stripe?.refundableThreshold || '',
-          taxTitle: generalSetting?.data?.stripe?.taxTitle || '',
-          taxCost: generalSetting?.data?.stripe?.taxCost || '',
-          taxStatus: generalSetting?.data?.stripe?.taxStatus || 'on',
-          defaultCurrency: generalSetting?.data?.stripe?.defaultCurrency || {},
-        },
-        googleMap: {
-          googleMapsApiKey: generalSetting?.data?.googleMap?.googleMapsApiKey || '',
-        },
-        page: {
-          policy: generalSetting?.data?.page?.policy || '',
-          terms: generalSetting?.data?.page?.terms || '',
-        },
-      };
+      //   notification: {
+      //     firebaseServerKey: generalSetting?.data?.notification?.firebaseServerKey || '',
+      //     firebaseTopics: generalSetting?.data?.notification?.firebaseTopics || '',
+      //   },
+      //   s3Bucket: {
+      //     awsRegion: generalSetting?.data?.s3Bucket?.awsRegion || '',
+      //     awsAccessKeyId: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
+      //     awsSecretAccessKey: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
+      //     awsBucketName: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
+      //   },
+      //   stripe: {
+      //     stripeSecretKey: generalSetting?.data?.stripe?.stripeSecretKey || '',
+      //     planChangeCost: generalSetting?.data?.stripe?.planChangeCost || '',
+      //     refundableThreshold: generalSetting?.data?.stripe?.refundableThreshold || '',
+      //     taxTitle: generalSetting?.data?.stripe?.taxTitle || '',
+      //     taxCost: generalSetting?.data?.stripe?.taxCost || '',
+      //     taxStatus: generalSetting?.data?.stripe?.taxStatus || 'on',
+      //     defaultCurrency: generalSetting?.data?.stripe?.defaultCurrency || {},
+      //   },
+      //   googleMap: {
+      //     googleMapsApiKey: generalSetting?.data?.googleMap?.googleMapsApiKey || '',
+      //   },
+      //   page: {
+      //     policy: generalSetting?.data?.page?.policy || '',
+      //     terms: generalSetting?.data?.page?.terms || '',
+      //   },
+      // };
 
-      setInitialValues(updatedGeneralSetting);
+      setInitialValues(updateGeneralSetting(generalSetting));
     }
   }, [generalSetting]);
 
