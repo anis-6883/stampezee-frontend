@@ -1,0 +1,88 @@
+{
+  "AppLayout": {
+    "home": "Home",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "contact_us": "Contact Us",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "socials": "Socials",
+    "contact": "Contact",
+    "newsletter": "JOIN OUR NEWSLETTER",
+    "privacy": "PRIVACY POLICY",
+    "terms": "T&amp;C",
+    "facebook": "FACEBOOK",
+    "instagram": "INSTAGRAM",
+    "tiktok": "TIKTOK",
+    "linkedin": "LINKEDIN",
+    "newsletterButtonText": "SUBMIT",
+    "newsletterPlaceholderText": "Email Address"
+  },
+  "HomePage": {
+    "bannerTitle": "Revolutionize Your Customer Experience",
+    "bannerDetails": "Engage, reward, and retain your customers with a touch of simplicity and technology, and bring the future of loyalty programs to your business.",
+    "bannerButtonText": "GET STARTED",
+    "heroTitleOne": "Why choose StampEzee?",
+    "heroDescriptionOne": "Digitalization has transformed the way businesses interact with their customers. Our platform combines intuitive design, robust analytics, and unparalleled customization, bringing you the ultimate tool for customer engagement.",
+    "heroTitleTwo": "Empower Customer Retention",
+    "heroDescriptionTwo": "In today's competitive market, customer retention is key. StampEzee fosters loyalty and encourages repeat business. More than a rewards system, our platform amplifies your brand engagement, nurturing long-lasting customer relationships.",
+    "workMainTitle": "How It Works?",
+    "workTitleOne": "UNMATCHED FLEXIBILITY",
+    "workDescriptionOne": "Foster strong, lasting customer relationships.",
+    "workTitleTwo": "SIMPLICITY AT HAND",
+    "workDescriptionTwo": "User-friendly, seamless interface.",
+    "workTitleThree": "SIMPLICITY AT HAND",
+    "workDescriptionThree": "Make growth-driving, informed decisions.",
+    "testimonials": "TESTIMONIALS",
+    "testimonialMainTitle": "Read What Others Have to Say?",
+    "testimonialTitleOne": "OLIVIA COLE",
+    "testimonialSubTitleOne": "Restaurant Manager",
+    "testimonialDescriptionOne": "StampEzee has been a game changer for our business. The convenience it offers our customers, coupled with the insights we've gained, has truly elevated our operations.",
+    "testimonialTitleTwo": "OLIVIA COLE",
+    "testimonialSubTitleTwo": "Restaurant Manager",
+    "testimonialDescriptionTwo": "StampEzee has been a game changer for our business. The convenience it offers our customers, coupled with the insights we've gained, has truly elevated our operations.",
+    "testimonialTitleThree": "OLIVIA COLE",
+    "testimonialSubTitleThree": "Restaurant Manager",
+    "testimonialDescriptionThree": "StampEzee has been a game changer for our business. The convenience it offers our customers, coupled with the insights we've gained, has truly elevated our operations."
+  },
+  "FaqPage": {
+    "how": "HOW",
+    "title": "can we help you?",
+    "questionTitle": "Frequently asked questions"
+  },
+  "ContactPage": {
+    "where": "WHERE",
+    "title": "to find us?",
+    "formTitle": "Connect with us",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "message": "Message",
+    "buttonText": "Send"
+  },
+  "pricingPage": {
+    "explore": "Explore",
+    "title": "Our Subscription and Add-on",
+    "subscriptions": "Subscriptions",
+    "subtitle": "Our Plans"
+  },
+  "LocaleSwitcher": {
+    "de": "Deutsch",
+    "en": "English",
+    "label": "Language"
+  },
+  "LoginPage": {
+    "credentials": "Credentials: jane@doe.com / next-intl",
+    "description": "Please enter your details.",
+    "email": "Email",
+    "invalidCredentials": "Please check your credentials.",
+    "invalidEmail": "Please enter a valid email address.",
+    "invalidPassword": "Please enter a password.",
+    "login": "Sign in",
+    "password": "Password",
+    "title": "Welcome back"
+  },
+  "ProfilePage": {
+    "title": "Profile"
+  }
+}

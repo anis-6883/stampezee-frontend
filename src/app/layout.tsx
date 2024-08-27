@@ -10,6 +10,9 @@ import { authOptions } from './api/auth/[...nextauth]/auth-options';
 import AuthProvider from './providers/auth-provider';
 import ReduxProvider from './providers/redux-provider';
 
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
+
 export const metadata = {
   title: siteConfig.title,
   description: siteConfig.description,
@@ -18,18 +21,23 @@ export const metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
 
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning={true} className={poppins.className}>
+    <html lang={locale} dir="ltr" suppressHydrationWarning={true} className={poppins.className}>
       <body suppressHydrationWarning={true}>
-        <ReduxProvider>
-          <AuthProvider session={session}>
-            <NextProgress />
-            {children}
-            <Toaster />
-            <GlobalModal />
-            <GlobalDrawer />
-          </AuthProvider>
-        </ReduxProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ReduxProvider>
+            <AuthProvider session={session}>
+              <NextProgress />
+              {children}
+              <Toaster />
+              <GlobalModal />
+              <GlobalDrawer />
+            </AuthProvider>
+          </ReduxProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

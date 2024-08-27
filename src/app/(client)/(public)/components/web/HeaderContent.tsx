@@ -1,6 +1,7 @@
 'use client';
 
 import CustomButton from '@/components/Formik/Button';
+import LocalSwitcherSelector from '@/components/Locale/LocalSwitcherSelector';
 import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
@@ -8,6 +9,7 @@ import { RootState } from '@/features/store';
 import { resetState } from '@/features/subscription/subscriptionSlice';
 import { Menu, Transition } from '@headlessui/react';
 import { signOut, useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -49,6 +51,8 @@ export default function HeaderContent() {
   const [currentUrl, setCurrentUrl] = useState('');
   const { user, isLoggedIn } = useSelector((state: RootState) => state.authSlice);
   const [drawerSate, setDrawerState] = useState({ isOpen: false });
+
+  const t = useTranslations('AppLayout');
 
   // Handle Logout Response
   const handleLogout = async () => {
@@ -257,7 +261,7 @@ export default function HeaderContent() {
                       href={routes.publicRoutes.home}
                       className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
                     >
-                      Home
+                      {t('home')}
                     </Link>
                   </li>
                   <li className="w-max-content">
@@ -265,7 +269,7 @@ export default function HeaderContent() {
                       href={routes.publicRoutes.pricing}
                       className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.pricing ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
-                      Pricing
+                      {t('pricing')}
                     </Link>
                   </li>
                   <li>
@@ -273,7 +277,7 @@ export default function HeaderContent() {
                       href="/faqs"
                       className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.faqs ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
-                      FAQ
+                      {t('faq')}
                     </Link>
                   </li>
                   <li>
@@ -281,18 +285,18 @@ export default function HeaderContent() {
                       href={routes.publicRoutes.contactUs}
                       className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.contactUs ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
-                      Contact Us
+                      {t('contact_us')}
                     </Link>
                   </li>
                   <div className="ms-2 flex items-center justify-center gap-2">
                     {isLoggedIn ? (
                       // className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white"
                       <Link href="/root/retailer/dashboard">
-                        <CustomButton color="danger" text="Dashboard" className="!m-0" />
+                        <CustomButton color="danger" text={t('dashboard')} className="!m-0" />
                       </Link>
                     ) : (
                       <Link href="/retailer/login" className={`relative  transition-all duration-150 ease-in hover:text-red-500`}>
-                        Login
+                        {t('login')}
                       </Link>
                     )}
                     {isLoggedIn && (
@@ -354,6 +358,9 @@ export default function HeaderContent() {
                         </Transition>
                       </Menu>
                     )}
+                    <div>
+                      <LocalSwitcherSelector />
+                    </div>
                     <button
                       data-collapse-toggle="navbar-cta"
                       onClick={() => setSidBer(!sidBer)}

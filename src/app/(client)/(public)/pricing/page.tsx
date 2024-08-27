@@ -17,20 +17,20 @@ export default async function Page() {
           <div className="flex h-full items-center justify-center sm:ml-3 sm:block">
             <div className="bottom-[28%]  sm:absolute">
               <div className="text-center text-[2.5rem] font-bold leading-10 text-[#DF2828] sm:mb-3 sm:text-left md:text-[4rem]">
-                <span style={{ opacity: 1, transform: 'none' }}>E</span>
-                <span style={{ opacity: 1, transform: 'none' }}>x</span>
+                <span style={{ opacity: 1, transform: 'none' }}>Explore</span>
+                {/* <span style={{ opacity: 1, transform: 'none' }}>x</span>
                 <span style={{ opacity: 1, transform: 'none' }}>p</span>
                 <span style={{ opacity: 1, transform: 'none' }}>l</span>
                 <span style={{ opacity: 1, transform: 'none' }}>o</span>
                 <span style={{ opacity: 1, transform: 'none' }}>r</span>
-                <span style={{ opacity: 1, transform: 'none' }}>e</span>
+                <span style={{ opacity: 1, transform: 'none' }}>e</span> */}
               </div>
               <br />
               <div className="flex gap-3 text-[1rem] font-bold	leading-10	text-white md:text-[3rem]">
                 <div className="">
-                  <span style={{ opacity: 1, transform: 'none' }}>Our</span>
+                  <span style={{ opacity: 1, transform: 'none' }}>Our Subscription and Add-on</span>
                 </div>
-                <div className="">
+                {/* <div className="">
                   <span style={{ opacity: 1, transform: 'none' }}>Subscription</span>
                 </div>
                 <div className="">
@@ -38,7 +38,7 @@ export default async function Page() {
                 </div>
                 <div className="">
                   <span style={{ opacity: 1, transform: 'none' }}>Add-on</span>
-                </div>
+                </div> */}
               </div>
               <div className="MuiStack-root css-plpzdo" />
             </div>

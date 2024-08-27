@@ -1,0 +1,88 @@
+{
+  "AppLayout": {
+    "home": "بيت",
+    "pricing": "التسعير",
+    "faq": "التعليمات",
+    "contact_us": "اتصل بنا",
+    "dashboard": "لوحة القيادة",
+    "login": "تسجيل الدخول",
+    "socials": "مواقع التواصل الاجتماعي",
+    "contact": "اتصال",
+    "newsletter": "انضم إلى نشرتنا الإخبارية",
+    "privacy": "سياسة الخصوصية",
+    "terms": "الشروط والأحكام",
+    "facebook": "فيسبوك",
+    "instagram": "انستجرام",
+    "tiktok": "تيك توك",
+    "linkedin": "لينكدإن",
+    "newsletterButtonText": "يُقدِّم",
+    "newsletterPlaceholderText": "عنوان البريد الإلكتروني"
+  },
+  "FaqPage": {
+    "how": "كيف",
+    "title": "هل يمكننا مساعدتك؟",
+    "questionTitle": "الأسئلة الشائعة"
+  },
+  "ContactPage": {
+    "where": "أين",
+    "title": "لتجدنا؟",
+    "formTitle": "تواصل معنا",
+    "name": "اسم",
+    "email": "بريد إلكتروني",
+    "phone": "رقم التليفون",
+    "message": "رسالة",
+    "buttonText": "يرسل"
+  },
+  "pricingPage": {
+    "explore": "يستكشف",
+    "title": "اشتراكنا وإضافاتنا",
+    "subscriptions": "الاشتراكات",
+    "subtitle": "خططنا"
+  },
+  "HomePage": {
+    "bannerTitle": "إحداث ثورة في تجربة عملائك",
+    "bannerDetails": "قم بإشراك عملائك ومكافأتهم والاحتفاظ بهم بلمسة من البساطة والتكنولوجيا، وأحضر مستقبل برامج الولاء إلى عملك.",
+    "bannerButtonText": "البدء",
+    "heroTitleOne": "لماذا تختار StampEzee؟",
+    "heroDescriptionOne": "لقد غيرت الرقمنة الطريقة التي تتفاعل بها الشركات مع عملائها. تجمع منصتنا بين التصميم البديهي والتحليلات القوية والتخصيص الذي لا مثيل له، مما يوفر لك الأداة المثالية للتفاعل مع العملاء.",
+    "heroTitleTwo": "تمكين الاحتفاظ بالعملاء",
+    "heroDescriptionTwo": "في سوق اليوم التنافسي، يعد الاحتفاظ بالعملاء أمرًا بالغ الأهمية. تعمل StampEzee على تعزيز الولاء وتشجيع تكرار الأعمال. أكثر من مجرد نظام للمكافآت، تعمل منصتنا على تعزيز مشاركة علامتك التجارية، ورعاية علاقات طويلة الأمد مع العملاء.",
+    "workMainTitle": "كيف يعمل؟",
+    "workTitleOne": "مرونة لا مثيل لها",
+    "workDescriptionOne": "تعزيز العلاقات القوية والدائمة مع العملاء.",
+    "workTitleTwo": "البساطة في متناول اليد",
+    "workDescriptionTwo": "واجهة سهلة الاستخدام وسلسة.",
+    "workTitleThree": "البساطة في متناول اليد",
+    "workDescriptionThree": "اتخذ قرارات مستنيرة تعزز النمو.",
+    "testimonials": "شهادات العملاء",
+    "testimonialMainTitle": "اقرأ ما يقوله الآخرون؟",
+    "testimonialTitleOne": "OLIVIA COLE",
+    "testimonialSubTitleOne": "مدير المطعم",
+    "testimonialDescriptionOne": "لقد كان StampEzee بمثابة نقطة تحول في أعمالنا. فالراحة التي يوفرها لعملائنا، إلى جانب الرؤى التي اكتسبناها، أدت إلى الارتقاء بعملياتنا حقًا.",
+    "testimonialTitleTwo": "OLIVIA COLE",
+    "testimonialSubTitleTwo": "مدير المطعم",
+    "testimonialDescriptionTwo": "لقد كان StampEzee بمثابة نقطة تحول في أعمالنا. فالراحة التي يوفرها لعملائنا، إلى جانب الرؤى التي اكتسبناها، أدت إلى الارتقاء بعملياتنا حقًا.",
+    "testimonialTitleThree": "OLIVIA COLE",
+    "testimonialSubTitleThree": "مدير المطعم",
+    "testimonialDescriptionThree": "لقد كان StampEzee بمثابة نقطة تحول في أعمالنا. فالراحة التي يوفرها لعملائنا، إلى جانب الرؤى التي اكتسبناها، أدت إلى الارتقاء بعملياتنا حقًا."
+  },
+  "LocaleSwitcher": {
+    "de": "Deutsch",
+    "en": "English",
+    "label": "Language"
+  },
+  "LoginPage": {
+    "credentials": "Credentials: jane@doe.com / next-intl",
+    "description": "Please enter your details.",
+    "email": "Email",
+    "invalidCredentials": "Please check your credentials.",
+    "invalidEmail": "Please enter a valid email address.",
+    "invalidPassword": "Please enter a password.",
+    "login": "Sign in",
+    "password": "Password",
+    "title": "Welcome back"
+  },
+  "ProfilePage": {
+    "title": "Profile"
+  }
+}

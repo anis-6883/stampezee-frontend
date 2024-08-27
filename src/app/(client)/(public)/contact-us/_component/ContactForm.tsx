@@ -6,6 +6,7 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
@@ -14,6 +15,7 @@ import { SlEnvolope } from 'react-icons/sl';
 import * as Yup from 'yup';
 
 const ContactForm = ({ token }: { token: string }) => {
+  const t = useTranslations('ContactPage');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const initialValues = {
     name: '',
@@ -61,15 +63,15 @@ const ContactForm = ({ token }: { token: string }) => {
         {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
           <Form className="mt-5">
             <div className="grid grid-cols-1 gap-x-5 gap-y-5 md:grid-cols-2">
-              <InputField prefix={<LuUserCircle2 className="text-xl" />} name="name" label="Name" placeholder="John" />
-              <InputField prefix={<SlEnvolope className="text-xl" />} name="email" label="Email" placeholder="john.doe@email.com" />
+              <InputField prefix={<LuUserCircle2 className="text-xl" />} name="name" label={t('name')} placeholder="John" />
+              <InputField prefix={<SlEnvolope className="text-xl" />} name="email" label={t('email')} placeholder="john.doe@email.com" />
             </div>
 
             <div className="my-3 grid grid-cols-1">
               <PhoneNumber
                 enableSearch={true}
                 name="phone"
-                label={<p>Phone Number</p>}
+                label={<p>{t('phone')}</p>}
                 country="ca"
                 preferredCountries={['ca']}
                 onChange={(value, countryData: any) => {
@@ -82,7 +84,7 @@ const ContactForm = ({ token }: { token: string }) => {
             </div>
 
             <div className="my-3">
-              <InputTextarea name="message" label="Message" placeholder="Write here..." />
+              <InputTextarea name="message" label={t('message')} placeholder="Write here..." />
             </div>
 
             <p className="flex flex-col text-end text-xs font-semibold">
@@ -95,7 +97,7 @@ const ContactForm = ({ token }: { token: string }) => {
               <Button
                 color="danger"
                 type="submit"
-                text={'Send'}
+                text={t('buttonText')}
                 postIcon={<FaRegPaperPlane className="text-base" />}
                 isSubmitting={isSubmitting}
               />
