@@ -57,7 +57,7 @@ export default function LocalSwitcherSelector({
   return (
     <Modal isOpen={modalState} onClose={() => setModalState(false)} customSize="600px">
       <div className="m-auto px-7 pb-3 pt-5">
-        <div className="mb-7 flex items-center justify-end">
+        <div className="flex items-center justify-end">
           <ActionIcon
             size="sm"
             variant="text"

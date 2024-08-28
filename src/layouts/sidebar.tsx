@@ -96,9 +96,10 @@ export default function Sidebar({ className }: { className?: string }) {
     >
       <div
         // 2xl:px-6 2xl:pt-2 sticky top-0 z-40 bg-gray-0/10 px-6 pb-2 pt-2 dark:bg-gray-100/5
+        // card-shadow
         className={cn(
           '2xl:py-5 sticky top-0 z-50 flex items-center justify-center bg-gray-0/80 px-4 py-4 backdrop-blur-xl dark:bg-gray-50/50 md:px-5 lg:px-6 3xl:px-8 4xl:px-10',
-          ((isMounted && windowScroll.y) as number) > 2 ? 'card-shadow' : ''
+          ((isMounted && windowScroll.y) as number) > 2 ? 'bg-gopacity-30' : ''
         )}
       >
         <Link

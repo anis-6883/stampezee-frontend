@@ -47,7 +47,7 @@ export default function HeaderContent() {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const { data: session }: any = useSession();
-  const [sidBer, setSidBer] = useState(false);
+  const [sideBar, setSideBar] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
   const { user, isLoggedIn } = useSelector((state: RootState) => state.authSlice);
@@ -72,7 +72,7 @@ export default function HeaderContent() {
 
     const handleResize = () => {
       if (window.innerWidth > 767) {
-        setSidBer(sidBer);
+        setSideBar(sideBar);
       }
     };
 
@@ -123,12 +123,12 @@ export default function HeaderContent() {
                 }))
               }
             >
-              <RxHamburgerMenu />
+              <RxHamburgerMenu className="text-3xl" />
             </span>
             <div className="mr-3">
               <div
-                onClick={() => setSidBer(sidBer == true && !sidBer)}
-                className={`${sidBer ? 'fixed -top-2 left-0 h-[100vh] w-full overflow-hidden bg-[#14131385] bg-red-600 transition-all duration-300 ease-in-out' : 'hidden'} z-10 items-center justify-between md:order-1 md:flex md:w-auto `}
+                onClick={() => setSideBar(sideBar == true && !sideBar)}
+                className={`${sideBar ? 'fixed -top-2 left-0 h-[100vh] w-full overflow-hidden bg-[#14131385] bg-red-600 transition-all duration-300 ease-in-out' : 'hidden'} z-10 items-center justify-between md:order-1 md:flex md:w-auto `}
                 id="navbar-cta"
               >
                 <Drawer
@@ -142,7 +142,7 @@ export default function HeaderContent() {
                     <div className="flex justify-end p-5">
                       <RxCross1
                         onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
-                        className="cursor-pointer font-bold"
+                        className="cursor-pointer text-lg font-bold"
                       />
                     </div>
                     <ul className=" p-3 ">
@@ -193,7 +193,7 @@ export default function HeaderContent() {
                       {isLoggedIn && (
                         <Menu as="div" className="relative inline-block text-left">
                           <div>
-                            <Menu.Button className="ml-2">
+                            <Menu.Button className="ml-3 py-2">
                               <img
                                 src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/man.png'}
                                 alt="author"
@@ -244,6 +244,13 @@ export default function HeaderContent() {
                           </Transition>
                         </Menu>
                       )}
+
+                      <li className="py-2 pl-3">
+                        <AiOutlineGlobal
+                          onClick={() => setModalState(true)}
+                          className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+                        />
+                      </li>
                     </ul>
                     <div className="mx-3 pb-6">
                       <hr className="border-t-1 border-gray-400" />
@@ -256,7 +263,7 @@ export default function HeaderContent() {
                 </Drawer>
 
                 <ul
-                  className={`${sidBer ? 'h-full' : ''} mt-4 flex flex-col items-center justify-center rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
+                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center justify-center rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                 >
                   <li className="w-max-content">
                     <Link
@@ -303,7 +310,7 @@ export default function HeaderContent() {
                     )}
                     {isLoggedIn && (
                       <Menu as="div" className="relative inline-block text-left">
-                        <div>
+                        <div className="mt-1">
                           <Menu.Button className="ml-2">
                             <img
                               src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
@@ -368,7 +375,7 @@ export default function HeaderContent() {
                     </div>
                     <button
                       data-collapse-toggle="navbar-cta"
-                      onClick={() => setSidBer(!sidBer)}
+                      onClick={() => setSideBar(!sideBar)}
                       type="button"
                       className={`ml-2 inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden`}
                       aria-controls="navbar-cta"
