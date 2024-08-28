@@ -13,6 +13,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { AiOutlineGlobal } from 'react-icons/ai';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -51,6 +52,7 @@ export default function HeaderContent() {
   const [currentUrl, setCurrentUrl] = useState('');
   const { user, isLoggedIn } = useSelector((state: RootState) => state.authSlice);
   const [drawerSate, setDrawerState] = useState({ isOpen: false });
+  const [modalState, setModalState] = useState<boolean>(false);
 
   const t = useTranslations('AppLayout');
 
@@ -358,8 +360,11 @@ export default function HeaderContent() {
                         </Transition>
                       </Menu>
                     )}
-                    <div>
-                      <LocalSwitcherSelector />
+                    <div className="ml-3">
+                      <AiOutlineGlobal
+                        onClick={() => setModalState(true)}
+                        className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+                      />
                     </div>
                     <button
                       data-collapse-toggle="navbar-cta"
@@ -387,6 +392,8 @@ export default function HeaderContent() {
           </div>
         </div>
       </nav>
+
+      <LocalSwitcherSelector modalState={modalState} setModalState={setModalState} />
     </div>
   );
 }

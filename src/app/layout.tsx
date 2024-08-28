@@ -5,13 +5,13 @@ import GlobalModal from '@/components/modal-views/container';
 import NextProgress from '@/components/next-progress';
 import { siteConfig } from '@/config/site.config';
 import { getServerSession } from 'next-auth';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 import { Toaster } from 'react-hot-toast';
+import { getLangDir } from 'rtl-detect';
 import { authOptions } from './api/auth/[...nextauth]/auth-options';
 import AuthProvider from './providers/auth-provider';
 import ReduxProvider from './providers/redux-provider';
-
-import { NextIntlClientProvider } from 'next-intl';
-import { getLocale, getMessages } from 'next-intl/server';
 
 export const metadata = {
   title: siteConfig.title,
@@ -23,9 +23,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   const locale = await getLocale();
   const messages = await getMessages();
+  const direction = getLangDir(locale);
 
   return (
-    <html lang={locale} dir="ltr" suppressHydrationWarning={true} className={poppins.className}>
+    <html lang={locale} dir={direction} suppressHydrationWarning={true} className={poppins.className}>
       <body suppressHydrationWarning={true}>
         <NextIntlClientProvider messages={messages}>
           <ReduxProvider>

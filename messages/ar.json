@@ -69,7 +69,10 @@
   "LocaleSwitcher": {
     "de": "Deutsch",
     "en": "English",
-    "label": "Language"
+    "label": "اللغات"
+  },
+  "CurrencySwitcher": {
+    "label": "عملة"
   },
   "LoginPage": {
     "credentials": "Credentials: jane@doe.com / next-intl",

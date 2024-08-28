@@ -1,25 +1,21 @@
 import { metaObject } from '@/config/site.config';
 import Cryptr from 'cryptr';
 import macaddress from 'macaddress';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import ContactForm from './_component/ContactForm';
 
 export const metadata = {
   ...metaObject('Contact Us'),
 };
 
-export default function Page() {
-  const t = useTranslations('ContactPage');
+export default async function Page() {
+  const t = await getTranslations('ContactPage');
   const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string, {
     encoding: 'base64',
     pbkdf2Iterations: 10000,
     saltLength: 12,
   });
-  let mac = '';
-  (async () => {
-    mac = await macaddress.one();
-  })();
-
+  const mac = await macaddress.one();
   const encryptedString = cryptr.encrypt(mac);
 
   return (
@@ -100,7 +96,7 @@ export default function Page() {
       <div className="mx-4 my-10 max-w-screen-xl xl:mx-auto">
         <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
           <h1 className=" text-xl font-bold xl:text-xl">{t('formTitle')}</h1>
-          <ContactForm token={encryptedString} />
+          {encryptedString && <ContactForm token={encryptedString} />}
         </div>
       </div>
     </div>
