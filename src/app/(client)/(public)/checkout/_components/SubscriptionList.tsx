@@ -11,7 +11,9 @@ import {
   upgradePlan,
 } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Subscription } from '@/types';
+import { calculateCurrencyExchangeRate } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
@@ -20,12 +22,24 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const packages = ['basic', 'pro', 'advanced'];
 
-export default function SubscriptionList({ isMemberShip }: { isMemberShip?: boolean }) {
+export default function SubscriptionList({
+  isMemberShip,
+  defaultCurrency,
+  selectedCurrency,
+}: {
+  isMemberShip?: boolean;
+  defaultCurrency?: any;
+  selectedCurrency?: any;
+}) {
   const dispatch = useDispatch();
   const [plans, setPlans] = useState([]);
+  const { data: currencyExchangeRates, loading } = useCurrencyExchange({ page: 1, limit: 20 });
   const { data: session }: any = useSession();
   const { subscription, downgradeRefund, activeSubscription, planChangeCost } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
+
+  const defaultCurrencyExchangeRate: any = currencyExchangeRates?.find((item: any) => item?.name === defaultCurrency);
+  const selectedCurrencyExchangeRate: any = currencyExchangeRates?.find((item: any) => item?.name === selectedCurrency);
 
   useEffect(() => {
     let transformPlans = [];
@@ -33,29 +47,41 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
       transformPlans = data?.data?.reduce((acc: Subscription[], item: Subscription) => {
         if (item.type === 'subscription') {
           if (item?.slug === 'trial' || item?.slug === session?.user?.plan) {
-            acc.push({ ...item, isBlocked: true });
+            acc.push({
+              ...item,
+              isBlocked: true,
+              price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, defaultCurrencyExchangeRate, price: item?.price }),
+            });
           } else {
-            acc.push({ ...item, isBlocked: false });
+            acc.push({
+              ...item,
+              isBlocked: false,
+              price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, defaultCurrencyExchangeRate, price: item?.price }),
+            });
           }
         }
         return acc;
       }, []);
     } else {
-      transformPlans = data?.data?.filter((item: Subscription) => {
+      transformPlans = data?.data?.reduce((acc: Subscription[], item: Subscription) => {
         if (item.type === 'subscription') {
-          return {
+          acc.push({
             ...item,
             isBlocked: false,
-          };
+            price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, defaultCurrencyExchangeRate, price: item?.price }),
+          });
         }
-      });
+        return acc;
+      }, []);
     }
+    // console.log({ transformPlans });
     setPlans(transformPlans);
     const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
     let updateActiveSubscription = {};
     if (activePlan) {
       updateActiveSubscription = {
         ...activePlan,
+        price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, defaultCurrencyExchangeRate, price: activePlan?.price }),
         takeFreeTrial: session?.user?.takeFreeTrial,
         planStartAt: session?.user?.planStartAt,
         planValidAt: session?.user?.planValidAt,
@@ -64,6 +90,11 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
     } else {
       updateActiveSubscription = {
         ...activeSubscription,
+        price: calculateCurrencyExchangeRate({
+          selectedCurrencyExchangeRate,
+          defaultCurrencyExchangeRate,
+          price: activeSubscription?.price,
+        }),
         takeFreeTrial: session?.user?.takeFreeTrial,
         planStartAt: session?.user?.planStartAt,
         planValidAt: session?.user?.planValidAt,
@@ -72,7 +103,15 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
     }
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.data, dispatch, session?.user, session?.user?.plan, session?.user?.takeFreeTrial]);
+  }, [
+    data?.data,
+    dispatch,
+    session?.user,
+    session?.user?.plan,
+    session?.user?.takeFreeTrial,
+    selectedCurrencyExchangeRate,
+    defaultCurrencyExchangeRate,
+  ]);
 
   const handleSubscription = (plan: Subscription) => {
     const currentPlanIndex = packages.indexOf(session?.user?.plan);
@@ -143,9 +182,14 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
                   </div>
                 )}
                 <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
-                <p className="mb-2 text-xl font-bold">
-                  {item.price} CAD/{item.duration === 30 ? 'Month' : `${item.duration} Days`}
-                </p>
+                {!loading ? (
+                  <Skeleton className="w-50 h-8 rounded" />
+                ) : (
+                  <p className="mb-2 text-xl font-bold">
+                    {item?.price?.toFixed(2)}
+                    {` ${selectedCurrencyExchangeRate?.name}/${item.duration === 30 ? 'month' : `${item.duration} days`}`}
+                  </p>
+                )}
                 <ul className="text-gray-600">
                   {item.descriptions.map((info, idx) => (
                     <li className="flex items-center space-x-3" key={idx}>
@@ -163,9 +207,14 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
                 } hover:border-red-600`}
               >
                 <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
-                <p className="mb-2 text-xl font-bold">
-                  {item.price} CAD/{item.duration === 30 ? 'Month' : `${item.duration} Days`}
-                </p>
+                {!loading ? (
+                  <Skeleton className="w-50 h-8 rounded" />
+                ) : (
+                  <p className="mb-2 text-xl font-bold">
+                    {item?.price?.toFixed(2)}
+                    {` ${selectedCurrencyExchangeRate?.name}/${item.duration === 30 ? 'month' : `${item.duration} days`}`}
+                  </p>
+                )}
                 <ul className="text-gray-600">
                   {item.descriptions.map((info, idx) => (
                     <li className="flex items-center space-x-3" key={idx}>

@@ -7,6 +7,7 @@ import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { resetState } from '@/features/subscription/subscriptionSlice';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Menu, Transition } from '@headlessui/react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -46,6 +47,7 @@ const mobileMenuItems = [
 export default function HeaderContent() {
   const pathname = usePathname();
   const dispatch = useDispatch();
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
   const { data: session }: any = useSession();
   const [sideBar, setSideBar] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -400,7 +402,7 @@ export default function HeaderContent() {
         </div>
       </nav>
 
-      <LocalSwitcherSelector modalState={modalState} setModalState={setModalState} />
+      <LocalSwitcherSelector currencyExchanges={currencyExchanges} modalState={modalState} setModalState={setModalState} />
     </div>
   );
 }

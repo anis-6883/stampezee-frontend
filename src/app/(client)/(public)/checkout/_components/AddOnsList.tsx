@@ -4,15 +4,38 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { RootState } from '@/features/store';
 import { setAddOns } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { AddOn, Subscription } from '@/types';
+import { calculateCurrencyExchangeRate } from '@/utils';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean }) {
+export default function AddOnsList({
+  isMemberShip,
+  defaultCurrency,
+  selectedCurrency,
+}: {
+  isMemberShip?: boolean;
+  defaultCurrency?: any;
+  selectedCurrency?: any;
+}) {
   const dispatch = useDispatch();
+  const { data: currencyExchangeRates, loading } = useCurrencyExchange({ page: 1, limit: 20 });
   const { subscription, addOns: addOnsData } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
-  const addOns = data?.data?.filter((item: Subscription) => item.type === 'addon');
+
+  const defaultCurrencyExchangeRate: any = currencyExchangeRates?.find((item: any) => item?.name === defaultCurrency);
+  const selectedCurrencyExchangeRate: any = currencyExchangeRates?.find((item: any) => item?.name === selectedCurrency);
+
+  const addOns = data?.data?.reduce((acc: Subscription[], item: Subscription) => {
+    if (item.type === 'addon') {
+      acc.push({
+        ...item,
+        price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, defaultCurrencyExchangeRate, price: item?.price }),
+      });
+    }
+    return acc;
+  }, []);
 
   const handleAddOnSelect = (addOn: AddOn) => {
     dispatch(setAddOns(addOn));
@@ -37,7 +60,15 @@ export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean })
               } hover:border-red-600`}
             >
               <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
-              <p className="mb-2 text-xl font-bold">{addOn.price} CAD/month</p>
+              {!loading ? (
+                <Skeleton className="w-50 h-8 rounded" />
+              ) : (
+                <p className="mb-2 text-xl font-bold">
+                  {addOn?.price?.toFixed(2)}
+                  {` ${selectedCurrencyExchangeRate?.name}/month`}
+                </p>
+              )}
+
               <ul className="text-gray-600">
                 {addOn.descriptions.map((info, idx) => (
                   <li className="flex items-center space-x-3" key={idx}>
@@ -49,7 +80,14 @@ export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean })
           ) : (
             <div className={`relative cursor-not-allowed rounded-lg border p-4 opacity-50 `}>
               <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
-              <p className="mb-2 text-xl font-bold">{addOn.price} CAD/month</p>
+              {!loading ? (
+                <Skeleton className="w-50 h-8 rounded" />
+              ) : (
+                <p className="mb-2 text-xl font-bold">
+                  {addOn?.price?.toFixed(2)}
+                  {` ${selectedCurrencyExchangeRate?.name}/month`}
+                </p>
+              )}
               <ul className="text-gray-600">
                 {addOn.descriptions.map((info, idx) => (
                   <li className="flex items-center space-x-3" key={idx}>

@@ -421,7 +421,7 @@ interface IS3Bucket {
   awsBucketName?: string;
 }
 
-interface ICurrency {
+export interface ICurrency {
   country?: string;
   currency?: string;
 }

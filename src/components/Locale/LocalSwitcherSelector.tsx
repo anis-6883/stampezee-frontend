@@ -17,14 +17,25 @@ const languageOptions = [
 export default function LocalSwitcherSelector({
   modalState,
   setModalState,
+  currencyExchanges,
 }: {
   modalState: boolean;
   setModalState: (state: boolean) => void;
+  currencyExchanges: any;
 }) {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
   const t1 = useTranslations('LocaleSwitcher');
   const t2 = useTranslations('CurrencySwitcher');
+
+  const currencyExchangeOptions = currencyData?.reduce((acc: any, curr: any) => {
+    currencyExchanges?.map((item: any) => {
+      if (item?.name === curr?.code) {
+        acc?.push(curr);
+      }
+    });
+    return acc;
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -52,10 +63,11 @@ export default function LocalSwitcherSelector({
     startTransition(() => {
       setUserCurrency(currency);
     });
+    setModalState(false);
   };
 
   return (
-    <Modal isOpen={modalState} onClose={() => setModalState(false)} customSize="600px">
+    <Modal isOpen={modalState} onClose={() => setModalState(false)} customSize="630px">
       <div className="m-auto px-7 pb-3 pt-5">
         <div className="flex items-center justify-end">
           <ActionIcon
@@ -105,7 +117,7 @@ export default function LocalSwitcherSelector({
             <Tab.Panel>
               <div className="my-5">
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {currencyData?.slice(0, 5).map((currency: any) => (
+                  {currencyExchangeOptions?.map((currency: any) => (
                     <AdvancedRadio
                       // disabled={checkDisableBranch(item)}
                       key={currency.id}

@@ -117,3 +117,15 @@ export const hasCheckedPurchaseAlert = ({
   }
   return false;
 };
+
+export const calculateCurrencyExchangeRate = ({
+  selectedCurrencyExchangeRate,
+  defaultCurrencyExchangeRate,
+  price,
+}: {
+  selectedCurrencyExchangeRate: any;
+  defaultCurrencyExchangeRate: any;
+  price: number;
+}) => {
+  return Number(((selectedCurrencyExchangeRate?.exchangeRate / defaultCurrencyExchangeRate?.exchangeRate) * price).toFixed(2));
+};
