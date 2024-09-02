@@ -6,6 +6,7 @@ import { RootState } from '@/features/store';
 import {
   activeSubscription,
   setActiveSubscription,
+  setDefaultCurrency,
   setPlanChangeCost,
   setRemainingBalance,
   setTaxPercentage,
@@ -13,6 +14,7 @@ import {
 } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
+import { calculateCurrencyExchangeRate } from '@/utils';
 import { Skeleton } from '@mantine/core';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
@@ -21,12 +23,25 @@ import PricingCard from './PricingCard';
 
 export default function SubscriptionList({ stripeInfo }: any) {
   const dispatch = useDispatch();
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { currencyExchangeRates } = useSelector((state: RootState) => state.currencyExchangeSlice);
+  const { activeSubscription, currency, defaultCurrency } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
-  const subscription = data?.data.filter((item: any) => item.type === 'subscription');
+  const subscription = data?.data.reduce((acc: any, curr: any) => {
+    if (curr.type === 'subscription') {
+      acc.push({
+        ...curr,
+        price: calculateCurrencyExchangeRate({
+          selectedCurrencyExchangeRate: currency,
+          defaultCurrencyExchangeRate: defaultCurrency,
+          price: curr.price,
+        }),
+      });
+    }
+    return acc;
+  }, []);
 
   const { data: session, update }: any = useSession();
-  const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: profile, isSuccess: profileSuccess } = useRetailerGetProfileQuery(null, { skip: !accessToken });
 
   useEffect(() => {
@@ -68,7 +83,9 @@ export default function SubscriptionList({ stripeInfo }: any) {
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
     dispatch(setTaxPercentage(stripeInfo?.taxCost));
     dispatch(setTaxStatus(stripeInfo?.taxStatus));
-  }, [dispatch, stripeInfo?.planChangeCost, stripeInfo?.taxCost, stripeInfo?.taxStatus]);
+    const currencyExchange: any = currencyExchangeRates?.find((item: any) => item?.name === stripeInfo?.defaultCurrency?.currency);
+    dispatch(setDefaultCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
+  }, [currencyExchangeRates, dispatch, stripeInfo]);
 
   return (
     <div>

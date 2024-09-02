@@ -1,4 +1,5 @@
 import { Currency, Locale } from '@/config';
+import { setCurrency } from '@/features/subscription/subscriptionSlice';
 import { getUserCurrency, setUserCurrency } from '@/services/currency';
 import { getUserLocale, setUserLocale } from '@/services/locale';
 import currencyData from '@/utils/get-currency-list';
@@ -7,6 +8,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { BsTranslate } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { RiCurrencyFill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
 import { ActionIcon, AdvancedRadio, Modal, Tab, Text } from 'rizzui';
 
 const languageOptions = [
@@ -23,6 +25,7 @@ export default function LocalSwitcherSelector({
   setModalState: (state: boolean) => void;
   currencyExchanges: any;
 }) {
+  const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
   const t1 = useTranslations('LocaleSwitcher');
@@ -43,8 +46,10 @@ export default function LocalSwitcherSelector({
       const currency = await getUserCurrency();
       setSelectedOption(locale);
       setSelectedCurrency(currency);
+      const currencyExchange = currencyExchanges?.find((item: any) => item?.name === currency);
+      dispatch(setCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
     })();
-  }, []);
+  }, [currencyExchanges, dispatch]);
 
   const [isPending, startTransition] = useTransition();
 
@@ -62,6 +67,8 @@ export default function LocalSwitcherSelector({
 
     startTransition(() => {
       setUserCurrency(currency);
+      const currencyExchange = currencyExchanges?.find((item: any) => item?.name === currency);
+      dispatch(setCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
     });
     setModalState(false);
   };

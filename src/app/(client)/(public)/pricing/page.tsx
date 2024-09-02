@@ -1,4 +1,5 @@
 import { metaObject } from '@/config/site.config';
+import { getUserCurrency } from '@/services/currency';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import { getTranslations } from 'next-intl/server';
 import SubscriptionList from './_components/SubscriptionList';
@@ -10,6 +11,7 @@ export const metadata = {
 export default async function Page() {
   const t = await getTranslations('pricingPage');
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
+  const selectedCurrency = await getUserCurrency();
   return (
     <div>
       <div className="relative mx-auto w-full">

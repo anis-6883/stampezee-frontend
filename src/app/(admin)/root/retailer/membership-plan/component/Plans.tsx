@@ -5,7 +5,13 @@ import SubscriptionList from '@/app/(client)/(public)/checkout/_components/Subsc
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
-import { setPlanChangeCost, setSubscription, setTaxPercentage, setTaxStatus } from '@/features/subscription/subscriptionSlice';
+import {
+  setDefaultCurrency,
+  setPlanChangeCost,
+  setSubscription,
+  setTaxPercentage,
+  setTaxStatus,
+} from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
 import { isCheckoutButtonDisabled } from '@/utils';
@@ -21,12 +27,15 @@ export const Plans = ({ stripeInfo }: any) => {
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
   const { activeSubscription, subscription, addOns, planChangeType, total } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { currencyExchangeRates } = useSelector((state: RootState) => state.currencyExchangeSlice);
 
   useEffect(() => {
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
     dispatch(setTaxPercentage(stripeInfo?.taxCost));
     dispatch(setTaxStatus(stripeInfo?.taxStatus));
-  }, [dispatch, stripeInfo?.planChangeCost, stripeInfo?.taxCost, stripeInfo?.taxStatus]);
+    const currencyExchange: any = currencyExchangeRates?.find((item: any) => item?.name === stripeInfo?.defaultCurrency?.currency);
+    dispatch(setDefaultCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
+  }, [currencyExchangeRates, dispatch, stripeInfo]);
 
   useEffect(() => {
     if (session?.user?.takeFreeTrial) {

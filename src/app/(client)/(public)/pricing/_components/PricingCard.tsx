@@ -2,16 +2,18 @@
 
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
+import { RootState } from '@/features/store';
 import { setSubscription } from '@/features/subscription/subscriptionSlice';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function PricingCard({ item }: { item: any }) {
   const dispatch = useDispatch();
+  const { currency } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: session }: any = useSession();
 
   return (
@@ -28,8 +30,8 @@ export default function PricingCard({ item }: { item: any }) {
         <h3 className="mb-4 text-xl font-semibold">{item.title}</h3>
         <div className="my-2 flex items-baseline">
           <span className="mr-2 text-xl font-bold xl:text-3xl xl:font-extrabold">
-            <sup className="font-medium capitalize">CAD</sup>
-            {item.price}
+            <sup className="font-medium capitalize">{currency?.name}</sup>
+            {item?.price ? item?.price?.toFixed(2) : 0}
           </span>
           <span className="text-gray-500 dark:text-gray-400">
             /{item.duration === 30 ? 1 : item.duration} {item.duration === 30 ? 'Month' : 'Days'}

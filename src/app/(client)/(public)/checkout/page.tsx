@@ -37,7 +37,7 @@ export default async function Page() {
           <div>
             <OrderBalance />
             <h2 className="mb-4 text-xl font-semibold">Order Summary</h2>
-            <OrderSummary stripeInfo={data?.data?.stripe} />
+            <OrderSummary stripeInfo={data?.data?.stripe} selectedCurrency={selectedCurrency} />
           </div>
         </div>
       </div>

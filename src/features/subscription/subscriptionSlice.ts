@@ -1,5 +1,5 @@
 import { AddOn, Coupon, Subscription } from '@/types';
-import { calculateBalancePrice } from '@/utils';
+import { calculateBalancePrice, calculateCurrencyExchangeRate } from '@/utils';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface activeSubscription extends Subscription {
@@ -7,6 +7,11 @@ export interface activeSubscription extends Subscription {
   planValidAt?: Date;
   takeFreeTrial?: string;
   planPayment?: number;
+}
+
+export interface Currency {
+  name: string;
+  exchangeRate: number;
 }
 
 interface SubscriptionState {
@@ -27,6 +32,8 @@ interface SubscriptionState {
   planChangeCost: number;
   planChangeType: string;
   refundableThreshold: number;
+  currency: Currency;
+  defaultCurrency: Currency;
 }
 
 const initialState: SubscriptionState = {
@@ -47,6 +54,8 @@ const initialState: SubscriptionState = {
   planChangeCost: 1,
   planChangeType: '',
   refundableThreshold: 0,
+  currency: { name: 'USD', exchangeRate: 1 },
+  defaultCurrency: { name: 'USD', exchangeRate: 1 },
 };
 
 // Helper functions
@@ -203,6 +212,41 @@ const subscriptionSlice = createSlice({
     setRemainingBalance: (state) => {
       updateBalance(state);
     },
+    setCurrency: (state, action: PayloadAction<Currency>) => {
+      state.subTotal = calculateCurrencyExchangeRate({
+        selectedCurrencyExchangeRate: action.payload,
+        defaultCurrencyExchangeRate: state.currency,
+        price: state.subTotal,
+      });
+
+      state.subscription = {
+        ...state.subscription,
+        price: calculateCurrencyExchangeRate({
+          selectedCurrencyExchangeRate: action.payload,
+          defaultCurrencyExchangeRate: state.currency,
+          price: state.subscription.price,
+        }),
+      };
+      state.tax = calculateCurrencyExchangeRate({
+        selectedCurrencyExchangeRate: action.payload,
+        defaultCurrencyExchangeRate: state.currency,
+        price: state.tax,
+      });
+      state.total = calculateCurrencyExchangeRate({
+        selectedCurrencyExchangeRate: action.payload,
+        defaultCurrencyExchangeRate: state.currency,
+        price: state.total,
+      });
+      state.couponDiscount = calculateCurrencyExchangeRate({
+        selectedCurrencyExchangeRate: action.payload,
+        defaultCurrencyExchangeRate: state.currency,
+        price: state.couponDiscount,
+      });
+      state.currency = action.payload;
+    },
+    setDefaultCurrency: (state, action: PayloadAction<Currency>) => {
+      state.defaultCurrency = action.payload;
+    },
     resetAddOns: (state) => {
       state.addOns = [];
       calculateSubTotal(state);
@@ -268,6 +312,8 @@ export const {
   setTaxStatus,
   setAddOns,
   setRemainingBalance,
+  setCurrency,
+  setDefaultCurrency,
   resetAddOns,
   removeAddOns,
   applyCoupon,
