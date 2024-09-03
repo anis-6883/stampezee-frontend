@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import { setSubscription } from '@/features/subscription/subscriptionSlice';
@@ -28,15 +29,19 @@ export default function PricingCard({ item }: { item: any }) {
       )}
       <div>
         <h3 className="mb-4 text-xl font-semibold">{item.title}</h3>
-        <div className="my-2 flex items-baseline">
-          <span className="mr-2 text-xl font-bold xl:text-3xl xl:font-extrabold">
-            <sup className="font-medium capitalize">{currency?.name}</sup>
-            {item?.price ? item?.price?.toFixed(2) : 0}
-          </span>
-          <span className="text-gray-500 dark:text-gray-400">
-            /{item.duration === 30 ? 1 : item.duration} {item.duration === 30 ? 'Month' : 'Days'}
-          </span>
-        </div>
+        {!currency?.name ? (
+          <Skeleton className="w-50 h-8 rounded" />
+        ) : (
+          <div className="my-2 flex items-baseline">
+            <span className="mr-2 text-xl font-bold xl:text-3xl xl:font-extrabold">
+              <sup className="font-medium capitalize">{currency?.name}</sup>
+              {item?.price ? item?.price?.toFixed(2) : 0}
+            </span>
+            <span className="text-gray-500 dark:text-gray-400">
+              /{item.duration === 30 ? 1 : item.duration} {item.duration === 30 ? 'Month' : 'Days'}
+            </span>
+          </div>
+        )}
         <img
           src={item?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item?.image}` : '/images/layer.png'}
           alt="icon"

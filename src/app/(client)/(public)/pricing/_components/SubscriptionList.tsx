@@ -3,15 +3,7 @@
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
-import {
-  activeSubscription,
-  setActiveSubscription,
-  setDefaultCurrency,
-  setPlanChangeCost,
-  setRemainingBalance,
-  setTaxPercentage,
-  setTaxStatus,
-} from '@/features/subscription/subscriptionSlice';
+import { activeSubscription, setActiveSubscription, setRemainingBalance } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
@@ -21,10 +13,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PricingCard from './PricingCard';
 
-export default function SubscriptionList({ stripeInfo }: any) {
+export default function SubscriptionList() {
   const dispatch = useDispatch();
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { currencyExchangeRates } = useSelector((state: RootState) => state.currencyExchangeSlice);
   const { activeSubscription, currency, defaultCurrency } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
   const subscription = data?.data.reduce((acc: any, curr: any) => {
@@ -78,14 +69,6 @@ export default function SubscriptionList({ stripeInfo }: any) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile?.data, profileSuccess, data?.data]);
-
-  useEffect(() => {
-    dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
-    dispatch(setTaxPercentage(stripeInfo?.taxCost));
-    dispatch(setTaxStatus(stripeInfo?.taxStatus));
-    const currencyExchange: any = currencyExchangeRates?.find((item: any) => item?.name === stripeInfo?.defaultCurrency?.currency);
-    dispatch(setDefaultCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
-  }, [currencyExchangeRates, dispatch, stripeInfo]);
 
   return (
     <div>

@@ -3,13 +3,12 @@
 
 import { RootState } from '@/features/store';
 import { removeAddOns, removeCode, removeCoupon } from '@/features/subscription/subscriptionSlice';
-import { AddOn } from '@/types';
 import { ImBin } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
 
 const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selectedCurrency: string }) => {
   const dispatch = useDispatch();
-  const { subscription, addOns, activeSubscription, remainingBalance, subTotal, total, tax, coupon, couponDiscount } = useSelector(
+  const { subscription, addOn, activeSubscription, remainingBalance, subTotal, total, tax, coupon, couponDiscount } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
 
@@ -21,12 +20,12 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
 
   return (
     <div>
-      <h2 className="pb-2 text-lg font-medium">{addOns?.length > 0 ? 'Plan & Add-Ons' : 'Plan'}</h2>
+      <h2 className="pb-2 text-lg font-medium">{addOn.slug ? 'Plan & Add-Ons' : 'Plan'}</h2>
       <hr className="p-2 text-lg font-bold" />
       <div className="mb-2 flex justify-between">
         <span>{subscription?.title}</span>
         <span className="text-red-500">
-          {subscription ? parseFloat(subscription?.price?.toFixed(2)).toFixed(2) : 0} {selectedCurrency}
+          {subscription?.price ? subscription?.price?.toFixed(2) : 0} {selectedCurrency}
         </span>
       </div>
 
@@ -39,21 +38,15 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </div>
       )}
 
-      {addOns?.length > 0 && (
-        <div>
-          {addOns.map((addOn: AddOn, index: number) => (
-            <div key={index} className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-              <span className="col-span-6">{addOn.title}</span>
-              <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
-                <ImBin />
-              </button>
-              <span className="col-span-4 justify-self-end">
-                {addOn ? parseFloat(addOn?.price?.toFixed(2)).toFixed(2) : 0} {selectedCurrency}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+        <span className="col-span-6">{addOn.title}</span>
+        <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
+          <ImBin />
+        </button>
+        <span className="col-span-4 justify-self-end">
+          {addOn ? parseFloat(addOn?.price?.toFixed(2)).toFixed(2) : 0} {selectedCurrency}
+        </span>
+      </div>
 
       <div className="mb-2 flex justify-between">
         <span className="font-semibold">Subtotal</span>

@@ -46,8 +46,6 @@ export default function LocalSwitcherSelector({
       const currency = await getUserCurrency();
       setSelectedOption(locale);
       setSelectedCurrency(currency);
-      const currencyExchange = currencyExchanges?.find((item: any) => item?.name === currency);
-      dispatch(setCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
     })();
   }, [currencyExchanges, dispatch]);
 

@@ -11,7 +11,6 @@ import {
   upgradePlan,
 } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
-import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
 import { useSession } from 'next-auth/react';
@@ -22,24 +21,19 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const packages = ['basic', 'pro', 'advanced'];
 
-export default function SubscriptionList({
-  isMemberShip,
-  defaultCurrency,
-  selectedCurrency,
-}: {
-  isMemberShip?: boolean;
-  defaultCurrency?: any;
-  selectedCurrency?: any;
-}) {
+export default function SubscriptionList({ isMemberShip }: { isMemberShip?: boolean }) {
   const dispatch = useDispatch();
   const [plans, setPlans] = useState([]);
-  const { data: currencyExchangeRates, loading } = useCurrencyExchange({ page: 1, limit: 20 });
   const { data: session }: any = useSession();
-  const { subscription, downgradeRefund, activeSubscription, planChangeCost } = useSelector((state: RootState) => state.subscriptionSlice);
+  const {
+    subscription,
+    downgradeRefund,
+    activeSubscription,
+    planChangeCost,
+    defaultCurrency: defaultCurrencyExchangeRate,
+    currency: selectedCurrencyExchangeRate,
+  } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
-
-  const defaultCurrencyExchangeRate: any = currencyExchangeRates?.find((item: any) => item?.name === defaultCurrency);
-  const selectedCurrencyExchangeRate: any = currencyExchangeRates?.find((item: any) => item?.name === selectedCurrency);
 
   useEffect(() => {
     let transformPlans = [];
@@ -74,7 +68,6 @@ export default function SubscriptionList({
         return acc;
       }, []);
     }
-    // console.log({ transformPlans });
     setPlans(transformPlans);
     const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
     let updateActiveSubscription = {};
@@ -131,6 +124,7 @@ export default function SubscriptionList({
     } else {
       dispatch(setSubscription(plan));
     }
+    dispatch(resetAddOns());
   };
 
   useEffect(() => {
@@ -182,11 +176,11 @@ export default function SubscriptionList({
                   </div>
                 )}
                 <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
-                {!loading ? (
+                {!selectedCurrencyExchangeRate?.name ? (
                   <Skeleton className="w-50 h-8 rounded" />
                 ) : (
                   <p className="mb-2 text-xl font-bold">
-                    {item?.price?.toFixed(2)}
+                    {item?.price ? item?.price?.toFixed(2) : 0}
                     {` ${selectedCurrencyExchangeRate?.name}/${item.duration === 30 ? 'month' : `${item.duration} days`}`}
                   </p>
                 )}
@@ -207,11 +201,11 @@ export default function SubscriptionList({
                 } hover:border-red-600`}
               >
                 <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
-                {!loading ? (
+                {!selectedCurrencyExchangeRate?.name ? (
                   <Skeleton className="w-50 h-8 rounded" />
                 ) : (
                   <p className="mb-2 text-xl font-bold">
-                    {item?.price?.toFixed(2)}
+                    {item?.price ? item?.price?.toFixed(2) : 0}
                     {` ${selectedCurrencyExchangeRate?.name}/${item.duration === 30 ? 'month' : `${item.duration} days`}`}
                   </p>
                 )}

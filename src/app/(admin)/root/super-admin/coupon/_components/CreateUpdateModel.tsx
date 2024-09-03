@@ -52,6 +52,7 @@ export default function CreateUpdateModel({
         return !isNaN(parseFloat(value)) && isFinite(value);
       })
       .min(0, 'Value must be greater then or equal to 0')
+      .max(50, 'Value must be less then or equal to 50')
       .required('Required!'),
     limit: Yup.number()
       .test('integer', 'Please enter an integer value', (value: any) => {

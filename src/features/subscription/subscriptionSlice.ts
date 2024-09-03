@@ -17,7 +17,8 @@ export interface Currency {
 interface SubscriptionState {
   subscription: Subscription;
   activeSubscription: activeSubscription;
-  addOns: AddOn[];
+  // addOns: AddOn[];
+  addOn: AddOn;
   coupon: Coupon | null;
   code: string;
   subTotal: number;
@@ -34,12 +35,14 @@ interface SubscriptionState {
   refundableThreshold: number;
   currency: Currency;
   defaultCurrency: Currency;
+  subscriptionType: string;
 }
 
 const initialState: SubscriptionState = {
   subscription: { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' },
   activeSubscription: { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' },
-  addOns: [],
+  // addOns: [],
+  addOn: { _id: '', title: '', price: 0, descriptions: [], slug: '' },
   coupon: null,
   code: '',
   subTotal: 0,
@@ -56,6 +59,7 @@ const initialState: SubscriptionState = {
   refundableThreshold: 0,
   currency: { name: 'USD', exchangeRate: 1 },
   defaultCurrency: { name: 'USD', exchangeRate: 1 },
+  subscriptionType: '',
 };
 
 // Helper functions
@@ -100,7 +104,11 @@ const updateBalance = (state: SubscriptionState) => {
 
 const calculateTax = (state: SubscriptionState) => {
   if (state.taxStatus === 'on') {
-    state.tax = calculateTaxAmount(Math.abs(state.subTotal), state.taxPercentage);
+    if (state.subscriptionType === 'plan') {
+      state.tax = calculateTaxAmount(Math.abs(state?.subscription?.price), state.taxPercentage);
+    } else {
+      state.tax = calculateTaxAmount(Math.abs(state?.addOn?.price), state.taxPercentage);
+    }
   }
 };
 
@@ -125,7 +133,7 @@ const calculateDowngradeRefund = (state: SubscriptionState, targetPlan: Subscrip
 
 const calculateSubTotal = (state: SubscriptionState, planType?: string) => {
   const planPrice = state.subscription?.price || 0;
-  const addOnsPrice = calculateAddOnsPrice(state.addOns);
+  const addOnsPrice = state?.addOn?.price;
   const planSwitchCharge = state?.planChangeCost || 0;
   const couponDiscount = state.couponDiscount || 0;
   const remainingBalance = state.remainingBalance || 0;
@@ -137,7 +145,7 @@ const calculateSubTotal = (state: SubscriptionState, planType?: string) => {
     (state?.activeSubscription?.slug && state?.activeSubscription?.slug !== 'trial')
   ) {
     // when buy just addons
-    if (state?.activeSubscription?.slug === state?.subscription?.slug && state?.addOns?.length > 0) {
+    if (state?.activeSubscription?.slug === state?.subscription?.slug && state?.addOn) {
       state.subTotal = addOnsPrice;
       calculateTax(state);
       state.total = state.subTotal + state.tax - couponDiscount;
@@ -153,12 +161,14 @@ const calculateSubTotal = (state: SubscriptionState, planType?: string) => {
   }
   // when pick plans and addons at first time
   else {
-    state.subTotal = planPrice + addOnsPrice;
+    const price = state.subscriptionType === 'plan' ? planPrice : addOnsPrice;
+    state.subTotal = price;
+
     calculateTax(state);
     state.total =
       state?.subscription?.slug === 'trial'
-        ? roundToTwoDecimals(remainingBalance - (planPrice + addOnsPrice - couponDiscount))
-        : roundToTwoDecimals(remainingBalance - (planPrice + addOnsPrice + state.tax - couponDiscount));
+        ? roundToTwoDecimals(remainingBalance - (price - couponDiscount))
+        : roundToTwoDecimals(remainingBalance - (price + state.tax - couponDiscount));
   }
 };
 
@@ -177,6 +187,16 @@ const subscriptionSlice = createSlice({
       } else {
         state.subscription = action.payload;
       }
+      state.subscriptionType = 'plan';
+      updateBalance(state);
+      calculateSubTotal(state);
+      if (state?.coupon) {
+        calculateDiscount(state);
+        calculateSubTotal(state);
+      }
+    },
+    resetSubscription: (state) => {
+      state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
       updateBalance(state);
       calculateSubTotal(state);
       if (state?.coupon) {
@@ -203,10 +223,18 @@ const subscriptionSlice = createSlice({
       state.taxStatus = action.payload;
     },
     setAddOns: (state, action: PayloadAction<AddOn>) => {
-      const newAddOn: any = state.addOns.find((item: any) => item._id === action.payload._id);
-      state.addOns = newAddOn
-        ? state.addOns.filter((item: any) => item._id !== newAddOn._id)
-        : [...state.addOns, { ...action.payload, isAddOnsSelect: true }];
+      // const newAddOn: any = state.addOns.find((item: any) => item._id === action.payload._id);
+      // state.addOns = newAddOn
+      //   ? state.addOns.filter((item: any) => item._id !== newAddOn._id)
+      //   : [...state.addOns, { ...action.payload, isAddOnsSelect: true }];
+
+      if (state.addOn.slug === action.payload.slug) {
+        state.addOn = { _id: '', title: '', price: 0, descriptions: [], slug: '' };
+      } else {
+        state.addOn = action.payload;
+      }
+      state.subscriptionType = 'addOn';
+
       calculateSubTotal(state);
     },
     setRemainingBalance: (state) => {
@@ -224,7 +252,7 @@ const subscriptionSlice = createSlice({
         price: calculateCurrencyExchangeRate({
           selectedCurrencyExchangeRate: action.payload,
           defaultCurrencyExchangeRate: state.currency,
-          price: state.subscription.price,
+          price: state?.subscription?.price,
         }),
       };
       state.tax = calculateCurrencyExchangeRate({
@@ -247,12 +275,18 @@ const subscriptionSlice = createSlice({
     setDefaultCurrency: (state, action: PayloadAction<Currency>) => {
       state.defaultCurrency = action.payload;
     },
+    setSubscriptionType: (state, action: PayloadAction<string>) => {
+      state.subscriptionType = action.payload;
+      calculateTax(state);
+    },
     resetAddOns: (state) => {
-      state.addOns = [];
+      // state.addOns = [];
+      state.addOn = { _id: '', title: '', price: 0, descriptions: [], slug: '' };
       calculateSubTotal(state);
     },
     removeAddOns: (state, action: PayloadAction<string>) => {
-      state.addOns = state.addOns.filter((item: any) => item._id !== action.payload);
+      // state.addOns = state.addOns.filter((item: any) => item._id !== action.payload);
+      state.addOn = { _id: '', title: '', price: 0, descriptions: [], slug: '' };
       calculateSubTotal(state);
     },
     applyCoupon: (state, action) => {
@@ -322,7 +356,9 @@ export const {
   upgradePlan,
   downgradePlan,
   setCode,
+  setSubscriptionType,
   resetState,
+  resetSubscription,
 } = subscriptionSlice.actions;
 
 export default subscriptionSlice;

@@ -23,7 +23,7 @@ export default async function Page() {
           <div className="lg:col-span-2">
             <h2 className="mb-4 text-xl font-semibold">Plans</h2>
             <p className="mb-6 text-gray-600">Select a subscription plan</p>
-            <SubscriptionList defaultCurrency={data?.data?.stripe?.defaultCurrency?.currency} selectedCurrency={selectedCurrency} />
+            <SubscriptionList />
             <div className="mt-6">
               <h2 className="mb-4 text-xl font-semibold">Add-Ons</h2>
               <p className="mb-6 text-gray-600">Select additional services</p>
@@ -31,7 +31,7 @@ export default async function Page() {
                 <p className="font-medium text-blue-700">Select Multiple Add on</p>
                 <p className="text-blue-700">You can able to selected multiple add on</p>
               </div>
-              <AddOnsList defaultCurrency={data?.data?.stripe?.defaultCurrency?.currency} selectedCurrency={selectedCurrency} />
+              <AddOnsList />
             </div>
           </div>
           <div>

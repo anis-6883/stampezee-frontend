@@ -5,7 +5,6 @@ import LocalSwitcherSelector from '@/components/Locale/LocalSwitcherSelector';
 import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
-import { setCurrencyExchangeRates } from '@/features/currency-exchange/currencyExchangeSlice';
 import { RootState } from '@/features/store';
 import { resetState } from '@/features/subscription/subscriptionSlice';
 import useCurrencyExchange from '@/hooks/use-currency-exchange';
@@ -99,10 +98,6 @@ export default function HeaderContent() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    dispatch(setCurrencyExchangeRates(currencyExchanges as []));
-  }, [currencyExchanges, dispatch]);
 
   let fullName = user?.firstName + ' ' + user?.lastName;
 

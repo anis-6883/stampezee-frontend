@@ -7,17 +7,8 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 import { RootState } from '@/features/store';
-import {
-  removeAddOns,
-  resetState,
-  setDefaultCurrency,
-  setPlanChangeCost,
-  setRefundableThreshold,
-  setTaxPercentage,
-  setTaxStatus,
-} from '@/features/subscription/subscriptionSlice';
+import { removeAddOns, resetState } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
-import { AddOn } from '@/types';
 import { hasCheckedPurchaseAlert, isCheckoutButtonDisabled } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -33,16 +24,14 @@ import { Badge } from 'rizzui';
 import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
 import LoginAlert from './LoginAlert';
-import PlanAddOns from './PlanAddons';
 
 export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
-  const { code, subscription, addOns, subTotal, total, tax, activeSubscription, planChangeType } = useSelector(
+  const { code, subscription, addOn, subTotal, total, tax, activeSubscription, planChangeType } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
-  const { currencyExchangeRates } = useSelector((state: RootState) => state.currencyExchangeSlice);
   const [modalState, setModalState] = useState(false);
 
   const [branchDisableModalState, setBranchDisableModalState] = useState(false);
@@ -52,7 +41,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
 
   const { isLoggedIn, user, accessToken } = useSelector((state: RootState) => state.authSlice);
 
-  const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
+  // const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
   const [checkOut, { data: checkOutResponse, isLoading: checkOutLoading, error: checkoutError }] = useCreateCheckOutMutation();
   const { data: profile, isSuccess: profileSuccess, refetch } = useRetailerGetProfileQuery(null, { skip: !isLoggedIn });
 
@@ -66,15 +55,6 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
     setDisableBranchOptions(disableBranchOptions);
     setTotalDisabledBranch(disabledTotalBranch);
   }, [branches, subscription]);
-
-  useEffect(() => {
-    dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
-    dispatch(setTaxPercentage(stripeInfo?.taxCost));
-    dispatch(setTaxStatus(stripeInfo?.taxStatus));
-    dispatch(setRefundableThreshold(stripeInfo?.refundableThreshold));
-    const currencyExchange: any = currencyExchangeRates?.find((item: any) => item?.name === stripeInfo?.defaultCurrency?.currency);
-    dispatch(setDefaultCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
-  }, [currencyExchangeRates, dispatch, stripeInfo]);
 
   useEffect(() => {
     if (checkoutError) {
@@ -105,7 +85,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
               value: { ...user, ...profile?.data },
             })
           );
-          push(routes.privateRoutes.retailer.dashboard);
+          push(routes?.privateRoutes?.retailer?.dashboard);
           setSelectedBranches([]);
         }
       }
@@ -119,13 +99,13 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
       setModalState(true);
       return;
     }
-    if (subscription?.slug === activeSubscription?.slug && addOns?.length > 0) {
-      checkOut({ slugs: addOns?.map((item: AddOn) => item.slug) });
+    if (subscription?.slug === activeSubscription?.slug && addOn.slug) {
+      checkOut({ slug: addOn.slug });
       return;
     }
     if (planChangeType === 'downgrade' && totalDisabledBranch > 0) {
       if (selectedBranches?.length === totalDisabledBranch) {
-        checkOut({ slugs: subSlugs, branchIds: selectedBranches });
+        checkOut({ slug: subscription.slug, branchIds: selectedBranches });
       } else {
         setBranchDisableModalState(true);
       }
@@ -154,25 +134,19 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
         <hr className=" text-lg font-bold" />
         <CouponForm />
 
-        {subscription?.slug === activeSubscription?.slug && addOns?.length > 0 && (
+        {subscription?.slug === activeSubscription?.slug && addOn?.slug && (
           <div>
-            <h2 className="pb-2 text-lg font-medium">Add-Ons</h2>
+            <h2 className="pb-2 text-lg font-medium">Add-On</h2>
             <hr className="p-2 text-lg font-bold" />
-            {addOns?.length > 0 && (
-              <div>
-                {addOns.map((addOn: AddOn, index: number) => (
-                  <div key={index} className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-                    <span className="col-span-6">{addOn.title}</span>
-                    <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
-                      <ImBin />
-                    </button>
-                    <span className="col-span-4 justify-self-end">
-                      {addOn ? parseFloat(addOn?.price?.toFixed(2)).toFixed(2) : 0} {selectedCurrency}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+              <span className="col-span-6">{addOn.title}</span>
+              <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
+                <ImBin />
+              </button>
+              <span className="col-span-4 justify-self-end">
+                {addOn ? parseFloat(addOn?.price?.toFixed(2)).toFixed(2) : 0} {selectedCurrency}
+              </span>
+            </div>
             <div className="mb-2 flex justify-between">
               <span className="font-semibold">Subtotal</span>
               <span className="text-red-500">
@@ -198,8 +172,8 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
             </div>
           </div>
         )}
-        {subscription?.slug !== activeSubscription?.slug && <PlanAddOns stripeInfo={stripeInfo} selectedCurrency={selectedCurrency} />}
-        {subscription?.slug === activeSubscription?.slug && addOns?.length === 0 && (
+        {/* {subscription?.slug !== activeSubscription?.slug && <PlanAddOns stripeInfo={stripeInfo} selectedCurrency={selectedCurrency} />} */}
+        {subscription?.slug === activeSubscription?.slug && !addOn.slug && (
           <div className="py-4 text-center font-medium text-red-500">Your cart is currently empty. Select a plan!</div>
         )}
       </div>
@@ -249,7 +223,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
         disabled={isCheckoutButtonDisabled({
           plan: subscription,
           activePlan: activeSubscription,
-          totalAddOn: addOns?.length,
+          totalAddOn: 2,
           planChangeType,
           total,
           refundableThreshold: stripeInfo?.refundableThreshold,

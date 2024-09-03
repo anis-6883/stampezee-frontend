@@ -4,6 +4,8 @@ import GlobalDrawer from '@/components/drawer-views/container';
 import GlobalModal from '@/components/modal-views/container';
 import NextProgress from '@/components/next-progress';
 import { siteConfig } from '@/config/site.config';
+import { getUserCurrency } from '@/services/currency';
+import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import { getServerSession } from 'next-auth';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
@@ -22,15 +24,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const session = await getServerSession(authOptions);
 
   const locale = await getLocale();
+  const currency = await getUserCurrency();
   const messages = await getMessages();
   const direction = getLangDir(locale);
+  const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
 
   return (
     <html lang={locale} dir={direction} suppressHydrationWarning={true} className={poppins.className}>
       <body suppressHydrationWarning={true}>
         <NextIntlClientProvider messages={messages}>
           <ReduxProvider>
-            <AuthProvider session={session}>
+            <AuthProvider session={session} stripeInfo={data?.data?.stripe} currency={currency}>
               <NextProgress />
               {children}
               <Toaster />

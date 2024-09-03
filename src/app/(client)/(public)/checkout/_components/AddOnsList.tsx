@@ -2,30 +2,26 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { RootState } from '@/features/store';
-import { setAddOns } from '@/features/subscription/subscriptionSlice';
+import { resetSubscription, setAddOns } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
-import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { AddOn, Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
+import { useSession } from 'next-auth/react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function AddOnsList({
-  isMemberShip,
-  defaultCurrency,
-  selectedCurrency,
-}: {
-  isMemberShip?: boolean;
-  defaultCurrency?: any;
-  selectedCurrency?: any;
-}) {
+export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean }) {
   const dispatch = useDispatch();
-  const { data: currencyExchangeRates, loading } = useCurrencyExchange({ page: 1, limit: 20 });
-  const { subscription, addOns: addOnsData } = useSelector((state: RootState) => state.subscriptionSlice);
+  const {
+    subscription,
+    addOn: addOnData,
+    defaultCurrency: defaultCurrencyExchangeRate,
+    currency: selectedCurrencyExchangeRate,
+  } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
+  const { data: session }: any = useSession();
 
-  const defaultCurrencyExchangeRate: any = currencyExchangeRates?.find((item: any) => item?.name === defaultCurrency);
-  const selectedCurrencyExchangeRate: any = currencyExchangeRates?.find((item: any) => item?.name === selectedCurrency);
+  console.log('session', session);
 
   const addOns = data?.data?.reduce((acc: Subscription[], item: Subscription) => {
     if (item.type === 'addon') {
@@ -39,6 +35,7 @@ export default function AddOnsList({
 
   const handleAddOnSelect = (addOn: AddOn) => {
     dispatch(setAddOns(addOn));
+    dispatch(resetSubscription());
   };
 
   return isLoading ? (
@@ -52,15 +49,15 @@ export default function AddOnsList({
     <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
       {addOns?.map((addOn: AddOn, index: number) => (
         <div key={index}>
-          {subscription?.slug !== 'trial' ? (
+          {session?.user?.plan && session?.user?.plan !== 'trial' ? (
             <div
               onClick={() => handleAddOnSelect(addOn)}
               className={`relative cursor-pointer rounded-lg border p-4 ${
-                addOnsData?.find((item: any) => item._id === addOn._id)?.isAddOnsSelect ? '!border-danger !ring-1 ring-danger' : 'border'
+                addOnData?.slug === addOn.slug ? '!border-danger !ring-1 ring-danger' : 'border'
               } hover:border-red-600`}
             >
               <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
-              {!loading ? (
+              {!selectedCurrencyExchangeRate?.name ? (
                 <Skeleton className="w-50 h-8 rounded" />
               ) : (
                 <p className="mb-2 text-xl font-bold">
@@ -80,7 +77,7 @@ export default function AddOnsList({
           ) : (
             <div className={`relative cursor-not-allowed rounded-lg border p-4 opacity-50 `}>
               <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
-              {!loading ? (
+              {!selectedCurrencyExchangeRate?.name ? (
                 <Skeleton className="w-50 h-8 rounded" />
               ) : (
                 <p className="mb-2 text-xl font-bold">

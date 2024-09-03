@@ -5,13 +5,7 @@ import SubscriptionList from '@/app/(client)/(public)/checkout/_components/Subsc
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
-import {
-  setDefaultCurrency,
-  setPlanChangeCost,
-  setSubscription,
-  setTaxPercentage,
-  setTaxStatus,
-} from '@/features/subscription/subscriptionSlice';
+import { setSubscription } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
 import { isCheckoutButtonDisabled } from '@/utils';
@@ -22,20 +16,11 @@ import { useEffect } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const Plans = ({ stripeInfo }: any) => {
+export const Plans = () => {
   const dispatch = useDispatch();
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
-  const { activeSubscription, subscription, addOns, planChangeType, total } = useSelector((state: RootState) => state.subscriptionSlice);
-  const { currencyExchangeRates } = useSelector((state: RootState) => state.currencyExchangeSlice);
-
-  useEffect(() => {
-    dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
-    dispatch(setTaxPercentage(stripeInfo?.taxCost));
-    dispatch(setTaxStatus(stripeInfo?.taxStatus));
-    const currencyExchange: any = currencyExchangeRates?.find((item: any) => item?.name === stripeInfo?.defaultCurrency?.currency);
-    dispatch(setDefaultCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
-  }, [currencyExchangeRates, dispatch, stripeInfo]);
+  const { activeSubscription, subscription, addOn, planChangeType, total } = useSelector((state: RootState) => state.subscriptionSlice);
 
   useEffect(() => {
     if (session?.user?.takeFreeTrial) {
@@ -66,7 +51,7 @@ export const Plans = ({ stripeInfo }: any) => {
               disabled={isCheckoutButtonDisabled({
                 plan: subscription,
                 activePlan: activeSubscription,
-                totalAddOn: addOns?.length,
+                totalAddOn: 2,
                 planChangeType,
                 total,
                 refundableThreshold: 1,
