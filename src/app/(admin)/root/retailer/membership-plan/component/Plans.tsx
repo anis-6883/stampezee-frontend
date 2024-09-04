@@ -5,14 +5,11 @@ import SubscriptionList from '@/app/(client)/(public)/checkout/_components/Subsc
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
-import { setSubscription } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
-import { Subscription } from '@/types';
 import { isCheckoutButtonDisabled } from '@/utils';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,19 +17,10 @@ export const Plans = () => {
   const dispatch = useDispatch();
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
-  const { activeSubscription, subscription, addOn, planChangeType, total } = useSelector((state: RootState) => state.subscriptionSlice);
-
-  useEffect(() => {
-    if (session?.user?.takeFreeTrial) {
-      const pursedSubscription = data?.data?.find((item: Subscription) => {
-        if (item?.type === 'subscription' && item?.slug === session?.user?.plan) {
-          return true;
-        }
-        return false;
-      });
-      dispatch(setSubscription(pursedSubscription));
-    }
-  }, [data, dispatch, session]);
+  const { activeSubscription, subscription, addOn, planChangeType, total, refundableThreshold } = useSelector(
+    (state: RootState) => state.subscriptionSlice
+  );
+  const { isLoggedIn } = useSelector((state: RootState) => state.authSlice);
 
   return (
     <div className="mb-6">
@@ -51,10 +39,12 @@ export const Plans = () => {
               disabled={isCheckoutButtonDisabled({
                 plan: subscription,
                 activePlan: activeSubscription,
-                totalAddOn: 2,
+                addOn,
+                isLoggedIn,
+                hasPurchasePlan: session?.user?.plan ? true : false,
                 planChangeType,
                 total,
-                refundableThreshold: 1,
+                refundableThreshold,
               })}
               className="text-white"
               color="danger"

@@ -20,16 +20,25 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
 
   return (
     <div>
-      <h2 className="pb-2 text-lg font-medium">{addOn.slug ? 'Plan & Add-Ons' : 'Plan'}</h2>
+      <h2 className="pb-2 text-lg font-medium">{addOn.slug ? 'Add-On' : 'Plan'}</h2>
       <hr className="p-2 text-lg font-bold" />
-      <div className="mb-2 flex justify-between">
-        <span>{subscription?.title}</span>
-        <span className="text-red-500">
-          {subscription?.price ? subscription?.price?.toFixed(2) : 0} {selectedCurrency}
-        </span>
-      </div>
+      {addOn.slug ? (
+        <div className="mb-2 flex justify-between">
+          <span>{addOn?.title}</span>
+          <span className="text-red-500">
+            {addOn?.price ? addOn?.price?.toFixed(2) : 0} {selectedCurrency}
+          </span>
+        </div>
+      ) : (
+        <div className="mb-2 flex justify-between">
+          <span>{subscription?.title}</span>
+          <span className="text-red-500">
+            {subscription?.price ? subscription?.price?.toFixed(2) : 0} {selectedCurrency}
+          </span>
+        </div>
+      )}
 
-      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && (
+      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && !addOn.slug && (
         <div className="mb-2 flex justify-between">
           <span>Remaining Amount</span>
           <span className="text-red-500">
@@ -38,16 +47,6 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </div>
       )}
 
-      <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-        <span className="col-span-6">{addOn.title}</span>
-        <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
-          <ImBin />
-        </button>
-        <span className="col-span-4 justify-self-end">
-          {addOn ? parseFloat(addOn?.price?.toFixed(2)).toFixed(2) : 0} {selectedCurrency}
-        </span>
-      </div>
-
       <div className="mb-2 flex justify-between">
         <span className="font-semibold">Subtotal</span>
         <span className="text-red-500">
@@ -55,7 +54,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </span>
       </div>
       <hr className="p-2 text-lg font-bold" />
-      {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && total < 0 && (
+      {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && (
         <div className="mb-2 flex justify-between">
           <span>
             <span className="font-semibold">{stripeInfo?.taxTitle}</span> ({stripeInfo?.taxCost}%)
@@ -66,7 +65,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </div>
       )}
 
-      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && (
+      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && !addOn.slug && (
         <div className="mb-2 flex justify-between">
           <span className="font-semibold">Plan Change Cost</span>
           <span className="text-red-500">

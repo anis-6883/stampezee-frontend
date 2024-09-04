@@ -1,5 +1,5 @@
 import { activeSubscription } from '@/features/subscription/subscriptionSlice';
-import { Subscription } from '@/types';
+import { AddOn, Subscription } from '@/types';
 import moment from 'moment';
 
 export const countDaysLeft = (date: Date) => {
@@ -40,34 +40,46 @@ export const checkedMinPurchaseAmount = (total: number, minPurchaseAmount: numbe
 export const isCheckoutButtonDisabled = ({
   plan,
   activePlan,
-  totalAddOn,
+  addOn,
+  isLoggedIn,
+  hasPurchasePlan,
   planChangeType,
   total,
   refundableThreshold,
 }: {
   plan: Subscription;
+  isLoggedIn: boolean;
+  hasPurchasePlan: boolean;
   activePlan: activeSubscription;
-  totalAddOn: number;
+  addOn: AddOn;
   planChangeType: string;
   total: number;
   refundableThreshold: number;
 }) => {
-  if (!plan?.slug || activePlan?.slug === plan?.slug) {
-    if (plan?.slug && plan?.slug !== 'trial' && plan?.slug === activePlan?.slug && totalAddOn > 0) {
-      return false;
-    }
-    return true;
-  }
-  if (Math.abs(total) < refundableThreshold && activePlan?.slug && activePlan?.slug !== 'trial') {
-    return true;
-  }
-  if (Math.abs(total) < refundableThreshold && !planChangeType && plan?.slug !== 'trial') {
-    return true;
-  }
-  // if (planChangeType === 'downgrade' && total > 1) {
+  // if (!plan?.slug || activePlan?.slug === plan?.slug) {
+  //   if (plan?.slug && plan?.slug !== 'trial' && plan?.slug === activePlan?.slug) {
+  //     return false;
+  //   }
   //   return true;
   // }
-  return false;
+  if (isLoggedIn) {
+    if (hasPurchasePlan) {
+      if (plan?.slug === activePlan?.slug && !addOn?.slug) {
+        return true;
+      }
+      if (Math.abs(total) < refundableThreshold && activePlan?.slug && activePlan?.slug !== 'trial') {
+        return true;
+      }
+      if (Math.abs(total) < refundableThreshold && !planChangeType && plan?.slug !== 'trial') {
+        return true;
+      }
+      return false;
+    } else {
+      return !plan?.slug && !addOn?.slug;
+    }
+  } else {
+    return !plan?.slug;
+  }
 };
 
 export const isCheckCouponDisabled = ({
@@ -75,18 +87,26 @@ export const isCheckCouponDisabled = ({
   activeSubscription,
   coupon,
   isLoggedIn,
+  addOn,
   planChangeType,
 }: {
   subscription: Subscription;
   activeSubscription: activeSubscription;
   coupon: any;
+  addOn: AddOn;
   isLoggedIn: boolean;
   planChangeType: string;
 }) => {
   if (!isLoggedIn) {
     return true;
   }
-  if (activeSubscription?.slug == subscription?.slug || subscription?.slug === 'trial' || coupon || planChangeType === 'downgrade') {
+  if (
+    activeSubscription?.slug == subscription?.slug ||
+    subscription?.slug === 'trial' ||
+    coupon ||
+    planChangeType === 'downgrade' ||
+    addOn?.slug
+  ) {
     return true;
   }
 

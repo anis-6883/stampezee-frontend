@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 
 const CouponForm = () => {
   const dispatch = useDispatch();
-  const { coupon, total, subscription, activeSubscription, planChangeType } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { coupon, addOn, subscription, activeSubscription, planChangeType } = useSelector((state: RootState) => state.subscriptionSlice);
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
   const [createCoupon, { data: couponResponse, error: couponError, isSuccess: couponSuccess }] = useCreateCouponMutation();
   const { isLoggedIn } = useSelector((state: RootState) => state?.authSlice);
@@ -72,7 +72,7 @@ const CouponForm = () => {
           <Form className="grid grid-cols-12 justify-between gap-x-2">
             <div className="col-span-7">
               <InputField
-                disabled={isCheckCouponDisabled({ activeSubscription, subscription, isLoggedIn, coupon, planChangeType })}
+                disabled={isCheckCouponDisabled({ activeSubscription, subscription, addOn, isLoggedIn, coupon, planChangeType })}
                 label=""
                 placeholder="X1Y2Z3"
                 required={false}
@@ -81,7 +81,7 @@ const CouponForm = () => {
             </div>
             <div className="col-span-5">
               <Button
-                disabled={isCheckCouponDisabled({ activeSubscription, subscription, isLoggedIn, coupon, planChangeType })}
+                disabled={isCheckCouponDisabled({ activeSubscription, subscription, isLoggedIn, coupon, planChangeType, addOn })}
                 color="danger"
                 text="Apply"
                 className="w-full"

@@ -2,14 +2,7 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { RootState } from '@/features/store';
-import {
-  activeSubscription,
-  downgradePlan,
-  resetAddOns,
-  setActiveSubscription,
-  setSubscription,
-  upgradePlan,
-} from '@/features/subscription/subscriptionSlice';
+import { downgradePlan, resetAddOns, setSubscription, upgradePlan } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
@@ -27,8 +20,6 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
   const { data: session }: any = useSession();
   const {
     subscription,
-    downgradeRefund,
-    activeSubscription,
     planChangeCost,
     defaultCurrency: defaultCurrencyExchangeRate,
     currency: selectedCurrencyExchangeRate,
@@ -69,42 +60,8 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
       }, []);
     }
     setPlans(transformPlans);
-    const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
-    let updateActiveSubscription = {};
-    if (activePlan) {
-      updateActiveSubscription = {
-        ...activePlan,
-        price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, defaultCurrencyExchangeRate, price: activePlan?.price }),
-        takeFreeTrial: session?.user?.takeFreeTrial,
-        planStartAt: session?.user?.planStartAt,
-        planValidAt: session?.user?.planValidAt,
-        planPayment: session?.user?.planPayment,
-      };
-    } else {
-      updateActiveSubscription = {
-        ...activeSubscription,
-        price: calculateCurrencyExchangeRate({
-          selectedCurrencyExchangeRate,
-          defaultCurrencyExchangeRate,
-          price: activeSubscription?.price,
-        }),
-        takeFreeTrial: session?.user?.takeFreeTrial,
-        planStartAt: session?.user?.planStartAt,
-        planValidAt: session?.user?.planValidAt,
-        planPayment: session?.user?.planPayment,
-      };
-    }
-    dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    data?.data,
-    dispatch,
-    session?.user,
-    session?.user?.plan,
-    session?.user?.takeFreeTrial,
-    selectedCurrencyExchangeRate,
-    defaultCurrencyExchangeRate,
-  ]);
+  }, [data?.data, dispatch, selectedCurrencyExchangeRate, defaultCurrencyExchangeRate]);
 
   const handleSubscription = (plan: Subscription) => {
     const currentPlanIndex = packages.indexOf(session?.user?.plan);
@@ -126,19 +83,6 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
     }
     dispatch(resetAddOns());
   };
-
-  useEffect(() => {
-    if (session?.user?.takeFreeTrial && !subscription?.slug) {
-      const pursedSubscription = data?.data?.find((item: Subscription) => {
-        if (item?.type === 'subscription' && item?.slug === session?.user?.plan) {
-          return true;
-        }
-        return false;
-      });
-      dispatch(setSubscription(pursedSubscription));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, session?.user?.plan, session?.user?.takeFreeTrial]);
 
   return (
     <div>

@@ -21,8 +21,6 @@ export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean })
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
 
-  console.log('session', session);
-
   const addOns = data?.data?.reduce((acc: Subscription[], item: Subscription) => {
     if (item.type === 'addon') {
       acc.push({
