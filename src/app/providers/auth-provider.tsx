@@ -10,6 +10,7 @@ import {
   setDefaultCurrency,
   setPlanChangeCost,
   setRefundableThreshold,
+  setRemainingBalance,
   setSubscription,
   setTaxPercentage,
   setTaxStatus,
@@ -49,6 +50,7 @@ export default function AuthProvider({
     dispatch(setCurrencyExchangeRates(currencyExchanges as []));
     dispatch(setDefaultCurrency({ name: defaultCurrencyExchange?.name, exchangeRate: defaultCurrencyExchange?.exchangeRate }));
     dispatch(setCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
+    dispatch(setRemainingBalance());
 
     // Active Subscription update into redux state
     const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
@@ -80,6 +82,7 @@ export default function AuthProvider({
         planPayment: session?.user?.planPayment,
       };
     }
+    console.log('updateActiveSubscription order', updateActiveSubscription);
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
 
     // subscription update into redux state
@@ -93,7 +96,7 @@ export default function AuthProvider({
       dispatch(setSubscription(pursedSubscription));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currency, currencyExchanges, data?.data, dispatch, session?.user, stripeInfo]);
+  }, [currencyExchanges, data?.data, dispatch, session?.user, stripeInfo]);
 
   // User data and token update into redux state
   useEffect(() => {

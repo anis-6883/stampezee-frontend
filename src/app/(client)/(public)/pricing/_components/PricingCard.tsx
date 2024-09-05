@@ -4,7 +4,7 @@ import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
-import { setSubscription } from '@/features/subscription/subscriptionSlice';
+import { resetAddOns, setSubscription } from '@/features/subscription/subscriptionSlice';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -66,7 +66,15 @@ export default function PricingCard({ item }: { item: any }) {
           <>
             {' '}
             <Link href={routes.privateRoutes.checkout}>
-              <Button onClick={() => dispatch(setSubscription(item))} color="danger" text="Get started" className="w-full" />
+              <Button
+                onClick={() => {
+                  dispatch(setSubscription(item));
+                  dispatch(resetAddOns());
+                }}
+                color="danger"
+                text="Get started"
+                className="w-full"
+              />
             </Link>
           </>
         )}

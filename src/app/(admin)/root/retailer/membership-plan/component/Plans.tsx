@@ -25,7 +25,11 @@ export const Plans = () => {
   return (
     <div className="mb-6">
       <div className="rounded-md p-8 shadow-md">
-        <h2 className="mb-4 text-xl font-semibold">Select Plans</h2>
+        {session?.user?.plan && session?.user?.plan !== 'trial' ? (
+          <h2 className="mb-4 text-xl font-semibold">Switch a Plan</h2>
+        ) : (
+          <h2 className="mb-4 text-xl font-semibold">Select a Plan</h2>
+        )}
         <SubscriptionList isMemberShip={true} />
 
         <hr className="my-6" />

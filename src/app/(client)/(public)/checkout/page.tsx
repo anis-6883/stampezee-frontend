@@ -1,6 +1,8 @@
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth-options';
 import { metaObject } from '@/config/site.config';
 import { getUserCurrency } from '@/services/currency';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
+import { getServerSession } from 'next-auth';
 import AddOnsList from './_components/AddOnsList';
 import OrderBalance from './_components/OrderBalance';
 import OrderSummary from './_components/OrderSummary';
@@ -13,6 +15,7 @@ export const metadata = {
 export default async function Page() {
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
   const selectedCurrency = await getUserCurrency();
+  const session: any = await getServerSession(authOptions);
   // const { data: currencyExchangeRates } = await axiosBackendUrl.get(`/api/web/currency-exchange/rates?currency=${selectedCurrency}`);
 
   return (
@@ -22,7 +25,11 @@ export default async function Page() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <h2 className="mb-4 text-xl font-semibold">Plans</h2>
-            <p className="mb-6 text-gray-600">Select a subscription plan</p>
+            {session?.user?.plan && session?.user?.plan !== 'trial' ? (
+              <p className="mb-6 text-gray-600">Switch a subscription plan</p>
+            ) : (
+              <p className="mb-6 text-gray-600">Select a subscription plan</p>
+            )}
             <SubscriptionList />
             <div className="mt-6">
               <h2 className="mb-4 text-xl font-semibold">Add-Ons</h2>

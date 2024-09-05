@@ -17,6 +17,7 @@ import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { CiEdit } from 'react-icons/ci';
 import { MdBlock } from 'react-icons/md';
+import { RiRefund2Line } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import BranchDisableModal from './BranchDisableModal';
@@ -28,7 +29,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
-  const { code, subscription, addOn, subTotal, total, tax, activeSubscription, planChangeType } = useSelector(
+  const { code, subscription, addOn, downgradeRefund, total, activeSubscription, planChangeType } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
   const [modalState, setModalState] = useState(false);
@@ -177,15 +178,16 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
           <div className="py-4 text-center font-medium text-red-500">Your cart is currently empty. Select a plan!</div>
         )}
       </div>
-      {/* 
-      {total > 0 && subscription?.slug !== activeSubscription?.slug && (
+
+      {downgradeRefund > 0 && subscription?.slug !== activeSubscription?.slug && (
         <div className="mt-3 rounded-lg border border-danger p-3">
           <h2 className="flex items-center gap-x-1 text-sm font-semibold">
             <RiRefund2Line className="text-xl" />
-            You will get back <span className="text-lg font-bold text-danger">{Math.abs(total).toFixed(2)}</span> {selectedCurrency}!
+            You will get back <span className="text-lg font-bold text-danger">{Math.abs(downgradeRefund).toFixed(2)}</span>{' '}
+            {selectedCurrency}!
           </h2>
         </div>
-      )} */}
+      )}
       {/* 
       {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold: stripeInfo?.refundableThreshold }) && (
         <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
@@ -196,7 +198,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
         </div>
       )} */}
 
-      {selectedBranches?.length > 0 && (
+      {selectedBranches?.length > 0 && downgradeRefund > 0 && (
         <div className="mt-3 rounded-lg border border-danger p-3">
           <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">
             <MdBlock className="text-xl" /> Disable Branch/s:
@@ -231,7 +233,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
           refundableThreshold: stripeInfo?.refundableThreshold,
         })}
         color="danger"
-        text="Checkout Confirm"
+        text="Confirm Checkout"
         className="mt-5 w-full"
         isSubmitting={checkOutLoading}
         onClick={handleCheckOut}

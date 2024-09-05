@@ -26,6 +26,13 @@ export default function StripeSettingsForm() {
         required={false}
         prefix={<RiKey2Line className="text-xl" />}
       />
+      <InputPassword
+        name="stripe.stripeWebhookSecretKey"
+        label="Stripe Webhook Secret Key"
+        placeholder="*******"
+        required={false}
+        prefix={<RiKey2Line className="text-xl" />}
+      />
       <div className="grid grid-cols-1 gap-x-4 gap-y-6 md:grid-cols-2">
         <InputField
           type="number"

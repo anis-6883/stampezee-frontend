@@ -5,7 +5,7 @@ import DateRangePicker from '@/components/Formik/DateRange';
 import InputField from '@/components/Formik/InputField';
 import SelectField from '@/components/Formik/SelectField';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useCreateCouponMutation, useUpdateCouponMutation } from '@/features/super-admin/coupon/couponApi';
+import { useCreateCouponAdminMutation, useUpdateCouponMutation } from '@/features/super-admin/coupon/couponApi';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
@@ -29,7 +29,7 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [createCoupon, { isSuccess: createSuccess, error: createError }] = useCreateCouponMutation();
+  const [createCoupon, { isSuccess: createSuccess, error: createError }] = useCreateCouponAdminMutation();
   const [updateCoupon, { isSuccess: updateSuccess, error: updateError }] = useUpdateCouponMutation();
 
   const initialValues = {

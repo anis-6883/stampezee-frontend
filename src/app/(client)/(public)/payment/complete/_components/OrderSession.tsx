@@ -47,6 +47,7 @@ export default function OrderSession() {
           planValidAt: session?.user?.planValidAt,
         };
       }
+      console.log('updateActiveSubscription order', updateActiveSubscription);
       dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
       dispatch(setRemainingBalance());
     }

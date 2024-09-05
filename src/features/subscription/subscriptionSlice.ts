@@ -68,24 +68,6 @@ export const roundToTwoDecimals = (value: number) => {
   return parseFloat(value.toFixed(2));
 };
 
-const calculateAddOnsPrice = (addOns: AddOn[]) => {
-  return roundToTwoDecimals(addOns.reduce((total: number, addOn: AddOn) => total + addOn.price, 0));
-};
-
-const calculateSubTotalAmount = (planPrice: number, addOnsPrice: number) => {
-  return roundToTwoDecimals(planPrice + addOnsPrice);
-};
-
-const calculateTotalAmount = (
-  remainingBalance: number,
-  subTotal: number,
-  tax: number,
-  planSwitchCharge: number,
-  couponDiscount: number
-) => {
-  return roundToTwoDecimals(couponDiscount - (subTotal + tax + planSwitchCharge));
-};
-
 const calculateTaxAmount = (subTotal: number, taxPercentage: number) => {
   return roundToTwoDecimals((subTotal * taxPercentage) / 100);
 };
@@ -128,32 +110,33 @@ const calculateUpgradeCost = (state: SubscriptionState, targetPlan: Subscription
 
 const calculateDowngradeRefund = (state: SubscriptionState, targetPlan: Subscription) => {
   updateBalance(state);
-  return roundToTwoDecimals(state.remainingBalance - targetPlan.price);
+  return roundToTwoDecimals(state.remainingBalance - (targetPlan.price + state.tax + state.planChangeCost));
 };
 
-const calculateSubTotal = (state: SubscriptionState, planType?: string) => {
+const calculateSubTotal = (state: SubscriptionState) => {
   const planPrice = state.subscription?.price || 0;
   const addOnsPrice = state?.addOn?.price;
   const planSwitchCharge = state?.planChangeCost || 0;
   const couponDiscount = state.couponDiscount || 0;
   const remainingBalance = state.remainingBalance || 0;
-  let subTotal = 0;
 
   // when select a addOn
   if (state.subscriptionType === 'addOn') {
     state.subTotal = addOnsPrice;
     calculateTax(state);
     state.total = state.subTotal + state.tax;
+    state.downgradeRefund = 0;
   }
 
   // when select a plan
   if (state.subscriptionType === 'plan') {
     // upgrade or downgrade plan
-    if (planType === 'upgrade') {
+    if (state.planChangeType === 'upgrade') {
       state.subTotal = Math.abs(roundToTwoDecimals(remainingBalance - planPrice));
+      state.downgradeRefund = 0;
       calculateTax(state);
       state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge - couponDiscount);
-    } else if (planType === 'downgrade') {
+    } else if (state.planChangeType === 'downgrade') {
       state.subTotal = Math.abs(roundToTwoDecimals(remainingBalance - planPrice));
       calculateTax(state);
       state.total = roundToTwoDecimals(state.subTotal - state.tax - planSwitchCharge);
@@ -161,6 +144,7 @@ const calculateSubTotal = (state: SubscriptionState, planType?: string) => {
     // when purchase a plan first time
     else {
       state.subTotal = planPrice;
+      state.downgradeRefund = 0;
       calculateTax(state);
       state.total =
         state?.subscription?.slug === 'trial'
@@ -168,38 +152,6 @@ const calculateSubTotal = (state: SubscriptionState, planType?: string) => {
           : roundToTwoDecimals(remainingBalance - (planPrice + state.tax - couponDiscount));
     }
   }
-
-  // if (
-  //   planType === 'upgrade' ||
-  //   planType === 'downgrade' ||
-  //   (state?.activeSubscription?.slug && state?.activeSubscription?.slug !== 'trial')
-  // ) {
-  //   // when buy just addons
-  //   if (state?.addOn.slug) {
-  //     state.subTotal = addOnsPrice;
-  //     calculateTax(state);
-  //     state.total = state.subTotal + state.tax - couponDiscount;
-  //   }
-  //   // upgrade or downgrade
-  //   else {
-  //     subTotal = calculateSubTotalAmount(planPrice, addOnsPrice);
-  //     state.subTotal = roundToTwoDecimals(remainingBalance - subTotal);
-  //     calculateTax(state);
-  //     // do not add tax when get refund
-  //     state.total = calculateTotalAmount(remainingBalance, subTotal, state.subTotal > 0 ? 0 : state.tax, planSwitchCharge, couponDiscount);
-  //   }
-  // }
-  // // when pick plans and addons at first time
-  // else {
-  //   const price = state.subscriptionType === 'plan' ? planPrice : addOnsPrice;
-  //   state.subTotal = price;
-
-  //   calculateTax(state);
-  //   state.total =
-  //     state?.subscription?.slug === 'trial'
-  //       ? roundToTwoDecimals(remainingBalance - (price - couponDiscount))
-  //       : roundToTwoDecimals(remainingBalance - (price + state.tax - couponDiscount));
-  // }
 };
 
 // Redux slice
@@ -253,11 +205,6 @@ const subscriptionSlice = createSlice({
       state.taxStatus = action.payload;
     },
     setAddOns: (state, action: PayloadAction<AddOn>) => {
-      // const newAddOn: any = state.addOns.find((item: any) => item._id === action.payload._id);
-      // state.addOns = newAddOn
-      //   ? state.addOns.filter((item: any) => item._id !== newAddOn._id)
-      //   : [...state.addOns, { ...action.payload, isAddOnsSelect: true }];
-
       if (state.addOn.slug === action.payload.slug) {
         state.addOn = { _id: '', title: '', price: 0, descriptions: [], slug: '' };
       } else {
@@ -271,12 +218,6 @@ const subscriptionSlice = createSlice({
       updateBalance(state);
     },
     setCurrency: (state, action: PayloadAction<Currency>) => {
-      state.subTotal = calculateCurrencyExchangeRate({
-        selectedCurrencyExchangeRate: action.payload,
-        defaultCurrencyExchangeRate: state.currency,
-        price: state.subTotal,
-      });
-
       state.subscription = {
         ...state.subscription,
         price: calculateCurrencyExchangeRate({
@@ -289,6 +230,11 @@ const subscriptionSlice = createSlice({
         selectedCurrencyExchangeRate: action.payload,
         defaultCurrencyExchangeRate: state.currency,
         price: state.tax,
+      });
+      state.subTotal = calculateCurrencyExchangeRate({
+        selectedCurrencyExchangeRate: action.payload,
+        defaultCurrencyExchangeRate: state.currency,
+        price: state.subTotal,
       });
       state.total = calculateCurrencyExchangeRate({
         selectedCurrencyExchangeRate: action.payload,
@@ -320,13 +266,6 @@ const subscriptionSlice = createSlice({
     applyCoupon: (state, action) => {
       state.coupon = action.payload;
       calculateDiscount(state);
-
-      if (state.planChangeType === 'upgrade') {
-        calculateSubTotal(state, 'upgrade');
-      }
-      if (state.planChangeType === 'downgrade') {
-        calculateSubTotal(state, 'downgrade');
-      }
       calculateSubTotal(state);
     },
     removeCoupon: (state) => {
@@ -350,10 +289,12 @@ const subscriptionSlice = createSlice({
       } else {
         state.subscription = action.payload;
       }
-      calculateSubTotal(state, 'upgrade');
+      if (state.coupon) {
+        calculateDiscount(state);
+      }
+      calculateSubTotal(state);
     },
     downgradePlan: (state, action: PayloadAction<Subscription>) => {
-      state.downgradeRefund = calculateDowngradeRefund(state, action.payload);
       state.planChangeType = 'downgrade';
       state.subscriptionType = 'plan';
       if (state?.subscription?.slug === action?.payload?.slug) {
@@ -365,7 +306,8 @@ const subscriptionSlice = createSlice({
       } else {
         state.subscription = action.payload;
       }
-      calculateSubTotal(state, 'downgrade');
+      calculateSubTotal(state);
+      state.downgradeRefund = calculateDowngradeRefund(state, action.payload);
     },
     resetState: (state) => {
       const { planChangeCost, taxPercentage, taxStatus } = state;
