@@ -49,7 +49,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuUsers />,
     },
     {
-      name: 'Currency Exchange',
+      name: 'Currency Exchange Rate',
       href: routes.privateRoutes.superAdmin.currencyExchange?.home,
       icon: <MdOutlineCurrencyExchange />,
     },

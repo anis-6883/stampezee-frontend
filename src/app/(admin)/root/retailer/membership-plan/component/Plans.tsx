@@ -5,11 +5,14 @@ import SubscriptionList from '@/app/(client)/(public)/checkout/_components/Subsc
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
+import { activeSubscription, setActiveSubscription, setSubscription } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
-import { isCheckoutButtonDisabled } from '@/utils';
+import { Subscription } from '@/types';
+import { calculateCurrencyExchangeRate, isCheckoutButtonDisabled } from '@/utils';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,10 +20,55 @@ export const Plans = () => {
   const dispatch = useDispatch();
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
-  const { activeSubscription, subscription, addOn, planChangeType, total, refundableThreshold } = useSelector(
+  const { activeSubscription, subscription, addOn, planChangeType, total, refundableThreshold, currency, defaultCurrency } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
   const { isLoggedIn } = useSelector((state: RootState) => state.authSlice);
+
+  useEffect(() => {
+    const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
+    let updateActiveSubscription = {};
+    if (activePlan) {
+      updateActiveSubscription = {
+        ...activePlan,
+        price: calculateCurrencyExchangeRate({
+          selectedCurrencyExchangeRate: currency,
+          defaultCurrencyExchangeRate: defaultCurrency,
+          price: activePlan?.price,
+        }),
+        takeFreeTrial: session?.user?.takeFreeTrial,
+        planStartAt: session?.user?.planStartAt,
+        planValidAt: session?.user?.planValidAt,
+        planPayment: session?.user?.planPayment,
+      };
+    } else {
+      updateActiveSubscription = {
+        ...activeSubscription,
+        price: calculateCurrencyExchangeRate({
+          selectedCurrencyExchangeRate: currency,
+          defaultCurrencyExchangeRate: defaultCurrency,
+          price: activeSubscription?.price,
+        }),
+        takeFreeTrial: session?.user?.takeFreeTrial,
+        planStartAt: session?.user?.planStartAt,
+        planValidAt: session?.user?.planValidAt,
+        planPayment: session?.user?.planPayment,
+      };
+    }
+    dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
+
+    // subscription update into redux state
+    if (session?.user?.takeFreeTrial) {
+      const pursedSubscription = data?.data?.find((item: Subscription) => {
+        if (item?.type === 'subscription' && item?.slug === session?.user?.plan) {
+          return true;
+        }
+        return false;
+      });
+      dispatch(setSubscription(pursedSubscription));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.data, dispatch, session?.user]);
 
   return (
     <div className="mb-6">

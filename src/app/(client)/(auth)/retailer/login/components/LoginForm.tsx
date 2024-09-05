@@ -8,6 +8,11 @@ import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerLoginMutation } from '@/features/auth/authApi';
 import { userLoggedIn } from '@/features/auth/authSlice';
+import { RootState } from '@/features/store';
+import { activeSubscription, setActiveSubscription, setRemainingBalance, setSubscription } from '@/features/subscription/subscriptionSlice';
+import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import { Subscription } from '@/types';
+import { calculateCurrencyExchangeRate } from '@/utils';
 import { Form, Formik } from 'formik';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -15,12 +20,14 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { SlEnvolope, SlLock } from 'react-icons/sl';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 export default function LoginForm() {
   const { replace } = useRouter();
   const dispatch = useDispatch();
+  const { activeSubscription, currency, defaultCurrency } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('callback');
@@ -38,6 +45,8 @@ export default function LoginForm() {
     password: Yup.string().required('Required!'),
   });
 
+  console.log('loginResponse?.data', data?.data);
+
   useEffect(() => {
     if (loginError) {
       setIsSubmitting(false);
@@ -48,6 +57,37 @@ export default function LoginForm() {
 
     if (loginSuccess) {
       dispatch(userLoggedIn(loginResponse?.data));
+
+      const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === loginResponse?.data?.plan);
+
+      let updateActiveSubscription: any = {};
+      if (activePlan) {
+        updateActiveSubscription = {
+          ...activePlan,
+          price: calculateCurrencyExchangeRate({
+            selectedCurrencyExchangeRate: currency,
+            defaultCurrencyExchangeRate: defaultCurrency,
+            price: activePlan?.price,
+          }),
+          takeFreeTrial: loginResponse?.data.takeFreeTrial,
+          planStartAt: loginResponse?.data.planStartAt,
+          planValidAt: loginResponse?.data.planValidAt,
+        };
+      } else {
+        updateActiveSubscription = {
+          ...activeSubscription,
+          takeFreeTrial: loginResponse?.data.takeFreeTrial,
+          planStartAt: loginResponse?.data.planStartAt,
+          planValidAt: loginResponse?.data.planValidAt,
+        };
+      }
+
+      if (loginResponse?.data.takeFreeTrial) {
+        dispatch(setSubscription(activePlan));
+      }
+
+      dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
+      dispatch(setRemainingBalance());
 
       signIn('credentials', {
         userData: JSON.stringify(loginResponse?.data),
@@ -69,6 +109,7 @@ export default function LoginForm() {
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, loginError, loginResponse, loginSuccess, replace, searchQuery]);
 
   const handleSubmit = (values: { email: string; password: string }) => {

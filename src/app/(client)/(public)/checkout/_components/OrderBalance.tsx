@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 const OrderBalance = () => {
   const { data: session }: any = useSession();
-  const { activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { activeSubscription, currency } = useSelector((state: RootState) => state.subscriptionSlice);
   const remainingAmount =
     activeSubscription?.slug && activeSubscription?.slug !== 'trial'
       ? roundToTwoDecimals(
@@ -25,11 +25,15 @@ const OrderBalance = () => {
         <div className="mb-5 rounded-lg border p-4">
           <div className="mb-2 flex justify-between">
             <span>Current Amount</span>
-            <span className="text-red-500">{remainingAmount.toFixed(2)} CAD</span>
+            <span className="text-red-500">
+              {remainingAmount.toFixed(2)} {currency?.name}
+            </span>
           </div>
           <div className="mb-2 flex justify-between">
             <span>Usage Amount</span>
-            <span className="text-red-500">{Math.abs(remainingAmount - session?.user?.planPayment).toFixed(2)} CAD</span>
+            <span className="text-red-500">
+              {Math.abs(remainingAmount - session?.user?.planPayment).toFixed(2)} {currency?.name}
+            </span>
           </div>
         </div>
       </div>

@@ -82,7 +82,6 @@ export default function AuthProvider({
         planPayment: session?.user?.planPayment,
       };
     }
-    console.log('updateActiveSubscription order', updateActiveSubscription);
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
 
     // subscription update into redux state
