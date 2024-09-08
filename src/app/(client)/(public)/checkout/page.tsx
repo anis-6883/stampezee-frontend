@@ -33,11 +33,11 @@ export default async function Page() {
             <SubscriptionList />
             <div className="mt-6">
               <h2 className="mb-4 text-xl font-semibold">Add-Ons</h2>
-              <p className="mb-6 text-gray-600">Select additional services</p>
-              <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
+              <p className="mb-6 text-gray-600">Select additional service</p>
+              {/* <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
                 <p className="font-medium text-blue-700">Select Multiple Add on</p>
                 <p className="text-blue-700">You can able to selected multiple add on</p>
-              </div>
+              </div> */}
               <AddOnsList />
             </div>
           </div>

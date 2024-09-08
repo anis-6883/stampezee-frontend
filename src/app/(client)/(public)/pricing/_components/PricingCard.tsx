@@ -2,9 +2,11 @@
 
 import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SUBSCRIPTIONS } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
-import { resetAddOns, setSubscription } from '@/features/subscription/subscriptionSlice';
+import { downgradePlan, resetAddOns, setSubscription, upgradePlan } from '@/features/subscription/subscriptionSlice';
+import { Subscription } from '@/types';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -16,6 +18,27 @@ export default function PricingCard({ item }: { item: any }) {
   const dispatch = useDispatch();
   const { currency } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: session }: any = useSession();
+
+  const handleSubscription = (plan: Subscription) => {
+    const currentPlanIndex = SUBSCRIPTIONS.indexOf(session?.user?.plan);
+    const targetPlanIndex = SUBSCRIPTIONS.indexOf(plan?.slug);
+
+    if (plan.slug === 'trial') {
+      dispatch(resetAddOns());
+      dispatch(setSubscription(plan));
+      return;
+    }
+    if (session?.user?.plan && session?.user?.plan !== 'trial') {
+      if (targetPlanIndex > currentPlanIndex) {
+        dispatch(upgradePlan(plan));
+      } else if (targetPlanIndex < currentPlanIndex) {
+        dispatch(downgradePlan(plan));
+      }
+    } else {
+      dispatch(setSubscription(plan));
+    }
+    dispatch(resetAddOns());
+  };
 
   return (
     <div className="relative mx-auto flex h-full w-full max-w-lg flex-col justify-between rounded-lg border-gray-100 bg-white p-3 text-gray-900 opacity-80 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8">
@@ -66,15 +89,7 @@ export default function PricingCard({ item }: { item: any }) {
           <>
             {' '}
             <Link href={routes.privateRoutes.checkout}>
-              <Button
-                onClick={() => {
-                  dispatch(setSubscription(item));
-                  dispatch(resetAddOns());
-                }}
-                color="danger"
-                text="Get started"
-                className="w-full"
-              />
+              <Button onClick={() => handleSubscription(item)} color="danger" text="Get started" className="w-full" />
             </Link>
           </>
         )}

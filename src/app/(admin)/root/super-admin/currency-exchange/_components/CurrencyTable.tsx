@@ -122,7 +122,12 @@ export default function CurrencyTable({ offset }: { offset: number }) {
         currencyData={data?.data?.docs?.map((item: any) => item?.name)}
       />
       <div className="mb-4 flex justify-between">
-        <StatusIndicator />
+        <div className="flex gap-x-3">
+          <StatusIndicator />
+          <div className="flex items-center justify-center rounded-md border border-solid px-3">
+            <span className="font-bold"> Base Currency : CAD</span>
+          </div>
+        </div>
         <div className="flex">
           <Button color="danger" onClick={() => setCreateState(true)} text="New Currency" preIcon={<HiPlus className="text-base" />} />
           <Button

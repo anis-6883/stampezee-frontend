@@ -75,9 +75,7 @@ export default function RegisterForm() {
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string()
-      .required('Required!')
-      .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, 'No spaces allowed'),
+    storeName: Yup.string().required('Required!'),
     firstName: Yup.string().required('Required!'),
     lastName: Yup.string(),
     email: Yup.string()

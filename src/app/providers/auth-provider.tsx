@@ -50,7 +50,6 @@ export default function AuthProvider({
     dispatch(setCurrencyExchangeRates(currencyExchanges as []));
     dispatch(setDefaultCurrency({ name: defaultCurrencyExchange?.name, exchangeRate: defaultCurrencyExchange?.exchangeRate }));
     dispatch(setCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
-    dispatch(setRemainingBalance());
 
     // Active Subscription update into redux state
     const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
@@ -94,6 +93,7 @@ export default function AuthProvider({
       });
       dispatch(setSubscription(pursedSubscription));
     }
+    dispatch(setRemainingBalance());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currencyExchanges, data?.data, dispatch, session?.user, stripeInfo]);
 

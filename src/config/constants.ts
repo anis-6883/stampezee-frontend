@@ -17,3 +17,5 @@ export const PACKAGES = {
   PUSH_NOTIFICATION_USER: 'push_notification_user',
   PUSH_NOTIFICATION_LOCATION: 'push_notification_location',
 };
+
+export const SUBSCRIPTIONS = ['basic', 'pro', 'advanced'];

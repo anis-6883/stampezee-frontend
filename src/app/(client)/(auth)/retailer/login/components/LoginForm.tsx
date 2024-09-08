@@ -45,8 +45,6 @@ export default function LoginForm() {
     password: Yup.string().required('Required!'),
   });
 
-  console.log('loginResponse?.data', data?.data);
-
   useEffect(() => {
     if (loginError) {
       setIsSubmitting(false);
@@ -110,7 +108,7 @@ export default function LoginForm() {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, loginError, loginResponse, loginSuccess, replace, searchQuery]);
+  }, [dispatch, loginError, loginSuccess, replace, searchQuery]);
 
   const handleSubmit = (values: { email: string; password: string }) => {
     setIsSubmitting(true);

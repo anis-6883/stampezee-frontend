@@ -22,7 +22,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
-import LoginAlert from './LoginAlert';
 import PlanAddOns from './PlanAddons';
 
 export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
@@ -96,7 +95,8 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
 
   const handleCheckOut = () => {
     if (!isLoggedIn) {
-      setModalState(true);
+      push(routes.publicRoutes.retailerLogin + '?callback=checkout');
+      // setModalState(true);
       return;
     }
     if (activeSubscription?.slug && addOn.slug) {
@@ -240,7 +240,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
         postIcon={<BsCheck2Circle className="text-base" />}
       />
 
-      <LoginAlert modalState={modalState} setModalState={setModalState} />
+      {/* <LoginAlert modalState={modalState} setModalState={setModalState} /> */}
       <BranchDisableModal
         selectedBranches={selectedBranches}
         setSelectedBranches={setSelectedBranches}

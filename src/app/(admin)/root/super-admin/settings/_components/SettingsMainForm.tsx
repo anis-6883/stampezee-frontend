@@ -51,7 +51,7 @@ function updateGeneralSetting(generalSetting: IGeneralSetting) {
       taxTitle: generalSetting?.data?.stripe?.taxTitle || '',
       taxCost: generalSetting?.data?.stripe?.taxCost || '',
       taxStatus: generalSetting?.data?.stripe?.taxStatus || 'on',
-      defaultCurrency: generalSetting?.data?.stripe?.defaultCurrency || {},
+      // defaultCurrency: generalSetting?.data?.stripe?.defaultCurrency || {},
     },
     googleMap: {
       googleMapsApiKey: generalSetting?.data?.googleMap?.googleMapsApiKey || '',
@@ -101,7 +101,7 @@ export default function SettingsMainForm() {
       taxTitle: '',
       taxCost: '',
       taxStatus: 'on',
-      defaultCurrency: { country: '', currency: '' },
+      // defaultCurrency: { country: '', currency: '' },
     },
     googleMap: {
       googleMapsApiKey: '',
@@ -127,46 +127,6 @@ export default function SettingsMainForm() {
 
   useEffect(() => {
     if (generalSetting) {
-      // const updatedGeneralSetting = {
-      //   general: {
-      //     timezone: generalSetting?.data?.general?.timezone || {},
-      //     companyName: generalSetting?.data?.general?.companyName || '',
-      //     siteTitle: generalSetting?.data?.general?.siteTitle || '',
-      //     androidDownloadLink: generalSetting?.data?.general?.androidDownloadLink || '',
-      //     iosDownloadLink: generalSetting?.data?.general?.iosDownloadLink || '',
-      //     contactEmail: generalSetting?.data?.general?.contactEmail || '',
-      //     emailUsername: generalSetting?.data?.general?.emailUsername || '',
-      //     emailPassword: generalSetting?.data?.general?.emailPassword || '',
-      //   },
-
-      //   notification: {
-      //     firebaseServerKey: generalSetting?.data?.notification?.firebaseServerKey || '',
-      //     firebaseTopics: generalSetting?.data?.notification?.firebaseTopics || '',
-      //   },
-      //   s3Bucket: {
-      //     awsRegion: generalSetting?.data?.s3Bucket?.awsRegion || '',
-      //     awsAccessKeyId: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
-      //     awsSecretAccessKey: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
-      //     awsBucketName: generalSetting?.data?.s3Bucket?.awsAccessKeyId || '',
-      //   },
-      //   stripe: {
-      //     stripeSecretKey: generalSetting?.data?.stripe?.stripeSecretKey || '',
-      //     planChangeCost: generalSetting?.data?.stripe?.planChangeCost || '',
-      //     refundableThreshold: generalSetting?.data?.stripe?.refundableThreshold || '',
-      //     taxTitle: generalSetting?.data?.stripe?.taxTitle || '',
-      //     taxCost: generalSetting?.data?.stripe?.taxCost || '',
-      //     taxStatus: generalSetting?.data?.stripe?.taxStatus || 'on',
-      //     defaultCurrency: generalSetting?.data?.stripe?.defaultCurrency || {},
-      //   },
-      //   googleMap: {
-      //     googleMapsApiKey: generalSetting?.data?.googleMap?.googleMapsApiKey || '',
-      //   },
-      //   page: {
-      //     policy: generalSetting?.data?.page?.policy || '',
-      //     terms: generalSetting?.data?.page?.terms || '',
-      //   },
-      // };
-
       setInitialValues(updateGeneralSetting(generalSetting));
     }
   }, [generalSetting]);

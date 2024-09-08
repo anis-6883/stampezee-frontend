@@ -15,7 +15,7 @@ const useCurrency = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
+        const response = await axios.get('https://api.exchangerate-api.com/v4/latest/CAD');
         setData(response.data);
       } catch (err) {
         setError('Failed to fetch exchange rates.');

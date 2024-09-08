@@ -92,7 +92,7 @@ export default function DragAndDropUpload({
   };
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center gap-y-2">
       <div {...getRootProps({ className: className })}>
         <input {...getInputProps()} />
         {value && preview ? (
@@ -152,7 +152,8 @@ export default function DragAndDropUpload({
         )}
         {brandText && <h2 className="py-3 text-center font-medium">{brandText}</h2>}
       </div>
-      {error && <p className="text-center text-sm text-danger">{error}</p>}
-    </>
+
+      {error && <p className=" text-sm text-danger">{error}</p>}
+    </div>
   );
 }

@@ -6,7 +6,6 @@ import countryData from '@/utils/get-country-list';
 import { useFormikContext } from 'formik';
 import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine, RiKey2Line } from 'react-icons/ri';
-import ReactSelect from 'react-select';
 
 export default function StripeSettingsForm() {
   const { setFieldValue, values }: any = useFormikContext();
@@ -77,7 +76,7 @@ export default function StripeSettingsForm() {
           onChange={(option: { label: string; value: string }) => setFieldValue('stripe.taxStatus', option.value)}
         />
       </div>
-      <div>
+      {/* <div>
         <p className="mb-2 font-medium">Default Currency</p>
         {values?.stripe.defaultCurrency?.country && (
           <ReactSelect
@@ -135,7 +134,7 @@ export default function StripeSettingsForm() {
             }}
           />
         )}
-      </div>
+      </div> */}
     </FormBlockWrapper>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { Skeleton } from '@/components/ui/skeleton';
+import { SUBSCRIPTIONS } from '@/config/constants';
 import { RootState } from '@/features/store';
 import { downgradePlan, resetAddOns, setSubscription, upgradePlan } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
@@ -11,8 +12,6 @@ import { useEffect, useState } from 'react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-
-const packages = ['basic', 'pro', 'advanced'];
 
 export default function SubscriptionList({ isMemberShip }: { isMemberShip?: boolean }) {
   const dispatch = useDispatch();
@@ -64,8 +63,8 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
   }, [data?.data, dispatch, selectedCurrencyExchangeRate, defaultCurrencyExchangeRate]);
 
   const handleSubscription = (plan: Subscription) => {
-    const currentPlanIndex = packages.indexOf(session?.user?.plan);
-    const targetPlanIndex = packages.indexOf(plan?.slug);
+    const currentPlanIndex = SUBSCRIPTIONS.indexOf(session?.user?.plan);
+    const targetPlanIndex = SUBSCRIPTIONS.indexOf(plan?.slug);
 
     if (plan.slug === 'trial') {
       dispatch(resetAddOns());
@@ -86,7 +85,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
 
   return (
     <div>
-      {(!session?.user?.plan || session?.user?.plan === 'trial') && (
+      {/* {(!session?.user?.plan || session?.user?.plan === 'trial') && (
         <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
           <p className="font-medium text-blue-700">Change Plan</p>
           <p className="text-blue-700">You will be billed immediately when switching plans</p>
@@ -97,7 +96,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
           <p className="font-medium text-yellow-500">Upgrade or downgrade plan</p>
           <p className="text-yellow-500">You will be charged {planChangeCost} CAD when switching plans</p>
         </div>
-      )}
+      )} */}
 
       {isLoading ? (
         <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>

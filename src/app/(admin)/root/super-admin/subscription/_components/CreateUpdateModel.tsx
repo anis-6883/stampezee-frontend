@@ -149,7 +149,7 @@ export default function CreateUpdateModel({
                         size={1024 * 1000}
                         sizeText="1MB"
                         isRounded={true}
-                        uploadText="Upload Logo"
+                        uploadText="Upload Image"
                       />
                     </div>
                   )}
