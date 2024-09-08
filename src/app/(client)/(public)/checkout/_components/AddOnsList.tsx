@@ -15,7 +15,6 @@ export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean })
   const {
     subscription,
     addOn: addOnData,
-    defaultCurrency: defaultCurrencyExchangeRate,
     currency: selectedCurrencyExchangeRate,
   } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
@@ -25,7 +24,7 @@ export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean })
     if (item.type === 'addon') {
       acc.push({
         ...item,
-        price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, defaultCurrencyExchangeRate, price: item?.price }),
+        price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, price: item?.price }),
       });
     }
     return acc;

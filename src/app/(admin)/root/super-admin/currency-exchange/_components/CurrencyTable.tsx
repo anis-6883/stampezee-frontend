@@ -15,6 +15,7 @@ import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
+import { Badge } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
@@ -125,7 +126,12 @@ export default function CurrencyTable({ offset }: { offset: number }) {
         <div className="flex gap-x-3">
           <StatusIndicator />
           <div className="flex items-center justify-center rounded-md border border-solid px-3">
-            <span className="font-bold"> Base Currency : CAD</span>
+            <span className="font-bold">
+              Base Currency :
+              <Badge size="sm" className="ml-1 bg-danger text-white">
+                CAD
+              </Badge>
+            </span>
           </div>
         </div>
         <div className="flex">

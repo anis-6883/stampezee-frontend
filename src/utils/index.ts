@@ -140,11 +140,11 @@ export const hasCheckedPurchaseAlert = ({
 
 export const calculateCurrencyExchangeRate = ({
   selectedCurrencyExchangeRate,
-  defaultCurrencyExchangeRate,
+  defaultCurrencyExchangeRate = { name: 'CAD', exchangeRate: 1 },
   price,
 }: {
   selectedCurrencyExchangeRate: any;
-  defaultCurrencyExchangeRate: any;
+  defaultCurrencyExchangeRate?: any;
   price: number;
 }) => {
   return Number(((selectedCurrencyExchangeRate?.exchangeRate / defaultCurrencyExchangeRate?.exchangeRate) * price).toFixed(2));

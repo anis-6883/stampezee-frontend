@@ -78,7 +78,7 @@ export default function StampsImageTable() {
       size: 250,
     },
     {
-      header: 'Price (USD)',
+      header: 'Price (CAD)',
       accessorKey: 'price',
       Cell: ({ row }: any) => (
         <div className="flex items-center gap-2">

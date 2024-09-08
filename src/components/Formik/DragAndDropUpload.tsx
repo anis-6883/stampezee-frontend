@@ -43,7 +43,11 @@ export default function DragAndDropUpload({
         if (file.size <= size) {
           const img = new Image();
           img.onload = () => {
-            if (img.width === Number(dimension?.split('X')[0]) && img.height === Number(dimension?.split('X')[1])) {
+            if (
+              img?.width === img?.height &&
+              img.width >= Number(dimension?.split('X')[0]) &&
+              img.height >= Number(dimension?.split('X')[1])
+            ) {
               const fileWithPreview = Object.assign(file, {
                 preview: URL.createObjectURL(file),
               });
@@ -51,18 +55,18 @@ export default function DragAndDropUpload({
               onChange(fileWithPreview);
               setError('');
             } else {
-              setError(`[ Image dimensions must be exactly ${dimension} pixels! ]`);
+              setError(`Min. ${dimension?.split('X')[0]} px with width & height must be same!`);
             }
           };
           img.onerror = () => {
-            setError('[ Could not read image dimensions. Please choose a valid image file! ]');
+            setError('Could not read image dimensions. Please choose a valid image file!');
           };
           img.src = URL.createObjectURL(file);
         } else {
-          setError('[ File size exceeds 1MB. Please choose a smaller file! ]');
+          setError('File size exceeds 1MB. Please choose a smaller file!');
         }
       } else {
-        setError('[ Invalid file type. Please choose a valid image file! ]');
+        setError('Invalid file type. Please choose a valid image file!');
       }
     },
     [onChange, size, dimension]
@@ -100,10 +104,8 @@ export default function DragAndDropUpload({
             <img
               src={preview}
               alt="Uploaded Image"
-              width={0}
-              height={0}
               sizes="100vw"
-              className={cn('z-30 h-[120px] w-[120px] rounded-md border border-gray-200 object-cover p-2', isRounded && 'rounded-full p-2')}
+              className={cn('z-30 h-[120px] w-[120px] rounded-md border border-gray-200 object-cover p-2', isRounded && 'rounded-full')}
             />
             {!isRounded ? (
               <button type="button" className="rounded bg-red-500 p-1" onClick={removeFile}>

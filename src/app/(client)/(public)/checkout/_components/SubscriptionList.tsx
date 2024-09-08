@@ -20,7 +20,6 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
   const {
     subscription,
     planChangeCost,
-    defaultCurrency: defaultCurrencyExchangeRate,
     currency: selectedCurrencyExchangeRate,
   } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
@@ -34,13 +33,13 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
             acc.push({
               ...item,
               isBlocked: true,
-              price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, defaultCurrencyExchangeRate, price: item?.price }),
+              price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, price: item?.price }),
             });
           } else {
             acc.push({
               ...item,
               isBlocked: false,
-              price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, defaultCurrencyExchangeRate, price: item?.price }),
+              price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, price: item?.price }),
             });
           }
         }
@@ -52,7 +51,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
           acc.push({
             ...item,
             isBlocked: false,
-            price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, defaultCurrencyExchangeRate, price: item?.price }),
+            price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, price: item?.price }),
           });
         }
         return acc;
@@ -60,7 +59,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
     }
     setPlans(transformPlans);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.data, dispatch, selectedCurrencyExchangeRate, defaultCurrencyExchangeRate]);
+  }, [data?.data, dispatch, selectedCurrencyExchangeRate]);
 
   const handleSubscription = (plan: Subscription) => {
     const currentPlanIndex = SUBSCRIPTIONS.indexOf(session?.user?.plan);

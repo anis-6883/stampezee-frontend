@@ -35,7 +35,7 @@ export default function AuthProvider({
   currency: string;
 }): React.ReactNode {
   const dispatch = useDispatch();
-  const { activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { activeSubscription, subscription } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
@@ -84,7 +84,7 @@ export default function AuthProvider({
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
 
     // subscription update into redux state
-    if (session?.user?.takeFreeTrial) {
+    if (session?.user?.takeFreeTrial && !subscription?.slug) {
       const pursedSubscription = data?.data?.find((item: Subscription) => {
         if (item?.type === 'subscription' && item?.slug === session?.user?.plan) {
           return true;

@@ -16,15 +16,18 @@ import PricingCard from './PricingCard';
 export default function SubscriptionList() {
   const dispatch = useDispatch();
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { activeSubscription, currency, defaultCurrency } = useSelector((state: RootState) => state.subscriptionSlice);
-  const { data, isLoading } = useGetSubscriptionQuery(undefined);
+  const { activeSubscription, currency } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { data, isLoading, isFetching } = useGetSubscriptionQuery(undefined);
+
+  console.log({ isLoading, data: data?.data });
+
   const subscription = data?.data.reduce((acc: any, curr: any) => {
     if (curr.type === 'subscription') {
       acc.push({
         ...curr,
         price: calculateCurrencyExchangeRate({
           selectedCurrencyExchangeRate: currency,
-          defaultCurrencyExchangeRate: defaultCurrency,
+          // defaultCurrencyExchangeRate: defaultCurrency,
           price: curr.price,
         }),
       });
@@ -72,20 +75,18 @@ export default function SubscriptionList() {
 
   return (
     <div>
-      <div className="mx-auto max-w-screen-xl">
-        {isLoading ? (
-          <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-4">
-            <Skeleton className="w-68 h-96 rounded" />
-            <Skeleton className="w-68 h-96 rounded" />
-            <Skeleton className="w-68 h-96 rounded" />
-            <Skeleton className="w-68 h-96 rounded" />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {subscription?.map((item: any) => <PricingCard key={item._id} item={item} />)}
-          </div>
-        )}
-      </div>
+      {isLoading ? (
+        <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-4">
+          <Skeleton className="w-68 h-96 rounded" />
+          <Skeleton className="w-68 h-96 rounded" />
+          <Skeleton className="w-68 h-96 rounded" />
+          <Skeleton className="w-68 h-96 rounded" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {subscription?.map((item: any) => <PricingCard key={item._id} item={item} />)}
+        </div>
+      )}
     </div>
   );
 }

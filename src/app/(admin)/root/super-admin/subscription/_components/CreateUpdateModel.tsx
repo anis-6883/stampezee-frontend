@@ -159,7 +159,7 @@ export default function CreateUpdateModel({
                     <InputField
                       name="price"
                       disabled={formData?.slug === 'trial' ? true : false}
-                      label="Price (USD)"
+                      label="Price (CAD)"
                       type="number"
                       placeholder="9.99"
                       prefix={<LuCircleDollarSign className="text-xl" />}
