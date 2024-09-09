@@ -52,7 +52,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
     const allowTotalBranch = subscription?.allowTotalBranch || 0;
     const disabledTotalBranch = activeTotalBranch?.length - allowTotalBranch;
     setDisableBranchOptions(disableBranchOptions);
-    setTotalDisabledBranch(disabledTotalBranch);
+    setTotalDisabledBranch(disabledTotalBranch < 0 ? 0 : disabledTotalBranch);
   }, [branches, subscription]);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
           push(checkOutResponse?.data?.url);
         } else {
           toast.success(checkOutResponse?.message || 'Downgrade Successfully!');
-          update({ ...session?.user, ...checkOutResponse?.data });
+          update({ ...session?.user, ...profile?.data });
           dispatch(
             setValue({
               target: 'user',

@@ -122,7 +122,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
                   <Skeleton className="w-50 h-8 rounded" />
                 ) : (
                   <p className="mb-2 text-xl font-bold">
-                    {item?.price ? item?.price?.toFixed(2) : 0}
+                    {item?.price ? item?.price?.toFixed(2) : Number(0).toFixed(2)}
                     {` ${selectedCurrencyExchangeRate?.name}/${item.duration === 30 ? 'month' : `${item.duration} days`}`}
                   </p>
                 )}
@@ -147,7 +147,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
                   <Skeleton className="w-50 h-8 rounded" />
                 ) : (
                   <p className="mb-2 text-xl font-bold">
-                    {item?.price ? item?.price?.toFixed(2) : 0}
+                    {item?.price ? item?.price?.toFixed(2) : Number(0).toFixed(2)}
                     {` ${selectedCurrencyExchangeRate?.name}/${item.duration === 30 ? 'month' : `${item.duration} days`}`}
                   </p>
                 )}

@@ -61,6 +61,7 @@ export default function StampsImageTable() {
     {
       header: 'Title',
       accessorKey: 'title',
+      enableSorting: false,
     },
     {
       header: 'Image',
@@ -70,6 +71,7 @@ export default function StampsImageTable() {
           <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="h-10 w-10 rounded-full" />
         </div>
       ),
+      enableSorting: false,
     },
     {
       header: 'Status',
@@ -81,6 +83,7 @@ export default function StampsImageTable() {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      enableSorting: false,
     },
     {
       header: 'Actions',

@@ -1,4 +1,5 @@
 import { Currency, Locale } from '@/config';
+import { setCurrentCurrency } from '@/features/currency-exchange/currencyExchangeSlice';
 import { setCurrency } from '@/features/subscription/subscriptionSlice';
 import { getUserCurrency, setUserCurrency } from '@/services/currency';
 import { getUserLocale, setUserLocale } from '@/services/locale';
@@ -46,6 +47,7 @@ export default function LocalSwitcherSelector({
       const currency = await getUserCurrency();
       setSelectedOption(locale);
       setSelectedCurrency(currency);
+      setCurrentCurrency(currency);
     })();
   }, [currencyExchanges, dispatch]);
 

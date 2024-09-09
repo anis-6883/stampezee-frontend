@@ -12,7 +12,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
     (state: RootState) => state.subscriptionSlice
   );
 
-  const { currency, defaultCurrency } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { currency, defaultCurrency, planChangeCost, downgradeRefund } = useSelector((state: RootState) => state.subscriptionSlice);
 
   const handleRemoveAddOn = (addOnId: string) => {
     dispatch(removeAddOns(addOnId));
@@ -26,14 +26,14 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         <div className="mb-2 flex justify-between">
           <span>{addOn?.title}</span>
           <span className="text-red-500">
-            {addOn?.price ? addOn?.price?.toFixed(2) : 0} {selectedCurrency}
+            {addOn?.price ? addOn?.price?.toFixed(2) : Number(0).toFixed(2)} {selectedCurrency}
           </span>
         </div>
       ) : (
         <div className="mb-2 flex justify-between">
           <span>{subscription?.title}</span>
           <span className="text-red-500">
-            {subscription?.price ? subscription?.price?.toFixed(2) : 0} {selectedCurrency}
+            {subscription?.price ? subscription?.price?.toFixed(2) : Number(0).toFixed(2)} {selectedCurrency}
           </span>
         </div>
       )}
@@ -54,7 +54,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </span>
       </div>
       <hr className="p-2 text-lg font-bold" />
-      {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && (
+      {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && downgradeRefund <= 0 && (
         <div className="mb-2 flex justify-between">
           <span>
             <span className="font-semibold">{stripeInfo?.taxTitle}</span> ({stripeInfo?.taxCost}%)
@@ -65,11 +65,11 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </div>
       )}
 
-      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && !addOn.slug && (
+      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && !addOn.slug && downgradeRefund <= 0 && (
         <div className="mb-2 flex justify-between">
           <span className="font-semibold">Plan Change Cost</span>
           <span className="text-red-500">
-            {stripeInfo?.planChangeCost} {selectedCurrency}
+            {planChangeCost} {selectedCurrency}
           </span>
         </div>
       )}

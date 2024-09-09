@@ -23,7 +23,7 @@ export default function DragAndDropUpload({
   sizeText: string;
   isRounded?: boolean;
   uploadText?: string;
-  brandText?: string;
+  brandText?: string | React.ReactNode;
   dimension?: string;
 }) {
   const [preview, setPreview] = useState<string | null>(null);

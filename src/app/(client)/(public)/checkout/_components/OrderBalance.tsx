@@ -3,7 +3,7 @@
 
 import { RootState } from '@/features/store';
 import { roundToTwoDecimals } from '@/features/subscription/subscriptionSlice';
-import { calculateBalancePrice } from '@/utils';
+import { calculateBalancePrice, calculateCurrencyExchangeRate } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useSelector } from 'react-redux';
 
@@ -13,8 +13,20 @@ const OrderBalance = () => {
   const remainingAmount =
     activeSubscription?.slug && activeSubscription?.slug !== 'trial'
       ? roundToTwoDecimals(
-          calculateBalancePrice(session?.user?.planStartAt as Date, session?.user?.planValidAt as Date, session?.user?.planPayment)
+          calculateCurrencyExchangeRate({
+            selectedCurrencyExchangeRate: currency,
+            price: calculateBalancePrice(
+              session?.user?.planStartAt as Date,
+              session?.user?.planValidAt as Date,
+              session?.user?.planPayment
+            ),
+          })
         )
+      : 0;
+
+  const usageAmount =
+    activeSubscription?.slug && activeSubscription?.slug !== 'trial'
+      ? roundToTwoDecimals(calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: currency, price: session?.user?.planPayment }))
       : 0;
 
   return (
@@ -32,7 +44,7 @@ const OrderBalance = () => {
           <div className="mb-2 flex justify-between">
             <span>Usage Amount</span>
             <span className="text-red-500">
-              {Math.abs(remainingAmount - session?.user?.planPayment).toFixed(2)} {currency?.name}
+              {Math.abs(remainingAmount - usageAmount).toFixed(2)} {currency?.name}
             </span>
           </div>
         </div>

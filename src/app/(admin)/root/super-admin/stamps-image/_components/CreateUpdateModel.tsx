@@ -116,9 +116,25 @@ export default function CreateUpdateModel({
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
             {({ setFieldValue, values }) => (
               <Form className="mt-5">
+                <div className="my-5 flex justify-center">
+                  <DragAndDropUpload
+                    value={{ name: 'image', image: values.image }}
+                    onChange={(image: any) => setFieldValue('image', image)}
+                    className="mt-2"
+                    size={1024 * 1000}
+                    sizeText="1MB"
+                    isRounded={true}
+                    uploadText="Upload"
+                    brandText={
+                      <span>
+                        Image <span className="text-danger">*</span>
+                      </span>
+                    }
+                  />
+                </div>
                 <InputField name="title" label="Title" placeholder="Stamp One" />
 
-                <div className="my-4">
+                {/* <div className="my-4">
                   <p className="font-medium">
                     Upload Image <span className="text-red-600">*</span>
                   </p>
@@ -129,7 +145,7 @@ export default function CreateUpdateModel({
                     size={1024 * 1000}
                     sizeText="1MB"
                   />
-                </div>
+                </div> */}
 
                 <p className="text-end text-xs font-semibold">
                   Fields marked with <span className="text-red-600">*</span> are mandatory!
