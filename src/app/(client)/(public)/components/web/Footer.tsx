@@ -4,6 +4,7 @@ import { routes } from '@/config/routes';
 
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateNewsletterMutation } from '@/features/newsletter/newsletterApi';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -16,6 +17,7 @@ export default function Footer() {
   const [email, setEmail] = useState<string>('');
   const [createNewsletter, { error: newsletterError, isSuccess: newsletterSuccess }] = useCreateNewsletterMutation();
 
+  const t = useTranslations('AppLayout');
   // Newsletter Response Handler
   useEffect(() => {
     if (newsletterError) {
@@ -55,11 +57,11 @@ export default function Footer() {
                 <div className="mt-4 block font-medium">
                   <div className="block text-lg font-bold  sm:text-xl">StampEzee</div>
                   <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
-                    <Link className="mt-4 w-fit font-medium" href={routes.publicRoutes.pricing}>
-                      PRICING
+                    <Link className="mt-4 w-fit font-medium uppercase" href={routes.publicRoutes.pricing}>
+                      {t('pricing')}
                     </Link>
-                    <Link className="mt-4 w-fit font-medium" href="/faqs/">
-                      FAQ
+                    <Link className="mt-4 w-fit font-medium uppercase" href="/faqs/">
+                      {t('faq')}
                     </Link>
                     {/* <Link className="mt-4 w-fit font-medium" href="/contact-us/">
                       CONTACT
@@ -67,38 +69,38 @@ export default function Footer() {
                   </div>
                 </div>
                 <div className="mt-4  font-medium">
-                  <div className="block text-lg font-bold  sm:text-xl">Socials</div>
+                  <div className="block text-lg font-bold  sm:text-xl"> {t('socials')}</div>
                   <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
                     <Link className="mt-4 w-fit font-medium" href="#">
-                      FACEBOOK
+                      {t('facebook')}
                     </Link>
                     <Link className="mt-4 w-fit font-medium" href="#">
-                      INSTAGRAM
+                      {t('instagram')}
                     </Link>
                     <Link className="mt-4 w-fit font-medium" href="#">
-                      TIKTOK
+                      {t('tiktok')}
                     </Link>
                     <Link className="mt-4 w-fit font-medium" href="#">
-                      LINKEDIN
+                      {t('linkedin')}
                     </Link>
                   </div>
                 </div>
                 <div className="mt-4 font-medium">
-                  <div className="block text-lg font-bold  sm:text-xl">Contact</div>
+                  <div className="block text-lg font-bold  sm:text-xl">{t('contact')}</div>
                   <div className="MuiStack-root css-yd8sa2 flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
-                    <Link className="mt-4 w-fit font-medium" href="/privacy-policy" target="_blank">
-                      PRIVACY POLICY
+                    <Link className="mt-4 w-fit font-medium uppercase" href="/privacy-policy" target="_blank">
+                      {t('privacy')}
                     </Link>
-                    <Link className="mt-4 w-fit font-medium" href={routes.publicRoutes.contactUs}>
-                      CONTACT US
+                    <Link className="mt-4 w-fit font-medium uppercase" href={routes.publicRoutes.contactUs}>
+                      {t('contact_us')}
                     </Link>
-                    <Link className="mt-4 w-fit font-medium" href="/terms" target="_blank">
-                      T&amp;C
+                    <Link className="mt-4 w-fit font-medium uppercase" href="/terms" target="_blank">
+                      {t('terms')}
                     </Link>
                   </div>
                 </div>
                 <div className="mt-4 flex flex-col font-medium">
-                  <div className="block text-lg font-bold  sm:text-xl">JOIN OUR NEWSLETTER</div>
+                  <div className="block text-lg font-bold  sm:text-xl">{t('newsletter')}</div>
                   <div className="text-xs sm:text-sm">
                     <form
                       onSubmit={handleNewsletter}
@@ -109,7 +111,7 @@ export default function Footer() {
                         aria-invalid="false"
                         id=":r0:"
                         required
-                        placeholder="Email Address"
+                        placeholder={t('newsletterPlaceholderText')}
                         className="w-[60%] rounded-md border-0 border-gray-300 bg-transparent px-4 py-2 outline-none focus:border-none focus:shadow-none focus:outline-none sm:w-full "
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
@@ -120,7 +122,7 @@ export default function Footer() {
                       />
                       <div className="rounded-full bg-[#E55555] px-4 py-2 text-sm font-bold text-white">
                         <button disabled={isSubmitting} className="flex items-center justify-center gap-1" type="submit">
-                          <span className="text-sm">SUBMIT</span>{' '}
+                          <span className="text-sm">{t('newsletterButtonText')}</span>{' '}
                           {isSubmitting ? <ImSpinner9 className="animate-spin text-base" /> : <BsCheck2Circle className="text-base" />}
                         </button>
                       </div>

@@ -44,7 +44,10 @@ export default function GeneralSettingsForm({
                       ...base,
                       borderRadius: '7px',
                       padding: '1px',
-                      border: '2px solid #C4D9FC',
+                      border: '1px solid border-gray-200',
+                      '&:hover': {
+                        borderColor: '#2563EB',
+                      },
                     }),
                   }}
                   value={typeof values?.general.timezone === 'string' ? JSON.parse(values?.general?.timezone) : values?.general?.timezone}

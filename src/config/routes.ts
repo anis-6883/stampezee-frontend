@@ -66,12 +66,16 @@ export const routes = {
       },
       subscription: {
         home: `/root/super-admin/subscription`,
+        edit: (id: number | string) => `/root/super-admin/subscription/${id}/update`,
       },
       retailer: '/root/super-admin/retailer',
       coupon: {
         home: `/root/super-admin/coupon`,
         create: `/root/super-admin/coupon/create`,
         edit: (id: number | string) => `/root/super-admin/coupon/${id}/update`,
+      },
+      currencyExchange: {
+        home: `/root/super-admin/currency-exchange`,
       },
       notification: `/root/super-admin/notification`,
       payment: `/root/super-admin/payment`,

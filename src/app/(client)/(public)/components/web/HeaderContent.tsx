@@ -1,16 +1,20 @@
 'use client';
 
 import CustomButton from '@/components/Formik/Button';
+import LocalSwitcherSelector from '@/components/Locale/LocalSwitcherSelector';
 import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { resetState } from '@/features/subscription/subscriptionSlice';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Menu, Transition } from '@headlessui/react';
 import { signOut, useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { AiOutlineGlobal } from 'react-icons/ai';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,12 +47,16 @@ const mobileMenuItems = [
 export default function HeaderContent() {
   const pathname = usePathname();
   const dispatch = useDispatch();
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
   const { data: session }: any = useSession();
-  const [sidBer, setSidBer] = useState(false);
+  const [sideBar, setSideBar] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
   const { user, isLoggedIn } = useSelector((state: RootState) => state.authSlice);
   const [drawerSate, setDrawerState] = useState({ isOpen: false });
+  const [modalState, setModalState] = useState<boolean>(false);
+
+  const t = useTranslations('AppLayout');
 
   // Handle Logout Response
   const handleLogout = async () => {
@@ -66,7 +74,7 @@ export default function HeaderContent() {
 
     const handleResize = () => {
       if (window.innerWidth > 767) {
-        setSidBer(sidBer);
+        setSideBar(sideBar);
       }
     };
 
@@ -117,12 +125,12 @@ export default function HeaderContent() {
                 }))
               }
             >
-              <RxHamburgerMenu />
+              <RxHamburgerMenu className="text-3xl" />
             </span>
             <div className="mr-3">
               <div
-                onClick={() => setSidBer(sidBer == true && !sidBer)}
-                className={`${sidBer ? 'fixed -top-2 left-0 h-[100vh] w-full overflow-hidden bg-[#14131385] bg-red-600 transition-all duration-300 ease-in-out' : 'hidden'} z-10 items-center justify-between md:order-1 md:flex md:w-auto `}
+                onClick={() => setSideBar(sideBar == true && !sideBar)}
+                className={`${sideBar ? 'fixed -top-2 left-0 h-[100vh] w-full overflow-hidden bg-[#14131385] bg-red-600 transition-all duration-300 ease-in-out' : 'hidden'} z-10 items-center justify-between md:order-1 md:flex md:w-auto `}
                 id="navbar-cta"
               >
                 <Drawer
@@ -136,7 +144,7 @@ export default function HeaderContent() {
                     <div className="flex justify-end p-5">
                       <RxCross1
                         onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
-                        className="cursor-pointer font-bold"
+                        className="cursor-pointer text-lg font-bold"
                       />
                     </div>
                     <ul className=" p-3 ">
@@ -187,7 +195,7 @@ export default function HeaderContent() {
                       {isLoggedIn && (
                         <Menu as="div" className="relative inline-block text-left">
                           <div>
-                            <Menu.Button className="ml-2">
+                            <Menu.Button className="ml-3 py-2">
                               <img
                                 src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/man.png'}
                                 alt="author"
@@ -238,6 +246,13 @@ export default function HeaderContent() {
                           </Transition>
                         </Menu>
                       )}
+
+                      <li className="py-2 pl-3">
+                        <AiOutlineGlobal
+                          onClick={() => setModalState(true)}
+                          className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+                        />
+                      </li>
                     </ul>
                     <div className="mx-3 pb-6">
                       <hr className="border-t-1 border-gray-400" />
@@ -250,14 +265,14 @@ export default function HeaderContent() {
                 </Drawer>
 
                 <ul
-                  className={`${sidBer ? 'h-full' : ''} mt-4 flex flex-col items-center justify-center rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
+                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center justify-center rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                 >
                   <li className="w-max-content">
                     <Link
                       href={routes.publicRoutes.home}
                       className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
                     >
-                      Home
+                      {t('home')}
                     </Link>
                   </li>
                   <li className="w-max-content">
@@ -265,7 +280,7 @@ export default function HeaderContent() {
                       href={routes.publicRoutes.pricing}
                       className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.pricing ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
-                      Pricing
+                      {t('pricing')}
                     </Link>
                   </li>
                   <li>
@@ -273,7 +288,7 @@ export default function HeaderContent() {
                       href="/faqs"
                       className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.faqs ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
-                      FAQ
+                      {t('faq')}
                     </Link>
                   </li>
                   <li>
@@ -281,23 +296,23 @@ export default function HeaderContent() {
                       href={routes.publicRoutes.contactUs}
                       className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.contactUs ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
-                      Contact Us
+                      {t('contact_us')}
                     </Link>
                   </li>
                   <div className="ms-2 flex items-center justify-center gap-2">
                     {isLoggedIn ? (
                       // className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white"
                       <Link href="/root/retailer/dashboard">
-                        <CustomButton color="danger" text="Dashboard" className="!m-0" />
+                        <CustomButton color="danger" text={t('dashboard')} className="!m-0" />
                       </Link>
                     ) : (
                       <Link href="/retailer/login" className={`relative  transition-all duration-150 ease-in hover:text-red-500`}>
-                        Login
+                        {t('login')}
                       </Link>
                     )}
                     {isLoggedIn && (
                       <Menu as="div" className="relative inline-block text-left">
-                        <div>
+                        <div className="mt-1">
                           <Menu.Button className="ml-2">
                             <img
                               src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
@@ -354,9 +369,15 @@ export default function HeaderContent() {
                         </Transition>
                       </Menu>
                     )}
+                    <div className="ml-3">
+                      <AiOutlineGlobal
+                        onClick={() => setModalState(true)}
+                        className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+                      />
+                    </div>
                     <button
                       data-collapse-toggle="navbar-cta"
-                      onClick={() => setSidBer(!sidBer)}
+                      onClick={() => setSideBar(!sideBar)}
                       type="button"
                       className={`ml-2 inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden`}
                       aria-controls="navbar-cta"
@@ -380,6 +401,8 @@ export default function HeaderContent() {
           </div>
         </div>
       </nav>
+
+      <LocalSwitcherSelector currencyExchanges={currencyExchanges} modalState={modalState} setModalState={setModalState} />
     </div>
   );
 }

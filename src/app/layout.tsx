@@ -4,8 +4,13 @@ import GlobalDrawer from '@/components/drawer-views/container';
 import GlobalModal from '@/components/modal-views/container';
 import NextProgress from '@/components/next-progress';
 import { siteConfig } from '@/config/site.config';
+import { getUserCurrency } from '@/services/currency';
+import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import { getServerSession } from 'next-auth';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 import { Toaster } from 'react-hot-toast';
+import { getLangDir } from 'rtl-detect';
 import { authOptions } from './api/auth/[...nextauth]/auth-options';
 import AuthProvider from './providers/auth-provider';
 import ReduxProvider from './providers/redux-provider';
@@ -18,18 +23,26 @@ export const metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
 
+  const locale = await getLocale();
+  const currency = await getUserCurrency();
+  const messages = await getMessages();
+  const direction = getLangDir(locale);
+  const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
+
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning={true} className={poppins.className}>
+    <html lang={locale} dir={direction} suppressHydrationWarning={true} className={poppins.className}>
       <body suppressHydrationWarning={true}>
-        <ReduxProvider>
-          <AuthProvider session={session}>
-            <NextProgress />
-            {children}
-            <Toaster />
-            <GlobalModal />
-            <GlobalDrawer />
-          </AuthProvider>
-        </ReduxProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ReduxProvider>
+            <AuthProvider session={session} stripeInfo={data?.data?.stripe} currency={currency}>
+              <NextProgress />
+              {children}
+              <Toaster />
+              <GlobalModal />
+              <GlobalDrawer />
+            </AuthProvider>
+          </ReduxProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

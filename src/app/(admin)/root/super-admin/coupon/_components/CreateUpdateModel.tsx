@@ -5,7 +5,7 @@ import DateRangePicker from '@/components/Formik/DateRange';
 import InputField from '@/components/Formik/InputField';
 import SelectField from '@/components/Formik/SelectField';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useCreateCouponMutation, useUpdateCouponMutation } from '@/features/super-admin/coupon/couponApi';
+import { useCreateCouponAdminMutation, useUpdateCouponMutation } from '@/features/super-admin/coupon/couponApi';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
@@ -29,7 +29,7 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [createCoupon, { isSuccess: createSuccess, error: createError }] = useCreateCouponMutation();
+  const [createCoupon, { isSuccess: createSuccess, error: createError }] = useCreateCouponAdminMutation();
   const [updateCoupon, { isSuccess: updateSuccess, error: updateError }] = useUpdateCouponMutation();
 
   const initialValues = {
@@ -52,6 +52,7 @@ export default function CreateUpdateModel({
         return !isNaN(parseFloat(value)) && isFinite(value);
       })
       .min(0, 'Value must be greater then or equal to 0')
+      .max(50, 'Value must be less then or equal to 50')
       .required('Required!'),
     limit: Yup.number()
       .test('integer', 'Please enter an integer value', (value: any) => {

@@ -1,5 +1,8 @@
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth-options';
 import { metaObject } from '@/config/site.config';
+import { getUserCurrency } from '@/services/currency';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
+import { getServerSession } from 'next-auth';
 import AddOnsList from './_components/AddOnsList';
 import OrderBalance from './_components/OrderBalance';
 import OrderSummary from './_components/OrderSummary';
@@ -11,6 +14,10 @@ export const metadata = {
 
 export default async function Page() {
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
+  const selectedCurrency = await getUserCurrency();
+  const session: any = await getServerSession(authOptions);
+  // const { data: currencyExchangeRates } = await axiosBackendUrl.get(`/api/web/currency-exchange/rates?currency=${selectedCurrency}`);
+
   return (
     <div className="mx-auto mt-20 w-full max-w-[1300px]">
       <div className="container mx-auto px-4 py-8">
@@ -18,26 +25,26 @@ export default async function Page() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <h2 className="mb-4 text-xl font-semibold">Plans</h2>
-            <p className="mb-6 text-gray-600">Select a subscription plan</p>
-            {/* <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
-              <p className="font-medium text-blue-700">Change Plan</p>
-              <p className="text-blue-700">You will be billed immediately when switching plans</p>
-            </div> */}
+            {session?.user?.plan && session?.user?.plan !== 'trial' ? (
+              <p className="mb-6 text-gray-600">Switch a subscription plan</p>
+            ) : (
+              <p className="mb-6 text-gray-600">Select a subscription plan</p>
+            )}
             <SubscriptionList />
             <div className="mt-6">
               <h2 className="mb-4 text-xl font-semibold">Add-Ons</h2>
-              <p className="mb-6 text-gray-600">Select additional services</p>
-              <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
+              <p className="mb-6 text-gray-600">Select additional service</p>
+              {/* <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
                 <p className="font-medium text-blue-700">Select Multiple Add on</p>
                 <p className="text-blue-700">You can able to selected multiple add on</p>
-              </div>
+              </div> */}
               <AddOnsList />
             </div>
           </div>
           <div>
             <OrderBalance />
             <h2 className="mb-4 text-xl font-semibold">Order Summary</h2>
-            <OrderSummary stripeInfo={data?.data?.stripe} />
+            <OrderSummary stripeInfo={data?.data?.stripe} selectedCurrency={selectedCurrency} />
           </div>
         </div>
       </div>

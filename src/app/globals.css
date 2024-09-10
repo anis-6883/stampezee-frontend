@@ -683,3 +683,10 @@ div[style='z-index: 1000001;'],
 input#react-select-5-input:focus {
   box-shadow: none !important;
 }
+
+/* react mantine  */
+.mantine-1bauqbv {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

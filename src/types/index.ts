@@ -390,3 +390,71 @@ export interface Coupon {
   minPurchaseAmount: number;
   limit: number;
 }
+
+// General Settings
+
+interface ITimezone {
+  label?: string;
+  value?: string;
+}
+
+interface IGeneral {
+  timezone?: ITimezone;
+  companyName?: string;
+  siteTitle?: string;
+  androidDownloadLink?: string;
+  iosDownloadLink?: string;
+  contactEmail?: string;
+  emailUsername?: string;
+  emailPassword?: string;
+}
+
+interface INotification {
+  firebaseServerKey?: string;
+  firebaseTopics?: string;
+}
+
+interface IS3Bucket {
+  awsRegion?: string;
+  awsAccessKeyId?: string;
+  awsSecretAccessKey?: string;
+  awsBucketName?: string;
+}
+
+export interface ICurrency {
+  country?: string;
+  currency?: string;
+}
+
+interface IStripe {
+  stripeSecretKey?: string;
+  stripeWebhookSecretKey?: string;
+  planChangeCost?: number | string;
+  refundableThreshold?: number | string;
+  taxTitle?: string;
+  taxCost?: number | string;
+  taxStatus?: string;
+  defaultCurrency?: ICurrency;
+}
+
+interface IGoogleMap {
+  googleMapsApiKey?: string;
+}
+
+interface IPage {
+  policy?: string;
+  terms?: string;
+}
+
+export interface IGeneralSettingData {
+  general?: IGeneral;
+  notification?: INotification;
+  s3Bucket?: IS3Bucket;
+  stripe?: IStripe;
+  googleMap?: IGoogleMap;
+  page?: IPage;
+}
+
+export interface IGeneralSetting {
+  data?: IGeneralSettingData;
+}

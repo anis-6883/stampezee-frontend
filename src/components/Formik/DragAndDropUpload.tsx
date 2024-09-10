@@ -14,6 +14,7 @@ export default function DragAndDropUpload({
   isRounded = false,
   uploadText = 'Upload Image',
   brandText = '',
+  dimension = '250X250',
 }: {
   className: string;
   value: any;
@@ -22,14 +23,15 @@ export default function DragAndDropUpload({
   sizeText: string;
   isRounded?: boolean;
   uploadText?: string;
-  brandText?: string;
+  brandText?: string | React.ReactNode;
+  dimension?: string;
 }) {
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string>('');
   const { errors } = useFormikContext<any>();
 
   useEffect(() => {
-    if (typeof value.image === 'string' && value.image != null) {
+    if (typeof value?.image === 'string' && value.image != null) {
       setPreview(value.image as any);
     }
   }, [value?.image]);
@@ -37,23 +39,37 @@ export default function DragAndDropUpload({
   const onDrop = useCallback(
     (acceptedFiles: any) => {
       const file = acceptedFiles[0];
-
       if (file && file.type.startsWith('image/')) {
         if (file.size <= size) {
-          const fileWithPreview = Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          });
-          setPreview(fileWithPreview.preview);
-          onChange(fileWithPreview);
-          setError('');
+          const img = new Image();
+          img.onload = () => {
+            if (
+              img?.width === img?.height &&
+              img.width >= Number(dimension?.split('X')[0]) &&
+              img.height >= Number(dimension?.split('X')[1])
+            ) {
+              const fileWithPreview = Object.assign(file, {
+                preview: URL.createObjectURL(file),
+              });
+              setPreview(fileWithPreview.preview);
+              onChange(fileWithPreview);
+              setError('');
+            } else {
+              setError(`Min. ${dimension?.split('X')[0]} px with width & height must be same!`);
+            }
+          };
+          img.onerror = () => {
+            setError('Could not read image dimensions. Please choose a valid image file!');
+          };
+          img.src = URL.createObjectURL(file);
         } else {
-          setError('File size exceeds 1MB. Please choose a smaller file.');
+          setError('File size exceeds 1MB. Please choose a smaller file!');
         }
       } else {
-        setError('Invalid file type. Please choose a valid image file.');
+        setError('Invalid file type. Please choose a valid image file!');
       }
     },
-    [onChange, size]
+    [onChange, size, dimension]
   );
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -61,7 +77,7 @@ export default function DragAndDropUpload({
       'image/png': ['.png'],
       'image/jpeg': ['.jpg', '.jpeg'],
     },
-    maxSize: size,
+    // maxSize: size,
     onDrop,
   });
 
@@ -80,44 +96,41 @@ export default function DragAndDropUpload({
   };
 
   return (
-    <div {...getRootProps({ className: className })}>
-      <input {...getInputProps()} />
-      {value && preview ? (
-        <div className="relative flex items-center gap-3">
-          <img
-            src={preview}
-            alt="Uploaded Image"
-            width={0}
-            height={0}
-            sizes="100vw"
-            className={cn('z-30 h-[120px] w-[120px] rounded-md border border-gray-200 object-cover p-2', isRounded && 'rounded-full p-2')}
-          />
-          {!isRounded ? (
-            <button type="button" className="rounded bg-red-500 p-1" onClick={removeFile}>
-              <FaTrashAlt className="hover:fill-secondary-400 h-5 w-5 fill-white transition-colors" />
-            </button>
-          ) : (
-            <FaTrashAlt
-              onClick={removeFile}
-              className="hover:fill-secondary-400 absolute right-3 top-0 z-50 h-4 w-4 transform cursor-pointer fill-red-500 transition-all duration-700 ease-in-out hover:scale-125"
+    <div className="flex flex-col items-center justify-center gap-y-2">
+      <div {...getRootProps({ className: className })}>
+        <input {...getInputProps()} />
+        {value && preview ? (
+          <div className="relative flex items-center gap-3">
+            <img
+              src={preview}
+              alt="Uploaded Image"
+              sizes="100vw"
+              className={cn('z-30 h-[120px] w-[120px] rounded-md border border-gray-200 object-cover p-2', isRounded && 'rounded-full')}
             />
-          )}
-        </div>
-      ) : (
-        <div
-          className={cn(
-            'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-2',
-            errors.image && '!border-danger ring-0',
-            isRounded && 'h-[120px] w-[120px] gap-0 rounded-full'
-          )}
-        >
-          <div className={className}>
-            <MdCloudUpload className={cn('text-4xl text-danger', isRounded && 'text-4xl')} />
+            {!isRounded ? (
+              <button type="button" className="rounded bg-red-500 p-1" onClick={removeFile}>
+                <FaTrashAlt className="hover:fill-secondary-400 h-5 w-5 fill-white transition-colors" />
+              </button>
+            ) : (
+              <FaTrashAlt
+                onClick={removeFile}
+                className="hover:fill-secondary-400 absolute right-3 top-0 z-50 h-4 w-4 transform cursor-pointer fill-red-500 transition-all duration-700 ease-in-out hover:scale-125"
+              />
+            )}
           </div>
+        ) : (
+          <div
+            className={cn(
+              'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-2',
+              errors.image && '!border-danger ring-0',
+              isRounded && 'h-[120px] w-[120px] gap-0 rounded-full',
+              isRounded && error && '!border-danger ring-0'
+            )}
+          >
+            <div className={className}>
+              <MdCloudUpload className={cn('text-4xl text-danger', isRounded && 'text-4xl')} />
+            </div>
 
-          {error ? (
-            <p className="text-sm text-danger">{error}</p>
-          ) : (
             <>
               <h3 className="mt-2 text-sm font-medium text-gray-900">
                 <label htmlFor="file-upload" className="relative cursor-pointer">
@@ -137,10 +150,12 @@ export default function DragAndDropUpload({
               </h3>
               {!isRounded && <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to {sizeText}</p>}
             </>
-          )}
-        </div>
-      )}
-      {brandText && <h2 className="p-3 text-center font-medium">{brandText}</h2>}
+          </div>
+        )}
+        {brandText && <h2 className="py-3 text-center font-medium">{brandText}</h2>}
+      </div>
+
+      {error && <p className=" text-sm text-danger">{error}</p>}
     </div>
   );
 }

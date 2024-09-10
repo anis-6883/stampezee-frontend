@@ -1,6 +1,7 @@
 import { metaObject } from '@/config/site.config';
 import Cryptr from 'cryptr';
 import macaddress from 'macaddress';
+import { getTranslations } from 'next-intl/server';
 import ContactForm from './_component/ContactForm';
 
 export const metadata = {
@@ -8,6 +9,7 @@ export const metadata = {
 };
 
 export default async function Page() {
+  const t = await getTranslations('ContactPage');
   const cryptr = new Cryptr(process.env.ENCRYPTION_KEY as string, {
     encoding: 'base64',
     pbkdf2Iterations: 10000,
@@ -25,19 +27,19 @@ export default async function Page() {
           <div className="flex h-full items-center justify-center sm:ml-3 sm:block">
             <div className="bottom-[28%] sm:absolute">
               <div className="text-center text-4xl font-bold text-[#DF2828] sm:text-left sm:text-6xl">
-                <span style={{ opacity: 1, transform: 'none' }}>W</span>
-                <span style={{ opacity: 1, transform: 'none' }}>h</span>
+                <span style={{ opacity: 1, transform: 'none' }}>{t('where')}</span>
+                {/* <span style={{ opacity: 1, transform: 'none' }}>h</span>
                 <span style={{ opacity: 1, transform: 'none' }}>e</span>
                 <span style={{ opacity: 1, transform: 'none' }}>r</span>
-                <span style={{ opacity: 1, transform: 'none' }}>e</span>
+                <span style={{ opacity: 1, transform: 'none' }}>e</span> */}
               </div>
               <br />
               <div className="flex gap-3 text-4xl font-bold text-white sm:text-6xl">
                 <div className="">
-                  <span style={{ opacity: 1, transform: 'none' }}>t</span>
-                  <span style={{ opacity: 1, transform: 'none' }}>o</span>
+                  <span style={{ opacity: 1, transform: 'none' }}>{t('title')}</span>
+                  {/* <span style={{ opacity: 1, transform: 'none' }}>o</span> */}
                 </div>
-                <div className="">
+                {/* <div className="">
                   <span style={{ opacity: 1, transform: 'none' }}>f</span>
                   <span style={{ opacity: 1, transform: 'none' }}>i</span>
                   <span style={{ opacity: 1, transform: 'none' }}>n</span>
@@ -47,7 +49,7 @@ export default async function Page() {
                   <span style={{ opacity: 1, transform: 'none' }}>u</span>
                   <span style={{ opacity: 1, transform: 'none' }}>s</span>
                   <span style={{ opacity: 1, transform: 'none' }}>?</span>
-                </div>
+                </div> */}
               </div>
               <div className="MuiStack-root css-plpzdo" />
             </div>
@@ -93,8 +95,8 @@ export default async function Page() {
       </div> */}
       <div className="mx-4 my-10 max-w-screen-xl xl:mx-auto">
         <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
-          <h1 className=" text-xl font-bold xl:text-xl">Connect with us</h1>
-          <ContactForm token={encryptedString} />
+          <h1 className=" text-xl font-bold xl:text-xl">{t('formTitle')}</h1>
+          {encryptedString && <ContactForm token={encryptedString} />}
         </div>
       </div>
     </div>

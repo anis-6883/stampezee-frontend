@@ -12,7 +12,6 @@ import { getCountryByTimezone, getPhoneCodeByTimezone } from '@/utils/get-countr
 import countryData from '@/utils/get-country-list';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -22,10 +21,14 @@ import ReactSelect, { OnChangeValue } from 'react-select';
 import { Checkbox, FieldError } from 'rizzui';
 import * as Yup from 'yup';
 import OtpModal from './OtpModal';
+import PolicyModal from './PolicyModal';
+import TermsModal from './TermsModal';
 
-export default function RegisterForm() {
+export default function RegisterForm({ terms, policy }: { terms: any; policy: any }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalState, setModalState] = useState(false);
+  const [termsModalState, setTermsModalState] = useState(false);
+  const [privacyPolicyModalState, setPrivacyPolicyModalState] = useState(false);
   const [register, { data: registerResponse, isSuccess, error }] = useRetailerRegisterMutation();
   const dispatch = useDispatch();
 
@@ -75,9 +78,7 @@ export default function RegisterForm() {
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string()
-      .required('Required!')
-      .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, 'No spaces allowed'),
+    storeName: Yup.string().required('Required!'),
     firstName: Yup.string().required('Required!'),
     lastName: Yup.string(),
     email: Yup.string()
@@ -217,13 +218,13 @@ export default function RegisterForm() {
                     />{' '}
                     <p className="text-xs font-medium">
                       I Agree with the{' '}
-                      <Link href="/terms" className="border-b-2">
+                      <span onClick={() => setTermsModalState(true)} className="cursor-pointer border-b-2">
                         Terms of Use
-                      </Link>{' '}
+                      </span>{' '}
                       and{' '}
-                      <Link href="/privacy-policy" className="border-b-2">
+                      <span onClick={() => setPrivacyPolicyModalState(true)} className="cursor-pointer border-b-2">
                         Privacy Policy
-                      </Link>
+                      </span>
                     </p>
                   </div>
                   {errors.isAgree && touched.isAgree && (
@@ -255,6 +256,8 @@ export default function RegisterForm() {
       </div>
 
       <OtpModal modalState={modalState} setModalState={setModalState} />
+      <TermsModal modalState={termsModalState} setModalState={setTermsModalState} terms={terms} />
+      <PolicyModal modalState={privacyPolicyModalState} setModalState={setPrivacyPolicyModalState} policy={policy} />
     </div>
   );
 }

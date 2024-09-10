@@ -10,7 +10,7 @@ import objectToFormData from '@/utils/objectToFormData';
 import { FieldArray, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { BsCheck2Circle } from 'react-icons/bs';
+import { BsCheck2Circle, BsPatchCheck } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { IoStorefrontOutline } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
@@ -34,18 +34,21 @@ export default function CreateUpdateModel({
 
   const initialValues = {
     title: formData?.title || '',
+    price: formData?.price || 0,
     image: formData?.image || null,
     allowTotalTeamMember: formData?.allowTotalTeamMember || null,
     allowTotalBranch: formData?.allowTotalBranch || null,
+    allowTotalStamp: formData?.allowTotalStamp || null,
     limit: formData?.limit || null,
-    price: formData?.price || 0,
     descriptions: formData?.descriptions || getSubDetailsObject(false),
     type: formData?.type || 'subscription',
+    slug: formData?.slug || '',
   };
 
   const validationSchema = Yup.object({
     title: Yup.string().required('Required!'),
     price: Yup.mixed().required('Required!'),
+    slug: Yup.string().required('Required!'),
     type: Yup.mixed().oneOf(['subscription', 'addon']).required('Required!'),
     allowTotalBranch: Yup.string().when('type', {
       is: 'subscription',
@@ -53,6 +56,11 @@ export default function CreateUpdateModel({
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalTeamMember: Yup.string().when('type', {
+      is: 'subscription',
+      then: () => Yup.number().required('Required!'),
+      otherwise: () => Yup.number().nullable(),
+    }),
+    allowTotalStamp: Yup.string().when('type', {
       is: 'subscription',
       then: () => Yup.number().required('Required!'),
       otherwise: () => Yup.number().nullable(),
@@ -85,7 +93,7 @@ export default function CreateUpdateModel({
       if (values?.type === 'subscription') {
         ignoreList.push('limit');
       } else {
-        ignoreList.push('allowTotalBranch', 'allowTotalTeamMember');
+        ignoreList.push('allowTotalBranch', 'allowTotalTeamMember', 'allowTotalStamp');
       }
       if (!isFile(values?.image)) ignoreList.push('image');
 
@@ -111,7 +119,7 @@ export default function CreateUpdateModel({
   }, [setFormData, setModalState, updateError, updateSuccess]);
 
   return (
-    <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
+    <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="650px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
           {formData?._id ? <Title as="h4">Update A Subscription</Title> : <Title as="h4">Add New Subscription</Title>}
@@ -141,22 +149,23 @@ export default function CreateUpdateModel({
                         size={1024 * 1000}
                         sizeText="1MB"
                         isRounded={true}
-                        uploadText="Upload Logo"
+                        uploadText="Upload Image"
                       />
                     </div>
                   )}
 
-                  <div className="flex gap-5">
+                  <div className="flex gap-3">
                     <InputField name="title" label="Title" placeholder="Title" />
                     <InputField
                       name="price"
+                      disabled={formData?.slug === 'trial' ? true : false}
                       label="Price (CAD)"
                       type="number"
-                      placeholder="999"
+                      placeholder="9.99"
                       prefix={<LuCircleDollarSign className="text-xl" />}
                     />
                   </div>
-                  <div className="my-3 flex gap-5">
+                  <div className="my-3 flex gap-3">
                     {formData?.type === 'subscription' && (
                       <InputField
                         name="allowTotalBranch"
@@ -174,6 +183,16 @@ export default function CreateUpdateModel({
                         type="number"
                         placeholder="0"
                         prefix={<RiTeamLine className="text-xl" />}
+                      />
+                    )}
+
+                    {formData?.type === 'subscription' && (
+                      <InputField
+                        name="allowTotalStamp"
+                        label="Total Stamp"
+                        type="number"
+                        placeholder="0"
+                        prefix={<BsPatchCheck className="text-xl" />}
                       />
                     )}
 

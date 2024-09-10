@@ -1,4 +1,5 @@
 import { metaObject } from '@/config/site.config';
+import { useTranslations } from 'next-intl';
 import Accordion from '../components/Accordion';
 
 export const metadata = {
@@ -6,6 +7,7 @@ export const metadata = {
 };
 
 export default function Page() {
+  const t = useTranslations('FaqPage');
   return (
     <div>
       <div className="relative mx-auto w-full">
@@ -15,18 +17,18 @@ export default function Page() {
           <div className="flex h-full items-center justify-center sm:ml-3 sm:block">
             <div className="bottom-[28%] sm:absolute">
               <div className="text-center text-4xl font-bold text-[#DF2828] sm:text-left sm:text-6xl">
-                <span style={{ opacity: 1, transform: 'none' }}>H</span>
-                <span style={{ opacity: 1, transform: 'none' }}>o</span>
-                <span style={{ opacity: 1, transform: 'none' }}>w</span>
+                <span style={{ opacity: 1, transform: 'none' }}>{t('how')}</span>
+                {/* <span style={{ opacity: 1, transform: 'none' }}>o</span>
+                <span style={{ opacity: 1, transform: 'none' }}>w</span> */}
               </div>
               <br />
               <div className="flex gap-3 text-[1.5rem]  font-bold text-white sm:text-6xl md:text-[4rem]">
                 <div className="">
-                  <span style={{ opacity: 1, transform: 'none' }}>c</span>
-                  <span style={{ opacity: 1, transform: 'none' }}>a</span>
-                  <span style={{ opacity: 1, transform: 'none' }}>n</span>
+                  <span style={{ opacity: 1, transform: 'none' }}>{t('title')}</span>
+                  {/* <span style={{ opacity: 1, transform: 'none' }}>a</span>
+                  <span style={{ opacity: 1, transform: 'none' }}>n</span> */}
                 </div>
-                <div className="">
+                {/* <div className="">
                   <span style={{ opacity: 1, transform: 'none' }}>w</span>
                   <span style={{ opacity: 1, transform: 'none' }}>e</span>
                 </div>
@@ -41,7 +43,7 @@ export default function Page() {
                   <span style={{ opacity: 1, transform: 'none' }}>o</span>
                   <span style={{ opacity: 1, transform: 'none' }}>u</span>
                   <span style={{ opacity: 1, transform: 'none' }}>?</span>
-                </div>
+                </div> */}
               </div>
               <div className="MuiStack-root css-plpzdo" />
             </div>
@@ -49,7 +51,7 @@ export default function Page() {
         </div>
       </div>
       <div className="md-px-0 container mx-auto mt-10 max-w-screen-xl px-3">
-        <h1 className="text-xl font-bold leading-tight  sm:text-[2rem]">Frequently asked questions</h1>
+        <h1 className="text-xl font-bold leading-tight  sm:text-[2rem]">{t('questionTitle')}</h1>
       </div>
 
       <div className="md-px-0 container mx-auto mt-10 max-w-screen-xl px-3">

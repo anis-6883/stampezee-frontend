@@ -7,16 +7,8 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 import { RootState } from '@/features/store';
-import {
-  removeAddOns,
-  resetState,
-  setPlanChangeCost,
-  setRefundableThreshold,
-  setTaxPercentage,
-  setTaxStatus,
-} from '@/features/subscription/subscriptionSlice';
+import { removeAddOns, resetState } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
-import { AddOn } from '@/types';
 import { hasCheckedPurchaseAlert, isCheckoutButtonDisabled } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -24,21 +16,19 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { CiEdit } from 'react-icons/ci';
-import { ImBin } from 'react-icons/im';
 import { MdBlock } from 'react-icons/md';
 import { RiRefund2Line } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
-import LoginAlert from './LoginAlert';
 import PlanAddOns from './PlanAddons';
 
-export default function OrderSummary({ stripeInfo }: any) {
+export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
-  const { code, subscription, addOns, subTotal, total, tax, activeSubscription, planChangeType } = useSelector(
+  const { code, subscription, addOn, downgradeRefund, total, activeSubscription, planChangeType, refundableThreshold } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
   const [modalState, setModalState] = useState(false);
@@ -50,7 +40,7 @@ export default function OrderSummary({ stripeInfo }: any) {
 
   const { isLoggedIn, user, accessToken } = useSelector((state: RootState) => state.authSlice);
 
-  const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
+  // const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
   const [checkOut, { data: checkOutResponse, isLoading: checkOutLoading, error: checkoutError }] = useCreateCheckOutMutation();
   const { data: profile, isSuccess: profileSuccess, refetch } = useRetailerGetProfileQuery(null, { skip: !isLoggedIn });
 
@@ -62,15 +52,8 @@ export default function OrderSummary({ stripeInfo }: any) {
     const allowTotalBranch = subscription?.allowTotalBranch || 0;
     const disabledTotalBranch = activeTotalBranch?.length - allowTotalBranch;
     setDisableBranchOptions(disableBranchOptions);
-    setTotalDisabledBranch(disabledTotalBranch);
+    setTotalDisabledBranch(disabledTotalBranch < 0 ? 0 : disabledTotalBranch);
   }, [branches, subscription]);
-
-  useEffect(() => {
-    dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
-    dispatch(setTaxPercentage(stripeInfo?.taxCost));
-    dispatch(setTaxStatus(stripeInfo?.taxStatus));
-    dispatch(setRefundableThreshold(stripeInfo?.refundableThreshold));
-  }, [dispatch, stripeInfo?.planChangeCost, stripeInfo?.taxCost, stripeInfo?.taxStatus, stripeInfo?.refundableThreshold]);
 
   useEffect(() => {
     if (checkoutError) {
@@ -94,14 +77,14 @@ export default function OrderSummary({ stripeInfo }: any) {
           push(checkOutResponse?.data?.url);
         } else {
           toast.success(checkOutResponse?.message || 'Downgrade Successfully!');
-          update({ ...session?.user, ...checkOutResponse?.data });
+          update({ ...session?.user, ...profile?.data });
           dispatch(
             setValue({
               target: 'user',
               value: { ...user, ...profile?.data },
             })
           );
-          push(routes.privateRoutes.retailer.dashboard);
+          push(routes?.privateRoutes?.retailer?.dashboard);
           setSelectedBranches([]);
         }
       }
@@ -112,27 +95,29 @@ export default function OrderSummary({ stripeInfo }: any) {
 
   const handleCheckOut = () => {
     if (!isLoggedIn) {
-      setModalState(true);
+      push(routes.publicRoutes.retailerLogin + '?callback=checkout');
+      // setModalState(true);
       return;
     }
-    if (subscription?.slug === activeSubscription?.slug && addOns?.length > 0) {
-      checkOut({ slugs: addOns?.map((item: AddOn) => item.slug) });
+    if (activeSubscription?.slug && addOn.slug) {
+      checkOut({ slug: addOn.slug, currency: selectedCurrency });
       return;
     }
-    if (planChangeType === 'downgrade' && totalDisabledBranch > 0) {
+
+    if (planChangeType === 'downgrade') {
       if (selectedBranches?.length === totalDisabledBranch) {
-        checkOut({ slugs: subSlugs, branchIds: selectedBranches });
+        checkOut({ slug: subscription.slug, branchIds: selectedBranches, currency: selectedCurrency });
       } else {
         setBranchDisableModalState(true);
       }
 
       return;
     }
-    if (subSlugs.length > 0) {
+    if (subscription?.slug) {
       if (code) {
-        checkOut({ slugs: subSlugs, code });
+        checkOut({ slug: subscription?.slug, code, currency: selectedCurrency });
       } else {
-        checkOut({ slugs: subSlugs });
+        checkOut({ slug: subscription?.slug, currency: selectedCurrency });
       }
     }
   };
@@ -150,26 +135,24 @@ export default function OrderSummary({ stripeInfo }: any) {
         <hr className=" text-lg font-bold" />
         <CouponForm />
 
-        {subscription?.slug === activeSubscription?.slug && addOns?.length > 0 && (
+        {/* {subscription?.slug === activeSubscription?.slug && addOn?.slug && (
           <div>
-            <h2 className="pb-2 text-lg font-medium">Add-Ons</h2>
+            <h2 className="pb-2 text-lg font-medium">Add-On</h2>
             <hr className="p-2 text-lg font-bold" />
-            {addOns?.length > 0 && (
-              <div>
-                {addOns.map((addOn: AddOn, index: number) => (
-                  <div key={index} className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-                    <span className="col-span-6">{addOn.title}</span>
-                    <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
-                      <ImBin />
-                    </button>
-                    <span className="col-span-4 justify-self-end">{addOn ? parseFloat(addOn?.price?.toFixed(2)).toFixed(2) : 0} CAD</span>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+              <span className="col-span-6">{addOn.title}</span>
+              <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
+                <ImBin />
+              </button>
+              <span className="col-span-4 justify-self-end">
+                {addOn ? parseFloat(addOn?.price?.toFixed(2)).toFixed(2) : 0} {selectedCurrency}
+              </span>
+            </div>
             <div className="mb-2 flex justify-between">
               <span className="font-semibold">Subtotal</span>
-              <span className="text-red-500">{Math.abs(subTotal).toFixed(2)} CAD</span>
+              <span className="text-red-500">
+                {Math.abs(subTotal).toFixed(2)} {selectedCurrency}
+              </span>
             </div>
             <hr className="p-2 text-lg font-bold" />
             {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && (
@@ -177,40 +160,45 @@ export default function OrderSummary({ stripeInfo }: any) {
                 <span>
                   <span className="font-semibold">{stripeInfo?.taxTitle}</span> ({stripeInfo?.taxCost}%)
                 </span>
-                <span className="text-red-500">{tax.toFixed(2)} CAD</span>
+                <span className="text-red-500">
+                  {tax.toFixed(2)} {selectedCurrency}
+                </span>
               </div>
             )}
             <div className="flex justify-between text-xl font-bold">
               <span>Total</span>
-              <span className="text-red-500">{Math.abs(total).toFixed(2)} CAD</span>
+              <span className="text-red-500">
+                {Math.abs(total).toFixed(2)} {selectedCurrency}
+              </span>
             </div>
           </div>
-        )}
-        {subscription?.slug !== activeSubscription?.slug && <PlanAddOns stripeInfo={stripeInfo} />}
-        {subscription?.slug === activeSubscription?.slug && addOns?.length === 0 && (
+        )} */}
+        {subscription?.slug !== activeSubscription?.slug && <PlanAddOns stripeInfo={stripeInfo} selectedCurrency={selectedCurrency} />}
+        {subscription?.slug === activeSubscription?.slug && !addOn.slug && (
           <div className="py-4 text-center font-medium text-red-500">Your cart is currently empty. Select a plan!</div>
         )}
       </div>
 
-      {total > 0 && subscription?.slug !== activeSubscription?.slug && (
+      {downgradeRefund > 0 && downgradeRefund > refundableThreshold && subscription?.slug !== activeSubscription?.slug && (
         <div className="mt-3 rounded-lg border border-danger p-3">
           <h2 className="flex items-center gap-x-1 text-sm font-semibold">
             <RiRefund2Line className="text-xl" />
-            You will get back <span className="text-lg font-bold text-danger">{Math.abs(total).toFixed(2)}</span> CAD!
+            You will get back <span className="text-lg font-bold text-danger">{Math.abs(downgradeRefund).toFixed(2)}</span>{' '}
+            {selectedCurrency}!
           </h2>
         </div>
       )}
 
-      {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold: stripeInfo?.refundableThreshold }) && (
+      {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold }) && (
         <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
           <p className="font-medium text-yellow-500">Purchase Alert!</p>
           <p className="text-yellow-500">
-            Your order needs to be at least {stripeInfo?.refundableThreshold} CAD. Please add more items to continue
+            Your order needs to be at least {refundableThreshold} {selectedCurrency}. Please add more items to continue
           </p>
         </div>
       )}
 
-      {selectedBranches?.length > 0 && (
+      {selectedBranches?.length > 0 && downgradeRefund > 0 && (
         <div className="mt-3 rounded-lg border border-danger p-3">
           <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">
             <MdBlock className="text-xl" /> Disable Branch/s:
@@ -237,20 +225,22 @@ export default function OrderSummary({ stripeInfo }: any) {
         disabled={isCheckoutButtonDisabled({
           plan: subscription,
           activePlan: activeSubscription,
-          totalAddOn: addOns?.length,
+          isLoggedIn,
+          hasPurchasePlan: session?.user?.plan ? true : false,
+          addOn,
           planChangeType,
           total,
           refundableThreshold: stripeInfo?.refundableThreshold,
         })}
         color="danger"
-        text="Checkout Confirm"
+        text="Confirm Checkout"
         className="mt-5 w-full"
         isSubmitting={checkOutLoading}
         onClick={handleCheckOut}
         postIcon={<BsCheck2Circle className="text-base" />}
       />
 
-      <LoginAlert modalState={modalState} setModalState={setModalState} />
+      {/* <LoginAlert modalState={modalState} setModalState={setModalState} /> */}
       <BranchDisableModal
         selectedBranches={selectedBranches}
         setSelectedBranches={setSelectedBranches}

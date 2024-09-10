@@ -10,7 +10,7 @@ export const couponApi = apiSlice.injectEndpoints({
       },
       providesTags: ['coupons'],
     }),
-    createCoupon: builder.mutation({
+    createCouponAdmin: builder.mutation({
       query: (data) => ({
         url: '/api/secret-root/admin/super-admin/coupon',
         method: 'POST',
@@ -46,7 +46,7 @@ export const couponApi = apiSlice.injectEndpoints({
 
 export const {
   useGetAllCouponQuery,
-  useCreateCouponMutation,
+  useCreateCouponAdminMutation,
   useUpdateCouponMutation,
   useDeleteCouponMutation,
   useUpdateCouponStatusMutation,

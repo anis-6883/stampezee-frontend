@@ -8,8 +8,11 @@ import { LuCircleDollarSign } from 'react-icons/lu';
 
 const BalanceCard = () => {
   const { data: session }: any = useSession();
-  const remainingAmount = roundToTwoDecimals(
-    calculateBalancePrice(session?.user?.planStartAt as Date, session?.user?.planValidAt as Date, session?.user?.planPayment)
+
+  const remainingAmount = calculateBalancePrice(
+    session?.user?.planStartAt as Date,
+    session?.user?.planValidAt as Date,
+    session?.user?.planPayment
   );
 
   const usageAmount = roundToTwoDecimals(Math.abs(remainingAmount - session?.user?.planPayment));
@@ -27,11 +30,15 @@ const BalanceCard = () => {
         <>
           <div className="flex">
             <LuCircleDollarSign className="text-xl" /> <p className="pl-3 text-center font-semibold">Current : </p>
-            <span className="pl-3 font-medium text-danger">{remainingAmount?.toFixed(2)} CAD</span>
+            <span className="pl-3 font-medium text-danger">
+              {remainingAmount?.toFixed(2)} {session?.user?.planPaymentCurrency}
+            </span>
           </div>
           <div className="flex">
             <LuCircleDollarSign className="text-xl" /> <p className="pl-3 text-center font-semibold">Usage : </p>
-            <span className="pl-3 font-medium text-danger">{usageAmount?.toFixed(2)} CAD</span>
+            <span className="pl-3 font-medium text-danger">
+              {usageAmount?.toFixed(2)} {session?.user?.planPaymentCurrency}
+            </span>
           </div>
         </>
       )}

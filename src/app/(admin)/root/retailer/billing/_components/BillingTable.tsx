@@ -1,13 +1,17 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import Button from '@/components/Formik/Button';
 import { useAllBillingQuery } from '@/features/retailer/billing/billingApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
+import Link from 'next/link';
 import { useState } from 'react';
+import { FaInfoCircle } from 'react-icons/fa';
 import { GiSandsOfTime } from 'react-icons/gi';
-import { IoCheckmarkCircle } from 'react-icons/io5';
+import { HiShoppingCart } from 'react-icons/hi2';
+import { IoArrowDownCircle, IoArrowUpCircle, IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
 
 export default function BillingTable({ offset }: { offset: number }) {
@@ -21,29 +25,40 @@ export default function BillingTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Enroll ID',
-      accessorKey: 'enrollSubscriptionId',
+      header: 'Plan/Add-on',
+      accessorKey: 'planSnapshot.title',
+      Cell: ({ row }: any) => {
+        return row?.original?.planSnapshot?.type === 'subscription' ? (
+          <div>{`${row?.original?.planSnapshot?.title} (Plan)`}</div>
+        ) : (
+          <div>{`${row?.original?.planSnapshot?.title} (Add-on)`}</div>
+        );
+      },
+      size: 150,
+    },
+    {
+      header: 'Payment Intent ID',
+      accessorKey: 'payment.paymentIntentId',
     },
     {
       header: 'Enroll Status',
-      accessorKey: 'enrollSubscriptionId',
-      Cell: ({ row }: any) => {
-        const upgradeOrDowngradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
-          if (item?.enrollStatus === 'upgrade' || item?.enrollStatus === 'downgrade') {
-            return true;
-          }
-          return false;
-        });
-        return <div>{upgradeOrDowngradeEnroll?.enrollStatus ? upgradeOrDowngradeEnroll?.enrollStatus : 'purchase'}</div>;
-      },
-    },
-    {
-      header: 'Grand Total (CAD)',
-      accessorKey: 'amountTotal',
+      accessorKey: 'enrollStatus',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
-          <div>
-            <h2 className="font-medium">${row?.original?.amountTotal?.toFixed(2)}</h2>
+          <div className="text-white">
+            {row?.original?.enrollStatus === 'purchase' ? (
+              <Badge className="bg-primary">
+                <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+              </Badge>
+            ) : row?.original?.enrollStatus === 'upgrade' ? (
+              <Badge className="!bg-success">
+                <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+              </Badge>
+            ) : (
+              <Badge className="!bg-danger">
+                <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+              </Badge>
+            )}
           </div>
         </div>
       ),
@@ -53,6 +68,43 @@ export default function BillingTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+    },
+    {
+      header: 'Grand Total',
+      accessorKey: 'amountTotal',
+      Cell: ({ row }: any) => {
+        let totalAmount = row?.original?.balanceInfo?.planCurrentPrice || 0;
+        if (row?.original?.taxSnapshot?.taxCost) {
+          totalAmount += (row?.original?.balanceInfo?.planCurrentPrice * 2) / 100;
+        }
+        if (row?.original?.couponSnapshot) {
+          if (row?.original?.couponSnapshot?.discountType === 'percentage') {
+            totalAmount -= (row?.original?.balanceInfo?.planCurrentPrice * row?.original?.couponSnapshot?.discount) / 100;
+          } else {
+            totalAmount -= row?.original?.couponSnapshot?.discount;
+          }
+        }
+        if (row?.original?.enrollStatus === 'upgrade' || row?.original?.enrollStatus === 'downgrade') {
+          totalAmount -= row?.original?.balanceInfo?.currentBalance;
+          totalAmount += row?.original?.planChangeCost;
+        }
+        return (
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <h2 className="font-medium">
+                {totalAmount?.toFixed(2)} {row?.original?.balanceInfo?.currency}
+              </h2>
+            </div>
+          </div>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+      size: 100,
     },
     {
       header: 'Payment Status',
@@ -78,6 +130,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      size: 200,
     },
     {
       header: 'Payment Date',
@@ -92,7 +145,25 @@ export default function BillingTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 150,
+      size: 230,
+    },
+    {
+      header: 'Actions',
+      Cell: ({ row }: any) => {
+        return (
+          <div>
+            <Link href={'/'}>
+              <Button className="!m-0" text="Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
+            </Link>
+          </div>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
     },
   ];
 
@@ -227,10 +298,10 @@ export default function BillingTable({ offset }: { offset: number }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Payment ID"
+      searchPlaceHolder="Search By Payment Intent ID"
       searchFieldWidth="250px"
       enableRowNumbers={true}
-      renderDetailPanel={renderDetailPanel}
+      // renderDetailPanel={renderDetailPanel}
     />
   );
 }

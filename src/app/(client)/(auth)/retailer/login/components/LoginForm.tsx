@@ -8,6 +8,12 @@ import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerLoginMutation } from '@/features/auth/authApi';
 import { userLoggedIn } from '@/features/auth/authSlice';
+import { RootState } from '@/features/store';
+import { activeSubscription, setActiveSubscription, setRemainingBalance, setSubscription } from '@/features/subscription/subscriptionSlice';
+import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
+import { Subscription } from '@/types';
+import { calculateCurrencyExchangeRate } from '@/utils';
 import { Form, Formik } from 'formik';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -15,12 +21,15 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { SlEnvolope, SlLock } from 'react-icons/sl';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 export default function LoginForm() {
   const { replace } = useRouter();
   const dispatch = useDispatch();
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
+  const { activeSubscription, currency, defaultCurrency } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('callback');
@@ -49,6 +58,40 @@ export default function LoginForm() {
     if (loginSuccess) {
       dispatch(userLoggedIn(loginResponse?.data));
 
+      const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === loginResponse?.data?.plan);
+      const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === loginResponse?.data?.planPaymentCurrency);
+
+      let updateActiveSubscription: any = {};
+      if (activePlan) {
+        updateActiveSubscription = {
+          ...activePlan,
+          price: calculateCurrencyExchangeRate({
+            selectedCurrencyExchangeRate: currency,
+            defaultCurrencyExchangeRate: defaultCurrency,
+            price: activePlan?.price,
+          }),
+          takeFreeTrial: loginResponse?.data.takeFreeTrial,
+          planStartAt: loginResponse?.data.planStartAt,
+          planValidAt: loginResponse?.data.planValidAt,
+          planPaymentCurrency: purchaseCurrencyExchange,
+        };
+      } else {
+        updateActiveSubscription = {
+          ...activeSubscription,
+          takeFreeTrial: loginResponse?.data.takeFreeTrial,
+          planStartAt: loginResponse?.data.planStartAt,
+          planValidAt: loginResponse?.data.planValidAt,
+          planPaymentCurrency: purchaseCurrencyExchange,
+        };
+      }
+
+      if (loginResponse?.data.takeFreeTrial) {
+        dispatch(setSubscription(activePlan));
+      }
+
+      dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
+      dispatch(setRemainingBalance());
+
       signIn('credentials', {
         userData: JSON.stringify(loginResponse?.data),
         redirect: false,
@@ -69,7 +112,8 @@ export default function LoginForm() {
         }
       });
     }
-  }, [dispatch, loginError, loginResponse, loginSuccess, replace, searchQuery]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, loginError, loginSuccess, replace, searchQuery]);
 
   const handleSubmit = (values: { email: string; password: string }) => {
     setIsSubmitting(true);

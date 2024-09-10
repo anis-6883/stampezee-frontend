@@ -15,6 +15,9 @@ export const subscriptionApi = apiSlice.injectEndpoints({
     getSubscription: builder.query({
       query: () => '/api/web/subscription-plans',
     }),
+    getSingleSubscription: builder.query({
+      query: (id) => `/api/secret-root/admin/super-admin/subscription/${id}`,
+    }),
 
     updateSubscription: builder.mutation({
       query: ({ id, data }: any) => ({
@@ -47,6 +50,7 @@ export const {
   useCreateCheckOutMutation,
   useGetSubscriptionQuery,
   useGetAllSubscriptionQuery,
+  useGetSingleSubscriptionQuery,
   useUpdateSubscriptionMutation,
   useCreateCouponMutation,
 } = subscriptionApi;

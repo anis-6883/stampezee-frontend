@@ -1,6 +1,5 @@
 'use client';
 
-import Logo from '@/components/logo';
 import cn from '@/hooks/class-names';
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import { useWindowScroll } from '@/hooks/use-window-scroll';
@@ -24,7 +23,7 @@ export default function Header() {
       <div className="flex w-full max-w-2xl items-center">
         <HamburgerButton view={<Sidebar className="2xl:w-full static w-full" />} />
         <Link href={'/'} aria-label="Site Logo" className="me-4 w-9 shrink-0 lg:me-5 xl:hidden">
-          <Logo iconOnly={true} />
+          <img src="/images/logo.png" className="mx-auto w-10" alt="logo" />
         </Link>
 
         <SearchWidget />
