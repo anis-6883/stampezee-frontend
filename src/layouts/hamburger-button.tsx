@@ -1,8 +1,8 @@
 'use client';
 
 import { DrawerPlacements, useDrawer } from '@/components/drawer-views/use-drawer';
-import { ActionIcon } from 'rizzui';
 import cn from '@/hooks/class-names';
+import { ActionIcon } from 'rizzui';
 
 interface Props {
   view: JSX.Element;
