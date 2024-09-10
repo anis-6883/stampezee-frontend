@@ -7,6 +7,7 @@ export interface activeSubscription extends Subscription {
   planValidAt?: Date;
   takeFreeTrial?: string;
   planPayment?: number;
+  planPaymentCurrency?: any;
 }
 
 export interface Currency {
@@ -80,7 +81,11 @@ const updateBalance = (state: SubscriptionState) => {
       state?.activeSubscription?.planPayment as number
     );
     state.remainingBalance = roundToTwoDecimals(
-      calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: state.currency, price: remainingBalance })
+      calculateCurrencyExchangeRate({
+        selectedCurrencyExchangeRate: state.currency,
+        defaultCurrencyExchangeRate: state.activeSubscription?.planPaymentCurrency,
+        price: remainingBalance,
+      })
     );
   }
 };
@@ -206,7 +211,7 @@ const subscriptionSlice = createSlice({
       state.planChangeCost = calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: state.currency, price: action.payload });
     },
     setRefundableThreshold: (state, action: PayloadAction<number>) => {
-      state.refundableThreshold = action.payload;
+      state.refundableThreshold = calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: state.currency, price: action.payload });
     },
     setCode: (state, action: PayloadAction<string>) => {
       state.code = action.payload;

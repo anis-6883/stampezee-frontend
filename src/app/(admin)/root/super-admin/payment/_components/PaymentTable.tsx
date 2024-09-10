@@ -1,13 +1,16 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import Button from '@/components/Formik/Button';
 import { useGetSubscriptionPaymentsQuery } from '@/features/super-admin/payment/paymentApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
+import Link from 'next/link';
 import { useState } from 'react';
-import { GiSandsOfTime } from 'react-icons/gi';
-import { IoCheckmarkCircle } from 'react-icons/io5';
+import { FaInfoCircle } from 'react-icons/fa';
+import { HiShoppingCart } from 'react-icons/hi2';
+import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
 
 export default function PaymentTable({ offset }: { offset: number }) {
@@ -26,10 +29,10 @@ export default function PaymentTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="flex items-center gap-2">
           <div>
-            {row?.original?.retailer?.image ? (
+            {row?.original?.enrollSubscription?.retailer?.image ? (
               <div>
                 <img
-                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row?.original?.retailer?.image}`}
+                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row?.original?.enrollSubscription?.retailer?.image}`}
                   alt="image"
                   className="h-full w-8 rounded"
                 />
@@ -48,10 +51,14 @@ export default function PaymentTable({ offset }: { offset: number }) {
       size: 200,
     },
     {
+      header: 'Payment Intent ID',
+      accessorKey: 'paymentIntentId',
+    },
+    {
       header: 'Plan/Add-on',
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
-        return row?.original?.planSnapshot?.type === 'subscription' ? (
+        return row?.original?.enrollSubscription?.planSnapshot?.type === 'subscription' ? (
           <div>{`${row?.original?.enrollSubscription?.planSnapshot?.title} (Plan)`}</div>
         ) : (
           <div>{`${row?.original?.enrollSubscription?.planSnapshot?.title} (Add-on)`}</div>
@@ -61,29 +68,56 @@ export default function PaymentTable({ offset }: { offset: number }) {
     {
       header: 'Enroll Status',
       accessorKey: 'enrollStatus',
-      Cell: ({ row }: any) => {
-        return <Badge className="!bg-danger text-white">{_.capitalize(row?.original?.enrollSubscription?.enrollStatus)}</Badge>;
+      Cell: ({ row }: any) => (
+        <div className="flex items-center justify-center gap-2">
+          <div className="text-white">
+            {row?.original?.enrollSubscription?.enrollStatus === 'purchase' ? (
+              <Badge className="bg-primary">
+                <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollSubscription?.enrollStatus)}
+              </Badge>
+            ) : row?.original?.enrollSubscription?.enrollStatus === 'upgrade' ? (
+              <Badge className="!bg-success">
+                <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollSubscription?.enrollStatus)}
+              </Badge>
+            ) : (
+              <Badge className="!bg-danger">
+                <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollSubscription?.enrollStatus)}
+              </Badge>
+            )}
+          </div>
+        </div>
+      ),
+      mantineTableHeadCellProps: {
+        align: 'center',
       },
-      size: 150,
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
     },
     {
       header: 'Grand Total',
       accessorKey: 'amountTotal',
       Cell: ({ row }: any) => {
-        let totalAmount = row?.original?.enrollSubscription?.planSnapshot?.price || 0;
+        let totalAmount = row?.original?.enrollSubscription?.balanceInfo?.planCurrentPrice || 0;
         if (row?.original?.enrollSubscription?.taxSnapshot?.taxCost) {
-          totalAmount += (row?.original?.enrollSubscription?.planSnapshot?.price * 2) / 100;
+          totalAmount += (row?.original?.enrollSubscription?.balanceInfo?.planCurrentPrice * 2) / 100;
         }
         if (row?.original?.enrollSubscription?.couponSnapshot) {
-          if (row?.original?.couponSnapshot?.discountType === 'percentage') {
+          if (row?.original?.enrollSubscription?.couponSnapshot?.discountType === 'percentage') {
             totalAmount -=
-              (row?.original?.enrollSubscription?.planSnapshot?.price * row?.original?.enrollSubscription?.couponSnapshot?.discount) / 100;
+              (row?.original?.enrollSubscription?.balanceInfo?.planCurrentPrice *
+                row?.original?.enrollSubscription?.couponSnapshot?.discount) /
+              100;
           } else {
             totalAmount -= row?.original?.enrollSubscription?.couponSnapshot?.discount;
           }
         }
-        if (row?.original?.enrollSubscription?.enrollStatus) {
+        if (
+          row?.original?.enrollSubscription?.enrollStatus === 'upgrade' ||
+          row?.original?.enrollSubscription?.enrollStatus === 'downgrade'
+        ) {
           totalAmount -= row?.original?.enrollSubscription?.balanceInfo?.currentBalance;
+          totalAmount += row?.original?.enrollSubscription?.planChangeCost;
         }
         return (
           <div className="flex items-center justify-center gap-2">
@@ -103,31 +137,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
       },
       size: 200,
     },
-    {
-      header: 'Payment Type',
-      accessorKey: 'type',
-      Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
-          <div className="text-white">
-            {row?.original?.paymentStatus === 'pending' ? (
-              <Badge className="!bg-warning">
-                <GiSandsOfTime className="text-xl" /> {_.capitalize(row?.original?.paymentStatus)}
-              </Badge>
-            ) : (
-              <Badge className="!bg-success">
-                <IoCheckmarkCircle className="text-xl" /> {_.capitalize(row?.original?.paymentStatus)}
-              </Badge>
-            )}
-          </div>
-        </div>
-      ),
-      mantineTableHeadCellProps: {
-        align: 'center',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
-    },
+
     {
       header: 'Payment Date',
       Cell: ({ row }: any) => (
@@ -141,7 +151,25 @@ export default function PaymentTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 150,
+      size: 220,
+    },
+    {
+      header: 'Actions',
+      Cell: ({ row }: any) => {
+        return (
+          <div>
+            <Link href={'/'}>
+              <Button className="!m-0" text="Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
+            </Link>
+          </div>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
     },
   ];
 
@@ -294,6 +322,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
       query={query}
       searchPlaceHolder="Search By Payment Intent ID"
       searchFieldWidth="250px"
+      enableRowNumbers={true}
       // renderDetailPanel={RenderDetailPanel}
     />
   );

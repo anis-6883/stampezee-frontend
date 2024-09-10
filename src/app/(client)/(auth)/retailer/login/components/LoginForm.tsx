@@ -11,6 +11,7 @@ import { userLoggedIn } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { activeSubscription, setActiveSubscription, setRemainingBalance, setSubscription } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
 import { Form, Formik } from 'formik';
@@ -26,6 +27,7 @@ import * as Yup from 'yup';
 export default function LoginForm() {
   const { replace } = useRouter();
   const dispatch = useDispatch();
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
   const { activeSubscription, currency, defaultCurrency } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
@@ -57,6 +59,7 @@ export default function LoginForm() {
       dispatch(userLoggedIn(loginResponse?.data));
 
       const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === loginResponse?.data?.plan);
+      const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === loginResponse?.data?.planPaymentCurrency);
 
       let updateActiveSubscription: any = {};
       if (activePlan) {
@@ -70,6 +73,7 @@ export default function LoginForm() {
           takeFreeTrial: loginResponse?.data.takeFreeTrial,
           planStartAt: loginResponse?.data.planStartAt,
           planValidAt: loginResponse?.data.planValidAt,
+          planPaymentCurrency: purchaseCurrencyExchange,
         };
       } else {
         updateActiveSubscription = {
@@ -77,6 +81,7 @@ export default function LoginForm() {
           takeFreeTrial: loginResponse?.data.takeFreeTrial,
           planStartAt: loginResponse?.data.planStartAt,
           planValidAt: loginResponse?.data.planValidAt,
+          planPaymentCurrency: purchaseCurrencyExchange,
         };
       }
 

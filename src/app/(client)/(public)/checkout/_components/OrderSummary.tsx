@@ -9,7 +9,7 @@ import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 import { RootState } from '@/features/store';
 import { removeAddOns, resetState } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
-import { isCheckoutButtonDisabled } from '@/utils';
+import { hasCheckedPurchaseAlert, isCheckoutButtonDisabled } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -28,7 +28,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
-  const { code, subscription, addOn, downgradeRefund, total, activeSubscription, planChangeType } = useSelector(
+  const { code, subscription, addOn, downgradeRefund, total, activeSubscription, planChangeType, refundableThreshold } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
   const [modalState, setModalState] = useState(false);
@@ -179,7 +179,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
         )}
       </div>
 
-      {downgradeRefund > 0 && subscription?.slug !== activeSubscription?.slug && (
+      {downgradeRefund > 0 && downgradeRefund > refundableThreshold && subscription?.slug !== activeSubscription?.slug && (
         <div className="mt-3 rounded-lg border border-danger p-3">
           <h2 className="flex items-center gap-x-1 text-sm font-semibold">
             <RiRefund2Line className="text-xl" />
@@ -188,15 +188,15 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
           </h2>
         </div>
       )}
-      {/* 
-      {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold: stripeInfo?.refundableThreshold }) && (
+
+      {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold }) && (
         <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
           <p className="font-medium text-yellow-500">Purchase Alert!</p>
           <p className="text-yellow-500">
-            Your order needs to be at least {stripeInfo?.refundableThreshold} {selectedCurrency}. Please add more items to continue
+            Your order needs to be at least {refundableThreshold} {selectedCurrency}. Please add more items to continue
           </p>
         </div>
-      )} */}
+      )}
 
       {selectedBranches?.length > 0 && downgradeRefund > 0 && (
         <div className="mt-3 rounded-lg border border-danger p-3">

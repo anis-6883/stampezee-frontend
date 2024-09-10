@@ -7,7 +7,7 @@ import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import { useState } from 'react';
 import { GiSandsOfTime } from 'react-icons/gi';
-import { IoCheckmarkCircle } from 'react-icons/io5';
+import { IoArrowDownCircle, IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
 
 export default function RefundTable({ offset }: { offset: number }) {
@@ -47,6 +47,11 @@ export default function RefundTable({ offset }: { offset: number }) {
     {
       header: 'Enroll Status',
       accessorKey: 'enrollsubscription.enrollStatus',
+      Cell: ({ row }: any) => (
+        <Badge className="!bg-danger text-white">
+          <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollsubscription?.enrollStatus)}
+        </Badge>
+      ),
     },
     {
       header: 'Refund Amount (CAD)',

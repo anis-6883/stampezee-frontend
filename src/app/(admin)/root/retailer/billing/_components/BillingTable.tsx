@@ -1,13 +1,17 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import Button from '@/components/Formik/Button';
 import { useAllBillingQuery } from '@/features/retailer/billing/billingApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
+import Link from 'next/link';
 import { useState } from 'react';
+import { FaInfoCircle } from 'react-icons/fa';
 import { GiSandsOfTime } from 'react-icons/gi';
-import { IoCheckmarkCircle } from 'react-icons/io5';
+import { HiShoppingCart } from 'react-icons/hi2';
+import { IoArrowDownCircle, IoArrowUpCircle, IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
 
 export default function BillingTable({ offset }: { offset: number }) {
@@ -30,6 +34,7 @@ export default function BillingTable({ offset }: { offset: number }) {
           <div>{`${row?.original?.planSnapshot?.title} (Add-on)`}</div>
         );
       },
+      size: 150,
     },
     {
       header: 'Payment Intent ID',
@@ -38,27 +43,50 @@ export default function BillingTable({ offset }: { offset: number }) {
     {
       header: 'Enroll Status',
       accessorKey: 'enrollStatus',
-      Cell: ({ row }: any) => {
-        return <Badge className="!bg-danger text-white">{_.capitalize(row?.original?.enrollStatus)}</Badge>;
+      Cell: ({ row }: any) => (
+        <div className="flex items-center justify-center gap-2">
+          <div className="text-white">
+            {row?.original?.enrollStatus === 'purchase' ? (
+              <Badge className="bg-primary">
+                <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+              </Badge>
+            ) : row?.original?.enrollStatus === 'upgrade' ? (
+              <Badge className="!bg-success">
+                <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+              </Badge>
+            ) : (
+              <Badge className="!bg-danger">
+                <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+              </Badge>
+            )}
+          </div>
+        </div>
+      ),
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
       },
     },
     {
       header: 'Grand Total',
       accessorKey: 'amountTotal',
       Cell: ({ row }: any) => {
-        let totalAmount = row?.original?.planSnapshot?.price || 0;
+        let totalAmount = row?.original?.balanceInfo?.planCurrentPrice || 0;
         if (row?.original?.taxSnapshot?.taxCost) {
-          totalAmount += (row?.original?.planSnapshot?.price * 2) / 100;
+          totalAmount += (row?.original?.balanceInfo?.planCurrentPrice * 2) / 100;
         }
         if (row?.original?.couponSnapshot) {
           if (row?.original?.couponSnapshot?.discountType === 'percentage') {
-            totalAmount -= (row?.original?.planSnapshot?.price * row?.original?.couponSnapshot?.discount) / 100;
+            totalAmount -= (row?.original?.balanceInfo?.planCurrentPrice * row?.original?.couponSnapshot?.discount) / 100;
           } else {
             totalAmount -= row?.original?.couponSnapshot?.discount;
           }
         }
-        if (row?.original?.enrollStatus) {
+        if (row?.original?.enrollStatus === 'upgrade' || row?.original?.enrollStatus === 'downgrade') {
           totalAmount -= row?.original?.balanceInfo?.currentBalance;
+          totalAmount += row?.original?.planChangeCost;
         }
         return (
           <div className="flex items-center justify-center gap-2">
@@ -76,7 +104,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 200,
+      size: 100,
     },
     {
       header: 'Payment Status',
@@ -117,7 +145,25 @@ export default function BillingTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 200,
+      size: 230,
+    },
+    {
+      header: 'Actions',
+      Cell: ({ row }: any) => {
+        return (
+          <div>
+            <Link href={'/'}>
+              <Button className="!m-0" text="Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
+            </Link>
+          </div>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
     },
   ];
 

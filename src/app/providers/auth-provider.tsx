@@ -67,6 +67,7 @@ export default function AuthProvider({
         planStartAt: session?.user?.planStartAt,
         planValidAt: session?.user?.planValidAt,
         planPayment: session?.user?.planPayment,
+        planPaymentCurrency: purchaseCurrencyExchange,
       };
     } else {
       updateActiveSubscription = {
@@ -80,6 +81,7 @@ export default function AuthProvider({
         planStartAt: session?.user?.planStartAt,
         planValidAt: session?.user?.planValidAt,
         planPayment: session?.user?.planPayment,
+        planPaymentCurrency: purchaseCurrencyExchange,
       };
     }
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
