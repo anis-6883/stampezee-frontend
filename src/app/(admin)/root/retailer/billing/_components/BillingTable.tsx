@@ -114,11 +114,11 @@ export default function BillingTable({ offset }: { offset: number }) {
           <div className="text-white">
             {row?.original?.paymentStatus === 'pending' ? (
               <Badge className="!bg-warning">
-                <GiSandsOfTime className="text-xl" /> {_.capitalize(row?.original?.paymentStatus)}
+                <GiSandsOfTime className="mr-1 text-xl" /> {_.capitalize(row?.original?.paymentStatus)}
               </Badge>
             ) : (
               <Badge className="!bg-success">
-                <IoCheckmarkCircle className="text-xl" /> {_.capitalize(row?.original?.paymentStatus)}
+                <IoCheckmarkCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.paymentStatus)}
               </Badge>
             )}
           </div>
