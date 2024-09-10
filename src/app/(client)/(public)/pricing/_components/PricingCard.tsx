@@ -53,7 +53,7 @@ export default function PricingCard({ item }: { item: any }) {
       <div>
         <h3 className="mb-4 text-xl font-semibold">{item.title}</h3>
         {!currency?.name ? (
-          <Skeleton className="w-50 h-8 rounded" />
+          <Skeleton className="w-50 mb-2 h-8 rounded" />
         ) : (
           <div className="my-2 flex items-baseline">
             <span className="mr-2 text-xl font-bold xl:text-3xl xl:font-extrabold">
