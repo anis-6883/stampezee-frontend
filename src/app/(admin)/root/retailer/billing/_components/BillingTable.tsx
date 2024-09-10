@@ -21,38 +21,62 @@ export default function BillingTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Enroll ID',
-      accessorKey: 'enrollSubscriptionId',
-    },
-    {
-      header: 'Enroll Status',
-      accessorKey: 'enrollSubscriptionId',
+      header: 'Plan/Add-on',
+      accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
-        const upgradeOrDowngradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
-          if (item?.enrollStatus === 'upgrade' || item?.enrollStatus === 'downgrade') {
-            return true;
-          }
-          return false;
-        });
-        return <div>{upgradeOrDowngradeEnroll?.enrollStatus ? upgradeOrDowngradeEnroll?.enrollStatus : 'purchase'}</div>;
+        return row?.original?.planSnapshot?.type === 'subscription' ? (
+          <div>{`${row?.original?.planSnapshot?.title} (Plan)`}</div>
+        ) : (
+          <div>{`${row?.original?.planSnapshot?.title} (Add-on)`}</div>
+        );
       },
     },
     {
-      header: 'Grand Total (CAD)',
+      header: 'Payment Intent ID',
+      accessorKey: 'payment.paymentIntentId',
+    },
+    {
+      header: 'Enroll Status',
+      accessorKey: 'enrollStatus',
+      Cell: ({ row }: any) => {
+        return <Badge className="!bg-danger text-white">{_.capitalize(row?.original?.enrollStatus)}</Badge>;
+      },
+    },
+    {
+      header: 'Grand Total',
       accessorKey: 'amountTotal',
-      Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
-          <div>
-            <h2 className="font-medium">${row?.original?.amountTotal?.toFixed(2)}</h2>
+      Cell: ({ row }: any) => {
+        let totalAmount = row?.original?.planSnapshot?.price || 0;
+        if (row?.original?.taxSnapshot?.taxCost) {
+          totalAmount += (row?.original?.planSnapshot?.price * 2) / 100;
+        }
+        if (row?.original?.couponSnapshot) {
+          if (row?.original?.couponSnapshot?.discountType === 'percentage') {
+            totalAmount -= (row?.original?.planSnapshot?.price * row?.original?.couponSnapshot?.discount) / 100;
+          } else {
+            totalAmount -= row?.original?.couponSnapshot?.discount;
+          }
+        }
+        if (row?.original?.enrollStatus) {
+          totalAmount -= row?.original?.balanceInfo?.currentBalance;
+        }
+        return (
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <h2 className="font-medium">
+                {totalAmount?.toFixed(2)} {row?.original?.balanceInfo?.currency}
+              </h2>
+            </div>
           </div>
-        </div>
-      ),
+        );
+      },
       mantineTableHeadCellProps: {
         align: 'center',
       },
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      size: 200,
     },
     {
       header: 'Payment Status',
@@ -78,6 +102,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      size: 200,
     },
     {
       header: 'Payment Date',
@@ -92,7 +117,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 150,
+      size: 200,
     },
   ];
 
@@ -227,10 +252,10 @@ export default function BillingTable({ offset }: { offset: number }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Payment ID"
+      searchPlaceHolder="Search By Payment Intent ID"
       searchFieldWidth="250px"
       enableRowNumbers={true}
-      renderDetailPanel={renderDetailPanel}
+      // renderDetailPanel={renderDetailPanel}
     />
   );
 }

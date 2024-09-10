@@ -43,6 +43,7 @@ export default function AuthProvider({
   useEffect(() => {
     const defaultCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === stripeInfo?.defaultCurrency?.currency);
     const currencyExchange: any = currencyExchanges?.find((item: any) => item?.name === currency);
+    const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === session?.user?.planPaymentCurrency);
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
     dispatch(setTaxPercentage(stripeInfo?.taxCost));
     dispatch(setTaxStatus(stripeInfo?.taxStatus));

@@ -24,64 +24,84 @@ export default function PaymentTable({ offset }: { offset: number }) {
       header: 'Retailer',
       accessorKey: 'retailer.storeName',
       Cell: ({ row }: any) => (
-        <div className="flex flex-col justify-center gap-2">
-          <div className="m-auto">
+        <div className="flex items-center gap-2">
+          <div>
             {row?.original?.retailer?.image ? (
               <div>
                 <img
                   src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row?.original?.retailer?.image}`}
                   alt="image"
-                  className="h-full w-12 rounded"
+                  className="h-full w-8 rounded"
                 />
               </div>
             ) : (
-              <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-12 rounded" />
+              <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-8 rounded" />
             )}
           </div>
           <div>
-            <div className="text-md mx-auto">
-              <p className="text-center font-semibold">
-                {row?.original?.retailer?.storeName}
-                {/* <span className="font-bold">Store Name:</span>  */}
-              </p>
+            <div className="text-md">
+              <p className="text-center font-semibold">{row?.original?.enrollSubscription?.retailer?.storeName}</p>
             </div>
           </div>
         </div>
       ),
-      mantineTableHeadCellProps: {
-        align: 'center',
+      size: 200,
+    },
+    {
+      header: 'Plan/Add-on',
+      accessorKey: 'planSnapshot.title',
+      Cell: ({ row }: any) => {
+        return row?.original?.planSnapshot?.type === 'subscription' ? (
+          <div>{`${row?.original?.enrollSubscription?.planSnapshot?.title} (Plan)`}</div>
+        ) : (
+          <div>{`${row?.original?.enrollSubscription?.planSnapshot?.title} (Add-on)`}</div>
+        );
+      },
+    },
+    {
+      header: 'Enroll Status',
+      accessorKey: 'enrollStatus',
+      Cell: ({ row }: any) => {
+        return <Badge className="!bg-danger text-white">{_.capitalize(row?.original?.enrollSubscription?.enrollStatus)}</Badge>;
       },
       size: 150,
     },
     {
-      header: 'Enroll Status',
-      accessorKey: 'enrollSubscriptionId',
+      header: 'Grand Total',
+      accessorKey: 'amountTotal',
       Cell: ({ row }: any) => {
-        const upgradeOrDowngradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
-          if (item?.enrollStatus === 'upgrade' || item?.enrollStatus === 'downgrade') {
-            return true;
+        let totalAmount = row?.original?.enrollSubscription?.planSnapshot?.price || 0;
+        if (row?.original?.enrollSubscription?.taxSnapshot?.taxCost) {
+          totalAmount += (row?.original?.enrollSubscription?.planSnapshot?.price * 2) / 100;
+        }
+        if (row?.original?.enrollSubscription?.couponSnapshot) {
+          if (row?.original?.couponSnapshot?.discountType === 'percentage') {
+            totalAmount -=
+              (row?.original?.enrollSubscription?.planSnapshot?.price * row?.original?.enrollSubscription?.couponSnapshot?.discount) / 100;
+          } else {
+            totalAmount -= row?.original?.enrollSubscription?.couponSnapshot?.discount;
           }
-          return false;
-        });
-        return <div>{upgradeOrDowngradeEnroll?.enrollStatus ? upgradeOrDowngradeEnroll?.enrollStatus : 'purchase'}</div>;
-      },
-    },
-    {
-      header: 'Grand Total(CAD)',
-      accessorKey: 'price',
-      Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
-          <div>
-            <h2 className="font-medium">${row?.original?.amountTotal?.toFixed(2)}</h2>
+        }
+        if (row?.original?.enrollSubscription?.enrollStatus) {
+          totalAmount -= row?.original?.enrollSubscription?.balanceInfo?.currentBalance;
+        }
+        return (
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <h2 className="font-medium">
+                {totalAmount?.toFixed(2)} {row?.original?.enrollSubscription?.balanceInfo?.currency}
+              </h2>
+            </div>
           </div>
-        </div>
-      ),
+        );
+      },
       mantineTableHeadCellProps: {
         align: 'center',
       },
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      size: 200,
     },
     {
       header: 'Payment Type',
@@ -272,9 +292,9 @@ export default function PaymentTable({ offset }: { offset: number }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Payment ID"
+      searchPlaceHolder="Search By Payment Intent ID"
       searchFieldWidth="250px"
-      renderDetailPanel={RenderDetailPanel}
+      // renderDetailPanel={RenderDetailPanel}
     />
   );
 }

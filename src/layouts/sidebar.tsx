@@ -251,6 +251,7 @@ export default function Sidebar({ className }: { className?: string }) {
                           <span className="truncate">
                             {item.name} {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
                             {item.name === 'Custom Stamp Images' && `(${session?.user?.totalCustomStamp || 0})`}
+                            {item.name === 'Stamps' && `(${session?.user?.totalStamp || 0})`}
                           </span>
                         </div>
                         {checkedLocked(role, item?.href, item.name, session?.user) && (
