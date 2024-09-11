@@ -1,10 +1,7 @@
-import Button from '@/components/Formik/Button';
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
-import Link from 'next/link';
-import { HiPlus } from 'react-icons/hi2';
 import StampTable from './_components/StampTable';
 
 const pageHeader = {
@@ -28,11 +25,11 @@ export default async function Page() {
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
 
-      <div className="mb-5 flex justify-end">
+      {/* <div className="mb-5 flex justify-end">
         <Link href={routes.privateRoutes.retailer.stamp.create}>
           <Button color="danger" text="Add New Stamp" preIcon={<HiPlus className="text-base" />} />
         </Link>
-      </div>
+      </div> */}
 
       <StampTable offset={data?.data?.general?.timezone?.value} />
     </>

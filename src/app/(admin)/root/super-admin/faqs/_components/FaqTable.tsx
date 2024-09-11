@@ -131,9 +131,17 @@ export default function FaqTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-between">
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
         <StatusIndicator />
-        <Button color="danger" onClick={() => setCreateState(true)} text="Add New Faq" preIcon={<HiPlus className="text-base" />} />
+        <div>
+          <Button
+            className="w-full"
+            color="danger"
+            onClick={() => setCreateState(true)}
+            text="Add New Faq"
+            preIcon={<HiPlus className="text-base" />}
+          />
+        </div>
       </div>
       <Table
         isFetching={isFetching}

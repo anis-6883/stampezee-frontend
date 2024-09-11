@@ -29,10 +29,10 @@ export default async function Page() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <div className="mb-5 flex justify-between">
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
         <StatusIndicator />
         <Link href={routes.privateRoutes.retailer.branch.create}>
-          <Button className="!m-0" color="danger" text="Add New Branch" preIcon={<HiPlus className="text-base" />} />
+          <Button className="!m-0 w-full" color="danger" text="Add New Branch" preIcon={<HiPlus className="text-base" />} />
         </Link>
       </div>
 

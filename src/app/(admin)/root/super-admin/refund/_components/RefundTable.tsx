@@ -67,12 +67,14 @@ export default function RefundTable({ offset }: { offset: number }) {
       size: 300,
     },
     {
-      header: 'Refund Amount (CAD)',
+      header: 'Refund Amount',
       accessorKey: 'refundAmount',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <div>
-            <h2 className="font-medium">${row?.original?.refundAmount?.toFixed(2)}</h2>
+            <h2 className="font-medium">
+              {row?.original?.refundAmount?.toFixed(2)} {row?.original?.currency}
+            </h2>
           </div>
         </div>
       ),

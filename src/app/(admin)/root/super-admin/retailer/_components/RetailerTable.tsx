@@ -10,6 +10,7 @@ import {
   useUpdateRetailerStatusMutation,
 } from '@/features/super-admin/retailer/retailerApi';
 import { IQueryType } from '@/types';
+import { convertDateByOffset } from '@/utils/getFormatDate';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -21,7 +22,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function RetailerTable() {
+export default function RetailerTable({ offset }: { offset: number }) {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -109,13 +110,13 @@ export default function RetailerTable() {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Plan:</span> {row?.original.firstName} {row?.original.lastName}
+            <span className="font-bold">Plan:</span> {row?.original.currentPlan}
           </p>
           <p>
-            <span className="font-bold">Total Active Branch:</span> {row?.original.email}
+            <span className="font-bold">Total Active Branch:</span> {row?.original.totalActiveBranch}
           </p>
           <p>
-            <span className="font-bold">Total Active Stamp:</span> {row?.original.phone}
+            <span className="font-bold">Total Active Stamp:</span> {row?.original.totalActiveStamp}
           </p>
         </div>
       ),
@@ -131,7 +132,7 @@ export default function RetailerTable() {
       header: 'Joining Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>{row?.original.createdAt}</p>
+          <p> {convertDateByOffset(row?.original?.createdAt, offset)}</p>
         </div>
       ),
       size: 300,
@@ -184,9 +185,17 @@ export default function RetailerTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-between">
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
         <StatusIndicator />
-        <Button color="danger" onClick={() => setCreateState(true)} text="Add New Retailer" preIcon={<HiPlus className="text-base" />} />
+        <div>
+          <Button
+            className="w-full"
+            color="danger"
+            onClick={() => setCreateState(true)}
+            text="Add New Retailer"
+            preIcon={<HiPlus className="text-base" />}
+          />
+        </div>
       </div>
       <Table
         isFetching={isFetching}

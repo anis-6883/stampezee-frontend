@@ -58,7 +58,7 @@ const initialState: SubscriptionState = {
   planChangeCost: 1,
   planChangeType: '',
   refundableThreshold: 0,
-  currency: { name: 'USD', exchangeRate: 1 },
+  currency: { name: 'CAD', exchangeRate: 1 },
   defaultCurrency: { name: 'CAD', exchangeRate: 1 },
   subscriptionType: '',
 };
@@ -105,17 +105,17 @@ const calculateDiscount = (state: SubscriptionState) => {
     state.couponDiscount =
       state.coupon.discountType === 'percentage'
         ? roundToTwoDecimals((Math.abs(state?.subscription?.price) * state.coupon.discount) / 100)
-        : roundToTwoDecimals(state.coupon.discount);
+        : roundToTwoDecimals(state.coupon.discount * state.currency?.exchangeRate);
   }
 };
 
 const calculateUpgradeCost = (state: SubscriptionState, targetPlan: Subscription) => {
-  updateBalance(state);
+  // updateBalance(state);
   return roundToTwoDecimals(targetPlan.price - state.remainingBalance);
 };
 
 const calculateDowngradeRefund = (state: SubscriptionState, targetPlan: Subscription) => {
-  updateBalance(state);
+  // updateBalance(state);
   const refundAmount = roundToTwoDecimals(state.remainingBalance - state.subscription.price);
   return refundAmount > 0
     ? roundToTwoDecimals(state.remainingBalance - targetPlan.price)
@@ -273,6 +273,11 @@ const subscriptionSlice = createSlice({
         defaultCurrencyExchangeRate: state.currency,
         price: state.couponDiscount,
       });
+      state.downgradeRefund = calculateCurrencyExchangeRate({
+        selectedCurrencyExchangeRate: action.payload,
+        defaultCurrencyExchangeRate: state.currency,
+        price: state.downgradeRefund,
+      });
       state.currency = action.payload;
     },
     setDefaultCurrency: (state, action: PayloadAction<Currency>) => {
@@ -339,8 +344,8 @@ const subscriptionSlice = createSlice({
       state.downgradeRefund = calculateDowngradeRefund(state, action.payload);
     },
     resetState: (state) => {
-      const { planChangeCost, taxPercentage, taxStatus } = state;
-      Object.assign(state, initialState, { planChangeCost, taxPercentage, taxStatus });
+      const { planChangeCost, taxPercentage, taxStatus, currency, refundableThreshold, defaultCurrency } = state;
+      Object.assign(state, initialState, { planChangeCost, taxPercentage, taxStatus, currency, refundableThreshold, defaultCurrency });
     },
   },
 });

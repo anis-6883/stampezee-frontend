@@ -8,6 +8,7 @@ import cn from '@/hooks/class-names';
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import { useWindowScroll } from '@/hooks/use-window-scroll';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
@@ -74,6 +75,7 @@ const checkedLocked = (role: string, url: string, menuName: string, user: any) =
 };
 
 export default function Sidebar({ className }: { className?: string }) {
+  const t = useTranslations('RetailerSidebar');
   const isMounted = useIsMounted();
   const windowScroll = useWindowScroll();
   const pathname = usePathname();
@@ -175,7 +177,8 @@ export default function Sidebar({ className }: { className?: string }) {
                                   {item?.icon}
                                 </span>
                               )}
-                              {item.name}
+                              {/* {item.name} */}
+                              {role === ROLE.RETAILER ? t(item?.name) : item.name}
                             </span>
 
                             <PiCaretDownBold
@@ -213,7 +216,10 @@ export default function Sidebar({ className }: { className?: string }) {
                                     isChildActive ? 'bg-danger ring-[1px] ring-danger' : 'opacity-40'
                                   )}
                                 />{' '}
-                                <span className="truncate">{dropdownItem?.name}</span>
+                                <span className="truncate">
+                                  {/* {dropdownItem?.name} */}
+                                  {role === ROLE.RETAILER ? t(dropdownItem?.name) : dropdownItem?.name}
+                                </span>
                               </div>
                               {checkedLocked(role, dropdownItem?.href, dropdownItem.name, session?.user) && (
                                 <div className="text-end ">
@@ -249,7 +255,8 @@ export default function Sidebar({ className }: { className?: string }) {
                             </span>
                           )}
                           <span className="truncate">
-                            {item.name} {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
+                            {role === ROLE.RETAILER ? t(item.name) : item.name}{' '}
+                            {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
                             {item.name === 'Custom Stamp Images' && `(${session?.user?.totalCustomStamp || 0})`}
                             {item.name === 'Stamps' && `(${session?.user?.totalStamp || 0})`}
                           </span>
@@ -270,7 +277,8 @@ export default function Sidebar({ className }: { className?: string }) {
                       index !== 0 && 'mt-6 3xl:mt-7'
                     )}
                   >
-                    {item.name}
+                    {/* {item.name} */}
+                    {role === ROLE.RETAILER ? t(item.name) : item.name}
                   </Title>
                 )}
               </Fragment>

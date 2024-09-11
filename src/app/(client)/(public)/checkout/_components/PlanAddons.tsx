@@ -90,7 +90,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
             <ImBin />
           </button>
           <span className="col-span-4 justify-self-end">
-            {coupon?.discountType === 'percentage' ? `-${couponDiscount?.toFixed(2)}` : `-${coupon?.discount}`} {selectedCurrency}
+            {`-${couponDiscount?.toFixed(2)}`} {selectedCurrency}
           </span>
         </div>
       )}

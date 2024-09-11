@@ -66,14 +66,6 @@
     "subscriptions": "Subscriptions",
     "subtitle": "Our Plans"
   },
-  "LocaleSwitcher": {
-    "de": "Deutsch",
-    "en": "English",
-    "label": "Language"
-  },
-  "CurrencySwitcher": {
-    "label": "Currency"
-  },
   "LoginPage": {
     "credentials": "Credentials: jane@doe.com / next-intl",
     "description": "Please enter your details.",
@@ -87,5 +79,29 @@
   },
   "ProfilePage": {
     "title": "Profile"
+  },
+  "LocaleSwitcher": {
+    "de": "Deutsch",
+    "en": "English",
+    "label": "Language"
+  },
+  "CurrencySwitcher": {
+    "label": "Currency"
+  },
+  "RetailerSidebar": {
+    "Dashboard": "Dashboard",
+    "Plans & AddOns": "Plans & AddOns",
+    "Billing": "Billing",
+    "Refunds": "Refunds",
+    "Branches": "Branches",
+    "Sub-Admins (Team)": "Sub-Admins (Team)",
+    "Stamps": "Stamps",
+    "Scans": "Scans",
+    "Customers": "Customers",
+    "Custom Stamp Images": "Custom Stamp Images",
+    "Push Notifications": "Push Notifications",
+    "Regular": "Regular",
+    "Location Based": "Location Based",
+    "Manage Profile": "Manage Profile"
   }
 }
