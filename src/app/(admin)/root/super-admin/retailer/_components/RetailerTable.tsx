@@ -3,6 +3,7 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import StatusIndicator from '@/components/shared/StatusIndicator';
+import { routes } from '@/config/routes';
 import {
   useDeleteSuperAdminRetailerMutation,
   useGetAllRetailersQuery,
@@ -93,9 +94,6 @@ export default function RetailerTable() {
           <p>
             <span className="font-bold">Phone:</span> {row?.original.phone}
           </p>
-          <p>
-            <span className="font-bold">Joining Date:</span> {row?.original.createdAt}
-          </p>
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -130,6 +128,15 @@ export default function RetailerTable() {
       size: 300,
     },
     {
+      header: 'Joining Date',
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">
+          <p>{row?.original.createdAt}</p>
+        </div>
+      ),
+      size: 300,
+    },
+    {
       header: 'Status',
       accessorKey: 'status',
       Cell: ({ row }: any) => {
@@ -146,7 +153,7 @@ export default function RetailerTable() {
       header: 'Actions',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
-          <Link href={'/'}>
+          <Link href={routes.privateRoutes.superAdmin.retailer?.details(row?.original?._id)}>
             <Button color="primary" preIcon={<FaInfoCircle className="text-base" />} tooltip="Details" />
           </Link>
           <Button

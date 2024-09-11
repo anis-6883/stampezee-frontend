@@ -94,8 +94,6 @@ export default function BranchStatsTable() {
                   </>
                 )}
               </table>
-
-              {/* End of x-scroll wrapper */}
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
+import { signOut } from 'next-auth/react';
 import { RootState } from '../store';
 
 export interface SerializedError {
@@ -24,10 +25,10 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   let result = await baseQuery(args, api, extraOptions);
   const loginEndpoints = ['retailerLogin', 'superAdminLogin'];
   if (!loginEndpoints?.includes(api?.endpoint) && result.error && (result.error.status === 401 || result.error.status === 403)) {
-    // await signOut({
-    //   redirect: true,
-    //   callbackUrl: '/retailer/login',
-    // });
+    await signOut({
+      redirect: true,
+      callbackUrl: '/retailer/login',
+    });
     // try to get a new token
     // const refreshResult = await baseQuery('/api/web/refresh-token', api, extraOptions);
     // if (refreshResult.data) {

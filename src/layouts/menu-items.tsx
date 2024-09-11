@@ -19,7 +19,7 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Retailers',
-      href: routes.privateRoutes.superAdmin.retailer,
+      href: routes.privateRoutes.superAdmin.retailer?.home,
       icon: <BsShop />,
     },
     {
