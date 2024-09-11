@@ -58,7 +58,7 @@ export const Plans = () => {
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
 
     // subscription update into redux state
-    if (session?.user?.takeFreeTrial) {
+    if (session?.user?.takeFreeTrial && !subscription?.slug && !addOn?.slug) {
       const pursedSubscription = data?.data?.find((item: Subscription) => {
         if (item?.type === 'subscription' && item?.slug === session?.user?.plan) {
           return true;

@@ -2,6 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import StatusIndicator from '@/components/shared/StatusIndicator';
 import { routes } from '@/config/routes';
 import {
   useDeleteStampMutation,
@@ -18,6 +19,7 @@ import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
+import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
@@ -228,6 +230,12 @@ export default function StampTable({ offset }: { offset: number }) {
 
   return (
     <>
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+        <StatusIndicator />
+        <Link href={routes.privateRoutes.retailer.stamp.create}>
+          <Button className="w-full" color="danger" text="Add New Stamp" preIcon={<HiPlus className="text-base" />} />
+        </Link>
+      </div>
       <Table
         isFetching={isFetching}
         isLoading={isLoading}

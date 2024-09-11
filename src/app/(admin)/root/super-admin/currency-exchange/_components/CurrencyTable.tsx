@@ -122,10 +122,10 @@ export default function CurrencyTable({ offset }: { offset: number }) {
         setModalState={setCurrencyModalState}
         currencyData={data?.data?.docs?.map((item: any) => item?.name)}
       />
-      <div className="mb-4 flex justify-between">
-        <div className="flex gap-x-3">
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+        <div className="flex flex-col gap-x-3 gap-y-3 md:flex-row md:gap-y-0">
           <StatusIndicator />
-          <div className="flex items-center justify-center rounded-md border border-solid px-3">
+          <div className="flex items-center justify-center rounded-md border border-solid p-3">
             <span className="font-bold">
               Base Currency :
               <Badge size="sm" className="ml-1 bg-danger text-white">
@@ -134,7 +134,7 @@ export default function CurrencyTable({ offset }: { offset: number }) {
             </span>
           </div>
         </div>
-        <div className="flex">
+        <div className="flex flex-col md:flex-row">
           <Button color="danger" onClick={() => setCreateState(true)} text="New Currency" preIcon={<HiPlus className="text-base" />} />
           <Button
             color="danger"

@@ -2,6 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import StatusIndicator from '@/components/shared/StatusIndicator';
 import {
   useCustomerStatusUpdateBySuperAdminMutation,
   useDeleteCustomerBySuperAdminMutation,
@@ -159,8 +160,17 @@ export default function CustomerTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-end">
-        <Button color="danger" onClick={() => setCreateState(true)} text="Add New Customer" preIcon={<HiPlus className="text-base" />} />
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+        <StatusIndicator />
+        <div>
+          <Button
+            className="w-full"
+            color="danger"
+            onClick={() => setCreateState(true)}
+            text="Add New Customer"
+            preIcon={<HiPlus className="text-base" />}
+          />
+        </div>
       </div>
       <Table
         isFetching={isFetching}

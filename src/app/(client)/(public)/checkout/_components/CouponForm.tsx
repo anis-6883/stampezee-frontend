@@ -17,7 +17,9 @@ import * as Yup from 'yup';
 
 const CouponForm = () => {
   const dispatch = useDispatch();
-  const { coupon, addOn, subscription, activeSubscription, planChangeType } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { coupon, addOn, subscription, activeSubscription, planChangeType, currency } = useSelector(
+    (state: RootState) => state.subscriptionSlice
+  );
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
   const [createCoupon, { data: couponResponse, error: couponError, isSuccess: couponSuccess }] = useCreateCouponMutation();
   const { isLoggedIn } = useSelector((state: RootState) => state?.authSlice);

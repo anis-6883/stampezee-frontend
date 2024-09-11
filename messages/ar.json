@@ -66,14 +66,6 @@
     "testimonialSubTitleThree": "مدير المطعم",
     "testimonialDescriptionThree": "لقد كان StampEzee بمثابة نقطة تحول في أعمالنا. فالراحة التي يوفرها لعملائنا، إلى جانب الرؤى التي اكتسبناها، أدت إلى الارتقاء بعملياتنا حقًا."
   },
-  "LocaleSwitcher": {
-    "de": "Deutsch",
-    "en": "English",
-    "label": "اللغات"
-  },
-  "CurrencySwitcher": {
-    "label": "عملة"
-  },
   "LoginPage": {
     "credentials": "Credentials: jane@doe.com / next-intl",
     "description": "Please enter your details.",
@@ -87,5 +79,29 @@
   },
   "ProfilePage": {
     "title": "Profile"
+  },
+  "LocaleSwitcher": {
+    "de": "Deutsch",
+    "en": "English",
+    "label": "اللغات"
+  },
+  "CurrencySwitcher": {
+    "label": "عملة"
+  },
+  "RetailerSidebar": {
+    "Dashboard": "لوحة القيادة",
+    "Plans & AddOns": "الخطط والإضافات",
+    "Billing": "الفواتير",
+    "Refunds": "استرداد الأموال",
+    "Branches": "الفروع",
+    "Sub-Admins (Team)": "المشرفون الفرعيون (Team)",
+    "Stamps": "طوابع",
+    "Scans": "المسح الضوئي",
+    "Customers": "عملاء",
+    "Custom Stamp Images": "صور الطوابع المخصصة",
+    "Push Notifications": "إشعارات الدفع",
+    "Regular": "عادي",
+    "Location Based": "يعتمد على الموقع",
+    "Manage Profile": "إدارة الملف الشخصي"
   }
 }
