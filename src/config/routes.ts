@@ -68,7 +68,10 @@ export const routes = {
         home: `/root/super-admin/subscription`,
         edit: (id: number | string) => `/root/super-admin/subscription/${id}/update`,
       },
-      retailer: '/root/super-admin/retailer',
+      retailer: {
+        home: '/root/super-admin/retailer',
+        details: (id: number | string) => `/root/super-admin/retailer/${id}/details`,
+      },
       coupon: {
         home: `/root/super-admin/coupon`,
         create: `/root/super-admin/coupon/create`,

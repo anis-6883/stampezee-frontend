@@ -7,7 +7,7 @@ const pageHeader = {
   title: 'Manage Retailers',
   breadcrumb: [
     {
-      href: routes.privateRoutes.retailer.dashboard,
+      href: routes.privateRoutes.superAdmin.dashboard,
       name: 'Dashboard',
     },
     {

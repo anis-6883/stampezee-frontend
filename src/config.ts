@@ -8,4 +8,4 @@ export const defaultLocale: Locale = 'en';
 export type Currency = (typeof currencies)[number];
 
 export const currencies = ['USD', 'CAD'] as const;
-export const defaultCurrency: Currency = 'USD';
+export const defaultCurrency: Currency = 'CAD';
