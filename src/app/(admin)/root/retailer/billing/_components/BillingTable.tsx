@@ -34,11 +34,11 @@ export default function BillingTable({ offset }: { offset: number }) {
           <div>{`${row?.original?.planSnapshot?.title} (Add-on)`}</div>
         );
       },
-      size: 150,
+      size: 220,
     },
     {
-      header: 'Payment Intent ID',
-      accessorKey: 'payment.paymentIntentId',
+      header: 'Subscription Id',
+      accessorKey: 'stripe.subscriptionId',
     },
     {
       header: 'Enroll Status',
@@ -70,40 +70,19 @@ export default function BillingTable({ offset }: { offset: number }) {
       },
     },
     {
-      header: 'Grand Total',
-      accessorKey: 'amountTotal',
-      Cell: ({ row }: any) => {
-        let totalAmount = row?.original?.balanceInfo?.planCurrentPrice || 0;
-        if (row?.original?.taxSnapshot?.taxCost) {
-          totalAmount += (row?.original?.balanceInfo?.planCurrentPrice * 2) / 100;
-        }
-        if (row?.original?.couponSnapshot) {
-          if (row?.original?.couponSnapshot?.discountType === 'percentage') {
-            totalAmount -= (row?.original?.balanceInfo?.planCurrentPrice * row?.original?.couponSnapshot?.discount) / 100;
-          } else {
-            totalAmount -= row?.original?.couponSnapshot?.discount;
-          }
-        }
-        if (row?.original?.enrollStatus === 'upgrade' || row?.original?.enrollStatus === 'downgrade') {
-          totalAmount -= row?.original?.balanceInfo?.currentBalance;
-          totalAmount += row?.original?.planChangeCost;
-        }
-        return (
-          <div className="flex items-center justify-center gap-2">
-            <div>
-              <h2 className="font-medium">
-                {totalAmount?.toFixed(2)} {row?.original?.balanceInfo?.currency}
-              </h2>
-            </div>
-          </div>
-        );
-      },
-      mantineTableHeadCellProps: {
-        align: 'center',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
+      header: 'Balance',
+      accessorKey: 'balanceInfo.planCurrentPrice',
+      Cell: ({ row }: any) => (
+        <div className="flex items-center gap-2 font-medium">
+          {row?.original?.balanceInfo?.planCurrentPrice?.toFixed(2)} {row?.original?.balanceInfo?.currency}
+        </div>
+      ),
+      // mantineTableHeadCellProps: {
+      //   align: 'center',
+      // },
+      // mantineTableBodyCellProps: {
+      //   align: 'center',
+      // },
       size: 100,
     },
     {
@@ -133,10 +112,49 @@ export default function BillingTable({ offset }: { offset: number }) {
       size: 200,
     },
     {
+      header: 'Total Paid',
+      accessorKey: 'amountTotal',
+      Cell: ({ row }: any) => {
+        const { balanceInfo, taxSnapshot, enrollStatus, planChangeCost, couponSnapshot, planSnapshot } = row?.original || {};
+
+        let totalAmount = planSnapshot?.price || 0;
+
+        console.log({ totalAmount });
+
+        if (taxSnapshot?.taxCost) {
+          totalAmount += (planSnapshot?.price * balanceInfo?.currencyRate * taxSnapshot?.taxCost) / 100;
+        }
+
+        if (couponSnapshot) {
+          if (couponSnapshot?.discountType === 'percentage') {
+            totalAmount -= (planSnapshot?.price * balanceInfo?.currencyRate * couponSnapshot?.discount) / 100;
+          } else {
+            totalAmount -= balanceInfo?.currencyRate * couponSnapshot?.discount;
+          }
+        }
+
+        // if (['upgrade', 'downgrade'].includes(enrollStatus)) {
+        //   totalAmount -= balanceInfo?.currentBalance;
+        //   totalAmount += planChangeCost;
+        // }
+
+        if (enrollStatus === 'downgrade' && balanceInfo.currentBalance > planSnapshot?.price * balanceInfo?.currencyRate) {
+          totalAmount = 0;
+        }
+
+        return (
+          <div className="flex items-center justify-center gap-2 font-medium">
+            {totalAmount?.toFixed(2)} {balanceInfo?.currency}
+          </div>
+        );
+      },
+      size: 100,
+    },
+    {
       header: 'Payment Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>{convertDateByOffset(row?.original?.createdAt, offset)}</p>
+          {row?.original?.payment?.createdAt ? <p>{convertDateByOffset(row?.original?.payment.createdAt, offset)}</p> : <p>Refunded</p>}
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -153,7 +171,7 @@ export default function BillingTable({ offset }: { offset: number }) {
         return (
           <div>
             <Link href={'/'}>
-              <Button className="!m-0" text="Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
+              <Button className="!m-0 !px-2 !py-1.5" text="Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
             </Link>
           </div>
         );
@@ -298,7 +316,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Payment Intent ID"
+      searchPlaceHolder="Search By Subscription ID"
       searchFieldWidth="250px"
       enableRowNumbers={true}
       // renderDetailPanel={renderDetailPanel}

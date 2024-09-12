@@ -99,32 +99,33 @@ export default function PaymentTable({ offset }: { offset: number }) {
       header: 'Grand Total',
       accessorKey: 'amountTotal',
       Cell: ({ row }: any) => {
-        let totalAmount = row?.original?.enrollSubscription?.balanceInfo?.planCurrentPrice || 0;
-        if (row?.original?.enrollSubscription?.taxSnapshot?.taxCost) {
-          totalAmount += (row?.original?.enrollSubscription?.balanceInfo?.planCurrentPrice * 2) / 100;
+        const { balanceInfo, taxSnapshot, enrollStatus, planChangeCost, couponSnapshot, planSnapshot } =
+          row?.original?.enrollSubscription || {};
+
+        let totalAmount = planSnapshot?.price || 0;
+
+        if (taxSnapshot?.taxCost) {
+          totalAmount += (planSnapshot?.price * balanceInfo?.currencyRate * taxSnapshot?.taxCost) / 100;
         }
-        if (row?.original?.enrollSubscription?.couponSnapshot) {
-          if (row?.original?.enrollSubscription?.couponSnapshot?.discountType === 'percentage') {
-            totalAmount -=
-              (row?.original?.enrollSubscription?.balanceInfo?.planCurrentPrice *
-                row?.original?.enrollSubscription?.couponSnapshot?.discount) /
-              100;
+
+        if (couponSnapshot) {
+          if (couponSnapshot?.discountType === 'percentage') {
+            totalAmount -= (planSnapshot?.price * balanceInfo?.currencyRate * couponSnapshot?.discount) / 100;
           } else {
-            totalAmount -= row?.original?.enrollSubscription?.couponSnapshot?.discount;
+            totalAmount -= balanceInfo?.currencyRate * couponSnapshot?.discount;
           }
         }
-        if (
-          row?.original?.enrollSubscription?.enrollStatus === 'upgrade' ||
-          row?.original?.enrollSubscription?.enrollStatus === 'downgrade'
-        ) {
-          totalAmount -= row?.original?.enrollSubscription?.balanceInfo?.currentBalance;
-          totalAmount += row?.original?.enrollSubscription?.planChangeCost;
+
+        if (['upgrade', 'downgrade'].includes(enrollStatus)) {
+          totalAmount -= balanceInfo?.currentBalance;
+          totalAmount += planChangeCost;
         }
+
         return (
           <div className="flex items-center justify-center gap-2">
             <div>
               <h2 className="font-medium">
-                {totalAmount?.toFixed(2)} {row?.original?.enrollSubscription?.balanceInfo?.currency}
+                {totalAmount?.toFixed(2)} {balanceInfo?.currency}
               </h2>
             </div>
           </div>
@@ -160,7 +161,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
         return (
           <div>
             <Link href={routes.privateRoutes.superAdmin.retailer?.details(row?.original?._id)}>
-              <Button className="!m-0" text="Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
+              <Button className="!m-0 !px-2 !py-1.5" text="Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
             </Link>
           </div>
         );

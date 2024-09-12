@@ -9,6 +9,7 @@ export const paymentApi = apiSlice.injectEndpoints({
         return `/api/secret-root/admin/super-admin/payment/subscription`;
       },
       providesTags: ['payments'],
+      keepUnusedDataFor: 10,
     }),
   }),
 });

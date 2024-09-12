@@ -16,7 +16,6 @@ export default async function Page() {
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
   const selectedCurrency = await getUserCurrency();
   const session: any = await getServerSession(authOptions);
-  // const { data: currencyExchangeRates } = await axiosBackendUrl.get(`/api/web/currency-exchange/rates?currency=${selectedCurrency}`);
 
   return (
     <div className="mx-auto mt-20 w-full max-w-[1300px]">

@@ -12,10 +12,6 @@ export default function HydrogenLayout({ children }: { children: React.ReactNode
   const dispatch = useDispatch();
   const { data: session, update } = useSession();
   const { role, accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { currentCurrency, currencyExchangeRates } = useSelector((state: RootState) => state.currencyExchangeSlice);
-
-  console.log('currentCurrency', currentCurrency);
-  console.log('currencyExchangeRates', currencyExchangeRates);
 
   const { data: retailerProfile, isSuccess: retailerProfileSuccess } = useRetailerGetProfileQuery(null, {
     skip: !accessToken || role !== ROLE.RETAILER,

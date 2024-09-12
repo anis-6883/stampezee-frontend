@@ -9,6 +9,7 @@ export const billingApi = apiSlice.injectEndpoints({
         return `/api/web/retailer/billing/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['billing'],
+      keepUnusedDataFor: 10,
     }),
   }),
 });
