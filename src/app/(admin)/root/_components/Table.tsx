@@ -14,12 +14,12 @@ export default function Table({
   enablePagination = true,
   enableRowActions = false,
   enableDnD = false,
-  renderDetailPanel,
   sort,
   sortContext,
   enableRowNumbers = false,
   searchPlaceHolder = 'Search',
   searchFieldWidth = '180px',
+  renderDetailPanel,
 }: ITableProps) {
   const { data, pagination } = response;
 

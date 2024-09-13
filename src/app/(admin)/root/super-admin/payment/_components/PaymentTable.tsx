@@ -6,12 +6,12 @@ import { routes } from '@/config/routes';
 import { useGetSubscriptionPaymentsQuery } from '@/features/super-admin/payment/paymentApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
-import _ from 'lodash';
+import moment from 'moment';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
-import { HiShoppingCart } from 'react-icons/hi2';
-import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
+import { GiSandsOfTime } from 'react-icons/gi';
+import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { Badge } from 'rizzui';
 
 export default function PaymentTable({ offset }: { offset: number }) {
@@ -30,10 +30,10 @@ export default function PaymentTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="flex items-center gap-2">
           <div>
-            {row?.original?.enrollSubscription?.retailer?.image ? (
+            {row?.original?.retailer?.image ? (
               <div>
                 <img
-                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row?.original?.enrollSubscription?.retailer?.image}`}
+                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row?.original?.retailer?.image}`}
                   alt="image"
                   className="h-full w-8 rounded"
                 />
@@ -44,89 +44,58 @@ export default function PaymentTable({ offset }: { offset: number }) {
           </div>
           <div>
             <div className="text-md">
-              <p className="text-center font-semibold">{row?.original?.enrollSubscription?.retailer?.storeName}</p>
+              <p className="text-center font-semibold">{row?.original?.retailer?.storeName}</p>
             </div>
           </div>
         </div>
       ),
       size: 200,
-    },
-    {
-      header: 'Payment Intent ID',
-      accessorKey: 'paymentIntentId',
     },
     {
       header: 'Plan/Add-on',
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
-        return row?.original?.enrollSubscription?.planSnapshot?.type === 'subscription' ? (
-          <div>{`${row?.original?.enrollSubscription?.planSnapshot?.title} (Plan)`}</div>
+        return row?.original?.planSnapshot?.type === 'subscription' ? (
+          <div>
+            <div>
+              <span className="font-semibold">Plan:</span> {`${row?.original?.planSnapshot?.title}`}
+            </div>
+            <div>
+              <span className="font-semibold">Subscription ID:</span> {`${row?.original?.stripe?.subscriptionId}`}
+            </div>
+          </div>
         ) : (
-          <div>{`${row?.original?.enrollSubscription?.planSnapshot?.title} (Add-on)`}</div>
+          <div>
+            <div>
+              <span className="font-semibold">Add-on:</span> {`${row?.original?.planSnapshot?.title}`}
+            </div>
+            <div>
+              <span className="font-semibold">Subscription ID:</span> {`${row?.original?.stripe?.subscriptionId}`}
+            </div>
+          </div>
         );
       },
+      size: 300,
     },
     {
-      header: 'Enroll Status',
-      accessorKey: 'enrollStatus',
-      Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
-          <div className="text-white">
-            {row?.original?.enrollSubscription?.enrollStatus === 'purchase' ? (
-              <Badge className="bg-primary">
-                <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollSubscription?.enrollStatus)}
-              </Badge>
-            ) : row?.original?.enrollSubscription?.enrollStatus === 'upgrade' ? (
-              <Badge className="!bg-success">
-                <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollSubscription?.enrollStatus)}
-              </Badge>
-            ) : (
-              <Badge className="!bg-danger">
-                <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollSubscription?.enrollStatus)}
-              </Badge>
-            )}
-          </div>
-        </div>
-      ),
-      mantineTableHeadCellProps: {
-        align: 'center',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
-    },
-    {
-      header: 'Grand Total',
-      accessorKey: 'amountTotal',
+      header: 'Plan Status',
+      accessorKey: 'status',
       Cell: ({ row }: any) => {
-        const { balanceInfo, taxSnapshot, enrollStatus, planChangeCost, couponSnapshot, planSnapshot } =
-          row?.original?.enrollSubscription || {};
-
-        let totalAmount = planSnapshot?.price || 0;
-
-        if (taxSnapshot?.taxCost) {
-          totalAmount += (planSnapshot?.price * balanceInfo?.currencyRate * taxSnapshot?.taxCost) / 100;
-        }
-
-        if (couponSnapshot) {
-          if (couponSnapshot?.discountType === 'percentage') {
-            totalAmount -= (planSnapshot?.price * balanceInfo?.currencyRate * couponSnapshot?.discount) / 100;
-          } else {
-            totalAmount -= balanceInfo?.currencyRate * couponSnapshot?.discount;
-          }
-        }
-
-        if (['upgrade', 'downgrade'].includes(enrollStatus)) {
-          totalAmount -= balanceInfo?.currentBalance;
-          totalAmount += planChangeCost;
-        }
+        const validityTo = moment.utc(row?.original?.validityTo).utcOffset(Number(offset));
+        console.log({ date: validityTo, isBefore: moment().isBefore(validityTo) });
 
         return (
           <div className="flex items-center justify-center gap-2">
-            <div>
-              <h2 className="font-medium">
-                {totalAmount?.toFixed(2)} {balanceInfo?.currency}
-              </h2>
+            <div className="text-white">
+              {row?.original?.status === true && moment().isBefore(validityTo) ? (
+                <Badge className="!bg-success">
+                  <GiSandsOfTime className="mr-1 text-xl" /> Running
+                </Badge>
+              ) : (
+                <Badge className="!bg-danger">
+                  <PiFlagCheckeredFill className="mr-1 text-xl" /> Ended
+                </Badge>
+              )}
             </div>
           </div>
         );
@@ -137,11 +106,9 @@ export default function PaymentTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 200,
     },
-
     {
-      header: 'Payment Date',
+      header: 'Enroll Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>{convertDateByOffset(row?.original?.createdAt, offset)}</p>
@@ -175,131 +142,6 @@ export default function PaymentTable({ offset }: { offset: number }) {
     },
   ];
 
-  const RenderDetailPanel = ({ row }: any) => {
-    const total = row?.original?.amountTotal || 0;
-    const totalPurchasedAmount = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => acc + item?.planSnapshot?.price, 0);
-    let totalTax: number = 0;
-    let remainingBalance = 0;
-    let vatPercentage = row?.original?.enrollSubscriptions[0]?.taxSnapshot?.taxCost;
-
-    const upgradeOrDowngradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
-      if (item?.enrollStatus === 'upgrade' || item?.enrollStatus === 'downgrade') {
-        return true;
-      }
-      return false;
-    });
-
-    const downGradeEnroll = row?.original?.enrollSubscriptions?.find((item: any) => {
-      if (item?.enrollStatus === 'downgrade') {
-        return true;
-      }
-      return false;
-    });
-    if (downGradeEnroll && row?.original?.enrollSubscriptions[1]?.taxSnapshot?.taxTitle) {
-      vatPercentage = row?.original?.enrollSubscriptions[1]?.taxSnapshot?.taxCost;
-    }
-
-    if (upgradeOrDowngradeEnroll) {
-      remainingBalance = upgradeOrDowngradeEnroll?.balanceInfo?.currentBalance;
-    }
-
-    if (upgradeOrDowngradeEnroll) {
-      totalTax = (Math.abs(totalPurchasedAmount - remainingBalance) * vatPercentage) / 100;
-    } else {
-      totalTax = (Math.abs(totalPurchasedAmount) * vatPercentage) / 100;
-    }
-
-    const totalCouponDiscount = row?.original?.enrollSubscriptions?.reduce((acc: number, item: any) => {
-      if (item?.couponSnapshot?.discount) {
-        if (item?.couponSnapshot?.discountType === 'percentage') {
-          return acc + (item?.planSnapshot?.price * item?.couponSnapshot?.discount) / 100;
-        } else {
-          return acc + item?.couponSnapshot?.discount;
-        }
-      }
-      return acc;
-    }, 0);
-
-    const planChangeCost = upgradeOrDowngradeEnroll?.planChangeCost;
-
-    return (
-      <div className="flex flex-col justify-around space-x-6 p-3 md:flex-row">
-        <div className="mb-6 w-full md:mb-0 md:w-[500px]">
-          <h2 className="pb-2 text-center text-lg font-medium">Plan & Add-Ons</h2>
-          <hr className="p-2 text-lg font-bold" />
-
-          <div>
-            <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-              <span className="col-span-6 font-medium">Title</span>
-              <span className="col-span-4 justify-self-end font-medium">Price</span>
-              <span className="col-span-2 justify-self-end font-medium">Duration</span>
-            </div>
-            <hr className="p-2 text-lg font-bold" />
-            {row?.original?.enrollSubscriptions?.map((enroll: any, index: number) => (
-              <div key={index} className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-                <span className="col-span-6">{enroll?.planSnapshot?.title}</span>
-                <span className="col-span-4 justify-self-end">
-                  {enroll ? parseFloat(enroll?.planSnapshot?.price?.toFixed(2)).toFixed(2) : 0} CAD
-                </span>
-                <span className="col-span-2 justify-self-end">{enroll?.planSnapshot?.duration} days</span>
-              </div>
-            ))}
-
-            {remainingBalance > 0 && (
-              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-                <span className="col-span-6 font-medium">Remaining Balance</span>
-                <span className="col-span-4 justify-self-end font-semibold">-{parseFloat(remainingBalance.toFixed(2)).toFixed(2)} CAD</span>
-              </div>
-            )}
-
-            {totalTax > 0 && (
-              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-                <span className="col-span-6 font-medium">VAT ({vatPercentage}%)</span>
-                <span className="col-span-4 justify-self-end font-semibold">{totalTax.toFixed(2)} CAD</span>
-              </div>
-            )}
-
-            {planChangeCost > 0 && (
-              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-                <span className="col-span-6 font-medium">Plan Change Cost</span>
-                <span className="col-span-4 justify-self-end font-semibold">{parseFloat(planChangeCost).toFixed(2)} CAD</span>
-              </div>
-            )}
-
-            {totalCouponDiscount > 0 && (
-              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-                <span className="col-span-6 font-medium">Coupon</span>
-                <span className="col-span-4 justify-self-end font-semibold">-{parseFloat(totalCouponDiscount).toFixed(2)} CAD</span>
-              </div>
-            )}
-            <hr className="p-2 text-lg font-bold" />
-            <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-              <span className="col-span-6 font-semibold">Total</span>
-              <span className="col-span-4 justify-self-end font-semibold">{parseFloat(total).toFixed(2)} CAD</span>
-            </div>
-          </div>
-        </div>
-        <div className="w-full md:w-[580px]">
-          <h2 className="pb-2 text-center text-lg font-medium">Payment Credentials</h2>
-          <hr className="p-2 text-lg font-bold" />
-          <div className="">
-            <p>
-              <span className="font-medium">Retailer ID :</span> {row?.original?.retailer?._id}
-            </p>
-            <p>
-              <span className="font-medium">Payment ID : </span>
-              {row?.original?.paymentId}
-            </p>
-            <p>
-              <span className="font-medium">Payment Intent ID : </span>
-              {row?.original?.paymentIntentId}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <Table
       isFetching={isFetching}
@@ -322,10 +164,9 @@ export default function PaymentTable({ offset }: { offset: number }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Payment Intent ID"
+      searchPlaceHolder="Search By Subscription ID"
       searchFieldWidth="250px"
       enableRowNumbers={true}
-      // renderDetailPanel={RenderDetailPanel}
     />
   );
 }
