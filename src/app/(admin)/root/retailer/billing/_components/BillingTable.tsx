@@ -29,13 +29,9 @@ export default function BillingTable({ offset }: { offset: number }) {
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
         return row?.original?.planSnapshot?.type === 'subscription' ? (
-          <div>
-            <span className="font-semibold">Plan:</span> {`${row?.original?.planSnapshot?.title}`}
-          </div>
+          <div>{`${row?.original?.planSnapshot?.title}`} Plan</div>
         ) : (
-          <div>
-            <span className="font-semibold">Add-on:</span> {`${row?.original?.planSnapshot?.title}`}
-          </div>
+          <div>{`${row?.original?.planSnapshot?.title}`} Add-On</div>
         );
       },
       size: 200,
@@ -59,7 +55,6 @@ export default function BillingTable({ offset }: { offset: number }) {
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         const validityTo = moment.utc(row?.original?.validityTo).utcOffset(Number(offset));
-        console.log({ date: validityTo, isBefore: moment().isBefore(validityTo) });
 
         return (
           <div className="flex items-center justify-center gap-2">
@@ -119,6 +114,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      size: 200,
     },
   ];
 

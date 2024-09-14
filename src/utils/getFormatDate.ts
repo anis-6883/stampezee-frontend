@@ -22,9 +22,15 @@ export const getFormatDate = (date: string | undefined, showTime: boolean = true
 };
 
 export const convertDateByOffset = (date: string, offset: number): string => {
-  if (!date) return 'N/A';
-  if (!offset) return 'N/A';
-  return date ? moment.utc(date).utcOffset(Number(offset)).format('DD MMMM YYYY,	hh:mm A') : 'N/A';
+  if (!date || !offset) return 'N/A';
+  return date ? moment.utc(date).utcOffset(Number(offset)).format('DD MMM YYYY,	hh:mm A') : 'N/A';
+};
+
+export const currentPeriod = (date1: string, date2: string, offset: number): string => {
+  if (!date1 || !date2 || !offset) return 'N/A';
+  const start = date1 ? moment.utc(date1).utcOffset(Number(offset)).format('MMM DD') : 'N/A';
+  const end = date2 ? moment.utc(date2).utcOffset(Number(offset)).format('MMM DD') : 'N/A';
+  return `${start} - ${end}`;
 };
 
 export const manualDateFormat = (date: string, withoutTime: boolean = false): string => {

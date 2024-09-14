@@ -49,7 +49,9 @@ const checkedLocked = (role: string, url: string, menuName: string, user: any) =
         return role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalBranch === 0;
       }
       if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Custom Stamp Images') {
-        return role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalCustomStamp === 0;
+        return (
+          role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalCustomStampImage === 0
+        );
       }
       if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Regular') {
         return (

@@ -65,6 +65,7 @@ export const apiSlice = createApi({
     'currency',
     'payments',
     'billing',
+    'billings',
     'superAdminRefund',
     'notification',
     'super-adminDashboard',
