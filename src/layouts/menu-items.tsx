@@ -93,7 +93,7 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Billing',
-      href: routes.privateRoutes.retailer.billing,
+      href: routes.privateRoutes.retailer.billing.home,
       icon: <FaMoneyBillTransfer />,
     },
     {

@@ -2,6 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import { routes } from '@/config/routes';
 import { useAllBillingQuery } from '@/features/retailer/billing/billingApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
@@ -102,16 +103,14 @@ export default function BillingTable({ offset }: { offset: number }) {
       header: 'Actions',
       Cell: ({ row }: any) => {
         return (
-          <div>
-            <Link href={'/'}>
-              <Button
-                className="!m-0 !px-2 !py-1.5"
-                text="Payment Details"
-                color="danger"
-                preIcon={<FaInfoCircle className="text-base" />}
-              />
-            </Link>
-          </div>
+          <Link href={routes.privateRoutes.retailer.billing.details(row?.original?._id)}>
+            <Button
+              className="!m-0 !px-2 !py-1.5"
+              text="Subscription Details"
+              color="danger"
+              preIcon={<FaInfoCircle className="text-base" />}
+            />
+          </Link>
         );
       },
       mantineTableHeadCellProps: {

@@ -49,7 +49,10 @@ export const routes = {
         edit: (id: number | string) => `/root/retailer/notification/regular/location-based/update/${id}`,
       },
       membershipPlan: `/root/retailer/membership-plan`,
-      billing: `/root/retailer/billing`,
+      billing: {
+        home: `/root/retailer/billing`,
+        details: (id: number | string) => `/root/retailer/billing/${id}`,
+      },
       refund: `/root/retailer/refund`,
       scan: `/root/retailer/scan`,
     },
