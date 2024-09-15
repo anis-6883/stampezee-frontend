@@ -1,0 +1,107 @@
+{
+  "AppLayout": {
+    "home": "होम",
+    "pricing": "मूल्य निर्धारण",
+    "faq": "सामान्य प्रश्न",
+    "contact_us": "संपर्क करें",
+    "dashboard": "डैशबोर्ड",
+    "login": "लॉगिन",
+    "socials": "सोशल मीडिया",
+    "contact": "संपर्क",
+    "newsletter": "हमारे न्यूज़लेटर से जुड़ें",
+    "privacy": "गोपनीयता नीति",
+    "terms": "नियम और शर्तें",
+    "facebook": "फेसबुक",
+    "instagram": "इंस्टाग्राम",
+    "tiktok": "टिकटॉक",
+    "linkedin": "लिंक्डइन",
+    "newsletterButtonText": "प्रस्तुत करें",
+    "newsletterPlaceholderText": "ईमेल पता"
+  },
+  "HomePage": {
+    "bannerTitle": "अपने ग्राहक अनुभव में क्रांति लाएं",
+    "bannerDetails": "सरलता और प्रौद्योगिकी के साथ अपने ग्राहकों को जोड़ें, पुरस्कृत करें और उन्हें बनाए रखें, और अपने व्यवसाय में वफादारी कार्यक्रमों का भविष्य लाएं।",
+    "bannerButtonText": "शुरू करें",
+    "heroTitleOne": "StampEzee क्यों चुनें?",
+    "heroDescriptionOne": "डिजिटलीकरण ने व्यवसायों के ग्राहकों के साथ बातचीत करने के तरीके को बदल दिया है। हमारा प्लेटफ़ॉर्म सहज डिज़ाइन, मजबूत एनालिटिक्स और बेजोड़ अनुकूलन को मिलाता है, जिससे आपको ग्राहक जुड़ाव के लिए सबसे बेहतरीन उपकरण मिलता है।",
+    "heroTitleTwo": "ग्राहक प्रतिधारण को सशक्त करें",
+    "heroDescriptionTwo": "आज के प्रतिस्पर्धी बाजार में, ग्राहक प्रतिधारण महत्वपूर्ण है। StampEzee वफादारी को बढ़ावा देता है और बार-बार व्यापार को प्रोत्साहित करता है। एक इनाम प्रणाली से अधिक, हमारा प्लेटफ़ॉर्म आपके ब्रांड जुड़ाव को बढ़ाता है, दीर्घकालिक ग्राहक संबंधों को पोषित करता है।",
+    "workMainTitle": "यह कैसे काम करता है?",
+    "workTitleOne": "अतुलनीय लचीलापन",
+    "workDescriptionOne": "मजबूत, दीर्घकालिक ग्राहक संबंधों को पोषित करें।",
+    "workTitleTwo": "सरलता हाथ में",
+    "workDescriptionTwo": "उपयोगकर्ता के अनुकूल, सहज इंटरफेस।",
+    "workTitleThree": "सरलता हाथ में",
+    "workDescriptionThree": "विकास-उन्मुख, सूचित निर्णय लें।",
+    "testimonials": "प्रशंसापत्र",
+    "testimonialMainTitle": "अन्य लोग क्या कहते हैं?",
+    "testimonialTitleOne": "ओलिविया कोल",
+    "testimonialSubTitleOne": "रेस्टोरेंट मैनेजर",
+    "testimonialDescriptionOne": "StampEzee हमारे व्यवसाय के लिए एक गेम चेंजर रहा है। हमारे ग्राहकों को जो सुविधा मिलती है, साथ ही जो जानकारी हमने प्राप्त की है, उसने वास्तव में हमारे संचालन को ऊंचा किया है।",
+    "testimonialTitleTwo": "ओलिविया कोल",
+    "testimonialSubTitleTwo": "रेस्टोरेंट मैनेजर",
+    "testimonialDescriptionTwo": "StampEzee हमारे व्यवसाय के लिए एक गेम चेंजर रहा है। हमारे ग्राहकों को जो सुविधा मिलती है, साथ ही जो जानकारी हमने प्राप्त की है, उसने वास्तव में हमारे संचालन को ऊंचा किया है।",
+    "testimonialTitleThree": "ओलिविया कोल",
+    "testimonialSubTitleThree": "रेस्टोरेंट मैनेजर",
+    "testimonialDescriptionThree": "StampEzee हमारे व्यवसाय के लिए एक गेम चेंजर रहा है। हमारे ग्राहकों को जो सुविधा मिलती है, साथ ही जो जानकारी हमने प्राप्त की है, उसने वास्तव में हमारे संचालन को ऊंचा किया है।"
+  },
+  "FaqPage": {
+    "how": "कैसे",
+    "title": "हम आपकी सहायता कैसे कर सकते हैं?",
+    "questionTitle": "अक्सर पूछे जाने वाले प्रश्न"
+  },
+  "ContactPage": {
+    "where": "कहाँ",
+    "title": "हमें खोजें?",
+    "formTitle": "हमसे जुड़ें",
+    "name": "नाम",
+    "email": "ईमेल",
+    "phone": "फोन नंबर",
+    "message": "संदेश",
+    "buttonText": "भेजें"
+  },
+  "pricingPage": {
+    "explore": "अन्वेषण करें",
+    "title": "हमारी सदस्यता और ऐड-ऑन",
+    "subscriptions": "सदस्यता",
+    "subtitle": "हमारी योजनाएं"
+  },
+  "LoginPage": {
+    "credentials": "क्रेडेंशियल्स: jane@doe.com / next-intl",
+    "description": "कृपया अपना विवरण दर्ज करें।",
+    "email": "ईमेल",
+    "invalidCredentials": "कृपया अपनी क्रेडेंशियल्स जांचें।",
+    "invalidEmail": "कृपया एक मान्य ईमेल पता दर्ज करें।",
+    "invalidPassword": "कृपया पासवर्ड दर्ज करें।",
+    "login": "साइन इन करें",
+    "password": "पासवर्ड",
+    "title": "वापसी पर स्वागत है"
+  },
+  "ProfilePage": {
+    "title": "प्रोफाइल"
+  },
+  "LocaleSwitcher": {
+    "de": "जर्मन",
+    "en": "अंग्रेज़ी",
+    "label": "भाषा"
+  },
+  "CurrencySwitcher": {
+    "label": "मुद्रा"
+  },
+  "RetailerSidebar": {
+    "Dashboard": "डैशबोर्ड",
+    "Plans & AddOns": "योजनाएं और ऐड-ऑन",
+    "Billing": "बिलिंग",
+    "Refunds": "रिफंड",
+    "Branches": "शाखाएं",
+    "Sub-Admins (Team)": "उप-प्रशासक (टीम)",
+    "Stamps": "स्टैम्प्स",
+    "Scans": "स्कैन",
+    "Customers": "ग्राहक",
+    "Custom Stamp Images": "कस्टम स्टाम्प छवियां",
+    "Push Notifications": "पुश सूचनाएं",
+    "Regular": "नियमित",
+    "Location Based": "स्थान आधारित",
+    "Manage Profile": "प्रोफ़ाइल प्रबंधित करें"
+  }
+}

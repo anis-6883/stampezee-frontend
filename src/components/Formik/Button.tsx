@@ -22,7 +22,7 @@ interface ButtonProps {
   postIcon?: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
   isSubmitting?: boolean;
-  onClick?: () => void;
+  onClick?: (data: any) => void;
   className?: string;
   disabled?: boolean;
   tooltip?: string;

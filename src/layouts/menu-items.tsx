@@ -35,7 +35,7 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Payments',
-      href: routes.privateRoutes.superAdmin.payment,
+      href: routes.privateRoutes.superAdmin.payment.home,
       icon: <RiMoneyDollarCircleLine />,
     },
     {

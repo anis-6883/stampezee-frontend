@@ -84,7 +84,10 @@ export const routes = {
         home: `/root/super-admin/currency-exchange`,
       },
       notification: `/root/super-admin/notification`,
-      payment: `/root/super-admin/payment`,
+      payment: {
+        home: `/root/super-admin/payment`,
+        details: (id: number | string) => `/root/super-admin/payment/${id}`,
+      },
       refund: `/root/super-admin/refund`,
       scan: `/root/super-admin/scan`,
       customer: `/root/super-admin/customer`,

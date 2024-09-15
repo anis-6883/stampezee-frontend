@@ -1,0 +1,107 @@
+{
+  "AppLayout": {
+    "home": "홈",
+    "pricing": "가격",
+    "faq": "자주 묻는 질문",
+    "contact_us": "문의하기",
+    "dashboard": "대시보드",
+    "login": "로그인",
+    "socials": "소셜",
+    "contact": "연락처",
+    "newsletter": "뉴스레터 가입",
+    "privacy": "개인정보 보호정책",
+    "terms": "이용 약관",
+    "facebook": "페이스북",
+    "instagram": "인스타그램",
+    "tiktok": "틱톡",
+    "linkedin": "링크드인",
+    "newsletterButtonText": "제출",
+    "newsletterPlaceholderText": "이메일 주소"
+  },
+  "HomePage": {
+    "bannerTitle": "고객 경험을 혁신하십시오",
+    "bannerDetails": "단순함과 기술을 통해 고객과 소통하고 보상을 제공하며 유지하여 고객 충성도 프로그램의 미래를 귀사의 비즈니스에 도입하세요.",
+    "bannerButtonText": "시작하기",
+    "heroTitleOne": "왜 StampEzee를 선택해야 하나요?",
+    "heroDescriptionOne": "디지털화는 기업이 고객과 상호 작용하는 방식을 변화시켰습니다. 당사의 플랫폼은 직관적인 디자인, 강력한 분석, 그리고 탁월한 맞춤화를 결합하여 고객 참여를 위한 최종 도구를 제공합니다.",
+    "heroTitleTwo": "고객 유지력 강화",
+    "heroDescriptionTwo": "오늘날의 경쟁적인 시장에서 고객 유지가 핵심입니다. StampEzee는 충성도를 촉진하고 재구매를 장려합니다. 단순한 보상 시스템 그 이상으로, 우리의 플랫폼은 브랜드 참여를 증대시키고 장기적인 고객 관계를 육성합니다.",
+    "workMainTitle": "어떻게 작동하나요?",
+    "workTitleOne": "비교할 수 없는 유연성",
+    "workDescriptionOne": "강력하고 오래 지속되는 고객 관계를 구축합니다.",
+    "workTitleTwo": "손쉬운 사용",
+    "workDescriptionTwo": "사용자 친화적이고 매끄러운 인터페이스.",
+    "workTitleThree": "손쉬운 사용",
+    "workDescriptionThree": "성장 촉진을 위한 정보 기반 결정을 내리세요.",
+    "testimonials": "고객 후기",
+    "testimonialMainTitle": "다른 사람들이 어떻게 말하고 있나요?",
+    "testimonialTitleOne": "올리비아 콜",
+    "testimonialSubTitleOne": "레스토랑 매니저",
+    "testimonialDescriptionOne": "StampEzee는 우리 비즈니스에 큰 변화를 가져왔습니다. 고객에게 제공된 편의성과 우리가 얻은 통찰력은 우리의 운영을 크게 향상시켰습니다.",
+    "testimonialTitleTwo": "올리비아 콜",
+    "testimonialSubTitleTwo": "레스토랑 매니저",
+    "testimonialDescriptionTwo": "StampEzee는 우리 비즈니스에 큰 변화를 가져왔습니다. 고객에게 제공된 편의성과 우리가 얻은 통찰력은 우리의 운영을 크게 향상시켰습니다.",
+    "testimonialTitleThree": "올리비아 콜",
+    "testimonialSubTitleThree": "레스토랑 매니저",
+    "testimonialDescriptionThree": "StampEzee는 우리 비즈니스에 큰 변화를 가져왔습니다. 고객에게 제공된 편의성과 우리가 얻은 통찰력은 우리의 운영을 크게 향상시켰습니다."
+  },
+  "FaqPage": {
+    "how": "방법",
+    "title": "어떻게 도와드릴까요?",
+    "questionTitle": "자주 묻는 질문"
+  },
+  "ContactPage": {
+    "where": "어디서",
+    "title": "우리를 찾나요?",
+    "formTitle": "문의하기",
+    "name": "이름",
+    "email": "이메일",
+    "phone": "전화번호",
+    "message": "메시지",
+    "buttonText": "전송"
+  },
+  "pricingPage": {
+    "explore": "탐색",
+    "title": "구독 및 추가 기능",
+    "subscriptions": "구독",
+    "subtitle": "우리의 플랜"
+  },
+  "LoginPage": {
+    "credentials": "자격증명: jane@doe.com / next-intl",
+    "description": "세부 정보를 입력하십시오.",
+    "email": "이메일",
+    "invalidCredentials": "자격 증명을 확인하십시오.",
+    "invalidEmail": "유효한 이메일 주소를 입력하십시오.",
+    "invalidPassword": "비밀번호를 입력하십시오.",
+    "login": "로그인",
+    "password": "비밀번호",
+    "title": "다시 오신 것을 환영합니다"
+  },
+  "ProfilePage": {
+    "title": "프로필"
+  },
+  "LocaleSwitcher": {
+    "de": "독일어",
+    "en": "영어",
+    "label": "언어"
+  },
+  "CurrencySwitcher": {
+    "label": "통화"
+  },
+  "RetailerSidebar": {
+    "Dashboard": "대시보드",
+    "Plans & AddOns": "플랜 및 추가 기능",
+    "Billing": "청구",
+    "Refunds": "환불",
+    "Branches": "지점",
+    "Sub-Admins (Team)": "서브 관리자 (팀)",
+    "Stamps": "스탬프",
+    "Scans": "스캔",
+    "Customers": "고객",
+    "Custom Stamp Images": "맞춤형 스탬프 이미지",
+    "Push Notifications": "푸시 알림",
+    "Regular": "일반",
+    "Location Based": "위치 기반",
+    "Manage Profile": "프로필 관리"
+  }
+}

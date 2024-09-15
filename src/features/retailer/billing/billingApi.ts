@@ -16,7 +16,14 @@ export const billingApi = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'billing', id: arg }],
       keepUnusedDataFor: 10,
     }),
+    getBillingPortal: builder.mutation({
+      query: (data) => ({
+        url: `/api/web/retailer/billing/portal`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useAllBillingQuery, useSingleBillingQuery } = billingApi;
+export const { useAllBillingQuery, useSingleBillingQuery, useGetBillingPortalMutation } = billingApi;

@@ -1,0 +1,107 @@
+{
+  "AppLayout": {
+    "home": "Accueil",
+    "pricing": "Tarification",
+    "faq": "FAQ",
+    "contact_us": "Nous contacter",
+    "dashboard": "Tableau de bord",
+    "login": "Connexion",
+    "socials": "Réseaux sociaux",
+    "contact": "Contact",
+    "newsletter": "REJOIGNEZ NOTRE NEWSLETTER",
+    "privacy": "POLITIQUE DE CONFIDENTIALITÉ",
+    "terms": "CGU",
+    "facebook": "FACEBOOK",
+    "instagram": "INSTAGRAM",
+    "tiktok": "TIKTOK",
+    "linkedin": "LINKEDIN",
+    "newsletterButtonText": "SOUMETTRE",
+    "newsletterPlaceholderText": "Adresse e-mail"
+  },
+  "HomePage": {
+    "bannerTitle": "Révolutionnez l'Expérience Client",
+    "bannerDetails": "Engagez, récompensez et fidélisez vos clients avec une touche de simplicité et de technologie, et apportez l'avenir des programmes de fidélité à votre entreprise.",
+    "bannerButtonText": "COMMENCER",
+    "heroTitleOne": "Pourquoi choisir StampEzee ?",
+    "heroDescriptionOne": "La digitalisation a transformé la manière dont les entreprises interagissent avec leurs clients. Notre plateforme combine un design intuitif, des analyses robustes et une personnalisation inégalée, vous offrant l'outil ultime pour l'engagement client.",
+    "heroTitleTwo": "Renforcez la Fidélité Client",
+    "heroDescriptionTwo": "Dans le marché compétitif d'aujourd'hui, la fidélité client est essentielle. StampEzee favorise la loyauté et encourage les achats répétés. Plus qu'un simple système de récompenses, notre plateforme amplifie l'engagement de votre marque, nourrissant des relations clients durables.",
+    "workMainTitle": "Comment ça Marche ?",
+    "workTitleOne": "FLEXIBILITÉ INÉGALÉE",
+    "workDescriptionOne": "Faites perdurer des relations solides avec vos clients.",
+    "workTitleTwo": "SIMPLICITÉ À PORTÉE DE MAIN",
+    "workDescriptionTwo": "Interface conviviale et sans couture.",
+    "workTitleThree": "SIMPLICITÉ À PORTÉE DE MAIN",
+    "workDescriptionThree": "Prenez des décisions éclairées qui stimulent la croissance.",
+    "testimonials": "TÉMOIGNAGES",
+    "testimonialMainTitle": "Que Disent les Autres ?",
+    "testimonialTitleOne": "OLIVIA COLE",
+    "testimonialSubTitleOne": "Directrice de Restaurant",
+    "testimonialDescriptionOne": "StampEzee a véritablement transformé notre entreprise. La commodité qu'il offre à nos clients, associée aux informations que nous avons obtenues, a véritablement amélioré nos opérations.",
+    "testimonialTitleTwo": "OLIVIA COLE",
+    "testimonialSubTitleTwo": "Directrice de Restaurant",
+    "testimonialDescriptionTwo": "StampEzee a véritablement transformé notre entreprise. La commodité qu'il offre à nos clients, associée aux informations que nous avons obtenues, a véritablement amélioré nos opérations.",
+    "testimonialTitleThree": "OLIVIA COLE",
+    "testimonialSubTitleThree": "Directrice de Restaurant",
+    "testimonialDescriptionThree": "StampEzee a véritablement transformé notre entreprise. La commodité qu'il offre à nos clients, associée aux informations que nous avons obtenues, a véritablement amélioré nos opérations."
+  },
+  "FaqPage": {
+    "how": "COMMENT",
+    "title": "pouvons-nous vous aider ?",
+    "questionTitle": "Questions fréquemment posées"
+  },
+  "ContactPage": {
+    "where": "OÙ",
+    "title": "nous trouver ?",
+    "formTitle": "Connectez-vous avec nous",
+    "name": "Nom",
+    "email": "E-mail",
+    "phone": "Numéro de Téléphone",
+    "message": "Message",
+    "buttonText": "Envoyer"
+  },
+  "pricingPage": {
+    "explore": "Explorer",
+    "title": "Nos Abonnements et Modules Complémentaires",
+    "subscriptions": "Abonnements",
+    "subtitle": "Nos Forfaits"
+  },
+  "LoginPage": {
+    "credentials": "Identifiants : jane@doe.com / next-intl",
+    "description": "Veuillez entrer vos informations.",
+    "email": "E-mail",
+    "invalidCredentials": "Veuillez vérifier vos identifiants.",
+    "invalidEmail": "Veuillez entrer une adresse e-mail valide.",
+    "invalidPassword": "Veuillez entrer un mot de passe.",
+    "login": "Connexion",
+    "password": "Mot de passe",
+    "title": "Bon retour"
+  },
+  "ProfilePage": {
+    "title": "Profil"
+  },
+  "LocaleSwitcher": {
+    "de": "Allemand",
+    "en": "Anglais",
+    "label": "Langue"
+  },
+  "CurrencySwitcher": {
+    "label": "Devise"
+  },
+  "RetailerSidebar": {
+    "Dashboard": "Tableau de bord",
+    "Plans & AddOns": "Forfaits et Modules",
+    "Billing": "Facturation",
+    "Refunds": "Remboursements",
+    "Branches": "Succursales",
+    "Sub-Admins (Team)": "Sous-administrateurs (Équipe)",
+    "Stamps": "Timbres",
+    "Scans": "Scans",
+    "Customers": "Clients",
+    "Custom Stamp Images": "Images de Timbres Personnalisés",
+    "Push Notifications": "Notifications Push",
+    "Regular": "Régulier",
+    "Location Based": "Basé sur la Localisation",
+    "Manage Profile": "Gérer le Profil"
+  }
+}

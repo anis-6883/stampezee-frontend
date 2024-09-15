@@ -68,10 +68,10 @@ export default function RetailerTable({ offset }: { offset: number }) {
           <div>
             {row.original.image ? (
               <div>
-                <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="h-full w-8 rounded" />
+                <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="h-8 w-8 rounded" />
               </div>
             ) : (
-              <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-8 rounded" />
+              <img src={'/images/stamp-logo.png'} alt="image" className="h-8 w-8 rounded" />
             )}
           </div>
           <div>
@@ -81,19 +81,21 @@ export default function RetailerTable({ offset }: { offset: number }) {
           </div>
         </div>
       ),
+      size: 200,
     },
     {
       header: 'Owner Info',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Name:</span> {row?.original.firstName} {row?.original.lastName}
+            <span className="font-bold">Name:</span> {row?.original?.firstName} {row?.original?.lastName}
           </p>
           <p>
-            <span className="font-bold">Email:</span> {row?.original.email}
+            <span className="font-bold">Email:</span> {row?.original?.email}
           </p>
           <p>
-            <span className="font-bold">Phone:</span> {row?.original.phone}
+            <span className="font-bold">Phone:</span> {row?.original?.dialCode}
+            {row?.original?.phone}
           </p>
         </div>
       ),
@@ -218,8 +220,8 @@ export default function RetailerTable({ offset }: { offset: number }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Name, Store, Email"
-        searchFieldWidth="270px"
+        searchPlaceHolder="Search By Store, Owner Name & Email"
+        searchFieldWidth="330px"
       />
 
       <DeleteConfirmModal

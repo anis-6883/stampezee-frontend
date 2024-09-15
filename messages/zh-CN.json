@@ -1,0 +1,107 @@
+{
+  "AppLayout": {
+    "home": "主页",
+    "pricing": "定价",
+    "faq": "常见问题",
+    "contact_us": "联系我们",
+    "dashboard": "仪表盘",
+    "login": "登录",
+    "socials": "社交媒体",
+    "contact": "联系",
+    "newsletter": "订阅我们的通讯",
+    "privacy": "隐私政策",
+    "terms": "条款和条件",
+    "facebook": "脸书",
+    "instagram": "Instagram",
+    "tiktok": "抖音",
+    "linkedin": "领英",
+    "newsletterButtonText": "提交",
+    "newsletterPlaceholderText": "电子邮件地址"
+  },
+  "HomePage": {
+    "bannerTitle": "革新您的客户体验",
+    "bannerDetails": "通过简单与科技的结合，吸引、奖励并留住您的客户，将忠诚计划的未来带到您的业务中。",
+    "bannerButtonText": "开始使用",
+    "heroTitleOne": "为什么选择StampEzee？",
+    "heroDescriptionOne": "数字化已经改变了企业与客户互动的方式。我们的平台结合了直观的设计、强大的分析和无与伦比的定制化，给您带来客户互动的终极工具。",
+    "heroTitleTwo": "增强客户留存",
+    "heroDescriptionTwo": "在当今竞争激烈的市场中，客户留存至关重要。StampEzee 促进忠诚度并鼓励重复购买。不仅仅是奖励系统，我们的平台还提升了品牌参与度，培育长期的客户关系。",
+    "workMainTitle": "它是如何运作的？",
+    "workTitleOne": "无与伦比的灵活性",
+    "workDescriptionOne": "建立强大且持久的客户关系。",
+    "workTitleTwo": "简易操作",
+    "workDescriptionTwo": "用户友好、无缝界面。",
+    "workTitleThree": "简易操作",
+    "workDescriptionThree": "做出促进增长的明智决策。",
+    "testimonials": "用户评价",
+    "testimonialMainTitle": "其他用户怎么说？",
+    "testimonialTitleOne": "奥利维亚·科尔",
+    "testimonialSubTitleOne": "餐厅经理",
+    "testimonialDescriptionOne": "StampEzee 为我们的业务带来了巨大改变。它为我们的客户提供的便利性，加上我们获得的洞察力，确实提升了我们的运营。",
+    "testimonialTitleTwo": "奥利维亚·科尔",
+    "testimonialSubTitleTwo": "餐厅经理",
+    "testimonialDescriptionTwo": "StampEzee 为我们的业务带来了巨大改变。它为我们的客户提供的便利性，加上我们获得的洞察力，确实提升了我们的运营。",
+    "testimonialTitleThree": "奥利维亚·科尔",
+    "testimonialSubTitleThree": "餐厅经理",
+    "testimonialDescriptionThree": "StampEzee 为我们的业务带来了巨大改变。它为我们的客户提供的便利性，加上我们获得的洞察力，确实提升了我们的运营。"
+  },
+  "FaqPage": {
+    "how": "如何",
+    "title": "我们能帮到您？",
+    "questionTitle": "常见问题"
+  },
+  "ContactPage": {
+    "where": "在哪里",
+    "title": "找到我们？",
+    "formTitle": "联系我们",
+    "name": "姓名",
+    "email": "电子邮件",
+    "phone": "电话号码",
+    "message": "留言",
+    "buttonText": "发送"
+  },
+  "pricingPage": {
+    "explore": "探索",
+    "title": "我们的订阅和附加功能",
+    "subscriptions": "订阅",
+    "subtitle": "我们的套餐"
+  },
+  "LoginPage": {
+    "credentials": "凭证: jane@doe.com / next-intl",
+    "description": "请输入您的信息。",
+    "email": "电子邮件",
+    "invalidCredentials": "请检查您的凭证。",
+    "invalidEmail": "请输入有效的电子邮件地址。",
+    "invalidPassword": "请输入密码。",
+    "login": "登录",
+    "password": "密码",
+    "title": "欢迎回来"
+  },
+  "ProfilePage": {
+    "title": "个人资料"
+  },
+  "LocaleSwitcher": {
+    "de": "德语",
+    "en": "英语",
+    "label": "语言"
+  },
+  "CurrencySwitcher": {
+    "label": "货币"
+  },
+  "RetailerSidebar": {
+    "Dashboard": "仪表盘",
+    "Plans & AddOns": "计划和附加功能",
+    "Billing": "账单",
+    "Refunds": "退款",
+    "Branches": "分支机构",
+    "Sub-Admins (Team)": "子管理员（团队）",
+    "Stamps": "印章",
+    "Scans": "扫描",
+    "Customers": "客户",
+    "Custom Stamp Images": "自定义印章图片",
+    "Push Notifications": "推送通知",
+    "Regular": "常规",
+    "Location Based": "基于位置",
+    "Manage Profile": "管理个人资料"
+  }
+}

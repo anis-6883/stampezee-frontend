@@ -15,6 +15,13 @@ import { ActionIcon, AdvancedRadio, Modal, Tab, Text } from 'rizzui';
 const languageOptions = [
   { label: 'English', value: 'en', country: 'United State' },
   { label: 'Arabic', value: 'ar', country: 'Saudi Arabia' },
+  { label: 'Spanish', value: 'es', country: 'Spain' },
+  { label: 'France', value: 'fr', country: 'France' },
+  { label: 'Hindi', value: 'hi', country: 'India' },
+  { label: 'Russian', value: 'ru', country: 'Russia' },
+  { label: 'Japanese', value: 'ja', country: 'Japan' },
+  { label: 'Korean', value: 'ko', country: 'Korea' },
+  { label: 'Chinese', value: 'zh-CN', country: 'China' },
 ];
 
 export default function LocalSwitcherSelector({

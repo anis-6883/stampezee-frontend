@@ -165,7 +165,7 @@ export default function CurrencyTable({ offset }: { offset: number }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Name (Currency)"
+        searchPlaceHolder="Search By Currency Name"
         searchFieldWidth="250px"
       />
 

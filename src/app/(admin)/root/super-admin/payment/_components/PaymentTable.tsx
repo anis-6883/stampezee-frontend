@@ -25,7 +25,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Retailer',
+      header: 'Retailer Store',
       accessorKey: 'retailer.storeName',
       Cell: ({ row }: any) => (
         <div className="flex items-center gap-2">
@@ -35,11 +35,11 @@ export default function PaymentTable({ offset }: { offset: number }) {
                 <img
                   src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row?.original?.retailer?.image}`}
                   alt="image"
-                  className="h-full w-8 rounded"
+                  className="h-8 w-8 rounded"
                 />
               </div>
             ) : (
-              <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-8 rounded" />
+              <img src={'/images/stamp-logo.png'} alt="image" className="h-8 w-8 rounded" />
             )}
           </div>
           <div>
@@ -82,7 +82,6 @@ export default function PaymentTable({ offset }: { offset: number }) {
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         const validityTo = moment.utc(row?.original?.validityTo).utcOffset(Number(offset));
-        console.log({ date: validityTo, isBefore: moment().isBefore(validityTo) });
 
         return (
           <div className="flex items-center justify-center gap-2">
@@ -126,11 +125,9 @@ export default function PaymentTable({ offset }: { offset: number }) {
       header: 'Actions',
       Cell: ({ row }: any) => {
         return (
-          <div>
-            <Link href={routes.privateRoutes.superAdmin.retailer?.details(row?.original?._id)}>
-              <Button className="!m-0 !px-2 !py-1.5" text="Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
-            </Link>
-          </div>
+          <Link href={routes.privateRoutes.superAdmin.payment?.details(row?.original?._id)}>
+            <Button className="!m-0 !px-2 !py-1.5" text="Payment Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
+          </Link>
         );
       },
       mantineTableHeadCellProps: {
@@ -164,8 +161,8 @@ export default function PaymentTable({ offset }: { offset: number }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Subscription ID"
-      searchFieldWidth="250px"
+      searchPlaceHolder="Search By Subscription ID & Store Name"
+      searchFieldWidth="340px"
       enableRowNumbers={true}
     />
   );
