@@ -110,13 +110,9 @@ export default function StampsImageTable() {
     {
       header: 'Actions',
       Cell: ({ row }: any) => (
-        // <div className="flex items-center justify-center gap-2">
-        //   <Link href={routes?.privateRoutes?.superAdmin?.subscription?.edit(row?.original?._id)}>
-        //     <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
-        //   </Link>
-        // </div>
         <div className="flex items-center justify-center gap-2">
           <Button
+            tooltip="Edit"
             color="warning"
             preIcon={<HiOutlinePencil className="text-base" />}
             onClick={() => {

@@ -152,6 +152,10 @@ input.mantine-TextInput-input {
   border-color: #d5dadf;
 }
 
+div.mantine-Input-wrapper {
+  width: 100%;
+}
+
 input.mantine-Select-input {
   border-radius: 10px;
   border-color: #d5dadf;

@@ -55,12 +55,18 @@ export default function CouponTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Title',
-      accessorKey: 'title',
-    },
-    {
-      header: 'Code',
+      header: 'Coupon',
       accessorKey: 'code',
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">
+          <p>
+            <span className="font-bold">Title:</span> {row?.original.title}
+          </p>
+          <p>
+            <span className="font-bold">Code:</span> {row?.original.code}
+          </p>
+        </div>
+      ),
     },
     {
       header: 'Discount',
@@ -109,7 +115,7 @@ export default function CouponTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 300,
+      size: 250,
     },
     {
       header: 'Status',
@@ -129,19 +135,19 @@ export default function CouponTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Button
+            tooltip="Edit"
             color="warning"
             preIcon={<HiOutlinePencil className="text-base" />}
             onClick={() => {
               setFormData({
                 ...row.original,
-                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
                 validDateRange: `${getFormattedDate(row?.original?.startedAt, offset)} to ${getFormattedDate(row?.original?.expiredAt, offset)}`,
               });
               setCreateState(true);
             }}
           />
 
-          <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+          <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -159,7 +165,6 @@ export default function CouponTable({ offset }: { offset: number }) {
       <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
         <StatusIndicator />
         <div>
-          {' '}
           <Button
             className="w-full"
             color="danger"
@@ -190,7 +195,7 @@ export default function CouponTable({ offset }: { offset: number }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Title & Code"
+        searchPlaceHolder="Search By Title or Code"
         searchFieldWidth="250px"
       />
 

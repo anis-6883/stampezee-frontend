@@ -161,6 +161,8 @@ export default function CreateUpdateModel({
                     size={1024 * 1000}
                     sizeText="1MB"
                     isRounded={true}
+                    uploadText="Upload"
+                    brandText={<span>Brand Logo</span>}
                   />
                   <InputField name="storeName" label="Store Name" placeholder="Burger King" />
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -206,15 +208,16 @@ export default function CreateUpdateModel({
                     </div>
                   </div>
 
+                  <div className="grid grid-cols-1">
+                    <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" />
+                  </div>
+
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                     <InputField name="province" label="Province" placeholder="Ontario" />
                     <InputField name="city" label="City" placeholder="Toronto" />
                     <InputField name="postalCode" label="Postal Code" placeholder="M3C" />
                   </div>
 
-                  <div className="grid grid-cols-1">
-                    <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" />
-                  </div>
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <div className="grid grid-cols-1">
                       <InputField required={false} name="about" label="About" placeholder="Write About Here" />

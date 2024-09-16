@@ -152,7 +152,6 @@ export default function CreateUpdateModel({
 
                   <div className="grid grid-cols-1 gap-x-3 md:grid-cols-2">
                     <SelectField
-                      // selectClassName=''
                       value={values?.discountType}
                       options={[
                         { label: 'Percentage', value: 'percentage' },
@@ -186,7 +185,7 @@ export default function CreateUpdateModel({
                     <InputField
                       type="number"
                       name="minPurchaseAmount"
-                      label="Min. Purchased Amount (CAD)"
+                      label="Min. Purchased Amount"
                       placeholder="5"
                       prefix={<LuCircleDollarSign className="text-xl" />}
                     />
@@ -197,6 +196,9 @@ export default function CreateUpdateModel({
                   </div>
 
                   <p className="flex flex-col text-end text-xs font-semibold">
+                    <span>
+                      Base Currency: <span className="text-red-600">CAD</span>
+                    </span>
                     <span>
                       Fields marked with <span className="text-red-600">*</span> are mandatory!
                     </span>

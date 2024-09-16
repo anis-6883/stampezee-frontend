@@ -32,12 +32,7 @@ export default function CustomerTable() {
     ...searchQuery,
   });
 
-  if (!isLoading) {
-    console.log('Data: ', data);
-  }
-
   const [deleteCustomerBySuperAdmin, { isSuccess, isError }] = useDeleteCustomerBySuperAdminMutation();
-
   const [customerStatusUpdateBySuperAdmin] = useCustomerStatusUpdateBySuperAdminMutation();
 
   const handleDelete = async (rowData: any) => {
@@ -69,10 +64,10 @@ export default function CustomerTable() {
           <div>
             {row.original.image ? (
               <div>
-                <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="h-full w-20 rounded" />
+                <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="h-10 w-10 rounded" />
               </div>
             ) : (
-              <img src={'/images/profile.png'} alt="image" className="h-full w-20 rounded" />
+              <img src={'/images/profile.png'} alt="image" className="h-10 w-10 rounded" />
             )}
           </div>
           <div>

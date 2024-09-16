@@ -128,7 +128,7 @@ export default function RetailerTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 300,
+      size: 200,
     },
     {
       header: 'Joining Date',
@@ -137,7 +137,7 @@ export default function RetailerTable({ offset }: { offset: number }) {
           <p> {convertDateByOffset(row?.original?.createdAt, offset)}</p>
         </div>
       ),
-      size: 300,
+      size: 200,
     },
     {
       header: 'Status',
@@ -221,7 +221,7 @@ export default function RetailerTable({ offset }: { offset: number }) {
         setQuery={setQuery}
         query={query}
         searchPlaceHolder="Search By Store, Owner Name & Email"
-        searchFieldWidth="330px"
+        searchFieldWidth="320px"
       />
 
       <DeleteConfirmModal
