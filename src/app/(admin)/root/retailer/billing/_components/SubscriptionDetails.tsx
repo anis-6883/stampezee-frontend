@@ -8,6 +8,7 @@ import { useGetBillingPortalMutation, useSingleBillingQuery } from '@/features/r
 import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import moment from 'moment';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
@@ -17,6 +18,7 @@ import { ImCancelCircle } from 'react-icons/im';
 import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
+import { RiDownloadCloud2Fill } from 'react-icons/ri';
 import { SlLock } from 'react-icons/sl';
 import { Badge } from 'rizzui';
 
@@ -24,7 +26,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
   const { push } = useRouter();
   const { data, isLoading, isError } = useSingleBillingQuery(id);
   const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetBillingPortalMutation();
-  const { stripe, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, planSnapshot } = data?.data || {};
+  const { stripe, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, planSnapshot, payments } = data?.data || {};
   const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
 
   useEffect(() => {
@@ -55,19 +57,20 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
         {isLoading ? (
           <Skeleton className="my-3 h-8 w-32 rounded" />
         ) : (
-          <h3 className="text-base">
+          <h3 className="text-lg font-medium">
             {planSnapshot?.title} <span className="font-semibold">({planSnapshot?.type === 'subscription' ? 'Plan' : 'AddOn'})</span>
           </h3>
         )}
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
           <div className="flex flex-col justify-between font-medium md:flex-row">
-            <span className="font-bold">Subscription ID</span>
+            <span className="font-semibold">Subscription ID</span>
             <span>{isLoading ? <Skeleton className="h-6 w-32 rounded" /> : stripe?.subscriptionId}</span>
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-bold">Enroll Status</span>
+            <span className="font-semibold">Enroll Status</span>
             {isLoading ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : enrollStatus === 'purchase' ? (
@@ -85,7 +88,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
             )}
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-bold">Balance</span>
+            <span className="font-semibold">Balance</span>
             {isLoading ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : (
@@ -95,15 +98,15 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
             )}
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-bold">Purchased At</span>{' '}
+            <span className="font-semibold">Purchased At</span>{' '}
             {isLoading ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(createdAt, offset)}</span>}
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-bold">Current Period</span>{' '}
+            <span className="font-semibold">Current Period</span>{' '}
             {isLoading ? <Skeleton className="h-6 w-32 rounded" /> : <span>{currentPeriod(validityFrom, validityTo, offset)}</span>}
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-bold">Plan Status</span>
+            <span className="font-semibold">Plan Status</span>
             {isLoading ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : status === true && moment().isBefore(validityToUtc) ? (
@@ -118,17 +121,116 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
           </div>
           {!isLoading && stripe?.renewCancelAt !== null && (
             <div className="flex items-center justify-between font-medium">
-              <span className="font-bold">Subscription Cancel At</span>{' '}
+              <span className="font-semibold">Subscription Cancel At</span>{' '}
               <span className="text-danger">{convertDateByOffset(stripe?.renewCancelAt, offset)}</span>
             </div>
           )}
           <div className="flex items-center justify-between font-medium">
-            <span className="font-bold">Next Invoice</span> <span>----</span>
+            <span className="font-semibold">Next Invoice</span> <span>{convertDateByOffset(validityTo, offset)}</span>
           </div>
         </div>
       </div>
-      <div className="mt-5">
-        <div className="flex">
+
+      <h2 className="my-5 text-lg font-medium">Invoices:</h2>
+      <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="whitespace-nowrap px-6 py-3">
+                Serial No.
+              </th>
+              <th scope="col" className="whitespace-nowrap px-6 py-3">
+                Payment Intent ID
+              </th>
+              <th scope="col" className="whitespace-nowrap px-6 py-3">
+                Invoice Number
+              </th>
+              <th scope="col" className="whitespace-nowrap px-6 py-3">
+                Amount
+              </th>
+              <th scope="col" className="whitespace-nowrap px-6 py-3">
+                Created At
+              </th>
+              <th scope="col" className="whitespace-nowrap px-6 py-3">
+                Action
+              </th>
+            </tr>
+          </thead>
+          {isLoading ? (
+            <tbody>
+              <tr>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+              </tr>
+            </tbody>
+          ) : (
+            <tbody>
+              {payments.length <= 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
+                    No transaction happened yet!
+                  </td>
+                </tr>
+              ) : (
+                payments.map((payment: any, index: number) => {
+                  const amount = (Number(payment?.amountTotal) / 100).toFixed(2);
+                  return (
+                    <tr
+                      key={payment?._id}
+                      className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                    >
+                      <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        {++index}
+                      </td>
+                      <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        {payment?.paymentIntentId}
+                      </td>
+                      <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        {payment?.invoiceNumber}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        {amount} {balanceInfo?.currency}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">{convertDateByOffset(payment?.createdAt, offset)}</td>
+                      <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
+                        <Link href={payment?.invoicePdf} target="_blank">
+                          <Button
+                            className="!m-0 !px-2 !py-1.5"
+                            color="danger"
+                            text="Download PDF"
+                            postIcon={<RiDownloadCloud2Fill className="text-lg" />}
+                          />
+                        </Link>
+
+                        {/* <Button className="!m-0 !px-2 !py-1.5" color="danger" text="Details" preIcon={<FaInfoCircle className="text-lg" />} /> */}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          )}
+        </table>
+      </div>
+
+      <div className="mt-20">
+        <div className="flex justify-end">
           {isLoading ? (
             <Skeleton className="h-6 w-32 rounded" />
           ) : status === true && moment().isBefore(validityToUtc) ? (
