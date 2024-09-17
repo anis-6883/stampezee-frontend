@@ -138,6 +138,18 @@ export default function CreateUpdateModal({
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
             {({ setFieldValue, values }) => (
               <Form className="mt-5">
+                <div className="mb-5">
+                  <DragAndDropUpload
+                    value={{ name: 'image', image: values.image }}
+                    onChange={(image: any) => setFieldValue('image', image)}
+                    className="mt-2"
+                    size={1024 * 1000}
+                    sizeText="1MB"
+                    isRounded={true}
+                    uploadText="Upload"
+                    brandText={<span>Image</span>}
+                  />
+                </div>
                 <div className="grid grid-cols-2 gap-x-5 gap-y-5">
                   <InputField name="firstName" label="First Name" placeholder="John" />
                   <InputField name="lastName" label="Last Name" placeholder="Doe" required={false} />
@@ -161,16 +173,6 @@ export default function CreateUpdateModal({
                       </Link>
                     </div>
                   )}
-                  <div>
-                    <p className="font-medium">Upload Image</p>
-                    <DragAndDropUpload
-                      value={{ name: 'image', image: values.image }}
-                      onChange={(image: any) => setFieldValue('image', image)}
-                      className="mt-2"
-                      size={1024 * 1000}
-                      sizeText="1MB"
-                    />
-                  </div>
                 </div>
                 <p className="text-end text-xs font-semibold">
                   Fields marked with <span className="text-red-600">*</span> are mandatory!

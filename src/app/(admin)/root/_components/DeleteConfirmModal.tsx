@@ -59,7 +59,8 @@ export default function DeleteConfirmModal({
               </svg>
               <span className="sr-only">Info</span>
               <div>
-                <span className="font-medium">Warning!</span> Deleting this branch will also remove the associated Super Admin and stamp.
+                <span className="font-medium">Warning!</span> <br />
+                Associated sub-admin and stamps will also deleted!
               </div>
             </div>
           </div>

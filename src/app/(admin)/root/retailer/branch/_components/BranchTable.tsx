@@ -147,7 +147,7 @@ export default function BranchTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Name',
+      header: 'Branch Name',
       accessorKey: 'name',
     },
     {
@@ -181,7 +181,7 @@ export default function BranchTable({ offset }: { offset: number }) {
       },
     },
     {
-      header: 'Validity Date',
+      header: 'Expiry Day',
       Cell: ({ row }: any) => {
         const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
 
@@ -287,9 +287,10 @@ export default function BranchTable({ offset }: { offset: number }) {
         return (
           <div className="flex items-center justify-center gap-2">
             <Link href={routes.privateRoutes.retailer.branch.edit(_id)}>
-              <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+              <Button tooltip="Edit" color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
             </Link>
             <Button
+              tooltip="Delete"
               color="danger"
               onClick={() => {
                 setModalState(true);
@@ -332,7 +333,7 @@ export default function BranchTable({ offset }: { offset: number }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Name"
+        searchPlaceHolder="Search By Branch Name"
         enableRowNumbers={true}
       />
 
