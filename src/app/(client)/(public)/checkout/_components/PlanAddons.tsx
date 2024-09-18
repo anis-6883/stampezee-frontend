@@ -8,12 +8,19 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selectedCurrency: string }) => {
   const dispatch = useDispatch();
-  const { subscription, addOn, activeSubscription, remainingBalance, subTotal, total, tax, coupon, couponDiscount } = useSelector(
-    (state: RootState) => state.subscriptionSlice
-  );
-
-  const { currency, defaultCurrency, planChangeCost, downgradeRefund } = useSelector((state: RootState) => state.subscriptionSlice);
-
+  const {
+    subscription,
+    addOn,
+    activeSubscription,
+    remainingBalance,
+    subTotal,
+    total,
+    tax,
+    coupon,
+    couponDiscount,
+    planChangeCost,
+    downgradeRefund,
+  } = useSelector((state: RootState) => state.subscriptionSlice);
   const handleRemoveAddOn = (addOnId: string) => {
     dispatch(removeAddOns(addOnId));
   };
@@ -54,7 +61,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </span>
       </div>
       <hr className="p-2 text-lg font-bold" />
-      {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && downgradeRefund <= 0 && (
+      {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && downgradeRefund <= 0 && total !== 0 && (
         <div className="mb-2 flex justify-between">
           <span>
             <span className="font-semibold">{stripeInfo?.taxTitle}</span> ({stripeInfo?.taxCost}%)
@@ -65,11 +72,11 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </div>
       )}
 
-      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && !addOn.slug && downgradeRefund <= 0 && (
+      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && !addOn.slug && downgradeRefund <= 0 && total !== 0 && (
         <div className="mb-2 flex justify-between">
           <span className="font-semibold">Plan Change Cost</span>
           <span className="text-red-500">
-            {planChangeCost} {selectedCurrency}
+            {stripeInfo?.planChangeCost} {selectedCurrency}
           </span>
         </div>
       )}

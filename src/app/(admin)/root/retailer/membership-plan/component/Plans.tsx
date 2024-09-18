@@ -5,7 +5,7 @@ import SubscriptionList from '@/app/(client)/(public)/checkout/_components/Subsc
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
-import { activeSubscription, setActiveSubscription, setSubscription } from '@/features/subscription/subscriptionSlice';
+import { activeSubscription, setActiveSubscription, setRemainingBalance, setSubscription } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate, isCheckoutButtonDisabled } from '@/utils';
@@ -28,6 +28,7 @@ export const Plans = () => {
   useEffect(() => {
     const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
     let updateActiveSubscription = {};
+
     if (activePlan) {
       updateActiveSubscription = {
         ...activePlan,
@@ -55,6 +56,7 @@ export const Plans = () => {
         planPayment: session?.user?.planPayment,
       };
     }
+
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
 
     // subscription update into redux state
@@ -67,6 +69,7 @@ export const Plans = () => {
       });
       dispatch(setSubscription(pursedSubscription));
     }
+    dispatch(setRemainingBalance());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.data, dispatch, session?.user]);
 

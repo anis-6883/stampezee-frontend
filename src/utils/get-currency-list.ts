@@ -208,6 +208,14 @@ const currencyData = [
     unicode_symbol: '$',
   },
   {
+    code: 'NGN',
+    id: 'NGN',
+    localized_full_name: 'Nigerian Naira',
+    name: 'Nigerian Naira',
+    symbol: '₦',
+    unicode_symbol: '₦',
+  },
+  {
     code: 'NOK',
     id: 'NOK',
     localized_full_name: 'Norwegian krone',

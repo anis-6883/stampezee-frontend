@@ -7,6 +7,7 @@ import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
+import { resetState } from '@/features/subscription/subscriptionSlice';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -36,6 +37,8 @@ function DropdownMenu({
       redirect: false,
       callbackUrl: role === 'super_admin' ? routes.publicRoutes.superAdminLogin : routes.publicRoutes.retailerLogin,
     });
+
+    dispatch(resetState());
 
     replace(role === 'super_admin' ? routes.publicRoutes.superAdminLogin : routes.publicRoutes.retailerLogin);
   };

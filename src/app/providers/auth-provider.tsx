@@ -41,16 +41,16 @@ export default function AuthProvider({
 
   // Stripe data and currency update into redux state
   useEffect(() => {
-    const defaultCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === stripeInfo?.defaultCurrency?.currency);
+    const defaultCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === 'CAD');
     const currencyExchange: any = currencyExchanges?.find((item: any) => item?.name === currency);
     const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === session?.user?.planPaymentCurrency);
+    dispatch(setCurrencyExchangeRates(currencyExchanges as []));
+    dispatch(setDefaultCurrency({ name: defaultCurrencyExchange?.name, exchangeRate: defaultCurrencyExchange?.exchangeRate }));
+    dispatch(setCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
     dispatch(setTaxPercentage(stripeInfo?.taxCost));
     dispatch(setTaxStatus(stripeInfo?.taxStatus));
     dispatch(setRefundableThreshold(stripeInfo?.refundableThreshold));
-    dispatch(setCurrencyExchangeRates(currencyExchanges as []));
-    dispatch(setDefaultCurrency({ name: defaultCurrencyExchange?.name, exchangeRate: defaultCurrencyExchange?.exchangeRate }));
-    dispatch(setCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
 
     // Active Subscription update into redux state
     const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
