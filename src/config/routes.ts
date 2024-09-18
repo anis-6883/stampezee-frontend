@@ -73,7 +73,7 @@ export const routes = {
       },
       retailer: {
         home: '/root/super-admin/retailer',
-        details: (id: number | string) => `/root/super-admin/retailer/${id}/details`,
+        details: (id: number | string) => `/root/super-admin/retailer/${id}`,
       },
       coupon: {
         home: `/root/super-admin/coupon`,
@@ -90,7 +90,10 @@ export const routes = {
       },
       refund: `/root/super-admin/refund`,
       scan: `/root/super-admin/scan`,
-      customer: `/root/super-admin/customer`,
+      customer: {
+        home: `/root/super-admin/customer`,
+        details: (id: number | string) => `/root/super-admin/customer/${id}`,
+      },
       contact: `/root/super-admin/contact`,
       settings: `/root/super-admin/settings`,
     },

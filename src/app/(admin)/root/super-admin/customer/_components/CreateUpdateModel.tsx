@@ -3,6 +3,7 @@
 import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
+import InputTextarea from '@/components/Formik/InputTextArea ';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateCustomerBySuperAdminMutation, useUpdateCustomerBySuperAdminMutation } from '@/features/super-admin/customer/customerApi';
@@ -35,6 +36,7 @@ export default function CreateUpdateModel({
 
   const initialValues = {
     fullName: formData?.fullName || '',
+    address: formData?.address || '',
     email: formData?.email || '',
     dialCode: formData?.dialCode ? formData?.dialCode : '+1',
     phone: formData?.phone || '',
@@ -122,11 +124,7 @@ export default function CreateUpdateModel({
               return (
                 <Form className="grid gap-4">
                   <InputField name="fullName" label="Full Name" placeholder="Jon Deo" />
-
-                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                    <InputField name="email" label="Email" placeholder="john@email.com" />
-                    {!formData._id && <InputPassword name="password" label="Password" placeholder="********" />}
-                  </div>
+                  <InputTextarea rows={2} name="address" label="Address" placeholder="Write Here..." required={false} />
 
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <PhoneNumber
@@ -176,6 +174,11 @@ export default function CreateUpdateModel({
                         }}
                       />
                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <InputField name="email" label="Email" placeholder="john@email.com" />
+                    {!formData._id && <InputPassword name="password" label="Password" placeholder="********" />}
                   </div>
 
                   <p className="flex flex-col text-end text-xs font-semibold">

@@ -112,7 +112,7 @@ export default function RetailerTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Plan:</span> {row?.original.currentPlan}
+            <span className="font-bold">Plan:</span> {row?.original.currentPlan ?? <span className="text-danger">No Enrollment Yet</span>}
           </p>
           <p>
             <span className="font-bold">Total Active Branch:</span> {row?.original.totalActiveBranch}

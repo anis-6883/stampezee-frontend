@@ -45,8 +45,13 @@ export const menuItems: { [key: string]: any } = {
     },
     {
       name: 'Customers',
-      href: routes.privateRoutes.superAdmin.customer,
+      href: routes.privateRoutes.superAdmin.customer.home,
       icon: <LuUsers />,
+    },
+    {
+      name: 'Scans',
+      href: routes.privateRoutes.superAdmin.scan,
+      icon: <MdOutlineQrCodeScanner />,
     },
     {
       name: 'Currency Exchange Rate',
