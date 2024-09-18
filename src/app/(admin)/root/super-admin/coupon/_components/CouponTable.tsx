@@ -74,10 +74,10 @@ export default function CouponTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Type:</span> {row?.original.discountType}
+            <span className="font-bold">Type:</span> {row?.original?.discountType}
           </p>
           <p>
-            <span className="font-bold">Amount:</span> {row?.original.discount} {row?.original.discountType === 'flat' ? 'CAD' : '%'}
+            <span className="font-bold">Amount:</span> {row?.original?.discount} {row?.original?.discountType === 'flat' ? 'CAD' : '%'}
           </p>
         </div>
       ),
@@ -88,14 +88,18 @@ export default function CouponTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Limit:</span> {row?.original.limit}
+            <span className="font-bold">Limit:</span> {row?.original?.limit}
           </p>
           <p>
-            <span className="font-bold">Min. Purchased Amount:</span> {row?.original.minPurchaseAmount}
+            <span className="font-bold">Min. Purchased Amount:</span> {row?.original?.minPurchaseAmount}
+          </p>
+          <p>
+            <span className="font-bold">Allow Retailers:</span>{' '}
+            {row?.original?.allowFor === 'all' ? 'All' : row?.original?.allowedRetailers?.length}
           </p>
         </div>
       ),
-      size: 200,
+      size: 220,
     },
     {
       header: 'Validity Date',
@@ -195,8 +199,8 @@ export default function CouponTable({ offset }: { offset: number }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Title or Code"
-        searchFieldWidth="250px"
+        searchPlaceHolder="Search By Coupon Title or Code"
+        searchFieldWidth="280px"
       />
 
       <DeleteConfirmModal

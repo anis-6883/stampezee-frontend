@@ -8,15 +8,15 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateCustomerBySuperAdminMutation, useUpdateCustomerBySuperAdminMutation } from '@/features/super-admin/customer/customerApi';
 import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
 import ReactSelect, { OnChangeValue } from 'react-select';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
-import removeEmptyValues from '../../../../../../utils/removeEmptyValues';
 
 export default function CreateUpdateModel({
   setFormData,
@@ -114,7 +114,7 @@ export default function CreateUpdateModel({
                 setFormData({});
               }}
             >
-              <HiMiniXCircle className="text-2xl text-danger" />
+              <IoCloseOutline className="text-2xl text-danger" />
             </ActionIcon>
           </div>
           <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>

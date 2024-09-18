@@ -5,15 +5,21 @@ import DateRangePicker from '@/components/Formik/DateRange';
 import InputField from '@/components/Formik/InputField';
 import SelectField from '@/components/Formik/SelectField';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useCreateCouponAdminMutation, useUpdateCouponMutation } from '@/features/super-admin/coupon/couponApi';
+import {
+  useCreateCouponAdminMutation,
+  useGetAllCouponRetailersQuery,
+  useUpdateCouponMutation,
+} from '@/features/super-admin/coupon/couponApi';
 import removeEmptyValues from '@/utils/removeEmptyValues';
+import { Skeleton } from '@mantine/core';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoAlertCircle, IoCloseOutline } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine } from 'react-icons/ri';
+import ReactSelect from 'react-select';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -29,18 +35,35 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showRetailers, setShowRetailers] = useState(formData?.allowFor !== 'all');
   const [createCoupon, { isSuccess: createSuccess, error: createError }] = useCreateCouponAdminMutation();
   const [updateCoupon, { isSuccess: updateSuccess, error: updateError }] = useUpdateCouponMutation();
+  const { data, isLoading, isError } = useGetAllCouponRetailersQuery(
+    {},
+    {
+      skip: !showRetailers || formData?.allowFor === 'all',
+    }
+  );
+
+  const retailerOptions = data
+    ? data.data.map((retailer: any) => ({
+        value: retailer._id,
+        label: retailer.storeName,
+        image: retailer.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailer.image}` : '/images/stamp-logo.png',
+      }))
+    : [];
 
   const initialValues = {
     title: formData?.title || '',
     code: formData?.code || '',
     description: formData?.description || '',
-    discountType: formData?.discountType || '',
+    discountType: formData?.discountType || 'percentage',
     discount: formData?.discount || '',
     limit: formData?.limit || '',
-    minPurchaseAmount: formData?.minPurchaseAmount || '',
+    minPurchaseAmount: formData?.minPurchaseAmount === 0 ? 0 : formData?.minPurchaseAmount || '',
     validDateRange: formData?.validDateRange || '',
+    allowFor: formData?.allowFor || 'all',
+    allowedRetailers: formData?.allowedRetailers || [],
   };
 
   const validationSchema = Yup.object().shape({
@@ -67,6 +90,12 @@ export default function CreateUpdateModel({
       .min(0, 'Value must be greater then or equal to 0')
       .required('Required!'),
     validDateRange: Yup.string().required('Required!'),
+    allowedRetailers: Yup.string().when('allowFor', {
+      is: 'specific',
+      then: () =>
+        Yup.array().of(Yup.string().required('Array must contain a string')).min(1, 'Select at least one retailer!').required('Required!'),
+      otherwise: () => Yup.array().nullable(),
+    }),
   });
 
   // Submit Handler
@@ -134,16 +163,85 @@ export default function CreateUpdateModel({
                 setFormData({});
               }}
             >
-              <HiMiniXCircle className="text-2xl text-danger" />
+              <IoCloseOutline className="text-2xl text-danger" />
             </ActionIcon>
           </div>
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-            {({ setFieldValue, values }) => {
+            {({ setFieldValue, values, errors, touched, setFieldTouched }) => {
               return (
                 <Form className="grid gap-4">
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <InputField name="title" label="Title" placeholder="Black Friday" />
                     <InputField name="code" label="Code" placeholder="BLACK2024" />
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-y-4">
+                    <SelectField
+                      value={values?.allowFor}
+                      options={[
+                        { label: 'All', value: 'all' },
+                        { label: 'Specific', value: 'specific' },
+                      ]}
+                      onChange={(option: { label: string; value: string }) => {
+                        if (option.value === 'specific') setShowRetailers(true);
+                        if (option.value === 'all') setFieldValue('allowedRetailers', []);
+                        setFieldValue('allowFor', option.value);
+                      }}
+                      name="allowFor"
+                      label="Allow For"
+                    />
+
+                    {values?.allowFor !== 'all' ? (
+                      showRetailers && !isLoading && !isError ? (
+                        <div>
+                          <div className="mb-2">
+                            <p className="font-medium">
+                              Select Specific Retailer
+                              <span className="text-red-500"> *</span>
+                            </p>
+                          </div>
+                          <ReactSelect
+                            placeholder="Select Retailers"
+                            isSearchable
+                            options={retailerOptions}
+                            isMulti={true}
+                            getOptionLabel={getOptionLabel}
+                            getOptionValue={(option) => option.label}
+                            defaultValue={retailerOptions.filter((retailer: any) => values.allowedRetailers.includes(retailer.value))}
+                            onChange={(selectedOption: any) => {
+                              console.log({ selectedOption });
+                              const retailerIds = selectedOption.map((obj: any) => obj.value);
+                              setFieldValue('allowedRetailers', retailerIds);
+                            }}
+                            onBlur={() => setFieldTouched('allowedRetailers', true)}
+                            styles={{
+                              control: (base) => ({
+                                ...base,
+                                boxShadow: 'none !important',
+                                ...(touched.allowedRetailers &&
+                                  errors.allowedRetailers && {
+                                    minHeight: '43px !important',
+                                    borderRadius: '7px !important',
+                                    border: '1px solid #DC3545 !important',
+                                  }),
+                              }),
+                              input: (base) => ({
+                                ...base,
+                                boxShadow: 'none !important',
+                              }),
+                            }}
+                          />
+                          {touched.allowedRetailers && errors.allowedRetailers && (
+                            <span className="mt-1 flex items-center gap-x-1 text-danger">
+                              <IoAlertCircle className="text-lg" />
+                              <span>{errors.allowedRetailers as string}</span>
+                            </span>
+                          )}
+                        </div>
+                      ) : (
+                        <Skeleton className="h-10 w-full rounded" />
+                      )
+                    ) : null}
                   </div>
 
                   <div className="grid grid-cols-1">
@@ -222,3 +320,10 @@ export default function CreateUpdateModel({
     </div>
   );
 }
+
+const getOptionLabel = (option: any): any => (
+  <div className="flex ">
+    <img src={option.image} alt={option.label} style={{ width: '20px', marginLeft: '5px' }} />
+    <span className="ml-2">{option.label}</span>
+  </div>
+);

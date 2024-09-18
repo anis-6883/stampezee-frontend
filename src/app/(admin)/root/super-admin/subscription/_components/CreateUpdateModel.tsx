@@ -11,8 +11,7 @@ import { FieldArray, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle, BsPatchCheck } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
-import { IoStorefrontOutline } from 'react-icons/io5';
+import { IoCloseOutline, IoStorefrontOutline } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiTeamLine } from 'react-icons/ri';
 import { ActionIcon, Modal, Title } from 'rizzui';
@@ -132,7 +131,7 @@ export default function CreateUpdateModel({
               setFormData({});
             }}
           >
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <div>
