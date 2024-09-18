@@ -117,7 +117,7 @@ const calculateUpgradeCost = (state: SubscriptionState, targetPlan: Subscription
 const calculateDowngradeRefund = (state: SubscriptionState, targetPlan: Subscription) => {
   // updateBalance(state);
   const refundAmount = roundToTwoDecimals(state.remainingBalance - state.subscription.price);
-  return refundAmount > 0
+  return refundAmount >= 0
     ? roundToTwoDecimals(state.remainingBalance - targetPlan.price)
     : roundToTwoDecimals(state.remainingBalance - (targetPlan.price + state.tax + state.planChangeCost));
 };
@@ -149,7 +149,7 @@ const calculateSubTotal = (state: SubscriptionState) => {
       state.subTotal = Math.abs(roundToTwoDecimals(remainingBalance - planPrice));
       // downgrade and refundable
       const refundAmount = roundToTwoDecimals(state.remainingBalance - state.subscription.price);
-      if (refundAmount > 0) {
+      if (refundAmount >= 0) {
         state.total = roundToTwoDecimals(state.subTotal);
       }
       // downgrade and payment in stripe

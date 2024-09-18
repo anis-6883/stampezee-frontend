@@ -189,7 +189,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
         </div>
       )}
 
-      {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold }) && (
+      {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold }) && total !== 0 && (
         <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
           <p className="font-medium text-yellow-500">Purchase Alert!</p>
           <p className="text-yellow-500">
