@@ -42,19 +42,10 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
     }
   }, [portalData, portalError, portalLoading, push]);
 
-  // if (isLoading || isError) {
-  //   return (
-  //     <>
-  //       <Skeleton className="my-3 h-8 w-32 rounded" />
-  //       <Skeleton className="my-3 h-64 w-96 rounded" />
-  //     </>
-  //   );
-  // }
-
   return (
     <div className="w-full">
       <div className="mb-3.5">
-        {isLoading ? (
+        {isLoading || isError ? (
           <Skeleton className="my-3 h-8 w-32 rounded" />
         ) : (
           <h3 className="text-lg font-medium">
@@ -67,11 +58,11 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
           <div className="flex flex-col justify-between font-medium md:flex-row">
             <span className="font-semibold">Subscription ID</span>
-            <span>{isLoading ? <Skeleton className="h-6 w-32 rounded" /> : stripe?.subscriptionId}</span>
+            <span>{isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : stripe?.subscriptionId}</span>
           </div>
           <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">Enroll Status</span>
-            {isLoading ? (
+            {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : enrollStatus === 'purchase' ? (
               <Badge className="bg-primary text-white">
@@ -89,7 +80,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
           </div>
           <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">Balance</span>
-            {isLoading ? (
+            {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : (
               <span>
@@ -99,15 +90,19 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
           </div>
           <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">Purchased At</span>{' '}
-            {isLoading ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(createdAt, offset)}</span>}
+            {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(createdAt, offset)}</span>}
           </div>
           <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">Current Period</span>{' '}
-            {isLoading ? <Skeleton className="h-6 w-32 rounded" /> : <span>{currentPeriod(validityFrom, validityTo, offset)}</span>}
+            {isLoading || isError ? (
+              <Skeleton className="h-6 w-32 rounded" />
+            ) : (
+              <span>{currentPeriod(validityFrom, validityTo, offset)}</span>
+            )}
           </div>
           <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">Plan Status</span>
-            {isLoading ? (
+            {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : status === true && moment().isBefore(validityToUtc) ? (
               <Badge className="!bg-success text-white">
@@ -126,7 +121,8 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
             </div>
           )}
           <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">Next Invoice</span> <span>{convertDateByOffset(validityTo, offset)}</span>
+            <span className="font-semibold">Next Invoice</span>
+            {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(validityTo, offset)}</span>}
           </div>
         </div>
       </div>
@@ -156,7 +152,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
               </th>
             </tr>
           </thead>
-          {isLoading ? (
+          {isLoading || isError ? (
             <tbody>
               <tr>
                 <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
@@ -217,8 +213,6 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                             postIcon={<RiDownloadCloud2Fill className="text-lg" />}
                           />
                         </Link>
-
-                        {/* <Button className="!m-0 !px-2 !py-1.5" color="danger" text="Details" preIcon={<FaInfoCircle className="text-lg" />} /> */}
                       </td>
                     </tr>
                   );
@@ -231,7 +225,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
 
       <div className="mt-20">
         <div className="flex justify-end">
-          {isLoading ? (
+          {isLoading || isError ? (
             <Skeleton className="h-6 w-32 rounded" />
           ) : status === true && moment().isBefore(validityToUtc) ? (
             <Button
