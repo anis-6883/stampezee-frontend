@@ -6,8 +6,8 @@ export const superAdminRetailerApi = apiSlice.injectEndpoints({
     getAllRetailers: builder.query<IResponse, IPagination>({
       query: (queries) => {
         const values = Object.values(queries);
-        if (values.length) return `api/secret-root/admin/super-admin/manage-retailer/all?${new URLSearchParams(queries as any)}`;
-        return `api/secret-root/admin/super-admin/manage-retailer/all`; // Ensure it returns a base URL if no queries are present
+        if (values.length) return `/api/secret-root/admin/super-admin/manage-retailer/all?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/manage-retailer/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['superAdminRetailer'],
     }),
@@ -29,7 +29,7 @@ export const superAdminRetailerApi = apiSlice.injectEndpoints({
     }),
     updateRetailerStatus: builder.mutation({
       query: ({ data, branchId }) => ({
-        url: `api/secret-root/admin/super-admin/manage-retailer/status/${branchId}`,
+        url: `/api/secret-root/admin/super-admin/manage-retailer/status/${branchId}`,
         method: 'PUT',
         body: data,
       }),

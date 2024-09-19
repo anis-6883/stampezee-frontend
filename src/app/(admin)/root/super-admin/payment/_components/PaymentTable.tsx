@@ -161,7 +161,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Subscription ID & Store Name"
+      searchPlaceHolder="Search By Subscription ID or Store Name"
       searchFieldWidth="340px"
       enableRowNumbers={true}
     />

@@ -54,6 +54,11 @@ export const menuItems: { [key: string]: any } = {
       icon: <MdOutlineQrCodeScanner />,
     },
     {
+      name: 'Push Notifications',
+      href: routes.privateRoutes.superAdmin.notification,
+      icon: <PiBellRinging />,
+    },
+    {
       name: 'Currency Exchange Rate',
       href: routes.privateRoutes.superAdmin.currencyExchange?.home,
       icon: <MdOutlineCurrencyExchange />,

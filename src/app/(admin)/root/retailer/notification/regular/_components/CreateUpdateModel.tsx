@@ -13,7 +13,7 @@ import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -86,7 +86,7 @@ export default function CreateUpdateModel({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Resend Notification</Title> : <Title as="h4">Send Notification</Title>}
+          {formData?._id ? <Title as="h4">Resend Regular Notification</Title> : <Title as="h4">Send Regular Notification</Title>}
 
           <ActionIcon
             size="sm"
@@ -96,7 +96,7 @@ export default function CreateUpdateModel({
               setFormData({});
             }}
           >
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <div>
@@ -131,7 +131,7 @@ export default function CreateUpdateModel({
                     <DragAndDropUpload
                       value={{ name: 'image', image: values.image }}
                       onChange={(image: any) => setFieldValue('image', image)}
-                      className="mt-2"
+                      className="mt-2 w-full"
                       size={1024 * 1000}
                       sizeText="1MB"
                     />

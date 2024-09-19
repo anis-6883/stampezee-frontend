@@ -127,7 +127,7 @@ export default function DragAndDropUpload({
               isRounded && error && '!border-danger ring-0'
             )}
           >
-            <div className={className}>
+            <div>
               <MdCloudUpload className={cn('text-4xl text-danger', isRounded && 'text-4xl')} />
             </div>
 

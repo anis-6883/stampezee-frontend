@@ -38,11 +38,7 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
       enableSorting: false,
       Cell: ({ row }: any) => (
         <div>
-          <img
-            src={row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : '/images/no-img.png'}
-            alt="image"
-            className="h-10 w-10 rounded-full"
-          />
+          <img src={row.original.image ?? '/images/no-img.png'} alt="image" className="h-16 w-16 rounded-md" />
         </div>
       ),
     },
@@ -58,9 +54,7 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
       enableSorting: false,
       Cell: ({ row }: any) => (
         <div>
-          <p>
-            {row?.original?.description?.length >= 123 ? `${row?.original?.description?.slice(0, 123)}....` : row?.original?.description}
-          </p>
+          <p>{row?.original?.description?.length >= 60 ? `${row?.original?.description?.slice(0, 60)}...` : row?.original?.description}</p>
         </div>
       ),
     },
@@ -117,13 +111,6 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
 
   return (
     <>
-      <CreateUpdateModel
-        googleMapsApiKey={googleMapsApiKey}
-        setFormData={setFormData}
-        formData={formData}
-        modalState={createState}
-        setModalState={setCreateState}
-      />
       <div className="mb-4 flex justify-between">
         <div className="flex items-center gap-x-2 rounded-lg border border-light px-3">
           <IoAlarmOutline className="text-xl" />
@@ -144,6 +131,7 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
           preIcon={<FaRegPaperPlane className="text-base" />}
         />
       </div>
+
       <Table
         isFetching={isFetching}
         isLoading={isLoading}
@@ -165,7 +153,15 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search by Title"
+        searchPlaceHolder="Search by Notification Title"
+      />
+
+      <CreateUpdateModel
+        googleMapsApiKey={googleMapsApiKey}
+        setFormData={setFormData}
+        formData={formData}
+        modalState={createState}
+        setModalState={setCreateState}
       />
     </>
   );

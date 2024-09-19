@@ -38,11 +38,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
       enableSorting: false,
       Cell: ({ row }: any) => (
         <div>
-          <img
-            src={row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : '/images/no-img.png'}
-            alt="image"
-            className="h-10 w-10 rounded-full"
-          />
+          <img src={row.original.image ?? '/images/no-img.png'} alt="image" className="h-16 w-16 rounded-md" />
         </div>
       ),
     },
@@ -62,9 +58,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
       enableSorting: false,
       Cell: ({ row }: any) => (
         <div>
-          <p>
-            {row?.original?.description?.length >= 123 ? `${row?.original?.description?.slice(0, 123)}....` : row?.original?.description}
-          </p>
+          <p>{row?.original?.description?.length >= 60 ? `${row?.original?.description?.slice(0, 60)}...` : row?.original?.description}</p>
         </div>
       ),
     },
@@ -152,7 +146,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search by Title"
+        searchPlaceHolder="Search by Notification Title"
       />
     </>
   );

@@ -14,7 +14,7 @@ import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 import MapComponent from '../../../branch/_components/Map';
@@ -117,7 +117,7 @@ export default function CreateUpdateModel({
               setFormData({});
             }}
           >
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <div>
