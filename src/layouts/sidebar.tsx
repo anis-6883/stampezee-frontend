@@ -99,8 +99,6 @@ export default function Sidebar({ className }: { className?: string }) {
       )}
     >
       <div
-        // 2xl:px-6 2xl:pt-2 sticky top-0 z-40 bg-gray-0/10 px-6 pb-2 pt-2 dark:bg-gray-100/5
-        // card-shadow
         className={cn(
           '2xl:py-5 sticky top-0 z-50 flex items-center justify-center bg-gray-0/80 px-4 py-4 backdrop-blur-xl dark:bg-gray-50/50 md:px-5 lg:px-6 3xl:px-8 4xl:px-10',
           ((isMounted && windowScroll.y) as number) > 2 ? 'card-shadow' : ''
@@ -179,7 +177,6 @@ export default function Sidebar({ className }: { className?: string }) {
                                   {item?.icon}
                                 </span>
                               )}
-                              {/* {item.name} */}
                               {role === ROLE.RETAILER ? t(item?.name) : item.name}
                             </span>
 
@@ -218,10 +215,7 @@ export default function Sidebar({ className }: { className?: string }) {
                                     isChildActive ? 'bg-danger ring-[1px] ring-danger' : 'opacity-40'
                                   )}
                                 />{' '}
-                                <span className="truncate">
-                                  {/* {dropdownItem?.name} */}
-                                  {role === ROLE.RETAILER ? t(dropdownItem?.name) : dropdownItem?.name}
-                                </span>
+                                <span className="truncate">{role === ROLE.RETAILER ? t(dropdownItem?.name) : dropdownItem?.name}</span>
                               </div>
                               {checkedLocked(role, dropdownItem?.href, dropdownItem.name, session?.user) && (
                                 <div className="text-end ">
@@ -259,7 +253,7 @@ export default function Sidebar({ className }: { className?: string }) {
                           <span className="truncate">
                             {role === ROLE.RETAILER ? t(item.name) : item.name}{' '}
                             {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
-                            {item.name === 'Custom Stamp Images' && `(${session?.user?.totalCustomStamp || 0})`}
+                            {item.name === 'Custom Stamp Images' && `(${session?.user?.totalCustomStampImage || 0})`}
                             {item.name === 'Stamps' && `(${session?.user?.totalStamp || 0})`}
                           </span>
                         </div>
@@ -279,7 +273,6 @@ export default function Sidebar({ className }: { className?: string }) {
                       index !== 0 && 'mt-6 3xl:mt-7'
                     )}
                   >
-                    {/* {item.name} */}
                     {role === ROLE.RETAILER ? t(item.name) : item.name}
                   </Title>
                 )}

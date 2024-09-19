@@ -102,11 +102,11 @@ export default function StampTable({ offset }: { offset: number }) {
                 <img
                   src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original?.stampImage?.image}`}
                   alt="image"
-                  className="h-full w-16 rounded"
+                  className="h-10 w-10 rounded"
                 />
               </div>
             ) : (
-              <img src={'/images/profile.png'} alt="image" className="h-full w-20 rounded" />
+              <img src={'/images/profile.png'} alt="image" className="h-10 w-10 rounded" />
             )}
           </div>
           <div>
@@ -127,7 +127,7 @@ export default function StampTable({ offset }: { offset: number }) {
           </div>
         </div>
       ),
-      size: 300,
+      size: 350,
     },
     {
       header: 'Reward',
@@ -257,7 +257,7 @@ export default function StampTable({ offset }: { offset: number }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search by Title"
+        searchPlaceHolder="Search by Stamp Title"
       />
 
       <StampPublishedModal

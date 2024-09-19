@@ -32,9 +32,8 @@ export default function Create() {
   const [publishState, setPublishState] = useState(false);
   const [publishSubmitting, setPublishSubmitting] = useState(false);
   const [values, setValues] = useState({});
-
-  const isAddons = session?.user?.totalCustomStamp > 0 ? true : false;
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery({});
+  const isAddons = session?.user?.totalCustomStampImage > 0 ? true : false;
 
   const initialValues = {
     branchId: '',
@@ -45,7 +44,7 @@ export default function Create() {
     rules: '',
     noOfStampsToCollect: 10,
     minPurchaseAmount: 0,
-    rewardType: 'discount',
+    rewardType: 'promotion',
     promotionReward: '',
     discountReward: 2,
     validDateRange: '',
@@ -278,9 +277,8 @@ export default function Create() {
                       className={`flex w-[150px] rounded bg-white px-6 py-3 shadow-md ${errors?.stampImageId && touched?.stampImageId && 'ring-2 ring-danger'}`}
                     >
                       <div>
-                        <img className="object-center" src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
+                        <img className="h-20 w-20 object-center" src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
                         <h3 className="mt-2 text-center font-medium">
-                          {' '}
                           {item?.title?.length >= 15 ? `${item?.title?.slice(0, 14)}...` : item?.title}
                         </h3>
                       </div>
@@ -374,6 +372,9 @@ export default function Create() {
               <InputTextarea name="description" required={false} label="Description" placeholder="Write here..." />
 
               <p className="mt-4 flex flex-col text-end text-xs font-semibold">
+                <span>
+                  Base Currency: <span className="text-red-600">CAD</span>
+                </span>
                 <span>
                   Fields marked with <span className="text-red-600">*</span> are mandatory!
                 </span>

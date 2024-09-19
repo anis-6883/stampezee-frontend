@@ -3,7 +3,6 @@ import { apiSlice } from '@/features/api/apiSlice';
 export const stampImageApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllStampImages: builder.query({
-      //   query: ({ page, limit }) => `api/retailer/stamp-image/all?page=${page}&limit=${limit}`,
       query: (queries) => {
         const values = Object.values(queries);
         if (values.length) return `/api/web/retailer/stamp-image/all?${new URLSearchParams(queries as any)}`;
@@ -35,13 +34,6 @@ export const stampImageApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['retailerStamp'],
     }),
-    renewStampImage: builder.mutation({
-      query: (id) => ({
-        url: `/api/web/retailer/stamp-image/renew/${id}`,
-        method: 'PUT',
-      }),
-      invalidatesTags: ['retailerStamp'],
-    }),
     deleteStampImage: builder.mutation({
       query: (id) => ({
         url: `/api/web/retailer/stamp-image/${id}`,
@@ -58,7 +50,6 @@ export const {
   useUpdateStampImageMutation,
   useDeleteStampImageMutation,
   useUpdateStampImageStatusMutation,
-  useRenewStampImageMutation,
 } = stampImageApi;
 
 export default stampImageApi;
