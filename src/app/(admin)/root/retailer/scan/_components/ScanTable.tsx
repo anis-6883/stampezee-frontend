@@ -126,7 +126,7 @@ export default function ScanTable({ offset }: { offset: number }) {
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Min. Purchase Amount:</td>
-                        <td className="px-6 py-4">{row?.original?.offer?.minPurchaseAmount}CAD</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.minPurchaseAmount} CAD</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Reward Type:</td>
