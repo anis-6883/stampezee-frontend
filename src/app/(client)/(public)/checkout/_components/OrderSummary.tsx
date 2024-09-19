@@ -7,7 +7,7 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 import { RootState } from '@/features/store';
-import { removeAddOns, resetState } from '@/features/subscription/subscriptionSlice';
+import { resetState } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { hasCheckedPurchaseAlert, isCheckoutButtonDisabled } from '@/utils';
 import { useSession } from 'next-auth/react';
@@ -88,6 +88,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
           setSelectedBranches([]);
         }
       }
+      console.log('Hello Reset');
       dispatch(resetState());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -122,10 +123,6 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
     }
   };
 
-  const handleRemoveAddOn = (addOnId: string) => {
-    dispatch(removeAddOns(addOnId));
-  };
-
   const disabledBranchItems = disableBranchOptions?.filter((item: any) => selectedBranches?.includes(item?.value));
 
   return (
@@ -135,46 +132,10 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
         <hr className=" text-lg font-bold" />
         <CouponForm />
 
-        {/* {subscription?.slug === activeSubscription?.slug && addOn?.slug && (
-          <div>
-            <h2 className="pb-2 text-lg font-medium">Add-On</h2>
-            <hr className="p-2 text-lg font-bold" />
-            <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
-              <span className="col-span-6">{addOn.title}</span>
-              <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
-                <ImBin />
-              </button>
-              <span className="col-span-4 justify-self-end">
-                {addOn ? parseFloat(addOn?.price?.toFixed(2)).toFixed(2) : 0} {selectedCurrency}
-              </span>
-            </div>
-            <div className="mb-2 flex justify-between">
-              <span className="font-semibold">Subtotal</span>
-              <span className="text-red-500">
-                {Math.abs(subTotal).toFixed(2)} {selectedCurrency}
-              </span>
-            </div>
-            <hr className="p-2 text-lg font-bold" />
-            {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && (
-              <div className="mb-2 flex justify-between">
-                <span>
-                  <span className="font-semibold">{stripeInfo?.taxTitle}</span> ({stripeInfo?.taxCost}%)
-                </span>
-                <span className="text-red-500">
-                  {tax.toFixed(2)} {selectedCurrency}
-                </span>
-              </div>
-            )}
-            <div className="flex justify-between text-xl font-bold">
-              <span>Total</span>
-              <span className="text-red-500">
-                {Math.abs(total).toFixed(2)} {selectedCurrency}
-              </span>
-            </div>
-          </div>
-        )} */}
-        {subscription?.slug !== activeSubscription?.slug && <PlanAddOns stripeInfo={stripeInfo} selectedCurrency={selectedCurrency} />}
-        {subscription?.slug === activeSubscription?.slug && !addOn.slug && (
+        {subscription?.slug !== activeSubscription?.slug && (subscription?.slug || addOn?.slug) && (
+          <PlanAddOns stripeInfo={stripeInfo} selectedCurrency={selectedCurrency} />
+        )}
+        {(subscription?.slug === activeSubscription?.slug || !subscription?.slug) && !addOn.slug && (
           <div className="py-4 text-center font-medium text-red-500">Your cart is currently empty. Select a plan!</div>
         )}
       </div>
@@ -189,7 +150,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
         </div>
       )}
 
-      {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold }) && total !== 0 && (
+      {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold }) && (
         <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
           <p className="font-medium text-yellow-500">Purchase Alert!</p>
           <p className="text-yellow-500">

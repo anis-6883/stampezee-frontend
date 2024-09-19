@@ -17,14 +17,13 @@ export default function OrderSession() {
   const { data: session, update }: any = useSession();
   const dispatch = useDispatch();
   const { user, isLoggedIn, accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { activeSubscription, subscription, addOn } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: profile, isSuccess: profileSuccess } = useRetailerGetProfileQuery(null, { skip: !accessToken });
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
   const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
 
   useEffect(() => {
     if (profileSuccess) {
-      console.log('profile?.data', profile?.data);
       update({ ...session?.user, ...profile?.data });
       dispatch(
         setValue({

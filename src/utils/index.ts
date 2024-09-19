@@ -126,13 +126,19 @@ export const hasCheckedPurchaseAlert = ({
 }) => {
   if (
     Math.abs(total) < refundableThreshold &&
+    subscription?.slug &&
     activeSubscription?.slug &&
     subscription?.slug !== activeSubscription?.slug &&
     activeSubscription?.slug !== 'trial'
   ) {
     return true;
   }
-  if (subscription?.slug && subscription?.slug !== 'trial' && Math.abs(total) < refundableThreshold) {
+  if (
+    subscription?.slug &&
+    subscription?.slug !== activeSubscription?.slug &&
+    subscription?.slug !== 'trial' &&
+    Math.abs(total) < refundableThreshold
+  ) {
     return true;
   }
   return false;

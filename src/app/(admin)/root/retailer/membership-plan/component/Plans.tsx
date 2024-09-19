@@ -7,6 +7,7 @@ import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import { activeSubscription, setActiveSubscription, setRemainingBalance, setSubscription } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate, isCheckoutButtonDisabled } from '@/utils';
 import 'aos/dist/aos.css';
@@ -19,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export const Plans = () => {
   const dispatch = useDispatch();
   const { data } = useGetSubscriptionQuery(undefined);
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
   const { data: session }: any = useSession();
   const { activeSubscription, subscription, addOn, planChangeType, total, refundableThreshold, currency, defaultCurrency } = useSelector(
     (state: RootState) => state.subscriptionSlice
@@ -27,6 +29,7 @@ export const Plans = () => {
 
   useEffect(() => {
     const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
+    const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === session?.user?.planPaymentCurrency);
     let updateActiveSubscription = {};
 
     if (activePlan) {
@@ -41,6 +44,7 @@ export const Plans = () => {
         planStartAt: session?.user?.planStartAt,
         planValidAt: session?.user?.planValidAt,
         planPayment: session?.user?.planPayment,
+        planPaymentCurrency: purchaseCurrencyExchange,
       };
     } else {
       updateActiveSubscription = {
@@ -54,13 +58,14 @@ export const Plans = () => {
         planStartAt: session?.user?.planStartAt,
         planValidAt: session?.user?.planValidAt,
         planPayment: session?.user?.planPayment,
+        planPaymentCurrency: purchaseCurrencyExchange,
       };
     }
 
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
 
     // subscription update into redux state
-    if (session?.user?.takeFreeTrial && !subscription?.slug && !addOn?.slug) {
+    if (session?.user?.takeFreeTrial && !addOn?.slug) {
       const pursedSubscription = data?.data?.find((item: Subscription) => {
         if (item?.type === 'subscription' && item?.slug === session?.user?.plan) {
           return true;
@@ -71,7 +76,7 @@ export const Plans = () => {
     }
     dispatch(setRemainingBalance());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.data, dispatch, session?.user]);
+  }, [currencyExchanges, data?.data, dispatch, session?.user]);
 
   return (
     <div className="mb-6">

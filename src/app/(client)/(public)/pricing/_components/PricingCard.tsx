@@ -10,7 +10,7 @@ import { Subscription } from '@/types';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { IoCheckmarkDoneCircle } from 'react-icons/io5';
+import { IoCheckmarkDoneCircle, IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -48,6 +48,14 @@ export default function PricingCard({ item }: { item: any }) {
             <MdStar />
           </span>
           <span className="text-sm font-medium">Active</span>
+        </div>
+      )}
+      {session?.user?.takeFreeTrial && item?.slug === 'trial' && (
+        <div className="absolute right-2 top-2  flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
+          <span className="font-medium">
+            <IoCheckmarkDoneOutline className="text-lg" />
+          </span>
+          <span className="text-sm font-medium">Applied</span>
         </div>
       )}
       <div>
