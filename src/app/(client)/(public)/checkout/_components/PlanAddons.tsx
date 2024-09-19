@@ -2,7 +2,8 @@
 'use client';
 
 import { RootState } from '@/features/store';
-import { removeAddOns, removeCode, removeCoupon } from '@/features/subscription/subscriptionSlice';
+import { removeCode, removeCoupon } from '@/features/subscription/subscriptionSlice';
+import { calculateCurrencyExchangeRate } from '@/utils';
 import { ImBin } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,10 +21,8 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
     couponDiscount,
     planChangeCost,
     downgradeRefund,
+    currency,
   } = useSelector((state: RootState) => state.subscriptionSlice);
-  const handleRemoveAddOn = (addOnId: string) => {
-    dispatch(removeAddOns(addOnId));
-  };
 
   return (
     <div>
@@ -49,7 +48,13 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         <div className="mb-2 flex justify-between">
           <span>Remaining Amount</span>
           <span className="text-red-500">
-            -{remainingBalance.toFixed(2)} {selectedCurrency}
+            -
+            {calculateCurrencyExchangeRate({
+              selectedCurrencyExchangeRate: currency,
+              defaultCurrencyExchangeRate: activeSubscription?.planPaymentCurrency,
+              price: remainingBalance,
+            })}
+            {selectedCurrency}
           </span>
         </div>
       )}
@@ -76,7 +81,8 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         <div className="mb-2 flex justify-between">
           <span className="font-semibold">Plan Change Cost</span>
           <span className="text-red-500">
-            {stripeInfo?.planChangeCost} {selectedCurrency}
+            {calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: currency, price: stripeInfo?.planChangeCost })}
+            {selectedCurrency}
           </span>
         </div>
       )}

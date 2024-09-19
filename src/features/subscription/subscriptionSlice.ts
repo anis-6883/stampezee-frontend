@@ -18,7 +18,6 @@ export interface Currency {
 interface SubscriptionState {
   subscription: Subscription;
   activeSubscription: activeSubscription;
-  // addOns: AddOn[];
   addOn: AddOn;
   coupon: Coupon | null;
   code: string;
@@ -42,7 +41,6 @@ interface SubscriptionState {
 const initialState: SubscriptionState = {
   subscription: { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' },
   activeSubscription: { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' },
-  // addOns: [],
   addOn: { _id: '', title: '', price: 0, descriptions: [], slug: '' },
   coupon: null,
   code: '',
@@ -65,6 +63,7 @@ const initialState: SubscriptionState = {
 
 // Helper functions
 
+//Get Two Decimal Number
 export const roundToTwoDecimals = (value: number) => {
   return parseFloat(value.toFixed(2));
 };
@@ -73,20 +72,16 @@ const calculateTaxAmount = (subTotal: number, taxPercentage: number) => {
   return roundToTwoDecimals((subTotal * taxPercentage) / 100);
 };
 
+// Set Remaining Balance
 const updateBalance = (state: SubscriptionState) => {
+  // If Active Subscription have Then Update Remaining Balance
   if (state?.activeSubscription?.slug) {
     const remainingBalance = calculateBalancePrice(
       state?.activeSubscription?.planStartAt as Date,
       state?.activeSubscription?.planValidAt as Date,
       state?.activeSubscription?.planPayment as number
     );
-    state.remainingBalance = roundToTwoDecimals(
-      calculateCurrencyExchangeRate({
-        selectedCurrencyExchangeRate: state.currency,
-        defaultCurrencyExchangeRate: state.activeSubscription?.planPaymentCurrency,
-        price: remainingBalance,
-      })
-    );
+    state.remainingBalance = roundToTwoDecimals(remainingBalance);
   }
 };
 
@@ -109,25 +104,36 @@ const calculateDiscount = (state: SubscriptionState) => {
   }
 };
 
+// Calculate Upgrade Cost
 const calculateUpgradeCost = (state: SubscriptionState, targetPlan: Subscription) => {
-  // updateBalance(state);
   return roundToTwoDecimals(targetPlan.price - state.remainingBalance);
 };
 
+// Calculate Downgrade Cost
 const calculateDowngradeRefund = (state: SubscriptionState, targetPlan: Subscription) => {
-  // updateBalance(state);
   const refundAmount = roundToTwoDecimals(state.remainingBalance - state.subscription.price);
   return refundAmount >= 0
     ? roundToTwoDecimals(state.remainingBalance - targetPlan.price)
     : roundToTwoDecimals(state.remainingBalance - (targetPlan.price + state.tax + state.planChangeCost));
 };
 
+// Calculate Total and SubTotal And Updated State
 const calculateSubTotal = (state: SubscriptionState) => {
   const planPrice = state.subscription?.price || 0;
   const addOnsPrice = state?.addOn?.price;
-  const planSwitchCharge = state?.planChangeCost || 0;
+
+  // Calculate Plan Change Cost with Current Currency
+  const planSwitchCharge =
+    calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: state.currency, price: state?.planChangeCost }) || 0;
   const couponDiscount = state.couponDiscount || 0;
-  const remainingBalance = state.remainingBalance || 0;
+
+  // Calculate Remaining Balance with Current Currency and Plan Payment Currency
+  const remainingBalance =
+    calculateCurrencyExchangeRate({
+      selectedCurrencyExchangeRate: state.currency,
+      defaultCurrencyExchangeRate: state.activeSubscription?.planPaymentCurrency,
+      price: state.remainingBalance,
+    }) || 0;
 
   // when select a addOn
   if (state.subscriptionType === 'addOn') {
@@ -198,7 +204,7 @@ const subscriptionSlice = createSlice({
     resetSubscription: (state) => {
       state.subscription = { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' };
       updateBalance(state);
-      calculateSubTotal(state);
+      // calculateSubTotal(state);
       if (state?.coupon) {
         calculateDiscount(state);
         calculateSubTotal(state);
@@ -208,10 +214,10 @@ const subscriptionSlice = createSlice({
       state.activeSubscription = action.payload;
     },
     setPlanChangeCost: (state, action: PayloadAction<number>) => {
-      state.planChangeCost = calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: state.currency, price: action.payload });
+      state.planChangeCost = action.payload;
     },
     setRefundableThreshold: (state, action: PayloadAction<number>) => {
-      state.refundableThreshold = calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: state.currency, price: action.payload });
+      state.refundableThreshold = action.payload;
     },
     setCode: (state, action: PayloadAction<string>) => {
       state.code = action.payload;
@@ -277,6 +283,21 @@ const subscriptionSlice = createSlice({
         selectedCurrencyExchangeRate: action.payload,
         defaultCurrencyExchangeRate: state.currency,
         price: state.downgradeRefund,
+      });
+      state.planChangeCost = calculateCurrencyExchangeRate({
+        selectedCurrencyExchangeRate: action.payload,
+        defaultCurrencyExchangeRate: state.currency,
+        price: state.planChangeCost,
+      });
+      state.refundableThreshold = calculateCurrencyExchangeRate({
+        selectedCurrencyExchangeRate: action.payload,
+        defaultCurrencyExchangeRate: state.currency,
+        price: state.refundableThreshold,
+      });
+      state.remainingBalance = calculateCurrencyExchangeRate({
+        selectedCurrencyExchangeRate: action.payload,
+        defaultCurrencyExchangeRate: state.currency,
+        price: state.remainingBalance,
       });
       state.currency = action.payload;
     },

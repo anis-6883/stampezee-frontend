@@ -9,7 +9,7 @@ import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { IoCheckmarkDoneCircle } from 'react-icons/io5';
+import { IoCheckmarkDoneCircle, IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -109,12 +109,20 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
           {plans?.map((item: Subscription, index: number) => {
             return item?.isBlocked ? (
               <div key={item._id} className={`relative cursor-not-allowed rounded-lg border p-4`}>
-                {session?.user?.plan === item?.slug && (
+                {session?.user?.plan !== 'trial' && session?.user?.plan === item?.slug && (
                   <div className="absolute right-2 top-2  flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
                     <span className="font-medium">
                       <MdStar />
                     </span>
                     <span className="text-sm font-medium">Active</span>
+                  </div>
+                )}
+                {session?.user?.takeFreeTrial && item?.slug === 'trial' && (
+                  <div className="absolute right-2 top-2  flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
+                    <span className="font-medium">
+                      <IoCheckmarkDoneOutline className="text-lg" />
+                    </span>
+                    <span className="text-sm font-medium">Applied</span>
                   </div>
                 )}
                 <h3 className="mb-2 text-base font-semibold">{item.title}</h3>

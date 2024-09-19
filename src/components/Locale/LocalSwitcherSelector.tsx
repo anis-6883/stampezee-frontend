@@ -7,7 +7,7 @@ import currencyData from '@/utils/get-currency-list';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState, useTransition } from 'react';
 import { BsTranslate } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
 import { RiCurrencyFill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { ActionIcon, AdvancedRadio, Modal, Tab, Text } from 'rizzui';
@@ -91,7 +91,7 @@ export default function LocalSwitcherSelector({
               setModalState(false);
             }}
           >
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
 
