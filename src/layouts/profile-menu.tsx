@@ -31,14 +31,13 @@ function DropdownMenu({
 
   // Handle Logout Response
   const handleLogout = async () => {
-    dispatch(userLoggedOut(undefined));
-
     await signOut({
       redirect: false,
       callbackUrl: role === 'super_admin' ? routes.publicRoutes.superAdminLogin : routes.publicRoutes.retailerLogin,
     });
 
     dispatch(resetState());
+    dispatch(userLoggedOut(undefined));
 
     replace(role === 'super_admin' ? routes.publicRoutes.superAdminLogin : routes.publicRoutes.retailerLogin);
   };

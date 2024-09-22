@@ -48,9 +48,11 @@ export default function ScanTable({ offset }: { offset: number }) {
     }
   }, [isSuccess, isError]);
 
-  if (!session?.user?.plan) {
-    return redirect(routes.privateRoutes.retailer.dashboard);
-  }
+  useEffect(() => {
+    if (!session?.user?.plan) {
+      return redirect(routes.privateRoutes.retailer.dashboard);
+    }
+  }, [session]);
 
   const structure = [
     {
