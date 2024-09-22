@@ -411,14 +411,17 @@ interface IGeneral {
   androidDownloadLink?: string;
   iosDownloadLink?: string;
   contactEmail?: string;
-  emailHost?: string;
-  emailPort?: string;
-  emailUsername?: string;
-  emailPassword?: string;
   facebook: string;
   linkedin: string;
   instagram: string;
   tiktok: string;
+}
+
+interface IMail {
+  host?: string;
+  port?: string;
+  username?: string;
+  password?: string;
 }
 
 interface INotification {
@@ -460,6 +463,7 @@ interface IPage {
 
 export interface IGeneralSettingData {
   general?: IGeneral;
+  mail?: IMail;
   notification?: INotification;
   s3Bucket?: IS3Bucket;
   stripe?: IStripe;

@@ -41,10 +41,12 @@ function updateGeneralSetting(generalSetting: IGeneralSetting) {
       instagram: generalSetting?.data?.general?.instagram || '',
       linkedin: generalSetting?.data?.general?.linkedin || '',
       tiktok: generalSetting?.data?.general?.tiktok || '',
-      emailHost: generalSetting?.data?.general?.emailHost || '',
-      emailPort: generalSetting?.data?.general?.emailPort || '',
-      emailUsername: generalSetting?.data?.general?.emailUsername || '',
-      emailPassword: generalSetting?.data?.general?.emailPassword || '',
+    },
+    mail: {
+      host: generalSetting?.data?.mail?.host || '',
+      port: generalSetting?.data?.mail?.port || '',
+      username: generalSetting?.data?.mail?.username || '',
+      password: generalSetting?.data?.mail?.password || '',
     },
     notification: {
       firebaseServerKey: generalSetting?.data?.notification?.firebaseServerKey || '',
@@ -101,8 +103,12 @@ export default function SettingsMainForm() {
       instagram: '',
       tiktok: '',
       contactEmail: '',
-      emailUsername: '',
-      emailPassword: '',
+    },
+    mail: {
+      host: '',
+      port: '',
+      username: '',
+      password: '',
     },
     notification: {
       firebaseServerKey: '',
