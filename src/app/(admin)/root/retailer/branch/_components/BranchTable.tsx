@@ -111,9 +111,11 @@ export default function BranchTable({ offset }: { offset: number }) {
     }
   }, [convertToAddonBranchSuccess, convertToAddonBranchError, convertAddOnError]);
 
-  if (session?.user?.totalBranch === 0) {
-    return redirect(routes.privateRoutes.retailer.dashboard);
-  }
+  useEffect(() => {
+    if (session?.user?.totalBranch === 0) {
+      return redirect(routes.privateRoutes.retailer.dashboard);
+    }
+  }, [session]);
 
   const structure = [
     {

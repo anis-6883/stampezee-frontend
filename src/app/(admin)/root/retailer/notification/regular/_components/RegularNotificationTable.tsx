@@ -9,7 +9,7 @@ import { convertDateByOffset } from '@/utils/getFormatDate';
 import { Skeleton } from '@mantine/core';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
 import { IoAlarmOutline } from 'react-icons/io5';
 import CreateUpdateModel from './CreateUpdateModel';
@@ -27,9 +27,11 @@ export default function RegularNotificationTable({ offset }: { offset: number })
     ...searchQuery,
   });
 
-  if (session?.user?.totalRegularNotification === 0) {
-    redirect(routes?.privateRoutes?.retailer?.dashboard);
-  }
+  useEffect(() => {
+    if (session?.user?.totalRegularNotification === 0) {
+      redirect(routes?.privateRoutes?.retailer?.dashboard);
+    }
+  }, [session]);
 
   const structure = [
     {
