@@ -174,7 +174,10 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
               {payments.length <= 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
-                    No transaction happened yet!
+                    <div className="flex flex-col justify-center py-5">
+                      <img src="/images/no-transaction.svg" alt="image" className="m-auto h-40 w-40" />
+                      <span>No transaction happened yet!</span>
+                    </div>
                   </td>
                 </tr>
               ) : (

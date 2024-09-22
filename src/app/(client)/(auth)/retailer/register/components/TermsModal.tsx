@@ -1,4 +1,4 @@
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
 import { ActionIcon, Modal, Title } from 'rizzui';
 
 export default function TermsModal({
@@ -24,7 +24,7 @@ export default function TermsModal({
                 setModalState(false);
               }}
             >
-              <HiMiniXCircle className="text-2xl text-danger" />
+              <IoCloseOutline className="text-2xl text-danger" />
             </ActionIcon>
           </div>
           <div className="ql-editor relative h-[340px] overflow-auto p-4 sm:rounded-lg">
