@@ -52,9 +52,11 @@ export default function CustomerTable() {
     }
   }, [isSuccess, isError]);
 
-  if (!session?.user?.plan) {
-    return redirect(routes.privateRoutes.retailer.dashboard);
-  }
+  useEffect(() => {
+    if (!session?.user?.plan) {
+      return redirect(routes.privateRoutes.retailer.dashboard);
+    }
+  }, [session]);
 
   const structure = [
     {
