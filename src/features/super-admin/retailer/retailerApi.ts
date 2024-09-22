@@ -11,6 +11,12 @@ export const superAdminRetailerApi = apiSlice.injectEndpoints({
       },
       providesTags: ['superAdminRetailer'],
     }),
+    getSingleRetailer: builder.query({
+      query: (id) => {
+        return `/api/secret-root/admin/super-admin/manage-retailer/${id}`; // Ensure it returns a base URL if no queries are present
+      },
+      providesTags: ['superAdminRetailer'],
+    }),
     createSuperAdminRetailer: builder.mutation({
       query: (newRetailer) => ({
         url: '/api/secret-root/admin/super-admin/manage-retailer',
@@ -47,6 +53,7 @@ export const superAdminRetailerApi = apiSlice.injectEndpoints({
 
 export const {
   useGetAllRetailersQuery,
+  useGetSingleRetailerQuery,
   useCreateSuperAdminRetailerMutation,
   useUpdateSuperAdminRetailerMutation,
   useDeleteSuperAdminRetailerMutation,

@@ -14,93 +14,6 @@ export default function BranchStatsTable() {
     ...searchQuery,
   });
 
-  // return (
-  //   <div>
-  //     <h2 className="mb-3 text-lg font-medium">Branch Statistics:</h2>
-  //     <div className="flex flex-col">
-  //       <div className="-m-1.5 overflow-x-auto">
-  //         <div className="inline-block min-w-full p-1.5 align-middle">
-  //           <div className="rounded-sm border ">
-  //             <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
-  //               <thead className="bg-gray-50">
-  //                 <tr>
-  //                   <th scope="col" className="px-6 py-3 text-start text-sm font-medium text-gray-500 dark:text-neutral-500">
-  //                     Branch Name
-  //                   </th>
-  //                   <th scope="col" className="px-6 py-3 text-start text-sm font-medium text-gray-500 dark:text-neutral-500">
-  //                     Branch Address
-  //                   </th>
-  //                   <th scope="col" className="px-6 py-3 text-start text-sm font-medium text-gray-500 dark:text-neutral-500">
-  //                     Sub Admin Name
-  //                   </th>
-  //                   <th scope="col" className="px-6 py-3 text-start text-sm font-medium text-gray-500 dark:text-neutral-500">
-  //                     Sub Admin Email
-  //                   </th>
-  //                   <th scope="col" className="px-6 py-3 text-start text-sm font-medium text-gray-500 dark:text-neutral-500">
-  //                     Total Reward Collected
-  //                   </th>
-  //                   <th scope="col" className="px-6 py-3 text-end text-sm font-medium text-gray-500 dark:text-neutral-500">
-  //                     Total Amount (CAD)
-  //                   </th>
-  //                 </tr>
-  //               </thead>
-
-  //               {isLoading ? (
-  //                 <>
-  //                   <tbody>
-  //                     <tr>
-  //                       <td colSpan={6}>
-  //                         <Skeleton className="my-3 h-8 w-full rounded" />
-  //                         <Skeleton className="my-3 h-8 w-full rounded" />
-  //                         <Skeleton className="mb-3 h-8 w-full rounded" />
-  //                       </td>
-  //                     </tr>
-  //                   </tbody>
-  //                 </>
-  //               ) : (
-  //                 <>
-  //                   {data?.data?.totalAmountAndRewardSubAdmin?.length === 0 ? (
-  //                     <tbody>
-  //                       <tr>
-  //                         <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
-  //                           <div className="flex h-full items-center justify-center">No Data Available!</div>
-  //                         </td>
-  //                       </tr>
-  //                     </tbody>
-  //                   ) : (
-  //                     <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
-  //                       {data?.data?.totalAmountAndRewardSubAdmin?.map((item: any, index: number) => (
-  //                         <tr key={index}>
-  //                           <td className="whitespace-nowrap px-6 py-4 text-xs font-medium text-gray-800 dark:text-neutral-200">
-  //                             {item?.subAdmin?.branch?.name}
-  //                           </td>
-  //                           <td className="whitespace-nowrap px-6 py-4 text-xs text-gray-800 dark:text-neutral-200">
-  //                             {item?.subAdmin?.branch?.address}
-  //                           </td>
-  //                           <td className="whitespace-nowrap px-6 py-4 text-xs text-gray-800 dark:text-neutral-200">
-  //                             {item?.subAdmin?.fullName}
-  //                           </td>
-  //                           <td className="whitespace-nowrap px-6 py-4 text-xs text-gray-800 dark:text-neutral-200">
-  //                             {item?.subAdmin?.email}
-  //                           </td>
-  //                           <td className="whitespace-nowrap px-6 py-4 text-center text-xs text-gray-800 dark:text-neutral-200">
-  //                             {item?.totalRewardCollected}
-  //                           </td>
-  //                           <td className="whitespace-nowrap px-6 py-4 text-center text-xs font-medium">${item?.totalAmount}</td>
-  //                         </tr>
-  //                       ))}
-  //                     </tbody>
-  //                   )}
-  //                 </>
-  //               )}
-  //             </table>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-
   return (
     <div>
       <h2 className="my-5 text-lg font-medium">Branch Statistics:</h2>
@@ -152,6 +65,9 @@ export default function BranchStatsTable() {
                 <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
                   <Skeleton className="h-6 w-32 rounded" />
                 </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
               </tr>
             </tbody>
           ) : (
@@ -159,7 +75,10 @@ export default function BranchStatsTable() {
               {data?.data?.totalAmountAndRewardSubAdmin?.length <= 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
-                    No Data Available!
+                    <div className="flex flex-col justify-center py-5">
+                      <img src="/images/no-data.svg" alt="image" className="m-auto h-40 w-40" />
+                      <span>No Data Available!</span>
+                    </div>
                   </td>
                 </tr>
               ) : (

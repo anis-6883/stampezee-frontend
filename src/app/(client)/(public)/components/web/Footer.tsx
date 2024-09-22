@@ -12,7 +12,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { ImSpinner9 } from 'react-icons/im';
 import Image from '../Image';
 
-export default function Footer() {
+export default function Footer({ general }: any) {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [createNewsletter, { error: newsletterError, isSuccess: newsletterSuccess }] = useCreateNewsletterMutation();
@@ -71,16 +71,16 @@ export default function Footer() {
                 <div className="mt-4  font-medium">
                   <div className="block text-lg font-bold  sm:text-xl"> {t('socials')}</div>
                   <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
-                    <Link className="mt-4 w-fit font-medium" href="#">
+                    <Link className="mt-4 w-fit font-medium" href={general?.facebook}>
                       {t('facebook')}
                     </Link>
-                    <Link className="mt-4 w-fit font-medium" href="#">
+                    <Link className="mt-4 w-fit font-medium" href={general?.instagram}>
                       {t('instagram')}
                     </Link>
-                    <Link className="mt-4 w-fit font-medium" href="#">
+                    <Link className="mt-4 w-fit font-medium" href={general?.tiktok}>
                       {t('tiktok')}
                     </Link>
-                    <Link className="mt-4 w-fit font-medium" href="#">
+                    <Link className="mt-4 w-fit font-medium" href={general?.linkedin}>
                       {t('linkedin')}
                     </Link>
                   </div>
@@ -132,10 +132,10 @@ export default function Footer() {
                     {/* <img className="MuiBox-root css-0" src="/Linkssets/images/home/Linkpp-store-badge.png" style={{ width: 200 }} />
                     <img className="MuiBox-root css-0" src="/Linkssets/images/home/google-play-badge.png" style={{ width: 200 }} /> */}
 
-                    <Link href="/" target="_blank">
+                    <Link href={general?.androidDownloadLink} target="_blank">
                       <Image src="/default/app-store-badge.png" alt="App Store Badge" className="h-[45px] w-[150px]" />
                     </Link>
-                    <Link href="/" target="_blank">
+                    <Link href={general?.iosDownloadLink} target="_blank">
                       <Image src="/default/google-play-badge.png" alt="Google  Store Badge" className="h-[45px] w-[150px]" />
                     </Link>
                   </div>
