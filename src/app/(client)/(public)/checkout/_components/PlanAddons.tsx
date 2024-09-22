@@ -54,7 +54,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
               defaultCurrencyExchangeRate: activeSubscription?.planPaymentCurrency,
               price: remainingBalance,
             })}
-            {selectedCurrency}
+            {` ${selectedCurrency}`}
           </span>
         </div>
       )}
@@ -82,7 +82,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
           <span className="font-semibold">Plan Change Cost</span>
           <span className="text-red-500">
             {calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: currency, price: stripeInfo?.planChangeCost })}
-            {selectedCurrency}
+            {` ${selectedCurrency}`}
           </span>
         </div>
       )}
