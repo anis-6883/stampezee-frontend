@@ -29,21 +29,26 @@ export default function StampPublishedModal({
   const router = useRouter();
   const handlePublish = async () => {
     setIsSubmitting(true);
-    if (publishId) {
-      publishHandler(publishId);
-      setModalState(false);
-    } else {
-      if (stampId) {
-        const result = await publishHandler({ formData: values, id: stampId }).unwrap();
-        router.push(routes.privateRoutes.retailer.stamp.home);
-        toast.success(result.data.message ?? 'Stamp updated successfully!');
+    try {
+      if (publishId) {
+        publishHandler(publishId);
+        setModalState(false);
       } else {
-        const result = await publishHandler(values).unwrap();
-        router.push(routes.privateRoutes.retailer.stamp.home);
-        toast.success(result.data.message || 'Stamp created successfully!');
-      }
+        if (stampId) {
+          const result = await publishHandler({ formData: values, id: stampId }).unwrap();
+          router.push(routes.privateRoutes.retailer.stamp.home);
+          toast.success(result.data.message ?? 'Stamp updated successfully!');
+        } else {
+          const result = await publishHandler(values).unwrap();
+          router.push(routes.privateRoutes.retailer.stamp.home);
+          toast.success(result.data.message || 'Stamp created successfully!');
+        }
 
-      setModalState(false);
+        setModalState(false);
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message || 'Failed to create Stamp. Please try again.');
+      setIsSubmitting(false);
     }
   };
 

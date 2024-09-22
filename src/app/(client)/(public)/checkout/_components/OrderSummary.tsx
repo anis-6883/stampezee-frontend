@@ -25,7 +25,7 @@ import CouponForm from './CouponForm';
 import PlanAddOns from './PlanAddons';
 
 export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
-  const { push } = useRouter();
+  const { push, replace } = useRouter();
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
   const { code, subscription, addOn, downgradeRefund, total, activeSubscription, planChangeType, refundableThreshold } = useSelector(
@@ -71,10 +71,10 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
             value: { ...user, ...profile?.data },
           })
         );
-        push(routes.privateRoutes.retailer.dashboard);
+        replace(routes.privateRoutes.retailer.dashboard);
       } else {
         if (checkOutResponse?.data?.url) {
-          push(checkOutResponse?.data?.url);
+          replace(checkOutResponse?.data?.url);
         } else {
           toast.success(checkOutResponse?.message || 'Downgrade Successfully!');
           update({ ...session?.user, ...profile?.data });
@@ -84,15 +84,14 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
               value: { ...user, ...profile?.data },
             })
           );
-          push(routes?.privateRoutes?.retailer?.dashboard);
+          replace(routes?.privateRoutes?.retailer?.dashboard);
           setSelectedBranches([]);
         }
       }
-      console.log('Hello Reset');
       dispatch(resetState());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checkOutResponse, push, profileSuccess, checkoutError]);
+  }, [checkOutResponse, replace, profileSuccess, checkoutError]);
 
   const handleCheckOut = () => {
     if (!isLoggedIn) {
