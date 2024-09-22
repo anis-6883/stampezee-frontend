@@ -188,6 +188,7 @@ export default function CreateUpdateModel({
                       inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border'} !h-[43px]`}
                       labelClassName="!mb-1"
                       helperClassName="text-danger"
+                      value={`${values?.dialCode}${values?.phone}`}
                     />
                     <div className="flex flex-col gap-1">
                       <div>
@@ -256,6 +257,7 @@ export default function CreateUpdateModel({
     </div>
   );
 }
+
 const getOptionLabel = (option: any): any => (
   <div className="flex ">
     <img src={option.flag} alt={option.label} style={{ width: '20px', marginLeft: '5px' }} />

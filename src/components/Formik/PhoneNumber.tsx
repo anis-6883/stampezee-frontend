@@ -98,6 +98,7 @@ export interface PhoneNumberProps
   className?: string;
   touched?: boolean;
   name: string;
+  value: string;
 }
 
 const PhoneNumber = ({
@@ -118,6 +119,7 @@ const PhoneNumber = ({
   errorClassName,
   className,
   name,
+  value,
   ...props
 }: PhoneNumberProps) => {
   const { setFieldTouched, values }: any = useFormikContext();
@@ -152,10 +154,10 @@ const PhoneNumber = ({
               disableSearchIcon
               {...props}
               onBlur={() => {
-                setFieldTouched('phone', true);
+                setFieldTouched(name, true);
               }}
-              value={`${values?.dialCode}${values?.phone}`}
-              // country={'+880'}
+              // value={`${values?.dialCode}${values?.phone}`}
+              value={value}
             />
 
             {clearable && (

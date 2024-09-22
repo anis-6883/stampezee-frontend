@@ -401,12 +401,24 @@ interface ITimezone {
 interface IGeneral {
   timezone?: ITimezone;
   companyName?: string;
-  siteTitle?: string;
+  dialCode: string;
+  phone: string;
+  country: string;
+  province: string;
+  city: string;
+  postalCode: string;
+  address: string;
   androidDownloadLink?: string;
   iosDownloadLink?: string;
   contactEmail?: string;
+  emailHost?: string;
+  emailPort?: string;
   emailUsername?: string;
   emailPassword?: string;
+  facebook: string;
+  linkedin: string;
+  instagram: string;
+  tiktok: string;
 }
 
 interface INotification {

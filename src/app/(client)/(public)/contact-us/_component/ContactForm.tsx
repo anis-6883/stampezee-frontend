@@ -60,7 +60,7 @@ const ContactForm = ({ token }: { token: string }) => {
   return (
     <div>
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-        {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
+        {({ setFieldValue, values }) => (
           <Form className="mt-5">
             <div className="grid grid-cols-1 gap-x-5 gap-y-5 md:grid-cols-2">
               <InputField prefix={<LuUserCircle2 className="text-xl" />} name="name" label={t('name')} placeholder="John" />
@@ -80,6 +80,7 @@ const ContactForm = ({ token }: { token: string }) => {
                 }}
                 labelClassName="!mb-1"
                 helperClassName="text-danger"
+                value={`${values?.dialCode}${values?.phone}`}
               />
             </div>
 

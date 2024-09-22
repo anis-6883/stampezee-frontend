@@ -180,6 +180,7 @@ export default function CreateUpdateModel({
                       errorClassName="text-red-600 text-xs mt-1"
                       inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border-[2px]'} !h-[43px]`}
                       labelClassName="!mb-1"
+                      value={`${values?.dialCode}${values?.phone}`}
                     />
                     <div className="flex flex-col gap-1">
                       <div>

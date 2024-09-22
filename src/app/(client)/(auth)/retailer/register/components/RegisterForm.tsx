@@ -134,6 +134,7 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
                     inputClassName={`${errors?.phone && touched?.phone ? '!border-danger hover:!border-danger' : '!border-slate-300 !border'} !h-[43px] !ring-0`}
                     labelClassName="!mb-1"
                     helperClassName="text-danger"
+                    value={`${values?.dialCode}${values?.phone}`}
                   />
                   <div className="flex flex-col gap-1">
                     <div>

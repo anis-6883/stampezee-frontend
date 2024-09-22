@@ -133,7 +133,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
                       Resend OTP
                     </span>
                   )}
-                  {resendOtpSubmitting && <ImSpinner9 size={20} className="ml-1 animate-spin" />}
+                  {resendOtpSubmitting && <ImSpinner9 size={18} className="ml-1 animate-spin text-danger" />}
                 </p>
               </div>
               <div className="col-span-4 text-right"></div>
