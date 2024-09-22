@@ -7,7 +7,7 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { RootState } from '@/features/store';
 import { applyCoupon, removeCoupon, setCode } from '@/features/subscription/subscriptionSlice';
 import { useCreateCouponMutation } from '@/features/super-admin/subscription/subscriptionApi';
-import { checkedMinPurchaseAmount, isCheckCouponDisabled } from '@/utils';
+import { calculateCurrencyExchangeRate, checkedMinPurchaseAmount, isCheckCouponDisabled } from '@/utils';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -37,13 +37,20 @@ const CouponForm = () => {
 
     if (couponSuccess) {
       setIsCouponSubmitting(false);
-      if (checkedMinPurchaseAmount(Math.abs(subscription?.price), couponResponse?.data?.minPurchaseAmount)) {
+      if (
+        checkedMinPurchaseAmount(
+          Math.abs(subscription?.price),
+          calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: currency, price: couponResponse?.data?.minPurchaseAmount })
+        )
+      ) {
         toast.success(couponResponse?.message);
 
         dispatch(applyCoupon(couponResponse?.data));
       } else {
         if (couponResponse?.data?.minPurchaseAmount) {
-          toast.error(`Min. ${couponResponse?.data?.minPurchaseAmount}CAD required to apply coupon!`);
+          toast.error(
+            `Min. ${calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: currency, price: couponResponse?.data?.minPurchaseAmount })}${currency?.name} required to apply coupon!`
+          );
         }
       }
     }
@@ -51,8 +58,16 @@ const CouponForm = () => {
   }, [couponError, couponResponse?.data, couponResponse?.message, couponSuccess, dispatch]);
 
   useEffect(() => {
-    if (coupon?.minPurchaseAmount && !checkedMinPurchaseAmount(Math.abs(subscription?.price), coupon?.minPurchaseAmount)) {
-      toast.error(`Min. ${coupon?.minPurchaseAmount}CAD required to apply coupon!`);
+    if (
+      coupon?.minPurchaseAmount &&
+      !checkedMinPurchaseAmount(
+        Math.abs(subscription?.price),
+        calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: currency, price: coupon?.minPurchaseAmount })
+      )
+    ) {
+      toast.error(
+        `Min. ${calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: currency, price: coupon?.minPurchaseAmount })}${currency?.name} required to apply coupon!`
+      );
       dispatch(removeCoupon());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
