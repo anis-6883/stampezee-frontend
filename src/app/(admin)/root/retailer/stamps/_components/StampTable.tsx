@@ -18,6 +18,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { FiCopy } from 'react-icons/fi';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
@@ -215,15 +216,21 @@ export default function StampTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => {
         return row?.original?.isPublished ? (
           <div className="flex gap-2">
-            <Button disabled color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
-            <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+            <Link href={routes.privateRoutes.retailer.stamp.clone(row.original._id)}>
+              <Button tooltip="Clone" color="primary" preIcon={<FiCopy className="text-base" />} />
+            </Link>
+            <Button tooltip="Edit" disabled color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+            <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
           </div>
         ) : (
           <div className="flex gap-2">
-            <Link href={routes.privateRoutes.retailer.stamp.edit(row.original._id)}>
-              <Button color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+            <Link href={routes.privateRoutes.retailer.stamp.clone(row.original._id)}>
+              <Button tooltip="Clone" color="primary" preIcon={<FiCopy className="text-base" />} />
             </Link>
-            <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+            <Link href={routes.privateRoutes.retailer.stamp.edit(row.original._id)}>
+              <Button tooltip="Edit" color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+            </Link>
+            <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
           </div>
         );
       },

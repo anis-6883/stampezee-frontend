@@ -1,6 +1,8 @@
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
+import { axiosBackendUrl } from '@/utils/axios/getAxios';
+import CustomerDetails from '../_components/CustomerDetails';
 
 const pageHeader = {
   title: 'Manage Customer Details',
@@ -21,10 +23,13 @@ const pageHeader = {
 
 export const metadata = { ...metaObject(pageHeader.title) };
 
-export default function Page() {
+export default async function Page({ params }: any) {
+  const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
+  const { id } = params;
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
+      <CustomerDetails id={''} offset={data?.data?.general?.timezone?.value} />
     </div>
   );
 }

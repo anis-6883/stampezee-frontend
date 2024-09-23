@@ -97,10 +97,18 @@ export default function BranchStatsTable() {
                       <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                         {item?.subAdmin?.branch?.address}
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4">{item?.subAdmin?.fullName}</td>
-                      <td className="whitespace-nowrap px-6 py-4"> {item?.subAdmin?.email}</td>
-                      <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">{item?.totalRewardCollected}</td>
-                      <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">${item?.totalAmount}</td>
+                      <td scope="row" className="whitespace-nowrap px-6 py-4">
+                        {item?.subAdmin?.fullName}
+                      </td>
+                      <td scope="row" className="whitespace-nowrap px-6 py-4">
+                        {item?.subAdmin?.email}
+                      </td>
+                      <td scope="row" className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
+                        {item?.totalRewardCollected}
+                      </td>
+                      <td scope="row" className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
+                        ${item?.totalAmount}
+                      </td>
                     </tr>
                   );
                 })
