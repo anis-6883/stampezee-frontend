@@ -251,7 +251,9 @@ export default function Update({ Id, offset }: any) {
                     >
                       <div>
                         <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
-                        <h3 className="mt-1 text-center font-medium">{item?.title}</h3>
+                        <h3 className="mt-1 text-center font-medium">
+                          {item?.title?.length >= 15 ? `${item?.title?.slice(0, 14)}...` : item?.title}
+                        </h3>
                       </div>
                       <input
                         style={{ backgroundImage: 'none' }}
@@ -285,7 +287,9 @@ export default function Update({ Id, offset }: any) {
                     >
                       <div>
                         <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
-                        <h3 className="mt-1 text-center font-medium">{item?.title}</h3>
+                        <h3 className="mt-1 text-center font-medium">
+                          {item?.title?.length >= 15 ? `${item?.title?.slice(0, 14)}...` : item?.title}
+                        </h3>
                       </div>
                       <input
                         style={{ backgroundImage: 'none' }}
