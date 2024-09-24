@@ -10,27 +10,22 @@ import MetricCard from '../../dashboard/_components/MetricCard';
 
 export default function StatsCardView({
   className,
-  totalActiveBranch,
-  totalActiveStamp,
-  totalCustomer,
-  totalRevenue,
+  totalCollectStamp,
+  totalScan,
+  totalRewardCollect,
+  totalPurchased,
   isLoading,
   isError,
 }: {
   className: string;
-  totalActiveBranch: number;
-  totalActiveStamp: number;
-  totalCustomer: number;
-  totalRevenue: number;
+  totalScan: number;
+  totalCollectStamp: number;
+  totalRewardCollect: number;
+  totalPurchased: number;
   isLoading: boolean;
   isError: boolean;
 }) {
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
-
-  // const totalVerifiedRetailer = data?.data?.totalVerifiedRetailer ?? 0;
-  // const totalVerifiedCustomer = data?.data?.totalVerifiedCustomer ?? 0;
-  // const newCustomerThisMonth = data?.data?.newCustomerThisMonth ?? 0;
-  // const newRetailerThisMonth = data?.data?.newRetailerThisMonth ?? 0;
 
   return (
     <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>
@@ -49,7 +44,7 @@ export default function StatsCardView({
             icon={<BsShop className="text-2xl" />}
             key={1}
             title={'Total Collect Stamp'}
-            metric={totalActiveBranch}
+            metric={totalCollectStamp}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
@@ -58,7 +53,7 @@ export default function StatsCardView({
             icon={<BsPatchCheck className="text-2xl" />}
             key={1}
             title={'Total Scan'}
-            metric={totalActiveStamp}
+            metric={totalScan}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
@@ -67,7 +62,7 @@ export default function StatsCardView({
             icon={<LuUsers className="text-2xl" />}
             key={1}
             title={'Total Reward Collect'}
-            metric={totalCustomer}
+            metric={totalRewardCollect}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
@@ -75,8 +70,8 @@ export default function StatsCardView({
           <MetricCard
             icon={<LuCircleDollarSign className="text-2xl" />}
             key={1}
-            title={'Total Revenue'}
-            metric={totalRevenue}
+            title={'Total Purchased'}
+            metric={totalPurchased}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}

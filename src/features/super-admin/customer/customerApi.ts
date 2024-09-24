@@ -10,6 +10,18 @@ export const customerApi = apiSlice.injectEndpoints({
       },
       providesTags: ['superAdminCustomer'],
     }),
+    getSingleCustomerBySuperAdmin: builder.query({
+      query: (id) => {
+        return `/api/secret-root/admin/super-admin/manage-customer/find/${id}`;
+      },
+      providesTags: ['superAdminCustomer'],
+    }),
+    getAllCustomerScanBySuperAdmin: builder.query({
+      query: (id) => {
+        return `/api/secret-root/admin/super-admin/manage-customer/scans/${id}`;
+      },
+      providesTags: ['superAdminCustomer'],
+    }),
     createCustomerBySuperAdmin: builder.mutation({
       query: (newCustomer) => ({
         url: '/api/secret-root/admin/super-admin/manage-customer/create',
@@ -46,6 +58,8 @@ export const customerApi = apiSlice.injectEndpoints({
 
 export const {
   useGetAllCustomerBySuperAdminQuery,
+  useGetSingleCustomerBySuperAdminQuery,
+  useGetAllCustomerScanBySuperAdminQuery,
   useCreateCustomerBySuperAdminMutation,
   useUpdateCustomerBySuperAdminMutation,
   useDeleteCustomerBySuperAdminMutation,

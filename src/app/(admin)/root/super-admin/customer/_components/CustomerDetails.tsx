@@ -1,14 +1,15 @@
 'use client';
 
 import { Skeleton } from '@/components/ui/skeleton';
-import { useGetSingleRetailerQuery } from '@/features/super-admin/retailer/retailerApi';
+import { useGetSingleCustomerBySuperAdminQuery } from '@/features/super-admin/customer/customerApi';
 import { InfoRow } from '../../retailer/_components/InfoRow';
 import ScanStatisticsTable from './ScanStatisticsTable';
 import StatsCardView from './StatsCardView';
 
 export default function CustomerDetails({ id, offset }: { id: string; offset: number }) {
-  const { data, isLoading, isError } = useGetSingleRetailerQuery(id);
-  const { storeName, fullName, email, image, dialCode, phone, country, city, address, province, postalCode } = data?.data || {};
+  const { data, isLoading, isError } = useGetSingleCustomerBySuperAdminQuery(id);
+  const { storeName, fullName, email, image, dialCode, phone, country, totalCollectStamp, totalPurchased, totalRewardCollect, totalScan } =
+    data?.data || {};
   // const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
 
   return (
@@ -34,23 +35,23 @@ export default function CustomerDetails({ id, offset }: { id: string; offset: nu
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
           <InfoRow label="Owner Name" value={fullName} isLoading={isLoading} />
           <InfoRow label="Owner Email" value={email} isLoading={isLoading} />
-          <InfoRow label="Owner Phone" value={phone} isLoading={isLoading} />
+          <InfoRow label="Owner Phone" value={`${dialCode} ${phone}`} isLoading={isLoading} />
           <InfoRow label="Country" value={country} isLoading={isLoading} />
         </div>
       </div>
 
       <StatsCardView
-        totalActiveBranch={0}
-        totalActiveStamp={0}
-        totalCustomer={0}
-        totalRevenue={0}
+        totalCollectStamp={totalCollectStamp}
+        totalScan={totalScan}
+        totalRewardCollect={totalRewardCollect}
+        totalPurchased={totalPurchased}
         isLoading={isLoading}
         isError={isError}
         className="2xl:mb-8 my-5"
       />
 
       <h2 className="my-5 text-lg font-medium">Scan Statistics:</h2>
-      <ScanStatisticsTable data={[]} isLoading={false} isError={false} />
+      <ScanStatisticsTable id={id} />
     </div>
   );
 }
