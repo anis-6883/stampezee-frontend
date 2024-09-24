@@ -53,7 +53,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
               selectedCurrencyExchangeRate: currency,
               defaultCurrencyExchangeRate: activeSubscription?.planPaymentCurrency,
               price: remainingBalance,
-            })}
+            }).toFixed(2)}
             {` ${selectedCurrency}`}
           </span>
         </div>

@@ -106,15 +106,29 @@ const calculateDiscount = (state: SubscriptionState) => {
 
 // Calculate Upgrade Cost
 const calculateUpgradeCost = (state: SubscriptionState, targetPlan: Subscription) => {
-  return roundToTwoDecimals(targetPlan.price - state.remainingBalance);
+  // Calculate Remaining Balance with Current Currency and Plan Payment Currency
+  const remainingBalance =
+    calculateCurrencyExchangeRate({
+      selectedCurrencyExchangeRate: state.currency,
+      defaultCurrencyExchangeRate: state.activeSubscription?.planPaymentCurrency,
+      price: state.remainingBalance,
+    }) || 0;
+  return roundToTwoDecimals(targetPlan.price - remainingBalance);
 };
 
 // Calculate Downgrade Cost
 const calculateDowngradeRefund = (state: SubscriptionState, targetPlan: Subscription) => {
-  const refundAmount = roundToTwoDecimals(state.remainingBalance - state.subscription.price);
+  // Calculate Remaining Balance with Current Currency and Plan Payment Currency
+  const remainingBalance =
+    calculateCurrencyExchangeRate({
+      selectedCurrencyExchangeRate: state.currency,
+      defaultCurrencyExchangeRate: state.activeSubscription?.planPaymentCurrency,
+      price: state.remainingBalance,
+    }) || 0;
+  const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price);
   return refundAmount >= 0
-    ? roundToTwoDecimals(state.remainingBalance - targetPlan.price)
-    : roundToTwoDecimals(state.remainingBalance - (targetPlan.price + state.tax + state.planChangeCost));
+    ? roundToTwoDecimals(remainingBalance - targetPlan.price)
+    : roundToTwoDecimals(remainingBalance - (targetPlan.price + state.tax + state.planChangeCost));
 };
 
 // Calculate Total and SubTotal And Updated State
@@ -154,7 +168,7 @@ const calculateSubTotal = (state: SubscriptionState) => {
     } else if (state.planChangeType === 'downgrade') {
       state.subTotal = Math.abs(roundToTwoDecimals(remainingBalance - planPrice));
       // downgrade and refundable
-      const refundAmount = roundToTwoDecimals(state.remainingBalance - state.subscription.price);
+      const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price);
       if (refundAmount >= 0) {
         state.total = roundToTwoDecimals(state.subTotal);
       }
@@ -335,6 +349,7 @@ const subscriptionSlice = createSlice({
       state.subscriptionType = 'plan';
       // plan toggle handle
       if (state?.subscription?.slug === action?.payload?.slug) {
+        state.planChangeType = '';
         if (state.activeSubscription?.slug) {
           state.subscription = state.activeSubscription;
         } else {
@@ -353,6 +368,7 @@ const subscriptionSlice = createSlice({
       state.subscriptionType = 'plan';
       // plan toggle handle
       if (state?.subscription?.slug === action?.payload?.slug) {
+        state.planChangeType = '';
         if (state.activeSubscription?.slug) {
           state.subscription = state.activeSubscription;
         } else {
