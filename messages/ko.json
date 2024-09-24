@@ -64,7 +64,22 @@
     "explore": "탐색",
     "title": "구독 및 추가 기능",
     "subscriptions": "구독",
-    "subtitle": "우리의 플랜"
+    "subtitle": "우리의 플랜",
+    "pricingButtonText": "시작하기"
+  },
+  "CheckoutPage": {
+    "plans": "플랜",
+    "selectPlan": "구독 플랜 선택",
+    "switchPlan": "구독 플랜 변경",
+    "addOns": "추가 기능",
+    "selectAddOn": "추가 서비스 선택",
+    "orderSummary": "주문 요약",
+    "total": "합계",
+    "checkout": "결제",
+    "coupon": "쿠폰",
+    "couponButtonText": "적용",
+    "cartEmpty": "장바구니가 비어 있습니다. 플랜을 선택하세요!",
+    "checkoutButtonText": "결제 확인"
   },
   "LoginPage": {
     "credentials": "자격증명: jane@doe.com / next-intl",

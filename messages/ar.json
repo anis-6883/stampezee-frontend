@@ -37,7 +37,22 @@
     "explore": "يستكشف",
     "title": "اشتراكنا وإضافاتنا",
     "subscriptions": "الاشتراكات",
-    "subtitle": "خططنا"
+    "subtitle": "خططنا",
+    "pricingButtonText": "البدء"
+  },
+  "CheckoutPage": {
+    "plans": "الخطط",
+    "selectPlan": "اختيار خطة الاشتراك",
+    "switchPlan": "تبديل خطة الاشتراك",
+    "addOns": "الإضافات",
+    "selectAddOn": "اختيار خدمة إضافية",
+    "orderSummary": "ملخص الطلب",
+    "total": "المجموع",
+    "checkout": "الدفع",
+    "coupon": "القسيمة",
+    "couponButtonText": "تطبيق",
+    "cartEmpty": "جرب خطة الاشتراك!",
+    "checkoutButtonText": "تأكيد الدفع"
   },
   "HomePage": {
     "bannerTitle": "إحداث ثورة في تجربة عملائك",

@@ -64,7 +64,22 @@
     "explore": "探る",
     "title": "私たちのサブスクリプションとアドオン",
     "subscriptions": "サブスクリプション",
-    "subtitle": "私たちのプラン"
+    "subtitle": "私たちのプラン",
+    "pricingButtonText": "始める"
+  },
+  "CheckoutPage": {
+    "plans": "プラン",
+    "selectPlan": "サブスクリプションプランを選択",
+    "switchPlan": "サブスクリプションプランを変更",
+    "addOns": "アドオン",
+    "selectAddOn": "追加サービスを選択",
+    "orderSummary": "注文の概要",
+    "total": "合計",
+    "checkout": "チェックアウト",
+    "coupon": "クーポン",
+    "couponButtonText": "適用",
+    "cartEmpty": "カートは現在空です。プランを選択してください！",
+    "checkoutButtonText": "確認"
   },
   "LoginPage": {
     "credentials": "クレデンシャル: jane@doe.com / next-intl",

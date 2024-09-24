@@ -1,5 +1,5 @@
 import { metaObject } from '@/config/site.config';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import SubscriptionList from './_components/SubscriptionList';
 
 export const metadata = {
@@ -8,6 +8,7 @@ export const metadata = {
 
 export default async function Page() {
   const t = await getTranslations('pricingPage');
+  const locale = await getLocale();
 
   return (
     <div>
@@ -37,7 +38,7 @@ export default async function Page() {
           <p className="mb-4 text-xl font-medium tracking-tight text-gray-900 dark:text-white sm:text-2xl">{t('subtitle')}</p>
         </div>
 
-        <SubscriptionList />
+        <SubscriptionList locale={locale} />
       </div>
     </div>
   );

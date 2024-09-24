@@ -64,7 +64,22 @@
     "explore": "Explore",
     "title": "Our Subscription and Add-on",
     "subscriptions": "Subscriptions",
-    "subtitle": "Our Plans"
+    "subtitle": "Our Plans",
+    "pricingButtonText": "Get started"
+  },
+  "CheckoutPage": {
+    "plans": "Plans",
+    "selectPlan": "Select a subscription plan",
+    "switchPlan": "Switch a subscription plan",
+    "addOns": "Add-Ons",
+    "selectAddOn": "Select additional service",
+    "orderSummary": "Order Summary",
+    "total": "Total",
+    "checkout": "Checkout",
+    "coupon": "Coupon",
+    "couponButtonText": "Apply",
+    "cartEmpty": "Your cart is currently empty. Select a plan!",
+    "checkoutButtonText": "Confirm Checkout"
   },
   "LoginPage": {
     "credentials": "Credentials: jane@doe.com / next-intl",

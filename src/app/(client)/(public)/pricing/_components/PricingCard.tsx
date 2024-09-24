@@ -9,12 +9,14 @@ import { downgradePlan, resetAddOns, setSubscription, upgradePlan } from '@/feat
 import { Subscription } from '@/types';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { IoCheckmarkDoneCircle, IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function PricingCard({ item }: { item: any }) {
+  const t = useTranslations('pricingPage');
   const dispatch = useDispatch();
   const { currency } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: session }: any = useSession();
@@ -91,13 +93,13 @@ export default function PricingCard({ item }: { item: any }) {
       <div>
         {session?.user?.plan === item?.slug || (session?.user?.takeFreeTrial === true && item?.slug === 'trial') ? (
           <>
-            <Button color="danger" text="Get started" className="w-full cursor-not-allowed" />
+            <Button color="danger" text={t('pricingButtonText')} className="w-full cursor-not-allowed" />
           </>
         ) : (
           <>
             {' '}
             <Link href={routes.privateRoutes.checkout}>
-              <Button onClick={() => handleSubscription(item)} color="danger" text="Get started" className="w-full" />
+              <Button onClick={() => handleSubscription(item)} color="danger" text={t('pricingButtonText')} className="w-full" />
             </Link>
           </>
         )}

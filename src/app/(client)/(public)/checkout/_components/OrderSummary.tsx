@@ -11,6 +11,7 @@ import { resetState } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { hasCheckedPurchaseAlert, isCheckoutButtonDisabled } from '@/utils';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -26,6 +27,7 @@ import PlanAddOns from './PlanAddons';
 
 export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
   const { push, replace } = useRouter();
+  const t = useTranslations('CheckoutPage');
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
   const { code, subscription, addOn, downgradeRefund, total, activeSubscription, planChangeType, refundableThreshold } = useSelector(
@@ -127,7 +129,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
   return (
     <>
       <div className="rounded-lg border p-4">
-        <h2 className="pb-2 text-lg font-medium">Coupon</h2>
+        <h2 className="pb-2 text-lg font-medium">{t('coupon')}</h2>
         <hr className=" text-lg font-bold" />
         <CouponForm />
 
@@ -135,7 +137,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
           <PlanAddOns stripeInfo={stripeInfo} selectedCurrency={selectedCurrency} />
         )}
         {(subscription?.slug === activeSubscription?.slug || !subscription?.slug) && !addOn.slug && (
-          <div className="py-4 text-center font-medium text-red-500">Your cart is currently empty. Select a plan!</div>
+          <div className="py-4 text-center font-medium text-red-500">{t('cartEmpty')}</div>
         )}
       </div>
 
@@ -193,7 +195,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
           refundableThreshold: stripeInfo?.refundableThreshold,
         })}
         color="danger"
-        text="Confirm Checkout"
+        text={t('checkoutButtonText')}
         className="mt-5 w-full"
         isSubmitting={checkOutLoading}
         onClick={handleCheckOut}
