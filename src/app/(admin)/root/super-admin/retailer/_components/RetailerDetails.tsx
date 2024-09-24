@@ -6,7 +6,7 @@ import BranchStatisticsTable from './BranchStatisticsTable';
 import { InfoRow } from './InfoRow';
 import StatsCardView from './StatsCardView';
 
-export default function RetailerDetails({ id, offset }: { id: string; offset: number }) {
+export default function RetailerDetails({ id }: { id: string }) {
   const { data, isLoading, isError } = useGetSingleRetailerQuery(id);
   const {
     storeName,
@@ -25,9 +25,9 @@ export default function RetailerDetails({ id, offset }: { id: string; offset: nu
     totalActiveStamp,
     totalCustomer,
     totalRevenue,
+    totalOrder,
     branches,
   } = data?.data || {};
-  // const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
 
   return (
     <div className="w-full">
@@ -37,14 +37,16 @@ export default function RetailerDetails({ id, offset }: { id: string; offset: nu
         ) : (
           <div className="flex items-center gap-x-1">
             <h3 className="text-base font-semibold">Store Name : </h3>
-            <h3 className="text-base font-medium">{storeName}</h3>
-            {image ? (
-              <div>
-                <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${image}`} alt="image" className="h-8 w-8 rounded" />
-              </div>
-            ) : (
-              <img src={'/images/stamp-logo.png'} alt="image" className="h-8 w-8 rounded" />
-            )}
+            <div className="flex items-center gap-x-2 rounded-md bg-[#F4F6F8] px-3 py-2">
+              {image ? (
+                <div>
+                  <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${image}`} alt="image" className="h-8 w-8 rounded" />
+                </div>
+              ) : (
+                <img src={'/images/stamp-logo.png'} alt="image" className="h-8 w-8 rounded" />
+              )}
+              <h3 className=" text-base font-medium">{storeName}</h3>
+            </div>
           </div>
         )}
       </div>
@@ -67,7 +69,7 @@ export default function RetailerDetails({ id, offset }: { id: string; offset: nu
       </div>
 
       <StatsCardView
-        totalActiveBranch={totalActiveBranch}
+        totalOrder={totalOrder}
         totalActiveStamp={totalActiveStamp}
         totalCustomer={totalCustomer}
         totalRevenue={totalRevenue}
@@ -76,7 +78,7 @@ export default function RetailerDetails({ id, offset }: { id: string; offset: nu
         className="2xl:mb-8 my-5"
       />
 
-      <h2 className="my-5 text-lg font-medium">Branch Statistics:</h2>
+      <h2 className="my-5 text-lg font-medium">Branch Statistics: ({totalActiveBranch})</h2>
       <BranchStatisticsTable data={branches} isLoading={isLoading} isError={isError} />
     </div>
   );

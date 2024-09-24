@@ -1,101 +1,181 @@
-import { Skeleton } from '@/components/ui/skeleton';
 import { useGetAllCustomerScanBySuperAdminQuery } from '@/features/super-admin/customer/customerApi';
+import { IQueryType } from '@/types';
+import { convertDateByOffset } from '@/utils/getFormatDate';
+import { useState } from 'react';
+import { BsShop } from 'react-icons/bs';
+import { MdOutlineQrCodeScanner } from 'react-icons/md';
+import { Tab } from 'rizzui';
+import Table from '../../../_components/Table';
 
-const ScanStatisticsTable = ({ id }: { id: string }) => {
-  const { data, isLoading, isError } = useGetAllCustomerScanBySuperAdminQuery(id);
-  console.log('data', data?.data);
-  const tableHeaders = [
-    'Serial No.',
-    'Branch Name',
-    'Branch Address',
-    'Sub Admin Name',
-    'Sub Admin Email',
-    'Total Customer',
-    'Total Revenue (CAD)',
+const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => {
+  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
+  const searchQuery = query.search ? { search: query.search } : {};
+  const { data, isLoading, isFetching } = useGetAllCustomerScanBySuperAdminQuery({
+    id,
+    queries: {
+      page: query.pageIndex + 1,
+      limit: query.pageSize,
+      ...searchQuery,
+    },
+  });
+
+  const structure = [
+    {
+      header: 'Stamp Title',
+      accessorKey: 'offer.title',
+    },
+    {
+      header: 'Store',
+      accessorKey: 'retailer.storeName',
+    },
+    {
+      header: 'Branch',
+      accessorKey: 'branch.name',
+    },
+    {
+      header: 'Scanned By',
+      accessorKey: 'subAdmin.fullName',
+    },
+    {
+      header: 'Scan Date',
+      Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original.scan.time, offset)}</div>,
+    },
+    {
+      header: 'Status',
+      Cell: ({ row }: any) => {
+        const display = row?.original?.scan?.rewardCollected
+          ? 'Reward Collected'
+          : `${row?.original.scan.stampNumber} / ${row?.original?.offer?.noOfStampsToCollect}`;
+
+        return <div>{display}</div>;
+      },
+    },
   ];
 
-  if (isLoading || isError) {
+  const renderDetailPanel = ({ row }: any) => {
     return (
-      <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
-        <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            {tableHeaders.map((header) => (
-              <th key={header} scope="col" className="whitespace-nowrap px-6 py-3">
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {tableHeaders.map((_, index) => (
-              <td key={index} scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                <Skeleton className="h-6 w-32 rounded" />
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
+      <div className="mx-20 flex justify-start">
+        <div className="w-1/2">
+          <Tab>
+            <Tab.List>
+              <Tab.ListItem>
+                <MdOutlineQrCodeScanner className="text-xl" /> <span className="font-semibold">Offer & Scan</span>
+              </Tab.ListItem>
+              <Tab.ListItem>
+                <BsShop className="text-xl" /> <span className="font-semibold">Store</span>
+              </Tab.ListItem>
+            </Tab.List>
+            <Tab.Panels>
+              <Tab.Panel>
+                <div>
+                  <table className="w-full text-left text-sm text-gray-500">
+                    <tbody>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Scan Time</td>
+                        <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, offset)}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Stamp Title</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.title}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Stamp Category</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.category}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">No of Stamp to Collect</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.noOfStampsToCollect}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Basic Rules</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.rules}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Min. Purchase Amount</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.minPurchaseAmount} CAD</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Reward Type</td>
+                        <td className="px-6 py-4">{row?.original?.offer?.rewardType}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Reward</td>
+                        <td className="px-6 py-4">
+                          {row?.original?.offer?.rewardType === 'discount'
+                            ? `${row?.original?.offer?.discountReward}%`
+                            : row?.original?.offer?.promotionReward}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                <div>
+                  <table className="w-full text-left text-sm text-gray-500">
+                    <tbody>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Store Name</td>
+                        <td className="px-6 py-4">{row?.original?.retailer?.storeName}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Owner Name</td>
+                        <td className="px-6 py-4">{row?.original?.retailer?.fullName}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Branch Name</td>
+                        <td className="px-6 py-4">{row?.original?.branch?.name}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Branch Address</td>
+                        <td className="px-6 py-4">{row?.original?.branch?.address}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Sub-Admin Name</td>
+                        <td className="px-6 py-4">{row?.original?.subAdmin?.fullName}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
+                        <td className="px-6 py-4">Sub-Admin Email</td>
+                        <td className="px-6 py-4">{row?.original?.subAdmin?.email}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </Tab.Panel>
+            </Tab.Panels>
+          </Tab>
+        </div>
+      </div>
     );
-  }
-
-  const branchStatistics = data || [];
+  };
 
   return (
-    <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
-        <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            {tableHeaders.map((header) => (
-              <th key={header} scope="col" className="whitespace-nowrap px-6 py-3">
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {branchStatistics.length === 0 ? (
-            <tr>
-              <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
-                <div className="flex flex-col justify-center py-5">
-                  <img src="/images/no-data.svg" alt="No data" className="m-auto h-40 w-40" />
-                  <span>No Data Available!</span>
-                </div>
-              </td>
-            </tr>
-          ) : (
-            branchStatistics.map((item: any, index: number) => (
-              <tr
-                key={item._id}
-                className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-              >
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {index + 1}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.name}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.address}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4">
-                  {item.subAdminName ?? <span className="text-danger">No Assigned</span>}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4">
-                  {item.subAdminEmail ?? <span className="text-danger">No Assigned</span>}
-                </td>
-                <td scope="row" className="flex items-center gap-x-2 px-6 py-4">
-                  {item.totalCustomer}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4">
-                  ${item.totalRevenue}
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <Table
+        isFetching={isFetching}
+        isLoading={isLoading}
+        response={
+          isLoading
+            ? {
+                data: [],
+                pagination: {
+                  totalDocuments: 0,
+                },
+              }
+            : {
+                data: data?.data.docs || [],
+                pagination: {
+                  totalDocuments: data?.data.totalDocs || 0,
+                },
+              }
+        }
+        structure={structure}
+        setQuery={setQuery}
+        query={query}
+        searchPlaceHolder="Search By Store Name"
+        renderDetailPanel={renderDetailPanel}
+      />
+    </>
   );
 };
 

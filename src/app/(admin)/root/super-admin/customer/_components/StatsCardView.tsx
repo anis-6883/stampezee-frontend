@@ -49,6 +49,7 @@ export default function StatsCardView({
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
+
           <MetricCard
             icon={<BsPatchCheck className="text-2xl" />}
             key={1}
@@ -58,6 +59,7 @@ export default function StatsCardView({
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
+
           <MetricCard
             icon={<LuUsers className="text-2xl" />}
             key={1}
@@ -67,10 +69,11 @@ export default function StatsCardView({
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
+
           <MetricCard
             icon={<LuCircleDollarSign className="text-2xl" />}
             key={1}
-            title={'Total Purchased'}
+            title={'Total Purchased (CAD)'}
             metric={totalPurchased}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"

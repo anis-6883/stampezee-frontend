@@ -3,89 +3,22 @@
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
-import { BsShop } from 'react-icons/bs';
-import { IoDiamondOutline } from 'react-icons/io5';
-import { LiaAwardSolid } from 'react-icons/lia';
+import { BsPatchCheck } from 'react-icons/bs';
 import { LuCircleDollarSign, LuUsers } from 'react-icons/lu';
 import { MdShoppingCartCheckout } from 'react-icons/md';
-import { PiCaretLeftBold, PiCaretRightBold, PiCurrencyDollar, PiStamp } from 'react-icons/pi';
+import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
 import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
-
-const filesStatData = [
-  {
-    id: 1,
-    title: 'Total Retailer',
-    metric: '36,476',
-    fill: '#3872FA',
-    percentage: 32,
-    increased: true,
-    decreased: false,
-    value: '+32.40',
-    icon: <BsShop className="text-2xl" />,
-  },
-  {
-    id: 2,
-    title: 'Total Customer',
-    metric: '53,406',
-    fill: '#3872FA',
-    percentage: 48,
-    increased: false,
-    decreased: true,
-    value: '-18.45',
-    icon: <LuUsers className="text-2xl" />,
-  },
-  {
-    id: 3,
-    title: 'Total Subscription',
-    metric: '90,875',
-    fill: '#EE0000',
-    percentage: 89,
-    increased: true,
-    decreased: false,
-    value: '+20.34',
-    icon: <IoDiamondOutline className="text-2xl" />,
-  },
-  {
-    id: 4,
-    title: 'Total Revenue',
-    metric: '63,076',
-    fill: '#3872FA',
-    percentage: 54,
-    increased: true,
-    decreased: false,
-    value: '+14.45',
-    icon: <PiCurrencyDollar className="text-2xl" />,
-  },
-];
-
-export function FileStatGrid({ className }: { className?: string }) {
-  return (
-    <>
-      {filesStatData.map((stat: any) => {
-        return (
-          <MetricCard
-            icon={stat.icon}
-            key={stat.id}
-            title={stat.title}
-            metric={stat.metric}
-            metricClassName="3xl:text-[22px]"
-            className={cn('w-full max-w-full justify-between', className)}
-          />
-        );
-      })}
-    </>
-  );
-}
 
 export default function StateCardView({ className }: { className: string }) {
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
 
-  const totalOrders = data?.data?.totalOrders ?? 0;
-  const totalStamps = data?.data?.totalStamps ?? 0;
-  const totalAmount = data?.data?.totalAmountAndReward[0]?.totalAmount ?? 0;
-  const totalRewardCollected = data?.data?.totalAmountAndReward[0]?.totalRewardCollected ?? 0;
+  if (!isLoading) {
+    console.log(data);
+  }
+
+  const { totalOrder, totalActiveStamp, totalRevenue, totalCustomer } = data?.data || {};
 
   return (
     <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>
@@ -104,7 +37,7 @@ export default function StateCardView({ className }: { className: string }) {
             icon={<MdShoppingCartCheckout className="text-2xl" />}
             key={1}
             title={'Total Orders'}
-            metric={totalOrders}
+            metric={totalOrder}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
@@ -113,26 +46,28 @@ export default function StateCardView({ className }: { className: string }) {
           <MetricCard
             icon={<LuCircleDollarSign className="text-2xl" />}
             key={1}
-            title={'Total Amount'}
-            metric={totalAmount}
+            title={'Total Revenue (CAD)'}
+            metric={totalRevenue}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
+
           <MetricCard
-            icon={<LiaAwardSolid className="text-2xl" />}
+            icon={<LuUsers className="text-2xl" />}
             key={1}
-            title={'Total Reward Collected'}
-            metric={totalRewardCollected}
+            title={'Total Customer'}
+            metric={totalCustomer}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
+
           <MetricCard
-            icon={<PiStamp className="text-2xl" />}
+            icon={<BsPatchCheck className="text-2xl" />}
             key={1}
-            title={'Total Stamps'}
-            metric={totalStamps}
+            title={'Total Active Stamp'}
+            metric={totalActiveStamp}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}

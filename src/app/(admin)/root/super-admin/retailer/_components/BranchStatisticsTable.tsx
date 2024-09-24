@@ -6,6 +6,7 @@ interface BranchStatistics {
   name: string;
   address: string;
   totalCustomer: number;
+  totalOrder: number;
   totalRevenue: number;
   subAdminName: string;
   subAdminEmail: string;
@@ -25,6 +26,7 @@ const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isL
     'Sub Admin Name',
     'Sub Admin Email',
     'Total Customer',
+    'Total Order',
     'Total Revenue (CAD)',
   ];
 
@@ -70,7 +72,7 @@ const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isL
         <tbody>
           {branchStatistics.length === 0 ? (
             <tr>
-              <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
+              <td colSpan={8} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
                 <div className="flex flex-col justify-center py-5">
                   <img src="/images/no-data.svg" alt="No data" className="m-auto h-40 w-40" />
                   <span>No Data Available!</span>
@@ -83,25 +85,28 @@ const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isL
                 key={item._id}
                 className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
               >
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   {index + 1}
                 </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   {item.name}
                 </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.address}
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                  {item.address.length > 25 ? `${item.address.slice(0, 25)}...` : item.address}
                 </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4">
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   {item.subAdminName ?? <span className="text-danger">No Assigned</span>}
                 </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4">
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   {item.subAdminEmail ?? <span className="text-danger">No Assigned</span>}
                 </td>
-                <td scope="row" className="flex items-center gap-x-2 px-6 py-4">
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   {item.totalCustomer}
                 </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4">
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                  {item.totalOrder}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   ${item.totalRevenue}
                 </td>
               </tr>

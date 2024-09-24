@@ -1,25 +1,16 @@
 'use client';
 
-import { useDeleteSubAdminMutation } from '@/features/retailer/sub-admin/subAdminApi';
 import { useSuperAdminScanDetailsQuery } from '@/features/super-admin/scan/scanApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
-import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { useState } from 'react';
 import { BsShop } from 'react-icons/bs';
 import { LuUser } from 'react-icons/lu';
 import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { Tab } from 'rizzui';
-import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import Table from '../../../_components/Table';
 
 export default function ScanTable({ offset }: { offset: number }) {
-  const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
-  const [deleteState, setDeleteState] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
-  const [deleteSubmitting, setDeleteSubmitting] = useState(false);
-
-  // Query State
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useSuperAdminScanDetailsQuery({
@@ -27,22 +18,6 @@ export default function ScanTable({ offset }: { offset: number }) {
     limit: query.pageSize,
     ...searchQuery,
   });
-
-  // Handle Delete Response
-  useEffect(() => {
-    if (isError) {
-      setDeleteSubmitting(false);
-      toast.error('Something went wrong. Please try again!');
-      setDeleteState(false);
-      setDeleteId(null);
-    }
-    if (isSuccess) {
-      setDeleteSubmitting(false);
-      toast.success('Sub Admin deleted successfully!');
-      setDeleteState(false);
-      setDeleteId(null);
-    }
-  }, [isSuccess, isError]);
 
   const structure = [
     {
@@ -56,6 +31,10 @@ export default function ScanTable({ offset }: { offset: number }) {
     {
       header: 'Branch',
       accessorKey: 'branch.name',
+    },
+    {
+      header: 'Customer',
+      accessorKey: 'customer.fullName',
     },
     {
       header: 'Scanned By',
@@ -74,11 +53,9 @@ export default function ScanTable({ offset }: { offset: number }) {
   ];
 
   const renderDetailPanel = ({ row }: any) => {
-    const total = row?.original?.amountTotal || 0;
-
     return (
-      <div className=" mx-20 flex justify-start">
-        <div className="">
+      <div className="mx-20 flex justify-start">
+        <div className="w-1/2">
           <Tab>
             <Tab.List>
               <Tab.ListItem>
@@ -192,41 +169,30 @@ export default function ScanTable({ offset }: { offset: number }) {
   };
 
   return (
-    <>
-      <Table
-        isFetching={isFetching}
-        isLoading={isLoading}
-        response={
-          isLoading
-            ? {
-                data: [],
-                pagination: {
-                  totalDocuments: 0,
-                },
-              }
-            : {
-                data: data?.data.docs || [],
-                pagination: {
-                  totalDocuments: data?.data.totalDocs || 0,
-                },
-              }
-        }
-        structure={structure}
-        setQuery={setQuery}
-        query={query}
-        searchPlaceHolder="Search By Customer Name & Email"
-        searchFieldWidth="300px"
-        renderDetailPanel={renderDetailPanel}
-      />
-
-      <DeleteConfirmModal
-        deleteId={deleteId}
-        deleteHandler={deleteSubAdmin}
-        modalState={deleteState}
-        setModalState={setDeleteState}
-        isSubmitting={deleteSubmitting}
-        setIsSubmitting={setDeleteSubmitting}
-      />
-    </>
+    <Table
+      isFetching={isFetching}
+      isLoading={isLoading}
+      response={
+        isLoading
+          ? {
+              data: [],
+              pagination: {
+                totalDocuments: 0,
+              },
+            }
+          : {
+              data: data?.data.docs || [],
+              pagination: {
+                totalDocuments: data?.data.totalDocs || 0,
+              },
+            }
+      }
+      structure={structure}
+      setQuery={setQuery}
+      query={query}
+      searchPlaceHolder="Search By Customer Name & Email"
+      searchFieldWidth="300px"
+      renderDetailPanel={renderDetailPanel}
+    />
   );
 }

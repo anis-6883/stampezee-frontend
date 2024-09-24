@@ -17,8 +17,10 @@ export const customerApi = apiSlice.injectEndpoints({
       providesTags: ['superAdminCustomer'],
     }),
     getAllCustomerScanBySuperAdmin: builder.query({
-      query: (id) => {
-        return `/api/secret-root/admin/super-admin/manage-customer/scans/${id}`;
+      query: ({ queries, id }) => {
+        const values = Object.values(queries);
+        if (values.length) return `/api/secret-root/admin/super-admin/manage-customer/scans/${id}?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/manage-customer/scans/${id}`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['superAdminCustomer'],
     }),

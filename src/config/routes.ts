@@ -36,8 +36,7 @@ export const routes = {
       },
       customer: {
         home: `/root/retailer/customer`,
-        create: '/root/retailer/customer/create',
-        edit: (id: number | string) => `/root/retailer/customer/update/${id}`,
+        details: (id: number | string) => `/root/retailer/customer/${id}`,
       },
       regularNotification: {
         home: `/root/retailer/notification/regular`,
