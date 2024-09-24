@@ -6,12 +6,16 @@ import { resetSubscription, setAddOns } from '@/features/subscription/subscripti
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn, Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
+import { translateData } from '@/utils/GoogleTranslate';
 import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean }) {
+export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: boolean; locale?: string }) {
   const dispatch = useDispatch();
+  const [translateLoading, setTranslateLoading] = useState(false);
+  const [addOnList, setAddOnList] = useState([]);
   const {
     subscription,
     addOn: addOnData,
@@ -20,22 +24,36 @@ export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean })
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
   const { data: session }: any = useSession();
 
-  const addOns = data?.data?.reduce((acc: Subscription[], item: Subscription) => {
-    if (item.type === 'addon') {
-      acc.push({
-        ...item,
-        price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, price: item?.price }),
-      });
-    }
-    return acc;
-  }, []);
+  useEffect(() => {
+    setTranslateLoading(true);
+    const addOns = data?.data?.reduce((acc: Subscription[], item: Subscription) => {
+      if (item.type === 'addon') {
+        acc.push({
+          ...item,
+          price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, price: item?.price }),
+        });
+      }
+      return acc;
+    }, []);
+    (async () => {
+      if (addOns?.length > 0 && locale !== 'en') {
+        const translatedSubscription = await translateData(addOns, locale as string, 'en');
+        setAddOnList(translatedSubscription);
+      } else {
+        setAddOnList(addOns);
+      }
+      setTranslateLoading(false);
+    })();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.data, locale]);
 
   const handleAddOnSelect = (addOn: AddOn) => {
     dispatch(setAddOns(addOn));
     dispatch(resetSubscription());
   };
 
-  return isLoading ? (
+  return isLoading || translateLoading ? (
     <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
       <Skeleton className="w-68 h-40 rounded" />
       <Skeleton className="w-68 h-40 rounded" />
@@ -44,7 +62,7 @@ export default function AddOnsList({ isMemberShip }: { isMemberShip?: boolean })
     </div>
   ) : (
     <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
-      {addOns?.map((addOn: AddOn, index: number) => (
+      {addOnList?.map((addOn: AddOn, index: number) => (
         <div key={index}>
           {session?.user?.plan && session?.user?.plan !== 'trial' ? (
             <div

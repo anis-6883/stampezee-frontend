@@ -64,7 +64,22 @@
     "explore": "Изучить",
     "title": "Наши подписки и дополнения",
     "subscriptions": "Подписки",
-    "subtitle": "Наши тарифные планы"
+    "subtitle": "Наши тарифные планы",
+    "pricingButtonText": "Начать"
+  },
+  "CheckoutPage": {
+    "plans": "Планы",
+    "selectPlan": "Выберите план подписки",
+    "switchPlan": "Изменить план подписки",
+    "addOns": "Дополнения",
+    "selectAddOn": "Выберите дополнительную услугу",
+    "orderSummary": "Сводка заказа",
+    "total": "Итого",
+    "checkout": "Оформить заказ",
+    "coupon": "Купон",
+    "couponButtonText": "Применить",
+    "cartEmpty": "Ваша корзина пуста. Выберите план!",
+    "checkoutButtonText": "Оформить заказ"
   },
   "LoginPage": {
     "credentials": "Учетные данные: jane@doe.com / next-intl",

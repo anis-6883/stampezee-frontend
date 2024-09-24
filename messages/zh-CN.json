@@ -64,7 +64,22 @@
     "explore": "探索",
     "title": "我们的订阅和附加功能",
     "subscriptions": "订阅",
-    "subtitle": "我们的套餐"
+    "subtitle": "我们的套餐",
+    "pricingButtonText": "开始使用"
+  },
+  "CheckoutPage": {
+    "plans": "计划",
+    "selectPlan": "选择订阅计划",
+    "switchPlan": "切换订阅计划",
+    "addOns": "附加功能",
+    "selectAddOn": "选择附加服务",
+    "orderSummary": "订单摘要",
+    "total": "总计",
+    "checkout": "结账",
+    "coupon": "优惠券",
+    "couponButtonText": "应用",
+    "cartEmpty": "您的购物车目前为空。选择一个计划！",
+    "checkoutButtonText": "确认结账"
   },
   "LoginPage": {
     "credentials": "凭证: jane@doe.com / next-intl",

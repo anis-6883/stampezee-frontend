@@ -64,7 +64,22 @@
     "explore": "Explorer",
     "title": "Nos Abonnements et Modules Complémentaires",
     "subscriptions": "Abonnements",
-    "subtitle": "Nos Forfaits"
+    "subtitle": "Nos Forfaits",
+    "pricingButtonText": "Commencer"
+  },
+  "CheckoutPage": {
+    "plans": "Forfaits",
+    "selectPlan": "Sélectionner un plan d'abonnement",
+    "switchPlan": "Changer un plan d'abonnement",
+    "addOns": "Add-Ons",
+    "selectAddOn": "Sélectionner un service complémentaire",
+    "orderSummary": "Récapitulatif de la commande",
+    "total": "Total",
+    "checkout": "Checkout",
+    "coupon": "Coupon",
+    "couponButtonText": "Appliquer",
+    "cartEmpty": "Votre panier est actuellement vide. Sélectionnez un plan !",
+    "checkoutButtonText": "Confirmer le Checkout"
   },
   "LoginPage": {
     "credentials": "Identifiants : jane@doe.com / next-intl",

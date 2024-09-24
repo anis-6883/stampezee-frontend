@@ -64,7 +64,22 @@
     "explore": "अन्वेषण करें",
     "title": "हमारी सदस्यता और ऐड-ऑन",
     "subscriptions": "सदस्यता",
-    "subtitle": "हमारी योजनाएं"
+    "subtitle": "हमारी योजनाएं",
+    "pricingButtonText": "शुरू करें"
+  },
+  "CheckoutPage": {
+    "plans": "योजनाएं",
+    "selectPlan": "एक सदस्यता योजना चुनें",
+    "switchPlan": "एक सदस्यता योजना बदलें",
+    "addOns": "ऐड-ऑन",
+    "selectAddOn": "एक अतिरिक्त सेवा चुनें",
+    "orderSummary": "आदेश सारांश",
+    "total": "कुल",
+    "checkout": "चेकआउट",
+    "coupon": "कूपन",
+    "couponButtonText": "लागू करें",
+    "cartEmpty": "आपका कार्ट वर्तमान में खाली है। एक योजना चुनें!",
+    "checkoutButtonText": "चेकआउट सुनिश्चित करें"
   },
   "LoginPage": {
     "credentials": "क्रेडेंशियल्स: jane@doe.com / next-intl",

@@ -64,7 +64,22 @@
     "explore": "Explorar",
     "title": "Nuestras Suscripciones y Complementos",
     "subscriptions": "Suscripciones",
-    "subtitle": "Nuestros Planes"
+    "subtitle": "Nuestros Planes",
+    "pricingButtonText": "Empezar"
+  },
+  "CheckoutPage": {
+    "plans": "Planes",
+    "selectPlan": "Selecciona un plan de suscripción",
+    "switchPlan": "Cambiar un plan de suscripción",
+    "addOns": "Complementos",
+    "selectAddOn": "Selecciona un complemento adicional",
+    "orderSummary": "Resumen del pedido",
+    "total": "Total",
+    "checkout": "Pagar",
+    "coupon": "Cupón",
+    "couponButtonText": "Aplicar",
+    "cartEmpty": "Tu carrito está actualmente vacío. Selecciona un plan!",
+    "checkoutButtonText": "Confirmar Checkout"
   },
   "LoginPage": {
     "credentials": "Credenciales: jane@doe.com / next-intl",

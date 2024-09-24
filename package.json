@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
+    "@google-cloud/translate": "^8.5.0",
     "@mantine/core": "^6.0.21",
     "@mantine/dates": "^6.0.21",
     "@mantine/hooks": "^6.0.21",
@@ -70,7 +71,7 @@
     "@types/aos": "^3.0.7",
     "@types/dompurify": "^3.0.5",
     "@types/lodash": "^4.17.0",
-    "@types/node": "20.12.7",
+    "@types/node": "^20.12.7",
     "@types/react": "^18.3.1",
     "@types/react-flatpickr": "^3.8.11",
     "@types/react-scroll": "^1.8.10",

@@ -9,6 +9,7 @@ import { applyCoupon, removeCoupon, setCode } from '@/features/subscription/subs
 import { useCreateCouponMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { calculateCurrencyExchangeRate, checkedMinPurchaseAmount, isCheckCouponDisabled } from '@/utils';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -17,6 +18,7 @@ import * as Yup from 'yup';
 
 const CouponForm = () => {
   const dispatch = useDispatch();
+  const t = useTranslations('CheckoutPage');
   const { coupon, addOn, subscription, activeSubscription, planChangeType, currency } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
@@ -100,7 +102,7 @@ const CouponForm = () => {
               <Button
                 disabled={isCheckCouponDisabled({ activeSubscription, subscription, isLoggedIn, coupon, planChangeType, addOn })}
                 color="danger"
-                text="Apply"
+                text={t('couponButtonText')}
                 className="w-full"
                 isSubmitting={isCouponSubmitting}
                 type="submit"

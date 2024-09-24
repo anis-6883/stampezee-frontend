@@ -8,34 +8,52 @@ import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/sub
 import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
+import { translateData } from '@/utils/GoogleTranslate';
 import { Skeleton } from '@mantine/core';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PricingCard from './PricingCard';
 
-export default function SubscriptionList() {
+export default function SubscriptionList({ locale }: { locale: string }) {
   const dispatch = useDispatch();
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { activeSubscription, currency } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading, isFetching } = useGetSubscriptionQuery(undefined);
   const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
-  const subscription = data?.data.reduce((acc: any, curr: any) => {
-    if (curr.type === 'subscription') {
-      acc.push({
-        ...curr,
-        price: calculateCurrencyExchangeRate({
-          selectedCurrencyExchangeRate: currency,
-          // defaultCurrencyExchangeRate: defaultCurrency,
-          price: curr.price,
-        }),
-      });
-    }
-    return acc;
-  }, []);
+  const [subscription, setSubscription] = useState([]);
+  const [translateLoading, setTranslateLoading] = useState(false);
 
   const { data: session, update }: any = useSession();
   const { data: profile, isSuccess: profileSuccess } = useRetailerGetProfileQuery(null, { skip: !accessToken });
+
+  useEffect(() => {
+    setTranslateLoading(true);
+    const subscription = data?.data.reduce((acc: any, curr: any) => {
+      if (curr.type === 'subscription') {
+        acc.push({
+          ...curr,
+          price: calculateCurrencyExchangeRate({
+            selectedCurrencyExchangeRate: currency,
+            // defaultCurrencyExchangeRate: defaultCurrency,
+            price: curr.price,
+          }),
+        });
+      }
+      return acc;
+    }, []);
+
+    (async () => {
+      if (subscription?.length > 0 && locale !== 'en') {
+        const translatedSubscription = await translateData(subscription, locale, 'en');
+        setSubscription(translatedSubscription);
+      } else {
+        setSubscription(subscription);
+      }
+      setTranslateLoading(false);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.data, locale]);
 
   useEffect(() => {
     if (profileSuccess) {
@@ -77,7 +95,7 @@ export default function SubscriptionList() {
 
   return (
     <div>
-      {isLoading ? (
+      {isLoading || translateLoading ? (
         <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-4">
           <Skeleton className="w-68 h-96 rounded" />
           <Skeleton className="w-68 h-96 rounded" />

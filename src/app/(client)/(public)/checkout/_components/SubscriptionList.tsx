@@ -7,15 +7,17 @@ import { downgradePlan, resetAddOns, setSubscription, upgradePlan } from '@/feat
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
+import { translateData } from '@/utils/GoogleTranslate';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { IoCheckmarkDoneCircle, IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function SubscriptionList({ isMemberShip }: { isMemberShip?: boolean }) {
+export default function SubscriptionList({ isMemberShip, locale }: { isMemberShip?: boolean; locale?: string }) {
   const dispatch = useDispatch();
   const [plans, setPlans] = useState([]);
+  const [translateLoading, setTranslateLoading] = useState(false);
   const { data: session }: any = useSession();
   const {
     subscription,
@@ -25,6 +27,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
 
   useEffect(() => {
+    setTranslateLoading(true);
     let transformPlans = [];
     if (session?.user?.takeFreeTrial) {
       transformPlans = data?.data?.reduce((acc: Subscription[], item: Subscription) => {
@@ -57,9 +60,18 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
         return acc;
       }, []);
     }
-    setPlans(transformPlans);
+    (async () => {
+      if (transformPlans?.length > 0 && locale !== 'en') {
+        const translatedSubscription = await translateData(transformPlans, locale as string, 'en');
+        setPlans(translatedSubscription);
+      } else {
+        setPlans(transformPlans);
+      }
+      setTranslateLoading(false);
+    })();
+    // setPlans(transformPlans);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.data, dispatch, selectedCurrencyExchangeRate]);
+  }, [data?.data, dispatch, selectedCurrencyExchangeRate, locale]);
 
   const handleSubscription = (plan: Subscription) => {
     const currentPlanIndex = SUBSCRIPTIONS.indexOf(session?.user?.plan);
@@ -97,7 +109,7 @@ export default function SubscriptionList({ isMemberShip }: { isMemberShip?: bool
         </div>
       )} */}
 
-      {isLoading ? (
+      {isLoading || translateLoading ? (
         <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
           <Skeleton className="w-68 h-48 rounded" />
           <Skeleton className="w-68 h-48 rounded" />
