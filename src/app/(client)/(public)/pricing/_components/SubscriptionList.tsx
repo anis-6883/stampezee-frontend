@@ -5,6 +5,7 @@ import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { activeSubscription, setActiveSubscription, setRemainingBalance } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
 import { Skeleton } from '@mantine/core';
@@ -18,9 +19,7 @@ export default function SubscriptionList() {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { activeSubscription, currency } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading, isFetching } = useGetSubscriptionQuery(undefined);
-
-  console.log({ isLoading, data: data?.data });
-
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
   const subscription = data?.data.reduce((acc: any, curr: any) => {
     if (curr.type === 'subscription') {
       acc.push({
@@ -48,6 +47,7 @@ export default function SubscriptionList() {
         })
       );
       const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
+      const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === session?.user?.planPaymentCurrency);
 
       let updateActiveSubscription = {};
       if (activePlan) {
@@ -57,6 +57,7 @@ export default function SubscriptionList() {
           planStartAt: session?.user?.planStartAt,
           planValidAt: session?.user?.planValidAt,
           planPayment: session?.user?.planPayment,
+          planPaymentCurrency: purchaseCurrencyExchange,
         };
       } else {
         updateActiveSubscription = {
@@ -65,13 +66,14 @@ export default function SubscriptionList() {
           planStartAt: session?.user?.planStartAt,
           planValidAt: session?.user?.planValidAt,
           planPayment: session?.user?.planPayment,
+          planPaymentCurrency: purchaseCurrencyExchange,
         };
       }
       dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
       dispatch(setRemainingBalance());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile?.data, profileSuccess, data?.data]);
+  }, [profile?.data, profileSuccess, data?.data, currencyExchanges]);
 
   return (
     <div>
