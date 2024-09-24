@@ -1,23 +1,9 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import React from 'react';
+import { useGetAllCustomerScanBySuperAdminQuery } from '@/features/super-admin/customer/customerApi';
 
-interface BranchStatistics {
-  _id: string;
-  name: string;
-  address: string;
-  totalCustomer: number;
-  totalRevenue: number;
-  subAdminName: string;
-  subAdminEmail: string;
-}
-
-interface BranchStatisticsTableProps {
-  data: BranchStatistics[] | undefined;
-  isLoading: boolean;
-  isError: boolean;
-}
-
-const ScanStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isLoading, isError }) => {
+const ScanStatisticsTable = ({ id }: { id: string }) => {
+  const { data, isLoading, isError } = useGetAllCustomerScanBySuperAdminQuery(id);
+  console.log('data', data?.data);
   const tableHeaders = [
     'Serial No.',
     'Branch Name',
@@ -78,7 +64,7 @@ const ScanStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isLoa
               </td>
             </tr>
           ) : (
-            branchStatistics.map((item, index) => (
+            branchStatistics.map((item: any, index: number) => (
               <tr
                 key={item._id}
                 className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
