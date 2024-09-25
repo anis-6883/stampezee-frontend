@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const Plans = () => {
+export const Plans = ({ locale }: { locale: string }) => {
   const dispatch = useDispatch();
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
@@ -86,12 +86,12 @@ export const Plans = () => {
         ) : (
           <h2 className="mb-4 text-xl font-semibold">Select a Plan</h2>
         )}
-        <SubscriptionList isMemberShip={true} />
+        <SubscriptionList isMemberShip={true} locale={locale} />
 
         <hr className="my-6" />
 
         <h2 className="mb-4 text-xl font-semibold">Select Add-Ons</h2>
-        <AddOnsList isMemberShip={true} />
+        <AddOnsList isMemberShip={true} locale={locale} />
         <hr className="my-3" />
         <div className="mt-10 flex items-center justify-end gap-2">
           <Link href={routes.privateRoutes.checkout}>

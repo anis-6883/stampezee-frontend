@@ -2,13 +2,29 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetAllFaqsQuery } from '@/features/faqs/faqsApi';
+import { faqTranslateData } from '@/utils/GoogleTranslate';
 import { useEffect, useRef, useState } from 'react';
 
-export default function Accordion() {
+export default function Accordion({ locale }: { locale: string }) {
   const [status, setStatus] = useState<string>('');
+  const [faqs, setFaqs] = useState<any>([]);
+  const [translateLoading, setTranslateLoading] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const [maxHeight, setMaxHeight] = useState<string>('0px');
   const { data: faqsData, isLoading: faqsLoading } = useGetAllFaqsQuery(undefined);
+
+  useEffect(() => {
+    setTranslateLoading(true);
+    (async () => {
+      if (faqsData?.data?.length > 0 && locale !== 'en') {
+        const translatedFaqs = await faqTranslateData(faqsData?.data, locale, 'en');
+        setFaqs(translatedFaqs);
+      } else {
+        setFaqs(faqsData?.data);
+      }
+      setTranslateLoading(false);
+    })();
+  }, [faqsData, locale]);
 
   const handleClick = (id: string) => {
     setStatus(status === id ? '' : id);
@@ -20,7 +36,7 @@ export default function Accordion() {
     }
   }, [status]);
 
-  return faqsLoading ? (
+  return faqsLoading || translateLoading ? (
     <div className="flex flex-col gap-3">
       <Skeleton className="w-68 h-14 rounded" />
       <Skeleton className="w-68 h-14 rounded" />
@@ -30,7 +46,7 @@ export default function Accordion() {
     </div>
   ) : (
     <div id="accordion-collapse" data-accordion="collapse">
-      {faqsData?.data?.map((item: any) => (
+      {faqs?.map((item: any) => (
         <div key={item?._id} className="card my-5 rounded-lg bg-white shadow-lg">
           <h2
             id="accordion-collapse-heading-1"

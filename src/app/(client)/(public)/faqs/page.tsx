@@ -1,13 +1,15 @@
 import { metaObject } from '@/config/site.config';
-import { useTranslations } from 'next-intl';
+import { getLocale, getTranslations } from 'next-intl/server';
 import Accordion from '../components/Accordion';
 
 export const metadata = {
   ...metaObject('FAQs'),
 };
 
-export default function Page() {
-  const t = useTranslations('FaqPage');
+export default async function Page() {
+  const t = await getTranslations('FaqPage');
+  const locale = await getLocale();
+
   return (
     <div>
       <div className="relative mx-auto w-full">
@@ -55,7 +57,7 @@ export default function Page() {
       </div>
 
       <div className="md-px-0 container mx-auto mt-10 max-w-screen-xl px-3">
-        <Accordion />
+        <Accordion locale={locale} />
       </div>
     </div>
   );
