@@ -27,4 +27,23 @@ const translateData = async (data: any, targetLanguage: string, sourceLanguage: 
   return data;
 };
 
-export { translateData, translateText };
+const faqTranslateData = async (data: any[], targetLanguage: string, sourceLanguage: string) => {
+  return Promise.all(
+    data.map(async (item) => {
+      // Translate title
+      const translatedTitle = await translateText([item.title], targetLanguage, sourceLanguage);
+
+      // Translate description
+      const translatedDescription = await translateText([item.description], targetLanguage, sourceLanguage);
+
+      // Return a new object with translated properties
+      return {
+        ...item,
+        title: translatedTitle[0],
+        description: translatedDescription[0],
+      };
+    })
+  );
+};
+
+export { faqTranslateData, translateData, translateText };

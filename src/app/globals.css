@@ -696,3 +696,28 @@ input#react-select-5-input:focus {
   align-items: center;
   gap: 6px;
 }
+
+/* .rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.rtl .md\:text-left {
+  text-align: right;
+}
+
+.rtl .md\:items-start {
+  align-items: flex-end;
+}
+
+.rtl .md\:justify-start {
+  justify-content: flex-end;
+}
+
+.rtl .md\:items-end {
+  align-items: flex-end;
+}
+
+.rtl .md\:justify-end {
+  justify-content: flex-end;
+} */
