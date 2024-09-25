@@ -39,6 +39,7 @@ export default function LocalSwitcherSelector({
   const t1 = useTranslations('LocaleSwitcher');
   const t2 = useTranslations('CurrencySwitcher');
   const [isPending, startTransition] = useTransition();
+  const [currentTab, setCurrentTab] = useState(0);
 
   const currencyExchangeOptions = currencyData?.reduce((acc: any, curr: any) => {
     currencyExchanges?.map((item: any) => {
@@ -65,6 +66,7 @@ export default function LocalSwitcherSelector({
 
     startTransition(() => {
       setUserLocale(locale);
+      setCurrentTab(1);
     });
   };
   // handle currency
@@ -77,6 +79,10 @@ export default function LocalSwitcherSelector({
       dispatch(setCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
     });
     setModalState(false);
+  };
+
+  const handleTabChange = (index: number) => {
+    setCurrentTab(index);
   };
 
   return (
@@ -94,7 +100,7 @@ export default function LocalSwitcherSelector({
           </ActionIcon>
         </div>
 
-        <Tab>
+        <Tab selectedIndex={currentTab} onChange={handleTabChange}>
           <Tab.List>
             <Tab.ListItem className="text-black hover:text-black">
               <BsTranslate className="mr-1 text-lg" /> <span className="font-semibold">{t1('label')}</span>
@@ -107,6 +113,7 @@ export default function LocalSwitcherSelector({
           <Tab.Panels>
             <Tab.Panel>
               <div className="my-5">
+                <h3 className="mb-5 text-center text-lg font-semibold">Select a Preferable Language</h3>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {languageOptions?.map((lang: any) => (
                     <AdvancedRadio
@@ -129,6 +136,7 @@ export default function LocalSwitcherSelector({
             </Tab.Panel>
             <Tab.Panel>
               <div className="my-5">
+                <h3 className="mb-5 text-center text-lg font-semibold">Select a Preferable Currency</h3>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {currencyExchangeOptions?.map((currency: any) => (
                     <AdvancedRadio
