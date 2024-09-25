@@ -38,6 +38,9 @@ const ContactForm = ({ token }: { token: string }) => {
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setIsSubmitting(true);
     try {
+      if (!values?.phone) {
+        delete values?.phone;
+      }
       const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/web/contact/submit`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
