@@ -38,6 +38,7 @@ export default function LocalSwitcherSelector({
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
   const t1 = useTranslations('LocaleSwitcher');
   const t2 = useTranslations('CurrencySwitcher');
+  const [isPending, startTransition] = useTransition();
 
   const currencyExchangeOptions = currencyData?.reduce((acc: any, curr: any) => {
     currencyExchanges?.map((item: any) => {
@@ -57,8 +58,6 @@ export default function LocalSwitcherSelector({
       setCurrentCurrency(currency);
     })();
   }, [currencyExchanges, dispatch]);
-
-  const [isPending, startTransition] = useTransition();
 
   // handle language
   const handleLanguageChange = (locale: Locale) => {

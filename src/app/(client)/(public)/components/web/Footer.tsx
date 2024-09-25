@@ -20,6 +20,7 @@ export default function Footer({ general }: any) {
   const t = useTranslations('AppLayout');
   const locale = useLocale();
   const isRtl = locale === 'ar';
+  console.log('locale', locale);
 
   // Newsletter Response Handler
   useEffect(() => {
@@ -103,7 +104,11 @@ export default function Footer({ general }: any) {
                   </div>
                 </div>
                 <div className="mt-4 flex flex-col font-medium">
-                  <div className="block text-lg font-bold  sm:text-xl">{t('newsletter')}</div>
+                  <div
+                    className={`block text-lg font-bold   ${locale === 'fr' ? 'sm:text-base' : locale === 'ru' ? 'sm:text-sm' : 'sm:text-xl'}`}
+                  >
+                    {t('newsletter')}
+                  </div>
                   <div className="text-xs sm:text-sm">
                     <form
                       onSubmit={handleNewsletter}
