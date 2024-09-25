@@ -173,7 +173,7 @@ export default function StampTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 300,
+      size: 250,
     },
     {
       header: 'Publish',
@@ -197,6 +197,7 @@ export default function StampTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      size: 200,
     },
     {
       header: 'Status',
