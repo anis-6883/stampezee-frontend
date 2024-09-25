@@ -4,7 +4,7 @@ import { routes } from '@/config/routes';
 
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateNewsletterMutation } from '@/features/newsletter/newsletterApi';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -18,6 +18,9 @@ export default function Footer({ general }: any) {
   const [createNewsletter, { error: newsletterError, isSuccess: newsletterSuccess }] = useCreateNewsletterMutation();
 
   const t = useTranslations('AppLayout');
+  const locale = useLocale();
+  const isRtl = locale === 'ar';
+
   // Newsletter Response Handler
   useEffect(() => {
     if (newsletterError) {
@@ -53,7 +56,7 @@ export default function Footer({ general }: any) {
           </div>
           <div className="mt-4 block font-medium">
             <div className="mt-4 block font-medium">
-              <div className="grid grid-cols-1 gap-4 text-center md:grid-cols-2 md:text-left lg:grid-cols-4">
+              <div className={`grid grid-cols-1 gap-4 text-center md:grid-cols-2 md:text-${isRtl ? 'right' : 'left'} lg:grid-cols-4`}>
                 <div className="mt-4 block font-medium">
                   <div className="block text-lg font-bold  sm:text-xl">StampEzee</div>
                   <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">

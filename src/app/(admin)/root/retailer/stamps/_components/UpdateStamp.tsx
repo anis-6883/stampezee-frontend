@@ -142,10 +142,10 @@ export default function Update({ Id, offset }: any) {
           }
         }}
       >
-        {({ errors, setFieldValue, values }) => {
+        {({ errors, setFieldValue, values, touched }) => {
           return (
             <Form className="mt-5 grid gap-4">
-              <div className="grid grid-cols-2 gap-x-5">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <SelectField
                   name="branchId"
                   label="Branch"
@@ -169,12 +169,12 @@ export default function Update({ Id, offset }: any) {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-x-5">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
                 <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
               </div>
 
-              <div className="grid grid-cols-2 gap-x-5">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div>
                   <SelectField
                     name="hasValidity"
@@ -187,13 +187,18 @@ export default function Update({ Id, offset }: any) {
                       label: _.startCase(_.toLower(item.name)),
                       value: item.value,
                     }))}
-                    onChange={(option: { label: string; value: boolean }) => setFieldValue('hasValidity', option.value)}
+                    onChange={(option: { label: string; value: boolean }) => {
+                      setFieldValue('hasValidity', option.value);
+                      if (option.value) {
+                        setFieldValue('validDateRange', '');
+                      }
+                    }}
                   />
                 </div>
                 {values?.hasValidity && <DateRangePicker label="Valid Date Range" name="validDateRange" />}
               </div>
 
-              <div className="grid grid-cols-2 gap-x-5">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <InputField name="noOfStampsToCollect" label="Number of Stamps to Collect" type="number" />
                 <InputField
                   name="minPurchaseAmount"
@@ -205,7 +210,7 @@ export default function Update({ Id, offset }: any) {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-x-5">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div>
                   <SelectField
                     name="rewardType"
@@ -242,29 +247,21 @@ export default function Update({ Id, offset }: any) {
               {responseIsLoading ? (
                 <StampImgSkeleton />
               ) : (
-                <div className="mb-5 flex w-full flex-wrap justify-center gap-3 md:justify-center lg:justify-start">
+                <div className="mb-5 grid grid-cols-1 gap-4 md:grid-cols-8">
                   {optionsData?.defaultImages?.map((item: any) => (
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
                       key={item?._id}
-                      className="flex h-[180px] w-[180px] rounded bg-white p-6 shadow-md"
+                      className={`cursor-pointer rounded-lg border p-4 ${errors?.stampImageId && touched?.stampImageId && 'ring-2 ring-danger'} ${
+                        values?.stampImageId === item._id ? 'scale-105 border-2 border-red-600 ring-1 ring-red-400' : 'border'
+                      }`}
                     >
-                      <div>
-                        <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
-                        <h3 className="mt-1 text-center font-medium">
+                      <div className="flex flex-col items-center justify-center">
+                        <img className="h-14 w-14 object-center" src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
+                        <h3 className="mt-2 text-center font-medium">
                           {item?.title?.length >= 15 ? `${item?.title?.slice(0, 14)}...` : item?.title}
                         </h3>
                       </div>
-                      <input
-                        style={{ backgroundImage: 'none' }}
-                        type="radio"
-                        id="radio1"
-                        name="stampImageId"
-                        value={item?._id}
-                        checked={values?.stampImageId === item?._id}
-                        onChange={(e) => setFieldValue('stampImageId', e.target.value)}
-                        className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-3 checked:w-3 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
-                      />
                     </div>
                   ))}
                 </div>
@@ -278,29 +275,21 @@ export default function Update({ Id, offset }: any) {
               {responseIsLoading ? (
                 <StampImgSkeleton />
               ) : (
-                <div className="flex w-full flex-wrap justify-center gap-3 md:justify-center lg:justify-start">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-8">
                   {optionsData?.customImages?.map((item: any) => (
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
                       key={item?._id}
-                      className="flex h-[180px] w-[180px] rounded bg-white p-6 shadow-md"
+                      className={`cursor-pointer rounded-lg border p-4 ${errors?.stampImageId && touched?.stampImageId && 'ring-2 ring-danger'} ${
+                        values?.stampImageId === item._id ? 'scale-105 border-2 border-red-600 ring-1 ring-red-400' : 'border'
+                      }`}
                     >
-                      <div>
-                        <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
-                        <h3 className="mt-1 text-center font-medium">
+                      <div className="flex flex-col items-center justify-center">
+                        <img className="h-14 w-14 object-center" src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${item.image}`} alt="" />
+                        <h3 className="mt-2 text-center font-medium">
                           {item?.title?.length >= 15 ? `${item?.title?.slice(0, 14)}...` : item?.title}
                         </h3>
                       </div>
-                      <input
-                        style={{ backgroundImage: 'none' }}
-                        type="radio"
-                        id="radio1"
-                        name="stampImageId"
-                        value={item?._id}
-                        checked={values?.stampImageId === item?._id}
-                        onChange={(e) => setFieldValue('stampImageId', e.target.value)}
-                        className="border-gray h-4 w-4 cursor-pointer appearance-none rounded-full border text-red-500 transition-none checked:h-4 checked:w-4 checked:bg-red-500 checked:ring-1 checked:ring-red-500 checked:ring-offset-2 focus:outline-none"
-                      />
                     </div>
                   ))}
                 </div>
