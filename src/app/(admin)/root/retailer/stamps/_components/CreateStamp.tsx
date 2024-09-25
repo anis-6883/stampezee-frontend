@@ -66,8 +66,9 @@ export default function Create() {
 
       if (values.hasValidity) {
         if (values?.validDateRange?.includes('to')) {
-          changedData.startedAt = values?.validDateRange?.split('to')[0];
-          changedData.expiredAt = values?.validDateRange?.split('to')[1];
+          const dateRange = values.validDateRange.split('to').map((date: string) => date.trim());
+          changedData.startedAt = dateRange[0];
+          changedData.expiredAt = dateRange[1];
         } else {
           changedData.startedAt = values?.validDateRange;
           changedData.expiredAt = values?.validDateRange;

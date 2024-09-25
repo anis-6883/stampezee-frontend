@@ -52,8 +52,9 @@ export default function CloneStamp({ Id, offset }: any) {
 
       if (values.hasValidity) {
         if (values?.validDateRange?.includes('to')) {
-          changedData.startedAt = values?.validDateRange?.split('to')[0];
-          changedData.expiredAt = values?.validDateRange?.split('to')[1];
+          const dateRange = values.validDateRange.split('to').map((date: string) => date.trim());
+          changedData.startedAt = dateRange[0];
+          changedData.expiredAt = dateRange[1];
         } else {
           changedData.startedAt = values?.validDateRange;
           changedData.expiredAt = values?.validDateRange;
@@ -88,8 +89,9 @@ export default function CloneStamp({ Id, offset }: any) {
     promotionReward: stampData?.data?.promotionReward ? stampData?.data?.promotionReward : '',
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
     hasValidity: stampData?.data?.hasValidity,
-    validDateRange:
-      `${getFormattedDate(stampData?.data?.startedAt, offset)} to ${getFormattedDate(stampData?.data?.expiredAt, offset)}` || '',
+    validDateRange: stampData?.data?.hasValidity
+      ? `${getFormattedDate(stampData?.data?.startedAt, offset)} to ${getFormattedDate(stampData?.data?.expiredAt, offset)}`
+      : '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -189,9 +191,6 @@ export default function CloneStamp({ Id, offset }: any) {
                     }))}
                     onChange={(option: { label: string; value: boolean }) => {
                       setFieldValue('hasValidity', option.value);
-                      if (option.value) {
-                        setFieldValue('validDateRange', '');
-                      }
                     }}
                   />
                 </div>
