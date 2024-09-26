@@ -19,6 +19,11 @@
     "newsletterPlaceholderText": "电子邮件地址",
     "copyright": "© Copyright 2024 StampEzee | 全著作権所有。"
   },
+  "StatusIndicator": {
+    "active": "活跃",
+    "inactive": "不活跃",
+    "status": "状态"
+  },
   "HomePage": {
     "bannerTitle": "革新您的客户体验",
     "bannerDetails": "通过简单与科技的结合，吸引、奖励并留住您的客户，将忠诚计划的未来带到您的业务中。",
@@ -66,7 +71,9 @@
     "title": "我们的订阅和附加功能",
     "subscriptions": "订阅",
     "subtitle": "我们的套餐",
-    "pricingButtonText": "开始使用"
+    "pricingButtonText": "开始使用",
+    "applied": "已应用",
+    "active": "活动"
   },
   "CheckoutPage": {
     "plans": "计划",
@@ -104,6 +111,10 @@
   "CurrencySwitcher": {
     "label": "货币"
   },
+  "RetailerCommon": {
+    "required": "必需的！",
+    "errorMessage": "出现问题。请再试一次！"
+  },
   "RetailerSidebar": {
     "Dashboard": "仪表盘",
     "Plans & AddOns": "计划和附加功能",
@@ -119,5 +130,104 @@
     "Regular": "常规",
     "Location Based": "基于位置",
     "Manage Profile": "管理个人资料"
+  },
+  "RetailerDashboard": {
+    "title": "零售商仪表板",
+    "totalOrders": "总订单数",
+    "totalRevenue": "总收入",
+    "totalCustomer": "总客户数",
+    "totalActiveStamp": "总活跃邮票",
+    "branchStatistics": "分支统计"
+  },
+  "RetailerDashboardTable": {
+    "serialNo": "序列号",
+    "branchName": "分店名称",
+    "branchAddress": "分店地址",
+    "subAdminName": "副管理员姓名",
+    "subAdminEmail": "副管理员邮箱",
+    "totalStamp": "总邮票数",
+    "totalCustomer": "总客户数",
+    "totalOrder": "总订单数",
+    "totalRevenue": "总收入"
+  },
+  "RetailerBilling": {
+    "Billing": "计费",
+    "Dashboard": "仪表板"
+  },
+  "RetailerBillingTable": {
+    "planAndAddOn": "计划/附加项",
+    "subscriptionId": "订阅 ID",
+    "balance": "余额",
+    "planStatus": "计划状态",
+    "expireDate": "到期日期",
+    "actions": "操作",
+    "running": "运行中",
+    "ended": "结束",
+    "subscriptionDetails": "订阅详情",
+    "placeHolder": "按支付 ID 搜索"
+  },
+  "RetailerRefund": {
+    "title": "管理退款",
+    "refunds": "退款",
+    "Dashboard": "仪表板"
+  },
+  "RetailerRefundTable": {
+    "plan": "计划",
+    "validityDate": "有效期",
+    "enrollStatus": "注册状态",
+    "refundAmount": "退款金额",
+    "refundStatus": "退款状态",
+    "refundDate": "退款日期",
+    "placeHolder": "按支付 ID 搜索"
+  },
+  "RetailerBranches": {
+    "title": "管理分支机构",
+    "branches": "分支机构",
+    "dashboard": "仪表板",
+    "addNewBranch": "添加新分支",
+    "create": "创建",
+    "update": "更新",
+    "updateABranch": "更新分支",
+    "name": "名称",
+    "address": "地址",
+    "submit": "提交"
+  },
+  "RetailerBranchTable": {
+    "branchName": "分支名称",
+    "address": "地址",
+    "source": "来源",
+    "expiryDay": "到期日",
+    "status": "状态",
+    "actions": "操作",
+    "placeHolder": "按分支名称搜索",
+    "expired": "已过期",
+    "daysLeft": "天数",
+    "activate": "活跃",
+    "convertToAddOn": "转换为附加项",
+    "upgradeYourPlan": "升级您的计划",
+    "errorMessage": "出了点问题。请再试一次！",
+    "branchActivated": "分支机构已激活！",
+    "branchConverted": "分支机构源已成功转换为附加项！",
+    "branchDeleted": "分支机构已成功删除！"
+  },
+  "RetailerSubAdmin": {
+    "title": "管理子管理员",
+    "subAdmins": "子管理员",
+    "dashboard": "仪表板",
+    "addNewSubAdmin": "添加新子管理员",
+    "updateASubAdmin": "更新子管理员",
+    "submit": "提交",
+    "update": "更新"
+  },
+  "RetailerSubAdminTable": {
+    "image": "图片",
+    "firstName": "名字",
+    "lastName": "姓氏",
+    "email": "电子邮件",
+    "password": "密码",
+    "branch": "分支",
+    "status": "状态",
+    "actions": "操作",
+    "placeHolder": "按名称搜索"
   }
 }

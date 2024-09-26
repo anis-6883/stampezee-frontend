@@ -20,7 +20,6 @@ export default function Footer({ general }: any) {
   const t = useTranslations('AppLayout');
   const locale = useLocale();
   const isRtl = locale === 'ar';
-  console.log('locale', locale);
 
   // Newsletter Response Handler
   useEffect(() => {

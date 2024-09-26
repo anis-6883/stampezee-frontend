@@ -19,6 +19,12 @@
     "newsletterPlaceholderText": "Email Address",
     "copyright": "© Copyright 2024 StampEzee | All Rights Reserved."
   },
+  "StatusIndicator": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "status": "Status"
+  },
+
   "HomePage": {
     "bannerTitle": "Revolutionize Your Customer Experience",
     "bannerDetails": "Engage, reward, and retain your customers with a touch of simplicity and technology, and bring the future of loyalty programs to your business.",
@@ -66,7 +72,9 @@
     "title": "Our Subscription and Add-on",
     "subscriptions": "Subscriptions",
     "subtitle": "Our Plans",
-    "pricingButtonText": "Get started"
+    "pricingButtonText": "Get started",
+    "applied": "Applied",
+    "active": "Active"
   },
   "CheckoutPage": {
     "plans": "Plans",
@@ -104,6 +112,10 @@
   "CurrencySwitcher": {
     "label": "Currency"
   },
+  "RetailerCommon": {
+    "required": "Required!",
+    "errorMessage": "Something went wrong. Please try again!"
+  },
   "RetailerSidebar": {
     "Dashboard": "Dashboard",
     "Plans & AddOns": "Plans & AddOns",
@@ -119,5 +131,106 @@
     "Regular": "Regular",
     "Location Based": "Location Based",
     "Manage Profile": "Manage Profile"
+  },
+  "RetailerDashboard": {
+    "title": "Retailer Dashboard",
+    "totalOrders": "Total Orders",
+    "totalRevenue": "Total Revenue",
+    "totalCustomer": "Total Customer",
+    "totalActiveStamp": "Total Active Stamp",
+    "branchStatistics": "Branch Statistics"
+  },
+  "RetailerDashboardTable": {
+    "serialNo": "Serial No.",
+    "branchName": "Branch Name",
+    "branchAddress": "Branch Address",
+    "subAdminName": "Sub Admin Name",
+    "subAdminEmail": "Sub Admin Email",
+    "totalStamp": "Total Stamp",
+    "totalCustomer": "Total Customer",
+    "totalOrder": "Total Order",
+    "totalRevenue": "Total Revenue"
+  },
+  "RetailerBilling": {
+    "Billing": "Billing",
+    "Dashboard": "Dashboard"
+  },
+  "RetailerBillingTable": {
+    "planAndAddOn": "Plan/Add-on",
+    "subscriptionId": "Subscription ID",
+    "balance": "Balance",
+    "planStatus": "Plan Status",
+    "expireDate": "Expire Date",
+    "actions": "Actions",
+    "running": "Running",
+    "ended": "Ended",
+    "subscriptionDetails": "Subscription Details",
+    "placeHolder": "Search By Subscription ID"
+  },
+  "RetailerRefund": {
+    "title": "Manage Refunds",
+    "refunds": "Refunds",
+    "Dashboard": "Dashboard"
+  },
+  "RetailerRefundTable": {
+    "plan": "Plan",
+    "validityDate": "Validity Date",
+    "enrollStatus": "Enroll Status",
+    "refundAmount": "Refund Amount",
+    "refundStatus": "Refund Status",
+    "refundDate": "Refund Date",
+    "placeHolder": "Search By Payment ID"
+  },
+  "RetailerBranches": {
+    "title": "Manage Branches",
+    "branches": "Branches",
+    "dashboard": "Dashboard",
+    "addNewBranch": "Add New Branch",
+    "create": "Create",
+    "update": "Update",
+    "updateABranch": "Update A Branch",
+    "name": "Name",
+    "address": "Address",
+    "submit": "Submit"
+  },
+  "RetailerBranchTable": {
+    "branchName": "Branch Name",
+    "address": "Address",
+    "source": "Source",
+    "expiryDay": "Expiry Day",
+    "status": "Status",
+    "actions": "Actions",
+    "placeHolder": "Search By Branch Name",
+    "expired": "Expired",
+    "daysLeft": "days left",
+    "activate": "Activate",
+    "convertToAddOn": "Convert To Add-On",
+    "upgradeYourPlan": "Upgrade Your Plan",
+    "errorMessage": "Something went wrong. Please try again!",
+    "branchActivated": "Branch activated successfully!",
+    "branchConverted": "Branch source converted to add-on successfully!",
+    "branchDeleted": "Branch deleted successfully!",
+    "branchCreated": "Branch created successfully!",
+    "branchUpdated": "Branch updated successfully!"
+  },
+  "RetailerSubAdmin": {
+    "title": "Manage Sub-Admins",
+    "subAdmins": "Sub-Admins",
+    "dashboard": "Dashboard",
+    "addNewSubAdmin": "Add New Sub-Admin",
+    "updateASubAdmin": "Update A Sub-Admin",
+    "submit": "Submit",
+    "update": "Update"
+  },
+  "RetailerSubAdminTable": {
+    "image": "Image",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "branch": "Branch",
+    "status": "Status",
+    "actions": "Actions",
+    "placeHolder": "Search By Name"
   }
 }

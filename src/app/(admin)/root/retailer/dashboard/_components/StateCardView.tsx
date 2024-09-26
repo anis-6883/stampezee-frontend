@@ -3,6 +3,7 @@
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
+import { useTranslations } from 'next-intl';
 import { BsPatchCheck } from 'react-icons/bs';
 import { LuCircleDollarSign, LuUsers } from 'react-icons/lu';
 import { MdShoppingCartCheckout } from 'react-icons/md';
@@ -13,10 +14,7 @@ import MetricCard from './MetricCard';
 export default function StateCardView({ className }: { className: string }) {
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
-
-  if (!isLoading) {
-    console.log(data);
-  }
+  const t = useTranslations('RetailerDashboard');
 
   const { totalOrder, totalActiveStamp, totalRevenue, totalCustomer } = data?.data || {};
 
@@ -36,7 +34,7 @@ export default function StateCardView({ className }: { className: string }) {
           <MetricCard
             icon={<MdShoppingCartCheckout className="text-2xl" />}
             key={1}
-            title={'Total Orders'}
+            title={t('totalOrders')}
             metric={totalOrder}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -46,7 +44,7 @@ export default function StateCardView({ className }: { className: string }) {
           <MetricCard
             icon={<LuCircleDollarSign className="text-2xl" />}
             key={1}
-            title={'Total Revenue (CAD)'}
+            title={`${t('totalRevenue')} (CAD)`}
             metric={totalRevenue}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -56,7 +54,7 @@ export default function StateCardView({ className }: { className: string }) {
           <MetricCard
             icon={<LuUsers className="text-2xl" />}
             key={1}
-            title={'Total Customer'}
+            title={t('totalCustomer')}
             metric={totalCustomer}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -66,7 +64,7 @@ export default function StateCardView({ className }: { className: string }) {
           <MetricCard
             icon={<BsPatchCheck className="text-2xl" />}
             key={1}
-            title={'Total Active Stamp'}
+            title={t('totalActiveStamp')}
             metric={totalActiveStamp}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"

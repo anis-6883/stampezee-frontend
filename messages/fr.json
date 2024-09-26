@@ -19,6 +19,11 @@
     "newsletterPlaceholderText": "Adresse e-mail",
     "copyright": "© Copyright 2024 StampEzee | Tous les droits sont réservés."
   },
+  "StatusIndicator": {
+    "active": "Actif",
+    "inactive": "Inactif",
+    "status": "Statut"
+  },
   "HomePage": {
     "bannerTitle": "Révolutionnez l'Expérience Client",
     "bannerDetails": "Engagez, récompensez et fidélisez vos clients avec une touche de simplicité et de technologie, et apportez l'avenir des programmes de fidélité à votre entreprise.",
@@ -66,7 +71,9 @@
     "title": "Nos Abonnements et Modules Complémentaires",
     "subscriptions": "Abonnements",
     "subtitle": "Nos Forfaits",
-    "pricingButtonText": "Commencer"
+    "pricingButtonText": "Commencer",
+    "applied": "Appliqué",
+    "active": "Actif"
   },
   "CheckoutPage": {
     "plans": "Forfaits",
@@ -104,6 +111,10 @@
   "CurrencySwitcher": {
     "label": "Devise"
   },
+  "RetailerCommon": {
+    "required": "Obligatoire!",
+    "errorMessage": "Une erreur s'est produite. Veuillez réessayer!"
+  },
   "RetailerSidebar": {
     "Dashboard": "Tableau de bord",
     "Plans & AddOns": "Forfaits et Modules",
@@ -119,5 +130,104 @@
     "Regular": "Régulier",
     "Location Based": "Basé sur la Localisation",
     "Manage Profile": "Gérer le Profil"
+  },
+  "RetailerDashboard": {
+    "title": "Tableau de Bord des Détaillants",
+    "totalOrders": "Total des Commandes",
+    "totalRevenue": "Revenu Total",
+    "totalCustomer": "Total des Clients",
+    "totalActiveStamp": "Total des Timbres Actifs",
+    "branchStatistics": "Statistiques des Succursales"
+  },
+  "RetailerDashboardTable": {
+    "serialNo": "N° de Série",
+    "branchName": "Nom de la Succursale",
+    "branchAddress": "Adresse de la Succursale",
+    "subAdminName": "Nom du Sous-Administrateur",
+    "subAdminEmail": "E-mail du Sous-Administrateur",
+    "totalStamp": "Total des Timbres",
+    "totalCustomer": "Total des Clients",
+    "totalOrder": "Total des Commandes",
+    "totalRevenue": "Revenu Total"
+  },
+  "RetailerBilling": {
+    "Billing": "Facturation",
+    "Dashboard": "Tableau de bord"
+  },
+  "RetailerBillingTable": {
+    "planAndAddOn": "Plan/Option",
+    "subscriptionId": "ID d’Abonnement",
+    "balance": "Solde",
+    "planStatus": "Statut du Plan",
+    "expireDate": "Date d’Expiration",
+    "actions": "Actions",
+    "running": "En cours",
+    "ended": "Terminé",
+    "subscriptionDetails": "Détails de l'abonnement",
+    "placeHolder": "Rechercher par ID d'Abonnement"
+  },
+  "RetailerRefund": {
+    "title": "Gérer les Remboursements",
+    "refunds": "Remboursements",
+    "Dashboard": "Tableau de bord"
+  },
+  "RetailerRefundTable": {
+    "plan": "Plan",
+    "validityDate": "Date de Validité",
+    "enrollStatus": "Statut de l’Inscription",
+    "refundAmount": "Montant du Remboursement",
+    "refundStatus": "Statut du Remboursement",
+    "refundDate": "Date du Remboursement",
+    "placeHolder": "Rechercher par ID de Paiement"
+  },
+  "RetailerBranches": {
+    "title": "Gérer les Agences",
+    "branches": "Agences",
+    "dashboard": "Tableau de bord",
+    "addNewBranch": "Ajouter une nouvelle agence",
+    "create": "Créer",
+    "update": "Mettre à jour",
+    "updateABranch": "Mettre à jour une agence",
+    "name": "Nom",
+    "address": "Adresse",
+    "submit": "Envoyer"
+  },
+  "RetailerBranchTable": {
+    "branchName": "Nom de l’Agence",
+    "address": "Adresse",
+    "source": "Source",
+    "expiryDay": "Jour d’Expiration",
+    "status": "Statut",
+    "actions": "Actions",
+    "placeHolder": "Rechercher par Nom d’Agence",
+    "expired": "Expiré",
+    "daysLeft": "jours restant",
+    "activate": "Activer",
+    "convertToAddOn": "Convertir en module complémentaire",
+    "upgradeYourPlan": "Mettre à jour votre plan",
+    "errorMessage": "Quelque chose a mal tourné. Veuillez réessayer !",
+    "branchActivated": "Agence activée avec succès !",
+    "branchConverted": "Le source de l'agence a été converti en module complémentaire avec succès !",
+    "branchDeleted": "Agence supprimée avec succès !"
+  },
+  "RetailerSubAdmin": {
+    "title": "Gérer les Sous-Admins",
+    "subAdmins": "Sous-Admins",
+    "dashboard": "Tableau de bord",
+    "addNewSubAdmin": "Ajouter un Nouveau Sous-Admin",
+    "updateASubAdmin": "Mettre à Jour un Sous-Admin",
+    "submit": "Soumettre",
+    "update": "Mettre à Jour"
+  },
+  "RetailerSubAdminTable": {
+    "image": "Image",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "password": "Mot de passe",
+    "branch": "Agence",
+    "status": "Statut",
+    "actions": "Actions",
+    "placeHolder": "Rechercher par Nom"
   }
 }

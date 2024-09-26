@@ -19,6 +19,11 @@
     "newsletterPlaceholderText": "ईमेल पता",
     "copyright": "© Copyright 2024 StampEzee | सभी अधिकार सुरक्षित हैं।"
   },
+  "StatusIndicator": {
+    "active": "सक्रिय",
+    "inactive": "निष्क्रिय",
+    "status": "स्थिति"
+  },
   "HomePage": {
     "bannerTitle": "अपने ग्राहक अनुभव में क्रांति लाएं",
     "bannerDetails": "सरलता और प्रौद्योगिकी के साथ अपने ग्राहकों को जोड़ें, पुरस्कृत करें और उन्हें बनाए रखें, और अपने व्यवसाय में वफादारी कार्यक्रमों का भविष्य लाएं।",
@@ -66,7 +71,9 @@
     "title": "हमारी सदस्यता और ऐड-ऑन",
     "subscriptions": "सदस्यता",
     "subtitle": "हमारी योजनाएं",
-    "pricingButtonText": "शुरू करें"
+    "pricingButtonText": "शुरू करें",
+    "applied": "लागू",
+    "active": "सक्रिय"
   },
   "CheckoutPage": {
     "plans": "योजनाएं",
@@ -104,6 +111,10 @@
   "CurrencySwitcher": {
     "label": "मुद्रा"
   },
+  "RetailerCommon": {
+    "required": "आवश्यक!",
+    "errorMessage": "कुछ गलत हो गया। कृपया पुनः प्रयास करें!"
+  },
   "RetailerSidebar": {
     "Dashboard": "डैशबोर्ड",
     "Plans & AddOns": "योजनाएं और ऐड-ऑन",
@@ -119,5 +130,104 @@
     "Regular": "नियमित",
     "Location Based": "स्थान आधारित",
     "Manage Profile": "प्रोफ़ाइल प्रबंधित करें"
+  },
+  "RetailerDashboard": {
+    "title": "रिटेलर डैशबोर्ड",
+    "totalOrders": "कुल ऑर्डर",
+    "totalRevenue": "कुल राजस्व",
+    "totalCustomer": "कुल ग्राहक",
+    "totalActiveStamp": "कुल सक्रिय स्टैम्प",
+    "branchStatistics": "शाखा सांख्यिकी"
+  },
+  "RetailerDashboardTable": {
+    "serialNo": "क्रम संख्या",
+    "branchName": "शाखा नाम",
+    "branchAddress": "शाखा का पता",
+    "subAdminName": "उप प्रशासक का नाम",
+    "subAdminEmail": "उप प्रशासक ईमेल",
+    "totalStamp": "कुल स्टैम्प",
+    "totalCustomer": "कुल ग्राहक",
+    "totalOrder": "कुल ऑर्डर",
+    "totalRevenue": "कुल राजस्व"
+  },
+  "RetailerBilling": {
+    "Billing": "बिलिंग",
+    "Dashboard": "डैशबोर्ड"
+  },
+  "RetailerBillingTable": {
+    "planAndAddOn": "प्लान/ऐड-ऑन",
+    "subscriptionId": "सदस्यता आईडी",
+    "balance": "शेष राशि",
+    "planStatus": "प्लान की स्थिति",
+    "expireDate": "समाप्ति तिथि",
+    "actions": "क्रियाएँ",
+    "running": "चल रहा है",
+    "ended": "समाप्त",
+    "subscriptionDetails": "सदस्यता का विवरण",
+    "placeHolder": "भुगतान ID द्वारा खोजें"
+  },
+  "RetailerRefund": {
+    "title": "रिफंड प्रबंधित करें",
+    "refunds": "रिफंड",
+    "Dashboard": "डैशबोर्ड"
+  },
+  "RetailerRefundTable": {
+    "plan": "प्लान",
+    "validityDate": "वैधता तिथि",
+    "enrollStatus": "नामांकन स्थिति",
+    "refundAmount": "रिफंड राशि",
+    "refundStatus": "रिफंड स्थिति",
+    "refundDate": "रिफंड तिथि",
+    "placeHolder": "भुगतान ID द्वारा खोजें"
+  },
+  "RetailerBranches": {
+    "title": "शाखाओं का प्रबंधन करें",
+    "branches": "शाखाएँ",
+    "dashboard": "डैशबोर्ड",
+    "addNewBranch": "नई शाखा जोड़ें",
+    "create": "बनाएं",
+    "update": "अपडेट",
+    "updateABranch": "एक शाखा अपडेट करें",
+    "name": "नाम",
+    "address": "पता",
+    "submit": "जमा करें"
+  },
+  "RetailerBranchTable": {
+    "branchName": "शाखा का नाम",
+    "address": "पता",
+    "source": "स्रोत",
+    "expiryDay": "समाप्ति दिवस",
+    "status": "स्थिति",
+    "actions": "क्रियाएँ",
+    "placeHolder": "शाखा नाम द्वारा खोजें",
+    "expired": "समाप्त",
+    "daysLeft": "दिन बचे",
+    "activate": "सक्रिय",
+    "convertToAddOn": "ऐड-ऑन में बदलें",
+    "upgradeYourPlan": "अपने योजने को अपग्रेड करें",
+    "errorMessage": "कुछ गलत हो गया। कृपया फिर से प्रयास करें!",
+    "branchActivated": "शाखा सक्रिय है!",
+    "branchConverted": "शाखा स्रोत सफलतापूर्वक ऐड-ऑन में बदल गया!",
+    "branchDeleted": "शाखा सफलतापूर्वक हटाई गई!"
+  },
+  "RetailerSubAdmin": {
+    "title": "उप-प्रशासकों का प्रबंधन करें",
+    "subAdmins": "उप-प्रशासक",
+    "dashboard": "डैशबोर्ड",
+    "addNewSubAdmin": "नया उप-प्रशासक जोड़ें",
+    "updateASubAdmin": "एक उप-प्रशासक को अपडेट करें",
+    "submit": "प्रस्तुत करें",
+    "update": "अपडेट करें"
+  },
+  "RetailerSubAdminTable": {
+    "image": "छवि",
+    "firstName": "प्रथम नाम",
+    "lastName": "अंतिम नाम",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "branch": "शाखा",
+    "status": "स्थिति",
+    "actions": "क्रियाएँ",
+    "placeHolder": "नाम से खोजें"
   }
 }

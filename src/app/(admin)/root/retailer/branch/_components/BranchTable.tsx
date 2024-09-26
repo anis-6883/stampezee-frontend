@@ -16,6 +16,7 @@ import { IQueryType, Subscription } from '@/types';
 import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -33,6 +34,7 @@ import SwitchButton from '../../../_components/SwitchButton';
 
 export default function BranchTable({ offset }: { offset: number }) {
   const { data: session }: any = useSession();
+  const t = useTranslations('RetailerBranchTable');
   const [deleteBranch, { isSuccess, isError }] = useDeleteBranchMutation();
   const [updateStatus] = useUpdateBranchStatusMutation();
   const [activateBranch, { isSuccess: activateBranchSuccess, isError: activateBranchError }] = useActivateBranchMutation();
@@ -66,49 +68,50 @@ export default function BranchTable({ offset }: { offset: number }) {
   useEffect(() => {
     if (isError) {
       setDeleteSubmitting(false);
-      toast.error('Something went wrong. Please try again!');
+      toast.error(t('errorMessage'));
       setModalState(false);
       setDeleteId(null);
     }
     if (isSuccess) {
       setDeleteSubmitting(false);
-      toast.success('Branch deleted successfully!');
+      toast.success(t('branchDeleted'));
       setModalState(false);
       setDeleteId(null);
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, t]);
 
   // Handle Active Branch Response
   useEffect(() => {
     if (activateBranchError) {
       setActiveSubmitting(false);
-      toast.error('Something went wrong. Please try again!');
+      toast.error(t('errorMessage'));
       setActivateModalState(false);
       setActiveId(null);
     }
     if (activateBranchSuccess) {
       setActiveSubmitting(false);
-      toast.success('Branch activated successfully!');
+      toast.success(t('branchActivated'));
       setActivateModalState(false);
       setActiveId(null);
     }
-  }, [activateBranchSuccess, activateBranchError]);
+  }, [activateBranchSuccess, activateBranchError, t]);
 
   // Handle Convert To Add-on Branch Response
   useEffect(() => {
     const myError = convertAddOnError as SerializedError;
     if (convertToAddonBranchError) {
       setConvertSubmitting(false);
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!');
+      toast.error(myError?.data?.message || t('errorMessage'));
       setConvertModalState(false);
       setConvertId(null);
     }
     if (convertToAddonBranchSuccess) {
       setConvertSubmitting(false);
-      toast.success('Branch source convert to add-on successfully!');
+      toast.success(t('branchConverted'));
       setConvertModalState(false);
       setConvertId(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [convertToAddonBranchSuccess, convertToAddonBranchError, convertAddOnError]);
 
   useEffect(() => {
@@ -119,11 +122,11 @@ export default function BranchTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Branch Name',
+      header: t('branchName'),
       accessorKey: 'name',
     },
     {
-      header: 'Address',
+      header: t('address'),
       accessorKey: 'address',
       Cell: ({ row }: any) => (
         <div>
@@ -132,7 +135,7 @@ export default function BranchTable({ offset }: { offset: number }) {
       ),
     },
     {
-      header: 'Source',
+      header: t('source'),
       accessorKey: 'source',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
@@ -153,14 +156,14 @@ export default function BranchTable({ offset }: { offset: number }) {
       },
     },
     {
-      header: 'Expiry Day',
+      header: t('expiryDay'),
       Cell: ({ row }: any) => {
         const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
 
         return row?.original?.disabledBySystem ? (
-          <span className="font-semibold text-danger">Expired</span>
+          <span className="font-semibold text-danger">{t('expired')}</span>
         ) : (
-          <span className="font-semibold text-danger">{countDays < 0 ? 'Expired' : `${countDays} days left`}</span>
+          <span className="font-semibold text-danger">{countDays < 0 ? t('expired') : `${countDays} ${t('daysLeft')}`}</span>
         );
       },
       mantineTableHeadCellProps: {
@@ -171,7 +174,7 @@ export default function BranchTable({ offset }: { offset: number }) {
       },
     },
     {
-      header: 'Status',
+      header: t('status'),
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
@@ -200,7 +203,7 @@ export default function BranchTable({ offset }: { offset: number }) {
       size: 100,
     },
     {
-      header: 'Actions',
+      header: t('actions'),
       Cell: ({ row }: any) => {
         const { disabledBySystem, _id } = row?.original || {};
         const isSystemDisabled = disabledBySystem;
@@ -219,7 +222,7 @@ export default function BranchTable({ offset }: { offset: number }) {
               }}
               className="!m-0 !px-3 !py-2 !text-xs"
               color="danger"
-              text="Activate"
+              text={t('activate')}
             />
           ) : session?.user?.plan === 'advanced' ? (
             <Button
@@ -230,10 +233,10 @@ export default function BranchTable({ offset }: { offset: number }) {
               }}
               className="!m-0 !px-3 !py-2 !text-xs"
               color="danger"
-              text="Convert To Add-On"
+              text={t('convertToAddOn')}
             />
           ) : (
-            <span className="font-semibold text-danger">Upgrade Your Plan</span>
+            <span className="font-semibold text-danger">{t('upgradeYourPlan')}</span>
           );
         }
 
@@ -286,7 +289,7 @@ export default function BranchTable({ offset }: { offset: number }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Branch Name"
+        searchPlaceHolder={t('placeHolder')}
         enableRowNumbers={true}
       />
 

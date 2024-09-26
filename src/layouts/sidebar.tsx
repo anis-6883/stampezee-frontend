@@ -255,6 +255,7 @@ export default function Sidebar({ className }: { className?: string }) {
                             {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
                             {item.name === 'Custom Stamp Images' && `(${session?.user?.totalCustomStampImage || 0})`}
                             {item.name === 'Stamps' && `(${session?.user?.totalStamp || 0})`}
+                            {item.name === 'Sub-Admins (Team)' && `(${session?.user?.totalBranch || 0})`}
                           </span>
                         </div>
                         {checkedLocked(role, item?.href, item.name, session?.user) && (

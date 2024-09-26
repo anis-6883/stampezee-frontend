@@ -1,5 +1,6 @@
 import { Circle, GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import { Field, useFormikContext } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { IoAlertCircle } from 'react-icons/io5';
 import { Input, Loader } from 'rizzui';
@@ -14,6 +15,7 @@ export default function MapComponent({
   googleMapsApiKey: string;
 }) {
   const { setFieldValue, values }: any = useFormikContext();
+  const t = useTranslations('RetailerBranches');
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -119,7 +121,7 @@ export default function MapComponent({
               onChange={handleInputChange}
               label={
                 <span>
-                  Address <span className="text-red-600">*</span>
+                  {t('address')} <span className="text-red-600">*</span>
                 </span>
               }
               type="text"

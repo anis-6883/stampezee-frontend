@@ -10,11 +10,12 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateSubAdminMutation, useSubAdminBranchesQuery, useUpdateSubAdminMutation } from '@/features/retailer/sub-admin/subAdminApi';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -34,6 +35,9 @@ export default function CreateUpdateModal({
   const [updateSubAdmin, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubAdminMutation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: branches } = useSubAdminBranchesQuery(undefined);
+  const t = useTranslations('RetailerSubAdmin');
+  const t2 = useTranslations('RetailerSubAdminTable');
+  const tCommon = useTranslations('RetailerCommon');
 
   useEffect(() => {
     if (branches) {
@@ -83,15 +87,15 @@ export default function CreateUpdateModal({
   };
 
   const validationSchema = Yup.object().shape({
-    branchId: Yup.string().required('Required!'),
-    firstName: Yup.string().required('Required!'),
+    branchId: Yup.string().required(tCommon('required')),
+    firstName: Yup.string().required(tCommon('required')),
     email: Yup.string()
       .test('email', 'Provide valid email!', (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(value);
       })
-      .required('Required!'),
-    password: (formData?._id ? Yup.string() : Yup.string().required('Required!')).min(6, 'At least 6 characters long!'),
+      .required(tCommon('required')),
+    password: (formData?._id ? Yup.string() : Yup.string().required(tCommon)).min(6, 'At least 6 characters long!'),
     image: Yup.string().nullable(),
   });
 
@@ -122,7 +126,7 @@ export default function CreateUpdateModal({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Update A Sub-Admin</Title> : <Title as="h4">Add New Sub-Admin</Title>}
+          {formData?._id ? <Title as="h4">{t('updateSubAdmin')}</Title> : <Title as="h4">{t('addNewSubAdmin')}</Title>}
           <ActionIcon
             size="sm"
             variant="text"
@@ -131,7 +135,7 @@ export default function CreateUpdateModal({
               setFormData({});
             }}
           >
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <div>
@@ -147,20 +151,20 @@ export default function CreateUpdateModal({
                     sizeText="1MB"
                     isRounded={true}
                     uploadText="Upload"
-                    brandText={<span>Image</span>}
+                    brandText={<span>{t2('image')}</span>}
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-x-5 gap-y-5">
-                  <InputField name="firstName" label="First Name" placeholder="John" />
-                  <InputField name="lastName" label="Last Name" placeholder="Doe" required={false} />
-                  <InputField name="email" label="Email" placeholder="john.doe@email.com" />
-                  {!formData?._id && <InputPassword name="password" label="Password" placeholder="******" />}
+                  <InputField name="firstName" label={t2('firstName')} placeholder="John" />
+                  <InputField name="lastName" label={t2('lastName')} placeholder="Doe" required={false} />
+                  <InputField name="email" label={t2('email')} placeholder="john.doe@email.com" />
+                  {!formData?._id && <InputPassword name="password" label={t2('password')} placeholder="******" />}
                 </div>
 
                 <div className="my-4 space-y-5">
                   <SelectField
                     name="branchId"
-                    label="Branch"
+                    label={t2('branch')}
                     disabled={branches?.data?.length === 0 ? true : false}
                     options={options}
                     onChange={(option: { label: string; value: string }) => setFieldValue('branchId', option.value)}

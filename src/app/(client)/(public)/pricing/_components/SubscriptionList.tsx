@@ -53,7 +53,7 @@ export default function SubscriptionList({ locale }: { locale: string }) {
       setTranslateLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.data, locale]);
+  }, [data?.data, locale, currencyExchanges]);
 
   useEffect(() => {
     if (profileSuccess) {

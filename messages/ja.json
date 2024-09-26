@@ -19,6 +19,11 @@
     "newsletterPlaceholderText": "メールアドレス",
     "copyright": "© Copyright 2024 StampEzee | 全著作権所有。"
   },
+  "StatusIndicator": {
+    "active": "アクティブ",
+    "inactive": "非アクティブ",
+    "status": "ステータス"
+  },
   "HomePage": {
     "bannerTitle": "お客様の体験を革新する",
     "bannerDetails": "シンプルさとテクノロジーを駆使してお客様を引き付け、報酬を与え、維持し、ロイヤリティプログラムの未来をビジネスに導入しましょう。",
@@ -66,7 +71,9 @@
     "title": "私たちのサブスクリプションとアドオン",
     "subscriptions": "サブスクリプション",
     "subtitle": "私たちのプラン",
-    "pricingButtonText": "始める"
+    "pricingButtonText": "始める",
+    "applied": "適用済み",
+    "active": "アクティブ"
   },
   "CheckoutPage": {
     "plans": "プラン",
@@ -104,6 +111,10 @@
   "CurrencySwitcher": {
     "label": "通貨"
   },
+  "RetailerCommon": {
+    "required": "必須!",
+    "errorMessage": "問題が発生しました。もう一度お試しください！"
+  },
   "RetailerSidebar": {
     "Dashboard": "ダッシュボード",
     "Plans & AddOns": "プランとアドオン",
@@ -119,5 +130,104 @@
     "Regular": "通常",
     "Location Based": "位置に基づく",
     "Manage Profile": "プロフィール管理"
+  },
+  "RetailerDashboard": {
+    "title": "小売業者ダッシュボード",
+    "totalOrders": "総注文数",
+    "totalRevenue": "総収益",
+    "totalCustomer": "総顧客数",
+    "totalActiveStamp": "総アクティブスタンプ数",
+    "branchStatistics": "支店統計"
+  },
+  "RetailerDashboardTable": {
+    "serialNo": "シリアル番号",
+    "branchName": "支店名",
+    "branchAddress": "支店住所",
+    "subAdminName": "サブ管理者名",
+    "subAdminEmail": "サブ管理者メール",
+    "totalStamp": "総スタンプ数",
+    "totalCustomer": "総顧客数",
+    "totalOrder": "総注文数",
+    "totalRevenue": "総収益"
+  },
+  "RetailerBilling": {
+    "Billing": "請求",
+    "Dashboard": "ダッシュボード"
+  },
+  "RetailerBillingTable": {
+    "planAndAddOn": "プラン/追加オプション",
+    "subscriptionId": "サブスクリプションID",
+    "balance": "残高",
+    "planStatus": "プランのステータス",
+    "expireDate": "有効期限",
+    "actions": "操作",
+    "running": "実行中",
+    "ended": "終了",
+    "subscriptionDetails": "サブスクリプションの詳細",
+    "placeHolder": "支払いIDで検索"
+  },
+  "RetailerRefund": {
+    "title": "返金管理",
+    "refunds": "返金",
+    "Dashboard": "ダッシュボード"
+  },
+  "RetailerRefundTable": {
+    "plan": "プラン",
+    "validityDate": "有効期限",
+    "enrollStatus": "登録状況",
+    "refundAmount": "返金額",
+    "refundStatus": "返金状況",
+    "refundDate": "返金日",
+    "placeHolder": "支払いIDで検索"
+  },
+  "RetailerBranches": {
+    "title": "支店管理",
+    "branches": "支店",
+    "dashboard": "ダッシュボード",
+    "addNewBranch": "新しい支店を追加",
+    "create": "作成",
+    "update": "更新",
+    "updateABranch": "支店を更新",
+    "name": "名前",
+    "address": "住所",
+    "submit": "送信"
+  },
+  "RetailerBranchTable": {
+    "branchName": "支店名",
+    "address": "住所",
+    "source": "ソース",
+    "expiryDay": "有効期限日",
+    "status": "ステータス",
+    "actions": "操作",
+    "placeHolder": "支店名で検索",
+    "expired": "期限切れ",
+    "daysLeft": "日数",
+    "activate": "アクティブ",
+    "convertToAddOn": "アドオンに変換",
+    "upgradeYourPlan": "プランをアップグレード",
+    "errorMessage": "何かがうまくいかない。もう一度試してください！",
+    "branchActivated": "支店がアクティブになりました！",
+    "branchConverted": "支店のソースがアドオンに正常に変換されました！",
+    "branchDeleted": "支店が正常に削除されました！"
+  },
+  "RetailerSubAdmin": {
+    "title": "サブ管理者を管理",
+    "subAdmins": "サブ管理者",
+    "dashboard": "ダッシュボード",
+    "addNewSubAdmin": "新しいサブ管理者を追加",
+    "updateASubAdmin": "サブ管理者を更新",
+    "submit": "送信",
+    "update": "更新"
+  },
+  "RetailerSubAdminTable": {
+    "image": "画像",
+    "firstName": "名前",
+    "lastName": "苗字",
+    "email": "メール",
+    "password": "パスワード",
+    "branch": "支店",
+    "status": "ステータス",
+    "actions": "操作",
+    "placeHolder": "名前で検索"
   }
 }
