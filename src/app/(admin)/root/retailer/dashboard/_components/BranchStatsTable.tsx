@@ -2,25 +2,27 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
+import { useTranslations } from 'next-intl';
 
 export default function BranchStatsTable() {
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
+  const t = useTranslations('RetailerDashboardTable');
 
   const tableHeaders = [
-    'Serial No.',
-    'Branch Name',
-    'Branch Address',
-    'Sub Admin Name',
-    'Sub Admin Email',
-    'Total Customer',
-    'Total Order',
-    'Total Revenue (CAD)',
+    t('serialNo'),
+    t('branchName'),
+    t('branchAddress'),
+    t('subAdminName'),
+    t('subAdminEmail'),
+    t('totalCustomer'),
+    t('totalOrder'),
+    `${t('totalRevenue')} (CAD)`,
   ];
 
   if (isLoading || isError) {
     return (
       <>
-        <h2 className="mb-5 text-lg font-medium">Branch Statistics:</h2>
+        <h2 className="mb-5 text-lg font-medium">{t('branchStatistics')}:</h2>
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>

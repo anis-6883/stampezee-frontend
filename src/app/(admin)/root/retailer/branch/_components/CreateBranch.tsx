@@ -7,6 +7,7 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateBranchMutation } from '@/features/retailer/branch/branchApi';
 import { Branch } from '@/types';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -15,6 +16,8 @@ import * as Yup from 'yup';
 import Map from './Map';
 
 export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: string }) {
+  const t = useTranslations('RetailerBranches');
+  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createBranch, { error, isSuccess }] = useCreateBranchMutation();
   const router = useRouter();
@@ -27,8 +30,8 @@ export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: s
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Required!'),
-    address: Yup.string().required('Required!'),
+    name: Yup.string().required(tCommon('required')),
+    address: Yup.string().required(tCommon('required')),
   });
 
   // Submit Handler
@@ -66,7 +69,7 @@ export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: s
     >
       {() => (
         <Form className="mt-5 grid gap-4">
-          <InputField name="name" label="Name" placeholder="ex. Ring Road Branch" />
+          <InputField name="name" label={t('name')} placeholder="ex. Ring Road Branch" />
           <Map googleMapsApiKey={googleMapsApiKey} />
           <p className="text-end text-xs font-semibold">
             Fields marked with <span className="text-red-600">*</span> are mandatory!
@@ -75,7 +78,7 @@ export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: s
             <Button
               color="danger"
               type="submit"
-              text="Submit"
+              text={t('submit')}
               postIcon={<BsCheck2Circle className="text-base" />}
               isSubmitting={isSubmitting}
             />

@@ -19,6 +19,11 @@
     "newsletterPlaceholderText": "عنوان البريد الإلكتروني",
     "copyright": "© حقوق الطبع والنشر 2024 StampEzee | جميع الحقوق محفوظة."
   },
+  "StatusIndicator": {
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "status": "الحالة"
+  },
   "FaqPage": {
     "how": "كيف",
     "title": "هل يمكننا مساعدتك؟",
@@ -39,7 +44,9 @@
     "title": "اشتراكنا وإضافاتنا",
     "subscriptions": "الاشتراكات",
     "subtitle": "خططنا",
-    "pricingButtonText": "البدء"
+    "pricingButtonText": "البدء",
+    "applied": "تم تطبيق",
+    "active": "نشط"
   },
   "CheckoutPage": {
     "plans": "الخطط",
@@ -104,6 +111,10 @@
   "CurrencySwitcher": {
     "label": "عملة"
   },
+  "RetailerCommon": {
+    "required": "مطلوب!",
+    "errorMessage": "حدث خطأ ما. حاول مرة أخرى!"
+  },
   "RetailerSidebar": {
     "Dashboard": "لوحة القيادة",
     "Plans & AddOns": "الخطط والإضافات",
@@ -119,5 +130,104 @@
     "Regular": "عادي",
     "Location Based": "يعتمد على الموقع",
     "Manage Profile": "إدارة الملف الشخصي"
+  },
+  "RetailerDashboard": {
+    "title": "لوحة تحكم التجار",
+    "totalOrders": "إجمالي الطلبات",
+    "totalRevenue": "إجمالي الإيرادات",
+    "totalCustomer": "إجمالي العملاء",
+    "totalActiveStamp": "إجمالي الطوابع النشطة",
+    "branchStatistics": "إحصائيات الفرع"
+  },
+  "RetailerDashboardTable": {
+    "serialNo": "رقم التسلسل",
+    "branchName": "اسم الفرع",
+    "branchAddress": "عنوان الفرع",
+    "subAdminName": "اسم المشرف الفرعي",
+    "subAdminEmail": "البريد الإلكتروني للمشرف الفرعي",
+    "totalStamp": "إجمالي الطوابع",
+    "totalCustomer": "إجمالي العملاء",
+    "totalOrder": "إجمالي الطلبات",
+    "totalRevenue": "إجمالي الإيرادات"
+  },
+  "RetailerBilling": {
+    "Billing": "الفوترة",
+    "Dashboard": "لوحة التحكم"
+  },
+  "RetailerBillingTable": {
+    "planAndAddOn": "الخطة/الإضافة",
+    "subscriptionId": "معرّف الاشتراك",
+    "balance": "الرصيد",
+    "planStatus": "حالة الخطة",
+    "expireDate": "تاريخ الانتهاء",
+    "actions": "الإجراءات",
+    "running": "نشط",
+    "ended": "منتهي",
+    "subscriptionDetails": "تفاصيل الاشتراك",
+    "placeHolder": "ابحث بمعرف الدفع"
+  },
+  "RetailerRefund": {
+    "title": "إدارة الاستردادات",
+    "refunds": "الاستردادات",
+    "Dashboard": "لوحة التحكم"
+  },
+  "RetailerRefundTable": {
+    "plan": "الخطة",
+    "validityDate": "تاريخ الصلاحية",
+    "enrollStatus": "حالة التسجيل",
+    "refundAmount": "مبلغ الاسترداد",
+    "refundStatus": "حالة الاسترداد",
+    "refundDate": "تاريخ الاسترداد",
+    "placeHolder": "ابحث بمعرف الدفع"
+  },
+  "RetailerBranches": {
+    "title": "إدارة الفروع",
+    "branches": "الفروع",
+    "dashboard": "لوحة التحكم",
+    "addNewBranch": "إضافة فرع جديد",
+    "create": "إنشاء",
+    "update": "تحديث",
+    "updateABranch": "تحديث فرع",
+    "name": "اسم",
+    "address": "العنوان",
+    "submit": "إرسال"
+  },
+  "RetailerBranchTable": {
+    "branchName": "اسم الفرع",
+    "address": "العنوان",
+    "source": "المصدر",
+    "expiryDay": "يوم الانتهاء",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "placeHolder": "البحث باسم الفرع",
+    "expired": "منتهي",
+    "daysLeft": "أيام يتبقى",
+    "activate": "تنشيط",
+    "convertToAddOn": "تحويل إلى إضافة",
+    "upgradeYourPlan": "ترقية الخطة",
+    "errorMessage": "هناك خطأ ما. يرجى المحاولة مرة أخرى!",
+    "branchActivated": "تم تنشيط الفرع بنجاح!",
+    "branchConverted": "تم تحويل مصدر الفرع إلى إضافة بنجاح!",
+    "branchDeleted": "تم حذف الفرع بنجاح!"
+  },
+  "RetailerSubAdmin": {
+    "title": "إدارة المشرفين الفرعيين",
+    "subAdmins": "المشرفين الفرعيين",
+    "dashboard": "لوحة التحكم",
+    "addNewSubAdmin": "إضافة مشرف فرعي جديد",
+    "updateASubAdmin": "تحديث مشرف فرعي",
+    "submit": "إرسال",
+    "update": "تحديث"
+  },
+  "RetailerSubAdminTable": {
+    "image": "صورة",
+    "firstName": "الاسم الأول",
+    "lastName": "الاسم الأخير",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "branch": "الفرع",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "placeHolder": "البحث بالاسم"
   }
 }

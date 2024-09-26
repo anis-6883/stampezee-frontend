@@ -19,6 +19,11 @@
     "newsletterPlaceholderText": "Dirección de Correo Electrónico",
     "copyright": "© Copyright 2024 StampEzee | Todos los derechos reservados."
   },
+  "StatusIndicator": {
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "status": "Estado"
+  },
   "HomePage": {
     "bannerTitle": "Revoluciona la Experiencia de Tus Clientes",
     "bannerDetails": "Involucra, recompensa y retén a tus clientes con un toque de simplicidad y tecnología, y trae el futuro de los programas de fidelización a tu negocio.",
@@ -66,7 +71,9 @@
     "title": "Nuestras Suscripciones y Complementos",
     "subscriptions": "Suscripciones",
     "subtitle": "Nuestros Planes",
-    "pricingButtonText": "Empezar"
+    "pricingButtonText": "Empezar",
+    "applied": "Aplicado",
+    "active": "Activo"
   },
   "CheckoutPage": {
     "plans": "Planes",
@@ -104,6 +111,10 @@
   "CurrencySwitcher": {
     "label": "Moneda"
   },
+  "RetailerCommon": {
+    "required": "¡Requerido!",
+    "errorMessage": "Algo salió mal. ¡Inténtalo de nuevo!"
+  },
   "RetailerSidebar": {
     "Dashboard": "Panel",
     "Plans & AddOns": "Planes y Complementos",
@@ -119,5 +130,104 @@
     "Regular": "Regular",
     "Location Based": "Basadas en Ubicación",
     "Manage Profile": "Gestionar Perfil"
+  },
+  "RetailerDashboard": {
+    "title": "Panel de Distribuidores",
+    "totalOrders": "Total de Pedidos",
+    "totalRevenue": "Ingresos Totales",
+    "totalCustomer": "Total de Clientes",
+    "totalActiveStamp": "Total de Sellos Activos",
+    "branchStatistics": "Estadísticas de Sucursales"
+  },
+  "RetailerDashboardTable": {
+    "serialNo": "No. de Serie",
+    "branchName": "Nombre de la Sucursal",
+    "branchAddress": "Dirección de la Sucursal",
+    "subAdminName": "Nombre del Subadministrador",
+    "subAdminEmail": "Correo Electrónico del Subadministrador",
+    "totalStamp": "Total de Sellos",
+    "totalCustomer": "Total de Clientes",
+    "totalOrder": "Total de Pedidos",
+    "totalRevenue": "Ingresos Totales"
+  },
+  "RetailerBilling": {
+    "Billing": "Facturación",
+    "Dashboard": "Panel de control"
+  },
+  "RetailerBillingTable": {
+    "planAndAddOn": "Plan/Complemento",
+    "subscriptionId": "ID de Suscripción",
+    "balance": "Saldo",
+    "planStatus": "Estado del Plan",
+    "expireDate": "Fecha de Expiración",
+    "actions": "Acciones",
+    "running": "En ejecución",
+    "ended": "Finalizado",
+    "subscriptionDetails": "Detalles de la Suscripción",
+    "placeHolder": "Buscar por ID de Suscripción"
+  },
+  "RetailerRefund": {
+    "title": "Gestionar Reembolsos",
+    "refunds": "Reembolsos",
+    "Dashboard": "Panel de control"
+  },
+  "RetailerRefundTable": {
+    "plan": "Plan",
+    "validityDate": "Fecha de Validez",
+    "enrollStatus": "Estado de Inscripción",
+    "refundAmount": "Monto del Reembolso",
+    "refundStatus": "Estado del Reembolso",
+    "refundDate": "Fecha del Reembolso",
+    "placeHolder": "Buscar por ID de Pago"
+  },
+  "RetailerBranches": {
+    "title": "Gestionar Sucursales",
+    "branches": "Sucursales",
+    "dashboard": "Panel de control",
+    "addNewBranch": "Agregar Nueva Sucursal",
+    "create": "Crear",
+    "update": "Actualizar",
+    "updateABranch": "Actualizar una Sucursal",
+    "name": "Nombre",
+    "address": "Dirección",
+    "submit": "Enviar"
+  },
+  "RetailerBranchTable": {
+    "branchName": "Nombre de la Sucursal",
+    "address": "Dirección",
+    "source": "Fuente",
+    "expiryDay": "Día de Expiración",
+    "status": "Estado",
+    "actions": "Acciones",
+    "placeHolder": "Buscar por Nombre de Sucursal",
+    "expired": "Expirado",
+    "daysLeft": "días restantes",
+    "activate": "Activar",
+    "convertToAddOn": "Convertir a Complemento",
+    "upgradeYourPlan": "Actualizar tu Plan",
+    "errorMessage": "¡Algo salió mal! Por favor, intenta de nuevo.",
+    "branchActivated": "Sucursal activada con éxito!",
+    "branchConverted": "El origen de la sucursal se ha convertido a un complemento con éxito!",
+    "branchDeleted": "Sucursal eliminada con éxito!"
+  },
+  "RetailerSubAdmin": {
+    "title": "Gestionar Sub-Administradores",
+    "subAdmins": "Sub-Administradores",
+    "dashboard": "Panel de control",
+    "addNewSubAdmin": "Agregar Nuevo Sub-Administrador",
+    "updateASubAdmin": "Actualizar un Sub-Administrador",
+    "submit": "Enviar",
+    "update": "Actualizar"
+  },
+  "RetailerSubAdminTable": {
+    "image": "Imagen",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "branch": "Sucursal",
+    "status": "Estado",
+    "actions": "Acciones",
+    "placeHolder": "Buscar por Nombre"
   }
 }

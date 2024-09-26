@@ -19,6 +19,11 @@
     "newsletterPlaceholderText": "Адрес электронной почты",
     "copyright": "© Copyright 2024 StampEzee | Все права защищены."
   },
+  "StatusIndicator": {
+    "active": "Активный",
+    "inactive": "Неактивный",
+    "status": "Статус"
+  },
   "HomePage": {
     "bannerTitle": "Революция в клиентском опыте",
     "bannerDetails": "Вовлекайте, вознаграждайте и удерживайте своих клиентов с помощью простоты и технологий, привнося будущее программ лояльности в ваш бизнес.",
@@ -66,7 +71,9 @@
     "title": "Наши подписки и дополнения",
     "subscriptions": "Подписки",
     "subtitle": "Наши тарифные планы",
-    "pricingButtonText": "Начать"
+    "pricingButtonText": "Начать",
+    "applied": "Применен",
+    "active": "Активный"
   },
   "CheckoutPage": {
     "plans": "Планы",
@@ -104,6 +111,10 @@
   "CurrencySwitcher": {
     "label": "Валюта"
   },
+  "RetailerCommon": {
+    "required": "Обязательно!",
+    "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте снова!"
+  },
   "RetailerSidebar": {
     "Dashboard": "Панель управления",
     "Plans & AddOns": "Планы и дополнения",
@@ -119,5 +130,104 @@
     "Regular": "Обычные",
     "Location Based": "На основе местоположения",
     "Manage Profile": "Управление профилем"
+  },
+  "RetailerDashboard": {
+    "title": "Панель Управления Розничным Магазином",
+    "totalOrders": "Общее Количество Заказов",
+    "totalRevenue": "Общий Доход",
+    "totalCustomer": "Общее Количество Клиентов",
+    "totalActiveStamp": "Общее Количество Активных Марок",
+    "branchStatistics": "Статистика Филиалов"
+  },
+  "RetailerDashboardTable": {
+    "serialNo": "Серийный Номер",
+    "branchName": "Название Филиала",
+    "branchAddress": "Адрес Филиала",
+    "subAdminName": "Имя Зам. Администратора",
+    "subAdminEmail": "Электронная Почта Зам. Администратора",
+    "totalStamp": "Общее Количество Марок",
+    "totalCustomer": "Общее Количество Клиентов",
+    "totalOrder": "Общее Количество Заказов",
+    "totalRevenue": "Общий Доход"
+  },
+  "RetailerBilling": {
+    "Billing": "Выставление счетов",
+    "Dashboard": "Панель управления"
+  },
+  "RetailerBillingTable": {
+    "planAndAddOn": "Тариф/Дополнение",
+    "subscriptionId": "ID Подписки",
+    "balance": "Баланс",
+    "planStatus": "Статус Плана",
+    "expireDate": "Дата истечения",
+    "actions": "Действия",
+    "running": "Выполняется",
+    "ended": "Завершено",
+    "subscriptionDetails": "Детали подписки",
+    "placeHolder": "Поиск по ID подписки"
+  },
+  "RetailerRefund": {
+    "title": "Управление Возвратами",
+    "refunds": "Возвраты",
+    "Dashboard": "Панель управления"
+  },
+  "RetailerRefundTable": {
+    "plan": "Тариф",
+    "validityDate": "Дата Действительности",
+    "enrollStatus": "Статус Регистрации",
+    "refundAmount": "Сумма Возврата",
+    "refundStatus": "Статус Возврата",
+    "refundDate": "Дата Возврата",
+    "placeHolder": "Поиск по ID подписки"
+  },
+  "RetailerBranches": {
+    "title": "Управление Филиалами",
+    "branches": "Филиалы",
+    "dashboard": "Панель управления",
+    "addNewBranch": "Добавить Новый Филиал",
+    "create": "Создать",
+    "update": "Обновить",
+    "updateABranch": "Обновить Филиал",
+    "name": "Имя",
+    "address": "Адрес",
+    "submit": "Отправить"
+  },
+  "RetailerBranchTable": {
+    "branchName": "Название Филиала",
+    "address": "Адрес",
+    "source": "Источник",
+    "expiryDay": "День истечения срока",
+    "status": "Статус",
+    "actions": "Действия",
+    "placeHolder": "Поиск по Названию Филиала",
+    "expired": "Истек",
+    "daysLeft": "Дней Осталось",
+    "activate": "Активный",
+    "convertToAddOn": "Преобразовать в Дополнение",
+    "upgradeYourPlan": "Обновить Ваш План",
+    "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте снова!",
+    "branchActivated": "Филиал активирован!",
+    "branchConverted": "Источник Филиала успешно преобразован в Дополнение!",
+    "branchDeleted": "Филиал успешно удален!"
+  },
+  "RetailerSubAdmin": {
+    "title": "Управление Суб-Администраторами",
+    "subAdmins": "Суб-Администраторы",
+    "dashboard": "Панель управления",
+    "addNewSubAdmin": "Добавить Нового Суб-Администратора",
+    "updateASubAdmin": "Обновить Суб-Администратора",
+    "submit": "Отправить",
+    "update": "Обновить"
+  },
+  "RetailerSubAdminTable": {
+    "image": "Изображение",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "branch": "Филиал",
+    "status": "Статус",
+    "actions": "Действия",
+    "placeHolder": "Поиск по имени"
   }
 }

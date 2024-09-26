@@ -5,7 +5,6 @@ import { RootState } from '@/features/store';
 import { resetSubscription, setAddOns } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn, Subscription } from '@/types';
-import { calculateCurrencyExchangeRate } from '@/utils';
 import { translateData } from '@/utils/GoogleTranslate';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -30,7 +29,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
       if (item.type === 'addon') {
         acc.push({
           ...item,
-          price: calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate, price: item?.price }),
+          price: Number((item?.price * selectedCurrencyExchangeRate?.exchangeRate).toFixed(2)),
         });
       }
       return acc;
@@ -46,7 +45,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
     })();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.data, locale]);
+  }, [data?.data, locale, selectedCurrencyExchangeRate]);
 
   const handleAddOnSelect = (addOn: AddOn) => {
     dispatch(setAddOns(addOn));

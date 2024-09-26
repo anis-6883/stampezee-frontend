@@ -5,12 +5,14 @@ import { useAllRefundQuery } from '@/features/retailer/refund/refundApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { IoArrowDownCircle, IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
 
 export default function RefundTable({ offset }: { offset: number }) {
+  const t = useTranslations('RetailerRefundTable');
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useAllRefundQuery({
@@ -21,11 +23,11 @@ export default function RefundTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Plan',
+      header: t('plan'),
       accessorKey: 'enrollsubscription.planSnapshot.title',
     },
     {
-      header: 'Validity Date',
+      header: t('validityDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
@@ -45,7 +47,7 @@ export default function RefundTable({ offset }: { offset: number }) {
       size: 300,
     },
     {
-      header: 'Enroll Status',
+      header: t('enrollStatus'),
       accessorKey: 'enrollsubscription.enrollStatus',
       Cell: ({ row }: any) => (
         <Badge className="!bg-danger text-white">
@@ -54,7 +56,7 @@ export default function RefundTable({ offset }: { offset: number }) {
       ),
     },
     {
-      header: 'Refund Amount',
+      header: t('refundAmount'),
       accessorKey: 'refundAmount',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
@@ -73,7 +75,7 @@ export default function RefundTable({ offset }: { offset: number }) {
       },
     },
     {
-      header: 'Refund Status',
+      header: t('refundStatus'),
       accessorKey: 'refundStatus',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
@@ -98,7 +100,7 @@ export default function RefundTable({ offset }: { offset: number }) {
       },
     },
     {
-      header: 'Refund Date',
+      header: t('refundDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>{convertDateByOffset(row?.original?.refundedAt, offset)}</p>
@@ -136,7 +138,7 @@ export default function RefundTable({ offset }: { offset: number }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Payment ID"
+      searchPlaceHolder={t('placeHolder')}
       searchFieldWidth="250px"
     />
   );

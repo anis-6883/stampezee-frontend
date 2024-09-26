@@ -62,10 +62,10 @@ export default function GeneralSettingsForm({ generalSettingLoading }: { general
             )}
           </div>
 
-          <InputField name="general.province" label="Province" placeholder="Ontario" required={false} />
-          <InputField name="general.city" label="City" placeholder="Toronto" required={false} />
-          <InputField name="general.postalCode" label="Postal Code" placeholder="M3C" required={false} />
-          <InputField name="general.address" label="Address" placeholder="120 Bremner Blvd, Suite 800" required={false} />
+          <InputField name="general.province" label="Province" placeholder="Alberta" required={false} />
+          <InputField name="general.city" label="City or Street" placeholder="MILLARVILLE AB T0L 1K0" required={false} />
+          <InputField name="general.postalCode" label="Postal Code" placeholder="H3Z 2Y7" required={false} />
+          <InputField name="general.address" label="Address" placeholder="2364 7TH CONCESSION SITE 6 COMP 10" required={false} />
 
           <InputField name="general.contactEmail" label="Contact Email" placeholder="example@gmail.com" required={false} />
 

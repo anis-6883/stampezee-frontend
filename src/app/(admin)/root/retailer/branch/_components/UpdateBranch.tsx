@@ -5,6 +5,7 @@ import { routes } from '@/config/routes';
 import { useSingleBranchQuery, useUpdateBranchMutation } from '@/features/retailer/branch/branchApi';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -14,6 +15,7 @@ import Button from '../../../../../../components/Formik/Button';
 import MapComponent from './Map';
 
 export default function UpdateBranch({ branchId, googleMapsApiKey }: any) {
+  const t = useTranslations('RetailerBranches');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [updateBranch, { isSuccess, isError }] = useUpdateBranchMutation();
   const {
@@ -90,13 +92,13 @@ export default function UpdateBranch({ branchId, googleMapsApiKey }: any) {
     <Formik initialValues={formData} enableReinitialize validationSchema={validationSchema} onSubmit={handleSubmit}>
       {() => (
         <Form className="mt-5 grid gap-4">
-          <InputField name="name" label="Name" placeholder="ex. Ring Road Branch" />
+          <InputField name="name" label={t('name')} placeholder="ex. Ring Road Branch" />
           <MapComponent googleMapsApiKey={googleMapsApiKey} />
           <div className="mt-2 flex justify-end">
             <Button
               color="danger"
               type="submit"
-              text="Update"
+              text={t('update')}
               postIcon={<BsCheck2Circle className="text-base" />}
               isSubmitting={isSubmitting}
             />

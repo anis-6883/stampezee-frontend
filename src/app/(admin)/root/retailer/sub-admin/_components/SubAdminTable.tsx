@@ -11,6 +11,7 @@ import {
 } from '@/features/retailer/sub-admin/subAdminApi';
 import { IQueryType } from '@/types';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -22,6 +23,8 @@ import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModal from './CreateUpdateModal';
 
 export default function SubAdminTable() {
+  const t = useTranslations('RetailerSubAdminTable');
+  const t2 = useTranslations('RetailerSubAdmin');
   const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
@@ -66,7 +69,7 @@ export default function SubAdminTable() {
 
   const structure = [
     {
-      header: 'Image',
+      header: t('image'),
       accessorKey: 'image',
       Cell: ({ row }: any) => (
         <div>
@@ -81,23 +84,23 @@ export default function SubAdminTable() {
       ),
     },
     {
-      header: 'First Name',
+      header: t('firstName'),
       accessorKey: 'firstName',
     },
     {
-      header: 'Last Name',
+      header: t('lastName'),
       accessorKey: 'lastName',
     },
     {
-      header: 'Email',
+      header: t('email'),
       accessorKey: 'email',
     },
     {
-      header: 'Branch',
+      header: t('branch'),
       accessorKey: 'branch.name',
     },
     {
-      header: 'Status',
+      header: t('status'),
       accessorKey: 'status',
       Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
       mantineTableHeadCellProps: {
@@ -108,7 +111,7 @@ export default function SubAdminTable() {
       },
     },
     {
-      header: 'Actions',
+      header: t('actions'),
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Button
@@ -154,7 +157,7 @@ export default function SubAdminTable() {
           <Button
             className="w-full"
             color="danger"
-            text="Add New Sub-Admin"
+            text={t2('addNewSubAdmin')}
             preIcon={<HiPlus className="text-base" />}
             onClick={() => setCreateState(true)}
           />
@@ -181,7 +184,7 @@ export default function SubAdminTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Name"
+        searchPlaceHolder={t('placeHolder')}
       />
 
       <CreateUpdateModal setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />

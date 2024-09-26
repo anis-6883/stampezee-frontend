@@ -7,6 +7,7 @@ import { useAllBillingQuery } from '@/features/retailer/billing/billingApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import moment from 'moment';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
@@ -15,6 +16,7 @@ import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { Badge } from 'rizzui';
 
 export default function BillingTable({ offset }: { offset: number }) {
+  const t = useTranslations('RetailerBillingTable');
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useAllBillingQuery({
@@ -25,7 +27,7 @@ export default function BillingTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Plan/Add-on',
+      header: t('planAndAddOn'),
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
         return row?.original?.planSnapshot?.type === 'subscription' ? (
@@ -37,11 +39,11 @@ export default function BillingTable({ offset }: { offset: number }) {
       size: 200,
     },
     {
-      header: 'Subscription ID',
+      header: t('subscriptionId'),
       accessorKey: 'stripe.subscriptionId',
     },
     {
-      header: 'Balance',
+      header: t('balance'),
       accessorKey: 'balanceInfo.planCurrentPrice',
       Cell: ({ row }: any) => (
         <div className="flex items-center gap-2 font-medium">
@@ -51,7 +53,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       size: 100,
     },
     {
-      header: 'Plan Status',
+      header: t('planStatus'),
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         const validityTo = moment.utc(row?.original?.validityTo).utcOffset(Number(offset));
@@ -61,11 +63,11 @@ export default function BillingTable({ offset }: { offset: number }) {
             <div className="text-white">
               {row?.original?.status === true && moment().isBefore(validityTo) ? (
                 <Badge className="!bg-success">
-                  <GiSandsOfTime className="mr-1 text-xl" /> Running
+                  <GiSandsOfTime className="mr-1 text-xl" /> {t('running')}
                 </Badge>
               ) : (
                 <Badge className="!bg-danger">
-                  <PiFlagCheckeredFill className="mr-1 text-xl" /> Ended
+                  <PiFlagCheckeredFill className="mr-1 text-xl" /> {t('ended')}
                 </Badge>
               )}
             </div>
@@ -80,7 +82,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       },
     },
     {
-      header: 'Expire Date',
+      header: t('expireDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>{convertDateByOffset(row?.original?.validityTo, offset)}</p>
@@ -95,13 +97,13 @@ export default function BillingTable({ offset }: { offset: number }) {
       size: 230,
     },
     {
-      header: 'Actions',
+      header: t('actions'),
       Cell: ({ row }: any) => {
         return (
           <Link href={routes.privateRoutes.retailer.billing.details(row?.original?._id)}>
             <Button
               className="!m-0 !px-2 !py-1.5"
-              text="Subscription Details"
+              text={t('subscriptionDetails')}
               color="danger"
               preIcon={<FaInfoCircle className="text-base" />}
             />
@@ -140,7 +142,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Subscription ID"
+      searchPlaceHolder={t('placeHolder')}
       searchFieldWidth="250px"
       enableRowNumbers={true}
     />

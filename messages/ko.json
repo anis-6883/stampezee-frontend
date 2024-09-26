@@ -19,6 +19,11 @@
     "newsletterPlaceholderText": "이메일 주소",
     "copyright": "© Copyright 2024 StampEzee | 모든 권리 보유."
   },
+  "StatusIndicator": {
+    "active": "활성",
+    "inactive": "비활성",
+    "status": "상태"
+  },
   "HomePage": {
     "bannerTitle": "고객 경험을 혁신하십시오",
     "bannerDetails": "단순함과 기술을 통해 고객과 소통하고 보상을 제공하며 유지하여 고객 충성도 프로그램의 미래를 귀사의 비즈니스에 도입하세요.",
@@ -66,7 +71,9 @@
     "title": "구독 및 추가 기능",
     "subscriptions": "구독",
     "subtitle": "우리의 플랜",
-    "pricingButtonText": "시작하기"
+    "pricingButtonText": "시작하기",
+    "applied": "적용됨",
+    "active": "활성"
   },
   "CheckoutPage": {
     "plans": "플랜",
@@ -104,6 +111,11 @@
   "CurrencySwitcher": {
     "label": "통화"
   },
+  "RetailerCommon": {
+    "required": "필수!",
+    "errorMessage": "문제가 발생했습니다. 다시 시도해주세요!"
+  },
+
   "RetailerSidebar": {
     "Dashboard": "대시보드",
     "Plans & AddOns": "플랜 및 추가 기능",
@@ -119,5 +131,104 @@
     "Regular": "일반",
     "Location Based": "위치 기반",
     "Manage Profile": "프로필 관리"
+  },
+  "RetailerDashboard": {
+    "title": "소매업자 대시보드",
+    "totalOrders": "총 주문 수",
+    "totalRevenue": "총 수익",
+    "totalCustomer": "총 고객 수",
+    "totalActiveStamp": "총 활성 스탬프 수",
+    "branchStatistics": "지점 통계"
+  },
+  "RetailerDashboardTable": {
+    "serialNo": "일련번호",
+    "branchName": "지점명",
+    "branchAddress": "지점 주소",
+    "subAdminName": "부 관리자 이름",
+    "subAdminEmail": "부 관리자 이메일",
+    "totalStamp": "총 스탬프 수",
+    "totalCustomer": "총 고객 수",
+    "totalOrder": "총 주문 수",
+    "totalRevenue": "총 수익"
+  },
+  "RetailerBilling": {
+    "Billing": "청구",
+    "Dashboard": "대시보드"
+  },
+  "RetailerBillingTable": {
+    "planAndAddOn": "플랜/애드온",
+    "subscriptionId": "구독 ID",
+    "balance": "잔액",
+    "planStatus": "플랜 상태",
+    "expireDate": "만료일",
+    "actions": "작업",
+    "running": "실행중",
+    "ended": "종료",
+    "subscriptionDetails": "구독 상세",
+    "placeHolder": "결제 ID로 검색"
+  },
+  "RetailerRefund": {
+    "title": "환불 관리",
+    "refunds": "환불",
+    "Dashboard": "대시보드"
+  },
+  "RetailerRefundTable": {
+    "plan": "플랜",
+    "validityDate": "유효일",
+    "enrollStatus": "등록 상태",
+    "refundAmount": "환불 금액",
+    "refundStatus": "환불 상태",
+    "refundDate": "환불일",
+    "placeHolder": "결제 ID로 검색"
+  },
+  "RetailerBranches": {
+    "title": "지점 관리",
+    "branches": "지점",
+    "dashboard": "대시보드",
+    "addNewBranch": "새 지점 추가",
+    "create": "생성",
+    "update": "업데이트",
+    "updateABranch": "지점 업데이트",
+    "name": "이름",
+    "address": "주소",
+    "submit": "제출"
+  },
+  "RetailerBranchTable": {
+    "branchName": "지점 이름",
+    "address": "주소",
+    "source": "소스",
+    "expiryDay": "만료일",
+    "status": "상태",
+    "actions": "작업",
+    "placeHolder": "지점 이름으로 검색",
+    "expired": "만료",
+    "daysLeft": "일 남음",
+    "activate": "활성",
+    "convertToAddOn": "추가 기능으로 변환",
+    "upgradeYourPlan": "플랜 업그레이드",
+    "errorMessage": "무언가 잘못되었습니다. 다시 시도해 주세요!",
+    "branchActivated": "지점이 활성화되었습니다!",
+    "branchConverted": "지점 소스가 성공적으로 추가 기능으로 변환되었습니다!",
+    "branchDeleted": "지점이 성공적으로 삭제되었습니다!"
+  },
+  "RetailerSubAdmin": {
+    "title": "서브 관리자 관리",
+    "subAdmins": "서브 관리자",
+    "dashboard": "대시보드",
+    "addNewSubAdmin": "새 서브 관리자 추가",
+    "updateASubAdmin": "서브 관리자 업데이트",
+    "submit": "제출",
+    "update": "업데이트"
+  },
+  "RetailerSubAdminTable": {
+    "image": "이미지",
+    "firstName": "이름",
+    "lastName": "성",
+    "email": "이메일",
+    "password": "비밀번호",
+    "branch": "지점",
+    "status": "상태",
+    "actions": "작업",
+    "placeHolder": "이름으로 검색"
   }
 }

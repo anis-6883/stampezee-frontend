@@ -153,5 +153,8 @@ export const calculateCurrencyExchangeRate = ({
   defaultCurrencyExchangeRate?: any;
   price: number;
 }) => {
+  console.log('selectedCurrencyExchangeRate', selectedCurrencyExchangeRate);
+  console.log('defaultCurrencyExchangeRate', defaultCurrencyExchangeRate);
+  console.log('price', price);
   return Number(((selectedCurrencyExchangeRate?.exchangeRate / defaultCurrencyExchangeRate?.exchangeRate) * price).toFixed(2));
 };

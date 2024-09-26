@@ -9,7 +9,7 @@ import { downgradePlan, resetAddOns, setSubscription, upgradePlan } from '@/feat
 import { Subscription } from '@/types';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { IoCheckmarkDoneCircle, IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function PricingCard({ item }: { item: any }) {
   const t = useTranslations('pricingPage');
+  const locale = useLocale();
+  const isRtl = locale === 'ar';
   const dispatch = useDispatch();
   const { currency } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: session }: any = useSession();
@@ -45,19 +47,23 @@ export default function PricingCard({ item }: { item: any }) {
   return (
     <div className="relative mx-auto flex h-full w-full max-w-lg flex-col justify-between rounded-lg border-gray-100 bg-white p-3 text-gray-900 opacity-80 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8">
       {session?.user?.plan === item?.slug && (
-        <div className="absolute right-2 top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
+        <div
+          className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
+        >
           <span className="font-medium">
             <MdStar />
           </span>
-          <span className="text-sm font-medium">Active</span>
+          <span className="text-sm font-medium">{t('active')}</span>
         </div>
       )}
       {session?.user?.takeFreeTrial && item?.slug === 'trial' && (
-        <div className="absolute right-2 top-2  flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white">
+        <div
+          className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
+        >
           <span className="font-medium">
             <IoCheckmarkDoneOutline className="text-lg" />
           </span>
-          <span className="text-sm font-medium">Applied</span>
+          <span className="text-sm font-medium">{t('applied')}</span>
         </div>
       )}
       <div>
