@@ -76,15 +76,15 @@ export default function StampCategoryTable() {
       ),
     },
     {
-      header: 'Image',
+      header: 'Icon',
       accessorKey: 'image',
       enableSorting: false,
       Cell: ({ row }: any) => (
         <div>
           <img
-            src={row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : '/images/categoryPlaceHolder.png'}
+            src={row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : '/images/stamp-logo.png'}
             alt="image"
-            className="h-10 w-10 rounded-full"
+            className="h-12 w-12 rounded-full"
           />
         </div>
       ),
@@ -106,6 +106,7 @@ export default function StampCategoryTable() {
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Button
+            tooltip="Edit"
             color="warning"
             preIcon={<HiOutlinePencil className="text-base" />}
             onClick={() => {
@@ -117,7 +118,7 @@ export default function StampCategoryTable() {
             }}
           />
 
-          <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+          <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -169,7 +170,7 @@ export default function StampCategoryTable() {
         sort={sort}
         sortContext="category"
         enableRowActions={false}
-        searchPlaceHolder="Search by Name"
+        searchPlaceHolder="Search by Category Name"
       />
 
       <DeleteConfirmModal
