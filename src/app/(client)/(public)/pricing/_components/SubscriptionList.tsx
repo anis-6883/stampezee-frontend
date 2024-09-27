@@ -91,7 +91,7 @@ export default function SubscriptionList({ locale }: { locale: string }) {
       dispatch(setRemainingBalance());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile?.data, profileSuccess, data?.data, currencyExchanges]);
+  }, [profile?.data, profileSuccess, data?.data, currencyExchanges, currency]);
 
   return (
     <div>

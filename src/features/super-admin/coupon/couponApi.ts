@@ -21,8 +21,8 @@ export const couponApi = apiSlice.injectEndpoints({
     getAllCouponRetailers: builder.query({
       query: (queries) => {
         const values = Object.values(queries);
-        if (values.length) return `/api/secret-root/admin/super-admin/coupon/all-retailers?${new URLSearchParams(queries as any)}`;
-        return `/api/secret-root/admin/super-admin/coupon/all-retailers`; // Ensure it returns a base URL if no queries are present
+        if (values.length) return `/api/secret-root/admin/super-admin/coupon/all-retailers-plans?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/coupon/all-retailers-plans`; // Ensure it returns a base URL if no queries are present
       },
       keepUnusedDataFor: 0,
     }),

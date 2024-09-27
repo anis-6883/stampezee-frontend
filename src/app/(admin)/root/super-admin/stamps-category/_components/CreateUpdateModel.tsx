@@ -30,7 +30,6 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [cretaeStampCategory, { isSuccess: createSuccess, error: createError }] = useCreateSuperAdminStampImageCategoryMutation();
   const [updateStampCategory, { isSuccess: updateSuccess, error: updateError }] = useUpdateSuperAdminStampImageCategoryMutation();
 
@@ -118,19 +117,21 @@ export default function CreateUpdateModel({
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
             {({ setFieldValue, values }) => (
               <Form className="mt-5">
-                <InputField name="name" label="Name" placeholder="Food" />
-                <div className="my-3">
-                  <InputTextarea required={false} name="description" label="Description" placeholder="Write here..." />
-                </div>
                 <div className="my-4">
-                  <p className="font-medium">Upload Image</p>
                   <DragAndDropUpload
                     value={{ name: 'image', image: values.image }}
                     onChange={(image: any) => setFieldValue('image', image)}
                     className="mt-2"
                     size={1024 * 1000}
                     sizeText="1MB"
+                    isRounded={true}
+                    uploadText="Upload"
+                    brandText={<span>Icon</span>}
                   />
+                </div>
+                <InputField name="name" label="Name" placeholder="Food" />
+                <div className="my-3">
+                  <InputTextarea required={false} name="description" label="Description" placeholder="Write here..." />
                 </div>
 
                 <p className="text-end text-xs font-semibold">

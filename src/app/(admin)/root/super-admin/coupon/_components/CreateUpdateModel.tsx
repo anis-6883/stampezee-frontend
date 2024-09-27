@@ -41,15 +41,22 @@ export default function CreateUpdateModel({
   const { data, isLoading, isError } = useGetAllCouponRetailersQuery(
     {},
     {
-      skip: !showRetailers || formData?.allowFor === 'all',
+      skip: !showRetailers || !modalState,
     }
   );
 
   const retailerOptions = data
-    ? data.data.map((retailer: any) => ({
+    ? data?.data?.retailers.map((retailer: any) => ({
         value: retailer._id,
         label: retailer.storeName,
         image: retailer.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailer.image}` : '/images/stamp-logo.png',
+      }))
+    : [];
+
+  const planOptions = data
+    ? data?.data?.subscriptions.map((plan: any) => ({
+        value: plan._id,
+        label: plan.title,
       }))
     : [];
 
@@ -60,36 +67,29 @@ export default function CreateUpdateModel({
     discountType: formData?.discountType || 'percentage',
     discount: formData?.discount || '',
     limit: formData?.limit || '',
-    minPurchaseAmount: formData?.minPurchaseAmount === 0 ? 0 : formData?.minPurchaseAmount || '',
     validDateRange: formData?.validDateRange || '',
     allowFor: formData?.allowFor || 'all',
     allowedRetailers: formData?.allowedRetailers || [],
+    applicablePackage: formData?.applicablePackage || '',
   };
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Required!'),
     code: Yup.string().required('Required!').min(6, 'At least 6 characters long!'),
     discountType: Yup.string().required('Required!'),
-    discount: Yup.number()
-      .test('integer', 'Please enter an integer value', (value: any) => {
-        return !isNaN(parseFloat(value)) && isFinite(value);
-      })
-      .min(0, 'Value must be greater then or equal to 0')
-      .max(50, 'Value must be less then or equal to 50')
-      .required('Required!'),
+    discount: Yup.string().when('discountType', {
+      is: 'percentage',
+      then: () => Yup.number().max(50, 'Value must be less then or equal to 50!').required('Required!'),
+      otherwise: () => Yup.number().required('Required!'),
+    }),
     limit: Yup.number()
       .test('integer', 'Please enter an integer value', (value: any) => {
         return !isNaN(parseFloat(value)) && isFinite(value);
       })
       .min(1, 'Value must be greater then or equal to 1')
       .required('Required!'),
-    minPurchaseAmount: Yup.number()
-      .test('integer', 'Please enter an integer value', (value: any) => {
-        return !isNaN(parseFloat(value)) && isFinite(value);
-      })
-      .min(0, 'Value must be greater then or equal to 0')
-      .required('Required!'),
     validDateRange: Yup.string().required('Required!'),
+    applicablePackage: Yup.string().required('Required!'),
     allowedRetailers: Yup.string().when('allowFor', {
       is: 'specific',
       then: () =>
@@ -168,6 +168,8 @@ export default function CreateUpdateModel({
           </div>
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
             {({ setFieldValue, values, errors, touched, setFieldTouched }) => {
+              console.log(values);
+
               return (
                 <Form className="grid gap-4">
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -208,9 +210,8 @@ export default function CreateUpdateModel({
                             getOptionLabel={getOptionLabel}
                             getOptionValue={(option) => option.label}
                             defaultValue={retailerOptions.filter((retailer: any) => values.allowedRetailers.includes(retailer.value))}
-                            onChange={(selectedOption: any) => {
-                              console.log({ selectedOption });
-                              const retailerIds = selectedOption.map((obj: any) => obj.value);
+                            onChange={(option: any) => {
+                              const retailerIds = option.map((obj: any) => obj.value);
                               setFieldValue('allowedRetailers', retailerIds);
                             }}
                             onBlur={() => setFieldTouched('allowedRetailers', true)}
@@ -242,13 +243,59 @@ export default function CreateUpdateModel({
                         <Skeleton className="h-10 w-full rounded" />
                       )
                     ) : null}
+
+                    {!isLoading && !isError ? (
+                      <div>
+                        <div className="mb-2">
+                          <p className="font-medium">
+                            Select Specific Plan / Addon
+                            <span className="text-red-500"> *</span>
+                          </p>
+                        </div>
+                        <ReactSelect
+                          placeholder="Select One"
+                          isSearchable
+                          options={planOptions}
+                          getOptionValue={(option) => option.label}
+                          defaultValue={planOptions.filter((plan: any) => (values.applicablePackage === plan.value ? plan.value : null))}
+                          onChange={(option: any) => {
+                            setFieldValue('applicablePackage', option.value);
+                          }}
+                          onBlur={() => setFieldTouched('applicablePackage', true)}
+                          styles={{
+                            control: (base) => ({
+                              ...base,
+                              boxShadow: 'none !important',
+                              ...(touched.applicablePackage &&
+                                errors.applicablePackage && {
+                                  minHeight: '43px !important',
+                                  borderRadius: '7px !important',
+                                  border: '1px solid #DC3545 !important',
+                                }),
+                            }),
+                            input: (base) => ({
+                              ...base,
+                              boxShadow: 'none !important',
+                            }),
+                          }}
+                        />
+                        {touched.applicablePackage && errors.applicablePackage && (
+                          <span className="mt-1 flex items-center gap-x-1 text-danger">
+                            <IoAlertCircle className="text-lg" />
+                            <span>{errors.applicablePackage as string}</span>
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <Skeleton className="h-10 w-full rounded" />
+                    )}
                   </div>
 
                   <div className="grid grid-cols-1">
                     <InputField name="description" label="Description" placeholder="Write here..." required={false} />
                   </div>
 
-                  <div className="grid grid-cols-1 gap-x-3 md:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-x-3 md:grid-cols-3">
                     <SelectField
                       value={values?.discountType}
                       options={[
@@ -276,17 +323,7 @@ export default function CreateUpdateModel({
                         prefix={<LuCircleDollarSign className="text-xl" />}
                       />
                     )}
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <InputField type="number" name="limit" label="Limit" placeholder="1" />
-                    <InputField
-                      type="number"
-                      name="minPurchaseAmount"
-                      label="Min. Purchased Amount"
-                      placeholder="5"
-                      prefix={<LuCircleDollarSign className="text-xl" />}
-                    />
                   </div>
 
                   <div className="grid grid-cols-1">
