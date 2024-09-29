@@ -24,6 +24,12 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
     currency,
   } = useSelector((state: RootState) => state.subscriptionSlice);
 
+  const remainingAmount = calculateCurrencyExchangeRate({
+    selectedCurrencyExchangeRate: currency,
+    defaultCurrencyExchangeRate: activeSubscription?.planPaymentCurrency,
+    price: remainingBalance,
+  }).toFixed(2);
+
   return (
     <div>
       <h2 className="pb-2 text-lg font-medium">{addOn.slug ? 'Add-On' : 'Plan'}</h2>
@@ -48,12 +54,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         <div className="mb-2 flex justify-between">
           <span>Remaining Amount</span>
           <span className="text-red-500">
-            -
-            {calculateCurrencyExchangeRate({
-              selectedCurrencyExchangeRate: currency,
-              defaultCurrencyExchangeRate: activeSubscription?.planPaymentCurrency,
-              price: remainingBalance,
-            }).toFixed(2)}
+            -{remainingAmount ? remainingAmount : 0}
             {` ${selectedCurrency}`}
           </span>
         </div>

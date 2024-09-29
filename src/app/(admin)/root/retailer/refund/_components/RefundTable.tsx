@@ -140,6 +140,7 @@ export default function RefundTable({ offset }: { offset: number }) {
       query={query}
       searchPlaceHolder={t('placeHolder')}
       searchFieldWidth="250px"
+      showGlobalFilter={false}
     />
   );
 }

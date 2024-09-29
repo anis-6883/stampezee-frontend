@@ -113,7 +113,8 @@
   },
   "RetailerCommon": {
     "required": "Obligatoire!",
-    "errorMessage": "Une erreur s'est produite. Veuillez réessayer!"
+    "errorMessage": "Une erreur s'est produite. Veuillez réessayer!",
+    "mandatoryFieldsMessage": "Les champs marqués avec <span class=\"text-red-600\">*</span> sont obligatoires!"
   },
   "RetailerSidebar": {
     "Dashboard": "Tableau de bord",
@@ -121,7 +122,7 @@
     "Billing": "Facturation",
     "Refunds": "Remboursements",
     "Branches": "Succursales",
-    "Sub-Admins (Team)": "Sous-administrateurs (Équipe)",
+    "Sub-Admins": "Sous-administrateurs",
     "Stamps": "Timbres",
     "Scans": "Scans",
     "Customers": "Clients",
@@ -229,5 +230,194 @@
     "status": "Statut",
     "actions": "Actions",
     "placeHolder": "Rechercher par Nom"
+  },
+  "RetailerStamp": {
+    "title": "Gérer les Timbres",
+    "stamps": "Timbres",
+    "dashboard": "Tableau de bord",
+    "addNewStamp": "Ajouter un Nouveau Timbre",
+    "updateStamp": "Mettre à Jour un Timbre"
+  },
+  "RetailerStampTable": {
+    "info": "Informations",
+    "reward": "Récompense",
+    "validityDate": "Date de Validité",
+    "publish": "Publier",
+    "status": "Statut",
+    "actions": "Actions",
+    "placeHolder": "Rechercher par Titre du Timbre",
+    "title": "Titre",
+    "category": "Catégorie",
+    "branch": "Agence",
+    "noOfStampsToCollect": "Nombre de Timbres à Collecter",
+    "rewardType": "Type de Récompense",
+    "minPurchaseAmount": "Montant Minimum d'Achat",
+    "noExpiration": "Pas d'Expiration",
+    "startedAt": "Commencé le",
+    "expiredAt": "Expiré le",
+    "publishNow": "Publier Maintenant",
+    "published": "Publié"
+  },
+  "RetailerCreateAndUpdateStamp": {
+    "createStamp": "Créer un Timbre",
+    "updateStamp": "Mettre à Jour un Timbre",
+    "create": "Créer",
+    "cloneStamp": "Cloner un Timbre",
+    "clone": "Cloner",
+    "title": "Titre",
+    "basicRules": "Règles de Base",
+    "validityPeriod": "Période de Validité",
+    "validDateRange": "Période Valide",
+    "numberOfStampsToCollect": "Nombre de Timbres à Collecter",
+    "update": "Mettre à Jour",
+    "category": "Catégorie",
+    "branch": "Agence",
+    "noOfStampsToCollect": "Nombre de Timbres à Collecter",
+    "rewardType": "Type de Récompense",
+    "minPurchaseAmount": "Montant Minimum d'Achat",
+    "noExpiration": "Pas d'Expiration",
+    "promotionReward": "Récompense Promotionnelle",
+    "discount": "Réduction",
+    "promotion": "Promotion",
+    "selectDefaultImage": "Sélectionner une Image par Défaut",
+    "description": "Description",
+    "draft": "Brouillon",
+    "publish": "Publier"
+  },
+  "RetailerScan": {
+    "title": "Gérer le Scan des Timbres",
+    "stampScan": "Scan des Timbres",
+    "dashboard": "Tableau de bord"
+  },
+  "RetailerScanTab": {
+    "offerAndScan": "Offre et Scan",
+    "branch": "Agence",
+    "customer": "Client",
+    "scanTime": "Heure du Scan",
+    "stampTitle": "Titre du Timbre",
+    "stampCategory": "Catégorie du Timbre",
+    "noOfStampToCollect": "Nombre de Timbres à Collecter",
+    "basicRules": "Règles de Base",
+    "status": "Statut",
+    "minPurchaseAmount": "Montant d'Achat Minimum",
+    "rewardType": "Type de Récompense",
+    "reward": "Récompense",
+    "branchName": "Nom de l'Agence",
+    "branchAddress": "Adresse de l'Agence",
+    "subAdminName": "Nom du Sous-Administrateur",
+    "subAdminEmail": "Email du Sous-Administrateur",
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "country": "Pays"
+  },
+  "RetailerStampScanTable": {
+    "stampTitle": "Titre du Timbre",
+    "scanDate": "Date de Scan",
+    "branch": "Agence",
+    "customer": "Client",
+    "scannedBy": "Scanné Par",
+    "status": "Statut",
+    "placeHolder": "Rechercher par Nom et Email du Client"
+  },
+  "RetailerProfile": {
+    "title": "Gérer le Profil",
+    "profile": "Profil du Détaillant",
+    "dashboard": "Tableau de Bord",
+    "storeName": "Nom du Magasin",
+    "firstName": "Prénom",
+    "lastName": "Nom de Famille",
+    "phoneNumber": "Numéro de Téléphone",
+    "country": "Pays",
+    "province": "Province",
+    "city": "Ville",
+    "postalCode": "Code Postal",
+    "address": "Adresse",
+    "email": "Email",
+    "update": "Mettre à Jour",
+    "owner": "Propriétaire"
+  },
+  "RetailerBalanceCard": {
+    "plan": "Plan",
+    "expire": "Expiration",
+    "current": "Actuel",
+    "usage": "Utilisation"
+  },
+  "RetailerNotification": {
+    "title": "Gérer la Notification Régulière",
+    "regularNotification": "Notification Régulière",
+    "dashboard": "Tableau de Bord"
+  },
+  "SendAndResendNotification": {
+    "sendRegularNotification": "Envoyer la Notification Régulière",
+    "resendRegularNotification": "Renvoyer la Notification Régulière",
+    "title": "Titre",
+    "description": "Description",
+    "imageType": "Type d'Image",
+    "imageUrl": "URL de l'Image",
+    "attachImage": "Joindre une Image",
+    "send": "Envoyer",
+    "resend": "Renvoyer"
+  },
+  "RegularNotificationTable": {
+    "regularNotificationSendLimit": "Limite d'Envoi de Notification Régulière",
+    "image": "Image",
+    "title": "Titre",
+    "description": "Description",
+    "sendTime": "Heure d'Envoi",
+    "actions": "Actions",
+    "searchByNotificationTitle": "Rechercher par Titre de Notification",
+    "sendNotification": "Envoyer la Notification"
+  },
+  "LocationBasedNotification": {
+    "title": "Gérer les Notifications Basées sur la Localisation",
+    "locationBasedNotifications": "Notification Basée sur la Localisation",
+    "dashboard": "Tableau de bord"
+  },
+  "SendAndResendLocationBasedNotification": {
+    "sendLocationBasedNotification": "Envoyer la Notification",
+    "resendLocationBasedNotification": "Renvoyer la Notification",
+    "title": "Titre",
+    "description": "Description",
+    "radius": "Rayon",
+    "address": "Adresse",
+    "imageType": "Type d'Image",
+    "imageUrl": "URL de l'Image",
+    "attachImage": "Joindre une Image",
+    "send": "Envoyer",
+    "resend": "Renvoyer"
+  },
+  "LocationBasedNotificationTable": {
+    "locationBasedNotificationSendLimit": "Limite d'Envoi de Notification Basée sur la Localisation",
+    "image": "Image",
+    "title": "Titre",
+    "description": "Description",
+    "sendTime": "Heure d'Envoi",
+    "actions": "Actions",
+    "radius": "Rayon",
+    "address": "Adresse",
+    "searchByNotificationTitle": "Rechercher par Titre de Notification",
+    "sendNotification": "Envoyer la Notification"
+  },
+  "RetailerStampImage": {
+    "title": "Gérer l'Image de Timbre Personnalisée",
+    "customStampImage": "Gérer le Timbre Personnalisé",
+    "dashboard": "Tableau de bord"
+  },
+  "RetailerStampImageTable": {
+    "image": "Image",
+    "title": "Titre",
+    "description": "Description",
+    "status": "Statut",
+    "actions": "Actions",
+    "validityDate": "Date de Validité",
+    "placeHolder": "Rechercher par Titre d'Image de Timbre"
+  },
+  "RetailerStampImageCreateUpdate": {
+    "addNewStampImage": "Ajouter une Nouvelle Image de Timbre",
+    "updateStampImage": "Mettre à Jour l'Image de Timbre",
+    "title": "Titre",
+    "update": "Mettre à Jour",
+    "submit": "Envoyer"
   }
 }

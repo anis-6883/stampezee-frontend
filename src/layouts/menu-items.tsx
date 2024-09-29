@@ -117,7 +117,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <LiaMapMarkedAltSolid />,
     },
     {
-      name: 'Sub-Admins (Team)',
+      name: 'Sub-Admins',
       href: routes.privateRoutes.retailer.sub_admin.home,
       icon: <TbUserShield />,
     },

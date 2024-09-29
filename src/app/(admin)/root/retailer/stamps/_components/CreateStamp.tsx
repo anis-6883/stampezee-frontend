@@ -11,6 +11,7 @@ import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -34,6 +35,7 @@ export default function Create() {
   const [values, setValues] = useState({});
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery({});
   const isAddons = session?.user?.totalCustomStampImage > 0 ? true : false;
+  const t = useTranslations('RetailerCreateAndUpdateStamp');
 
   const initialValues = {
     branchId: '',
@@ -154,7 +156,7 @@ export default function Create() {
                 <div>
                   <SelectField
                     name="branchId"
-                    label="Branch"
+                    label={t('branch')}
                     disabled={optionsData?.branches?.length === 0 ? true : false}
                     value={values?.branchId}
                     options={optionsData?.branches.map((item: any) => ({
@@ -175,7 +177,7 @@ export default function Create() {
                 <div>
                   <SelectField
                     name="categoryId"
-                    label="Category"
+                    label={t('category')}
                     disabled={optionsData?.categories?.length === 0 ? true : false}
                     value={values?.categoryId}
                     options={optionsData?.categories?.map((item: any) => ({
@@ -193,15 +195,15 @@ export default function Create() {
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
-                <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
+                <InputField name="title" label={t('title')} placeholder="Buy 10 Pizza Get 1 Coke" />
+                <InputField name="rules" label={t('basicRules')} placeholder="You need to buy..." />
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div>
                   <SelectField
                     name="hasValidity"
-                    label="Validity Period"
+                    label={t('validityPeriod')}
                     value={values?.hasValidity}
                     options={[
                       { id: 1, name: 'no expiration', value: false },
@@ -217,11 +219,11 @@ export default function Create() {
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                <InputField name="noOfStampsToCollect" label="Number of Stamps to Collect" type="number" />
+                <InputField name="noOfStampsToCollect" label={t('noOfStampsToCollect')} type="number" />
                 <InputField
                   name="minPurchaseAmount"
                   required={false}
-                  label="Minimum Purchase Amount"
+                  label={t('minPurchaseAmount')}
                   type="number"
                   prefix={<LuCircleDollarSign className="text-xl" />}
                   placeholder="0"
@@ -232,7 +234,7 @@ export default function Create() {
                 <div>
                   <SelectField
                     name="rewardType"
-                    label="Reward Type"
+                    label={t('rewardType')}
                     value={values?.rewardType}
                     options={[
                       { id: 1, name: 'discount', value: 'discount' },
@@ -248,7 +250,7 @@ export default function Create() {
                 {values.rewardType === 'discount' && (
                   <InputField
                     name="discountReward"
-                    label="Discount Reward"
+                    label={t('discountReward')}
                     placeholder="Ex. Get 1 Coke"
                     type="number"
                     prefix={<RiDiscountPercentLine className="text-xl" />}
@@ -257,7 +259,7 @@ export default function Create() {
                 {values.rewardType === 'promotion' && (
                   <InputField
                     name="promotionReward"
-                    label="Promotion Reward"
+                    label={t('promotionReward')}
                     placeholder="Ex. Get 1 Coke"
                     prefix={<RiDrinks2Fill className="text-xl" />}
                   />
@@ -265,7 +267,7 @@ export default function Create() {
               </div>
 
               <h2 className="font-medium">
-                Select Default Image <span className="text-red-600">*</span>
+                {t('selectDefaultImage')} <span className="text-red-600">*</span>
               </h2>
               {responseIsLoading ? (
                 <StampImgSkeleton />
@@ -292,12 +294,12 @@ export default function Create() {
 
               {optionsData?.defaultImages?.length === 0 && (
                 <div className=" pt-3 text-center text-danger">
-                  <span>No default image by super admin</span>
+                  <span>{t('noDefaultImageBySuperAdmin')}</span>
                 </div>
               )}
               {optionsData?.customImages?.length > 0 && (
                 <h2 className="font-medium">
-                  Select Custom Image <span className="text-red-600">*</span>
+                  {t('selectCustomImage')} <span className="text-red-600">*</span>
                 </h2>
               )}
               {responseIsLoading ? (
@@ -354,7 +356,7 @@ export default function Create() {
                 </div>
               )}
 
-              <InputTextarea name="description" required={false} label="Description" placeholder="Write here..." />
+              <InputTextarea name="description" required={false} label={t('description')} placeholder="Write here..." />
 
               <p className="mt-4 flex flex-col text-end text-xs font-semibold">
                 <span>
@@ -370,7 +372,7 @@ export default function Create() {
                 <Button
                   color="danger"
                   type="submit"
-                  text="Draft"
+                  text={t('draft')}
                   postIcon={<RiDraftLine className="text-base" />}
                   isSubmitting={submitting}
                   onClick={() => setSubmitAction('draft')}
@@ -378,7 +380,7 @@ export default function Create() {
                 <Button
                   color="outline"
                   type="submit"
-                  text="Publish"
+                  text={t('publish')}
                   postIcon={<BsCheck2Circle className="text-base" />}
                   // isSubmitting={publishSubmitting}
                   onClick={() => {

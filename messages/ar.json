@@ -113,7 +113,8 @@
   },
   "RetailerCommon": {
     "required": "مطلوب!",
-    "errorMessage": "حدث خطأ ما. حاول مرة أخرى!"
+    "errorMessage": "حدث خطأ ما. حاول مرة أخرى!",
+    "mandatoryFieldsMessage": "الحقول المطلوبة مع <span class=\"text-red-600\">*</span> مطلوبة!"
   },
   "RetailerSidebar": {
     "Dashboard": "لوحة القيادة",
@@ -121,7 +122,7 @@
     "Billing": "الفواتير",
     "Refunds": "استرداد الأموال",
     "Branches": "الفروع",
-    "Sub-Admins (Team)": "المشرفون الفرعيون (Team)",
+    "Sub-Admins": "المشرفون الفرعيون",
     "Stamps": "طوابع",
     "Scans": "المسح الضوئي",
     "Customers": "عملاء",
@@ -229,5 +230,194 @@
     "status": "الحالة",
     "actions": "الإجراءات",
     "placeHolder": "البحث بالاسم"
+  },
+  "RetailerStamp": {
+    "title": "إدارة الطوابع",
+    "stamps": "الطوابع",
+    "dashboard": "لوحة التحكم",
+    "addNewStamp": "إضافة طابع جديد",
+    "updateStamp": "تحديث طابع"
+  },
+  "RetailerStampTable": {
+    "info": "معلومات",
+    "reward": "المكافأة",
+    "validityDate": "تاريخ الصلاحية",
+    "publish": "نشر",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "placeHolder": "البحث بعنوان الطابع",
+    "title": "العنوان",
+    "category": "الفئة",
+    "branch": "الفرع",
+    "noOfStampsToCollect": "عدد الطوابع للتجميع",
+    "rewardType": "نوع المكافأة",
+    "minPurchaseAmount": "الحد الأدنى للمبلغ",
+    "noExpiration": "بدون انتهاء",
+    "startedAt": "بدأ في",
+    "expiredAt": "انتهى في",
+    "publishNow": "نشر الآن",
+    "published": "تم النشر"
+  },
+  "RetailerCreateAndUpdateStamp": {
+    "createStamp": "إنشاء طابع",
+    "updateStamp": "تحديث طابع",
+    "create": "إنشاء",
+    "cloneStamp": "إنسخ طابع",
+    "clone": "إنسخ",
+    "title": "العنوان",
+    "basicRules": "القواعد الأساسية",
+    "validityPeriod": "فترة الصلاحية",
+    "validDateRange": "نطاق التواريخ الصالحة",
+    "numberOfStampsToCollect": "عدد الطوابع للتجميع",
+    "update": "تحديث",
+    "category": "الفئة",
+    "branch": "الفرع",
+    "noOfStampsToCollect": "عدد الطوابع للتجميع",
+    "rewardType": "نوع المكافأة",
+    "minPurchaseAmount": "الحد الأدنى للمبلغ",
+    "noExpiration": "بدون انتهاء",
+    "promotionReward": "مكافأة ترويجية",
+    "discount": "خصم",
+    "promotion": "الترويج",
+    "selectDefaultImage": "اختر الصورة الافتراضية",
+    "description": "الوصف",
+    "draft": "مسودة",
+    "publish": "نشر"
+  },
+  "RetailerScan": {
+    "title": "إدارة مسح الطوابع",
+    "stampScan": "مسح الطوابع",
+    "dashboard": "لوحة التحكم"
+  },
+  "RetailerScanTab": {
+    "offerAndScan": "عرض ومسح",
+    "branch": "الفرع",
+    "customer": "العميل",
+    "scanTime": "وقت المسح",
+    "stampTitle": "عنوان الطابع",
+    "stampCategory": "فئة الطابع",
+    "noOfStampToCollect": "عدد الطوابع لجمعها",
+    "basicRules": "القواعد الأساسية",
+    "status": "الحالة",
+    "minPurchaseAmount": "الحد الأدنى للمبلغ المشتري",
+    "rewardType": "نوع المكافأة",
+    "reward": "المكافأة",
+    "branchName": "اسم الفرع",
+    "branchAddress": "عنوان الفرع",
+    "subAdminName": "اسم المسؤول الفرعي",
+    "subAdminEmail": "البريد الإلكتروني للمسؤول الفرعي",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "country": "الدولة"
+  },
+  "RetailerStampScanTable": {
+    "stampTitle": "عنوان الطابع",
+    "scanDate": "تاريخ المسح",
+    "branch": "الفرع",
+    "customer": "العميل",
+    "scannedBy": "تم المسح بواسطة",
+    "status": "الحالة",
+    "placeHolder": "البحث بواسطة اسم العميل والبريد الإلكتروني"
+  },
+  "RetailerProfile": {
+    "title": "إدارة الملف الشخصي",
+    "profile": "ملف بائع التجزئة",
+    "dashboard": "لوحة التحكم",
+    "storeName": "اسم المتجر",
+    "firstName": "الاسم الأول",
+    "lastName": "الاسم الأخير",
+    "phoneNumber": "رقم الهاتف",
+    "country": "البلد",
+    "province": "المقاطعة",
+    "city": "المدينة",
+    "postalCode": "الرمز البريدي",
+    "address": "العنوان",
+    "email": "البريد الإلكتروني",
+    "update": "تحديث",
+    "owner": "المالك"
+  },
+  "RetailerBalanceCard": {
+    "plan": "الخطة",
+    "expire": "تنتهي",
+    "current": "الحالي",
+    "usage": "الاستخدام"
+  },
+  "RetailerNotification": {
+    "title": "إدارة الإشعارات العادية",
+    "regularNotification": "الإشعارات العادية",
+    "dashboard": "لوحة التحكم"
+  },
+  "SendAndResendNotification": {
+    "sendRegularNotification": "إرسال الإشعار العادي",
+    "resendRegularNotification": "إعادة إرسال الإشعار العادي",
+    "title": "العنوان",
+    "description": "الوصف",
+    "imageType": "نوع الصورة",
+    "imageUrl": "رابط الصورة",
+    "attachImage": "إرفاق صورة",
+    "send": "إرسال",
+    "resend": "إعادة إرسال"
+  },
+  "RegularNotificationTable": {
+    "regularNotificationSendLimit": "حد إرسال الإشعارات العادية",
+    "image": "صورة",
+    "title": "العنوان",
+    "description": "الوصف",
+    "sendTime": "وقت الإرسال",
+    "actions": "الإجراءات",
+    "searchByNotificationTitle": "البحث بعنوان الإشعار",
+    "sendNotification": "إرسال الإشعار"
+  },
+  "LocationBasedNotification": {
+    "title": "إدارة الإشعارات المستندة إلى الموقع",
+    "locationBasedNotifications": "الإشعار المستند إلى الموقع",
+    "dashboard": "لوحة التحكم"
+  },
+  "SendAndResendLocationBasedNotification": {
+    "sendLocationBasedNotification": "إرسال الإشعار",
+    "resendLocationBasedNotification": "إعادة إرسال الإشعار",
+    "title": "العنوان",
+    "description": "الوصف",
+    "radius": "نصف القطر",
+    "address": "العنوان",
+    "imageType": "نوع الصورة",
+    "imageUrl": "رابط الصورة",
+    "attachImage": "إرفاق صورة",
+    "send": "إرسال",
+    "resend": "إعادة إرسال"
+  },
+  "LocationBasedNotificationTable": {
+    "locationBasedNotificationSendLimit": "حد إرسال الإشعارات المستندة إلى الموقع",
+    "image": "صورة",
+    "title": "العنوان",
+    "description": "الوصف",
+    "sendTime": "وقت الإرسال",
+    "actions": "الإجراءات",
+    "radius": "نصف القطر",
+    "address": "العنوان",
+    "searchByNotificationTitle": "البحث حسب عنوان الإشعار",
+    "sendNotification": "إرسال الإشعار"
+  },
+  "RetailerStampImage": {
+    "title": "إدارة صورة الطابع المخصصة",
+    "customStampImage": "إدارة الطابع المخصص",
+    "dashboard": "لوحة التحكم"
+  },
+  "RetailerStampImageTable": {
+    "image": "صورة",
+    "title": "العنوان",
+    "description": "الوصف",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "validityDate": "تاريخ الصلاحية",
+    "placeHolder": "البحث حسب عنوان صورة الطابع"
+  },
+  "RetailerStampImageCreateUpdate": {
+    "addNewStampImage": "إضافة صورة طابع جديدة",
+    "updateStampImage": "تحديث صورة الطابع",
+    "title": "العنوان",
+    "update": "تحديث",
+    "submit": "إرسال"
   }
 }

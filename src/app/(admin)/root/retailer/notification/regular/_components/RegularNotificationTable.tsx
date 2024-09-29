@@ -8,6 +8,7 @@ import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import { Skeleton } from '@mantine/core';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
@@ -15,6 +16,7 @@ import { IoAlarmOutline } from 'react-icons/io5';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function RegularNotificationTable({ offset }: { offset: number }) {
+  const t = useTranslations('RegularNotificationTable');
   const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
@@ -35,7 +37,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
 
   const structure = [
     {
-      header: 'Image',
+      header: t('image'),
       accessorKey: 'image',
       enableSorting: false,
       Cell: ({ row }: any) => (
@@ -45,7 +47,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
       ),
     },
     {
-      header: 'Title',
+      header: t('title'),
       accessorKey: 'title',
       enableSorting: false,
       Cell: ({ row }: any) => (
@@ -55,7 +57,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
       ),
     },
     {
-      header: 'Description',
+      header: t('description'),
       accessorKey: 'description',
       enableSorting: false,
       Cell: ({ row }: any) => (
@@ -65,7 +67,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
       ),
     },
     {
-      header: 'Send Time',
+      header: t('sendTime'),
       Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original?.createdAt, offset)}</div>,
       mantineTableHeadCellProps: {
         align: 'start',
@@ -76,7 +78,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
       size: 150,
     },
     {
-      header: 'Actions',
+      header: t('actions'),
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Button
@@ -111,7 +113,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
         <div className="flex items-center gap-x-2 rounded-lg border border-light px-3">
           <IoAlarmOutline className="text-xl" />
           <h2 className="flex items-center gap-x-1 font-semibold">
-            Regular Notification Send Limit:
+            {t('regularNotificationSendLimit')} :
             {isLoading ? (
               <Skeleton className="h-4 w-4 rounded" />
             ) : (
@@ -123,7 +125,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
           className="!m-0"
           color="danger"
           onClick={() => setCreateState(true)}
-          text="Send Notification"
+          text={t('sendNotification')}
           preIcon={<FaRegPaperPlane className="text-base" />}
         />
       </div>
@@ -148,7 +150,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search by Notification Title"
+        searchPlaceHolder={t('searchByNotificationTitle')}
       />
     </>
   );

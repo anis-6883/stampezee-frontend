@@ -1,6 +1,7 @@
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
+import { getTranslations } from 'next-intl/server';
 import StampsImageTable from './_components/StampsImageTable';
 
 const pageHeader = {
@@ -18,7 +19,11 @@ const pageHeader = {
 
 export const metadata = { ...metaObject(pageHeader.title) };
 
-export default function Page() {
+export default async function Page() {
+  const t = await getTranslations('RetailerStampImage');
+  pageHeader.breadcrumb[0].name = t('dashboard');
+  pageHeader.breadcrumb[1].name = t('customStampImage');
+  pageHeader.title = t('title');
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />

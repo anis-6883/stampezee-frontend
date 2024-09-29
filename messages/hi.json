@@ -113,7 +113,8 @@
   },
   "RetailerCommon": {
     "required": "आवश्यक!",
-    "errorMessage": "कुछ गलत हो गया। कृपया पुनः प्रयास करें!"
+    "errorMessage": "कुछ गलत हो गया। कृपया पुनः प्रयास करें!",
+    "mandatoryFieldsMessage": "चिह्नित क्षेत्रों के साथ <span class=\"text-red-600\">*</span> आवश्यक हैं!"
   },
   "RetailerSidebar": {
     "Dashboard": "डैशबोर्ड",
@@ -121,7 +122,7 @@
     "Billing": "बिलिंग",
     "Refunds": "रिफंड",
     "Branches": "शाखाएं",
-    "Sub-Admins (Team)": "उप-प्रशासक (टीम)",
+    "Sub-Admins": "उप-प्रशासक",
     "Stamps": "स्टैम्प्स",
     "Scans": "स्कैन",
     "Customers": "ग्राहक",
@@ -229,5 +230,194 @@
     "status": "स्थिति",
     "actions": "क्रियाएँ",
     "placeHolder": "नाम से खोजें"
+  },
+  "RetailerStamp": {
+    "title": "स्टैम्प्स प्रबंधित करें",
+    "stamps": "स्टैम्प्स",
+    "dashboard": "डैशबोर्ड",
+    "addNewStamp": "नया स्टैम्प जोड़ें",
+    "updateStamp": "एक स्टैम्प अपडेट करें"
+  },
+  "RetailerStampTable": {
+    "info": "जानकारी",
+    "reward": "इनाम",
+    "validityDate": "वैधता तिथि",
+    "publish": "प्रकाशित करें",
+    "status": "स्थिति",
+    "actions": "क्रियाएँ",
+    "placeHolder": "स्टैम्प शीर्षक द्वारा खोजें",
+    "title": "शीर्षक",
+    "category": "श्रेणी",
+    "branch": "शाखा",
+    "noOfStampsToCollect": "संग्रह करने के लिए स्टैम्प्स की संख्या",
+    "rewardType": "इनाम का प्रकार",
+    "minPurchaseAmount": "न्यूनतम खरीद राशि",
+    "noExpiration": "समाप्ति नहीं",
+    "startedAt": "शुरू हुआ",
+    "expiredAt": "समाप्त हुआ",
+    "publishNow": "अभी प्रकाशित करें",
+    "published": "प्रकाशित"
+  },
+  "RetailerCreateAndUpdateStamp": {
+    "createStamp": "एक स्टैम्प बनाएं",
+    "updateStamp": "एक स्टैम्प अपडेट करें",
+    "create": "बनाएं",
+    "cloneStamp": "एक स्टैम्प को क्लोन करें",
+    "clone": "क्लोन",
+    "title": "शीर्षक",
+    "basicRules": "मूल नियम",
+    "validityPeriod": "वैधता अवधि",
+    "validDateRange": "वैध तिथि सीमा",
+    "numberOfStampsToCollect": "संग्रह करने के लिए स्टैम्प्स की संख्या",
+    "update": "अपडेट करें",
+    "category": "श्रेणी",
+    "branch": "शाखा",
+    "noOfStampsToCollect": "संग्रह करने के लिए स्टैम्प्स की संख्या",
+    "rewardType": "इनाम का प्रकार",
+    "minPurchaseAmount": "न्यूनतम खरीद राशि",
+    "noExpiration": "समाप्ति नहीं",
+    "promotionReward": "प्रचार इनाम",
+    "discount": "छूट",
+    "promotion": "प्रचार",
+    "selectDefaultImage": "डिफ़ॉल्ट छवि चुनें",
+    "description": "विवरण",
+    "draft": "ड्राफ्ट",
+    "publish": "प्रकाशित करें"
+  },
+  "RetailerScan": {
+    "title": "स्टैम्प स्कैन प्रबंधन",
+    "stampScan": "स्टैम्प स्कैन",
+    "dashboard": "डैशबोर्ड"
+  },
+  "RetailerScanTab": {
+    "offerAndScan": "ऑफ़र और स्कैन",
+    "branch": "शाखा",
+    "customer": "ग्राहक",
+    "scanTime": "स्कैन समय",
+    "stampTitle": "स्टैम्प शीर्षक",
+    "stampCategory": "स्टैम्प श्रेणी",
+    "noOfStampToCollect": "संग्रह के लिए स्टैम्प की संख्या",
+    "basicRules": "मूल नियम",
+    "status": "स्थिति",
+    "minPurchaseAmount": "न्यूनतम खरीद राशि",
+    "rewardType": "पुरस्कार का प्रकार",
+    "reward": "पुरस्कार",
+    "branchName": "शाखा का नाम",
+    "branchAddress": "शाखा का पता",
+    "subAdminName": "उप-प्रशासक का नाम",
+    "subAdminEmail": "उप-प्रशासक का ईमेल",
+    "name": "नाम",
+    "email": "ईमेल",
+    "phone": "फोन",
+    "country": "देश"
+  },
+  "RetailerStampScanTable": {
+    "stampTitle": "स्टैम्प शीर्षक",
+    "scanDate": "स्कैन तिथि",
+    "branch": "शाखा",
+    "customer": "ग्राहक",
+    "scannedBy": "द्वारा स्कैन",
+    "status": "स्थिति",
+    "placeHolder": "ग्राहक का नाम और ईमेल द्वारा खोजें"
+  },
+  "RetailerProfile": {
+    "title": "प्रोफ़ाइल प्रबंधित करें",
+    "profile": "खुदरा विक्रेता प्रोफ़ाइल",
+    "dashboard": "डैशबोर्ड",
+    "storeName": "दुकान का नाम",
+    "firstName": "पहला नाम",
+    "lastName": "अंतिम नाम",
+    "phoneNumber": "फ़ोन नंबर",
+    "country": "देश",
+    "province": "प्रांत",
+    "city": "शहर",
+    "postalCode": "डाक कोड",
+    "address": "पता",
+    "email": "ईमेल",
+    "update": "अद्यतन करें",
+    "owner": "मालिक"
+  },
+  "RetailerBalanceCard": {
+    "plan": "योजना",
+    "expire": "समाप्त",
+    "current": "वर्तमान",
+    "usage": "उपयोग"
+  },
+  "RetailerNotification": {
+    "title": "नियमित सूचना प्रबंधित करें",
+    "regularNotification": "नियमित सूचना",
+    "dashboard": "डैशबोर्ड"
+  },
+  "SendAndResendNotification": {
+    "sendRegularNotification": "नियमित सूचना भेजें",
+    "resendRegularNotification": "नियमित सूचना पुनः भेजें",
+    "title": "शीर्षक",
+    "description": "विवरण",
+    "imageType": "छवि प्रकार",
+    "imageUrl": "छवि यूआरएल",
+    "attachImage": "छवि संलग्न करें",
+    "send": "भेजें",
+    "resend": "पुनः भेजें"
+  },
+  "RegularNotificationTable": {
+    "regularNotificationSendLimit": "नियमित सूचना भेजने की सीमा",
+    "image": "छवि",
+    "title": "शीर्षक",
+    "description": "विवरण",
+    "sendTime": "भेजने का समय",
+    "actions": "क्रियाएँ",
+    "searchByNotificationTitle": "सूचना शीर्षक द्वारा खोजें",
+    "sendNotification": "सूचना भेजें"
+  },
+  "LocationBasedNotification": {
+    "title": "स्थान आधारित सूचनाओं का प्रबंधन करें",
+    "locationBasedNotifications": "स्थान आधारित सूचना",
+    "dashboard": "डैशबोर्ड"
+  },
+  "SendAndResendLocationBasedNotification": {
+    "sendLocationBasedNotification": "सूचना भेजें",
+    "resendLocationBasedNotification": "सूचना पुनः भेजें",
+    "title": "शीर्षक",
+    "description": "विवरण",
+    "radius": "त्रिज्या",
+    "address": "पता",
+    "imageType": "छवि प्रकार",
+    "imageUrl": "छवि URL",
+    "attachImage": "छवि संलग्न करें",
+    "send": "भेजें",
+    "resend": "पुनः भेजें"
+  },
+  "LocationBasedNotificationTable": {
+    "locationBasedNotificationSendLimit": "स्थान आधारित सूचना भेजने की सीमा",
+    "image": "छवि",
+    "title": "शीर्षक",
+    "description": "विवरण",
+    "sendTime": "भेजने का समय",
+    "actions": "क्रियाएँ",
+    "radius": "त्रिज्या",
+    "address": "पता",
+    "searchByNotificationTitle": "सूचना शीर्षक से खोजें",
+    "sendNotification": "सूचना भेजें"
+  },
+  "RetailerStampImage": {
+    "title": "कस्टम स्टैम्प छवि प्रबंधित करें",
+    "customStampImage": "कस्टम स्टैम्प प्रबंधित करें",
+    "dashboard": "डैशबोर्ड"
+  },
+  "RetailerStampImageTable": {
+    "image": "छवि",
+    "title": "शीर्षक",
+    "description": "विवरण",
+    "status": "स्थिति",
+    "actions": "क्रियाएँ",
+    "validityDate": "वैधता तिथि",
+    "placeHolder": "स्टैम्प छवि शीर्षक से खोजें"
+  },
+  "RetailerStampImageCreateUpdate": {
+    "addNewStampImage": "नया स्टैम्प छवि जोड़ें",
+    "updateStampImage": "स्टैम्प छवि अपडेट करें",
+    "title": "शीर्षक",
+    "update": "अपडेट",
+    "submit": "जमा करें"
   }
 }

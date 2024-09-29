@@ -11,6 +11,7 @@ import getFormattedDate from '@/utils/get-formatted-date';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -22,6 +23,7 @@ import StampImgSkeleton from './StampImgSkeleton';
 import StampPublishedModal from './StampPublishedModal';
 
 export default function Update({ Id, offset }: any) {
+  const t = useTranslations('RetailerCreateAndUpdateStamp');
   const [submitting, setSubmitting] = useState(false);
 
   const [submitAction, setSubmitAction] = useState<string | null>(null);
@@ -150,7 +152,7 @@ export default function Update({ Id, offset }: any) {
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <SelectField
                   name="branchId"
-                  label="Branch"
+                  label={t('branch')}
                   value={values?.branchId}
                   options={optionsData?.branches.map((item: any) => ({
                     label: item.name,
@@ -161,7 +163,7 @@ export default function Update({ Id, offset }: any) {
 
                 <SelectField
                   name="categoryId"
-                  label="Category"
+                  label={t('category')}
                   value={values?.categoryId}
                   options={optionsData?.categories?.map((item: any) => ({
                     label: _.startCase(_.toLower(item.name)),
@@ -172,15 +174,15 @@ export default function Update({ Id, offset }: any) {
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
-                <InputField name="rules" label="Basic Rules" placeholder="You need to buy..." />
+                <InputField name="title" label={t('title')} placeholder="Buy 10 Pizza Get 1 Coke" />
+                <InputField name="rules" label={t('basicRules')} placeholder="You need to buy..." />
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div>
                   <SelectField
                     name="hasValidity"
-                    label="Validity Period"
+                    label={t('validityPeriod')}
                     value={values?.hasValidity}
                     options={[
                       { id: 1, name: 'no expiration', value: false },
@@ -194,15 +196,15 @@ export default function Update({ Id, offset }: any) {
                     }}
                   />
                 </div>
-                {values?.hasValidity && <DateRangePicker label="Valid Date Range" name="validDateRange" />}
+                {values?.hasValidity && <DateRangePicker label={t('validDateRange')} name="validDateRange" />}
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                <InputField name="noOfStampsToCollect" label="Number of Stamps to Collect" type="number" />
+                <InputField name="noOfStampsToCollect" label={t('noOfStampsToCollect')} type="number" />
                 <InputField
                   name="minPurchaseAmount"
                   required={false}
-                  label="Minimum Purchase Amount"
+                  label={t('minimumPurchaseAmount')}
                   type="number"
                   prefix={<LuCircleDollarSign className="text-xl" />}
                   placeholder="0"
@@ -213,7 +215,7 @@ export default function Update({ Id, offset }: any) {
                 <div>
                   <SelectField
                     name="rewardType"
-                    label="Reward Type"
+                    label={t('rewardType')}
                     value={values?.rewardType}
                     options={[
                       { id: 1, name: 'discount', value: 'discount' },
@@ -229,19 +231,19 @@ export default function Update({ Id, offset }: any) {
                 {values.rewardType === 'discount' && (
                   <InputField
                     name="discountReward"
-                    label="Discount Reward"
+                    label={t('discountReward')}
                     placeholder="Ex. Get 1 Coke"
                     type="number"
                     prefix={<RiDiscountPercentLine className="text-xl" />}
                   />
                 )}
                 {values.rewardType === 'promotion' && (
-                  <InputField name="promotionReward" label="Promotion Reward" placeholder="Ex. Get 1 Coke" />
+                  <InputField name="promotionReward" label={t('promotionReward')} placeholder="Ex. Get 1 Coke" />
                 )}
               </div>
 
               <h2 className="font-medium">
-                Select Default Image <span className="text-red-600">*</span>
+                {t('selectDefaultImage')} <span className="text-red-600">*</span>
               </h2>
               {responseIsLoading ? (
                 <StampImgSkeleton />
@@ -268,7 +270,7 @@ export default function Update({ Id, offset }: any) {
 
               {optionsData?.customImages?.length > 0 && (
                 <h2 className="font-medium">
-                  Select Custom Image <span className="text-red-600">*</span>
+                  {t('selectCustomImage')} <span className="text-red-600">*</span>
                 </h2>
               )}
               {responseIsLoading ? (
@@ -295,7 +297,7 @@ export default function Update({ Id, offset }: any) {
               )}
               {errors?.stampImageId && <span className="text-red-600">Select a stamp image of custom or default stamp</span>}
 
-              <InputTextarea name="description" required={false} label="Description" placeholder="Write here..." />
+              <InputTextarea name="description" required={false} label={t('description')} placeholder="Write here..." />
 
               <p className="text-end text-xs font-semibold">
                 Fields marked with <span className="text-red-600">*</span> are mandatory!
@@ -304,7 +306,7 @@ export default function Update({ Id, offset }: any) {
                 <Button
                   color="danger"
                   type="submit"
-                  text="Update"
+                  text={t('update')}
                   postIcon={<BsPencil className="text-base" />}
                   isSubmitting={submitting}
                   onClick={() => setSubmitAction('draft')}
@@ -312,7 +314,7 @@ export default function Update({ Id, offset }: any) {
                 <Button
                   color="outline"
                   type="submit"
-                  text="Publish"
+                  text={t('publish')}
                   postIcon={<BsCheck2Circle className="text-base" />}
                   onClick={() => {
                     setSubmitAction('publish');

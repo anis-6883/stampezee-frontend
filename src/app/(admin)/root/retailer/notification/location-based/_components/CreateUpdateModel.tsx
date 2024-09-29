@@ -11,6 +11,7 @@ import { useCreateNotificationByLocationMutation } from '@/features/retailer/not
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
@@ -46,6 +47,8 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
   googleMapsApiKey: string;
 }) {
+  const t = useTranslations('SendAndResendLocationBasedNotification');
+  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createNotificationByLocation, { isSuccess: createSuccess, error: createError }] = useCreateNotificationByLocationMutation();
 
@@ -61,9 +64,9 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('Required!'),
-    description: Yup.string().required('Required!'),
-    address: Yup.string().required('Required!'),
+    title: Yup.string().required(tCommon('required')),
+    description: Yup.string().required(tCommon('required')),
+    address: Yup.string().required(tCommon('required')),
   });
 
   const submitHandler = async (values: any) => {
@@ -107,7 +110,11 @@ export default function CreateUpdateModel({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="700px">
       <div className="m-auto select-none px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Resend Notification</Title> : <Title as="h4">Send Notification</Title>}
+          {formData?._id ? (
+            <Title as="h4">{t('resendLocationBasedNotification')}</Title>
+          ) : (
+            <Title as="h4">{t('sendLocationBasedNotification')}</Title>
+          )}
 
           <ActionIcon
             size="sm"
@@ -127,9 +134,9 @@ export default function CreateUpdateModel({
 
               return (
                 <Form className="mt-5">
-                  <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
+                  <InputField name="title" label={t('title')} placeholder="Buy 10 Pizza Get 1 Coke" />
                   <div className="my-3">
-                    <InputTextarea rows={4} name="description" label="Description" placeholder="Write here..." />
+                    <InputTextarea rows={4} name="description" label={t('description')} placeholder="Write here..." />
                   </div>
 
                   <div className=" h-full">
@@ -137,7 +144,7 @@ export default function CreateUpdateModel({
                   </div>
 
                   <div className="py-5">
-                    <span className=" font-medium">Radius</span>
+                    <span className=" font-medium">{t('radius')}</span>
                     <RangeSlider
                       className="mt-3"
                       value={values?.radius}
@@ -151,7 +158,7 @@ export default function CreateUpdateModel({
                     <SelectField
                       name="imageType"
                       required={false}
-                      label="Image Type"
+                      label={t('imageType')}
                       value={values?.imageType}
                       options={[
                         { id: 1, name: 'url', value: 'url' },
@@ -166,7 +173,7 @@ export default function CreateUpdateModel({
 
                   {values?.imageType === 'image' && (
                     <div className="my-4">
-                      <p className="font-medium">Attach Image</p>
+                      <p className="font-medium">{t('attachImage')}</p>
                       <DragAndDropUpload
                         value={{ name: 'image', image: values.image }}
                         onChange={(image: any) => setFieldValue('image', image)}
@@ -179,7 +186,7 @@ export default function CreateUpdateModel({
 
                   {values?.imageType === 'url' && (
                     <div className="my-4">
-                      <InputField required={false} name="image" label="Image URL" placeholder="https://picsum.photos/200" />
+                      <InputField required={false} name="image" label={t('imageUrl')} placeholder="https://picsum.photos/200" />
                     </div>
                   )}
 
@@ -190,7 +197,7 @@ export default function CreateUpdateModel({
                     <Button
                       color="danger"
                       type="submit"
-                      text={formData?._id ? 'Resend' : 'Send'}
+                      text={formData?._id ? t('resend') : t('send')}
                       postIcon={<FaRegPaperPlane className="text-base" />}
                       isSubmitting={isSubmitting}
                     />
