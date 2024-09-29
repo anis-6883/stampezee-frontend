@@ -10,6 +10,7 @@ import { useCreateNotificationMutation } from '@/features/retailer/notification/
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
@@ -30,7 +31,8 @@ export default function CreateUpdateModel({
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createNotification, { isSuccess: createSuccess, error: createError }] = useCreateNotificationMutation();
-
+  const t = useTranslations('SendAndResendNotification');
+  const tCommon = useTranslations('RetailerCommon');
   const initialValues = {
     title: formData?.title || '',
     description: formData?.description || '',
@@ -39,8 +41,8 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('Required!'),
-    description: Yup.string().required('Required!'),
+    title: Yup.string().required(tCommon('required')),
+    description: Yup.string().required(tCommon('required')),
   });
 
   const submitHandler = async (values: any) => {
@@ -86,7 +88,7 @@ export default function CreateUpdateModel({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Resend Regular Notification</Title> : <Title as="h4">Send Regular Notification</Title>}
+          {formData?._id ? <Title as="h4">{t('resendRegularNotification')}</Title> : <Title as="h4">{t('sendRegularNotification')}</Title>}
 
           <ActionIcon
             size="sm"
@@ -103,16 +105,16 @@ export default function CreateUpdateModel({
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
             {({ setFieldValue, values }) => (
               <Form className="mt-5">
-                <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
+                <InputField name="title" label={t('title')} placeholder="Buy 10 Pizza Get 1 Coke" />
                 <div className="my-3">
-                  <InputTextarea name="description" label="Description" placeholder="Write here..." />
+                  <InputTextarea name="description" label={t('description')} placeholder="Write here..." />
                 </div>
 
                 <div className="my-3">
                   <SelectField
                     name="imageType"
                     required={false}
-                    label="Image Type"
+                    label={t('imageType')}
                     value={values?.imageType}
                     options={[
                       { id: 1, name: 'url', value: 'url' },
@@ -127,7 +129,7 @@ export default function CreateUpdateModel({
 
                 {values?.imageType === 'image' && (
                   <div className="my-4">
-                    <p className="font-medium">Attach Image</p>
+                    <p className="font-medium">{t('attachImage')}</p>
                     <DragAndDropUpload
                       value={{ name: 'image', image: values.image }}
                       onChange={(image: any) => setFieldValue('image', image)}
@@ -151,7 +153,7 @@ export default function CreateUpdateModel({
                   <Button
                     color="danger"
                     type="submit"
-                    text={formData?._id ? 'Resend' : 'Send'}
+                    text={formData?._id ? t('resend') : t('send')}
                     postIcon={<FaRegPaperPlane className="text-base" />}
                     isSubmitting={isSubmitting}
                   />

@@ -113,7 +113,8 @@
   },
   "RetailerCommon": {
     "required": "¡Requerido!",
-    "errorMessage": "Algo salió mal. ¡Inténtalo de nuevo!"
+    "errorMessage": "Algo salió mal. ¡Inténtalo de nuevo!",
+    "mandatoryFieldsMessage": "Los campos marcados con <span class=\"text-red-600\">*</span> son obligatorios!"
   },
   "RetailerSidebar": {
     "Dashboard": "Panel",
@@ -121,7 +122,7 @@
     "Billing": "Facturación",
     "Refunds": "Reembolsos",
     "Branches": "Sucursales",
-    "Sub-Admins (Team)": "Subadministradores (Equipo)",
+    "Sub-Admins": "Subadministradores",
     "Stamps": "Sellos",
     "Scans": "Escaneos",
     "Customers": "Clientes",
@@ -229,5 +230,194 @@
     "status": "Estado",
     "actions": "Acciones",
     "placeHolder": "Buscar por Nombre"
+  },
+  "RetailerStamp": {
+    "title": "Gestionar Sellos",
+    "stamps": "Sellos",
+    "dashboard": "Panel de control",
+    "addNewStamp": "Agregar Nuevo Sello",
+    "updateStamp": "Actualizar un Sello"
+  },
+  "RetailerStampTable": {
+    "info": "Información",
+    "reward": "Recompensa",
+    "validityDate": "Fecha de Validez",
+    "publish": "Publicar",
+    "status": "Estado",
+    "actions": "Acciones",
+    "placeHolder": "Buscar por Título del Sello",
+    "title": "Título",
+    "category": "Categoría",
+    "branch": "Sucursal",
+    "noOfStampsToCollect": "No. de Sellos para Recolectar",
+    "rewardType": "Tipo de Recompensa",
+    "minPurchaseAmount": "Monto Mínimo de Compra",
+    "noExpiration": "Sin Expiración",
+    "startedAt": "Comenzado en",
+    "expiredAt": "Expirado en",
+    "publishNow": "Publicar Ahora",
+    "published": "Publicado"
+  },
+  "RetailerCreateAndUpdateStamp": {
+    "createStamp": "Crear un Sello",
+    "updateStamp": "Actualizar un Sello",
+    "create": "Crear",
+    "cloneStamp": "Clonar un Sello",
+    "clone": "Clonar",
+    "title": "Título",
+    "basicRules": "Reglas Básicas",
+    "validityPeriod": "Periodo de Validez",
+    "validDateRange": "Rango de Fechas Válidas",
+    "numberOfStampsToCollect": "Número de Sellos a Recolectar",
+    "update": "Actualizar",
+    "category": "Categoría",
+    "branch": "Sucursal",
+    "noOfStampsToCollect": "No. de Sellos para Recolectar",
+    "rewardType": "Tipo de Recompensa",
+    "minPurchaseAmount": "Monto Mínimo de Compra",
+    "noExpiration": "Sin Expiración",
+    "promotionReward": "Recompensa Promocional",
+    "discount": "Descuento",
+    "promotion": "Promoción",
+    "selectDefaultImage": "Seleccionar Imagen Predeterminada",
+    "description": "Descripción",
+    "draft": "Borrador",
+    "publish": "Publicar"
+  },
+  "RetailerScan": {
+    "title": "Gestionar Escaneo de Estampas",
+    "stampScan": "Escaneo de Estampas",
+    "dashboard": "Tablero"
+  },
+  "RetailerScanTab": {
+    "offerAndScan": "Oferta y Escaneo",
+    "branch": "Sucursal",
+    "customer": "Cliente",
+    "scanTime": "Hora del Escaneo",
+    "stampTitle": "Título de Estampa",
+    "stampCategory": "Categoría de Estampa",
+    "noOfStampToCollect": "Número de Estampas para Recolectar",
+    "basicRules": "Reglas Básicas",
+    "status": "Estado",
+    "minPurchaseAmount": "Monto Mínimo de Compra",
+    "rewardType": "Tipo de Recompensa",
+    "reward": "Recompensa",
+    "branchName": "Nombre de la Sucursal",
+    "branchAddress": "Dirección de la Sucursal",
+    "subAdminName": "Nombre del Subadministrador",
+    "subAdminEmail": "Correo del Subadministrador",
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "country": "País"
+  },
+  "RetailerStampScanTable": {
+    "stampTitle": "Título de Estampa",
+    "scanDate": "Fecha de Escaneo",
+    "branch": "Sucursal",
+    "customer": "Cliente",
+    "scannedBy": "Escaneado Por",
+    "status": "Estado",
+    "placeHolder": "Buscar por Nombre y Correo Electrónico del Cliente"
+  },
+  "RetailerProfile": {
+    "title": "Gestionar Perfil",
+    "profile": "Perfil del Minorista",
+    "dashboard": "Tablero",
+    "storeName": "Nombre de la Tienda",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "phoneNumber": "Número de Teléfono",
+    "country": "País",
+    "province": "Provincia",
+    "city": "Ciudad",
+    "postalCode": "Código Postal",
+    "address": "Dirección",
+    "email": "Correo Electrónico",
+    "update": "Actualizar",
+    "owner": "Propietario"
+  },
+  "RetailerBalanceCard": {
+    "plan": "Plan",
+    "expire": "Expira",
+    "current": "Actual",
+    "usage": "Uso"
+  },
+  "RetailerNotification": {
+    "title": "Gestionar Notificación Regular",
+    "regularNotification": "Notificación Regular",
+    "dashboard": "Tablero"
+  },
+  "SendAndResendNotification": {
+    "sendRegularNotification": "Enviar Notificación Regular",
+    "resendRegularNotification": "Reenviar Notificación Regular",
+    "title": "Título",
+    "description": "Descripción",
+    "imageType": "Tipo de Imagen",
+    "imageUrl": "URL de Imagen",
+    "attachImage": "Adjuntar Imagen",
+    "send": "Enviar",
+    "resend": "Reenviar"
+  },
+  "RegularNotificationTable": {
+    "regularNotificationSendLimit": "Límite de Envío de Notificación Regular",
+    "image": "Imagen",
+    "title": "Título",
+    "description": "Descripción",
+    "sendTime": "Hora de Envío",
+    "actions": "Acciones",
+    "searchByNotificationTitle": "Buscar por Título de Notificación",
+    "sendNotification": "Enviar Notificación"
+  },
+  "LocationBasedNotification": {
+    "title": "Gestionar Notificaciones Basadas en Ubicación",
+    "locationBasedNotifications": "Notificación Basada en Ubicación",
+    "dashboard": "Panel de control"
+  },
+  "SendAndResendLocationBasedNotification": {
+    "sendLocationBasedNotification": "Enviar Notificación",
+    "resendLocationBasedNotification": "Reenviar Notificación",
+    "title": "Título",
+    "description": "Descripción",
+    "radius": "Radio",
+    "address": "Dirección",
+    "imageType": "Tipo de Imagen",
+    "imageUrl": "URL de Imagen",
+    "attachImage": "Adjuntar Imagen",
+    "send": "Enviar",
+    "resend": "Reenviar"
+  },
+  "LocationBasedNotificationTable": {
+    "locationBasedNotificationSendLimit": "Límite de Envío de Notificación Basada en Ubicación",
+    "image": "Imagen",
+    "title": "Título",
+    "description": "Descripción",
+    "sendTime": "Hora de Envío",
+    "actions": "Acciones",
+    "radius": "Radio",
+    "address": "Dirección",
+    "searchByNotificationTitle": "Buscar por Título de Notificación",
+    "sendNotification": "Enviar Notificación"
+  },
+  "RetailerStampImage": {
+    "title": "Gestionar Imagen de Sello Personalizado",
+    "customStampImage": "Gestionar Sello Personalizado",
+    "dashboard": "Panel de control"
+  },
+  "RetailerStampImageTable": {
+    "image": "Imagen",
+    "title": "Título",
+    "description": "Descripción",
+    "status": "Estado",
+    "actions": "Acciones",
+    "validityDate": "Fecha de Validez",
+    "placeHolder": "Buscar por Título de Imagen de Sello"
+  },
+  "RetailerStampImageCreateUpdate": {
+    "addNewStampImage": "Agregar Nueva Imagen de Sello",
+    "updateStampImage": "Actualizar Imagen de Sello",
+    "title": "Título",
+    "update": "Actualizar",
+    "submit": "Enviar"
   }
 }

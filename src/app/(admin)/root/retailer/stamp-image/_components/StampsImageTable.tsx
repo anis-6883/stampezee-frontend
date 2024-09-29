@@ -12,6 +12,7 @@ import {
 import { IQueryType } from '@/types';
 import { countDaysLeft } from '@/utils';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -23,6 +24,8 @@ import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function StampsImageTable() {
+  const t = useTranslations('RetailerStampImageTable');
+  const t2 = useTranslations('RetailerStampImageCreateUpdate');
   const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
@@ -66,11 +69,11 @@ export default function StampsImageTable() {
 
   const structure = [
     {
-      header: 'Title',
+      header: t('title'),
       accessorKey: 'title',
     },
     {
-      header: 'Image',
+      header: t('image'),
       accessorKey: 'image',
       Cell: ({ row }: any) => (
         <div>
@@ -79,7 +82,7 @@ export default function StampsImageTable() {
       ),
     },
     {
-      header: 'Status',
+      header: t('status'),
       accessorKey: 'status',
       Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
       mantineTableHeadCellProps: {
@@ -90,7 +93,7 @@ export default function StampsImageTable() {
       },
     },
     {
-      header: 'Validity Date',
+      header: t('validityDate'),
       Cell: ({ row }: any) => {
         const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
         return <span className="font-semibold text-danger">{countDays < 0 ? 'Expired' : `${countDays} days left`}</span>;
@@ -103,7 +106,7 @@ export default function StampsImageTable() {
       },
     },
     {
-      header: 'Actions',
+      header: t('actions'),
       Cell: ({ row }: any) => {
         return (
           <div className="flex items-center justify-center gap-2">
@@ -143,7 +146,7 @@ export default function StampsImageTable() {
             className="w-full"
             color="danger"
             onClick={() => setCreateState(true)}
-            text="Add New Stamp Image"
+            text={t2('addNewStampImage')}
             preIcon={<HiPlus className="text-base" />}
           />
         </div>
@@ -170,7 +173,7 @@ export default function StampsImageTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Stamp Image Title"
+        searchPlaceHolder={t('placeHolder')}
       />
 
       <DeleteConfirmModal

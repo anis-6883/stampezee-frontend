@@ -95,7 +95,7 @@ export default function CreateUpdateModal({
         return emailRegex.test(value);
       })
       .required(tCommon('required')),
-    password: (formData?._id ? Yup.string() : Yup.string().required(tCommon)).min(6, 'At least 6 characters long!'),
+    password: (formData?._id ? Yup.string() : Yup.string().required(tCommon('required'))).min(6, 'At least 6 characters long!'),
     image: Yup.string().nullable(),
   });
 
@@ -185,7 +185,7 @@ export default function CreateUpdateModal({
                   <Button
                     color="danger"
                     type="submit"
-                    text={formData?._id ? 'Update' : 'Submit'}
+                    text={formData?._id ? t('update') : t('submit')}
                     postIcon={<BsCheck2Circle className="text-base" />}
                     isSubmitting={isSubmitting}
                   />

@@ -14,6 +14,7 @@ import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -29,6 +30,8 @@ import SwitchButton from '../../../_components/SwitchButton';
 import StampPublishedModal from './StampPublishedModal';
 
 export default function StampTable({ offset }: { offset: number }) {
+  const t = useTranslations('RetailerStampTable');
+  const tStamp = useTranslations('RetailerStamp');
   const { data: session }: any = useSession();
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -95,7 +98,7 @@ export default function StampTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Info',
+      header: t('info'),
       accessorKey: 'image',
       Cell: ({ row }: any) => (
         <div className="flex items-center gap-3">
@@ -115,16 +118,16 @@ export default function StampTable({ offset }: { offset: number }) {
           <div>
             <div className="text-md mx-auto text-start">
               <p>
-                <span className="font-bold">Title:</span> {row?.original.title}
+                <span className="font-bold">{t('title')}:</span> {row?.original.title}
               </p>
               <p>
-                <span className="font-bold">Category:</span> {_.startCase(_.toLower(row?.original?.category?.name))}
+                <span className="font-bold">{t('category')}:</span> {_.startCase(_.toLower(row?.original?.category?.name))}
               </p>
               <p>
-                <span className="font-bold">Branch:</span> {row?.original?.branch?.name}
+                <span className="font-bold">{t('branch')}:</span> {row?.original?.branch?.name}
               </p>
               <p>
-                <span className="font-bold">No. Of Stamps To Collect:</span> {row?.original?.noOfStampsToCollect}
+                <span className="font-bold">{t('noOfStampsToCollect')}:</span> {row?.original?.noOfStampsToCollect}
               </p>
             </div>
           </div>
@@ -133,38 +136,38 @@ export default function StampTable({ offset }: { offset: number }) {
       size: 350,
     },
     {
-      header: 'Reward',
+      header: t('reward'),
       accessorKey: 'rewardType',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Reward Type:</span> {row?.original?.rewardType}
+            <span className="font-bold">{t('rewardType')}:</span> {row?.original?.rewardType}
           </p>
           <p>
-            <span className="font-bold">Reward:</span>{' '}
+            <span className="font-bold">{t('reward')}:</span>{' '}
             {row?.original?.rewardType === 'discount' ? `${row?.original?.discountReward}%` : row?.original?.promotionReward}
           </p>
           <p>
-            <span className="font-bold">Min. Purchase Amount:</span> {row?.original?.minPurchaseAmount} CAD
+            <span className="font-bold">{t('minPurchaseAmount')}:</span> {row?.original?.minPurchaseAmount} CAD
           </p>
         </div>
       ),
       size: 250,
     },
     {
-      header: 'Validity Date',
+      header: t('validityDate'),
       Cell: ({ row }: any) => {
         return row?.original?.hasValidity ? (
           <div className="text-md mx-auto text-start">
             <p>
-              <span className="font-bold">Started At:</span> {convertDateByOffset(row?.original?.startedAt, offset)}
+              <span className="font-bold">{t('startedAt')}:</span> {convertDateByOffset(row?.original?.startedAt, offset)}
             </p>
             <p>
-              <span className="font-bold">Expired At:</span> {convertDateByOffset(row?.original?.expiredAt, offset)}
+              <span className="font-bold">{t('expiredAt')}:</span> {convertDateByOffset(row?.original?.expiredAt, offset)}
             </p>
           </div>
         ) : (
-          <div className="text-md mx-auto text-start font-bold">No Expiration</div>
+          <div className="text-md mx-auto text-start font-bold">{t('noExpiration')}</div>
         );
       },
       mantineTableHeadCellProps: {
@@ -176,16 +179,16 @@ export default function StampTable({ offset }: { offset: number }) {
       size: 250,
     },
     {
-      header: 'Publish',
+      header: t('publish'),
       accessorKey: 'isPublished',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <div className="text-white">
             {!row?.original?.isPublished ? (
-              <Button className="!m-0" onClick={() => handlePublishStamp(row?.original)} color="danger" text="Publish Now" />
+              <Button className="!m-0" onClick={() => handlePublishStamp(row?.original)} color="danger" text={t('publishNow')} />
             ) : (
               <Badge className="!bg-success">
-                <IoCheckmarkCircle className="text-xl" /> {_.capitalize('published')}
+                <IoCheckmarkCircle className="text-xl" /> {_.capitalize(t('published'))}
               </Badge>
             )}
           </div>
@@ -200,7 +203,7 @@ export default function StampTable({ offset }: { offset: number }) {
       size: 200,
     },
     {
-      header: 'Status',
+      header: t('status'),
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         return <SwitchButton updateStatus={updateStampStatus} id={row?.original?._id} status={row?.original?.status} />;
@@ -213,7 +216,7 @@ export default function StampTable({ offset }: { offset: number }) {
       },
     },
     {
-      header: 'Actions',
+      header: t('actions'),
       Cell: ({ row }: any) => {
         return row?.original?.isPublished ? (
           <div className="flex gap-2">
@@ -243,7 +246,7 @@ export default function StampTable({ offset }: { offset: number }) {
       <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
         <StatusIndicator />
         <Link href={routes.privateRoutes.retailer.stamp.create}>
-          <Button className="w-full" color="danger" text="Add New Stamp" preIcon={<HiPlus className="text-base" />} />
+          <Button className="w-full" color="danger" text={tStamp('addNewStamp')} preIcon={<HiPlus className="text-base" />} />
         </Link>
       </div>
       <Table
@@ -267,7 +270,7 @@ export default function StampTable({ offset }: { offset: number }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search by Stamp Title"
+        searchPlaceHolder={t('placeHolder')}
       />
 
       <StampPublishedModal

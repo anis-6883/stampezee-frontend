@@ -14,6 +14,7 @@ import objectToFormData from '@/utils/objectToFormData';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -23,6 +24,8 @@ import { FieldError } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function UpdateProfileForm() {
+  const t = useTranslations('RetailerProfile');
+  const tRetailerCommon = useTranslations('RetailerCommon');
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: session, update } = useSession();
@@ -70,16 +73,16 @@ export default function UpdateProfileForm() {
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string().required('Required!'),
-    firstName: Yup.string().required('Required!'),
+    storeName: Yup.string().required(tRetailerCommon('required')),
+    firstName: Yup.string().required(tRetailerCommon('required')),
     lastName: Yup.string(),
-    email: Yup.string().email('Invalid email').required('Required!'),
-    phone: Yup.string().required('Required!'),
-    country: Yup.string().required('Required!'),
-    province: Yup.string().required('Required!'),
-    city: Yup.string().required('Required!'),
-    postalCode: Yup.string().required('Required!'),
-    address: Yup.string().required('Required!'),
+    email: Yup.string().email('Invalid email').required(tRetailerCommon('required')),
+    phone: Yup.string().required(tRetailerCommon('required')),
+    country: Yup.string().required(tRetailerCommon('required')),
+    province: Yup.string().required(tRetailerCommon('required')),
+    city: Yup.string().required(tRetailerCommon('required')),
+    postalCode: Yup.string().required(tRetailerCommon('required')),
+    address: Yup.string().required(tRetailerCommon('required')),
   });
 
   const handleSubmit = async (values: any) => {
@@ -116,10 +119,10 @@ export default function UpdateProfileForm() {
                   isRounded={true}
                   brandText="Brand Logo"
                 />
-                <InputField name="storeName" label="Store Name" placeholder="Burger King" />
+                <InputField name="storeName" label={t('storeName')} placeholder="Burger King" />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <InputField name="firstName" label="First Name (Owner)" placeholder="John" />
-                  <InputField name="lastName" label="Last Name (Owner)" placeholder="Doe" required={false} />
+                  <InputField name="firstName" label={`${t('firstName')} (${t('owner')})`} placeholder="John" />
+                  <InputField name="lastName" label={`${t('lastName')} (${t('owner')})`} placeholder="Doe" required={false} />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -128,7 +131,7 @@ export default function UpdateProfileForm() {
                     name="phone"
                     label={
                       <p>
-                        Phone Number <span className="text-red-600">*</span>
+                        {t('phoneNumber')} <span className="text-red-600">*</span>
                       </p>
                     }
                     country="ca"
@@ -145,7 +148,7 @@ export default function UpdateProfileForm() {
                   <div className="flex flex-col gap-1">
                     <div>
                       <p className="font-medium">
-                        Country
+                        {t('country')}
                         <span className="text-red-500"> *</span>
                       </p>
                     </div>
@@ -166,14 +169,14 @@ export default function UpdateProfileForm() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                  <InputField name="province" label="Province" placeholder="Ontario" />
-                  <InputField name="city" label="City" placeholder="Toronto" />
-                  <InputField name="postalCode" label="Postal Code" placeholder="M3C" />
+                  <InputField name="province" label={t('province')} placeholder="Ontario" />
+                  <InputField name="city" label={t('city')} placeholder="Toronto" />
+                  <InputField name="postalCode" label={t('postalCode')} placeholder="M3C" />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <InputField disabled={true} name="email" label="Email" placeholder="john@email.com" />
-                  <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" />
+                  <InputField disabled={true} name="email" label={t('email')} placeholder="john@email.com" />
+                  <InputField name="address" label={t('address')} placeholder="120 Bremner Blvd, Suite 800" />
                 </div>
 
                 <p className="flex flex-col text-end text-xs font-semibold">
@@ -186,7 +189,7 @@ export default function UpdateProfileForm() {
                   <Button
                     color="danger"
                     type="submit"
-                    text="Update"
+                    text={t('update')}
                     postIcon={<BsCheck2Circle className="text-base" />}
                     isSubmitting={isSubmitting}
                   />

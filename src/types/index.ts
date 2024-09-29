@@ -17,6 +17,7 @@ export interface ITableProps {
   searchFieldWidth?: string;
   enableRowNumbers?: boolean;
   renderDetailPanel?: any;
+  showGlobalFilter?: boolean;
 }
 
 export interface ICountrySelect {

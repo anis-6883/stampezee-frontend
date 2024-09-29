@@ -7,6 +7,7 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateStampImageMutation, useUpdateStampImageMutation } from '@/features/retailer/stamp-image/stampApi';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -25,6 +26,8 @@ export default function CreateUpdateModel({
   setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
 }) {
+  const t2 = useTranslations('RetailerStampImageCreateUpdate');
+  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [createStampImage, { isSuccess: createSuccess, error: createError }] = useCreateStampImageMutation();
@@ -36,8 +39,8 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('Title is required'),
-    image: Yup.mixed().required('Image is required'),
+    title: Yup.string().required(tCommon('required')),
+    image: Yup.mixed().required(tCommon('required')),
   });
 
   const submitHandler = async (values: any) => {
@@ -96,7 +99,7 @@ export default function CreateUpdateModel({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Update A Stamp Image</Title> : <Title as="h4">Add New Stamp Image</Title>}
+          {formData?._id ? <Title as="h4">{t2('updateStampImage')}</Title> : <Title as="h4">{t2('addNewStampImage')}</Title>}
 
           <ActionIcon
             size="sm"
@@ -130,7 +133,7 @@ export default function CreateUpdateModel({
                   />
                 </div>
 
-                <InputField name="title" label="Title" placeholder="Stamp One" />
+                <InputField name="title" label={t2('title')} placeholder="Stamp One" />
 
                 <p className="mt-5 text-end text-xs font-semibold">
                   Fields marked with <span className="text-red-600">*</span> are mandatory!
@@ -139,7 +142,7 @@ export default function CreateUpdateModel({
                   <Button
                     color={'danger'}
                     type="submit"
-                    text={formData?._id ? 'Update' : 'Submit'}
+                    text={formData?._id ? t2('update') : t2('submit')}
                     postIcon={<BsCheck2Circle className="text-base" />}
                     isSubmitting={isSubmitting}
                   />

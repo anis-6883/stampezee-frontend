@@ -8,6 +8,7 @@ import { useGetAllNotificationQuery } from '@/features/retailer/notification/not
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
@@ -15,6 +16,8 @@ import { IoAlarmOutline } from 'react-icons/io5';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { offset: number; googleMapsApiKey: string }) {
+  const t = useTranslations('LocationBasedNotificationTable');
+  const t2 = useTranslations('SendAndResendLocationBasedNotification');
   const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
@@ -35,7 +38,7 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
 
   const structure = [
     {
-      header: 'Image',
+      header: t('image'),
       accessorKey: 'image',
       enableSorting: false,
       Cell: ({ row }: any) => (
@@ -45,13 +48,13 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
       ),
     },
     {
-      header: 'Title',
+      header: t('title'),
       accessorKey: 'title',
       enableSorting: false,
       Cell: ({ row }: any) => <div>{row?.original?.title}</div>,
     },
     {
-      header: 'Description',
+      header: t('description'),
       accessorKey: 'description',
       enableSorting: false,
       Cell: ({ row }: any) => (
@@ -61,7 +64,7 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
       ),
     },
     {
-      header: 'Send Time',
+      header: t('sendTime'),
       Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original?.createdAt, offset)}</div>,
       mantineTableHeadCellProps: {
         align: 'start',
@@ -72,15 +75,15 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
       size: 150,
     },
     {
-      header: 'Address',
+      header: t('address'),
       accessorKey: 'address.name',
     },
     {
-      header: 'Radius(km)',
+      header: `${t('radius')}(km)`,
       accessorKey: 'radius',
     },
     {
-      header: 'Actions',
+      header: t('actions'),
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Button
@@ -95,7 +98,7 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
               setCreateState(true);
             }}
             className="!m-0 !px-3 !py-2 !text-xs"
-            text="Resend"
+            text={t2('resend')}
             color="danger"
             preIcon={<FaRegPaperPlane className="text-base" />}
           />
@@ -117,7 +120,7 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
         <div className="flex items-center gap-x-2 rounded-lg border border-light px-3">
           <IoAlarmOutline className="text-xl" />
           <h2 className="flex items-center gap-x-1 font-semibold">
-            Location Based Notification Send Limit:
+            {t('locationBasedNotificationSendLimit')}:
             {isLoading ? (
               <Skeleton className="h-4 w-4 rounded" />
             ) : (
@@ -129,7 +132,7 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
           className="!m-0"
           color="danger"
           onClick={() => setCreateState(true)}
-          text="Send Notification"
+          text={t('sendNotification')}
           preIcon={<FaRegPaperPlane className="text-base" />}
         />
       </div>
@@ -155,7 +158,7 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search by Notification Title"
+        searchPlaceHolder={t('searchByNotificationTitle')}
       />
 
       <CreateUpdateModel

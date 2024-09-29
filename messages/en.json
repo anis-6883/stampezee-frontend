@@ -114,7 +114,8 @@
   },
   "RetailerCommon": {
     "required": "Required!",
-    "errorMessage": "Something went wrong. Please try again!"
+    "errorMessage": "Something went wrong. Please try again!",
+    "mandatoryFieldsMessage": "Fields marked with <span class=\"text-red-600\">*</span> are mandatory!"
   },
   "RetailerSidebar": {
     "Dashboard": "Dashboard",
@@ -122,7 +123,7 @@
     "Billing": "Billing",
     "Refunds": "Refunds",
     "Branches": "Branches",
-    "Sub-Admins (Team)": "Sub-Admins (Team)",
+    "Sub-Admins": "Sub-Admins",
     "Stamps": "Stamps",
     "Scans": "Scans",
     "Customers": "Customers",
@@ -232,5 +233,194 @@
     "status": "Status",
     "actions": "Actions",
     "placeHolder": "Search By Name"
+  },
+  "RetailerStamp": {
+    "title": "Manage Stamps",
+    "stamps": "Stamps",
+    "dashboard": "Dashboard",
+    "addNewStamp": "Add New Stamp",
+    "updateStamp": "Update A Stamp"
+  },
+  "RetailerStampTable": {
+    "info": "Info",
+    "reward": "Reward",
+    "validityDate": "Validity Date",
+    "publish": "Publish",
+    "status": "Status",
+    "actions": "Actions",
+    "placeHolder": "Search By Stamp Title",
+    "title": "Title",
+    "category": "Category",
+    "branch": "Branch",
+    "noOfStampsToCollect": "No. Of Stamps To Collect",
+    "rewardType": "Reward Type",
+    "minPurchaseAmount": "Min. Purchase Amount",
+    "noExpiration": "No Expiration",
+    "startedAt": "Started At",
+    "expiredAt": "Expired At",
+    "publishNow": "Publish Now",
+    "published": "Published"
+  },
+  "RetailerCreateAndUpdateStamp": {
+    "createStamp": "Create A Stamp",
+    "updateStamp": "Update A Stamp",
+    "cloneStamp": "Clone A Stamp",
+    "create": "Create",
+    "clone": "Clone",
+    "title": "Title",
+    "basicRules": "Basic Rules",
+    "validityPeriod": "Validity Period",
+    "validDateRange": "Valid Date Range",
+    "numberOfStampsToCollect": "Number of Stamps to Collect",
+    "update": "Update",
+    "category": "Category",
+    "branch": "Branch",
+    "noOfStampsToCollect": "No. Of Stamps To Collect",
+    "rewardType": "Reward Type",
+    "minPurchaseAmount": "Min. Purchase Amount",
+    "noExpiration": "No Expiration",
+    "promotionReward": "Promotion Reward",
+    "discount": "Discount",
+    "promotion": "Promotion",
+    "selectDefaultImage": "Select Default Image",
+    "description": "Description",
+    "draft": "Draft",
+    "publish": "Publish"
+  },
+  "RetailerScan": {
+    "title": "Manage Stamp Scan",
+    "stampScan": "Stamp Scan",
+    "dashboard": "Dashboard"
+  },
+  "RetailerScanTab": {
+    "offerAndScan": "Offer & Scan",
+    "branch": "Branch",
+    "customer": "Customer",
+    "scanTime": "Scan Time",
+    "stampTitle": "Stamp Title",
+    "stampCategory": "Stamp Category",
+    "noOfStampToCollect": "No Of Stamp To Collect",
+    "basicRules": "Basic Rules",
+    "status": "Status",
+    "minPurchaseAmount": "Min. Purchase Amount",
+    "rewardType": "Reward Type",
+    "reward": "Reward",
+    "branchName": "Branch Name",
+    "branchAddress": "Branch Address",
+    "subAdminName": "Sub Admin Name",
+    "subAdminEmail": "Sub Admin Email",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "country": "Country"
+  },
+  "RetailerStampScanTable": {
+    "stampTitle": "Stamp Title",
+    "scanDate": "Scan Date",
+    "branch": "Branch",
+    "customer": "Customer",
+    "scannedBy": "Scanned By",
+    "status": "Status",
+    "placeHolder": "Search By Customer Name & Email"
+  },
+  "RetailerProfile": {
+    "title": "Manage Profile",
+    "profile": "Retailer Profile",
+    "dashboard": "Dashboard",
+    "storeName": "Store Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "country": "Country",
+    "province": "Province",
+    "city": "City",
+    "postalCode": "Postal Code",
+    "address": "Address",
+    "email": "Email",
+    "update": "Update",
+    "owner": "Owner"
+  },
+  "RetailerBalanceCard": {
+    "plan": "Plan",
+    "expire": "Expire",
+    "current": "Current",
+    "usage": "Usage"
+  },
+  "RetailerNotification": {
+    "title": "Manage Regular Notification",
+    "regularNotification": "Regular Notification",
+    "dashboard": "Dashboard"
+  },
+  "SendAndResendNotification": {
+    "sendRegularNotification": "Send Regular Notification",
+    "resendRegularNotification": "Resend Regular Notification",
+    "title": "Title",
+    "description": "Description",
+    "imageType": "Image Type",
+    "imageUrl": "Image URL",
+    "attachImage": "Attach Image",
+    "send": "Send",
+    "resend": "Resend"
+  },
+  "RegularNotificationTable": {
+    "regularNotificationSendLimit": "Regular Notification Send Limit",
+    "image": "Image",
+    "title": "Title",
+    "description": "Description",
+    "sendTime": "Send Time",
+    "actions": "Actions",
+    "searchByNotificationTitle": "Search by Notification Title",
+    "sendNotification": "Send Notification"
+  },
+  "LocationBasedNotification": {
+    "title": "Manage Location Based Notifications",
+    "locationBasedNotifications": "Location Based Notification",
+    "dashboard": "Dashboard"
+  },
+  "SendAndResendLocationBasedNotification": {
+    "sendLocationBasedNotification": "Send Notification",
+    "resendLocationBasedNotification": "Resend Notification",
+    "title": "Title",
+    "description": "Description",
+    "radius": "Radius",
+    "address": "Address",
+    "imageType": "Image Type",
+    "imageUrl": "Image URL",
+    "attachImage": "Attach Image",
+    "send": "Send",
+    "resend": "Resend"
+  },
+  "LocationBasedNotificationTable": {
+    "locationBasedNotificationSendLimit": "Location Based Notification Send Limit",
+    "image": "Image",
+    "title": "Title",
+    "description": "Description",
+    "sendTime": "Send Time",
+    "actions": "Actions",
+    "radius": "Radius",
+    "address": "Address",
+    "searchByNotificationTitle": "Search by Notification Title",
+    "sendNotification": "Send Notification"
+  },
+  "RetailerStampImage": {
+    "title": "Manage Custom Stamp Image",
+    "customStampImage": "Manage Custom Stamp",
+    "dashboard": "Dashboard"
+  },
+  "RetailerStampImageTable": {
+    "image": "Image",
+    "title": "Title",
+    "description": "Description",
+    "status": "Status",
+    "actions": "Actions",
+    "validityDate": "Validity Date",
+    "placeHolder": "Search By Stamp Image Title"
+  },
+  "RetailerStampImageCreateUpdate": {
+    "addNewStampImage": "Add New Stamp Image",
+    "updateStampImage": "Update Stamp Image",
+    "title": "Title",
+    "update": "Update",
+    "submit": "Submit"
   }
 }

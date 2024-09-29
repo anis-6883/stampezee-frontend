@@ -113,7 +113,8 @@
   },
   "RetailerCommon": {
     "required": "必需的！",
-    "errorMessage": "出现问题。请再试一次！"
+    "errorMessage": "出现问题。请再试一次！",
+    "mandatoryFieldsMessage": "标记的<span class=\"text-red-600\">*</span>字段是必需的！"
   },
   "RetailerSidebar": {
     "Dashboard": "仪表盘",
@@ -121,7 +122,7 @@
     "Billing": "账单",
     "Refunds": "退款",
     "Branches": "分支机构",
-    "Sub-Admins (Team)": "子管理员（团队）",
+    "Sub-Admins": "子管理员",
     "Stamps": "印章",
     "Scans": "扫描",
     "Customers": "客户",
@@ -229,5 +230,194 @@
     "status": "状态",
     "actions": "操作",
     "placeHolder": "按名称搜索"
+  },
+  "RetailerStamp": {
+    "title": "管理邮票",
+    "stamps": "邮票",
+    "dashboard": "仪表板",
+    "addNewStamp": "添加新邮票",
+    "updateStamp": "更新邮票"
+  },
+  "RetailerStampTable": {
+    "info": "信息",
+    "reward": "奖励",
+    "validityDate": "有效期",
+    "publish": "发布",
+    "status": "状态",
+    "actions": "操作",
+    "placeHolder": "按邮票标题搜索",
+    "title": "标题",
+    "category": "类别",
+    "branch": "分支",
+    "noOfStampsToCollect": "收集邮票的数量",
+    "rewardType": "奖励类型",
+    "minPurchaseAmount": "最低购买金额",
+    "noExpiration": "无到期",
+    "startedAt": "开始于",
+    "expiredAt": "到期于",
+    "publishNow": "立即发布",
+    "published": "已发布"
+  },
+  "RetailerCreateAndUpdateStamp": {
+    "createStamp": "创建邮票",
+    "updateStamp": "更新邮票",
+    "create": "创建",
+    "cloneStamp": "克隆邮票",
+    "clone": "克隆",
+    "title": "标题",
+    "basicRules": "基本规则",
+    "validityPeriod": "有效期",
+    "validDateRange": "有效日期范围",
+    "numberOfStampsToCollect": "收集邮票的数量",
+    "update": "更新",
+    "category": "类别",
+    "branch": "分支",
+    "noOfStampsToCollect": "收集邮票的数量",
+    "rewardType": "奖励类型",
+    "minPurchaseAmount": "最低购买金额",
+    "noExpiration": "无到期",
+    "promotionReward": "促销奖励",
+    "discount": "折扣",
+    "promotion": "促销",
+    "selectDefaultImage": "选择默认图片",
+    "description": "描述",
+    "draft": "草稿",
+    "publish": "发布"
+  },
+  "RetailerScan": {
+    "title": "管理邮票扫描",
+    "stampScan": "邮票扫描",
+    "dashboard": "仪表板"
+  },
+  "RetailerScanTab": {
+    "offerAndScan": "优惠和扫描",
+    "branch": "分支",
+    "customer": "客户",
+    "scanTime": "扫描时间",
+    "stampTitle": "邮票标题",
+    "stampCategory": "邮票类别",
+    "noOfStampToCollect": "要收集的邮票数量",
+    "basicRules": "基本规则",
+    "status": "状态",
+    "minPurchaseAmount": "最低购买金额",
+    "rewardType": "奖励类型",
+    "reward": "奖励",
+    "branchName": "分支名称",
+    "branchAddress": "分支地址",
+    "subAdminName": "子管理员姓名",
+    "subAdminEmail": "子管理员电子邮件",
+    "name": "姓名",
+    "email": "电子邮件",
+    "phone": "电话",
+    "country": "国家"
+  },
+  "RetailerStampScanTable": {
+    "stampTitle": "邮票标题",
+    "scanDate": "扫描日期",
+    "branch": "分支",
+    "customer": "客户",
+    "scannedBy": "扫描者",
+    "status": "状态",
+    "placeHolder": "按客户名称和电子邮件搜索"
+  },
+  "RetailerProfile": {
+    "title": "管理个人资料",
+    "profile": "零售商资料",
+    "dashboard": "仪表板",
+    "storeName": "店铺名称",
+    "firstName": "名",
+    "lastName": "姓",
+    "phoneNumber": "电话号码",
+    "country": "国家",
+    "province": "省份",
+    "city": "城市",
+    "postalCode": "邮政编码",
+    "address": "地址",
+    "email": "电子邮件",
+    "update": "更新",
+    "owner": "所有者"
+  },
+  "RetailerBalanceCard": {
+    "plan": "计划",
+    "expire": "到期",
+    "current": "当前",
+    "usage": "使用情况"
+  },
+  "RetailerNotification": {
+    "title": "管理常规通知",
+    "regularNotification": "常规通知",
+    "dashboard": "仪表板"
+  },
+  "SendAndResendNotification": {
+    "sendRegularNotification": "发送常规通知",
+    "resendRegularNotification": "重新发送常规通知",
+    "title": "标题",
+    "description": "描述",
+    "imageType": "图片类型",
+    "imageUrl": "图片URL",
+    "attachImage": "附加图片",
+    "send": "发送",
+    "resend": "重新发送"
+  },
+  "RegularNotificationTable": {
+    "regularNotificationSendLimit": "常规通知发送限制",
+    "image": "图片",
+    "title": "标题",
+    "description": "描述",
+    "sendTime": "发送时间",
+    "actions": "操作",
+    "searchByNotificationTitle": "按通知标题搜索",
+    "sendNotification": "发送通知"
+  },
+  "LocationBasedNotification": {
+    "title": "管理基于位置的通知",
+    "locationBasedNotifications": "基于位置的通知",
+    "dashboard": "仪表板"
+  },
+  "SendAndResendLocationBasedNotification": {
+    "sendLocationBasedNotification": "发送通知",
+    "resendLocationBasedNotification": "重新发送通知",
+    "title": "标题",
+    "description": "描述",
+    "radius": "半径",
+    "address": "地址",
+    "imageType": "图片类型",
+    "imageUrl": "图片 URL",
+    "attachImage": "附加图片",
+    "send": "发送",
+    "resend": "重新发送"
+  },
+  "LocationBasedNotificationTable": {
+    "locationBasedNotificationSendLimit": "基于位置的通知发送限制",
+    "image": "图片",
+    "title": "标题",
+    "description": "描述",
+    "sendTime": "发送时间",
+    "actions": "操作",
+    "radius": "半径",
+    "address": "地址",
+    "searchByNotificationTitle": "按通知标题搜索",
+    "sendNotification": "发送通知"
+  },
+  "RetailerStampImage": {
+    "title": "管理自定义印章图片",
+    "customStampImage": "管理自定义印章",
+    "dashboard": "仪表板"
+  },
+  "RetailerStampImageTable": {
+    "image": "图片",
+    "title": "标题",
+    "description": "描述",
+    "status": "状态",
+    "actions": "操作",
+    "validityDate": "有效日期",
+    "placeHolder": "按印章图片标题搜索"
+  },
+  "RetailerStampImageCreateUpdate": {
+    "addNewStampImage": "添加新印章图片",
+    "updateStampImage": "更新印章图片",
+    "title": "标题",
+    "update": "更新",
+    "submit": "提交"
   }
 }

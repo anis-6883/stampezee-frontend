@@ -113,7 +113,8 @@
   },
   "RetailerCommon": {
     "required": "필수!",
-    "errorMessage": "문제가 발생했습니다. 다시 시도해주세요!"
+    "errorMessage": "문제가 발생했습니다. 다시 시도해주세요!",
+    "mandatoryFieldsMessage": "필수 필드는 <span class=\"text-red-600\">*</span>입니다!"
   },
 
   "RetailerSidebar": {
@@ -122,7 +123,7 @@
     "Billing": "청구",
     "Refunds": "환불",
     "Branches": "지점",
-    "Sub-Admins (Team)": "서브 관리자 (팀)",
+    "Sub-Admins": "서브 관리자",
     "Stamps": "스탬프",
     "Scans": "스캔",
     "Customers": "고객",
@@ -230,5 +231,194 @@
     "status": "상태",
     "actions": "작업",
     "placeHolder": "이름으로 검색"
+  },
+  "RetailerStamp": {
+    "title": "스탬프 관리",
+    "stamps": "스탬프",
+    "dashboard": "대시보드",
+    "addNewStamp": "새 스탬프 추가",
+    "updateStamp": "스탬프 업데이트"
+  },
+  "RetailerStampTable": {
+    "info": "정보",
+    "reward": "보상",
+    "validityDate": "유효 기간",
+    "publish": "발행",
+    "status": "상태",
+    "actions": "작업",
+    "placeHolder": "스탬프 제목으로 검색",
+    "title": "제목",
+    "category": "카테고리",
+    "branch": "지점",
+    "noOfStampsToCollect": "수집할 스탬프 수",
+    "rewardType": "보상 유형",
+    "minPurchaseAmount": "최소 구매 금액",
+    "noExpiration": "만료 없음",
+    "startedAt": "시작일",
+    "expiredAt": "종료일",
+    "publishNow": "지금 발행",
+    "published": "발행됨"
+  },
+  "RetailerCreateAndUpdateStamp": {
+    "createStamp": "스탬프 생성",
+    "updateStamp": "스탬프 업데이트",
+    "create": "생성",
+    "cloneStamp": "스탬프 복제",
+    "clone": "복제",
+    "title": "제목",
+    "basicRules": "기본 규칙",
+    "validityPeriod": "유효 기간",
+    "validDateRange": "유효 날짜 범위",
+    "numberOfStampsToCollect": "수집할 스탬프 수",
+    "update": "업데이트",
+    "category": "카테고리",
+    "branch": "지점",
+    "noOfStampsToCollect": "수집할 스탬프 수",
+    "rewardType": "보상 유형",
+    "minPurchaseAmount": "최소 구매 금액",
+    "noExpiration": "만료 없음",
+    "promotionReward": "프로모션 보상",
+    "discount": "할인",
+    "promotion": "프로모션",
+    "selectDefaultImage": "기본 이미지 선택",
+    "description": "설명",
+    "draft": "초안",
+    "publish": "발행"
+  },
+  "RetailerScan": {
+    "title": "스탬프 스캔 관리",
+    "stampScan": "스탬프 스캔",
+    "dashboard": "대시보드"
+  },
+  "RetailerScanTab": {
+    "offerAndScan": "오퍼 및 스캔",
+    "branch": "지점",
+    "customer": "고객",
+    "scanTime": "스캔 시간",
+    "stampTitle": "스탬프 제목",
+    "stampCategory": "스탬프 카테고리",
+    "noOfStampToCollect": "수집할 스탬프 수",
+    "basicRules": "기본 규칙",
+    "status": "상태",
+    "minPurchaseAmount": "최소 구매 금액",
+    "rewardType": "보상 유형",
+    "reward": "보상",
+    "branchName": "지점 이름",
+    "branchAddress": "지점 주소",
+    "subAdminName": "서브 관리자 이름",
+    "subAdminEmail": "서브 관리자 이메일",
+    "name": "이름",
+    "email": "이메일",
+    "phone": "전화",
+    "country": "국가"
+  },
+  "RetailerStampScanTable": {
+    "stampTitle": "스탬프 제목",
+    "scanDate": "스캔 날짜",
+    "branch": "지점",
+    "customer": "고객",
+    "scannedBy": "스캔한 사람",
+    "status": "상태",
+    "placeHolder": "고객 이름 및 이메일로 검색"
+  },
+  "RetailerProfile": {
+    "title": "프로필 관리",
+    "profile": "소매업자 프로필",
+    "dashboard": "대시보드",
+    "storeName": "상점 이름",
+    "firstName": "이름",
+    "lastName": "성",
+    "phoneNumber": "전화번호",
+    "country": "국가",
+    "province": "주",
+    "city": "도시",
+    "postalCode": "우편번호",
+    "address": "주소",
+    "email": "이메일",
+    "update": "업데이트",
+    "owner": "소유자"
+  },
+  "RetailerBalanceCard": {
+    "plan": "계획",
+    "expire": "만료",
+    "current": "현재",
+    "usage": "사용량"
+  },
+  "RetailerNotification": {
+    "title": "일반 알림 관리",
+    "regularNotification": "일반 알림",
+    "dashboard": "대시보드"
+  },
+  "SendAndResendNotification": {
+    "sendRegularNotification": "일반 알림 보내기",
+    "resendRegularNotification": "일반 알림 다시 보내기",
+    "title": "제목",
+    "description": "설명",
+    "imageType": "이미지 유형",
+    "imageUrl": "이미지 URL",
+    "attachImage": "이미지 첨부",
+    "send": "보내기",
+    "resend": "다시 보내기"
+  },
+  "RegularNotificationTable": {
+    "regularNotificationSendLimit": "일반 알림 전송 제한",
+    "image": "이미지",
+    "title": "제목",
+    "description": "설명",
+    "sendTime": "전송 시간",
+    "actions": "작업",
+    "searchByNotificationTitle": "알림 제목으로 검색",
+    "sendNotification": "알림 보내기"
+  },
+  "LocationBasedNotification": {
+    "title": "위치 기반 알림 관리",
+    "locationBasedNotifications": "위치 기반 알림",
+    "dashboard": "대시보드"
+  },
+  "SendAndResendLocationBasedNotification": {
+    "sendLocationBasedNotification": "알림 보내기",
+    "resendLocationBasedNotification": "알림 재전송",
+    "title": "제목",
+    "description": "설명",
+    "radius": "반경",
+    "address": "주소",
+    "imageType": "이미지 유형",
+    "imageUrl": "이미지 URL",
+    "attachImage": "이미지 첨부",
+    "send": "보내기",
+    "resend": "재전송"
+  },
+  "LocationBasedNotificationTable": {
+    "locationBasedNotificationSendLimit": "위치 기반 알림 전송 제한",
+    "image": "이미지",
+    "title": "제목",
+    "description": "설명",
+    "sendTime": "전송 시간",
+    "actions": "작업",
+    "radius": "반경",
+    "address": "주소",
+    "searchByNotificationTitle": "알림 제목으로 검색",
+    "sendNotification": "알림 보내기"
+  },
+  "RetailerStampImage": {
+    "title": "맞춤 스탬프 이미지 관리",
+    "customStampImage": "맞춤 스탬프 관리",
+    "dashboard": "대시보드"
+  },
+  "RetailerStampImageTable": {
+    "image": "이미지",
+    "title": "제목",
+    "description": "설명",
+    "status": "상태",
+    "actions": "작업",
+    "validityDate": "유효기간",
+    "placeHolder": "스탬프 이미지 제목으로 검색"
+  },
+  "RetailerStampImageCreateUpdate": {
+    "addNewStampImage": "새 스탬프 이미지 추가",
+    "updateStampImage": "스탬프 이미지 업데이트",
+    "title": "제목",
+    "update": "업데이트",
+    "submit": "제출"
   }
 }

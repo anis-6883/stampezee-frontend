@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 export default function BranchStatsTable() {
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
   const t = useTranslations('RetailerDashboardTable');
+  const t2 = useTranslations('RetailerDashboard');
 
   const tableHeaders = [
     t('serialNo'),
@@ -22,7 +23,7 @@ export default function BranchStatsTable() {
   if (isLoading || isError) {
     return (
       <>
-        <h2 className="mb-5 text-lg font-medium">{t('branchStatistics')}:</h2>
+        <h2 className="mb-5 text-lg font-medium">{t2('branchStatistics')}:</h2>
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -52,7 +53,9 @@ export default function BranchStatsTable() {
 
   return (
     <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
-      <h2 className="mb-5 text-lg font-medium">Branch Statistics: ({totalActiveBranch})</h2>
+      <h2 className="mb-5 text-lg font-medium">
+        {t2('branchStatistics')}: ({totalActiveBranch})
+      </h2>
 
       <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
         <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">

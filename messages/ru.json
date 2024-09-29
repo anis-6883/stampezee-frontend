@@ -113,7 +113,8 @@
   },
   "RetailerCommon": {
     "required": "Обязательно!",
-    "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте снова!"
+    "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте снова!",
+    "mandatoryFieldsMessage": "Поля, отмеченные <span class=\"text-red-600\">*</span> обязательны!"
   },
   "RetailerSidebar": {
     "Dashboard": "Панель управления",
@@ -121,7 +122,7 @@
     "Billing": "Выставление счетов",
     "Refunds": "Возвраты",
     "Branches": "Филиалы",
-    "Sub-Admins (Team)": "Суб-администраторы (Команда)",
+    "Sub-Admins": "Суб-администраторы",
     "Stamps": "Штампы",
     "Scans": "Сканирования",
     "Customers": "Клиенты",
@@ -229,5 +230,194 @@
     "status": "Статус",
     "actions": "Действия",
     "placeHolder": "Поиск по имени"
+  },
+  "RetailerStamp": {
+    "title": "Управление Штампами",
+    "stamps": "Штампы",
+    "dashboard": "Панель управления",
+    "addNewStamp": "Добавить Новый Штамп",
+    "updateStamp": "Обновить Штамп"
+  },
+  "RetailerStampTable": {
+    "info": "Информация",
+    "reward": "Награда",
+    "validityDate": "Дата Действительности",
+    "publish": "Опубликовать",
+    "status": "Статус",
+    "actions": "Действия",
+    "placeHolder": "Поиск по Названию Штампа",
+    "title": "Название",
+    "category": "Категория",
+    "branch": "Филиал",
+    "noOfStampsToCollect": "Количество Штампов для Сбора",
+    "rewardType": "Тип Награды",
+    "minPurchaseAmount": "Минимальная Сумма Покупки",
+    "noExpiration": "Без Истечения",
+    "startedAt": "Началось",
+    "expiredAt": "Истекло",
+    "publishNow": "Опубликовать Сейчас",
+    "published": "Опубликовано"
+  },
+  "RetailerCreateAndUpdateStamp": {
+    "createStamp": "Создать Штамп",
+    "updateStamp": "Обновить Штамп",
+    "create": "Создать",
+    "cloneStamp": "Клонировать Штамп",
+    "clone": "Клонировать",
+    "title": "Название",
+    "basicRules": "Основные Правила",
+    "validityPeriod": "Срок Действия",
+    "validDateRange": "Диапазон Дат",
+    "numberOfStampsToCollect": "Количество Штампов для Сбора",
+    "update": "Обновить",
+    "category": "Категория",
+    "branch": "Филиал",
+    "noOfStampsToCollect": "Количество Штампов для Сбора",
+    "rewardType": "Тип Награды",
+    "minPurchaseAmount": "Минимальная Сумма Покупки",
+    "noExpiration": "Без Истечения",
+    "promotionReward": "Промо-награда",
+    "discount": "Скидка",
+    "promotion": "Продвижение",
+    "selectDefaultImage": "Выбрать Изображение по Умолчанию",
+    "description": "Описание",
+    "draft": "Черновик",
+    "publish": "Опубликовать"
+  },
+  "RetailerScan": {
+    "title": "Управление Сканированием Штампов",
+    "stampScan": "Сканирование Штампов",
+    "dashboard": "Панель управления"
+  },
+  "RetailerScanTab": {
+    "offerAndScan": "Предложение и Сканирование",
+    "branch": "Филиал",
+    "customer": "Клиент",
+    "scanTime": "Время Сканирования",
+    "stampTitle": "Название Штампа",
+    "stampCategory": "Категория Штампа",
+    "noOfStampToCollect": "Количество Штампов для Сбора",
+    "basicRules": "Основные Правила",
+    "status": "Статус",
+    "minPurchaseAmount": "Минимальная Сумма Покупки",
+    "rewardType": "Тип Награды",
+    "reward": "Награда",
+    "branchName": "Название Филиала",
+    "branchAddress": "Адрес Филиала",
+    "subAdminName": "Имя Субадминистратора",
+    "subAdminEmail": "Электронная Почта Субадминистратора",
+    "name": "Имя",
+    "email": "Электронная Почта",
+    "phone": "Телефон",
+    "country": "Страна"
+  },
+  "RetailerStampScanTable": {
+    "stampTitle": "Название Штампа",
+    "scanDate": "Дата Сканирования",
+    "branch": "Филиал",
+    "customer": "Клиент",
+    "scannedBy": "Сканировал",
+    "status": "Статус",
+    "placeHolder": "Поиск по Имени и Электронной Почте Клиента"
+  },
+  "RetailerProfile": {
+    "title": "Управление Профилем",
+    "profile": "Профиль Ритейлера",
+    "dashboard": "Панель управления",
+    "storeName": "Название магазина",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "phoneNumber": "Номер телефона",
+    "country": "Страна",
+    "province": "Провинция",
+    "city": "Город",
+    "postalCode": "Почтовый индекс",
+    "address": "Адрес",
+    "email": "Электронная почта",
+    "update": "Обновить",
+    "owner": "Владелец"
+  },
+  "RetailerBalanceCard": {
+    "plan": "План",
+    "expire": "Истекает",
+    "current": "Текущий",
+    "usage": "Использование"
+  },
+  "RetailerNotification": {
+    "title": "Управление Регулярными Уведомлениями",
+    "regularNotification": "Регулярные Уведомления",
+    "dashboard": "Панель управления"
+  },
+  "SendAndResendNotification": {
+    "sendRegularNotification": "Отправить Регулярное Уведомление",
+    "resendRegularNotification": "Повторно Отправить Регулярное Уведомление",
+    "title": "Заголовок",
+    "description": "Описание",
+    "imageType": "Тип Изображения",
+    "imageUrl": "URL Изображения",
+    "attachImage": "Прикрепить Изображение",
+    "send": "Отправить",
+    "resend": "Повторно Отправить"
+  },
+  "RegularNotificationTable": {
+    "regularNotificationSendLimit": "Лимит отправки регулярных уведомлений",
+    "image": "Изображение",
+    "title": "Заголовок",
+    "description": "Описание",
+    "sendTime": "Время отправки",
+    "actions": "Действия",
+    "searchByNotificationTitle": "Поиск по Заголовку Уведомления",
+    "sendNotification": "Отправить Уведомление"
+  },
+  "LocationBasedNotification": {
+    "title": "Управление уведомлениями на основе местоположения",
+    "locationBasedNotifications": "Уведомление на основе местоположения",
+    "dashboard": "Панель управления"
+  },
+  "SendAndResendLocationBasedNotification": {
+    "sendLocationBasedNotification": "Отправить уведомление",
+    "resendLocationBasedNotification": "Отправить уведомление повторно",
+    "title": "Заголовок",
+    "description": "Описание",
+    "radius": "Радиус",
+    "address": "Адрес",
+    "imageType": "Тип изображения",
+    "imageUrl": "URL изображения",
+    "attachImage": "Прикрепить изображение",
+    "send": "Отправить",
+    "resend": "Повторно отправить"
+  },
+  "LocationBasedNotificationTable": {
+    "locationBasedNotificationSendLimit": "Лимит отправки уведомлений на основе местоположения",
+    "image": "Изображение",
+    "title": "Заголовок",
+    "description": "Описание",
+    "sendTime": "Время отправки",
+    "actions": "Действия",
+    "radius": "Радиус",
+    "address": "Адрес",
+    "searchByNotificationTitle": "Поиск по заголовку уведомления",
+    "sendNotification": "Отправить уведомление"
+  },
+  "RetailerStampImage": {
+    "title": "Управление пользовательским изображением штампа",
+    "customStampImage": "Управление пользовательским штампом",
+    "dashboard": "Панель управления"
+  },
+  "RetailerStampImageTable": {
+    "image": "Изображение",
+    "title": "Заголовок",
+    "description": "Описание",
+    "status": "Статус",
+    "actions": "Действия",
+    "validityDate": "Дата действия",
+    "placeHolder": "Поиск по названию изображения штампа"
+  },
+  "RetailerStampImageCreateUpdate": {
+    "addNewStampImage": "Добавить новое изображение штампа",
+    "updateStampImage": "Обновить изображение штампа",
+    "title": "Заголовок",
+    "update": "Обновить",
+    "submit": "Отправить"
   }
 }

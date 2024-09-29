@@ -20,6 +20,7 @@ export default function Table({
   searchPlaceHolder = 'Search',
   searchFieldWidth = '180px',
   renderDetailPanel,
+  showGlobalFilter = true,
 }: ITableProps) {
   const { data, pagination } = response;
 
@@ -47,7 +48,7 @@ export default function Table({
     },
     positionGlobalFilter: 'left',
     initialState: {
-      showGlobalFilter: true,
+      showGlobalFilter: showGlobalFilter,
     },
     ...(enablePagination && {
       manualPagination: pagination,

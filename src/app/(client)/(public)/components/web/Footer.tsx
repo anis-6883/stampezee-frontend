@@ -139,10 +139,10 @@ export default function Footer({ general }: any) {
                     {/* <img className="MuiBox-root css-0" src="/Linkssets/images/home/Linkpp-store-badge.png" style={{ width: 200 }} />
                     <img className="MuiBox-root css-0" src="/Linkssets/images/home/google-play-badge.png" style={{ width: 200 }} /> */}
 
-                    <Link href={general?.androidDownloadLink} target="_blank">
+                    <Link href={general?.iosDownloadLink} target="_blank">
                       <Image src="/default/app-store-badge.png" alt="App Store Badge" className="h-[45px] w-[150px]" />
                     </Link>
-                    <Link href={general?.iosDownloadLink} target="_blank">
+                    <Link href={general?.androidDownloadLink} target="_blank">
                       <Image src="/default/google-play-badge.png" alt="Google  Store Badge" className="h-[45px] w-[150px]" />
                     </Link>
                   </div>

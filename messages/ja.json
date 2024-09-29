@@ -113,7 +113,8 @@
   },
   "RetailerCommon": {
     "required": "必須!",
-    "errorMessage": "問題が発生しました。もう一度お試しください！"
+    "errorMessage": "問題が発生しました。もう一度お試しください！",
+    "mandatoryFieldsMessage": "マークされたフィールドは<span class=\"text-red-600\">*</span>が必須です！"
   },
   "RetailerSidebar": {
     "Dashboard": "ダッシュボード",
@@ -121,7 +122,7 @@
     "Billing": "請求書",
     "Refunds": "払い戻し",
     "Branches": "支店",
-    "Sub-Admins (Team)": "サブ管理者（チーム）",
+    "Sub-Admins": "サブ管理者",
     "Stamps": "スタンプ",
     "Scans": "スキャン",
     "Customers": "顧客",
@@ -229,5 +230,194 @@
     "status": "ステータス",
     "actions": "操作",
     "placeHolder": "名前で検索"
+  },
+  "RetailerStamp": {
+    "title": "スタンプを管理",
+    "stamps": "スタンプ",
+    "dashboard": "ダッシュボード",
+    "addNewStamp": "新しいスタンプを追加",
+    "updateStamp": "スタンプを更新"
+  },
+  "RetailerStampTable": {
+    "info": "情報",
+    "reward": "報酬",
+    "validityDate": "有効期限",
+    "publish": "公開",
+    "status": "ステータス",
+    "actions": "操作",
+    "placeHolder": "スタンプタイトルで検索",
+    "title": "タイトル",
+    "category": "カテゴリー",
+    "branch": "支店",
+    "noOfStampsToCollect": "集めるスタンプの数",
+    "rewardType": "報酬タイプ",
+    "minPurchaseAmount": "最低購入金額",
+    "noExpiration": "期限なし",
+    "startedAt": "開始日",
+    "expiredAt": "終了日",
+    "publishNow": "今すぐ公開",
+    "published": "公開済み"
+  },
+  "RetailerCreateAndUpdateStamp": {
+    "createStamp": "スタンプを作成",
+    "updateStamp": "スタンプを更新",
+    "create": "作成",
+    "cloneStamp": "スタンプをクローン",
+    "clone": "クローン",
+    "title": "タイトル",
+    "basicRules": "基本ルール",
+    "validityPeriod": "有効期間",
+    "validDateRange": "有効日範囲",
+    "numberOfStampsToCollect": "集めるスタンプの数",
+    "update": "更新",
+    "category": "カテゴリー",
+    "branch": "支店",
+    "noOfStampsToCollect": "集めるスタンプの数",
+    "rewardType": "報酬タイプ",
+    "minPurchaseAmount": "最低購入金額",
+    "noExpiration": "期限なし",
+    "promotionReward": "プロモーション報酬",
+    "discount": "割引",
+    "promotion": "プロモーション",
+    "selectDefaultImage": "デフォルト画像を選択",
+    "description": "説明",
+    "draft": "下書き",
+    "publish": "公開"
+  },
+  "RetailerScan": {
+    "title": "スタンプスキャン管理",
+    "stampScan": "スタンプスキャン",
+    "dashboard": "ダッシュボード"
+  },
+  "RetailerScanTab": {
+    "offerAndScan": "オファーとスキャン",
+    "branch": "支店",
+    "customer": "顧客",
+    "scanTime": "スキャン時間",
+    "stampTitle": "スタンプタイトル",
+    "stampCategory": "スタンプカテゴリ",
+    "noOfStampToCollect": "収集するスタンプの数",
+    "basicRules": "基本ルール",
+    "status": "ステータス",
+    "minPurchaseAmount": "最低購入金額",
+    "rewardType": "報酬の種類",
+    "reward": "報酬",
+    "branchName": "支店名",
+    "branchAddress": "支店の住所",
+    "subAdminName": "サブ管理者名",
+    "subAdminEmail": "サブ管理者のメール",
+    "name": "名前",
+    "email": "メール",
+    "phone": "電話",
+    "country": "国"
+  },
+  "RetailerStampScanTable": {
+    "stampTitle": "スタンプタイトル",
+    "scanDate": "スキャン日",
+    "branch": "支店",
+    "customer": "顧客",
+    "scannedBy": "スキャンした人",
+    "status": "ステータス",
+    "placeHolder": "顧客名とメールで検索"
+  },
+  "RetailerProfile": {
+    "title": "プロフィール管理",
+    "profile": "小売業者プロフィール",
+    "dashboard": "ダッシュボード",
+    "storeName": "店舗名",
+    "firstName": "名",
+    "lastName": "姓",
+    "phoneNumber": "電話番号",
+    "country": "国",
+    "province": "都道府県",
+    "city": "市",
+    "postalCode": "郵便番号",
+    "address": "住所",
+    "email": "メール",
+    "update": "更新する",
+    "owner": "所有者"
+  },
+  "RetailerBalanceCard": {
+    "plan": "プラン",
+    "expire": "有効期限",
+    "current": "現在",
+    "usage": "使用量"
+  },
+  "RetailerNotification": {
+    "title": "定期通知を管理",
+    "regularNotification": "定期通知",
+    "dashboard": "ダッシュボード"
+  },
+  "SendAndResendNotification": {
+    "sendRegularNotification": "定期通知を送信",
+    "resendRegularNotification": "定期通知を再送",
+    "title": "タイトル",
+    "description": "説明",
+    "imageType": "画像タイプ",
+    "imageUrl": "画像URL",
+    "attachImage": "画像を添付",
+    "send": "送信",
+    "resend": "再送信"
+  },
+  "RegularNotificationTable": {
+    "regularNotificationSendLimit": "定期通知の送信制限",
+    "image": "画像",
+    "title": "タイトル",
+    "description": "説明",
+    "sendTime": "送信時間",
+    "actions": "アクション",
+    "searchByNotificationTitle": "通知タイトルで検索",
+    "sendNotification": "通知を送信"
+  },
+  "LocationBasedNotification": {
+    "title": "位置情報ベースの通知を管理",
+    "locationBasedNotifications": "位置情報ベースの通知",
+    "dashboard": "ダッシュボード"
+  },
+  "SendAndResendLocationBasedNotification": {
+    "sendLocationBasedNotification": "通知を送信",
+    "resendLocationBasedNotification": "通知を再送信",
+    "title": "タイトル",
+    "description": "説明",
+    "radius": "半径",
+    "address": "住所",
+    "imageType": "画像タイプ",
+    "imageUrl": "画像URL",
+    "attachImage": "画像を添付",
+    "send": "送信",
+    "resend": "再送信"
+  },
+  "LocationBasedNotificationTable": {
+    "locationBasedNotificationSendLimit": "位置情報ベースの通知送信制限",
+    "image": "画像",
+    "title": "タイトル",
+    "description": "説明",
+    "sendTime": "送信時間",
+    "actions": "アクション",
+    "radius": "半径",
+    "address": "住所",
+    "searchByNotificationTitle": "通知タイトルで検索",
+    "sendNotification": "通知を送信"
+  },
+  "RetailerStampImage": {
+    "title": "カスタムスタンプ画像の管理",
+    "customStampImage": "カスタムスタンプの管理",
+    "dashboard": "ダッシュボード"
+  },
+  "RetailerStampImageTable": {
+    "image": "画像",
+    "title": "タイトル",
+    "description": "説明",
+    "status": "ステータス",
+    "actions": "アクション",
+    "validityDate": "有効期限",
+    "placeHolder": "スタンプ画像のタイトルで検索"
+  },
+  "RetailerStampImageCreateUpdate": {
+    "addNewStampImage": "新しいスタンプ画像を追加",
+    "updateStampImage": "スタンプ画像を更新",
+    "title": "タイトル",
+    "update": "更新",
+    "submit": "送信"
   }
 }
