@@ -12,6 +12,7 @@ import { getCountryByTimezone, getPhoneCodeByTimezone } from '@/utils/get-countr
 import countryData from '@/utils/get-country-list';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -25,6 +26,8 @@ import PolicyModal from './PolicyModal';
 import TermsModal from './TermsModal';
 
 export default function RegisterForm({ terms, policy }: { terms: any; policy: any }) {
+  const t = useTranslations('RegisterPage');
+  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [termsModalState, setTermsModalState] = useState(false);
@@ -78,8 +81,8 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string().required('Required!'),
-    firstName: Yup.string().required('Required!'),
+    storeName: Yup.string().required(tCommon('required')),
+    firstName: Yup.string().required(tCommon('required')),
     lastName: Yup.string(),
     email: Yup.string()
       .test('email', 'Provide valid email!', (value: any) => {
@@ -87,14 +90,14 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
         return emailRegex.test(value);
       })
       .required('Required!'),
-    phone: Yup.string().required('Required!'),
-    country: Yup.string().required('Required!'),
-    province: Yup.string().required('Required!'),
-    city: Yup.string().required('Required!'),
-    postalCode: Yup.string().required('Required!'),
-    address: Yup.string().required('Required!'),
-    isAgree: Yup.string().required('Required!'),
-    password: Yup.string().required('Required!').min(8, 'At least 8 characters long!'),
+    phone: Yup.string().required(tCommon('required')),
+    country: Yup.string().required(tCommon('required')),
+    province: Yup.string().required(tCommon('required')),
+    city: Yup.string().required(tCommon('required')),
+    postalCode: Yup.string().required(tCommon('required')),
+    address: Yup.string().required(tCommon('required')),
+    isAgree: Yup.string().required(tCommon('required')),
+    password: Yup.string().required(tCommon('required')).min(8, 'At least 8 characters long!'),
   });
 
   const handleSubmit = async (values: any) => {
@@ -109,10 +112,10 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
           {({ errors, setFieldValue, touched, setFieldTouched, values }) => {
             return (
               <Form className="grid gap-4">
-                <InputField name="storeName" label="Store Name" placeholder="Burger King" />
+                <InputField name="storeName" label={t('storeName')} placeholder="Burger King" />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <InputField name="firstName" label="First Name (Owner)" placeholder="John" />
-                  <InputField name="lastName" label="Last Name (Owner)" placeholder="Doe" required={false} />
+                  <InputField name="firstName" label={`${t('firstName')} (${t('owner')})`} placeholder="John" />
+                  <InputField name="lastName" label={`${t('lastName')} (${t('owner')})`} placeholder="Doe" required={false} />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -121,7 +124,7 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
                     name="phone"
                     label={
                       <p>
-                        Phone Number <span className="text-danger">*</span>
+                        {t('phoneNumber')} <span className="text-danger">*</span>
                       </p>
                     }
                     country="ca"
@@ -139,7 +142,7 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
                   <div className="flex flex-col gap-1">
                     <div>
                       <p className="font-medium">
-                        Country
+                        {t('country')}
                         <span className="text-red-500"> *</span>
                       </p>
                     </div>
@@ -192,18 +195,18 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                  <InputField name="province" label="Province" placeholder="Ontario" />
-                  <InputField name="city" label="City" placeholder="Toronto" />
-                  <InputField name="postalCode" label="Postal Code" placeholder="M3C" />
+                  <InputField name="province" label={t('province')} placeholder="Ontario" />
+                  <InputField name="city" label={t('city')} placeholder="Toronto" />
+                  <InputField name="postalCode" label={t('postalCode')} placeholder="M3C" />
                 </div>
 
                 <div className="grid grid-cols-1">
-                  <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" />
+                  <InputField name="address" label={t('address')} placeholder="120 Bremner Blvd, Suite 800" />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <InputField name="email" label="Email" placeholder="john@email.com" />
-                  <InputPassword name="password" label="Password" placeholder="********" />
+                  <InputField name="email" label={t('email')} placeholder="john@email.com" />
+                  <InputPassword name="password" label={t('password')} placeholder="********" />
                 </div>
 
                 <div className="flex flex-col gap-y-1">
@@ -218,20 +221,20 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
                       onBlur={() => setFieldTouched('isAgree', true)}
                     />{' '}
                     <p className="text-xs font-medium">
-                      I Agree with the{' '}
+                      {t('iAgree')} with the{' '}
                       <span onClick={() => setTermsModalState(true)} className="cursor-pointer border-b-2">
-                        Terms of Use
+                        {t('termsAndConditions')}
                       </span>{' '}
-                      and{' '}
+                      {t('and')}{' '}
                       <span onClick={() => setPrivacyPolicyModalState(true)} className="cursor-pointer border-b-2">
-                        Privacy Policy
+                        {t('privacyPolicy')}
                       </span>
                     </p>
                   </div>
                   {errors.isAgree && touched.isAgree && (
                     <span className="flex items-center gap-x-1 text-danger">
                       <IoAlertCircle className="text-lg" />
-                      <span>Required!</span>
+                      <span>{tCommon('required')}</span>
                     </span>
                   )}
                 </div>
@@ -246,7 +249,7 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
                   color="danger"
                   className="w-full"
                   type="submit"
-                  text="Submit"
+                  text={t('submit')}
                   postIcon={<BsCheck2Circle className="text-base" />}
                   isSubmitting={isSubmitting}
                 />

@@ -19,7 +19,9 @@
     "newsletterPlaceholderText": "Email Address",
     "goToHome": "Go To Home",
     "copyright": "© Copyright 2024 StampEzee | All Rights Reserved.",
-    "searchWidgetPlaceholder": "Search your page"
+    "searchWidgetPlaceholder": "Search your page",
+    "newsletterSuccessMessage": "Thank you for subscribing!",
+    "newsletterErrorMessage": "Something went wrong!"
   },
   "StatusIndicator": {
     "active": "Active",
@@ -114,9 +116,52 @@
     "invalidCredentials": "Please check your credentials.",
     "invalidEmail": "Please enter a valid email address.",
     "invalidPassword": "Please enter a password.",
-    "login": "Sign in",
+    "signIn": "Sign in",
+    "forgotPassword": "Forgot Password?",
+    "newRetailer": "New Retailer?",
+    "signUp": "Sign Up",
+    "here": "Here",
     "password": "Password",
-    "title": "Welcome back"
+    "title": "Welcome back",
+    "submit": "Submit"
+  },
+  "RegisterPage": {
+    "title": "Store Registration",
+    "storeName": "Store Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "owner": "Owner",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "country": "Country",
+    "province": "Province",
+    "city": "City",
+    "postalCode": "Postal Code",
+    "address": "Address",
+    "password": "Password",
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign In",
+    "here": "Here",
+    "iAgree": "I Agree with the",
+    "termsAndConditions": "Terms of use",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy",
+    "submit": "Submit"
+  },
+  "ForgotPasswordPage": {
+    "title": "Forgot Password",
+    "stepOne": "Step 1",
+    "stepTwo": "Step 2",
+    "stepThree": "Step 3",
+    "email": "Email",
+    "next": "Next",
+    "goToLogin": "Go To Login",
+    "verifyOtp": "Verify OTP",
+    "otpMessage": "We sent an OTP to your Email. You have 2 minutes to complete this verification. Thank you!",
+    "otpMessage2": "Didn't get any otp yet?",
+    "resend": "Resend OTP",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password"
   },
   "ProfilePage": {
     "title": "Profile"

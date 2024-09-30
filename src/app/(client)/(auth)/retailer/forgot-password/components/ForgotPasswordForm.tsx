@@ -4,6 +4,7 @@ import { routes } from '@/config/routes';
 import { useRetailerChangeForgetPasswordMutation } from '@/features/auth/authApi';
 import { ErrorResponse, isFetchBaseQueryError } from '@/utils/check-base-query-error';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -13,6 +14,8 @@ import { HiOutlineArrowSmLeft } from 'react-icons/hi';
 import * as Yup from 'yup';
 
 export default function ForgotPasswordForm({ currentTab }: { currentTab: number }) {
+  const t = useTranslations('ForgotPasswordPage');
+  const tCommon = useTranslations('RetailerCommon');
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
@@ -27,8 +30,8 @@ export default function ForgotPasswordForm({ currentTab }: { currentTab: number 
   };
 
   const loginSchema = Yup.object().shape({
-    password: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters!'),
-    confirmPassword: Yup.string().required('Required!').min(8, 'Password must be at least 8 characters!'),
+    password: Yup.string().required(tCommon('required')).min(8, 'Password must be at least 8 characters!'),
+    confirmPassword: Yup.string().required(tCommon('required')).min(8, 'Password must be at least 8 characters!'),
   });
 
   // Handle Forget Password Response
@@ -71,9 +74,9 @@ export default function ForgotPasswordForm({ currentTab }: { currentTab: number 
         {() => (
           <Form>
             <div className="mx-auto w-full space-y-4 p-5">
-              <InputPassword name="password" label="New Password" placeholder="******" />
+              <InputPassword name="password" label={t('newPassword')} placeholder="******" />
 
-              <InputPassword name="confirmPassword" label="Confirm Password" placeholder="******" />
+              <InputPassword name="confirmPassword" label={t('confirmPassword')} placeholder="******" />
               <p className="flex flex-col text-end text-xs font-semibold">
                 <span className="text-end text-xs font-semibold">
                   Fields marked with <span className="text-red-600">*</span> are mandatory!
@@ -83,7 +86,7 @@ export default function ForgotPasswordForm({ currentTab }: { currentTab: number 
                 color="danger"
                 className="w-full"
                 type="submit"
-                text="Next"
+                text={t('next')}
                 postIcon={<BsCheck2Circle className="text-base" />}
                 isSubmitting={submitting}
               />
@@ -92,7 +95,7 @@ export default function ForgotPasswordForm({ currentTab }: { currentTab: number 
                   href={routes.publicRoutes.retailerLogin}
                   className="flex items-center transition-all duration-150 ease-in hover:text-danger"
                 >
-                  <HiOutlineArrowSmLeft className="mr-3 text-xl" /> <span className="font-semibold">Go to Login</span>
+                  <HiOutlineArrowSmLeft className="mr-3 text-xl" /> <span className="font-semibold">{t('goToLogin')}</span>
                 </Link>
               </div>
             </div>

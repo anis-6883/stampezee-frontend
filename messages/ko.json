@@ -19,7 +19,9 @@
     "newsletterPlaceholderText": "이메일 주소",
     "goToHome": "홈페이지로 가기",
     "copyright": "© Copyright 2024 StampEzee | 모든 권리 보유.",
-    "searchWidgetPlaceholder": "페이지를 검색"
+    "searchWidgetPlaceholder": "페이지를 검색",
+    "newsletterSuccessMessage": "감사합니다!",
+    "newsletterErrorMessage": "무언가 잘못되었습니다!"
   },
   "StatusIndicator": {
     "active": "활성",
@@ -107,15 +109,58 @@
     "addOn": "애드온"
   },
   "LoginPage": {
-    "credentials": "자격증명: jane@doe.com / next-intl",
-    "description": "세부 정보를 입력하십시오.",
+    "credentials": "자격 증명: jane@doe.com / next-intl",
+    "description": "세부 정보를 입력하세요.",
     "email": "이메일",
-    "invalidCredentials": "자격 증명을 확인하십시오.",
-    "invalidEmail": "유효한 이메일 주소를 입력하십시오.",
-    "invalidPassword": "비밀번호를 입력하십시오.",
-    "login": "로그인",
+    "invalidCredentials": "자격 증명을 확인하세요.",
+    "invalidEmail": "유효한 이메일 주소를 입력하세요.",
+    "invalidPassword": "비밀번호를 입력하세요.",
+    "signIn": "로그인",
+    "forgotPassword": "비밀번호를 잊으셨나요?",
+    "newRetailer": "새로운 소매업자?",
+    "signUp": "가입",
+    "here": "여기",
     "password": "비밀번호",
-    "title": "다시 오신 것을 환영합니다"
+    "title": "다시 오신 것을 환영합니다",
+    "submit": "제출"
+  },
+  "RegisterPage": {
+    "title": "스토어 등록",
+    "storeName": "상점 이름",
+    "firstName": "이름",
+    "lastName": "성",
+    "owner": "소유자",
+    "email": "이메일",
+    "phoneNumber": "전화번호",
+    "country": "국가",
+    "province": "도",
+    "city": "도시",
+    "postalCode": "우편 번호",
+    "address": "주소",
+    "password": "비밀번호",
+    "alreadyHaveAccount": "이미 계정이 있으신가요?",
+    "signIn": "로그인",
+    "here": "여기",
+    "iAgree": "동의합니다",
+    "termsAndConditions": "이용 약관",
+    "and": "및",
+    "privacyPolicy": "개인정보 처리방침",
+    "submit": "제출"
+  },
+  "ForgotPasswordPage": {
+    "title": "비밀번호를 잊으셨나요",
+    "stepOne": "1단계",
+    "stepTwo": "2단계",
+    "stepThree": "3단계",
+    "email": "이메일",
+    "next": "다음",
+    "goToLogin": "로그인으로 이동",
+    "verifyOtp": "OTP 확인",
+    "otpMessage": "OTP를 이메일로 보냈습니다. 이 인증을 완료하려면 2분이 있습니다. 감사합니다!",
+    "otpMessage2": "OTP를 아직 받지 못하셨나요?",
+    "resend": "OTP 다시 보내기",
+    "newPassword": "새 비밀번호",
+    "confirmPassword": "비밀번호 확인"
   },
   "ProfilePage": {
     "title": "프로필"

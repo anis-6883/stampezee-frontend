@@ -16,6 +16,7 @@ import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
 import { Form, Formik } from 'formik';
 import { signIn } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -25,6 +26,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 export default function LoginForm() {
+  const t = useTranslations('LoginPage');
+  const tCommon = useTranslations('RetailerCommon');
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
@@ -48,8 +51,8 @@ export default function LoginForm() {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(value);
       })
-      .required('Required!'),
-    password: Yup.string().required('Required!'),
+      .required(tCommon('required')),
+    password: Yup.string().required(tCommon('required')),
   });
 
   useEffect(() => {
@@ -133,8 +136,8 @@ export default function LoginForm() {
       {() => (
         <Form>
           <div className="mx-auto mt-8 w-full space-y-4">
-            <InputField prefix={<SlEnvolope className="text-xl" />} name="email" label="Email" placeholder="retailer@email.com" />
-            <InputPassword prefix={<SlLock className="text-xl" />} name="password" label="Password" placeholder="********" />
+            <InputField prefix={<SlEnvolope className="text-xl" />} name="email" label={t('email')} placeholder="retailer@email.com" />
+            <InputPassword prefix={<SlLock className="text-xl" />} name="password" label={t('password')} placeholder="********" />
 
             <p className="text-end text-xs font-semibold">
               Fields marked with <span className="text-red-600">*</span> are mandatory!
@@ -143,7 +146,7 @@ export default function LoginForm() {
               color="danger"
               className="w-full"
               type="submit"
-              text="Submit"
+              text={t('submit')}
               postIcon={<BsCheck2Circle className="text-base" />}
               isSubmitting={isSubmitting}
             />

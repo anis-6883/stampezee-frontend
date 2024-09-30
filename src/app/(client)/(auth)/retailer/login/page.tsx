@@ -3,9 +3,10 @@ import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { getServerSession } from 'next-auth';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { IoHomeOutline } from 'react-icons/io5';
+import HomeAndLocalButton from '../register/components/HomeAndLocalButton';
 import LoginForm from './components/LoginForm';
 
 export const metadata = {
@@ -13,6 +14,7 @@ export const metadata = {
 };
 
 export default async function Page() {
+  const t = await getTranslations('LoginPage');
   const session = await getServerSession(authOptions);
 
   if (session) {
@@ -24,9 +26,7 @@ export default async function Page() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100 text-gray-900">
       <div className="m-10 grid w-full grid-cols-12 rounded-lg bg-white shadow md:max-w-6xl">
         <div className="col-span-12 p-5 md:col-span-6">
-          <Link className="inline-block" href={routes.publicRoutes.home}>
-            <IoHomeOutline className="text-lg text-danger" />
-          </Link>
+          <HomeAndLocalButton />
           <div className="mx-auto w-28">
             <Link href={routes.publicRoutes.home}>
               <img src="/images/logo.png" alt="logo" />
@@ -34,21 +34,21 @@ export default async function Page() {
           </div>
 
           <div className="mt-8 px-1 lg:px-16">
-            <h1 className="text-center text-xl font-bold xl:text-xl">Sign In</h1>
+            <h1 className="text-center text-xl font-bold xl:text-xl">{t('signIn')}</h1>
 
             <LoginForm />
             <div className="mt-3">
               <Link href={routes.publicRoutes.retailerForgotPassword} className="text-xs font-semibold text-danger">
-                Forgot Password?
+                {t('forgotPassword')}
               </Link>
             </div>
 
             <div className="mt-10 text-center">
-              New Retailer?{' '}
+              {t('newRetailer')}?{' '}
               <Link href={routes.publicRoutes.retailerRegister} className="font-semibold text-danger">
-                Sign Up
+                {t('signUp')}
               </Link>{' '}
-              Here
+              {t('here')}
             </div>
           </div>
         </div>

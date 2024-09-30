@@ -1,27 +1,19 @@
 'use client';
 
-import LocalSwitcherSelector from '@/components/Locale/LocalSwitcherSelector';
-import { ROLE } from '@/config/constants';
-import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
-import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import { useWindowScroll } from '@/hooks/use-window-scroll';
 import HamburgerButton from '@/layouts/hamburger-button';
 import HeaderMenuRight from '@/layouts/header-menu-right';
 import Link from 'next/link';
-import { useState } from 'react';
-import { AiOutlineGlobal } from 'react-icons/ai';
-import { useSelector } from 'react-redux';
 import SearchWidget from '../components/search/search';
 import Sidebar from './sidebar';
 
 export default function Header() {
   const isMounted = useIsMounted();
   const windowScroll = useWindowScroll();
-  const [modalState, setModalState] = useState<boolean>(false);
-  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
-  const { role } = useSelector((state: RootState) => state.authSlice);
+
+  // const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
 
   return (
     <header
@@ -37,15 +29,6 @@ export default function Header() {
         </Link>
 
         <SearchWidget />
-        {role === ROLE.RETAILER && (
-          <div className="mx-4">
-            <AiOutlineGlobal
-              onClick={() => setModalState(true)}
-              className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
-            />
-          </div>
-        )}
-        <LocalSwitcherSelector currencyExchanges={currencyExchanges} modalState={modalState} setModalState={setModalState} />
       </div>
 
       <HeaderMenuRight />

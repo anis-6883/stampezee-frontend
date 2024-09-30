@@ -4,8 +4,10 @@ import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import { getServerSession } from 'next-auth';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import HomeAndLocalButton from './components/HomeAndLocalButton';
 import RegisterForm from './components/RegisterForm';
 
 export const metadata = {
@@ -15,6 +17,7 @@ export const metadata = {
 export default async function Page() {
   const session = await getServerSession(authOptions);
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
+  const t = await getTranslations('RegisterPage');
 
   if (session) {
     if (session?.user?.role === ROLE.RETAILER) redirect(routes.privateRoutes.retailer.dashboard);
@@ -24,6 +27,7 @@ export default async function Page() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 text-gray-900">
       <div className="m-10 w-full rounded-lg bg-white shadow md:max-w-2xl">
+        <HomeAndLocalButton />
         <div className="p-5">
           <div className="mx-auto w-24">
             <Link href="/">
@@ -32,16 +36,16 @@ export default async function Page() {
           </div>
 
           <div className="mt-4 px-3">
-            <h1 className="text-center text-xl font-bold xl:text-xl">Store Registration</h1>
+            <h1 className="text-center text-xl font-bold xl:text-xl">{t('title')}</h1>
 
             <RegisterForm terms={data?.data?.page?.terms} policy={data?.data?.page?.policy} />
 
             <div className="mt-5 text-center">
-              Already have an account?{' '}
+              {t('alreadyHaveAccount')}
               <Link href={routes.publicRoutes.retailerLogin} className="font-semibold text-danger">
-                Sign In
+                {t('signIn')}
               </Link>{' '}
-              Here
+              {t('here')}
             </div>
           </div>
         </div>

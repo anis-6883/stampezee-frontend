@@ -19,7 +19,9 @@
     "newsletterPlaceholderText": "Adresse e-mail",
     "goToHome": "Retour à l'accueil",
     "copyright": "© Copyright 2024 StampEzee | Tous les droits sont réservés.",
-    "searchWidgetPlaceholder": "Rechercher sur votre page"
+    "searchWidgetPlaceholder": "Rechercher sur votre page",
+    "newsletterSuccessMessage": "Merci pour votre inscription!",
+    "newsletterErrorMessage": "Quelque chose a mal tourné!"
   },
   "StatusIndicator": {
     "active": "Actif",
@@ -107,15 +109,58 @@
     "addOn": "Module complémentaire"
   },
   "LoginPage": {
-    "credentials": "Identifiants : jane@doe.com / next-intl",
-    "description": "Veuillez entrer vos informations.",
+    "credentials": "Identifiants: jane@doe.com / next-intl",
+    "description": "Veuillez entrer vos détails.",
     "email": "E-mail",
     "invalidCredentials": "Veuillez vérifier vos identifiants.",
     "invalidEmail": "Veuillez entrer une adresse e-mail valide.",
     "invalidPassword": "Veuillez entrer un mot de passe.",
-    "login": "Connexion",
+    "signIn": "Se connecter",
+    "forgotPassword": "Mot de passe oublié?",
+    "newRetailer": "Nouveau détaillant?",
+    "signUp": "S'inscrire",
+    "here": "Ici",
     "password": "Mot de passe",
-    "title": "Bon retour"
+    "title": "Bienvenue de retour",
+    "submit": "Soumettre"
+  },
+  "RegisterPage": {
+    "title": "Inscription du magasin",
+    "storeName": "Nom du magasin",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "owner": "Propriétaire",
+    "email": "E-mail",
+    "phoneNumber": "Numéro de téléphone",
+    "country": "Pays",
+    "province": "Province",
+    "city": "Ville",
+    "postalCode": "Code postal",
+    "address": "Adresse",
+    "password": "Mot de passe",
+    "alreadyHaveAccount": "Vous avez déjà un compte?",
+    "signIn": "Se connecter",
+    "here": "Ici",
+    "iAgree": "J'accepte les",
+    "termsAndConditions": "Conditions d'utilisation",
+    "and": "et",
+    "privacyPolicy": "Politique de confidentialité",
+    "submit": "Soumettre"
+  },
+  "ForgotPasswordPage": {
+    "title": "Mot de passe oublié",
+    "stepOne": "Étape 1",
+    "stepTwo": "Étape 2",
+    "stepThree": "Étape 3",
+    "email": "E-mail",
+    "next": "Suivant",
+    "goToLogin": "Aller à la connexion",
+    "verifyOtp": "Vérifier l'OTP",
+    "otpMessage": "Nous avons envoyé un OTP à votre e-mail. Vous avez 2 minutes pour compléter cette vérification. Merci !",
+    "otpMessage2": "Vous n'avez toujours pas reçu d'OTP?",
+    "resend": "Renvoyer OTP",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe"
   },
   "ProfilePage": {
     "title": "Profil"

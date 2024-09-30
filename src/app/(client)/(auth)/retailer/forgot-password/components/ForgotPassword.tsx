@@ -1,6 +1,7 @@
 'use client';
 
 import { routes } from '@/config/routes';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Button as RizButton, Stepper } from 'rizzui';
@@ -9,6 +10,7 @@ import ForgetOtpInput from './ForgotOtpInput';
 import ForgotPasswordForm from './ForgotPasswordForm';
 
 export default function ForgotPassword() {
+  const t = useTranslations('ForgotPasswordPage');
   const [currentTab, setCurrentTab] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -19,12 +21,12 @@ export default function ForgotPassword() {
           <img src="/images/logo.png" className="mx-auto w-28 pb-5" alt="logo" />
         </Link>
 
-        <h1 className="pb-6 text-center text-xl font-bold xl:text-xl">Forgot Password</h1>
+        <h1 className="pb-6 text-center text-xl font-bold xl:text-xl">{t('title')}</h1>
 
         <Stepper currentIndex={currentStep} className="w-full">
-          <Stepper.Step title={<span className="text-gray-900">Step 1</span>} />
-          <Stepper.Step title={<span className="text-gray-900">Step 2</span>} />
-          <Stepper.Step title={<span className="text-gray-900">Step 3</span>} />
+          <Stepper.Step title={<span className="text-gray-900">{t('stepOne')}</span>} />
+          <Stepper.Step title={<span className="text-gray-900">{t('stepTwo')}</span>} />
+          <Stepper.Step title={<span className="text-gray-900">{t('stepThree')}</span>} />
         </Stepper>
 
         <div className="mt-7 flex space-x-4">
