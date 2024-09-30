@@ -3,6 +3,7 @@ import StatusIndicator from '@/components/shared/StatusIndicator';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
+import { getTranslations } from 'next-intl/server';
 import CustomerTable from './_components/CustomerTable';
 
 const pageHeader = {
@@ -22,6 +23,10 @@ export const metadata = { ...metaObject(pageHeader.title) };
 
 export default async function Page() {
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
+  const t = await getTranslations('RetailerCustomer');
+  pageHeader.breadcrumb[0].name = t('dashboard');
+  pageHeader.breadcrumb[1].name = t('customer');
+  pageHeader.title = t('title');
 
   return (
     <div>

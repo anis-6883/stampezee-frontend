@@ -145,7 +145,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
         <div className="mt-3 rounded-lg border border-danger p-3">
           <h2 className="flex items-center gap-x-1 text-sm font-semibold">
             <RiRefund2Line className="text-xl" />
-            You will get back <span className="text-lg font-bold text-danger">{Math.abs(downgradeRefund).toFixed(2)}</span>{' '}
+            {t('refundMessage')} <span className="text-lg font-bold text-danger">{Math.abs(downgradeRefund).toFixed(2)}</span>{' '}
             {selectedCurrency}!
           </h2>
         </div>
@@ -153,9 +153,9 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
 
       {hasCheckedPurchaseAlert({ subscription, activeSubscription, total, refundableThreshold }) && (
         <div className="my-3 border-l-4 border-yellow-400 bg-yellow-50 p-4">
-          <p className="font-medium text-yellow-500">Purchase Alert!</p>
+          <p className="font-medium text-yellow-500">{t('purchaseAlert')}</p>
           <p className="text-yellow-500">
-            Your order needs to be at least {refundableThreshold} {selectedCurrency}. Please add more items to continue
+            {t('purchaseAlertMessage')} {refundableThreshold} {selectedCurrency}. {t('purchaseAlertMessageAfter')}
           </p>
         </div>
       )}
@@ -163,7 +163,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
       {selectedBranches?.length > 0 && downgradeRefund > 0 && (
         <div className="mt-3 rounded-lg border border-danger p-3">
           <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">
-            <MdBlock className="text-xl" /> Disable Branch/s:
+            <MdBlock className="text-xl" /> {t('disableBranch')} :
           </p>
           <div>
             {disabledBranchItems?.map((item: any) => (
@@ -175,7 +175,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
           <div className="mt-2 flex justify-end">
             <Button
               color="danger"
-              text="Edit"
+              text={t('edit')}
               className="!m-0 !px-3 !py-2 !text-xs"
               onClick={() => setBranchDisableModalState(true)}
               postIcon={<CiEdit className="text-base" />}

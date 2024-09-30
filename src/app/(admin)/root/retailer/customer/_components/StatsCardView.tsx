@@ -2,6 +2,7 @@
 
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
+import { useTranslations } from 'next-intl';
 import { BsPatchCheck, BsShop } from 'react-icons/bs';
 import { LuCircleDollarSign, LuUsers } from 'react-icons/lu';
 import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
@@ -25,6 +26,7 @@ export default function StatsCardView({
   isLoading: boolean;
   isError: boolean;
 }) {
+  const t = useTranslations('RetailerCustomerDetailsStats');
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
 
   return (
@@ -43,7 +45,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<BsShop className="text-2xl" />}
             key={1}
-            title={'Total Collect Stamp'}
+            title={t('totalCollectStamp')}
             metric={totalCollectStamp}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -53,7 +55,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<BsPatchCheck className="text-2xl" />}
             key={1}
-            title={'Total Scan'}
+            title={t('totalScan')}
             metric={totalScan}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -63,7 +65,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<LuUsers className="text-2xl" />}
             key={1}
-            title={'Total Reward Collect'}
+            title={t('totalRewardCollect')}
             metric={totalRewardCollect}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -73,7 +75,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<LuCircleDollarSign className="text-2xl" />}
             key={1}
-            title={'Total Purchased (CAD)'}
+            title={`${t('totalPurchased')} (CAD)`}
             metric={totalPurchased}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"

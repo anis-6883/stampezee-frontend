@@ -17,7 +17,9 @@
     "linkedin": "领英",
     "newsletterButtonText": "提交",
     "newsletterPlaceholderText": "电子邮件地址",
-    "copyright": "© Copyright 2024 StampEzee | 全著作権所有。"
+    "goToHome": "返回主页",
+    "copyright": "© Copyright 2024 StampEzee | 全著作権所有。",
+    "searchWidgetPlaceholder": "搜索页面"
   },
   "StatusIndicator": {
     "active": "活跃",
@@ -79,15 +81,30 @@
     "plans": "计划",
     "selectPlan": "选择订阅计划",
     "switchPlan": "切换订阅计划",
-    "addOns": "附加功能",
+    "addOns": "附加服务",
     "selectAddOn": "选择附加服务",
     "orderSummary": "订单摘要",
     "total": "总计",
+    "remainingAmount": "剩余金额",
+    "subtotal": "小计",
+    "vat": "增值税",
+    "planChangeCost": "计划变更费用",
     "checkout": "结账",
     "coupon": "优惠券",
     "couponButtonText": "应用",
-    "cartEmpty": "您的购物车目前为空。选择一个计划！",
-    "checkoutButtonText": "确认结账"
+    "cartEmpty": "您的购物车为空。请选择计划！",
+    "refundMessage": "您将收到退款",
+    "disableBranch": "禁用分支:",
+    "edit": "编辑",
+    "checkoutButtonText": "确认结账",
+    "balance": "余额",
+    "currentAmount": "当前金额",
+    "usageAmount": "使用金额",
+    "purchaseAlert": "购买警告！",
+    "purchaseAlertMessage": "您的订单至少需要",
+    "purchaseAlertMessageAfter": "请添加更多项目以继续",
+    "plan": "计划",
+    "addOn": "附加"
   },
   "LoginPage": {
     "credentials": "凭证: jane@doe.com / next-intl",
@@ -151,6 +168,12 @@
     "totalOrder": "总订单数",
     "totalRevenue": "总收入"
   },
+  "RetailerMembership": {
+    "switchPlan": "切换计划",
+    "selectPlan": "选择计划",
+    "selectAddOns": "选择附加功能",
+    "buttonText": "确认"
+  },
   "RetailerBilling": {
     "Billing": "计费",
     "Dashboard": "仪表板"
@@ -167,6 +190,39 @@
     "subscriptionDetails": "订阅详情",
     "placeHolder": "按支付 ID 搜索"
   },
+  "RetailerBillingDetails": {
+    "title": "订阅详情",
+    "dashboard": "仪表板",
+    "billing": "计费",
+    "plan": "计划",
+    "addOn": "附加项",
+    "invoices": "发票",
+    "cancelSubscriptionOrChangeCard": "取消订阅或更改卡片",
+    "renewSubscriptionOrChangeCard": "续订或更改卡片",
+    "subscriptionCanceled": "订阅已取消"
+  },
+  "RetailerBillingDetailsCard": {
+    "subscriptionID": "订阅ID",
+    "enrollStatus": "注册状态",
+    "balance": "余额",
+    "purchasedAt": "购买时间",
+    "currentPeriod": "当前周期",
+    "planStatus": "计划状态",
+    "nextInvoice": "下一个发票",
+    "running": "正在运行",
+    "ended": "已结束",
+    "subscriptionCancelAt": "取消订阅于"
+  },
+  "RetailerBillingInvoiceTable": {
+    "serialNo": "序列号",
+    "paymentIntentID": "支付意图ID",
+    "invoiceNumber": "发票号码",
+    "amount": "金额",
+    "createdAt": "创建于",
+    "action": "操作",
+    "downloadPdf": "下载PDF",
+    "noTransaction": "还没有发生任何交易！"
+  },
   "RetailerRefund": {
     "title": "管理退款",
     "refunds": "退款",
@@ -179,6 +235,8 @@
     "refundAmount": "退款金额",
     "refundStatus": "退款状态",
     "refundDate": "退款日期",
+    "startedAt": "开始于",
+    "expiredAt": "到期于",
     "placeHolder": "按支付 ID 搜索"
   },
   "RetailerBranches": {
@@ -419,5 +477,79 @@
     "title": "标题",
     "update": "更新",
     "submit": "提交"
+  },
+  "RetailerCustomer": {
+    "title": "管理客户",
+    "customer": "客户",
+    "dashboard": "仪表板"
+  },
+  "RetailerCustomerTable": {
+    "info": "信息",
+    "joinedDate": "加入日期",
+    "statistics": "统计",
+    "actions": "操作",
+    "placeHolder": "按客户姓名或邮箱搜索",
+    "name": "姓名",
+    "email": "邮箱",
+    "phone": "电话",
+    "country": "国家",
+    "totalCollectStamp": "累计集印章数",
+    "totalScan": "总扫描次数",
+    "totalRewardCollect": "累计奖励领取"
+  },
+  "RetailerCustomerDetails": {
+    "title": "管理客户详细信息",
+    "customer": "客户",
+    "dashboard": "仪表板",
+    "details": "详细信息"
+  },
+  "RetailerCustomerDetailsCard": {
+    "name": "姓名",
+    "email": "邮箱",
+    "phone": "电话",
+    "country": "国家",
+    "address": "地址"
+  },
+  "RetailerCustomerDetailsStats": {
+    "totalCollectStamp": "累计集印章数",
+    "totalScan": "总扫描次数",
+    "totalRewardCollect": "累计奖励领取",
+    "totalPurchased": "总购买量"
+  },
+  "RetailerCustomerDetailsScanTable": {
+    "title": "扫描统计",
+    "scanDate": "扫描日期",
+    "stampTitle": "印章标题",
+    "store": "商店",
+    "branch": "分店",
+    "scannedBy": "扫描者",
+    "status": "状态",
+    "branchName": "分店名称",
+    "branchAddress": "分店地址",
+    "subAdminName": "副管理员姓名",
+    "subAdminEmail": "副管理员邮箱",
+    "name": "姓名",
+    "email": "邮箱",
+    "phone": "电话",
+    "country": "国家",
+    "placeHolder": "按商店名称搜索"
+  },
+  "RetailerCustomerDetailsScanTableTabs": {
+    "offerAndScan": "优惠与扫描",
+    "store": "商店",
+    "scanTime": "扫描时间",
+    "stampTitle": "印章标题",
+    "stampCategory": "印章类别",
+    "noOfStampToCollect": "收集的印章数量",
+    "basicRules": "基本规则",
+    "minPurchaseAmount": "最低购买金额",
+    "rewardType": "奖励类型",
+    "reward": "奖励",
+    "storeName": "商店名称",
+    "ownerName": "所有者名称",
+    "branchName": "分店名称",
+    "branchAddress": "分店地址",
+    "subAdminName": "子管理员姓名",
+    "subAdminEmail": "子管理员邮箱"
   }
 }

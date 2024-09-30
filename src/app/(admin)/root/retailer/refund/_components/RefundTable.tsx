@@ -31,10 +31,12 @@ export default function RefundTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Started At:</span> {convertDateByOffset(row?.original?.enrollsubscription?.validityFrom, offset)}
+            <span className="font-bold">{t('startedAt')}:</span>{' '}
+            {convertDateByOffset(row?.original?.enrollsubscription?.validityFrom, offset)}
           </p>
           <p>
-            <span className="font-bold">Expired At:</span> {convertDateByOffset(row?.original?.enrollsubscription?.validityTo, offset)}
+            <span className="font-bold">{t('expiredAt')}:</span>{' '}
+            {convertDateByOffset(row?.original?.enrollsubscription?.validityTo, offset)}
           </p>
         </div>
       ),

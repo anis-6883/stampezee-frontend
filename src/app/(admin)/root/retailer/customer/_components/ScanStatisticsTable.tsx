@@ -1,6 +1,7 @@
 import { useGetAllCustomerScanByRetailerQuery } from '@/features/retailer/customer/customerApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { BsShop } from 'react-icons/bs';
 import { MdOutlineQrCodeScanner } from 'react-icons/md';
@@ -8,6 +9,8 @@ import { Tab } from 'rizzui';
 import Table from '../../../_components/Table';
 
 const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => {
+  const t = useTranslations('RetailerCustomerDetailsScanTable');
+  const t2 = useTranslations('RetailerCustomerDetailsScanTableTabs');
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllCustomerScanByRetailerQuery({
@@ -21,27 +24,27 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
 
   const structure = [
     {
-      header: 'Stamp Title',
+      header: t('stampTitle'),
       accessorKey: 'offer.title',
     },
     {
-      header: 'Store',
+      header: t('store'),
       accessorKey: 'retailer.storeName',
     },
     {
-      header: 'Branch',
+      header: t('branch'),
       accessorKey: 'branch.name',
     },
     {
-      header: 'Scanned By',
+      header: t('scannedBy'),
       accessorKey: 'subAdmin.fullName',
     },
     {
-      header: 'Scan Date',
+      header: t('scanDate'),
       Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original.scan.time, offset)}</div>,
     },
     {
-      header: 'Status',
+      header: t('status'),
       Cell: ({ row }: any) => {
         const display = row?.original?.scan?.rewardCollected
           ? 'Reward Collected'
@@ -59,10 +62,10 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
           <Tab>
             <Tab.List>
               <Tab.ListItem>
-                <MdOutlineQrCodeScanner className="text-xl" /> <span className="font-semibold">Offer & Scan</span>
+                <MdOutlineQrCodeScanner className="text-xl" /> <span className="font-semibold">{t2('offerAndScan')}</span>
               </Tab.ListItem>
               <Tab.ListItem>
-                <BsShop className="text-xl" /> <span className="font-semibold">Store</span>
+                <BsShop className="text-xl" /> <span className="font-semibold">{t2('store')}</span>
               </Tab.ListItem>
             </Tab.List>
             <Tab.Panels>
@@ -71,35 +74,35 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
                   <table className="w-full text-left text-sm text-gray-500">
                     <tbody>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Scan Time</td>
+                        <td className="px-6 py-4">{t2('scanTime')}</td>
                         <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, offset)}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Stamp Title</td>
+                        <td className="px-6 py-4">{t2('stampTitle')}</td>
                         <td className="px-6 py-4">{row?.original?.offer?.title}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Stamp Category</td>
+                        <td className="px-6 py-4">{t2('stampCategory')}</td>
                         <td className="px-6 py-4">{row?.original?.offer?.category}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">No of Stamp to Collect</td>
+                        <td className="px-6 py-4">{t2('noOfStampToCollect')}</td>
                         <td className="px-6 py-4">{row?.original?.offer?.noOfStampsToCollect}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Basic Rules</td>
+                        <td className="px-6 py-4">{t2('basicRules')}</td>
                         <td className="px-6 py-4">{row?.original?.offer?.rules}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Min. Purchase Amount</td>
+                        <td className="px-6 py-4">{t2('minPurchaseAmount')}</td>
                         <td className="px-6 py-4">{row?.original?.offer?.minPurchaseAmount} CAD</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Reward Type</td>
+                        <td className="px-6 py-4">{t2('rewardType')}</td>
                         <td className="px-6 py-4">{row?.original?.offer?.rewardType}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Reward</td>
+                        <td className="px-6 py-4">{t2('reward')}</td>
                         <td className="px-6 py-4">
                           {row?.original?.offer?.rewardType === 'discount'
                             ? `${row?.original?.offer?.discountReward}%`
@@ -115,27 +118,27 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
                   <table className="w-full text-left text-sm text-gray-500">
                     <tbody>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Store Name</td>
+                        <td className="px-6 py-4">{t2('storeName')}</td>
                         <td className="px-6 py-4">{row?.original?.retailer?.storeName}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Owner Name</td>
+                        <td className="px-6 py-4">{t2('ownerName')}</td>
                         <td className="px-6 py-4">{row?.original?.retailer?.fullName}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Branch Name</td>
+                        <td className="px-6 py-4">{t2('branchName')}</td>
                         <td className="px-6 py-4">{row?.original?.branch?.name}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Branch Address</td>
+                        <td className="px-6 py-4">{t2('branchAddress')}</td>
                         <td className="px-6 py-4">{row?.original?.branch?.address}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Sub-Admin Name</td>
+                        <td className="px-6 py-4">{t2('subAdminName')}</td>
                         <td className="px-6 py-4">{row?.original?.subAdmin?.fullName}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Sub-Admin Email</td>
+                        <td className="px-6 py-4">{t2('subAdminEmail')}</td>
                         <td className="px-6 py-4">{row?.original?.subAdmin?.email}</td>
                       </tr>
                     </tbody>
@@ -172,7 +175,7 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Store Name"
+        searchPlaceHolder={t('placeHolder')}
         renderDetailPanel={renderDetailPanel}
       />
     </>

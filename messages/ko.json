@@ -17,7 +17,9 @@
     "linkedin": "링크드인",
     "newsletterButtonText": "제출",
     "newsletterPlaceholderText": "이메일 주소",
-    "copyright": "© Copyright 2024 StampEzee | 모든 권리 보유."
+    "goToHome": "홈페이지로 가기",
+    "copyright": "© Copyright 2024 StampEzee | 모든 권리 보유.",
+    "searchWidgetPlaceholder": "페이지를 검색"
   },
   "StatusIndicator": {
     "active": "활성",
@@ -76,18 +78,33 @@
     "active": "활성"
   },
   "CheckoutPage": {
-    "plans": "플랜",
+    "plans": "계획",
     "selectPlan": "구독 플랜 선택",
     "switchPlan": "구독 플랜 변경",
-    "addOns": "추가 기능",
-    "selectAddOn": "추가 서비스 선택",
+    "addOns": "추가 서비스",
+    "selectAddOn": "추가 서비스를 선택하세요",
     "orderSummary": "주문 요약",
     "total": "합계",
+    "remainingAmount": "남은 금액",
+    "subtotal": "소계",
+    "vat": "부가세",
+    "planChangeCost": "플랜 변경 비용",
     "checkout": "결제",
     "coupon": "쿠폰",
     "couponButtonText": "적용",
     "cartEmpty": "장바구니가 비어 있습니다. 플랜을 선택하세요!",
-    "checkoutButtonText": "결제 확인"
+    "refundMessage": "환불 받게 됩니다",
+    "disableBranch": "지점 비활성화:",
+    "edit": "편집",
+    "checkoutButtonText": "결제 확인",
+    "balance": "잔액",
+    "currentAmount": "현재 금액",
+    "usageAmount": "사용 금액",
+    "purchaseAlert": "구매 경고!",
+    "purchaseAlertMessage": "주문은 최소",
+    "purchaseAlertMessageAfter": "계속하려면 더 많은 항목을 추가하십시오",
+    "plan": "플랜",
+    "addOn": "애드온"
   },
   "LoginPage": {
     "credentials": "자격증명: jane@doe.com / next-intl",
@@ -152,6 +169,12 @@
     "totalOrder": "총 주문 수",
     "totalRevenue": "총 수익"
   },
+  "RetailerMembership": {
+    "switchPlan": "플랜 변경",
+    "selectPlan": "플랜 선택",
+    "selectAddOns": "추가 기능 선택",
+    "buttonText": "확인"
+  },
   "RetailerBilling": {
     "Billing": "청구",
     "Dashboard": "대시보드"
@@ -168,6 +191,39 @@
     "subscriptionDetails": "구독 상세",
     "placeHolder": "결제 ID로 검색"
   },
+  "RetailerBillingDetails": {
+    "title": "구독 세부 사항",
+    "dashboard": "대시보드",
+    "billing": "결제",
+    "plan": "계획",
+    "addOn": "추가 서비스",
+    "invoices": "청구서",
+    "cancelSubscriptionOrChangeCard": "구독 취소 또는 카드 변경",
+    "renewSubscriptionOrChangeCard": "구독 갱신 또는 카드 변경",
+    "subscriptionCanceled": "구독이 취소되었습니다"
+  },
+  "RetailerBillingDetailsCard": {
+    "subscriptionID": "구독 ID",
+    "enrollStatus": "등록 상태",
+    "balance": "잔액",
+    "purchasedAt": "구매일",
+    "currentPeriod": "현재 기간",
+    "planStatus": "플랜 상태",
+    "nextInvoice": "다음 청구서",
+    "running": "진행 중",
+    "ended": "종료됨",
+    "subscriptionCancelAt": "구독 취소 일시"
+  },
+  "RetailerBillingInvoiceTable": {
+    "serialNo": "일련 번호",
+    "paymentIntentID": "결제 의도 ID",
+    "invoiceNumber": "청구서 번호",
+    "amount": "금액",
+    "createdAt": "생성일",
+    "action": "작업",
+    "downloadPdf": "PDF 다운로드",
+    "noTransaction": "아직 거래가 발생하지 않았습니다!"
+  },
   "RetailerRefund": {
     "title": "환불 관리",
     "refunds": "환불",
@@ -180,6 +236,8 @@
     "refundAmount": "환불 금액",
     "refundStatus": "환불 상태",
     "refundDate": "환불일",
+    "startedAt": "시작일",
+    "expiredAt": "종료일",
     "placeHolder": "결제 ID로 검색"
   },
   "RetailerBranches": {
@@ -420,5 +478,79 @@
     "title": "제목",
     "update": "업데이트",
     "submit": "제출"
+  },
+  "RetailerCustomer": {
+    "title": "고객 관리",
+    "customer": "고객",
+    "dashboard": "대시보드"
+  },
+  "RetailerCustomerTable": {
+    "info": "정보",
+    "joinedDate": "가입 날짜",
+    "statistics": "통계",
+    "actions": "작업",
+    "placeHolder": "고객 이름 또는 이메일로 검색",
+    "name": "이름",
+    "email": "이메일",
+    "phone": "전화번호",
+    "country": "국가",
+    "totalCollectStamp": "수집한 스탬프 수",
+    "totalScan": "총 스캔 수",
+    "totalRewardCollect": "수집한 보상"
+  },
+  "RetailerCustomerDetails": {
+    "title": "고객 세부 정보 관리",
+    "customer": "고객",
+    "dashboard": "대시보드",
+    "details": "세부 정보"
+  },
+  "RetailerCustomerDetailsCard": {
+    "name": "이름",
+    "email": "이메일",
+    "phone": "전화번호",
+    "country": "국가",
+    "address": "주소"
+  },
+  "RetailerCustomerDetailsStats": {
+    "totalCollectStamp": "수집한 스탬프 수",
+    "totalScan": "총 스캔 수",
+    "totalRewardCollect": "수집한 보상",
+    "totalPurchased": "총 구매액"
+  },
+  "RetailerCustomerDetailsScanTable": {
+    "title": "스캔 통계",
+    "scanDate": "스캔 날짜",
+    "stampTitle": "스탬프 제목",
+    "store": "매장",
+    "branch": "지점",
+    "scannedBy": "스캔한 사람",
+    "status": "상태",
+    "branchName": "지점명",
+    "branchAddress": "지점 주소",
+    "subAdminName": "서브 관리자 이름",
+    "subAdminEmail": "서브 관리자 이메일",
+    "name": "이름",
+    "email": "이메일",
+    "phone": "전화번호",
+    "country": "국가",
+    "placeHolder": "매장명으로 검색"
+  },
+  "RetailerCustomerDetailsScanTableTabs": {
+    "offerAndScan": "제안 및 스캔",
+    "store": "매장",
+    "scanTime": "스캔 시간",
+    "stampTitle": "스탬프 제목",
+    "stampCategory": "스탬프 카테고리",
+    "noOfStampToCollect": "수집할 스탬프 수",
+    "basicRules": "기본 규칙",
+    "minPurchaseAmount": "최소 구매 금액",
+    "rewardType": "보상 유형",
+    "reward": "보상",
+    "storeName": "매장 이름",
+    "ownerName": "소유자 이름",
+    "branchName": "지점 이름",
+    "branchAddress": "지점 주소",
+    "subAdminName": "부 관리자 이름",
+    "subAdminEmail": "부 관리자 이메일"
   }
 }

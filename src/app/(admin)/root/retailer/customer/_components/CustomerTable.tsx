@@ -7,12 +7,14 @@ import { useGetAllRetailerCustomerQuery } from '@/features/retailer/customer/cus
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 
 export default function CustomerTable({ offset }: { offset: number }) {
+  const t = useTranslations('RetailerCustomerTable');
   const { data: session }: any = useSession();
 
   // Query State
@@ -32,29 +34,29 @@ export default function CustomerTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Info',
+      header: t('info'),
       accessorKey: 'name',
       Cell: ({ row }: any) => (
         <div className="">
           <p>
-            <span className="font-bold">Name:</span> {row?.original?.fullName}
+            <span className="font-bold">{t('name')}:</span> {row?.original?.fullName}
           </p>
           <p>
-            <span className="font-bold">Email:</span> {row?.original?.email}
+            <span className="font-bold">{t('email')}:</span> {row?.original?.email}
           </p>
           <p>
-            <span className="font-bold">Phone:</span> {row?.original?.dialCode}
+            <span className="font-bold">{t('phone')}:</span> {row?.original?.dialCode}
             {row?.original?.phone}
           </p>
           <p>
-            <span className="font-bold">Country:</span> {row?.original?.country}
+            <span className="font-bold">{t('country')}:</span> {row?.original?.country}
           </p>
         </div>
       ),
       size: 250,
     },
     {
-      header: 'Joined Date',
+      header: t('joinedDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p> {convertDateByOffset(row?.original?.createdAt, offset)}</p>
@@ -63,25 +65,25 @@ export default function CustomerTable({ offset }: { offset: number }) {
       size: 200,
     },
     {
-      header: 'Statistics',
+      header: t('statistics'),
       accessorKey: 'totalCollectStamp',
       Cell: ({ row }: any) => (
         <div className="">
           <p>
-            <span className="font-bold">Total Collect Stamp:</span> {row?.original?.totalCollectStamp}
+            <span className="font-bold">{t('totalCollectStamp')}:</span> {row?.original?.totalCollectStamp}
           </p>
           <p>
-            <span className="font-bold">Total Scan:</span> {row?.original?.totalScan}
+            <span className="font-bold">{t('totalScan')}:</span> {row?.original?.totalScan}
           </p>
           <p>
-            <span className="font-bold">Total Reward Collect:</span> {row?.original?.totalRewardCollect}
+            <span className="font-bold">{t('totalRewardCollect')}:</span> {row?.original?.totalRewardCollect}
           </p>
         </div>
       ),
       size: 200,
     },
     {
-      header: 'Actions',
+      header: t('actions'),
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Link href={routes.privateRoutes.retailer.customer?.details(row?.original?._id)}>
@@ -121,7 +123,7 @@ export default function CustomerTable({ offset }: { offset: number }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Customer Name or Email"
+        searchPlaceHolder={t('placeHolder')}
         searchFieldWidth="300px"
       />
     </>
