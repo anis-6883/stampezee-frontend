@@ -17,7 +17,9 @@
     "linkedin": "リンクトイン",
     "newsletterButtonText": "送信",
     "newsletterPlaceholderText": "メールアドレス",
-    "copyright": "© Copyright 2024 StampEzee | 全著作権所有。"
+    "goToHome": "ホームページに移動",
+    "copyright": "© Copyright 2024 StampEzee | 全著作権所有。",
+    "searchWidgetPlaceholder": "ページを検索"
   },
   "StatusIndicator": {
     "active": "アクティブ",
@@ -79,15 +81,30 @@
     "plans": "プラン",
     "selectPlan": "サブスクリプションプランを選択",
     "switchPlan": "サブスクリプションプランを変更",
-    "addOns": "アドオン",
+    "addOns": "追加機能",
     "selectAddOn": "追加サービスを選択",
-    "orderSummary": "注文の概要",
+    "orderSummary": "注文概要",
     "total": "合計",
+    "remainingAmount": "残りの金額",
+    "subtotal": "小計",
+    "vat": "消費税",
+    "planChangeCost": "プラン変更料金",
     "checkout": "チェックアウト",
     "coupon": "クーポン",
     "couponButtonText": "適用",
-    "cartEmpty": "カートは現在空です。プランを選択してください！",
-    "checkoutButtonText": "確認"
+    "cartEmpty": "カートが空です。プランを選択してください！",
+    "refundMessage": "返金されます",
+    "disableBranch": "無効にする支店:",
+    "edit": "編集",
+    "checkoutButtonText": "チェックアウトを確認",
+    "balance": "残高",
+    "currentAmount": "現在の金額",
+    "usageAmount": "使用金額",
+    "purchaseAlert": "購入アラート！",
+    "purchaseAlertMessage": "ご注文は少なくとも",
+    "purchaseAlertMessageAfter": "続行するにはさらにアイテムを追加してください",
+    "plan": "プラン",
+    "addOn": "アドオン"
   },
   "LoginPage": {
     "credentials": "クレデンシャル: jane@doe.com / next-intl",
@@ -151,6 +168,12 @@
     "totalOrder": "総注文数",
     "totalRevenue": "総収益"
   },
+  "RetailerMembership": {
+    "switchPlan": "プランを変更",
+    "selectPlan": "プランを選択",
+    "selectAddOns": "アドオンを選択",
+    "buttonText": "確認"
+  },
   "RetailerBilling": {
     "Billing": "請求",
     "Dashboard": "ダッシュボード"
@@ -167,6 +190,39 @@
     "subscriptionDetails": "サブスクリプションの詳細",
     "placeHolder": "支払いIDで検索"
   },
+  "RetailerBillingDetails": {
+    "title": "サブスクリプションの詳細",
+    "dashboard": "ダッシュボード",
+    "billing": "請求",
+    "plan": "プラン",
+    "addOn": "追加",
+    "invoices": "請求書",
+    "cancelSubscriptionOrChangeCard": "サブスクリプションをキャンセルまたはカードを変更",
+    "renewSubscriptionOrChangeCard": "サブスクリプションを更新またはカードを変更",
+    "subscriptionCanceled": "サブスクリプションがキャンセルされました"
+  },
+  "RetailerBillingDetailsCard": {
+    "subscriptionID": "サブスクリプションID",
+    "enrollStatus": "登録状況",
+    "balance": "残高",
+    "purchasedAt": "購入日",
+    "currentPeriod": "現在の期間",
+    "planStatus": "プランのステータス",
+    "nextInvoice": "次の請求書",
+    "running": "進行中",
+    "ended": "終了",
+    "subscriptionCancelAt": "サブスクリプションがキャンセルされた日時"
+  },
+  "RetailerBillingInvoiceTable": {
+    "serialNo": "シリアル番号",
+    "paymentIntentID": "支払い意図ID",
+    "invoiceNumber": "請求書番号",
+    "amount": "金額",
+    "createdAt": "作成日",
+    "action": "操作",
+    "downloadPdf": "PDFをダウンロード",
+    "noTransaction": "まだ取引は行われていません!"
+  },
   "RetailerRefund": {
     "title": "返金管理",
     "refunds": "返金",
@@ -179,6 +235,8 @@
     "refundAmount": "返金額",
     "refundStatus": "返金状況",
     "refundDate": "返金日",
+    "startedAt": "開始日",
+    "expiredAt": "終了日",
     "placeHolder": "支払いIDで検索"
   },
   "RetailerBranches": {
@@ -419,5 +477,79 @@
     "title": "タイトル",
     "update": "更新",
     "submit": "送信"
+  },
+  "RetailerCustomer": {
+    "title": "顧客管理",
+    "customer": "顧客",
+    "dashboard": "ダッシュボード"
+  },
+  "RetailerCustomerTable": {
+    "info": "情報",
+    "joinedDate": "加入日",
+    "statistics": "統計",
+    "actions": "アクション",
+    "placeHolder": "顧客名またはメールで検索",
+    "name": "名前",
+    "email": "メール",
+    "phone": "電話番号",
+    "country": "国",
+    "totalCollectStamp": "集めたスタンプ数",
+    "totalScan": "スキャン総数",
+    "totalRewardCollect": "獲得した報酬"
+  },
+  "RetailerCustomerDetails": {
+    "title": "顧客詳細管理",
+    "customer": "顧客",
+    "dashboard": "ダッシュボード",
+    "details": "詳細"
+  },
+  "RetailerCustomerDetailsCard": {
+    "name": "名前",
+    "email": "メール",
+    "phone": "電話番号",
+    "country": "国",
+    "address": "住所"
+  },
+  "RetailerCustomerDetailsStats": {
+    "totalCollectStamp": "集めたスタンプ数",
+    "totalScan": "スキャン総数",
+    "totalRewardCollect": "獲得した報酬",
+    "totalPurchased": "購入総額"
+  },
+  "RetailerCustomerDetailsScanTable": {
+    "title": "スキャン統計",
+    "scanDate": "スキャン日",
+    "stampTitle": "スタンプタイトル",
+    "store": "店舗",
+    "branch": "支店",
+    "scannedBy": "スキャンした人",
+    "status": "ステータス",
+    "branchName": "支店名",
+    "branchAddress": "支店住所",
+    "subAdminName": "サブ管理者名",
+    "subAdminEmail": "サブ管理者メール",
+    "name": "名前",
+    "email": "メール",
+    "phone": "電話番号",
+    "country": "国",
+    "placeHolder": "店舗名で検索"
+  },
+  "RetailerCustomerDetailsScanTableTabs": {
+    "offerAndScan": "オファーとスキャン",
+    "store": "店舗",
+    "scanTime": "スキャン時間",
+    "stampTitle": "スタンプタイトル",
+    "stampCategory": "スタンプカテゴリー",
+    "noOfStampToCollect": "集めるスタンプ数",
+    "basicRules": "基本ルール",
+    "minPurchaseAmount": "最低購入金額",
+    "rewardType": "報酬タイプ",
+    "reward": "報酬",
+    "storeName": "店舗名",
+    "ownerName": "オーナー名",
+    "branchName": "支店名",
+    "branchAddress": "支店住所",
+    "subAdminName": "サブ管理者名",
+    "subAdminEmail": "サブ管理者のメール"
   }
 }

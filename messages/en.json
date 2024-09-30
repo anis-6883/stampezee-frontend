@@ -17,7 +17,9 @@
     "linkedin": "LINKEDIN",
     "newsletterButtonText": "SUBMIT",
     "newsletterPlaceholderText": "Email Address",
-    "copyright": "© Copyright 2024 StampEzee | All Rights Reserved."
+    "goToHome": "Go To Home",
+    "copyright": "© Copyright 2024 StampEzee | All Rights Reserved.",
+    "searchWidgetPlaceholder": "Search your page"
   },
   "StatusIndicator": {
     "active": "Active",
@@ -84,11 +86,26 @@
     "selectAddOn": "Select additional service",
     "orderSummary": "Order Summary",
     "total": "Total",
+    "remainingAmount": "Remaining Amount",
+    "subtotal": "Subtotal",
+    "vat": "VAT",
+    "planChangeCost": "Plan Change Cost",
     "checkout": "Checkout",
     "coupon": "Coupon",
     "couponButtonText": "Apply",
     "cartEmpty": "Your cart is currently empty. Select a plan!",
-    "checkoutButtonText": "Confirm Checkout"
+    "refundMessage": "You will get back",
+    "disableBranch": "Disable Branch/s:",
+    "edit": "Edit",
+    "checkoutButtonText": "Confirm Checkout",
+    "balance": "Balance",
+    "currentAmount": "Current Amount",
+    "usageAmount": "Usage Amount",
+    "purchaseAlert": "Purchase Alert!",
+    "purchaseAlertMessage": "Your order needs to be at least",
+    "purchaseAlertMessageAfter": "Please add more items to continue",
+    "plan": "Plan",
+    "addOn": "Add-On"
   },
   "LoginPage": {
     "credentials": "Credentials: jane@doe.com / next-intl",
@@ -152,6 +169,12 @@
     "totalOrder": "Total Order",
     "totalRevenue": "Total Revenue"
   },
+  "RetailerMembership": {
+    "switchPlan": "Switch a Plan",
+    "selectPlan": "Select a Plan",
+    "selectAddOns": "Select Add-Ons",
+    "buttonText": "Selection Confirm"
+  },
   "RetailerBilling": {
     "Billing": "Billing",
     "Dashboard": "Dashboard"
@@ -168,6 +191,39 @@
     "subscriptionDetails": "Subscription Details",
     "placeHolder": "Search By Subscription ID"
   },
+  "RetailerBillingDetails": {
+    "title": "Subscription Details",
+    "dashboard": "Dashboard",
+    "billing": "Billing",
+    "plan": "Plan",
+    "addOn": "Add-On",
+    "invoices": "Invoices",
+    "cancelSubscriptionOrChangeCard": "Cancel Subscription Or Change Card",
+    "renewSubscriptionOrChangeCard": "Renew Subscription Or Change Card",
+    "subscriptionCanceled": "Subscription Canceled"
+  },
+  "RetailerBillingDetailsCard": {
+    "subscriptionID": "Subscription ID",
+    "enrollStatus": "Enroll Status",
+    "balance": "Balance",
+    "purchasedAt": "Purchased At",
+    "currentPeriod": "Current Period",
+    "planStatus": "Plan Status",
+    "nextInvoice": "Next Invoice",
+    "running": "Running",
+    "ended": "Ended",
+    "subscriptionCancelAt": "Subscription Cancel At"
+  },
+  "RetailerBillingInvoiceTable": {
+    "serialNo": "Serial No.",
+    "paymentIntentID": "Payment Intent ID",
+    "invoiceNumber": "Invoice Number",
+    "amount": "Amount",
+    "createdAt": "Created At",
+    "action": "Action",
+    "downloadPdf": "Download PDF",
+    "noTransaction": "No transaction happened yet!"
+  },
   "RetailerRefund": {
     "title": "Manage Refunds",
     "refunds": "Refunds",
@@ -180,6 +236,8 @@
     "refundAmount": "Refund Amount",
     "refundStatus": "Refund Status",
     "refundDate": "Refund Date",
+    "startedAt": "Started At",
+    "expiredAt": "Expired At",
     "placeHolder": "Search By Payment ID"
   },
   "RetailerBranches": {
@@ -422,5 +480,81 @@
     "title": "Title",
     "update": "Update",
     "submit": "Submit"
+  },
+  "RetailerCustomer": {
+    "title": "Manage Customer",
+    "customer": "Customer",
+    "dashboard": "Dashboard"
+  },
+  "RetailerCustomerTable": {
+    "info": "Info",
+    "joinedDate": "Joined Date",
+    "statistics": "Statistics",
+    "actions": "Actions",
+    "placeHolder": "Search By Customer Name or Email",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "country": "Country",
+    "totalCollectStamp": "Total Collect Stamp",
+    "totalScan": "Total Scan",
+    "totalRewardCollect": "Total Reward Collect"
+  },
+
+  "RetailerCustomerDetails": {
+    "title": "Manage Customer Details",
+    "customer": "Customers",
+    "dashboard": "Dashboard",
+    "details": "Details"
+  },
+  "RetailerCustomerDetailsCard": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "country": "Country",
+    "address": "Address"
+  },
+
+  "RetailerCustomerDetailsStats": {
+    "totalCollectStamp": "Total Collect Stamp",
+    "totalScan": "Total Scan",
+    "totalRewardCollect": "Total Reward Collect",
+    "totalPurchased": "Total Purchased"
+  },
+  "RetailerCustomerDetailsScanTable": {
+    "title": "Scan Statistics",
+    "scanDate": "Scan Date",
+    "stampTitle": "Stamp Title",
+    "store": "Store",
+    "branch": "Branch",
+    "scannedBy": "Scanned By",
+    "status": "Status",
+    "branchName": "Branch Name",
+    "branchAddress": "Branch Address",
+    "subAdminName": "Sub Admin Name",
+    "subAdminEmail": "Sub Admin Email",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "country": "Country",
+    "placeHolder": "Search By Store Name"
+  },
+  "RetailerCustomerDetailsScanTableTabs": {
+    "offerAndScan": "Offer & Scan",
+    "store": "Store",
+    "scanTime": "Scan Time",
+    "stampTitle": "Stamp Title",
+    "stampCategory": "Stamp Category",
+    "noOfStampToCollect": "No of Stamp to Collect",
+    "basicRules": "Basic Rules",
+    "minPurchaseAmount": "Min. Purchase Amount",
+    "rewardType": "Reward Type",
+    "reward": "Reward",
+    "storeName": "Store Name",
+    "ownerName": "Owner Name",
+    "branchName": "Branch Name",
+    "branchAddress": "Branch Address",
+    "subAdminName": "Sub Admin Name",
+    "subAdminEmail": "Sub Admin Email"
   }
 }

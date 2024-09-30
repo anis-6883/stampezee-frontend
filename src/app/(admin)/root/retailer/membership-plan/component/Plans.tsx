@@ -12,12 +12,14 @@ import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate, isCheckoutButtonDisabled } from '@/utils';
 import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const Plans = ({ locale }: { locale: string }) => {
+  const t = useTranslations('RetailerMembership');
   const dispatch = useDispatch();
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
@@ -82,15 +84,15 @@ export const Plans = ({ locale }: { locale: string }) => {
     <div className="mb-6">
       <div className="rounded-md p-8 shadow-md">
         {session?.user?.plan && session?.user?.plan !== 'trial' ? (
-          <h2 className="mb-4 text-xl font-semibold">Switch a Plan</h2>
+          <h2 className="mb-4 text-xl font-semibold">{t('switchPlan')}</h2>
         ) : (
-          <h2 className="mb-4 text-xl font-semibold">Select a Plan</h2>
+          <h2 className="mb-4 text-xl font-semibold">{t('selectPlan')}</h2>
         )}
         <SubscriptionList isMemberShip={true} locale={locale} />
 
         <hr className="my-6" />
 
-        <h2 className="mb-4 text-xl font-semibold">Select Add-Ons</h2>
+        <h2 className="mb-4 text-xl font-semibold">{t('selectAddOns')}</h2>
         <AddOnsList isMemberShip={true} locale={locale} />
         <hr className="my-3" />
         <div className="mt-10 flex items-center justify-end gap-2">
@@ -108,7 +110,7 @@ export const Plans = ({ locale }: { locale: string }) => {
               })}
               className="text-white"
               color="danger"
-              text="Selection Confirm"
+              text={t('buttonText')}
               postIcon={<BsCheck2Circle className="text-base" />}
             />
           </Link>

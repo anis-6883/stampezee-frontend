@@ -17,7 +17,9 @@
     "linkedin": "ЛИНКЕДИН",
     "newsletterButtonText": "ОТПРАВИТЬ",
     "newsletterPlaceholderText": "Адрес электронной почты",
-    "copyright": "© Copyright 2024 StampEzee | Все права защищены."
+    "goToHome": "Перейти на главную страницу",
+    "copyright": "© Copyright 2024 StampEzee | Все права защищены.",
+    "searchWidgetPlaceholder": "Найти на странице"
   },
   "StatusIndicator": {
     "active": "Активный",
@@ -76,18 +78,33 @@
     "active": "Активный"
   },
   "CheckoutPage": {
-    "plans": "Планы",
-    "selectPlan": "Выберите план подписки",
-    "switchPlan": "Изменить план подписки",
+    "plans": "Тарифы",
+    "selectPlan": "Выберите тарифный план",
+    "switchPlan": "Сменить тарифный план",
     "addOns": "Дополнения",
     "selectAddOn": "Выберите дополнительную услугу",
-    "orderSummary": "Сводка заказа",
+    "orderSummary": "Итог заказа",
     "total": "Итого",
+    "remainingAmount": "Оставшаяся сумма",
+    "subtotal": "Промежуточный итог",
+    "vat": "НДС",
+    "planChangeCost": "Стоимость смены плана",
     "checkout": "Оформить заказ",
     "coupon": "Купон",
     "couponButtonText": "Применить",
-    "cartEmpty": "Ваша корзина пуста. Выберите план!",
-    "checkoutButtonText": "Оформить заказ"
+    "cartEmpty": "Ваша корзина пуста. Выберите тариф!",
+    "refundMessage": "Вы получите обратно",
+    "disableBranch": "Отключить филиал/ы:",
+    "edit": "Редактировать",
+    "checkoutButtonText": "Подтвердить заказ",
+    "balance": "Баланс",
+    "currentAmount": "Текущая сумма",
+    "usageAmount": "Использованная сумма",
+    "purchaseAlert": "Покупка предупреждение!",
+    "purchaseAlertMessage": "Ваш заказ должен быть не менее",
+    "purchaseAlertMessageAfter": "Добавьте больше товаров, чтобы продолжить",
+    "plan": "План",
+    "addOn": "Дополнение"
   },
   "LoginPage": {
     "credentials": "Учетные данные: jane@doe.com / next-intl",
@@ -151,6 +168,12 @@
     "totalOrder": "Общее Количество Заказов",
     "totalRevenue": "Общий Доход"
   },
+  "RetailerMembership": {
+    "switchPlan": "Изменить план",
+    "selectPlan": "Выберите план",
+    "selectAddOns": "Выберите дополнения",
+    "buttonText": "Подтвердить"
+  },
   "RetailerBilling": {
     "Billing": "Выставление счетов",
     "Dashboard": "Панель управления"
@@ -167,6 +190,39 @@
     "subscriptionDetails": "Детали подписки",
     "placeHolder": "Поиск по ID подписки"
   },
+  "RetailerBillingDetails": {
+    "title": "Детали подписки",
+    "dashboard": "Панель управления",
+    "billing": "Оплата",
+    "plan": "План",
+    "addOn": "Дополнение",
+    "invoices": "Счета",
+    "cancelSubscriptionOrChangeCard": "Отменить подписку или изменить карту",
+    "renewSubscriptionOrChangeCard": "Продлить подписку или изменить карту",
+    "subscriptionCanceled": "Подписка отменена"
+  },
+  "RetailerBillingDetailsCard": {
+    "subscriptionID": "ID подписки",
+    "enrollStatus": "Статус регистрации",
+    "balance": "Баланс",
+    "purchasedAt": "Дата покупки",
+    "currentPeriod": "Текущий период",
+    "planStatus": "Статус плана",
+    "nextInvoice": "Следующий счет",
+    "running": "В работе",
+    "ended": "Завершено",
+    "subscriptionCancelAt": "Подписка отменена"
+  },
+  "RetailerBillingInvoiceTable": {
+    "serialNo": "Серийный номер",
+    "paymentIntentID": "ID намерения оплаты",
+    "invoiceNumber": "Номер счета",
+    "amount": "Сумма",
+    "createdAt": "Создано",
+    "action": "Действие",
+    "downloadPdf": "Скачать PDF",
+    "noTransaction": "Пока не было никаких транзакций!"
+  },
   "RetailerRefund": {
     "title": "Управление Возвратами",
     "refunds": "Возвраты",
@@ -179,6 +235,8 @@
     "refundAmount": "Сумма Возврата",
     "refundStatus": "Статус Возврата",
     "refundDate": "Дата Возврата",
+    "startedAt": "Начало",
+    "expiredAt": "Истечение",
     "placeHolder": "Поиск по ID подписки"
   },
   "RetailerBranches": {
@@ -419,5 +477,79 @@
     "title": "Заголовок",
     "update": "Обновить",
     "submit": "Отправить"
+  },
+  "RetailerCustomer": {
+    "title": "Управление клиентами",
+    "customer": "Клиент",
+    "dashboard": "Панель управления"
+  },
+  "RetailerCustomerTable": {
+    "info": "Информация",
+    "joinedDate": "Дата присоединения",
+    "statistics": "Статистика",
+    "actions": "Действия",
+    "placeHolder": "Поиск по имени клиента или электронной почте",
+    "name": "Имя",
+    "email": "Эл. почта",
+    "phone": "Телефон",
+    "country": "Страна",
+    "totalCollectStamp": "Всего собранных штампов",
+    "totalScan": "Всего сканов",
+    "totalRewardCollect": "Всего полученных наград"
+  },
+  "RetailerCustomerDetails": {
+    "title": "Управление данными клиентов",
+    "customer": "Клиенты",
+    "dashboard": "Панель управления",
+    "details": "Детали"
+  },
+  "RetailerCustomerDetailsCard": {
+    "name": "Имя",
+    "email": "Эл. почта",
+    "phone": "Телефон",
+    "country": "Страна",
+    "address": "Адрес"
+  },
+  "RetailerCustomerDetailsStats": {
+    "totalCollectStamp": "Всего собранных штампов",
+    "totalScan": "Всего сканов",
+    "totalRewardCollect": "Всего полученных наград",
+    "totalPurchased": "Всего покупок"
+  },
+  "RetailerCustomerDetailsScanTable": {
+    "title": "Статистика сканирования",
+    "scanDate": "Дата сканирования",
+    "stampTitle": "Название штампа",
+    "store": "Магазин",
+    "branch": "Филиал",
+    "scannedBy": "Сканировал",
+    "status": "Статус",
+    "branchName": "Название филиала",
+    "branchAddress": "Адрес филиала",
+    "subAdminName": "Имя субадминистратора",
+    "subAdminEmail": "Эл. почта субадминистратора",
+    "name": "Имя",
+    "email": "Эл. почта",
+    "phone": "Телефон",
+    "country": "Страна",
+    "placeHolder": "Поиск по названию магазина"
+  },
+  "RetailerCustomerDetailsScanTableTabs": {
+    "offerAndScan": "Предложение и Сканирование",
+    "store": "Магазин",
+    "scanTime": "Время сканирования",
+    "stampTitle": "Название штампа",
+    "stampCategory": "Категория штампа",
+    "noOfStampToCollect": "Количество штампов для сбора",
+    "basicRules": "Основные правила",
+    "minPurchaseAmount": "Мин. сумма покупки",
+    "rewardType": "Тип награды",
+    "reward": "Награда",
+    "storeName": "Название магазина",
+    "ownerName": "Имя владельца",
+    "branchName": "Название филиала",
+    "branchAddress": "Адрес филиала",
+    "subAdminName": "Имя субадминистратора",
+    "subAdminEmail": "Эл. почта субадминистратора"
   }
 }

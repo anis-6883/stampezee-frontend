@@ -17,7 +17,9 @@
     "linkedin": "LINKEDIN",
     "newsletterButtonText": "ENVIAR",
     "newsletterPlaceholderText": "Dirección de Correo Electrónico",
-    "copyright": "© Copyright 2024 StampEzee | Todos los derechos reservados."
+    "goToHome": "Ir a la página principal",
+    "copyright": "© Copyright 2024 StampEzee | Todos los derechos reservados.",
+    "searchWidgetPlaceholder": "Buscar en tu página"
   },
   "StatusIndicator": {
     "active": "Activo",
@@ -78,16 +80,31 @@
   "CheckoutPage": {
     "plans": "Planes",
     "selectPlan": "Selecciona un plan de suscripción",
-    "switchPlan": "Cambiar un plan de suscripción",
+    "switchPlan": "Cambia un plan de suscripción",
     "addOns": "Complementos",
-    "selectAddOn": "Selecciona un complemento adicional",
+    "selectAddOn": "Selecciona un servicio adicional",
     "orderSummary": "Resumen del pedido",
     "total": "Total",
+    "remainingAmount": "Cantidad restante",
+    "subtotal": "Subtotal",
+    "vat": "IVA",
+    "planChangeCost": "Costo de cambio de plan",
     "checkout": "Pagar",
     "coupon": "Cupón",
     "couponButtonText": "Aplicar",
-    "cartEmpty": "Tu carrito está actualmente vacío. Selecciona un plan!",
-    "checkoutButtonText": "Confirmar Checkout"
+    "cartEmpty": "Tu carrito está vacío. ¡Selecciona un plan!",
+    "refundMessage": "Recibirás",
+    "disableBranch": "Desactivar Sucursal/es:",
+    "edit": "Editar",
+    "checkoutButtonText": "Confirmar Pago",
+    "balance": "Saldo",
+    "currentAmount": "Monto actual",
+    "usageAmount": "Cantidad utilizada",
+    "purchaseAlert": "¡Alerta de compra!",
+    "purchaseAlertMessage": "Tu pedido debe ser al menos",
+    "purchaseAlertMessageAfter": "Agrega más elementos para continuar",
+    "plan": "Plan",
+    "addOn": "Complemento"
   },
   "LoginPage": {
     "credentials": "Credenciales: jane@doe.com / next-intl",
@@ -151,6 +168,12 @@
     "totalOrder": "Total de Pedidos",
     "totalRevenue": "Ingresos Totales"
   },
+  "RetailerMembership": {
+    "switchPlan": "Cambiar un Plan",
+    "selectPlan": "Selecciona un Plan",
+    "selectAddOns": "Selecciona Complementos",
+    "buttonText": "Confirmar Selección"
+  },
   "RetailerBilling": {
     "Billing": "Facturación",
     "Dashboard": "Panel de control"
@@ -167,6 +190,39 @@
     "subscriptionDetails": "Detalles de la Suscripción",
     "placeHolder": "Buscar por ID de Suscripción"
   },
+  "RetailerBillingDetails": {
+    "title": "Detalles de la suscripción",
+    "dashboard": "Panel de control",
+    "billing": "Facturación",
+    "plan": "Plan",
+    "addOn": "Complemento",
+    "invoices": "Facturas",
+    "cancelSubscriptionOrChangeCard": "Cancelar suscripción o cambiar tarjeta",
+    "renewSubscriptionOrChangeCard": "Renovar suscripción o cambiar tarjeta",
+    "subscriptionCanceled": "Suscripción cancelada"
+  },
+  "RetailerBillingDetailsCard": {
+    "subscriptionID": "ID de suscripción",
+    "enrollStatus": "Estado de inscripción",
+    "balance": "Saldo",
+    "purchasedAt": "Comprado en",
+    "currentPeriod": "Periodo actual",
+    "planStatus": "Estado del plan",
+    "nextInvoice": "Próxima factura",
+    "running": "En curso",
+    "ended": "Finalizado",
+    "subscriptionCancelAt": "Suscripción cancelada en"
+  },
+  "RetailerBillingInvoiceTable": {
+    "serialNo": "N.º de serie",
+    "paymentIntentID": "ID de intención de pago",
+    "invoiceNumber": "Número de factura",
+    "amount": "Cantidad",
+    "createdAt": "Creado en",
+    "action": "Acción",
+    "downloadPdf": "Descargar PDF",
+    "noTransaction": "¡No se ha realizado ninguna transacción aún!"
+  },
   "RetailerRefund": {
     "title": "Gestionar Reembolsos",
     "refunds": "Reembolsos",
@@ -179,6 +235,8 @@
     "refundAmount": "Monto del Reembolso",
     "refundStatus": "Estado del Reembolso",
     "refundDate": "Fecha del Reembolso",
+    "startedAt": "Comenzado en",
+    "expiredAt": "Expirado en",
     "placeHolder": "Buscar por ID de Pago"
   },
   "RetailerBranches": {
@@ -419,5 +477,79 @@
     "title": "Título",
     "update": "Actualizar",
     "submit": "Enviar"
+  },
+  "RetailerCustomer": {
+    "title": "Gestionar Cliente",
+    "customer": "Cliente",
+    "dashboard": "Panel de control"
+  },
+  "RetailerCustomerTable": {
+    "info": "Información",
+    "joinedDate": "Fecha de incorporación",
+    "statistics": "Estadísticas",
+    "actions": "Acciones",
+    "placeHolder": "Buscar por Nombre o Correo Electrónico del Cliente",
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "country": "País",
+    "totalCollectStamp": "Total de Sellos Recolectados",
+    "totalScan": "Total de Escaneos",
+    "totalRewardCollect": "Total de Recompensas Recolectadas"
+  },
+  "RetailerCustomerDetails": {
+    "title": "Gestionar Detalles del Cliente",
+    "customer": "Clientes",
+    "dashboard": "Panel de control",
+    "details": "Detalles"
+  },
+  "RetailerCustomerDetailsCard": {
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "country": "País",
+    "address": "Dirección"
+  },
+  "RetailerCustomerDetailsStats": {
+    "totalCollectStamp": "Total de Sellos Recolectados",
+    "totalScan": "Total de Escaneos",
+    "totalRewardCollect": "Total de Recompensas Recolectadas",
+    "totalPurchased": "Total de Compras"
+  },
+  "RetailerCustomerDetailsScanTable": {
+    "title": "Estadísticas de Escaneo",
+    "scanDate": "Fecha de Escaneo",
+    "stampTitle": "Título del Sello",
+    "store": "Tienda",
+    "branch": "Sucursal",
+    "scannedBy": "Escaneado por",
+    "status": "Estado",
+    "branchName": "Nombre de la Sucursal",
+    "branchAddress": "Dirección de la Sucursal",
+    "subAdminName": "Nombre del Subadministrador",
+    "subAdminEmail": "Correo Electrónico del Subadministrador",
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "country": "País",
+    "placeHolder": "Buscar por Nombre de la Tienda"
+  },
+  "RetailerCustomerDetailsScanTableTabs": {
+    "offerAndScan": "Oferta y Escaneo",
+    "store": "Tienda",
+    "scanTime": "Hora de Escaneo",
+    "stampTitle": "Título del Sello",
+    "stampCategory": "Categoría del Sello",
+    "noOfStampToCollect": "Núm. de Sellos a Recolectar",
+    "basicRules": "Reglas Básicas",
+    "minPurchaseAmount": "Monto Mínimo de Compra",
+    "rewardType": "Tipo de Recompensa",
+    "reward": "Recompensa",
+    "storeName": "Nombre de la Tienda",
+    "ownerName": "Nombre del Propietario",
+    "branchName": "Nombre de la Sucursal",
+    "branchAddress": "Dirección de la Sucursal",
+    "subAdminName": "Nombre del Subadministrador",
+    "subAdminEmail": "Correo Electrónico del Subadministrador"
   }
 }

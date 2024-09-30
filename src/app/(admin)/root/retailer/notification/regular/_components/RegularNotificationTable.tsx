@@ -17,6 +17,7 @@ import CreateUpdateModel from './CreateUpdateModel';
 
 export default function RegularNotificationTable({ offset }: { offset: number }) {
   const t = useTranslations('RegularNotificationTable');
+  const t2 = useTranslations('SendAndResendNotification');
   const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
@@ -83,7 +84,7 @@ export default function RegularNotificationTable({ offset }: { offset: number })
         <div className="flex items-center justify-center gap-2">
           <Button
             className="!m-0 !px-3 !py-2 !text-xs"
-            text="Resend"
+            text={t2('resend')}
             color="danger"
             preIcon={<FaRegPaperPlane className="text-base" />}
             onClick={() => {

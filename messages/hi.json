@@ -17,7 +17,9 @@
     "linkedin": "लिंक्डइन",
     "newsletterButtonText": "प्रस्तुत करें",
     "newsletterPlaceholderText": "ईमेल पता",
-    "copyright": "© Copyright 2024 StampEzee | सभी अधिकार सुरक्षित हैं।"
+    "goToHome": "होम पेज पर जाएं",
+    "copyright": "© Copyright 2024 StampEzee | सभी अधिकार सुरक्षित हैं।",
+    "searchWidgetPlaceholder": "अपनी पेज पर खोजें"
   },
   "StatusIndicator": {
     "active": "सक्रिय",
@@ -76,18 +78,33 @@
     "active": "सक्रिय"
   },
   "CheckoutPage": {
-    "plans": "योजनाएं",
-    "selectPlan": "एक सदस्यता योजना चुनें",
-    "switchPlan": "एक सदस्यता योजना बदलें",
+    "plans": "योजनाएँ",
+    "selectPlan": "सदस्यता योजना चुनें",
+    "switchPlan": "सदस्यता योजना बदलें",
     "addOns": "ऐड-ऑन",
-    "selectAddOn": "एक अतिरिक्त सेवा चुनें",
-    "orderSummary": "आदेश सारांश",
+    "selectAddOn": "अतिरिक्त सेवा चुनें",
+    "orderSummary": "आदेश का सारांश",
     "total": "कुल",
+    "remainingAmount": "शेष राशि",
+    "subtotal": "उप-योग",
+    "vat": "वैट",
+    "planChangeCost": "योजना परिवर्तन लागत",
     "checkout": "चेकआउट",
     "coupon": "कूपन",
     "couponButtonText": "लागू करें",
-    "cartEmpty": "आपका कार्ट वर्तमान में खाली है। एक योजना चुनें!",
-    "checkoutButtonText": "चेकआउट सुनिश्चित करें"
+    "cartEmpty": "आपकी गाड़ी अभी खाली है। एक योजना चुनें!",
+    "refundMessage": "आपको वापस मिलेगा",
+    "disableBranch": "शाखा/शाखाओं को अक्षम करें:",
+    "edit": "संपादित करें",
+    "checkoutButtonText": "चेकआउट की पुष्टि करें",
+    "balance": "शेष",
+    "currentAmount": "वर्तमान राशि",
+    "usageAmount": "उपयोग की गई राशि",
+    "purchaseAlert": "खरीद चेतावनी!",
+    "purchaseAlertMessage": "आपका ऑर्डर कम से कम",
+    "purchaseAlertMessageAfter": "कृपया आगे बढ़ने के लिए अधिक आइटम जोड़ें",
+    "plan": "योजना",
+    "addOn": "ऐड-ऑन"
   },
   "LoginPage": {
     "credentials": "क्रेडेंशियल्स: jane@doe.com / next-intl",
@@ -151,6 +168,12 @@
     "totalOrder": "कुल ऑर्डर",
     "totalRevenue": "कुल राजस्व"
   },
+  "RetailerMembership": {
+    "switchPlan": "योजना बदलें",
+    "selectPlan": "योजना चुनें",
+    "selectAddOns": "ऐड-ऑन चुनें",
+    "buttonText": "पुष्टि करें"
+  },
   "RetailerBilling": {
     "Billing": "बिलिंग",
     "Dashboard": "डैशबोर्ड"
@@ -167,6 +190,39 @@
     "subscriptionDetails": "सदस्यता का विवरण",
     "placeHolder": "भुगतान ID द्वारा खोजें"
   },
+  "RetailerBillingDetails": {
+    "title": "सदस्यता विवरण",
+    "dashboard": "डैशबोर्ड",
+    "billing": "बिलिंग",
+    "plan": "योजना",
+    "addOn": "एड-ऑन",
+    "invoices": "इनवॉइस",
+    "cancelSubscriptionOrChangeCard": "सदस्यता रद्द करें या कार्ड बदलें",
+    "renewSubscriptionOrChangeCard": "सदस्यता नवीनीकरण करें या कार्ड बदलें",
+    "subscriptionCanceled": "सदस्यता रद्द की गई"
+  },
+  "RetailerBillingDetailsCard": {
+    "subscriptionID": "सदस्यता आईडी",
+    "enrollStatus": "नामांकन स्थिति",
+    "balance": "शेष",
+    "purchasedAt": "खरीदा गया",
+    "currentPeriod": "वर्तमान अवधि",
+    "planStatus": "योजना स्थिति",
+    "nextInvoice": "अगला चालान",
+    "running": "चल रहा है",
+    "ended": "समाप्त",
+    "subscriptionCancelAt": "सदस्यता रद्द की गई"
+  },
+  "RetailerBillingInvoiceTable": {
+    "serialNo": "क्रमांक",
+    "paymentIntentID": "भुगतान इरादा आईडी",
+    "invoiceNumber": "चालान संख्या",
+    "amount": "राशि",
+    "createdAt": "निर्मित",
+    "action": "क्रिया",
+    "downloadPdf": "पीडीएफ डाउनलोड करें",
+    "noTransaction": "अभी तक कोई लेन-देन नहीं हुआ!"
+  },
   "RetailerRefund": {
     "title": "रिफंड प्रबंधित करें",
     "refunds": "रिफंड",
@@ -179,6 +235,8 @@
     "refundAmount": "रिफंड राशि",
     "refundStatus": "रिफंड स्थिति",
     "refundDate": "रिफंड तिथि",
+    "startedAt": "शुरू हुआ",
+    "expiredAt": "समाप्त हुआ",
     "placeHolder": "भुगतान ID द्वारा खोजें"
   },
   "RetailerBranches": {
@@ -419,5 +477,79 @@
     "title": "शीर्षक",
     "update": "अपडेट",
     "submit": "जमा करें"
+  },
+  "RetailerCustomer": {
+    "title": "ग्राहक प्रबंधन",
+    "customer": "ग्राहक",
+    "dashboard": "डैशबोर्ड"
+  },
+  "RetailerCustomerTable": {
+    "info": "जानकारी",
+    "joinedDate": "शामिल होने की तिथि",
+    "statistics": "आंकड़े",
+    "actions": "क्रियाएँ",
+    "placeHolder": "ग्राहक के नाम या ईमेल से खोजें",
+    "name": "नाम",
+    "email": "ईमेल",
+    "phone": "फ़ोन",
+    "country": "देश",
+    "totalCollectStamp": "कुल स्टैम्प संग्रह",
+    "totalScan": "कुल स्कैन",
+    "totalRewardCollect": "कुल पुरस्कार संग्रह"
+  },
+  "RetailerCustomerDetails": {
+    "title": "ग्राहक विवरण प्रबंधन",
+    "customer": "ग्राहक",
+    "dashboard": "डैशबोर्ड",
+    "details": "विवरण"
+  },
+  "RetailerCustomerDetailsCard": {
+    "name": "नाम",
+    "email": "ईमेल",
+    "phone": "फ़ोन",
+    "country": "देश",
+    "address": "पता"
+  },
+  "RetailerCustomerDetailsStats": {
+    "totalCollectStamp": "कुल स्टैम्प संग्रह",
+    "totalScan": "कुल स्कैन",
+    "totalRewardCollect": "कुल पुरस्कार संग्रह",
+    "totalPurchased": "कुल खरीद"
+  },
+  "RetailerCustomerDetailsScanTable": {
+    "title": "स्कैन आंकड़े",
+    "scanDate": "स्कैन तिथि",
+    "stampTitle": "स्टैम्प का शीर्षक",
+    "store": "स्टोर",
+    "branch": "शाखा",
+    "scannedBy": "स्कैन द्वारा",
+    "status": "स्थिति",
+    "branchName": "शाखा का नाम",
+    "branchAddress": "शाखा का पता",
+    "subAdminName": "उप व्यवस्थापक का नाम",
+    "subAdminEmail": "उप व्यवस्थापक का ईमेल",
+    "name": "नाम",
+    "email": "ईमेल",
+    "phone": "फ़ोन",
+    "country": "देश",
+    "placeHolder": "दुकान का नाम द्वारा खोजें"
+  },
+  "RetailerCustomerDetailsScanTableTabs": {
+    "offerAndScan": "प्रस्ताव और स्कैन",
+    "store": "स्टोर",
+    "scanTime": "स्कैन समय",
+    "stampTitle": "टिकट का शीर्षक",
+    "stampCategory": "टिकट की श्रेणी",
+    "noOfStampToCollect": "इकट्ठा करने के टिकटों की संख्या",
+    "basicRules": "मूल नियम",
+    "minPurchaseAmount": "न्यूनतम खरीद राशि",
+    "rewardType": "इनाम का प्रकार",
+    "reward": "इनाम",
+    "storeName": "स्टोर का नाम",
+    "ownerName": "मालिक का नाम",
+    "branchName": "शाखा का नाम",
+    "branchAddress": "शाखा का पता",
+    "subAdminName": "उप प्रशासक का नाम",
+    "subAdminEmail": "उप प्रशासक का ईमेल"
   }
 }

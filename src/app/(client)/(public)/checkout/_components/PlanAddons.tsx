@@ -4,11 +4,13 @@
 import { RootState } from '@/features/store';
 import { removeCode, removeCoupon } from '@/features/subscription/subscriptionSlice';
 import { calculateCurrencyExchangeRate } from '@/utils';
+import { useTranslations } from 'next-intl';
 import { ImBin } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
 
 const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selectedCurrency: string }) => {
   const dispatch = useDispatch();
+  const t = useTranslations('CheckoutPage');
   const {
     subscription,
     addOn,
@@ -32,7 +34,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
 
   return (
     <div>
-      <h2 className="pb-2 text-lg font-medium">{addOn.slug ? 'Add-On' : 'Plan'}</h2>
+      <h2 className="pb-2 text-lg font-medium">{addOn.slug ? t('addOn') : t('plan')}</h2>
       <hr className="p-2 text-lg font-bold" />
       {addOn.slug ? (
         <div className="mb-2 flex justify-between">
@@ -52,7 +54,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
 
       {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && !addOn.slug && (
         <div className="mb-2 flex justify-between">
-          <span>Remaining Amount</span>
+          <span>{t('remainingAmount')}</span>
           <span className="text-red-500">
             -{remainingAmount ? remainingAmount : 0}
             {` ${selectedCurrency}`}
@@ -61,7 +63,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
       )}
 
       <div className="mb-2 flex justify-between">
-        <span className="font-semibold">Subtotal</span>
+        <span className="font-semibold">{t('subtotal')}</span>
         <span className="text-red-500">
           {Math.abs(subTotal).toFixed(2)} {selectedCurrency}
         </span>
@@ -80,7 +82,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
 
       {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && !addOn.slug && downgradeRefund <= 0 && total !== 0 && (
         <div className="mb-2 flex justify-between">
-          <span className="font-semibold">Plan Change Cost</span>
+          <span className="font-semibold">{t('planChangeCost')}</span>
           <span className="text-red-500">
             {calculateCurrencyExchangeRate({ selectedCurrencyExchangeRate: currency, price: stripeInfo?.planChangeCost })}
             {` ${selectedCurrency}`}
@@ -91,7 +93,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
       {coupon && (
         <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
           <span className="col-span-7">
-            <span className="font-semibold">Coupon:</span>{' '}
+            <span className="font-semibold">{t('coupon')}:</span>{' '}
             {`${coupon?.title.length > 10 ? `${coupon?.title.slice(0, 10)}...` : coupon?.title} ${coupon?.discountType === 'percentage' ? `(${coupon?.discount}%)` : ''}`}
           </span>
           <button
@@ -110,7 +112,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
       )}
 
       <div className="flex justify-between text-xl font-bold">
-        <span>Total</span>
+        <span>{t('total')}</span>
         <span className="text-red-500">
           {Math.abs(total).toFixed(2)} {selectedCurrency}
         </span>

@@ -17,7 +17,9 @@
     "linkedin": "LINKEDIN",
     "newsletterButtonText": "SOUMETTRE",
     "newsletterPlaceholderText": "Adresse e-mail",
-    "copyright": "© Copyright 2024 StampEzee | Tous les droits sont réservés."
+    "goToHome": "Retour à l'accueil",
+    "copyright": "© Copyright 2024 StampEzee | Tous les droits sont réservés.",
+    "searchWidgetPlaceholder": "Rechercher sur votre page"
   },
   "StatusIndicator": {
     "active": "Actif",
@@ -76,18 +78,33 @@
     "active": "Actif"
   },
   "CheckoutPage": {
-    "plans": "Forfaits",
-    "selectPlan": "Sélectionner un plan d'abonnement",
+    "plans": "Plans",
+    "selectPlan": "Sélectionnez un plan d'abonnement",
     "switchPlan": "Changer un plan d'abonnement",
-    "addOns": "Add-Ons",
-    "selectAddOn": "Sélectionner un service complémentaire",
-    "orderSummary": "Récapitulatif de la commande",
+    "addOns": "Suppléments",
+    "selectAddOn": "Sélectionnez un service supplémentaire",
+    "orderSummary": "Résumé de la commande",
     "total": "Total",
-    "checkout": "Checkout",
+    "remainingAmount": "Montant restant",
+    "subtotal": "Sous-total",
+    "vat": "TVA",
+    "planChangeCost": "Coût du changement de plan",
+    "checkout": "Paiement",
     "coupon": "Coupon",
     "couponButtonText": "Appliquer",
-    "cartEmpty": "Votre panier est actuellement vide. Sélectionnez un plan !",
-    "checkoutButtonText": "Confirmer le Checkout"
+    "cartEmpty": "Votre panier est vide. Sélectionnez un plan!",
+    "refundMessage": "Vous recevrez",
+    "disableBranch": "Désactiver Succursale/s:",
+    "edit": "Modifier",
+    "checkoutButtonText": "Confirmer le paiement",
+    "balance": "Solde",
+    "currentAmount": "Montant actuel",
+    "usageAmount": "Montant utilisé",
+    "purchaseAlert": "Alerte d'achat !",
+    "purchaseAlertMessage": "Votre commande doit être d'au moins",
+    "purchaseAlertMessageAfter": "Veuillez ajouter d'autres articles pour continuer",
+    "plan": "Plan",
+    "addOn": "Module complémentaire"
   },
   "LoginPage": {
     "credentials": "Identifiants : jane@doe.com / next-intl",
@@ -151,6 +168,12 @@
     "totalOrder": "Total des Commandes",
     "totalRevenue": "Revenu Total"
   },
+  "RetailerMembership": {
+    "switchPlan": "Changer un Plan",
+    "selectPlan": "Sélectionner un Plan",
+    "selectAddOns": "Sélectionner les Modules",
+    "buttonText": "Confirmation de Sélection"
+  },
   "RetailerBilling": {
     "Billing": "Facturation",
     "Dashboard": "Tableau de bord"
@@ -167,6 +190,39 @@
     "subscriptionDetails": "Détails de l'abonnement",
     "placeHolder": "Rechercher par ID d'Abonnement"
   },
+  "RetailerBillingDetails": {
+    "title": "Détails de l'abonnement",
+    "dashboard": "Tableau de bord",
+    "billing": "Facturation",
+    "plan": "Plan",
+    "addOn": "Supplément",
+    "invoices": "Factures",
+    "cancelSubscriptionOrChangeCard": "Annuler l'abonnement ou changer de carte",
+    "renewSubscriptionOrChangeCard": "Renouveler l'abonnement ou changer de carte",
+    "subscriptionCanceled": "Abonnement annulé"
+  },
+  "RetailerBillingDetailsCard": {
+    "subscriptionID": "ID de l'abonnement",
+    "enrollStatus": "Statut d'inscription",
+    "balance": "Solde",
+    "purchasedAt": "Acheté à",
+    "currentPeriod": "Période actuelle",
+    "planStatus": "Statut du plan",
+    "nextInvoice": "Prochaine facture",
+    "running": "En cours",
+    "ended": "Terminé",
+    "subscriptionCancelAt": "Abonnement annulé à"
+  },
+  "RetailerBillingInvoiceTable": {
+    "serialNo": "N° de série",
+    "paymentIntentID": "ID d'intention de paiement",
+    "invoiceNumber": "Numéro de facture",
+    "amount": "Montant",
+    "createdAt": "Créé à",
+    "action": "Action",
+    "downloadPdf": "Télécharger PDF",
+    "noTransaction": "Aucune transaction n'a encore eu lieu!"
+  },
   "RetailerRefund": {
     "title": "Gérer les Remboursements",
     "refunds": "Remboursements",
@@ -179,6 +235,8 @@
     "refundAmount": "Montant du Remboursement",
     "refundStatus": "Statut du Remboursement",
     "refundDate": "Date du Remboursement",
+    "startedAt": "Commencé le",
+    "expiredAt": "Expiré le",
     "placeHolder": "Rechercher par ID de Paiement"
   },
   "RetailerBranches": {
@@ -419,5 +477,79 @@
     "title": "Titre",
     "update": "Mettre à Jour",
     "submit": "Envoyer"
+  },
+  "RetailerCustomer": {
+    "title": "Gérer le Client",
+    "customer": "Client",
+    "dashboard": "Tableau de bord"
+  },
+  "RetailerCustomerTable": {
+    "info": "Info",
+    "joinedDate": "Date d'adhésion",
+    "statistics": "Statistiques",
+    "actions": "Actions",
+    "placeHolder": "Rechercher par Nom ou Email du Client",
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "country": "Pays",
+    "totalCollectStamp": "Nombre total de timbres collectés",
+    "totalScan": "Nombre total de scans",
+    "totalRewardCollect": "Nombre total de récompenses collectées"
+  },
+  "RetailerCustomerDetails": {
+    "title": "Gérer les Détails du Client",
+    "customer": "Clients",
+    "dashboard": "Tableau de bord",
+    "details": "Détails"
+  },
+  "RetailerCustomerDetailsCard": {
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "country": "Pays",
+    "address": "Adresse"
+  },
+  "RetailerCustomerDetailsStats": {
+    "totalCollectStamp": "Nombre total de timbres collectés",
+    "totalScan": "Nombre total de scans",
+    "totalRewardCollect": "Nombre total de récompenses collectées",
+    "totalPurchased": "Total des achats"
+  },
+  "RetailerCustomerDetailsScanTable": {
+    "title": "Statistiques de Scan",
+    "scanDate": "Date du scan",
+    "stampTitle": "Titre du timbre",
+    "store": "Magasin",
+    "branch": "Succursale",
+    "scannedBy": "Scanné par",
+    "status": "Statut",
+    "branchName": "Nom de la succursale",
+    "branchAddress": "Adresse de la succursale",
+    "subAdminName": "Nom du sous-admin",
+    "subAdminEmail": "Email du sous-admin",
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "country": "Pays",
+    "placeHolder": "Rechercher par Nom du Magasin"
+  },
+  "RetailerCustomerDetailsScanTableTabs": {
+    "offerAndScan": "Offre et Scanner",
+    "store": "Magasin",
+    "scanTime": "Heure de Scan",
+    "stampTitle": "Titre du Timbre",
+    "stampCategory": "Catégorie de Timbre",
+    "noOfStampToCollect": "Nombre de Timbres à Collecter",
+    "basicRules": "Règles de Base",
+    "minPurchaseAmount": "Montant Min. d'Achat",
+    "rewardType": "Type de Récompense",
+    "reward": "Récompense",
+    "storeName": "Nom du Magasin",
+    "ownerName": "Nom du Propriétaire",
+    "branchName": "Nom de la Succursale",
+    "branchAddress": "Adresse de la Succursale",
+    "subAdminName": "Nom du Sous-Administrateur",
+    "subAdminEmail": "Email du Sous-Administrateur"
   }
 }

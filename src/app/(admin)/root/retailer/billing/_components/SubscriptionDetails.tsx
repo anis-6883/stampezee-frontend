@@ -8,6 +8,7 @@ import { useGetBillingPortalMutation, useSingleBillingQuery } from '@/features/r
 import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import moment from 'moment';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -23,6 +24,9 @@ import { SlLock } from 'react-icons/sl';
 import { Badge } from 'rizzui';
 
 export default function SubscriptionDetails({ id, offset }: { id: string; offset: number }) {
+  const t = useTranslations('RetailerBillingDetailsCard');
+  const t2 = useTranslations('RetailerBillingDetails');
+  const t3 = useTranslations('RetailerBillingInvoiceTable');
   const { push } = useRouter();
   const { data, isLoading, isError } = useSingleBillingQuery(id);
   const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetBillingPortalMutation();
@@ -49,7 +53,8 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
           <Skeleton className="my-3 h-8 w-32 rounded" />
         ) : (
           <h3 className="text-lg font-medium">
-            {planSnapshot?.title} <span className="font-semibold">({planSnapshot?.type === 'subscription' ? 'Plan' : 'AddOn'})</span>
+            {planSnapshot?.title}{' '}
+            <span className="font-semibold">({planSnapshot?.type === 'subscription' ? t2('plan') : t2('addOn')})</span>
           </h3>
         )}
       </div>
@@ -57,11 +62,11 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
           <div className="flex flex-col justify-between font-medium md:flex-row">
-            <span className="font-semibold">Subscription ID</span>
+            <span className="font-semibold">{t('subscriptionID')}</span>
             <span>{isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : stripe?.subscriptionId}</span>
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">Enroll Status</span>
+            <span className="font-semibold">{t('enrollStatus')}</span>
             {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : enrollStatus === 'purchase' ? (
@@ -79,7 +84,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
             )}
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">Balance</span>
+            <span className="font-semibold">{t('balance')}</span>
             {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : (
@@ -89,11 +94,11 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
             )}
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">Purchased At</span>{' '}
+            <span className="font-semibold">{t('purchasedAt')}</span>{' '}
             {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(createdAt, offset)}</span>}
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">Current Period</span>{' '}
+            <span className="font-semibold">{t('currentPeriod')}</span>{' '}
             {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : (
@@ -101,54 +106,54 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
             )}
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">Plan Status</span>
+            <span className="font-semibold">{t('planStatus')}</span>
             {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : status === true && moment().isBefore(validityToUtc) ? (
               <Badge className="!bg-success text-white">
-                <GiSandsOfTime className="mr-1 text-xl" /> Running
+                <GiSandsOfTime className="mr-1 text-xl" /> {t('running')}
               </Badge>
             ) : (
               <Badge className="!bg-danger text-white">
-                <PiFlagCheckeredFill className="mr-1 text-xl" /> Ended
+                <PiFlagCheckeredFill className="mr-1 text-xl" /> {t('ended')}
               </Badge>
             )}
           </div>
           {!isLoading && stripe?.renewCancelAt !== null && (
             <div className="flex items-center justify-between font-medium">
-              <span className="font-semibold">Subscription Cancel At</span>{' '}
+              <span className="font-semibold">{t('subscriptionCancelAt')}</span>{' '}
               <span className="text-danger">{convertDateByOffset(stripe?.renewCancelAt, offset)}</span>
             </div>
           )}
           <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">Next Invoice</span>
+            <span className="font-semibold">{t('nextInvoice')}</span>
             {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(validityTo, offset)}</span>}
           </div>
         </div>
       </div>
 
-      <h2 className="my-5 text-lg font-medium">Invoices:</h2>
+      <h2 className="my-5 text-lg font-medium">{t2('invoices')}</h2>
       <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Serial No.
+                {t3('serialNo')}
               </th>
               <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Payment Intent ID
+                {t3('paymentIntentID')}
               </th>
               <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Invoice Number
+                {t3('invoiceNumber')}
               </th>
               <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Amount
+                {t3('amount')}
               </th>
               <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Created At
+                {t3('createdAt')}
               </th>
               <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Action
+                {t3('action')}
               </th>
             </tr>
           </thead>
@@ -180,7 +185,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
               {payments.length <= 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
-                    No transaction happened yet!
+                    {t3('noTransaction')}
                   </td>
                 </tr>
               ) : (
@@ -209,7 +214,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                           <Button
                             className="!m-0 !px-2 !py-1.5"
                             color="danger"
-                            text="Download PDF"
+                            text={t3('downloadPdf')}
                             postIcon={<RiDownloadCloud2Fill className="text-lg" />}
                           />
                         </Link>
@@ -238,7 +243,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
               isSubmitting={portalLoading}
               className="!m-0"
               color="danger"
-              text={stripe?.renewCancelAt === null ? 'Cancel Subscription Or Change Card' : 'Renew Subscription Or Change Card'}
+              text={stripe?.renewCancelAt === null ? t2('cancelSubscriptionOrChangeCard') : t2('renewSubscriptionOrChangeCard')}
               postIcon={stripe?.renewCancelAt === null ? <ImCancelCircle className="text-xl" /> : <MdAutorenew className="text-xl" />}
             />
           ) : (
@@ -246,7 +251,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
               disabled={true}
               className="!m-0"
               color="danger"
-              text="Subscription Canceled"
+              text={t2('subscriptionCanceled')}
               postIcon={<SlLock className="text-xl" />}
             />
           )}

@@ -1,11 +1,14 @@
 'use client';
 
 import { useGetSingleCustomerByRetailerQuery } from '@/features/retailer/customer/customerApi';
+import { useTranslations } from 'next-intl';
 import { InfoRow } from '../../../super-admin/retailer/_components/InfoRow';
 import ScanStatisticsTable from './ScanStatisticsTable';
 import StatsCardView from './StatsCardView';
 
 export default function CustomerDetails({ id, offset }: { id: string; offset: number }) {
+  const t = useTranslations('RetailerCustomerDetailsCard');
+  const t2 = useTranslations('RetailerCustomerDetailsScanTable');
   const { data, isLoading, isError } = useGetSingleCustomerByRetailerQuery(id);
   const { fullName, email, address, dialCode, phone, country, totalCollectStamp, totalPurchased, totalRewardCollect, totalScan } =
     data?.data || {};
@@ -14,11 +17,11 @@ export default function CustomerDetails({ id, offset }: { id: string; offset: nu
     <div className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
-          <InfoRow label="Name" value={fullName} isLoading={isLoading} />
-          <InfoRow label="Email" value={email} isLoading={isLoading} />
-          <InfoRow label="Phone" value={`${dialCode}${phone}`} isLoading={isLoading} />
-          <InfoRow label="Country" value={country} isLoading={isLoading} />
-          <InfoRow label="Address" value={address?.name} isLoading={isLoading} />
+          <InfoRow label={t('name')} value={fullName} isLoading={isLoading} />
+          <InfoRow label={t('email')} value={email} isLoading={isLoading} />
+          <InfoRow label={t('phone')} value={`${dialCode}${phone}`} isLoading={isLoading} />
+          <InfoRow label={t('country')} value={country} isLoading={isLoading} />
+          <InfoRow label={t('address')} value={address?.name ? address?.name : 'N/A'} isLoading={isLoading} />
         </div>
       </div>
 
@@ -32,7 +35,7 @@ export default function CustomerDetails({ id, offset }: { id: string; offset: nu
         className="2xl:mb-8 my-5"
       />
 
-      <h2 className="my-5 text-lg font-medium">Scan Statistics:</h2>
+      <h2 className="my-5 text-lg font-medium">{t2('title')} :</h2>
       <ScanStatisticsTable id={id} offset={offset} />
     </div>
   );
