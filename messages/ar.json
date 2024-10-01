@@ -19,7 +19,9 @@
     "newsletterPlaceholderText": "عنوان البريد الإلكتروني",
     "goToHome": "العودة إلى الرائيسية",
     "copyright": "© حقوق الطبع والنشر 2024 StampEzee | جميع الحقوق محفوظة.",
-    "searchWidgetPlaceholder": "ابحث في صفحتك"
+    "searchWidgetPlaceholder": "ابحث في صفحتك",
+    "newsletterSuccessMessage": "شكرا للاشتراك!",
+    "newsletterErrorMessage": "حدث خطأ ما!"
   },
   "StatusIndicator": {
     "active": "نشط",
@@ -107,15 +109,58 @@
     "testimonialDescriptionThree": "لقد كان StampEzee بمثابة نقطة تحول في أعمالنا. فالراحة التي يوفرها لعملائنا، إلى جانب الرؤى التي اكتسبناها، أدت إلى الارتقاء بعملياتنا حقًا."
   },
   "LoginPage": {
-    "credentials": "Credentials: jane@doe.com / next-intl",
-    "description": "Please enter your details.",
-    "email": "Email",
-    "invalidCredentials": "Please check your credentials.",
-    "invalidEmail": "Please enter a valid email address.",
-    "invalidPassword": "Please enter a password.",
-    "login": "Sign in",
-    "password": "Password",
-    "title": "Welcome back"
+    "credentials": "بيانات الاعتماد: jane@doe.com / next-intl",
+    "description": "يرجى إدخال التفاصيل الخاصة بك.",
+    "email": "البريد الإلكتروني",
+    "invalidCredentials": "يرجى التحقق من بيانات الاعتماد الخاصة بك.",
+    "invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صالح.",
+    "invalidPassword": "يرجى إدخال كلمة المرور.",
+    "signIn": "تسجيل الدخول",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "newRetailer": "تاجر جديد؟",
+    "signUp": "اشترك",
+    "here": "هنا",
+    "password": "كلمة المرور",
+    "title": "مرحباً بعودتك",
+    "submit": "إرسال"
+  },
+  "RegisterPage": {
+    "title": "تسجيل المتجر",
+    "storeName": "اسم المتجر",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "owner": "المالك",
+    "email": "البريد الإلكتروني",
+    "phoneNumber": "رقم الهاتف",
+    "country": "البلد",
+    "province": "المقاطعة",
+    "city": "المدينة",
+    "postalCode": "الرمز البريدي",
+    "address": "العنوان",
+    "password": "كلمة المرور",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "signIn": "تسجيل الدخول",
+    "here": "هنا",
+    "iAgree": "أوافق على",
+    "termsAndConditions": "شروط الاستخدام",
+    "and": "و",
+    "privacyPolicy": "سياسة الخصوصية",
+    "submit": "إرسال"
+  },
+  "ForgotPasswordPage": {
+    "title": "نسيت كلمة المرور",
+    "stepOne": "الخطوة 1",
+    "stepTwo": "الخطوة 2",
+    "stepThree": "الخطوة 3",
+    "email": "البريد الإلكتروني",
+    "next": "التالي",
+    "goToLogin": "الذهاب إلى تسجيل الدخول",
+    "verifyOtp": "تحقق من OTP",
+    "otpMessage": "لقد أرسلنا OTP إلى بريدك الإلكتروني. لديك دقيقتان لإكمال هذا التحقق. شكرًا لك!",
+    "otpMessage2": "لم تستلم رمز OTP بعد؟",
+    "resend": "إعادة إرسال OTP",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور"
   },
   "ProfilePage": {
     "title": "Profile"

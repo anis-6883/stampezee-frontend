@@ -4,6 +4,7 @@ import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
+import { translateText } from '@/utils/GoogleTranslate';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
@@ -14,8 +15,9 @@ import { LuUserCircle2 } from 'react-icons/lu';
 import { SlEnvolope } from 'react-icons/sl';
 import * as Yup from 'yup';
 
-const ContactForm = ({ token }: { token: string }) => {
+const ContactForm = ({ token, locale }: { token: string; locale: string }) => {
   const t = useTranslations('ContactPage');
+  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const initialValues = {
     name: '',
@@ -26,14 +28,14 @@ const ContactForm = ({ token }: { token: string }) => {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Required!'),
+    name: Yup.string().required(tCommon('required')),
     email: Yup.string()
       .test('email', 'Provide valid email!', (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(value);
       })
-      .required('Required!'),
-    message: Yup.string().required('Required!'),
+      .required(tCommon('required')),
+    message: Yup.string().required(tCommon('required')),
   });
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setIsSubmitting(true);
@@ -50,13 +52,24 @@ const ContactForm = ({ token }: { token: string }) => {
           'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
         },
       });
-      toast.success(res?.data?.message);
-      setIsSubmitting(false);
+      if (locale === 'en') {
+        toast.success(res?.data?.message || 'Thank you for contacting with us! We will get back to you shortly!');
+      } else {
+        const translatedMessage = await translateText([res?.data?.message], locale, 'en');
+        toast.success(translatedMessage[0] || 'Thank you for contacting with us! We will get back to you shortly!');
+      }
       if (res?.data?.status) {
         resetForm();
       }
     } catch (err: any) {
-      toast.error(err?.response?.data?.message || 'Something went wrong!');
+      if (locale === 'en') {
+        toast.error(err?.response?.data?.message || tCommon('errorMessage'));
+      } else {
+        const translatedMessage = await translateText([err?.response?.data?.message], locale, 'en');
+        const errorMessage = translatedMessage[0] || tCommon('errorMessage');
+        toast.error(errorMessage);
+      }
+    } finally {
       setIsSubmitting(false);
     }
   };

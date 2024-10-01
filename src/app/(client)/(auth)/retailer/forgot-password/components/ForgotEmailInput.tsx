@@ -5,6 +5,7 @@ import { useRetailerForgotPasswordMutation } from '@/features/auth/authApi';
 import { setAccessToken } from '@/features/auth/authSlice';
 import { ErrorResponse, isFetchBaseQueryError } from '@/utils/check-base-query-error';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -22,6 +23,8 @@ export default function ForgotEmailInput({
   setCurrentStep: any;
   setCurrentTab: any;
 }) {
+  const t = useTranslations('ForgotPasswordPage');
+  const tCommon = useTranslations('RetailerCommon');
   const dispatch = useDispatch();
   const [submitting, setSubmitting] = useState(false);
 
@@ -33,7 +36,7 @@ export default function ForgotEmailInput({
   };
 
   const emailSchema = Yup.object().shape({
-    email: Yup.string().required('Required!').email('Required valid email!'),
+    email: Yup.string().required(tCommon('required')).email(tCommon('validEmail')),
   });
 
   // Handle Forget Password Response
@@ -73,7 +76,7 @@ export default function ForgotEmailInput({
         {() => (
           <Form>
             <div className="mx-auto w-full space-y-4 p-5">
-              <InputField name="email" label="Email" placeholder="retailer@email.com" />
+              <InputField name="email" label={t('email')} placeholder="retailer@email.com" />
 
               <p className="text-end text-xs font-semibold">
                 Fields marked with <span className="text-red-600">*</span> are mandatory!
@@ -82,7 +85,7 @@ export default function ForgotEmailInput({
                 color="danger"
                 className="w-full"
                 type="submit"
-                text="Next"
+                text={t('next')}
                 postIcon={<BsCheck2Circle className="text-base" />}
                 isSubmitting={submitting}
               />
@@ -91,7 +94,7 @@ export default function ForgotEmailInput({
                   href={routes.publicRoutes.retailerLogin}
                   className="flex items-center transition-all duration-150 ease-in hover:text-danger"
                 >
-                  <HiOutlineArrowSmLeft className="mr-3 text-xl" /> <span className="font-semibold">Go to Login</span>
+                  <HiOutlineArrowSmLeft className="mr-3 text-xl" /> <span className="font-semibold">{t('goToLogin')}</span>
                 </Link>
               </div>
             </div>

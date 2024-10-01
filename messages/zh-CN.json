@@ -19,7 +19,9 @@
     "newsletterPlaceholderText": "电子邮件地址",
     "goToHome": "返回主页",
     "copyright": "© Copyright 2024 StampEzee | 全著作権所有。",
-    "searchWidgetPlaceholder": "搜索页面"
+    "searchWidgetPlaceholder": "搜索页面",
+    "newsletterSuccessMessage": "感谢订阅！",
+    "newsletterErrorMessage": "出了点问题！"
   },
   "StatusIndicator": {
     "active": "活跃",
@@ -108,14 +110,57 @@
   },
   "LoginPage": {
     "credentials": "凭证: jane@doe.com / next-intl",
-    "description": "请输入您的信息。",
+    "description": "请输入您的详细信息。",
     "email": "电子邮件",
     "invalidCredentials": "请检查您的凭证。",
     "invalidEmail": "请输入有效的电子邮件地址。",
     "invalidPassword": "请输入密码。",
-    "login": "登录",
+    "signIn": "登录",
+    "forgotPassword": "忘记密码？",
+    "newRetailer": "新零售商？",
+    "signUp": "注册",
+    "here": "这里",
     "password": "密码",
-    "title": "欢迎回来"
+    "title": "欢迎回来",
+    "submit": "提交"
+  },
+  "RegisterPage": {
+    "title": "商店注册",
+    "storeName": "商店名称",
+    "firstName": "名字",
+    "lastName": "姓氏",
+    "owner": "店主",
+    "email": "电子邮件",
+    "phoneNumber": "电话号码",
+    "country": "国家",
+    "province": "省",
+    "city": "城市",
+    "postalCode": "邮政编码",
+    "address": "地址",
+    "password": "密码",
+    "alreadyHaveAccount": "已经有账号了？",
+    "signIn": "登录",
+    "here": "这里",
+    "iAgree": "我同意",
+    "termsAndConditions": "使用条款",
+    "and": "和",
+    "privacyPolicy": "隐私政策",
+    "submit": "提交"
+  },
+  "ForgotPasswordPage": {
+    "title": "忘记密码",
+    "stepOne": "步骤 1",
+    "stepTwo": "步骤 2",
+    "stepThree": "步骤 3",
+    "email": "电子邮件",
+    "next": "下一步",
+    "goToLogin": "返回登录",
+    "verifyOtp": "验证 OTP",
+    "otpMessage": "我们已向您的电子邮件发送了 OTP。您有 2 分钟的时间来完成验证。谢谢！",
+    "otpMessage2": "还没收到 OTP？",
+    "resend": "重新发送 OTP",
+    "newPassword": "新密码",
+    "confirmPassword": "确认密码"
   },
   "ProfilePage": {
     "title": "个人资料"

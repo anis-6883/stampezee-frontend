@@ -19,7 +19,9 @@
     "newsletterPlaceholderText": "メールアドレス",
     "goToHome": "ホームページに移動",
     "copyright": "© Copyright 2024 StampEzee | 全著作権所有。",
-    "searchWidgetPlaceholder": "ページを検索"
+    "searchWidgetPlaceholder": "ページを検索",
+    "newsletterSuccessMessage": "ありがとうございます！",
+    "newsletterErrorMessage": "何かがうまくいかない！"
   },
   "StatusIndicator": {
     "active": "アクティブ",
@@ -107,15 +109,58 @@
     "addOn": "アドオン"
   },
   "LoginPage": {
-    "credentials": "クレデンシャル: jane@doe.com / next-intl",
+    "credentials": "資格情報: jane@doe.com / next-intl",
     "description": "詳細を入力してください。",
-    "email": "メールアドレス",
-    "invalidCredentials": "クレデンシャルを確認してください。",
+    "email": "メール",
+    "invalidCredentials": "資格情報を確認してください。",
     "invalidEmail": "有効なメールアドレスを入力してください。",
     "invalidPassword": "パスワードを入力してください。",
-    "login": "サインイン",
+    "signIn": "サインイン",
+    "forgotPassword": "パスワードを忘れましたか？",
+    "newRetailer": "新しい小売店？",
+    "signUp": "サインアップ",
+    "here": "こちら",
     "password": "パスワード",
-    "title": "お帰りなさい"
+    "title": "お帰りなさい",
+    "submit": "送信"
+  },
+  "RegisterPage": {
+    "title": "ストア登録",
+    "storeName": "店舗名",
+    "firstName": "名",
+    "lastName": "姓",
+    "owner": "所有者",
+    "email": "メール",
+    "phoneNumber": "電話番号",
+    "country": "国",
+    "province": "州",
+    "city": "市",
+    "postalCode": "郵便番号",
+    "address": "住所",
+    "password": "パスワード",
+    "alreadyHaveAccount": "すでにアカウントをお持ちですか？",
+    "signIn": "サインイン",
+    "here": "こちら",
+    "iAgree": "同意します",
+    "termsAndConditions": "利用規約",
+    "and": "および",
+    "privacyPolicy": "プライバシーポリシー",
+    "submit": "送信"
+  },
+  "ForgotPasswordPage": {
+    "title": "パスワードを忘れた",
+    "stepOne": "ステップ 1",
+    "stepTwo": "ステップ 2",
+    "stepThree": "ステップ 3",
+    "email": "メール",
+    "next": "次へ",
+    "goToLogin": "ログインに戻る",
+    "verifyOtp": "OTP を確認する",
+    "otpMessage": "OTP をメールに送信しました。この確認を完了するには 2 分があります。ありがとうございます！",
+    "otpMessage2": "OTP がまだ届いていませんか？",
+    "resend": "OTP を再送信",
+    "newPassword": "新しいパスワード",
+    "confirmPassword": "パスワードを確認"
   },
   "ProfilePage": {
     "title": "プロフィール"

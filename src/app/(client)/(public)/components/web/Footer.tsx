@@ -26,14 +26,15 @@ export default function Footer({ general }: any) {
     if (newsletterError) {
       const myError = newsletterError as SerializedError;
       setIsSubmitting(false);
-      toast.error(myError?.data?.message || 'Something went wrong!');
+      toast.error(myError?.data?.message || t('newsletterErrorMessage'));
     }
 
     if (newsletterSuccess) {
-      toast.success('Thank you for subscribing!');
+      toast.success(t('newsletterSuccessMessage'));
       setEmail('');
       setIsSubmitting(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newsletterError, newsletterSuccess]);
 
   const handleNewsletter = (e: any) => {
@@ -129,7 +130,7 @@ export default function Footer({ general }: any) {
                       />
                       <div className="rounded-full bg-[#E55555] px-4 py-2 text-sm font-bold text-white">
                         <button disabled={isSubmitting} className="flex items-center justify-center gap-1" type="submit">
-                          <span className="text-sm">{t('newsletterButtonText')}</span>{' '}
+                          <span className="min-w-[97px] text-sm">{t('newsletterButtonText')}</span>{' '}
                           {isSubmitting ? <ImSpinner9 className="animate-spin text-base" /> : <BsCheck2Circle className="text-base" />}
                         </button>
                       </div>

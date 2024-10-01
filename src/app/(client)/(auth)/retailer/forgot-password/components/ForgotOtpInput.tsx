@@ -5,6 +5,7 @@ import { useRetailerForgetResendOtpMutation, useRetailerVerifyForgetPasswordOtpM
 import { useTimer } from '@/hooks/use-timer';
 import { ErrorResponse, isFetchBaseQueryError } from '@/utils/check-base-query-error';
 import { SetStateAction } from 'jotai';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -23,6 +24,7 @@ export default function ForgetOtpInput({
   setCurrentTab: any;
 }) {
   //   const { user } = useSelector((state: RootState) => state.authSlice);
+  const t = useTranslations('ForgotPasswordPage');
 
   const [otp, setOtp] = useState<SetStateAction<string | number | undefined>>('');
   const [otpSubmitting, setOtpSubmitting] = useState(false);
@@ -113,11 +115,9 @@ export default function ForgetOtpInput({
 
   return (
     <div className={`card-body p-3 ${currentTab === 1 ? '' : 'hidden'}`}>
-      <h2 className="mb-5 text-center text-xl font-semibold">Verify OTP</h2>
+      <h2 className="mb-5 text-center text-xl font-semibold">{t('verifyOtp')}</h2>
       <div className="label mb-4">
-        <span className="text-sm font-semibold ">
-          We sent an OTP to your Email. You have 2 minutes to complete this verification. Thank you!
-        </span>
+        <span className="text-sm font-semibold ">{t('otpMessage')}</span>
       </div>
       <form onSubmit={otpSubmitHandler}>
         <div>
@@ -127,7 +127,7 @@ export default function ForgetOtpInput({
         <div className="mt-10 grid grid-cols-12 items-center">
           <div className="col-span-8">
             <p className="flex select-none items-center font-medium">
-              Didn{"'"}t get any otp yet?
+              {t('otpMessage2')}
               {timer > 0 ? (
                 <span className="ml-1 font-bold text-danger">
                   {`${Math.floor(timer / 60)}`.padStart(2, '0') + ':' + `${timer % 60}`.padStart(2, '0')}
@@ -137,7 +137,7 @@ export default function ForgetOtpInput({
                   className={`${resendOtpSubmitting && 'pointer-events-none'} ml-1 cursor-pointer font-semibold text-danger`}
                   onClick={handleResendOtp}
                 >
-                  Resend OTP
+                  {t('resend')}
                 </span>
               )}
               {resendOtpSubmitting && <ImSpinner9 size={20} className="ml-1 animate-spin" />}
@@ -149,7 +149,7 @@ export default function ForgetOtpInput({
             color="danger"
             className="w-full"
             type="submit"
-            text="Next"
+            text={t('next')}
             postIcon={<BsCheck2Circle className="text-base" />}
             isSubmitting={otpSubmitting}
           />
@@ -157,7 +157,7 @@ export default function ForgetOtpInput({
       </form>
       <div className="mt-5 flex select-none items-center justify-center">
         <Link href={routes.publicRoutes.retailerLogin} className="flex items-center transition-all duration-150 ease-in hover:text-danger">
-          <HiOutlineArrowSmLeft className="mr-3 text-xl" /> <span className="font-semibold">Go to Login</span>
+          <HiOutlineArrowSmLeft className="mr-3 text-xl" /> <span className="font-semibold">{t('goToLogin')}</span>
         </Link>
       </div>
     </div>

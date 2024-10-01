@@ -64,7 +64,7 @@ export default function ContactTable() {
       header: 'Phone',
       accessorKey: 'phone',
       Cell: ({ row }: any) => {
-        return <div>{`${row?.original?.dialCode} ${row?.original?.phone}`} </div>;
+        return <div>{row.original.phone ? `${row.original.dialCode} ${row.original.phone}` : 'N/A'} </div>;
       },
     },
     {
