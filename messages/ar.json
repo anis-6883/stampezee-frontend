@@ -113,7 +113,7 @@
     "description": "يرجى إدخال التفاصيل الخاصة بك.",
     "email": "البريد الإلكتروني",
     "invalidCredentials": "يرجى التحقق من بيانات الاعتماد الخاصة بك.",
-    "invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صالح.",
+    "invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صالح!",
     "invalidPassword": "يرجى إدخال كلمة المرور.",
     "signIn": "تسجيل الدخول",
     "forgotPassword": "نسيت كلمة المرور؟",
@@ -122,7 +122,8 @@
     "here": "هنا",
     "password": "كلمة المرور",
     "title": "مرحباً بعودتك",
-    "submit": "إرسال"
+    "submit": "إرسال",
+    "loginSuccessMessage": "مرحباً بك في لوحة تحكم التجار!"
   },
   "RegisterPage": {
     "title": "تسجيل المتجر",
@@ -145,7 +146,8 @@
     "termsAndConditions": "شروط الاستخدام",
     "and": "و",
     "privacyPolicy": "سياسة الخصوصية",
-    "submit": "إرسال"
+    "submit": "إرسال",
+    "otpSentMessage": "تم إرسال OTP إلى بريدك الإلكتروني!"
   },
   "ForgotPasswordPage": {
     "title": "نسيت كلمة المرور",
@@ -176,7 +178,10 @@
   "RetailerCommon": {
     "required": "مطلوب!",
     "errorMessage": "حدث خطأ ما. حاول مرة أخرى!",
-    "mandatoryFieldsMessage": "الحقول المطلوبة مع <span class=\"text-red-600\">*</span> مطلوبة!"
+    "mandatoryFieldsMessage": "الحقول المطلوبة مع <span class=\"text-red-600\">*</span> مطلوبة!",
+    "needDoubleClickToSelectASingleDate": "يجب الضغط مرتين لتحديد التاريخ!",
+    "baseCurrency": "عملة أساسية",
+    "atLeast8Characters": "أقل من 8 أحرف!"
   },
   "RetailerSidebar": {
     "Dashboard": "لوحة القيادة",
@@ -332,7 +337,10 @@
     "branch": "الفرع",
     "status": "الحالة",
     "actions": "الإجراءات",
-    "placeHolder": "البحث بالاسم"
+    "placeHolder": "البحث بالاسم",
+    "subAdminCreatedSuccessfully": "تم إنشاء مشرف فرعي بنجاح!",
+    "subAdminUpdatedSuccessfully": "تم تحديث مشرف فرعي بنجاح!",
+    "subAdminDeletedSuccessfully": "تم حذف مشرف فرعي بنجاح!"
   },
   "RetailerStamp": {
     "title": "إدارة الطوابع",
@@ -359,7 +367,9 @@
     "startedAt": "بدأ في",
     "expiredAt": "انتهى في",
     "publishNow": "نشر الآن",
-    "published": "تم النشر"
+    "published": "تم النشر",
+    "stampDeletedSuccessfully": "تم حذف الطابع بنجاح!",
+    "stampPublishedSuccessfully": "تم نشر الطابع بنجاح!"
   },
   "RetailerCreateAndUpdateStamp": {
     "createStamp": "إنشاء طابع",
@@ -383,9 +393,20 @@
     "discount": "خصم",
     "promotion": "الترويج",
     "selectDefaultImage": "اختر الصورة الافتراضية",
+    "selectCustomImage": "اختر الصورة المخصصة",
     "description": "الوصف",
     "draft": "مسودة",
-    "publish": "نشر"
+    "publish": "نشر",
+    "createBranch": "إنشاء فرع",
+    "noCategoryAddedBySuperAdmin": "لم يتم إضافة فئة بواسطة المسؤول العام",
+    "purchaseCustomStampAddOn": "شراء إضافة طابع المخصص.",
+    "clickHere": "اضغط هنا",
+    "thereIsNoActiveCustomImageAvailable": "لا توجد صورة مخصصة نشطة!",
+    "createOrActiveCustomStamp": "إنشاء أو تنشيط طابع مخصص.",
+    "selectOneFromDefaultOrCustomStampIsRequired": "يجب اختيار طابع مخصص أو طابع مخصص!",
+    "stampCreatedSuccessfully": "تم إنشاء الطابع بنجاح!",
+    "stampUpdatedSuccessfully": "تم تحديث الطابع بنجاح!",
+    "stampClonedSuccessfully": "تم إنسخ الطابع بنجاح!"
   },
   "RetailerScan": {
     "title": "إدارة مسح الطوابع",
@@ -438,7 +459,8 @@
     "address": "العنوان",
     "email": "البريد الإلكتروني",
     "update": "تحديث",
-    "owner": "المالك"
+    "owner": "المالك",
+    "retailerProfileUpdated": "تم تحديث ملف البائع التجزئة بنجاح!"
   },
   "RetailerBalanceCard": {
     "plan": "الخطة",
@@ -460,7 +482,8 @@
     "imageUrl": "رابط الصورة",
     "attachImage": "إرفاق صورة",
     "send": "إرسال",
-    "resend": "إعادة إرسال"
+    "resend": "إعادة إرسال",
+    "notificationSendSuccessfully": "تم إرسال الإشعار بنجاح!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "حد إرسال الإشعارات العادية",
@@ -521,7 +544,9 @@
     "updateStampImage": "تحديث صورة الطابع",
     "title": "العنوان",
     "update": "تحديث",
-    "submit": "إرسال"
+    "submit": "إرسال",
+    "stampImageCreatedSuccessfully": "تم إنشاء صورة الطابع بنجاح!",
+    "stampImageUpdatedSuccessfully": "تم تحديث صورة الطابع بنجاح!"
   },
   "RetailerCustomer": {
     "title": "إدارة العملاء",

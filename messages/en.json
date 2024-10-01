@@ -114,7 +114,7 @@
     "description": "Please enter your details.",
     "email": "Email",
     "invalidCredentials": "Please check your credentials.",
-    "invalidEmail": "Please enter a valid email address.",
+    "invalidEmail": "Provide valid email!",
     "invalidPassword": "Please enter a password.",
     "signIn": "Sign in",
     "forgotPassword": "Forgot Password?",
@@ -123,7 +123,8 @@
     "here": "Here",
     "password": "Password",
     "title": "Welcome back",
-    "submit": "Submit"
+    "submit": "Submit",
+    "loginSuccessMessage": "Welcome to Retailer Panel!"
   },
   "RegisterPage": {
     "title": "Store Registration",
@@ -146,7 +147,8 @@
     "termsAndConditions": "Terms of use",
     "and": "and",
     "privacyPolicy": "Privacy Policy",
-    "submit": "Submit"
+    "submit": "Submit",
+    "otpSentMessage": "OTP sent on your email!"
   },
   "ForgotPasswordPage": {
     "title": "Forgot Password",
@@ -177,7 +179,10 @@
   "RetailerCommon": {
     "required": "Required!",
     "errorMessage": "Something went wrong. Please try again!",
-    "mandatoryFieldsMessage": "Fields marked with <span class=\"text-red-600\">*</span> are mandatory!"
+    "mandatoryFieldsMessage": "Fields marked with <span class=\"text-red-600\">*</span> are mandatory!",
+    "needDoubleClickToSelectASingleDate": "Need double-click to select a single date!",
+    "baseCurrency": "Base Currency",
+    "atLeast8Characters": "At least 8 characters long!"
   },
   "RetailerSidebar": {
     "Dashboard": "Dashboard",
@@ -295,7 +300,11 @@
     "updateABranch": "Update A Branch",
     "name": "Name",
     "address": "Address",
-    "submit": "Submit"
+    "submit": "Submit",
+    "branchCreatedSuccessfully": "Branch created successfully!",
+    "branchUpdatedSuccessfully": "Branch updated successfully!",
+    "branchDeletedSuccessfully": "Branch deleted successfully!",
+    "pleaseSelectALocationOnTheMap": "Please select a location on the map!"
   },
   "RetailerBranchTable": {
     "branchName": "Branch Name",
@@ -335,7 +344,10 @@
     "branch": "Branch",
     "status": "Status",
     "actions": "Actions",
-    "placeHolder": "Search By Name"
+    "placeHolder": "Search By Name",
+    "subAdminCreatedSuccessfully": "Sub Admin created successfully!",
+    "subAdminUpdatedSuccessfully": "Sub Admin updated successfully!",
+    "subAdminDeletedSuccessfully": "Sub Admin deleted successfully!"
   },
   "RetailerStamp": {
     "title": "Manage Stamps",
@@ -362,7 +374,9 @@
     "startedAt": "Started At",
     "expiredAt": "Expired At",
     "publishNow": "Publish Now",
-    "published": "Published"
+    "published": "Published",
+    "stampDeletedSuccessfully": "Stamp deleted successfully!",
+    "stampPublishedSuccessfully": "Stamp published successfully!"
   },
   "RetailerCreateAndUpdateStamp": {
     "createStamp": "Create A Stamp",
@@ -386,9 +400,20 @@
     "discount": "Discount",
     "promotion": "Promotion",
     "selectDefaultImage": "Select Default Image",
+    "selectCustomImage": "Select Custom Image",
     "description": "Description",
     "draft": "Draft",
-    "publish": "Publish"
+    "publish": "Publish",
+    "createBranch": "Create Branch",
+    "noCategoryAddedBySuperAdmin": "No category added by super admin",
+    "purchaseCustomStampAddOn": "Purchase Custom Stamp AddOn.",
+    "clickHere": "Click Here",
+    "thereIsNoActiveCustomImageAvailable": "There is no active custom image available!",
+    "createOrActiveCustomStamp": "Create or Active Custom Stamp.",
+    "selectOneFromDefaultOrCustomStampIsRequired": "Select one from default or custom stamp is required!",
+    "stampCreatedSuccessfully": "Stamp created successfully!",
+    "stampUpdatedSuccessfully": "Stamp updated successfully!",
+    "stampClonedSuccessfully": "Stamp cloned successfully!"
   },
   "RetailerScan": {
     "title": "Manage Stamp Scan",
@@ -441,7 +466,8 @@
     "address": "Address",
     "email": "Email",
     "update": "Update",
-    "owner": "Owner"
+    "owner": "Owner",
+    "retailerProfileUpdated": "Retailer profile updated successfully!"
   },
   "RetailerBalanceCard": {
     "plan": "Plan",
@@ -463,7 +489,8 @@
     "imageUrl": "Image URL",
     "attachImage": "Attach Image",
     "send": "Send",
-    "resend": "Resend"
+    "resend": "Resend",
+    "notificationCreatedSuccessfully": "Notification send successfully!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "Regular Notification Send Limit",
@@ -524,7 +551,9 @@
     "updateStampImage": "Update Stamp Image",
     "title": "Title",
     "update": "Update",
-    "submit": "Submit"
+    "submit": "Submit",
+    "stampImageCreatedSuccessfully": "Stamp Image created successfully!",
+    "stampImageUpdatedSuccessfully": "Stamp Image updated successfully!"
   },
   "RetailerCustomer": {
     "title": "Manage Customer",

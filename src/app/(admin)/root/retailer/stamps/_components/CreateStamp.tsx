@@ -7,6 +7,7 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { useBranchCategoryImageListQuery, useCreateStampMutation } from '@/features/retailer/stamp/stampApi';
+import { translateText } from '@/utils/GoogleTranslate';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
@@ -24,7 +25,7 @@ import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 import StampPublishedModal from './StampPublishedModal';
 
-export default function Create() {
+export default function Create({ locale }: { locale: string }) {
   const { data: session }: any = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [createStamp] = useCreateStampMutation();
@@ -36,6 +37,7 @@ export default function Create() {
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery({});
   const isAddons = session?.user?.totalCustomStampImage > 0 ? true : false;
   const t = useTranslations('RetailerCreateAndUpdateStamp');
+  const tCommon = useTranslations('RetailerCommon');
 
   const initialValues = {
     branchId: '',
@@ -84,36 +86,41 @@ export default function Create() {
 
       const result = await createStamp(changedData).unwrap();
       router.push(routes.privateRoutes.retailer.stamp.home);
-      toast.success(result.data.message || 'Stamp created successfully!');
+      toast.success(t('stampCreatedSuccessfully'));
     } catch (error: any) {
       console.error('Failed to create Stamp:', error);
-      toast.error(error?.data?.message || 'Failed to create Stamp. Please try again.');
+      if (locale === 'en') {
+        toast.error(error?.data?.message || 'Failed to create Stamp. Please try again.');
+      } else {
+        const translatedMessage = await translateText([error?.data?.message], locale, 'en');
+        toast.error(translatedMessage[0] || tCommon('errorMessage'));
+      }
       setSubmitting(false);
     }
   };
 
   const validationSchema = Yup.object().shape({
-    branchId: Yup.string().required('Required!'),
-    stampImageId: Yup.string().required('Required!'),
-    categoryId: Yup.string().required('Required!'),
-    title: Yup.string().required('Required!'),
-    rules: Yup.string().required('Required!'),
-    hasValidity: Yup.boolean().required('Required!'),
-    noOfStampsToCollect: Yup.number().min(1, 'Number of stamps to collect must be at least 1').required('This field is required'),
-    rewardType: Yup.mixed().oneOf(['promotion', 'discount']).required('Reward type is required'),
+    branchId: Yup.string().required(tCommon('required')),
+    stampImageId: Yup.string().required(tCommon('required')),
+    categoryId: Yup.string().required(tCommon('required')),
+    title: Yup.string().required(tCommon('required')),
+    rules: Yup.string().required(tCommon('required')),
+    hasValidity: Yup.boolean().required(tCommon('required')),
+    noOfStampsToCollect: Yup.number().min(1, 'Number of stamps to collect must be at least 1').required(tCommon('required')),
+    rewardType: Yup.mixed().oneOf(['promotion', 'discount']).required(tCommon('required')),
     promotionReward: Yup.string().when('rewardType', {
       is: 'promotion',
-      then: () => Yup.string().required('Required!'),
+      then: () => Yup.string().required(tCommon('required')),
       otherwise: () => Yup.string(),
     }),
     discountReward: Yup.string().when('rewardType', {
       is: 'discount',
-      then: () => Yup.number().required('Required!').min(1, 'Discount must be greater than zero!'),
+      then: () => Yup.number().required(tCommon('required')).min(1, 'Discount must be greater than zero!'),
       otherwise: () => Yup.number(),
     }),
     validDateRange: Yup.string().when('hasValidity', {
       is: true,
-      then: () => Yup.string().required('Required!'),
+      then: () => Yup.string().required(tCommon('required')),
       otherwise: () => Yup.string(),
     }),
   });
@@ -168,7 +175,7 @@ export default function Create() {
                   {optionsData?.branches?.length === 0 && (
                     <div className="pt-3 text-center">
                       <Link href={routes.privateRoutes.retailer.branch.create} className="text-xs font-semibold text-danger">
-                        Create Branch
+                        {t('createBranch')}
                       </Link>
                     </div>
                   )}
@@ -188,7 +195,7 @@ export default function Create() {
                   />
                   {optionsData?.categories?.length === 0 && (
                     <div className=" pt-3 text-center text-danger">
-                      <span>No category added by super admin</span>
+                      <span>{t('noCategoryAddedBySuperAdmin')}</span>
                     </div>
                   )}
                 </div>
@@ -329,9 +336,9 @@ export default function Create() {
                 <div className="border-l-4 border-red-400 bg-blue-50 p-4">
                   <p className="mb-3 font-semibold">Attach your Custom Stamp Image!</p>
                   <p>
-                    Purchase Custom Stamp AddOn.{' '}
+                    {t('purchaseCustomStampAddOn')}.{' '}
                     <Link href={routes.privateRoutes.retailer.membershipPlan} className="font-semibold text-danger hover:cursor-pointer">
-                      Click Here
+                      {t('clickHere')}
                     </Link>
                   </p>
                 </div>
@@ -341,9 +348,9 @@ export default function Create() {
                 <div className="border-l-4 border-red-400 bg-blue-50 p-4">
                   <p className="mb-3 text-sm font-semibold">There is no active custom image available!</p>
                   <p>
-                    Create or Active Custom Stamp.{' '}
+                    {t('createOrActiveCustomStamp')}.{' '}
                     <Link href={routes.privateRoutes.retailer.stampImage.home} className="font-semibold text-danger hover:cursor-pointer">
-                      Click Here
+                      {t('clickHere')}
                     </Link>
                   </p>
                 </div>
@@ -352,7 +359,7 @@ export default function Create() {
               {errors?.stampImageId && touched?.stampImageId && (
                 <div className="flex items-center gap-x-1 text-danger">
                   <IoAlertCircle className="text-lg" />
-                  <span>Select one from default or custom stamp is required!</span>
+                  <span>{t('selectOneFromDefaultOrCustomStampIsRequired')}</span>
                 </div>
               )}
 
@@ -360,12 +367,10 @@ export default function Create() {
 
               <p className="mt-4 flex flex-col text-end text-xs font-semibold">
                 <span>
-                  Base Currency: <span className="text-red-600">CAD</span>
+                  {tCommon('baseCurrency')}: <span className="text-red-600">CAD</span>
                 </span>
-                <span>
-                  Fields marked with <span className="text-red-600">*</span> are mandatory!
-                </span>
-                <span>Need double-click to select a single date!</span>
+                <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
+                <span>{tCommon('needDoubleClickToSelectASingleDate')}</span>
               </p>
 
               <div className="mt-2 flex justify-end">

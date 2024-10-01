@@ -10,6 +10,7 @@ import { setAccessToken } from '@/features/auth/authSlice';
 import { ICountrySelect } from '@/types';
 import { getCountryByTimezone, getPhoneCodeByTimezone } from '@/utils/get-country-by-timezone';
 import countryData from '@/utils/get-country-list';
+import { translateText } from '@/utils/GoogleTranslate';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
@@ -25,9 +26,10 @@ import OtpModal from './OtpModal';
 import PolicyModal from './PolicyModal';
 import TermsModal from './TermsModal';
 
-export default function RegisterForm({ terms, policy }: { terms: any; policy: any }) {
+export default function RegisterForm({ terms, policy, locale }: { terms: any; policy: any; locale: string }) {
   const t = useTranslations('RegisterPage');
   const tCommon = useTranslations('RetailerCommon');
+  const tLogin = useTranslations('LoginPage');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [termsModalState, setTermsModalState] = useState(false);
@@ -45,17 +47,25 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
     if (error) {
       const myError = error as SerializedError;
       setIsSubmitting(false);
-      toast.error(myError?.data?.message || 'Something went wrong!');
+      if (locale === 'en') {
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([myError?.data?.message], locale, 'en');
+          const errorMessage = translatedMessage[0] || tCommon('errorMessage');
+          toast.error(errorMessage);
+        })();
+      }
     }
 
     if (isSuccess) {
-      console.log('Register Response: ', registerResponse);
       dispatch(setAccessToken(registerResponse.data.temp));
 
       setIsSubmitting(false);
       setModalState(true);
-      toast.success('OTP sent on your email!');
+      toast.success(t('otpSentMessage'));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, error, isSuccess, registerResponse]);
 
   const countryOptions = countryData.map((country) => ({
@@ -85,11 +95,11 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
     firstName: Yup.string().required(tCommon('required')),
     lastName: Yup.string(),
     email: Yup.string()
-      .test('email', 'Provide valid email!', (value: any) => {
+      .test('email', tLogin('invalidEmail'), (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(value);
       })
-      .required('Required!'),
+      .required(tCommon('required')),
     phone: Yup.string().required(tCommon('required')),
     country: Yup.string().required(tCommon('required')),
     province: Yup.string().required(tCommon('required')),
@@ -97,7 +107,7 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
     postalCode: Yup.string().required(tCommon('required')),
     address: Yup.string().required(tCommon('required')),
     isAgree: Yup.string().required(tCommon('required')),
-    password: Yup.string().required(tCommon('required')).min(8, 'At least 8 characters long!'),
+    password: Yup.string().required(tCommon('required')).min(8, tCommon('atLeast8Characters')),
   });
 
   const handleSubmit = async (values: any) => {
@@ -221,7 +231,7 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
                       onBlur={() => setFieldTouched('isAgree', true)}
                     />{' '}
                     <p className="text-xs font-medium">
-                      {t('iAgree')} with the{' '}
+                      {t('iAgree')}{' '}
                       <span onClick={() => setTermsModalState(true)} className="cursor-pointer border-b-2">
                         {t('termsAndConditions')}
                       </span>{' '}
@@ -240,9 +250,7 @@ export default function RegisterForm({ terms, policy }: { terms: any; policy: an
                 </div>
 
                 <p className="flex flex-col text-end text-xs font-semibold">
-                  <span>
-                    Fields marked with <span className="text-red-600">*</span> are mandatory!
-                  </span>
+                  <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
                 </p>
 
                 <Button

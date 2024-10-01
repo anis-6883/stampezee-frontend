@@ -7,6 +7,7 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateNotificationMutation } from '@/features/retailer/notification/notificationApi';
+import { translateText } from '@/utils/GoogleTranslate';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
@@ -19,11 +20,13 @@ import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function CreateUpdateModel({
+  locale,
   setFormData,
   formData,
   modalState,
   setModalState,
 }: {
+  locale: string;
   formData: any;
   modalState: boolean;
   setFormData: (data: any) => void;
@@ -72,16 +75,25 @@ export default function CreateUpdateModel({
   useEffect(() => {
     if (createError) {
       const myError = createError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
       setIsSubmitting(false);
       setModalState(false);
+      if (locale === 'en') {
+        toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([myError?.data?.message], locale, 'en');
+          const errorMessage = translatedMessage[0] || tCommon('errorMessage');
+          toast.error(errorMessage);
+        })();
+      }
     }
     if (createSuccess) {
-      toast.success('Notification created successfully!');
+      toast.success(t('notificationCreatedSuccessfully'));
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createError, createSuccess, setFormData, setModalState]);
 
   return (
@@ -146,8 +158,8 @@ export default function CreateUpdateModel({
                   </div>
                 )}
 
-                <p className=" text-end text-xs font-semibold">
-                  Fields marked with <span className="text-red-600">*</span> are mandatory!
+                <p className="flex flex-col text-end text-xs font-semibold">
+                  <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
                 </p>
                 <div className="mt-6 flex justify-end">
                   <Button

@@ -14,6 +14,7 @@ import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/sub
 import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
+import { translateText } from '@/utils/GoogleTranslate';
 import { Form, Formik } from 'formik';
 import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -25,7 +26,7 @@ import { SlEnvolope, SlLock } from 'react-icons/sl';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-export default function LoginForm() {
+export default function LoginForm({ locale }: { locale: string }) {
   const t = useTranslations('LoginPage');
   const tCommon = useTranslations('RetailerCommon');
   const { replace } = useRouter();
@@ -47,7 +48,7 @@ export default function LoginForm() {
 
   const loginSchema = Yup.object().shape({
     email: Yup.string()
-      .test('email', 'Provide valid email!', (value: any) => {
+      .test('email', t('invalidEmail'), (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(value);
       })
@@ -60,7 +61,15 @@ export default function LoginForm() {
       setIsSubmitting(false);
       const myError = loginError as SerializedError;
       setIsSubmitting(false);
-      toast.error(myError?.data?.message || 'Something went wrong!');
+      if (locale === 'en') {
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([myError?.data?.message], locale, 'en');
+          const errorMessage = translatedMessage[0] || tCommon('errorMessage');
+          toast.error(errorMessage);
+        })();
+      }
     }
 
     if (loginSuccess) {
@@ -109,7 +118,7 @@ export default function LoginForm() {
           toast.error(callback?.error);
         }
         if (callback?.ok && !callback?.error) {
-          toast.success('Welcome to Retailer Panel!');
+          toast.success(t('loginSuccessMessage'));
           if (loginResponse?.data?.role === ROLE.RETAILER) {
             if (searchQuery === 'checkout') {
               replace(routes.privateRoutes.checkout);
@@ -140,7 +149,7 @@ export default function LoginForm() {
             <InputPassword prefix={<SlLock className="text-xl" />} name="password" label={t('password')} placeholder="********" />
 
             <p className="text-end text-xs font-semibold">
-              Fields marked with <span className="text-red-600">*</span> are mandatory!
+              <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
             </p>
             <Button
               color="danger"

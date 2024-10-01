@@ -72,10 +72,11 @@ export default function StampTable({ offset }: { offset: number }) {
     }
     if (isSuccess) {
       setDeleteSubmitting(false);
-      toast.success('Stamp deleted successfully!');
+      toast.success(t('stampDeletedSuccessfully'));
       setDeleteState(false);
       setDeleteId(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError]);
 
   // publish handler
@@ -86,8 +87,9 @@ export default function StampTable({ offset }: { offset: number }) {
     }
     if (publishStampSuccess) {
       setPublishSubmitting(false);
-      toast.success('Stamp Published successfully!');
+      toast.success(t('stampPublishedSuccessfully'));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publishStampSuccess, publishStampError]);
 
   useEffect(() => {

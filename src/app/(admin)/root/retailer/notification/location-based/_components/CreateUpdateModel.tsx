@@ -8,6 +8,7 @@ import SelectField from '@/components/Formik/SelectField';
 import RangeSlider from '@/components/range-slider';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateNotificationByLocationMutation } from '@/features/retailer/notification/notificationApi';
+import { translateText } from '@/utils/GoogleTranslate';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
@@ -40,14 +41,17 @@ export default function CreateUpdateModel({
   modalState,
   setModalState,
   googleMapsApiKey,
+  locale,
 }: {
   formData: any;
   modalState: boolean;
   setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
   googleMapsApiKey: string;
+  locale: string;
 }) {
   const t = useTranslations('SendAndResendLocationBasedNotification');
+  const tRegular = useTranslations('SendAndResendNotification');
   const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createNotificationByLocation, { isSuccess: createSuccess, error: createError }] = useCreateNotificationByLocationMutation();
@@ -95,15 +99,24 @@ export default function CreateUpdateModel({
   useEffect(() => {
     if (createError) {
       const myError = createError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
+      if (locale === 'en') {
+        toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([myError?.data?.message], locale, 'en');
+          const errorMessage = translatedMessage[0] || tCommon('errorMessage');
+          toast.error(errorMessage);
+        })();
+      }
       setIsSubmitting(false);
     }
     if (createSuccess) {
-      toast.success('Notification send successfully!');
+      toast.success(tRegular('notificationSendSuccessfully'));
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createError, createSuccess, setFormData, setModalState]);
 
   return (
@@ -191,7 +204,7 @@ export default function CreateUpdateModel({
                   )}
 
                   <p className="mt-4 text-end text-xs font-semibold">
-                    Fields marked with <span className="text-red-600">*</span> are mandatory!
+                    <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
                   </p>
                   <div className="mt-6 flex justify-end">
                     <Button

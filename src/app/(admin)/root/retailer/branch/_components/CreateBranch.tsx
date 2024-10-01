@@ -72,7 +72,7 @@ export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: s
           <InputField name="name" label={t('name')} placeholder="ex. Ring Road Branch" />
           <Map googleMapsApiKey={googleMapsApiKey} />
           <p className="text-end text-xs font-semibold">
-            Fields marked with <span className="text-red-600">*</span> are mandatory!
+            <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
           </p>
           <div className="mt-2 flex justify-end">
             <Button

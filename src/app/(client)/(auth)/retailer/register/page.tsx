@@ -4,7 +4,7 @@ import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import { getServerSession } from 'next-auth';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import HomeAndLocalButton from './components/HomeAndLocalButton';
@@ -16,6 +16,7 @@ export const metadata = {
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
+  const locale = await getLocale();
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
   const t = await getTranslations('RegisterPage');
 
@@ -38,7 +39,7 @@ export default async function Page() {
           <div className="mt-4 px-3">
             <h1 className="text-center text-xl font-bold xl:text-xl">{t('title')}</h1>
 
-            <RegisterForm terms={data?.data?.page?.terms} policy={data?.data?.page?.policy} />
+            <RegisterForm terms={data?.data?.page?.terms} policy={data?.data?.page?.policy} locale={locale} />
 
             <div className="mt-5 text-center">
               {t('alreadyHaveAccount')}

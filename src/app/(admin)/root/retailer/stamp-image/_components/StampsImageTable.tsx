@@ -23,7 +23,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function StampsImageTable() {
+export default function StampsImageTable({ locale }: { locale: string }) {
   const t = useTranslations('RetailerStampImageTable');
   const t2 = useTranslations('RetailerStampImageCreateUpdate');
   const { data: session }: any = useSession();
@@ -138,7 +138,13 @@ export default function StampsImageTable() {
 
   return (
     <>
-      <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
+      <CreateUpdateModel
+        setFormData={setFormData}
+        formData={formData}
+        modalState={createState}
+        setModalState={setCreateState}
+        locale={locale}
+      />
       <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
         <StatusIndicator />
         <div>

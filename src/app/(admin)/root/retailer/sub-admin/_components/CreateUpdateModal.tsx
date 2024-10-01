@@ -52,29 +52,31 @@ export default function CreateUpdateModal({
   useEffect(() => {
     if (createError) {
       const myError = createError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
+      toast.error(myError?.data?.message || tCommon('errorMessage'));
       setIsSubmitting(false);
     }
     if (createSuccess) {
-      toast.success('Sub-Admin created successfully!');
+      toast.success(t2('subAdminCreatedSuccessfully'));
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createError, createSuccess, setFormData, setModalState]);
 
   useEffect(() => {
     if (updateError) {
       const myError = updateError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
+      toast.error(myError?.data?.message || tCommon('errorMessage'));
       setIsSubmitting(false);
     }
     if (updateSuccess) {
-      toast.success('Sub-Admin updated successfully!');
+      toast.success(t2('subAdminUpdatedSuccessfully'));
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setFormData, setModalState, updateError, updateSuccess]);
 
   const initialValues = {
@@ -179,7 +181,7 @@ export default function CreateUpdateModal({
                   )}
                 </div>
                 <p className="text-end text-xs font-semibold">
-                  Fields marked with <span className="text-red-600">*</span> are mandatory!
+                  <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
                 </p>
                 <div className="mt-6 flex justify-end">
                   <Button
