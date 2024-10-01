@@ -46,7 +46,7 @@ export default async function Page() {
           <div>
             <OrderBalance />
             <h2 className="mb-4 text-xl font-semibold">{t('orderSummary')}</h2>
-            <OrderSummary stripeInfo={data?.data?.stripe} selectedCurrency={selectedCurrency} />
+            <OrderSummary stripeInfo={data?.data?.stripe} selectedCurrency={selectedCurrency} locale={locale} />
           </div>
         </div>
       </div>

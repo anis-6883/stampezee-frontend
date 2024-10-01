@@ -106,7 +106,11 @@
     "purchaseAlertMessage": "Votre commande doit être d'au moins",
     "purchaseAlertMessageAfter": "Veuillez ajouter d'autres articles pour continuer",
     "plan": "Plan",
-    "addOn": "Module complémentaire"
+    "addOn": "Module complémentaire",
+    "freeTrialActivated": "Essai gratuit activé !",
+    "downgradeSuccessfully": "Baisse de plan réussie !",
+    "branchDisableMessage": "Pour baisse, tu dois <span className=\"font-bold text-danger\">sélectionner {totalDisabledBranch} succursale/s</span> pour désactiver par le système !",
+    "confirm": "Confirmer"
   },
   "LoginPage": {
     "credentials": "Identifiants: jane@doe.com / next-intl",
@@ -299,7 +303,8 @@
     "updateABranch": "Mettre à jour une agence",
     "name": "Nom",
     "address": "Adresse",
-    "submit": "Envoyer"
+    "submit": "Envoyer",
+    "pleaseSelectALocationOnTheMap": "Veuillez sélectionner une localisation sur la carte!"
   },
   "RetailerBranchTable": {
     "branchName": "Nom de l’Agence",
@@ -317,7 +322,9 @@
     "errorMessage": "Quelque chose a mal tourné. Veuillez réessayer !",
     "branchActivated": "Agence activée avec succès !",
     "branchConverted": "Le source de l'agence a été converti en module complémentaire avec succès !",
-    "branchDeleted": "Agence supprimée avec succès !"
+    "branchDeleted": "Agence supprimée avec succès !",
+    "branchCreated": "Agence créée avec succès !",
+    "branchUpdated": "Agence mise à jour avec succès !"
   },
   "RetailerSubAdmin": {
     "title": "Gérer les Sous-Admins",

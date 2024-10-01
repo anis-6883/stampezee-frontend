@@ -17,6 +17,7 @@ import Map from './Map';
 
 export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: string }) {
   const t = useTranslations('RetailerBranches');
+  const t2 = useTranslations('RetailerBranchTable');
   const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createBranch, { error, isSuccess }] = useCreateBranchMutation();
@@ -37,7 +38,7 @@ export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: s
   // Submit Handler
   const handleSubmit = async (values: Branch) => {
     if (values.latitude === '' || values.longitude === '') {
-      toast.error('Please select a location on the map!');
+      toast.error(t('pleaseSelectALocationOnTheMap'));
       return;
     }
     setIsSubmitting(true);
@@ -54,9 +55,10 @@ export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: s
 
     if (isSuccess) {
       router.push(routes.privateRoutes.retailer.branch.home);
-      toast.success('Branch created successfully!');
+      toast.success(t2('branchCreated'));
       setIsSubmitting(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, isSuccess, router]);
 
   return (

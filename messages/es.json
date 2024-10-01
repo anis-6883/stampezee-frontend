@@ -106,7 +106,11 @@
     "purchaseAlertMessage": "Tu pedido debe ser al menos",
     "purchaseAlertMessageAfter": "Agrega más elementos para continuar",
     "plan": "Plan",
-    "addOn": "Complemento"
+    "addOn": "Complemento",
+    "freeTrialActivated": "¡Pruebe gratis!",
+    "downgradeSuccessfully": "¡Bajada de plan exitosa!",
+    "branchDisableMessage": "Para bajar, debes <span className=\"font-bold text-danger\">seleccionar {totalDisabledBranch} sucursal/es</span> para desactivar por el sistema!",
+    "confirm": "Confirmar"
   },
   "LoginPage": {
     "credentials": "Credenciales: jane@doe.com / next-intl",
@@ -299,7 +303,8 @@
     "updateABranch": "Actualizar una Sucursal",
     "name": "Nombre",
     "address": "Dirección",
-    "submit": "Enviar"
+    "submit": "Enviar",
+    "pleaseSelectALocationOnTheMap": "¡Por favor selecciona una ubicación en el mapa!"
   },
   "RetailerBranchTable": {
     "branchName": "Nombre de la Sucursal",
@@ -317,7 +322,9 @@
     "errorMessage": "¡Algo salió mal! Por favor, intenta de nuevo.",
     "branchActivated": "Sucursal activada con éxito!",
     "branchConverted": "El origen de la sucursal se ha convertido a un complemento con éxito!",
-    "branchDeleted": "Sucursal eliminada con éxito!"
+    "branchDeleted": "Sucursal eliminada con éxito!",
+    "branchCreated": "Sucursal creada con éxito!",
+    "branchUpdated": "Sucursal actualizada con éxito!"
   },
   "RetailerSubAdmin": {
     "title": "Gestionar Sub-Administradores",

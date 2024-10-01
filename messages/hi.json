@@ -106,7 +106,11 @@
     "purchaseAlertMessage": "आपका ऑर्डर कम से कम",
     "purchaseAlertMessageAfter": "कृपया आगे बढ़ने के लिए अधिक आइटम जोड़ें",
     "plan": "योजना",
-    "addOn": "ऐड-ऑन"
+    "addOn": "ऐड-ऑन",
+    "freeTrialActivated": "मुफ्त ट्रायल सक्रिय हो गया!",
+    "downgradeSuccessfully": "अपग्रेड सफलतापूर्वक किया गया!",
+    "branchDisableMessage": "डाउनग्रेड करने के लिए, आपको <span className=\"font-bold text-danger\">{totalDisabledBranch} शाखा/शाखाओं का चयन</span> करना होगा जिसे सिस्टम द्वारा अक्षम किया जाएगा!",
+    "confirm": "पुष्टि करें"
   },
   "LoginPage": {
     "credentials": "प्रमाणपत्र: jane@doe.com / next-intl",
@@ -299,7 +303,8 @@
     "updateABranch": "एक शाखा अपडेट करें",
     "name": "नाम",
     "address": "पता",
-    "submit": "जमा करें"
+    "submit": "जमा करें",
+    "pleaseSelectALocationOnTheMap": "कृपया एक शाखा चुनें!"
   },
   "RetailerBranchTable": {
     "branchName": "शाखा का नाम",
@@ -317,7 +322,9 @@
     "errorMessage": "कुछ गलत हो गया। कृपया फिर से प्रयास करें!",
     "branchActivated": "शाखा सक्रिय है!",
     "branchConverted": "शाखा स्रोत सफलतापूर्वक ऐड-ऑन में बदल गया!",
-    "branchDeleted": "शाखा सफलतापूर्वक हटाई गई!"
+    "branchDeleted": "शाखा सफलतापूर्वक हटाई गई!",
+    "branchCreated": "शाखा सफलतापूर्वक बनाई गई!",
+    "branchUpdated": "शाखा सफलतापूर्वक अपडेट हुई!"
   },
   "RetailerSubAdmin": {
     "title": "उप-प्रशासकों का प्रबंधन करें",

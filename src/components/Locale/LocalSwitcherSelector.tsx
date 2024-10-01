@@ -1,6 +1,6 @@
 import { Currency, Locale } from '@/config';
 import { setCurrentCurrency } from '@/features/currency-exchange/currencyExchangeSlice';
-import { setCurrency } from '@/features/subscription/subscriptionSlice';
+import { resetState, setCurrency } from '@/features/subscription/subscriptionSlice';
 import { getUserCurrency, setUserCurrency } from '@/services/currency';
 import { getUserLocale, setUserLocale } from '@/services/locale';
 import currencyData from '@/utils/get-currency-list';
@@ -67,6 +67,7 @@ export default function LocalSwitcherSelector({
     startTransition(() => {
       setUserLocale(locale);
       setCurrentTab(1);
+      dispatch(resetState());
     });
   };
   // handle currency

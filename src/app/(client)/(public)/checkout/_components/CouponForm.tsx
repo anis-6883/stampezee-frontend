@@ -8,6 +8,7 @@ import { RootState } from '@/features/store';
 import { applyCoupon, setCode } from '@/features/subscription/subscriptionSlice';
 import { useCreateCouponMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { isCheckCouponDisabled } from '@/utils';
+import { translateText } from '@/utils/GoogleTranslate';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -16,9 +17,10 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-const CouponForm = () => {
+const CouponForm = ({ locale }: { locale: string }) => {
   const dispatch = useDispatch();
   const t = useTranslations('CheckoutPage');
+  const tCommon = useTranslations('RetailerCommon');
   const { coupon, addOn, subscription, activeSubscription, planChangeType, currency } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
@@ -34,12 +36,26 @@ const CouponForm = () => {
     if (couponError) {
       const myError = couponError as SerializedError;
       setIsCouponSubmitting(false);
-      toast.error(myError?.data?.message || 'Something went wrong!');
+      if (locale === 'en') {
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([myError?.data?.message], locale, 'en');
+          toast.error(translatedMessage[0] || tCommon('errorMessage'));
+        })();
+      }
     }
 
     if (couponSuccess) {
       setIsCouponSubmitting(false);
-      toast.success(couponResponse?.message);
+      if (locale === 'en') {
+        toast.success(couponResponse?.message);
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([couponResponse?.message], locale, 'en');
+          toast.success(translatedMessage[0]);
+        })();
+      }
 
       dispatch(applyCoupon(couponResponse?.data));
     }

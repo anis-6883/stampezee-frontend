@@ -106,7 +106,11 @@
     "purchaseAlertMessage": "Ваш заказ должен быть не менее",
     "purchaseAlertMessageAfter": "Добавьте больше товаров, чтобы продолжить",
     "plan": "План",
-    "addOn": "Дополнение"
+    "addOn": "Дополнение",
+    "freeTrialActivated": "Бесплатная пробная версия активирована!",
+    "downgradeSuccessfully": "Успешное снижение уровня!",
+    "branchDisableMessage": "Для снижения уровня необходимо выбрать <span className=\"font-bold text-danger\">{totalDisabledBranch} филиал/ов</span>, которые будут отключены системой!",
+    "confirm": "Подтвердить"
   },
   "LoginPage": {
     "credentials": "Учетные данные: jane@doe.com / next-intl",
@@ -299,7 +303,8 @@
     "updateABranch": "Обновить Филиал",
     "name": "Имя",
     "address": "Адрес",
-    "submit": "Отправить"
+    "submit": "Отправить",
+    "pleaseSelectALocationOnTheMap": "Необходимо выбрать место на карте!"
   },
   "RetailerBranchTable": {
     "branchName": "Название Филиала",
@@ -317,7 +322,9 @@
     "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте снова!",
     "branchActivated": "Филиал активирован!",
     "branchConverted": "Источник Филиала успешно преобразован в Дополнение!",
-    "branchDeleted": "Филиал успешно удален!"
+    "branchDeleted": "Филиал успешно удален!",
+    "branchCreated": "Филиал успешно создан!",
+    "branchUpdated": "Филиал успешно обновлен!"
   },
   "RetailerSubAdmin": {
     "title": "Управление Суб-Администраторами",

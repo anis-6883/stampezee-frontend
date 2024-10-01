@@ -10,6 +10,7 @@ import { RootState } from '@/features/store';
 import { resetState } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import { hasCheckedPurchaseAlert, isCheckoutButtonDisabled } from '@/utils';
+import { translateText } from '@/utils/GoogleTranslate';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -25,7 +26,7 @@ import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
 import PlanAddOns from './PlanAddons';
 
-export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
+export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: any) {
   const { push, replace } = useRouter();
   const t = useTranslations('CheckoutPage');
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
 
     if (checkOutResponse) {
       if (subscription?.slug === 'trial') {
-        toast.success('Free trial activated!');
+        toast.success(t('freeTrialActivated'));
         update({ ...session?.user, ...checkOutResponse?.data });
         dispatch(
           setValue({
@@ -78,7 +79,14 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
         if (checkOutResponse?.data?.url) {
           replace(checkOutResponse?.data?.url);
         } else {
-          toast.success(checkOutResponse?.message || 'Downgrade Successfully!');
+          if (locale === 'en') {
+            toast.success(checkOutResponse?.message || 'Downgrade Successfully!');
+          } else {
+            (async () => {
+              const translatedMessage = await translateText([checkOutResponse?.message], locale, 'en');
+              toast.success(translatedMessage[0] || t('downgradeSuccessfully'));
+            })();
+          }
           update({ ...session?.user, ...profile?.data });
           dispatch(
             setValue({
@@ -131,7 +139,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency }: any) {
       <div className="rounded-lg border p-4">
         <h2 className="pb-2 text-lg font-medium">{t('coupon')}</h2>
         <hr className=" text-lg font-bold" />
-        <CouponForm />
+        <CouponForm locale={locale} />
 
         {subscription?.slug !== activeSubscription?.slug && (subscription?.slug || addOn?.slug) && (
           <PlanAddOns stripeInfo={stripeInfo} selectedCurrency={selectedCurrency} />

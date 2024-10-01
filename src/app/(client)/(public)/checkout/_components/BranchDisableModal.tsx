@@ -1,4 +1,5 @@
 import Button from '@/components/Formik/Button';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -27,6 +28,7 @@ export default function BranchDisableModal({
   selectedBranches: string[];
   totalDisabledBranch: number;
 }) {
+  const t = useTranslations('CheckoutPage');
   const handleDisableBranch = () => {
     if (selectedBranches?.length !== totalDisabledBranch) {
       toast.error(`You Should Select ${totalDisabledBranch} branches`);
@@ -40,6 +42,12 @@ export default function BranchDisableModal({
     return !isExist && selectedBranches?.length >= totalDisabledBranch;
   };
 
+  // Get the raw translation string
+  const rawMessage = t.raw('branchDisableMessage');
+
+  // Replace the placeholder in the translation string
+  const formattedMessage = rawMessage.replace('{totalDisabledBranch}', `<span class='font-bold text-danger'>${totalDisabledBranch}</span>`);
+
   return (
     <Modal isOpen={modalState} onClose={() => setModalState(false)}>
       <div className="m-auto px-7 pb-8 pt-6">
@@ -51,8 +59,9 @@ export default function BranchDisableModal({
         </div>
 
         <p className="mt-5 text-center text-base font-medium">
-          For downgrading, you must <span className="font-bold text-danger">select {totalDisabledBranch} branch/s</span> to disable by the
-          system!
+          <span dangerouslySetInnerHTML={{ __html: formattedMessage }} />
+          {/* For downgrading, you must <span className="font-bold text-danger">select {totalDisabledBranch} branch/s</span> to disable by the
+          system! */}
         </p>
         <p className="mt-2 text-end text-base font-medium">
           {selectedBranches?.length} / {totalDisabledBranch}

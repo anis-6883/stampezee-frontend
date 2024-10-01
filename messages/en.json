@@ -107,7 +107,11 @@
     "purchaseAlertMessage": "Your order needs to be at least",
     "purchaseAlertMessageAfter": "Please add more items to continue",
     "plan": "Plan",
-    "addOn": "Add-On"
+    "addOn": "Add-On",
+    "freeTrialActivated": "Free trial activated!",
+    "downgradeSuccessfully": "Downgrade Successfully!",
+    "branchDisableMessage": "For downgrading, you must <span className=\"font-bold text-danger\">select {totalDisabledBranch} branch/s</span> to disable by the system!",
+    "confirm": "Confirm"
   },
   "LoginPage": {
     "credentials": "Credentials: jane@doe.com / next-intl",
@@ -301,9 +305,6 @@
     "name": "Name",
     "address": "Address",
     "submit": "Submit",
-    "branchCreatedSuccessfully": "Branch created successfully!",
-    "branchUpdatedSuccessfully": "Branch updated successfully!",
-    "branchDeletedSuccessfully": "Branch deleted successfully!",
     "pleaseSelectALocationOnTheMap": "Please select a location on the map!"
   },
   "RetailerBranchTable": {
