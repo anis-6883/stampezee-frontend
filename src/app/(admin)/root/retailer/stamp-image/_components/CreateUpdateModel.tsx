@@ -5,6 +5,7 @@ import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateStampImageMutation, useUpdateStampImageMutation } from '@/features/retailer/stamp-image/stampApi';
+import { translateText } from '@/utils/GoogleTranslate';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
@@ -16,11 +17,13 @@ import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function CreateUpdateModel({
+  locale,
   setFormData,
   formData,
   modalState,
   setModalState,
 }: {
+  locale: string;
   formData: any;
   modalState: boolean;
   setFormData: (data: any) => void;
@@ -69,30 +72,48 @@ export default function CreateUpdateModel({
   useEffect(() => {
     if (createError) {
       const myError = createError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
+      if (locale === 'en') {
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([myError?.data?.message], locale, 'en');
+          const errorMessage = translatedMessage[0] || tCommon('errorMessage');
+          toast.error(errorMessage);
+        })();
+      }
       setIsSubmitting(false);
     }
     if (createSuccess) {
-      toast.success('Stamp Image created successfully!');
+      toast.success(t2('stampImageCreatedSuccessfully'));
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createError, createSuccess, setFormData, setModalState]);
 
   // Handle Update Response
   useEffect(() => {
     if (updateError) {
       const myError = updateError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
+      if (locale === 'en') {
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([myError?.data?.message], locale, 'en');
+          const errorMessage = translatedMessage[0] || tCommon('errorMessage');
+          toast.error(errorMessage);
+        })();
+      }
       setIsSubmitting(false);
     }
     if (updateSuccess) {
-      toast.success('Stamp Image updated successfully!');
+      toast.success(t2('stampImageUpdatedSuccessfully'));
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setFormData, setModalState, updateError, updateSuccess]);
 
   return (
@@ -136,7 +157,7 @@ export default function CreateUpdateModel({
                 <InputField name="title" label={t2('title')} placeholder="Stamp One" />
 
                 <p className="mt-5 text-end text-xs font-semibold">
-                  Fields marked with <span className="text-red-600">*</span> are mandatory!
+                  <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
                 </p>
                 <div className="mt-6 flex justify-end">
                   <Button

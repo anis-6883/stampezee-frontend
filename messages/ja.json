@@ -113,7 +113,7 @@
     "description": "詳細を入力してください。",
     "email": "メール",
     "invalidCredentials": "資格情報を確認してください。",
-    "invalidEmail": "有効なメールアドレスを入力してください。",
+    "invalidEmail": "有効なメールアドレスを入力してください!",
     "invalidPassword": "パスワードを入力してください。",
     "signIn": "サインイン",
     "forgotPassword": "パスワードを忘れましたか？",
@@ -122,7 +122,8 @@
     "here": "こちら",
     "password": "パスワード",
     "title": "お帰りなさい",
-    "submit": "送信"
+    "submit": "送信",
+    "loginSuccessMessage": "小売店のインターフェースにようこそ!"
   },
   "RegisterPage": {
     "title": "ストア登録",
@@ -145,7 +146,8 @@
     "termsAndConditions": "利用規約",
     "and": "および",
     "privacyPolicy": "プライバシーポリシー",
-    "submit": "送信"
+    "submit": "送信",
+    "otpSentMessage": "OTP があなたのメールに送信されました！"
   },
   "ForgotPasswordPage": {
     "title": "パスワードを忘れた",
@@ -176,7 +178,10 @@
   "RetailerCommon": {
     "required": "必須!",
     "errorMessage": "問題が発生しました。もう一度お試しください！",
-    "mandatoryFieldsMessage": "マークされたフィールドは<span class=\"text-red-600\">*</span>が必須です！"
+    "mandatoryFieldsMessage": "マークされたフィールドは<span class=\"text-red-600\">*</span>が必須です！",
+    "atLeast8Characters": "少なくとも8文字！",
+    "needDoubleClickToSelectASingleDate": "単一の日付を選択するにはダブルクリックが必要です！",
+    "baseCurrency": "基礎通貨"
   },
   "RetailerSidebar": {
     "Dashboard": "ダッシュボード",
@@ -332,7 +337,10 @@
     "branch": "支店",
     "status": "ステータス",
     "actions": "操作",
-    "placeHolder": "名前で検索"
+    "placeHolder": "名前で検索",
+    "subAdminDeletedSuccessfully": "サブ管理者が正常に削除されました！",
+    "subAdminUpdatedSuccessfully": "サブ管理者が正常に更新されました！",
+    "subAdminCreatedSuccessfully": "サブ管理者が正常に作成されました！"
   },
   "RetailerStamp": {
     "title": "スタンプを管理",
@@ -359,7 +367,9 @@
     "startedAt": "開始日",
     "expiredAt": "終了日",
     "publishNow": "今すぐ公開",
-    "published": "公開済み"
+    "published": "公開済み",
+    "stampDeletedSuccessfully": "スタンプが正常に削除されました！",
+    "stampPublishedSuccessfully": "スタンプが正常に公開されました！"
   },
   "RetailerCreateAndUpdateStamp": {
     "createStamp": "スタンプを作成",
@@ -383,9 +393,20 @@
     "discount": "割引",
     "promotion": "プロモーション",
     "selectDefaultImage": "デフォルト画像を選択",
+    "selectCustomImage": "カスタム画像を選択",
     "description": "説明",
     "draft": "下書き",
-    "publish": "公開"
+    "publish": "公開",
+    "createBranch": "支店を作成",
+    "noCategoryAddedBySuperAdmin": "スーパー管理者によってカテゴリが追加されていません",
+    "purchaseCustomStampAddOn": "カスタムスタンプアドオンを購入します。",
+    "clickHere": "ここをクリック",
+    "thereIsNoActiveCustomImageAvailable": "アクティブなカスタム画像はありません！",
+    "createOrActiveCustomStamp": "カスタムスタンプを作成またはアクティブにします。",
+    "selectOneFromDefaultOrCustomStampIsRequired": "デフォルトまたはカスタムスタンプから1つを選択する必要があります！",
+    "stampCreatedSuccessfully": "スタンプが正常に作成されました！",
+    "stampUpdatedSuccessfully": "スタンプが正常に更新されました！",
+    "stampClonedSuccessfully": "スタンプが正常にクローンされました！"
   },
   "RetailerScan": {
     "title": "スタンプスキャン管理",
@@ -438,7 +459,8 @@
     "address": "住所",
     "email": "メール",
     "update": "更新する",
-    "owner": "所有者"
+    "owner": "所有者",
+    "retailerProfileUpdated": "小売業者プロフィールが正常に更新されました！"
   },
   "RetailerBalanceCard": {
     "plan": "プラン",
@@ -460,7 +482,8 @@
     "imageUrl": "画像URL",
     "attachImage": "画像を添付",
     "send": "送信",
-    "resend": "再送信"
+    "resend": "再送信",
+    "notificationSendSuccessfully": "通知が正常に送信されました！"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "定期通知の送信制限",
@@ -521,7 +544,9 @@
     "updateStampImage": "スタンプ画像を更新",
     "title": "タイトル",
     "update": "更新",
-    "submit": "送信"
+    "submit": "送信",
+    "stampImageCreatedSuccessfully": "スタンプ画像が正常に作成されました！",
+    "stampImageUpdatedSuccessfully": "スタンプ画像が正常に更新されました！"
   },
   "RetailerCustomer": {
     "title": "顧客管理",

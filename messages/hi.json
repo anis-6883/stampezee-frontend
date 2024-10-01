@@ -113,7 +113,7 @@
     "description": "कृपया अपना विवरण दर्ज करें।",
     "email": "ईमेल",
     "invalidCredentials": "कृपया अपने प्रमाणपत्र जांचें।",
-    "invalidEmail": "कृपया एक मान्य ईमेल पता दर्ज करें।",
+    "invalidEmail": "कृपया एक मान्य ईमेल पता दर्ज करें!",
     "invalidPassword": "कृपया एक पासवर्ड दर्ज करें।",
     "signIn": "साइन इन करें",
     "forgotPassword": "पासवर्ड भूल गए?",
@@ -122,7 +122,8 @@
     "here": "यहाँ",
     "password": "पासवर्ड",
     "title": "वापसी पर स्वागत है",
-    "submit": "प्रस्तुत करें"
+    "submit": "प्रस्तुत करें",
+    "loginSuccessMessage": "खुदरा व्यापारी पैनल में आपका स्वागत है!"
   },
   "RegisterPage": {
     "title": "स्टोर पंजीकरण",
@@ -145,7 +146,8 @@
     "termsAndConditions": "उपयोग की शर्तें",
     "and": "और",
     "privacyPolicy": "गोपनीयता नीति",
-    "submit": "प्रस्तुत करें"
+    "submit": "प्रस्तुत करें",
+    "otpSentMessage": "OTP आपके ईमेल पर भेजा गया!"
   },
   "ForgotPasswordPage": {
     "title": "पासवर्ड भूल गए",
@@ -176,7 +178,10 @@
   "RetailerCommon": {
     "required": "आवश्यक!",
     "errorMessage": "कुछ गलत हो गया। कृपया पुनः प्रयास करें!",
-    "mandatoryFieldsMessage": "चिह्नित क्षेत्रों के साथ <span class=\"text-red-600\">*</span> आवश्यक हैं!"
+    "mandatoryFieldsMessage": "चिह्नित क्षेत्रों के साथ <span class=\"text-red-600\">*</span> आवश्यक हैं!",
+    "atLeast8Characters": "कम से कम 8 अक्षरों का होना आवश्यक है!",
+    "needDoubleClickToSelectASingleDate": "एकल तिथि का चयन करने के लिए डबल क्लिक करने की आवश्यकता है!",
+    "baseCurrency": "मुद्रा का आधार"
   },
   "RetailerSidebar": {
     "Dashboard": "डैशबोर्ड",
@@ -332,7 +337,10 @@
     "branch": "शाखा",
     "status": "स्थिति",
     "actions": "क्रियाएँ",
-    "placeHolder": "नाम से खोजें"
+    "placeHolder": "नाम से खोजें",
+    "subAdminDeletedSuccessfully": "उप-प्रशासक सफलतापूर्वक हटाई गई!",
+    "subAdminUpdatedSuccessfully": "उप-प्रशासक सफलतापूर्वक अपडेट हुआ!",
+    "subAdminCreatedSuccessfully": "उप-प्रशासक सफलतापूर्वक बनाया गया!"
   },
   "RetailerStamp": {
     "title": "स्टैम्प्स प्रबंधित करें",
@@ -359,7 +367,9 @@
     "startedAt": "शुरू हुआ",
     "expiredAt": "समाप्त हुआ",
     "publishNow": "अभी प्रकाशित करें",
-    "published": "प्रकाशित"
+    "published": "प्रकाशित",
+    "stampDeletedSuccessfully": "स्टैम्प सफलतापूर्वक हटाई गई!",
+    "stampPublishedSuccessfully": "स्टैम्प सफलतापूर्वक प्रकाशित हुआ!"
   },
   "RetailerCreateAndUpdateStamp": {
     "createStamp": "एक स्टैम्प बनाएं",
@@ -383,9 +393,20 @@
     "discount": "छूट",
     "promotion": "प्रचार",
     "selectDefaultImage": "डिफ़ॉल्ट छवि चुनें",
+    "selectCustomImage": "कस्टम छवि चुनें",
     "description": "विवरण",
     "draft": "ड्राफ्ट",
-    "publish": "प्रकाशित करें"
+    "publish": "प्रकाशित करें",
+    "createBranch": "शाखा बनाएं",
+    "noCategoryAddedBySuperAdmin": "अधिकृत शाखा नहीं है",
+    "purchaseCustomStampAddOn": "कस्टम स्टैम्प एड-ऑन खरीदें।",
+    "clickHere": "यहां क्लिक करें",
+    "thereIsNoActiveCustomImageAvailable": "कोई उपलब्ध सक्रिय कस्टम छवि नहीं है!",
+    "createOrActiveCustomStamp": "कस्टम स्टैम्प बनाएं या सक्रिय करें।",
+    "selectOneFromDefaultOrCustomStampIsRequired": "डिफ़ॉल्ट या कस्टम स्टैम्प से एक चुनें आवश्यक है!",
+    "stampCreatedSuccessfully": "स्टैम्प सफलतापूर्वक बनाया गया!",
+    "stampUpdatedSuccessfully": "स्टैम्प सफलतापूर्वक अपडेट हुआ!",
+    "stampClonedSuccessfully": "स्टैम्प सफलतापूर्वक क्लोन हुआ!"
   },
   "RetailerScan": {
     "title": "स्टैम्प स्कैन प्रबंधन",
@@ -438,7 +459,8 @@
     "address": "पता",
     "email": "ईमेल",
     "update": "अद्यतन करें",
-    "owner": "मालिक"
+    "owner": "मालिक",
+    "retailerProfileUpdated": "खुदरा विक्रेता प्रोफ़ाइल सफलतापूर्वक अद्यतन हुई!"
   },
   "RetailerBalanceCard": {
     "plan": "योजना",
@@ -460,7 +482,8 @@
     "imageUrl": "छवि यूआरएल",
     "attachImage": "छवि संलग्न करें",
     "send": "भेजें",
-    "resend": "पुनः भेजें"
+    "resend": "पुनः भेजें",
+    "notificationSendSuccessfully": "सूचना सफलतापूर्वक भेजी गई!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "नियमित सूचना भेजने की सीमा",
@@ -521,7 +544,9 @@
     "updateStampImage": "स्टैम्प छवि अपडेट करें",
     "title": "शीर्षक",
     "update": "अपडेट",
-    "submit": "जमा करें"
+    "submit": "जमा करें",
+    "stampImageCreatedSuccessfully": "स्टैम्प छवि सफलतापूर्वक बनाई गई!",
+    "stampImageUpdatedSuccessfully": "स्टैम्प छवि सफलतापूर्वक अपडेट हुई!"
   },
   "RetailerCustomer": {
     "title": "ग्राहक प्रबंधन",

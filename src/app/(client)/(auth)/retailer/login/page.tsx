@@ -3,7 +3,7 @@ import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { getServerSession } from 'next-auth';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import HomeAndLocalButton from '../register/components/HomeAndLocalButton';
@@ -16,6 +16,7 @@ export const metadata = {
 export default async function Page() {
   const t = await getTranslations('LoginPage');
   const session = await getServerSession(authOptions);
+  const locale = await getLocale();
 
   if (session) {
     if (session?.user?.role === ROLE.RETAILER) redirect(routes.privateRoutes.retailer.dashboard);
@@ -36,7 +37,7 @@ export default async function Page() {
           <div className="mt-8 px-1 lg:px-16">
             <h1 className="text-center text-xl font-bold xl:text-xl">{t('signIn')}</h1>
 
-            <LoginForm />
+            <LoginForm locale={locale} />
             <div className="mt-3">
               <Link href={routes.publicRoutes.retailerForgotPassword} className="text-xs font-semibold text-danger">
                 {t('forgotPassword')}

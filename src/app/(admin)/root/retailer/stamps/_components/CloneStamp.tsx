@@ -24,6 +24,7 @@ import StampPublishedModal from './StampPublishedModal';
 
 export default function CloneStamp({ Id, offset }: any) {
   const t = useTranslations('RetailerCreateAndUpdateStamp');
+  const tCommon = useTranslations('RetailerCommon');
   const [submitting, setSubmitting] = useState(false);
 
   const [submitAction, setSubmitAction] = useState<string | null>(null);
@@ -70,10 +71,10 @@ export default function CloneStamp({ Id, offset }: any) {
 
       const result = await createStamp(changedData).unwrap();
       router.push(routes.privateRoutes.retailer.stamp.home);
-      toast.success(result.data.message || 'Stamp Cloned successfully!');
+      toast.success(t('stampClonedSuccessfully'));
     } catch (error: any) {
       console.error('Failed to Clone Stamp:', error);
-      toast.error(error?.data?.message || 'Failed to Clone Stamp. Please try again.');
+      toast.error(error?.data?.message || tCommon('errorMessage'));
       setSubmitting(false);
     }
   };
@@ -97,24 +98,28 @@ export default function CloneStamp({ Id, offset }: any) {
   };
 
   const validationSchema = Yup.object().shape({
-    branchId: Yup.string().required('Required!'),
-    stampImageId: Yup.string().required('Required!'),
-    categoryId: Yup.string().required('Required!'),
-    title: Yup.string().required('Required!'),
-    rules: Yup.string().required('Required!'),
-    noOfStampsToCollect: Yup.number().min(1, 'Number of stamps to collect must be at least 1').required('This field is required'),
-    rewardType: Yup.mixed().oneOf(['promotion', 'discount']).required('Reward type is required'),
+    branchId: Yup.string().required(tCommon('required')),
+    stampImageId: Yup.string().required(tCommon('required')),
+    categoryId: Yup.string().required(tCommon('required')),
+    title: Yup.string().required(tCommon('required')),
+    rules: Yup.string().required(tCommon('required')),
+    noOfStampsToCollect: Yup.number().min(1, 'Number of stamps to collect must be at least 1').required(tCommon('required')),
+    rewardType: Yup.mixed().oneOf(['promotion', 'discount']).required(tCommon('required')),
     promotionReward: Yup.string().when('rewardType', {
       is: 'promotion',
-      then: () => Yup.string().required('Required!'),
+      then: () => Yup.string().required(tCommon('required')),
       otherwise: () => Yup.string(),
     }),
     discountReward: Yup.string().when('rewardType', {
       is: 'discount',
-      then: () => Yup.number().required('Required!'),
+      then: () => Yup.number().required(tCommon('required')),
       otherwise: () => Yup.number(),
     }),
-    validDateRange: Yup.string().required('Required!'),
+    validDateRange: Yup.string().when('hasValidity', {
+      is: true,
+      then: () => Yup.string().required(tCommon('required')),
+      otherwise: () => Yup.string(),
+    }),
   });
 
   return (
@@ -299,8 +304,12 @@ export default function CloneStamp({ Id, offset }: any) {
 
               <InputTextarea name="description" required={false} label={t('description')} placeholder="Write here..." />
 
-              <p className="text-end text-xs font-semibold">
-                Fields marked with <span className="text-red-600">*</span> are mandatory!
+              <p className="mt-4 flex flex-col text-end text-xs font-semibold">
+                <span>
+                  {tCommon('baseCurrency')}: <span className="text-red-600">CAD</span>
+                </span>
+                <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
+                <span>{tCommon('needDoubleClickToSelectASingleDate')}</span>
               </p>
               <div className="mt-2 flex justify-end">
                 <Button

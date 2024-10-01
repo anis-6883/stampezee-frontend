@@ -2,7 +2,7 @@ import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import LocationBaseNotifyTable from './_components/LocationBaseNotifiyTable';
 
 const pageHeader = {
@@ -26,11 +26,16 @@ export default async function Page() {
   pageHeader.breadcrumb[0].name = t('dashboard');
   pageHeader.breadcrumb[1].name = t('locationBasedNotifications');
   pageHeader.title = t('title');
+  const locale = await getLocale();
 
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <LocationBaseNotifyTable offset={data?.data?.general?.timezone?.value} googleMapsApiKey={data?.data?.googleMap?.googleMapsApiKey} />
+      <LocationBaseNotifyTable
+        locale={locale}
+        offset={data?.data?.general?.timezone?.value}
+        googleMapsApiKey={data?.data?.googleMap?.googleMapsApiKey}
+      />
     </div>
   );
 }

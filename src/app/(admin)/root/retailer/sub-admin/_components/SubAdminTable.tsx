@@ -25,6 +25,7 @@ import CreateUpdateModal from './CreateUpdateModal';
 export default function SubAdminTable() {
   const t = useTranslations('RetailerSubAdminTable');
   const t2 = useTranslations('RetailerSubAdmin');
+  const tCommon = useTranslations('RetailerCommon');
   const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
@@ -49,16 +50,17 @@ export default function SubAdminTable() {
   useEffect(() => {
     if (isError) {
       setDeleteSubmitting(false);
-      toast.error('Something went wrong. Please try again!');
+      toast.error(tCommon('errorMessage'));
       setDeleteState(false);
       setDeleteId(null);
     }
     if (isSuccess) {
       setDeleteSubmitting(false);
-      toast.success('Sub Admin deleted successfully!');
+      toast.success(t('subAdminDeletedSuccessfully'));
       setDeleteState(false);
       setDeleteId(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError]);
 
   useEffect(() => {

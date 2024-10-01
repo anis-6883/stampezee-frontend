@@ -24,6 +24,7 @@ import StampPublishedModal from './StampPublishedModal';
 
 export default function Update({ Id, offset }: any) {
   const t = useTranslations('RetailerCreateAndUpdateStamp');
+  const tCommon = useTranslations('RetailerCommon');
   const [submitting, setSubmitting] = useState(false);
 
   const [submitAction, setSubmitAction] = useState<string | null>(null);
@@ -70,7 +71,7 @@ export default function Update({ Id, offset }: any) {
 
       const result = await updateStamp({ formData: changedData, id: Id }).unwrap();
       router.push(routes.privateRoutes.retailer.stamp.home);
-      toast.success(result.data.message ?? 'Stamp updated successfully!');
+      toast.success(result.data.message || t('stampUpdatedSuccessfully'));
     } catch (error: any) {
       console.error('Failed to update Stamp:', error);
       toast.error(error.data.message ?? 'Failed to update Stamp. Please try again.');
@@ -114,7 +115,11 @@ export default function Update({ Id, offset }: any) {
       then: () => Yup.number().required('Required!'),
       otherwise: () => Yup.number(),
     }),
-    validDateRange: Yup.string().required('Required!'),
+    validDateRange: Yup.string().when('hasValidity', {
+      is: true,
+      then: () => Yup.string().required(tCommon('required')),
+      otherwise: () => Yup.string(),
+    }),
   });
 
   return (
@@ -204,7 +209,7 @@ export default function Update({ Id, offset }: any) {
                 <InputField
                   name="minPurchaseAmount"
                   required={false}
-                  label={t('minimumPurchaseAmount')}
+                  label={t('minPurchaseAmount')}
                   type="number"
                   prefix={<LuCircleDollarSign className="text-xl" />}
                   placeholder="0"
@@ -299,8 +304,12 @@ export default function Update({ Id, offset }: any) {
 
               <InputTextarea name="description" required={false} label={t('description')} placeholder="Write here..." />
 
-              <p className="text-end text-xs font-semibold">
-                Fields marked with <span className="text-red-600">*</span> are mandatory!
+              <p className="mt-4 flex flex-col text-end text-xs font-semibold">
+                <span>
+                  {tCommon('baseCurrency')}: <span className="text-red-600">CAD</span>
+                </span>
+                <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
+                <span>{tCommon('needDoubleClickToSelectASingleDate')}</span>
               </p>
               <div className="mt-2 flex justify-end">
                 <Button

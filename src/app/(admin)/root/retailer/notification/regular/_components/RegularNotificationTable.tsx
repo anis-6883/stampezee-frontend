@@ -15,7 +15,7 @@ import { FaRegPaperPlane } from 'react-icons/fa';
 import { IoAlarmOutline } from 'react-icons/io5';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function RegularNotificationTable({ offset }: { offset: number }) {
+export default function RegularNotificationTable({ offset, locale }: { offset: number; locale: string }) {
   const t = useTranslations('RegularNotificationTable');
   const t2 = useTranslations('SendAndResendNotification');
   const { data: session }: any = useSession();
@@ -109,7 +109,13 @@ export default function RegularNotificationTable({ offset }: { offset: number })
 
   return (
     <>
-      <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
+      <CreateUpdateModel
+        setFormData={setFormData}
+        formData={formData}
+        modalState={createState}
+        setModalState={setCreateState}
+        locale={locale}
+      />
       <div className="mb-4 flex justify-between">
         <div className="flex items-center gap-x-2 rounded-lg border border-light px-3">
           <IoAlarmOutline className="text-xl" />

@@ -113,7 +113,7 @@
     "description": "请输入您的详细信息。",
     "email": "电子邮件",
     "invalidCredentials": "请检查您的凭证。",
-    "invalidEmail": "请输入有效的电子邮件地址。",
+    "invalidEmail": "请输入有效的电子邮件地址!",
     "invalidPassword": "请输入密码。",
     "signIn": "登录",
     "forgotPassword": "忘记密码？",
@@ -122,7 +122,8 @@
     "here": "这里",
     "password": "密码",
     "title": "欢迎回来",
-    "submit": "提交"
+    "submit": "提交",
+    "loginSuccessMessage": "欢迎来到零售商界面!"
   },
   "RegisterPage": {
     "title": "商店注册",
@@ -145,7 +146,8 @@
     "termsAndConditions": "使用条款",
     "and": "和",
     "privacyPolicy": "隐私政策",
-    "submit": "提交"
+    "submit": "提交",
+    "otpSentMessage": "OTP 已发送到您的邮箱！"
   },
   "ForgotPasswordPage": {
     "title": "忘记密码",
@@ -176,7 +178,10 @@
   "RetailerCommon": {
     "required": "必需的！",
     "errorMessage": "出现问题。请再试一次！",
-    "mandatoryFieldsMessage": "标记的<span class=\"text-red-600\">*</span>字段是必需的！"
+    "mandatoryFieldsMessage": "标记的<span class=\"text-red-600\">*</span>字段是必需的！",
+    "atLeast8Characters": "至少8个字符！",
+    "needDoubleClickToSelectASingleDate": "需要双击选择单个日期！",
+    "baseCurrency": "基础货币"
   },
   "RetailerSidebar": {
     "Dashboard": "仪表盘",
@@ -332,7 +337,10 @@
     "branch": "分支",
     "status": "状态",
     "actions": "操作",
-    "placeHolder": "按名称搜索"
+    "placeHolder": "按名称搜索",
+    "subAdminDeletedSuccessfully": "子管理员成功删除！",
+    "subAdminUpdatedSuccessfully": "子管理员成功更新！",
+    "subAdminCreatedSuccessfully": "子管理员成功创建！"
   },
   "RetailerStamp": {
     "title": "管理邮票",
@@ -359,7 +367,9 @@
     "startedAt": "开始于",
     "expiredAt": "到期于",
     "publishNow": "立即发布",
-    "published": "已发布"
+    "published": "已发布",
+    "stampDeletedSuccessfully": "邮票成功删除！",
+    "stampPublishedSuccessfully": "邮票成功发布！"
   },
   "RetailerCreateAndUpdateStamp": {
     "createStamp": "创建邮票",
@@ -383,9 +393,20 @@
     "discount": "折扣",
     "promotion": "促销",
     "selectDefaultImage": "选择默认图片",
+    "selectCustomImage": "选择自定义图片",
     "description": "描述",
     "draft": "草稿",
-    "publish": "发布"
+    "publish": "发布",
+    "createBranch": "创建分支",
+    "noCategoryAddedBySuperAdmin": "超级管理员未添加类别",
+    "purchaseCustomStampAddOn": "购买自定义邮票附加项。",
+    "clickHere": "点击这里",
+    "thereIsNoActiveCustomImageAvailable": "没有可用的活动自定义图像！",
+    "createOrActiveCustomStamp": "创建或激活自定义邮票。",
+    "selectOneFromDefaultOrCustomStampIsRequired": "必须从默认邮票或自定义邮票中选择一个！",
+    "stampCreatedSuccessfully": "邮票成功创建！",
+    "stampUpdatedSuccessfully": "邮票成功更新！",
+    "stampClonedSuccessfully": "邮票成功克隆！"
   },
   "RetailerScan": {
     "title": "管理邮票扫描",
@@ -438,7 +459,8 @@
     "address": "地址",
     "email": "电子邮件",
     "update": "更新",
-    "owner": "所有者"
+    "owner": "所有者",
+    "retailerProfileUpdated": "零售商资料更新成功！"
   },
   "RetailerBalanceCard": {
     "plan": "计划",
@@ -460,7 +482,8 @@
     "imageUrl": "图片URL",
     "attachImage": "附加图片",
     "send": "发送",
-    "resend": "重新发送"
+    "resend": "重新发送",
+    "notificationSendSuccessfully": "通知已成功发送！"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "常规通知发送限制",
@@ -521,7 +544,9 @@
     "updateStampImage": "更新印章图片",
     "title": "标题",
     "update": "更新",
-    "submit": "提交"
+    "submit": "提交",
+    "stampImageCreatedSuccessfully": "印章图片创建成功！",
+    "stampImageUpdatedSuccessfully": "印章图片更新成功！"
   },
   "RetailerCustomer": {
     "title": "管理客户",

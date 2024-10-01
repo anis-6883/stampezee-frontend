@@ -113,7 +113,7 @@
     "description": "세부 정보를 입력하세요.",
     "email": "이메일",
     "invalidCredentials": "자격 증명을 확인하세요.",
-    "invalidEmail": "유효한 이메일 주소를 입력하세요.",
+    "invalidEmail": "유효한 이메일 주소를 입력하세요!",
     "invalidPassword": "비밀번호를 입력하세요.",
     "signIn": "로그인",
     "forgotPassword": "비밀번호를 잊으셨나요?",
@@ -122,7 +122,8 @@
     "here": "여기",
     "password": "비밀번호",
     "title": "다시 오신 것을 환영합니다",
-    "submit": "제출"
+    "submit": "제출",
+    "loginSuccessMessage": "소매업자 인터페이스에 오신 것을 환영합니다!"
   },
   "RegisterPage": {
     "title": "스토어 등록",
@@ -145,7 +146,8 @@
     "termsAndConditions": "이용 약관",
     "and": "및",
     "privacyPolicy": "개인정보 처리방침",
-    "submit": "제출"
+    "submit": "제출",
+    "otpSentMessage": "OTP가 이메일로 전송되었습니다!"
   },
   "ForgotPasswordPage": {
     "title": "비밀번호를 잊으셨나요",
@@ -176,7 +178,10 @@
   "RetailerCommon": {
     "required": "필수!",
     "errorMessage": "문제가 발생했습니다. 다시 시도해주세요!",
-    "mandatoryFieldsMessage": "필수 필드는 <span class=\"text-red-600\">*</span>입니다!"
+    "mandatoryFieldsMessage": "필수 필드는 <span class=\"text-red-600\">*</span>입니다!",
+    "atLeast8Characters": "최소 8자 이상!",
+    "needDoubleClickToSelectASingleDate": "한 번의 클릭으로 단일 날짜를 선택해야 합니다!",
+    "baseCurrency": "기본 통화"
   },
 
   "RetailerSidebar": {
@@ -333,7 +338,10 @@
     "branch": "지점",
     "status": "상태",
     "actions": "작업",
-    "placeHolder": "이름으로 검색"
+    "placeHolder": "이름으로 검색",
+    "subAdminDeletedSuccessfully": "서브 관리자가 성공적으로 삭제되었습니다!",
+    "subAdminUpdatedSuccessfully": "서브 관리자가 성공적으로 업데이트되었습니다!",
+    "subAdminCreatedSuccessfully": "서브 관리자가 성공적으로 생성되었습니다!"
   },
   "RetailerStamp": {
     "title": "스탬프 관리",
@@ -360,7 +368,9 @@
     "startedAt": "시작일",
     "expiredAt": "종료일",
     "publishNow": "지금 발행",
-    "published": "발행됨"
+    "published": "발행됨",
+    "stampDeletedSuccessfully": "스탬프가 성공적으로 삭제되었습니다!",
+    "stampPublishedSuccessfully": "스탬프가 성공적으로 발행되었습니다!"
   },
   "RetailerCreateAndUpdateStamp": {
     "createStamp": "스탬프 생성",
@@ -384,9 +394,20 @@
     "discount": "할인",
     "promotion": "프로모션",
     "selectDefaultImage": "기본 이미지 선택",
+    "selectCustomImage": "사용자 정의 이미지 선택",
     "description": "설명",
     "draft": "초안",
-    "publish": "발행"
+    "publish": "발행",
+    "createBranch": "지점 생성",
+    "noCategoryAddedBySuperAdmin": "슈퍼 관리자에 의해 카테고리가 추가되지 않았습니다",
+    "purchaseCustomStampAddOn": "사용자 정의 스탬프 애드온을 구매합니다.",
+    "clickHere": "여기를 클릭",
+    "thereIsNoActiveCustomImageAvailable": "활성 사용자 정의 이미지가 없습니다!",
+    "createOrActiveCustomStamp": "사용자 정의 스탬프를 생성하거나 활성화합니다.",
+    "selectOneFromDefaultOrCustomStampIsRequired": "기본 또는 사용자 정의 스탬프 중 하나를 선택해야 합니다!",
+    "stampCreatedSuccessfully": "스탬프가 성공적으로 생성되었습니다!",
+    "stampUpdatedSuccessfully": "스탬프가 성공적으로 업데이트되었습니다!",
+    "stampClonedSuccessfully": "스탬프가 성공적으로 복제되었습니다!"
   },
   "RetailerScan": {
     "title": "스탬프 스캔 관리",
@@ -439,7 +460,8 @@
     "address": "주소",
     "email": "이메일",
     "update": "업데이트",
-    "owner": "소유자"
+    "owner": "소유자",
+    "retailerProfileUpdated": "소매업자 프로필이 성공적으로 업데이트되었습니다!"
   },
   "RetailerBalanceCard": {
     "plan": "계획",
@@ -461,7 +483,8 @@
     "imageUrl": "이미지 URL",
     "attachImage": "이미지 첨부",
     "send": "보내기",
-    "resend": "다시 보내기"
+    "resend": "다시 보내기",
+    "notificationSendSuccessfully": "알림이 성공적으로 보내졌습니다!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "일반 알림 전송 제한",
@@ -522,7 +545,9 @@
     "updateStampImage": "스탬프 이미지 업데이트",
     "title": "제목",
     "update": "업데이트",
-    "submit": "제출"
+    "submit": "제출",
+    "stampImageCreatedSuccessfully": "스탬프 이미지가 성공적으로 생성되었습니다!",
+    "stampImageUpdatedSuccessfully": "스탬프 이미지가 성공적으로 업데이트되었습니다!"
   },
   "RetailerCustomer": {
     "title": "고객 관리",

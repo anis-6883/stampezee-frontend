@@ -1,7 +1,7 @@
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import CreateStamp from '../_components/CreateStamp';
 
 const pageHeader = {
@@ -30,10 +30,11 @@ export default async function page() {
   pageHeader.breadcrumb[1].name = tStamp('stamps');
   pageHeader.breadcrumb[2].name = t('createStamp');
   pageHeader.title = t('createStamp');
+  const locale = await getLocale();
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <CreateStamp />
+      <CreateStamp locale={locale} />
     </>
   );
 }

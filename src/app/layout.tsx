@@ -31,6 +31,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang={locale} dir={direction} suppressHydrationWarning={true} className={poppins.className}>
+      <head>
+        <meta name="google" content="notranslate" />
+      </head>
       <body suppressHydrationWarning={true}>
         <NextIntlClientProvider messages={messages}>
           <ReduxProvider>

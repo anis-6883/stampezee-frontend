@@ -10,6 +10,7 @@ import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
+import { translateText } from '@/utils/GoogleTranslate';
 import objectToFormData from '@/utils/objectToFormData';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
@@ -23,7 +24,7 @@ import ReactSelect, { OnChangeValue } from 'react-select';
 import { FieldError } from 'rizzui';
 import * as Yup from 'yup';
 
-export default function UpdateProfileForm() {
+export default function UpdateProfileForm({ locale }: { locale: string }) {
   const t = useTranslations('RetailerProfile');
   const tRetailerCommon = useTranslations('RetailerCommon');
   const dispatch = useDispatch();
@@ -38,12 +39,20 @@ export default function UpdateProfileForm() {
     if (error) {
       const myError = error as SerializedError;
       setIsSubmitting(false);
-      toast.error(myError?.data?.message || 'Something went wrong!');
+      if (locale === 'en') {
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([myError?.data?.message], locale, 'en');
+          const errorMessage = translatedMessage[0] || tRetailerCommon('errorMessage');
+          toast.error(errorMessage);
+        })();
+      }
     }
 
     if (isSuccess) {
       setIsSubmitting(false);
-      toast.success('Retailer profile updated successfully!');
+      toast.success(t('retailerProfileUpdated'));
       update({ ...session?.user, ...updateRetailerProfile?.data });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -180,9 +189,7 @@ export default function UpdateProfileForm() {
                 </div>
 
                 <p className="flex flex-col text-end text-xs font-semibold">
-                  <span>
-                    Fields marked with <span className="text-red-600">*</span> are mandatory!
-                  </span>
+                  <span dangerouslySetInnerHTML={{ __html: tRetailerCommon.raw('mandatoryFieldsMessage') }} />
                 </p>
 
                 <div className="mt-2 flex justify-end">

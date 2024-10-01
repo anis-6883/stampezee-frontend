@@ -113,7 +113,7 @@
     "description": "Veuillez entrer vos détails.",
     "email": "E-mail",
     "invalidCredentials": "Veuillez vérifier vos identifiants.",
-    "invalidEmail": "Veuillez entrer une adresse e-mail valide.",
+    "invalidEmail": "Veuillez entrer une adresse e-mail valide!",
     "invalidPassword": "Veuillez entrer un mot de passe.",
     "signIn": "Se connecter",
     "forgotPassword": "Mot de passe oublié?",
@@ -122,7 +122,8 @@
     "here": "Ici",
     "password": "Mot de passe",
     "title": "Bienvenue de retour",
-    "submit": "Soumettre"
+    "submit": "Soumettre",
+    "loginSuccessMessage": "Bienvenue dans l'interface du détaillant!"
   },
   "RegisterPage": {
     "title": "Inscription du magasin",
@@ -145,7 +146,8 @@
     "termsAndConditions": "Conditions d'utilisation",
     "and": "et",
     "privacyPolicy": "Politique de confidentialité",
-    "submit": "Soumettre"
+    "submit": "Soumettre",
+    "otpSentMessage": "OTP envoyé à votre e-mail!"
   },
   "ForgotPasswordPage": {
     "title": "Mot de passe oublié",
@@ -176,7 +178,10 @@
   "RetailerCommon": {
     "required": "Obligatoire!",
     "errorMessage": "Une erreur s'est produite. Veuillez réessayer!",
-    "mandatoryFieldsMessage": "Les champs marqués avec <span class=\"text-red-600\">*</span> sont obligatoires!"
+    "mandatoryFieldsMessage": "Les champs marqués avec <span class=\"text-red-600\">*</span> sont obligatoires!",
+    "needDoubleClickToSelectASingleDate": "Il faut double-cliquer pour sélectionner une date unique!",
+    "baseCurrency": "Devise de base",
+    "atLeast8Characters": "Au moins 8 caractères!"
   },
   "RetailerSidebar": {
     "Dashboard": "Tableau de bord",
@@ -332,7 +337,10 @@
     "branch": "Agence",
     "status": "Statut",
     "actions": "Actions",
-    "placeHolder": "Rechercher par Nom"
+    "placeHolder": "Rechercher par Nom",
+    "subAdminCreatedSuccessfully": "Sous-Admin créé avec succès!",
+    "subAdminUpdatedSuccessfully": "Sous-Admin mis à jour avec succès!",
+    "subAdminDeletedSuccessfully": "Sous-Admin supprimé avec succès!"
   },
   "RetailerStamp": {
     "title": "Gérer les Timbres",
@@ -359,7 +367,9 @@
     "startedAt": "Commencé le",
     "expiredAt": "Expiré le",
     "publishNow": "Publier Maintenant",
-    "published": "Publié"
+    "published": "Publié",
+    "stampDeletedSuccessfully": "Le timbre a été supprimé avec succès!",
+    "stampPublishedSuccessfully": "Le timbre a été publié avec succès!"
   },
   "RetailerCreateAndUpdateStamp": {
     "createStamp": "Créer un Timbre",
@@ -383,9 +393,20 @@
     "discount": "Réduction",
     "promotion": "Promotion",
     "selectDefaultImage": "Sélectionner une Image par Défaut",
+    "selectCustomImage": "Sélectionner une Image Personnalisée",
     "description": "Description",
     "draft": "Brouillon",
-    "publish": "Publier"
+    "publish": "Publier",
+    "createBranch": "Créer une Agence",
+    "noCategoryAddedBySuperAdmin": "Aucune catégorie ajoutée par l'administrateur général",
+    "purchaseCustomStampAddOn": "Acheter le module complémentaire de timbre personnalisé.",
+    "clickHere": "Cliquer ici",
+    "thereIsNoActiveCustomImageAvailable": "Aucune image personnalisée active disponible !",
+    "createOrActiveCustomStamp": "Créer ou activer le timbre personnalisé.",
+    "selectOneFromDefaultOrCustomStampIsRequired": "Sélectionner un timbre par défaut ou personnalisé est requis !",
+    "stampCreatedSuccessfully": "Le timbre a été créé avec succès !",
+    "stampUpdatedSuccessfully": "Le timbre a été mis à jour avec succès !",
+    "stampClonedSuccessfully": "Le timbre a été cloné avec succès !"
   },
   "RetailerScan": {
     "title": "Gérer le Scan des Timbres",
@@ -438,7 +459,8 @@
     "address": "Adresse",
     "email": "Email",
     "update": "Mettre à Jour",
-    "owner": "Propriétaire"
+    "owner": "Propriétaire",
+    "retailerProfileUpdated": "Le profil du détaillant a été mis à jour avec succès!"
   },
   "RetailerBalanceCard": {
     "plan": "Plan",
@@ -460,7 +482,8 @@
     "imageUrl": "URL de l'Image",
     "attachImage": "Joindre une Image",
     "send": "Envoyer",
-    "resend": "Renvoyer"
+    "resend": "Renvoyer",
+    "notificationSendSuccessfully": "La notification a été envoyée avec succès!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "Limite d'Envoi de Notification Régulière",
@@ -521,7 +544,9 @@
     "updateStampImage": "Mettre à Jour l'Image de Timbre",
     "title": "Titre",
     "update": "Mettre à Jour",
-    "submit": "Envoyer"
+    "submit": "Envoyer",
+    "stampImageCreatedSuccessfully": "L'image du timbre a été créée avec succès!",
+    "stampImageUpdatedSuccessfully": "L'image du timbre a été mise à jour avec succès!"
   },
   "RetailerCustomer": {
     "title": "Gérer le Client",

@@ -113,7 +113,7 @@
     "description": "Por favor ingrese sus datos.",
     "email": "Correo electrónico",
     "invalidCredentials": "Por favor verifica tus credenciales.",
-    "invalidEmail": "Por favor ingrese una dirección de correo válida.",
+    "invalidEmail": "¡Por favor ingrese una dirección de correo válida!",
     "invalidPassword": "Por favor ingrese una contraseña.",
     "signIn": "Iniciar sesión",
     "forgotPassword": "¿Olvidaste tu contraseña?",
@@ -122,7 +122,8 @@
     "here": "Aquí",
     "password": "Contraseña",
     "title": "Bienvenido de nuevo",
-    "submit": "Enviar"
+    "submit": "Enviar",
+    "loginSuccessMessage": "¡Bienvenido a la interfaz de minorista!"
   },
   "RegisterPage": {
     "title": "Registro de Tienda",
@@ -145,7 +146,8 @@
     "termsAndConditions": "Términos de uso",
     "and": "y",
     "privacyPolicy": "Política de privacidad",
-    "submit": "Enviar"
+    "submit": "Enviar",
+    "otpSentMessage": "OTP enviado a tu correo electrónico!"
   },
   "ForgotPasswordPage": {
     "title": "Olvidé mi contraseña",
@@ -176,7 +178,10 @@
   "RetailerCommon": {
     "required": "¡Requerido!",
     "errorMessage": "Algo salió mal. ¡Inténtalo de nuevo!",
-    "mandatoryFieldsMessage": "Los campos marcados con <span class=\"text-red-600\">*</span> son obligatorios!"
+    "mandatoryFieldsMessage": "Los campos marcados con <span class=\"text-red-600\">*</span> son obligatorios!",
+    "needDoubleClickToSelectASingleDate": "¡Se necesita doble clic para seleccionar una sola fecha!",
+    "baseCurrency": "Moneda Base",
+    "atLeast8Characters": "Al menos 8 caracteres!"
   },
   "RetailerSidebar": {
     "Dashboard": "Panel",
@@ -332,7 +337,10 @@
     "branch": "Sucursal",
     "status": "Estado",
     "actions": "Acciones",
-    "placeHolder": "Buscar por Nombre"
+    "placeHolder": "Buscar por Nombre",
+    "subAdminCreatedSuccessfully": "Sub Admin creado con éxito!",
+    "subAdminUpdatedSuccessfully": "Sub Admin actualizado con éxito!",
+    "subAdminDeletedSuccessfully": "Sub Admin eliminado con éxito!"
   },
   "RetailerStamp": {
     "title": "Gestionar Sellos",
@@ -359,7 +367,9 @@
     "startedAt": "Comenzado en",
     "expiredAt": "Expirado en",
     "publishNow": "Publicar Ahora",
-    "published": "Publicado"
+    "published": "Publicado",
+    "stampDeletedSuccessfully": "¡El sello se ha eliminado con éxito!",
+    "stampPublishedSuccessfully": "¡El sello se ha publicado con éxito!"
   },
   "RetailerCreateAndUpdateStamp": {
     "createStamp": "Crear un Sello",
@@ -383,9 +393,20 @@
     "discount": "Descuento",
     "promotion": "Promoción",
     "selectDefaultImage": "Seleccionar Imagen Predeterminada",
+    "selectCustomImage": "Seleccionar Imagen Personalizada",
     "description": "Descripción",
     "draft": "Borrador",
-    "publish": "Publicar"
+    "publish": "Publicar",
+    "createBranch": "Crear Sucursal",
+    "noCategoryAddedBySuperAdmin": "No se ha agregado ninguna categoría por el administrador general",
+    "purchaseCustomStampAddOn": "Comprar Complemento de Sello Personalizado.",
+    "clickHere": "Haga clic aquí",
+    "thereIsNoActiveCustomImageAvailable": "¡No hay ninguna imagen activa disponible!",
+    "createOrActiveCustomStamp": "Crear o activar sello personalizado.",
+    "selectOneFromDefaultOrCustomStampIsRequired": "¡Seleccione uno desde sello predeterminado o personalizado es requerido!",
+    "stampCreatedSuccessfully": "¡El sello se ha creado con éxito!",
+    "stampUpdatedSuccessfully": "¡El sello se ha actualizado con éxito!",
+    "stampClonedSuccessfully": "¡El sello se ha clonado con éxito!"
   },
   "RetailerScan": {
     "title": "Gestionar Escaneo de Estampas",
@@ -438,7 +459,8 @@
     "address": "Dirección",
     "email": "Correo Electrónico",
     "update": "Actualizar",
-    "owner": "Propietario"
+    "owner": "Propietario",
+    "retailerProfileUpdated": "¡El perfil del minorista se ha actualizado con éxito!"
   },
   "RetailerBalanceCard": {
     "plan": "Plan",
@@ -460,7 +482,8 @@
     "imageUrl": "URL de Imagen",
     "attachImage": "Adjuntar Imagen",
     "send": "Enviar",
-    "resend": "Reenviar"
+    "resend": "Reenviar",
+    "notificationSendSuccessfully": "¡La notificación se ha enviado con éxito!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "Límite de Envío de Notificación Regular",
@@ -521,7 +544,9 @@
     "updateStampImage": "Actualizar Imagen de Sello",
     "title": "Título",
     "update": "Actualizar",
-    "submit": "Enviar"
+    "submit": "Enviar",
+    "stampImageCreatedSuccessfully": "¡La imagen del sello se ha creado con éxito!",
+    "stampImageUpdatedSuccessfully": "¡La imagen del sello se ha actualizado con éxito!"
   },
   "RetailerCustomer": {
     "title": "Gestionar Cliente",

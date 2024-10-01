@@ -15,7 +15,15 @@ import { FaRegPaperPlane } from 'react-icons/fa';
 import { IoAlarmOutline } from 'react-icons/io5';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { offset: number; googleMapsApiKey: string }) {
+export default function LocationBaseNotifyTable({
+  locale,
+  offset,
+  googleMapsApiKey,
+}: {
+  locale: string;
+  offset: number;
+  googleMapsApiKey: string;
+}) {
   const t = useTranslations('LocationBasedNotificationTable');
   const t2 = useTranslations('SendAndResendLocationBasedNotification');
   const { data: session }: any = useSession();
@@ -167,6 +175,7 @@ export default function LocationBaseNotifyTable({ offset, googleMapsApiKey }: { 
         formData={formData}
         modalState={createState}
         setModalState={setCreateState}
+        locale={locale}
       />
     </>
   );

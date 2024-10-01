@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { AiOutlineGlobal } from 'react-icons/ai';
 import { IoHomeOutline } from 'react-icons/io5';
+import { Tooltip } from 'rizzui';
 
 export default function HomeAndLocalButton() {
   const [modalState, setModalState] = useState<boolean>(false);
@@ -14,11 +15,17 @@ export default function HomeAndLocalButton() {
   return (
     <div className="flex items-center">
       <Link className="inline-block p-5" href={routes.publicRoutes.home}>
-        <IoHomeOutline className="text-lg text-danger" />
+        <Tooltip color="danger" className="bg-danger text-white" size="sm" placement="top" content="Home" arrowClassName="fill-danger">
+          <span>
+            <IoHomeOutline className="text-lg text-danger" />
+          </span>
+        </Tooltip>
       </Link>
-      <div className="">
-        <AiOutlineGlobal onClick={() => setModalState(true)} className="cursor-pointer text-xl text-danger" />
-      </div>
+      <Tooltip color="danger" className="bg-danger text-white" size="sm" placement="top" content="Global" arrowClassName="fill-danger">
+        <span>
+          <AiOutlineGlobal onClick={() => setModalState(true)} className="cursor-pointer text-xl text-danger" />
+        </span>
+      </Tooltip>
       <LocalSwitcherSelector currencyExchanges={currencyExchanges} modalState={modalState} setModalState={setModalState} />
     </div>
   );

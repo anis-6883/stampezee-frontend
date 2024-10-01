@@ -113,7 +113,7 @@
     "description": "Пожалуйста, введите свои данные.",
     "email": "Эл. почта",
     "invalidCredentials": "Пожалуйста, проверьте свои учетные данные.",
-    "invalidEmail": "Пожалуйста, введите действительный адрес электронной почты.",
+    "invalidEmail": "Пожалуйста, введите действительный адрес электронной почты!",
     "invalidPassword": "Пожалуйста, введите пароль.",
     "signIn": "Войти",
     "forgotPassword": "Забыли пароль?",
@@ -122,7 +122,8 @@
     "here": "Здесь",
     "password": "Пароль",
     "title": "Добро пожаловать",
-    "submit": "Отправить"
+    "submit": "Отправить",
+    "loginSuccessMessage": "Добро пожаловать в интерфейс розничного магазина!"
   },
   "RegisterPage": {
     "title": "Регистрация магазина",
@@ -145,7 +146,8 @@
     "termsAndConditions": "Условиями использования",
     "and": "и",
     "privacyPolicy": "Политикой конфиденциальности",
-    "submit": "Отправить"
+    "submit": "Отправить",
+    "otpSentMessage": "OTP отправлен на вашу электронную почту!"
   },
   "ForgotPasswordPage": {
     "title": "Забыли пароль",
@@ -176,7 +178,10 @@
   "RetailerCommon": {
     "required": "Обязательно!",
     "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте снова!",
-    "mandatoryFieldsMessage": "Поля, отмеченные <span class=\"text-red-600\">*</span> обязательны!"
+    "mandatoryFieldsMessage": "Поля, отмеченные <span class=\"text-red-600\">*</span> обязательны!",
+    "atLeast8Characters": "Минимум 8 символов!",
+    "needDoubleClickToSelectASingleDate": "Для выбора одной даты нужно дважды щелкнуть!",
+    "baseCurrency": "Базовая валюта"
   },
   "RetailerSidebar": {
     "Dashboard": "Панель управления",
@@ -332,7 +337,10 @@
     "branch": "Филиал",
     "status": "Статус",
     "actions": "Действия",
-    "placeHolder": "Поиск по имени"
+    "placeHolder": "Поиск по имени",
+    "subAdminDeletedSuccessfully": "Суб-администратор успешно удален!",
+    "subAdminUpdatedSuccessfully": "Суб-администратор успешно обновлен!",
+    "subAdminCreatedSuccessfully": "Суб-администратор успешно создан!"
   },
   "RetailerStamp": {
     "title": "Управление Штампами",
@@ -359,7 +367,9 @@
     "startedAt": "Началось",
     "expiredAt": "Истекло",
     "publishNow": "Опубликовать Сейчас",
-    "published": "Опубликовано"
+    "published": "Опубликовано",
+    "stampDeletedSuccessfully": "Штамп успешно удален!",
+    "stampPublishedSuccessfully": "Штамп успешно опубликован!"
   },
   "RetailerCreateAndUpdateStamp": {
     "createStamp": "Создать Штамп",
@@ -383,9 +393,20 @@
     "discount": "Скидка",
     "promotion": "Продвижение",
     "selectDefaultImage": "Выбрать Изображение по Умолчанию",
+    "selectCustomImage": "Выбрать Пользовательское Изображение",
     "description": "Описание",
     "draft": "Черновик",
-    "publish": "Опубликовать"
+    "publish": "Опубликовать",
+    "createBranch": "Создать Филиал",
+    "noCategoryAddedBySuperAdmin": "Категория не добавлена супер-администратором",
+    "purchaseCustomStampAddOn": "Купить пользовательский штамп-дополнение.",
+    "clickHere": "Нажмите здесь",
+    "thereIsNoActiveCustomImageAvailable": "Недоступна активная пользовательская изображение!",
+    "createOrActiveCustomStamp": "Создать или активировать пользовательский штамп.",
+    "selectOneFromDefaultOrCustomStampIsRequired": "Необходимо выбрать один из штампов по умолчанию или пользовательских штампов!",
+    "stampCreatedSuccessfully": "Штамп успешно создан!",
+    "stampUpdatedSuccessfully": "Штамп успешно обновлен!",
+    "stampClonedSuccessfully": "Штамп успешно клонирован!"
   },
   "RetailerScan": {
     "title": "Управление Сканированием Штампов",
@@ -438,7 +459,8 @@
     "address": "Адрес",
     "email": "Электронная почта",
     "update": "Обновить",
-    "owner": "Владелец"
+    "owner": "Владелец",
+    "retailerProfileUpdated": "Профиль розничного продавца успешно обновлен!"
   },
   "RetailerBalanceCard": {
     "plan": "План",
@@ -460,7 +482,8 @@
     "imageUrl": "URL Изображения",
     "attachImage": "Прикрепить Изображение",
     "send": "Отправить",
-    "resend": "Повторно Отправить"
+    "resend": "Повторно Отправить",
+    "notificationSendSuccessfully": "Уведомление успешно отправлено!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "Лимит отправки регулярных уведомлений",
@@ -521,7 +544,9 @@
     "updateStampImage": "Обновить изображение штампа",
     "title": "Заголовок",
     "update": "Обновить",
-    "submit": "Отправить"
+    "submit": "Отправить",
+    "stampImageCreatedSuccessfully": "Изображение штампа успешно создано!",
+    "stampImageUpdatedSuccessfully": "Изображение штампа успешно обновлено!"
   },
   "RetailerCustomer": {
     "title": "Управление клиентами",
