@@ -106,7 +106,11 @@
     "purchaseAlertMessage": "ご注文は少なくとも",
     "purchaseAlertMessageAfter": "続行するにはさらにアイテムを追加してください",
     "plan": "プラン",
-    "addOn": "アドオン"
+    "addOn": "アドオン",
+    "freeTrialActivated": "無料試用が有効になりました！",
+    "downgradeSuccessfully": "プランの降格が成功しました！",
+    "branchDisableMessage": "降格するには、<span className=\"font-bold text-danger\">{totalDisabledBranch} 支店/支店を選択</span>する必要があります！",
+    "confirm": "確認"
   },
   "LoginPage": {
     "credentials": "資格情報: jane@doe.com / next-intl",
@@ -299,7 +303,8 @@
     "updateABranch": "支店を更新",
     "name": "名前",
     "address": "住所",
-    "submit": "送信"
+    "submit": "送信",
+    "pleaseSelectALocationOnTheMap": "マップ上の場所を選択してください！"
   },
   "RetailerBranchTable": {
     "branchName": "支店名",
@@ -317,7 +322,9 @@
     "errorMessage": "何かがうまくいかない。もう一度試してください！",
     "branchActivated": "支店がアクティブになりました！",
     "branchConverted": "支店のソースがアドオンに正常に変換されました！",
-    "branchDeleted": "支店が正常に削除されました！"
+    "branchDeleted": "支店が正常に削除されました！",
+    "branchCreated": "支店が正常に作成されました！",
+    "branchUpdated": "支店が正常に更新されました！"
   },
   "RetailerSubAdmin": {
     "title": "サブ管理者を管理",

@@ -20,7 +20,7 @@ export default function HeaderMenuRight() {
       <div className="text-base font-semibold text-danger">
         <Link className="flex items-center gap-x-2 " href={routes.publicRoutes.home}>
           <IoHomeOutline className="text-lg text-danger" />
-          {t('goToHome')}
+          {role === ROLE.SUPER_ADMIN ? 'Go To Home' : t('goToHome')}
         </Link>
       </div>
       <ProfileMenu />

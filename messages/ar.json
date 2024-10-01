@@ -79,7 +79,11 @@
     "purchaseAlertMessage": "يجب أن يكون طلبك على الأقل",
     "purchaseAlertMessageAfter": "يرجى إضافة المزيد من العناصر للمتابعة",
     "plan": "الخطة",
-    "addOn": "الإضافة"
+    "addOn": "الإضافة",
+    "freeTrialActivated": "تم تنشيط التجربة المجانية!",
+    "downgradeSuccessfully": "تم تنزيل الخطة بنجاح!",
+    "branchDisableMessage": "للتنزيل، يجب عليك <span className=\"font-bold text-danger\">تحديد {totalDisabledBranch} فرع/فروع</span> لتعطيلها بواسطة النظام!",
+    "confirm": "تأكيد"
   },
   "HomePage": {
     "bannerTitle": "إحداث ثورة في تجربة عملائك",
@@ -299,7 +303,8 @@
     "updateABranch": "تحديث فرع",
     "name": "اسم",
     "address": "العنوان",
-    "submit": "إرسال"
+    "submit": "إرسال",
+    "pleaseSelectALocationOnTheMap": "يرجى تحديد موقع على الخريطة!"
   },
   "RetailerBranchTable": {
     "branchName": "اسم الفرع",
@@ -317,7 +322,9 @@
     "errorMessage": "هناك خطأ ما. يرجى المحاولة مرة أخرى!",
     "branchActivated": "تم تنشيط الفرع بنجاح!",
     "branchConverted": "تم تحويل مصدر الفرع إلى إضافة بنجاح!",
-    "branchDeleted": "تم حذف الفرع بنجاح!"
+    "branchDeleted": "تم حذف الفرع بنجاح!",
+    "branchCreated": "تم إنشاء الفرع بنجاح!",
+    "branchUpdated": "تم تحديث الفرع بنجاح!"
   },
   "RetailerSubAdmin": {
     "title": "إدارة المشرفين الفرعيين",

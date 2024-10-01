@@ -1,6 +1,6 @@
 import Button from '@/components/Formik/Button';
 import { BsCheck2Circle, BsExclamationTriangle } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
 import { MdDoNotDisturb } from 'react-icons/md';
 import { ActionIcon, Modal } from 'rizzui';
 
@@ -38,7 +38,7 @@ export default function DeleteConfirmModal({
           </h3>
 
           <ActionIcon size="sm" variant="text" onClick={() => setModalState(false)}>
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <p className="text-base font-medium">Do you want to delete it ?</p>

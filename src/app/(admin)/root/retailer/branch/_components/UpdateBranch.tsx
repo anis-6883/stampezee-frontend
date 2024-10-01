@@ -16,6 +16,8 @@ import MapComponent from './Map';
 
 export default function UpdateBranch({ branchId, googleMapsApiKey }: any) {
   const t = useTranslations('RetailerBranches');
+  const t2 = useTranslations('RetailerBranchTable');
+  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [updateBranch, { isSuccess, isError }] = useUpdateBranchMutation();
   const {
@@ -34,8 +36,8 @@ export default function UpdateBranch({ branchId, googleMapsApiKey }: any) {
   });
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Required!'),
-    address: Yup.string().required('Required!'),
+    name: Yup.string().required(tCommon('required')),
+    address: Yup.string().required(tCommon('required')),
   });
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export default function UpdateBranch({ branchId, googleMapsApiKey }: any) {
   // Submit Handler
   const handleSubmit = async (values: any & { _id: string }) => {
     if (values.latitude === '' || values.longitude === '') {
-      toast.error('Please select a location on the map!');
+      toast.error(t('pleaseSelectALocationOnTheMap'));
       return;
     }
 
@@ -83,9 +85,10 @@ export default function UpdateBranch({ branchId, googleMapsApiKey }: any) {
 
     if (isSuccess) {
       router.push(routes.privateRoutes.retailer.branch.home);
-      toast.success('Branch updated successfully!');
+      toast.success(t2('branchUpdated'));
       setIsSubmitting(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError, isSuccess, router]);
 
   return (

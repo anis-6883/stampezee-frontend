@@ -1,6 +1,9 @@
+import { ROLE } from '@/config/constants';
+import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
 import { useTranslations } from 'next-intl';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
+import { useSelector } from 'react-redux';
 
 type SearchTriggerProps = {
   icon?: React.ReactNode;
@@ -8,6 +11,7 @@ type SearchTriggerProps = {
 
 export default function SearchTrigger({ icon, className, ...props }: SearchTriggerProps) {
   const t = useTranslations('AppLayout');
+  const { role } = useSelector((state: RootState) => state.authSlice);
   return (
     <button
       aria-label="Search"
@@ -19,7 +23,7 @@ export default function SearchTrigger({ icon, className, ...props }: SearchTrigg
     >
       {icon ? icon : <PiMagnifyingGlassBold className="magnifying-glass me-2 h-[18px] w-[18px]" />}
       <span className="placeholder-text hidden text-sm text-gray-600 group-hover:text-gray-900 xl:inline-flex">
-        {t('searchWidgetPlaceholder')}...
+        {role === ROLE.SUPER_ADMIN ? 'Search your page' : t('searchWidgetPlaceholder')}...
       </span>
     </button>
   );

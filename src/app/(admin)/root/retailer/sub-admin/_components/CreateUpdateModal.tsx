@@ -38,6 +38,7 @@ export default function CreateUpdateModal({
   const t = useTranslations('RetailerSubAdmin');
   const t2 = useTranslations('RetailerSubAdminTable');
   const tCommon = useTranslations('RetailerCommon');
+  const t3 = useTranslations('RetailerCreateAndUpdateStamp');
 
   useEffect(() => {
     if (branches) {
@@ -128,7 +129,7 @@ export default function CreateUpdateModal({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">{t('updateSubAdmin')}</Title> : <Title as="h4">{t('addNewSubAdmin')}</Title>}
+          {formData?._id ? <Title as="h4">{t('updateASubAdmin')}</Title> : <Title as="h4">{t('addNewSubAdmin')}</Title>}
           <ActionIcon
             size="sm"
             variant="text"
@@ -175,7 +176,7 @@ export default function CreateUpdateModal({
                   {branches?.data?.length === 0 && (
                     <div className="text-center">
                       <Link href={routes.privateRoutes.retailer.branch.create} className="text-xs font-semibold text-danger">
-                        Create Branch
+                        {t3('createBranch')}
                       </Link>
                     </div>
                   )}
