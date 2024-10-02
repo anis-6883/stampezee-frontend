@@ -21,12 +21,51 @@
     "copyright": "© Copyright 2024 StampEzee | Todos los derechos reservados.",
     "searchWidgetPlaceholder": "Buscar en tu página",
     "newsletterSuccessMessage": "¡Gracias por suscribirte!",
-    "newsletterErrorMessage": "¡Algo salió mal!"
+    "newsletterErrorMessage": "¡Algo salió mal!",
+    "myProfile": "Mi Perfil",
+    "changePassword": "Cambiar contraseña",
+    "logout": "Cerrar sesión"
   },
   "StatusIndicator": {
     "active": "Activo",
     "inactive": "Inactivo",
     "status": "Estado"
+  },
+  "DeleteConfirmationModal": {
+    "title": "Confirmación de eliminación",
+    "description": "¿Desea eliminarlo?",
+    "warning": "¡Advertencia!",
+    "info": "Información",
+    "associatedSubAdminAndStampsWillBeDeleted": "¡Los sub-administradores y sellos asociados también serán eliminados!",
+    "notNow": "No ahora",
+    "confirm": "Sí, confirmar"
+  },
+  "ActivateConfirmModal": {
+    "title": "Confirmación de activación",
+    "description": "¿Desea activarlo?",
+    "notNow": "No ahora",
+    "confirm": "Sí, confirmar"
+  },
+  "ConvertToAddOnModal": {
+    "title": "Confirmación de conversión a complemento",
+    "description": "¿Desea convertirlo en complemento?",
+    "notNow": "No ahora",
+    "confirm": "Sí, confirmar"
+  },
+  "ChangePasswordModal": {
+    "title": "Cambiar Contraseña",
+    "oldPassword": "Contraseña Antigua",
+    "newPassword": "Nueva Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "passwordMustBeAtLeast8Characters": "¡La contraseña debe tener al menos 8 caracteres!",
+    "doesNotMatchNewPasswordAndConfirmPassword": "¡La nueva contraseña y la confirmación no coinciden!",
+    "fieldsMarkedWithStarAreMandatory": "¡Los campos marcados con <span className=\"text-red-600\">*</span> son obligatorios!",
+    "passwordMustBeAtLeast8CharactersLong": "¡La contraseña debe tener al menos <span className=\"text-red-600\">8 caracteres</span>!",
+    "update": "Actualizar",
+    "retailerPasswordUpdatedSuccessfully": "¡Contraseña actualizada con éxito!"
+  },
+  "SwitchButton": {
+    "statusUpdatedSuccessfully": "¡Estado actualizado con éxito!"
   },
   "HomePage": {
     "bannerTitle": "Revoluciona la Experiencia de Tus Clientes",
@@ -174,10 +213,12 @@
   "LocaleSwitcher": {
     "de": "Alemán",
     "en": "Inglés",
-    "label": "Idioma"
+    "label": "Idioma",
+    "selectPreferableLanguage": "Selecciona un Idioma Preferido"
   },
   "CurrencySwitcher": {
-    "label": "Moneda"
+    "label": "Moneda",
+    "selectPreferableCurrency": "Selecciona una Moneda Preferida"
   },
   "RetailerCommon": {
     "required": "¡Requerido!",

@@ -114,7 +114,7 @@ export default function LocalSwitcherSelector({
           <Tab.Panels>
             <Tab.Panel>
               <div className="my-5">
-                <h3 className="mb-5 text-center text-lg font-semibold">Select a Preferable Language</h3>
+                <h3 className="mb-5 text-center text-lg font-semibold">{t1('selectPreferableLanguage')}</h3>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {languageOptions?.map((lang: any) => (
                     <AdvancedRadio
@@ -137,7 +137,7 @@ export default function LocalSwitcherSelector({
             </Tab.Panel>
             <Tab.Panel>
               <div className="my-5">
-                <h3 className="mb-5 text-center text-lg font-semibold">Select a Preferable Currency</h3>
+                <h3 className="mb-5 text-center text-lg font-semibold">{t2('selectPreferableCurrency')}</h3>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {currencyExchangeOptions?.map((currency: any) => (
                     <AdvancedRadio

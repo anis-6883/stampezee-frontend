@@ -21,12 +21,51 @@
     "copyright": "© حقوق الطبع والنشر 2024 StampEzee | جميع الحقوق محفوظة.",
     "searchWidgetPlaceholder": "ابحث في صفحتك",
     "newsletterSuccessMessage": "شكرا للاشتراك!",
-    "newsletterErrorMessage": "حدث خطأ ما!"
+    "newsletterErrorMessage": "حدث خطأ ما!",
+    "myProfile": "حسابي",
+    "changePassword": "تغيير كلمة المرور",
+    "logout": "تسجيل خروج"
   },
   "StatusIndicator": {
     "active": "نشط",
     "inactive": "غير نشط",
     "status": "الحالة"
+  },
+  "DeleteConfirmationModal": {
+    "title": "تأكيد الحذف",
+    "description": "هل تريد حذفها؟",
+    "warning": "تحذير!",
+    "info": "معلومة",
+    "associatedSubAdminAndStampsWillBeDeleted": "سيتم أيضًا حذف المسؤولين الفرعيين والطوابع المرتبطة!",
+    "notNow": "ليس الآن",
+    "confirm": "نعم، تأكيد"
+  },
+  "ActivateConfirmModal": {
+    "title": "تأكيد التفعيل",
+    "description": "هل تريد تفعيله؟",
+    "notNow": "ليس الآن",
+    "confirm": "نعم، تأكيد"
+  },
+  "ConvertToAddOnModal": {
+    "title": "تأكيد التحويل إلى الإضافة",
+    "description": "هل تريد تحويله إلى إضافة؟",
+    "notNow": "ليس الآن",
+    "confirm": "نعم، تأكيد"
+  },
+  "ChangePasswordModal": {
+    "title": "تغيير كلمة المرور",
+    "oldPassword": "كلمة المرور القديمة",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "passwordMustBeAtLeast8Characters": "يجب أن تكون كلمة المرور مكونة من 8 أحرف على الأقل",
+    "doesNotMatchNewPasswordAndConfirmPassword": "لا تتطابق كلمة المرور الجديدة وتأكيد كلمة المرور!",
+    "fieldsMarkedWithStarAreMandatory": "الحقول المميزة بـ <span className=\"text-red-600\">*</span> إلزامية!",
+    "passwordMustBeAtLeast8CharactersLong": "يجب أن تكون كلمة المرور <span className=\"text-red-600\">8 أحرف</span> على الأقل!",
+    "update": "تحديث",
+    "retailerPasswordUpdatedSuccessfully": "تم تحديث كلمة المرور للتجر بنجاح!"
+  },
+  "SwitchButton": {
+    "statusUpdatedSuccessfully": "تم تحديث الحالة بنجاح!"
   },
   "FaqPage": {
     "how": "كيف",
@@ -174,10 +213,12 @@
   "LocaleSwitcher": {
     "de": "Deutsch",
     "en": "English",
-    "label": "اللغات"
+    "label": "اللغات",
+    "selectPreferableLanguage": "اختر اللغة المفضلة"
   },
   "CurrencySwitcher": {
-    "label": "عملة"
+    "label": "عملة",
+    "selectPreferableCurrency": "اختر العملة المفضلة"
   },
   "RetailerCommon": {
     "required": "مطلوب!",

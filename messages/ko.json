@@ -21,12 +21,51 @@
     "copyright": "© Copyright 2024 StampEzee | 모든 권리 보유.",
     "searchWidgetPlaceholder": "페이지를 검색",
     "newsletterSuccessMessage": "감사합니다!",
-    "newsletterErrorMessage": "무언가 잘못되었습니다!"
+    "newsletterErrorMessage": "무언가 잘못되었습니다!",
+    "myProfile": "마이 프로필",
+    "changePassword": "비밀번호 변경",
+    "logout": "로그아웃"
   },
   "StatusIndicator": {
     "active": "활성",
     "inactive": "비활성",
     "status": "상태"
+  },
+  "DeleteConfirmationModal": {
+    "title": "삭제 확인",
+    "description": "삭제하시겠습니까?",
+    "warning": "경고!",
+    "info": "정보",
+    "associatedSubAdminAndStampsWillBeDeleted": "관련된 하위 관리자와 스탬프도 삭제됩니다!",
+    "notNow": "지금은 아니요",
+    "confirm": "예, 확인"
+  },
+  "ActivateConfirmModal": {
+    "title": "활성화 확인",
+    "description": "활성화하시겠습니까?",
+    "notNow": "지금은 아니요",
+    "confirm": "예, 확인"
+  },
+  "ConvertToAddOnModal": {
+    "title": "추가 기능으로 변환 확인",
+    "description": "추가 기능으로 변환하시겠습니까?",
+    "notNow": "지금은 아니요",
+    "confirm": "예, 확인"
+  },
+  "ChangePasswordModal": {
+    "title": "비밀번호 변경",
+    "oldPassword": "이전 비밀번호",
+    "newPassword": "새 비밀번호",
+    "confirmPassword": "비밀번호 확인",
+    "passwordMustBeAtLeast8Characters": "비밀번호는 최소 8자 이상이어야 합니다!",
+    "doesNotMatchNewPasswordAndConfirmPassword": "새 비밀번호와 확인 비밀번호가 일치하지 않습니다!",
+    "fieldsMarkedWithStarAreMandatory": "<span className=\"text-red-600\">*</span>로 표시된 필드는 필수입니다!",
+    "passwordMustBeAtLeast8CharactersLong": "비밀번호는 최소 <span className=\"text-red-600\">8자</span> 이상이어야 합니다!",
+    "update": "업데이트",
+    "retailerPasswordUpdatedSuccessfully": "소매업자 비밀번호가 성공적으로 업데이트되었습니다!"
+  },
+  "SwitchButton": {
+    "statusUpdatedSuccessfully": "상태가 성공적으로 업데이트되었습니다!"
   },
   "HomePage": {
     "bannerTitle": "고객 경험을 혁신하십시오",
@@ -174,10 +213,12 @@
   "LocaleSwitcher": {
     "de": "독일어",
     "en": "영어",
-    "label": "언어"
+    "label": "언어",
+    "selectPreferableLanguage": "선택 가능한 언어"
   },
   "CurrencySwitcher": {
-    "label": "통화"
+    "label": "통화",
+    "selectPreferableCurrency": "선택 가능한 통화"
   },
   "RetailerCommon": {
     "required": "필수!",

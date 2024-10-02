@@ -21,12 +21,51 @@
     "copyright": "© Copyright 2024 StampEzee | Tous les droits sont réservés.",
     "searchWidgetPlaceholder": "Rechercher sur votre page",
     "newsletterSuccessMessage": "Merci pour votre inscription!",
-    "newsletterErrorMessage": "Quelque chose a mal tourné!"
+    "newsletterErrorMessage": "Quelque chose a mal tourné!",
+    "myProfile": "Mon Profil",
+    "changePassword": "Changer le mot de passe",
+    "logout": "Déconnexion"
   },
   "StatusIndicator": {
     "active": "Actif",
     "inactive": "Inactif",
     "status": "Statut"
+  },
+  "DeleteConfirmationModal": {
+    "title": "Confirmation de suppression",
+    "description": "Voulez-vous le supprimer?",
+    "warning": "Avertissement!",
+    "info": "Info",
+    "associatedSubAdminAndStampsWillBeDeleted": "Les sous-administrateurs et les timbres associés seront également supprimés!",
+    "notNow": "Pas maintenant",
+    "confirm": "Oui, confirmer"
+  },
+  "ActivateConfirmModal": {
+    "title": "Confirmation d'activation",
+    "description": "Voulez-vous l'activer?",
+    "notNow": "Pas maintenant",
+    "confirm": "Oui, confirmer"
+  },
+  "ConvertToAddOnModal": {
+    "title": "Confirmation de conversion en complément",
+    "description": "Voulez-vous le convertir en complément?",
+    "notNow": "Pas maintenant",
+    "confirm": "Oui, confirmer"
+  },
+  "ChangePasswordModal": {
+    "title": "Changer le mot de passe",
+    "oldPassword": "Ancien mot de passe",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "passwordMustBeAtLeast8Characters": "Le mot de passe doit contenir au moins 8 caractères!",
+    "doesNotMatchNewPasswordAndConfirmPassword": "Le nouveau mot de passe et la confirmation ne correspondent pas!",
+    "fieldsMarkedWithStarAreMandatory": "Les champs marqués d'une <span className=\"text-red-600\">*</span> sont obligatoires!",
+    "passwordMustBeAtLeast8CharactersLong": "Le mot de passe doit contenir au moins <span className=\"text-red-600\">8 caractères</span>!",
+    "update": "Mettre à jour",
+    "retailerPasswordUpdatedSuccessfully": "Mot de passe du détaillant mis à jour avec succès!"
+  },
+  "SwitchButton": {
+    "statusUpdatedSuccessfully": "Statut mis à jour avec succès!"
   },
   "HomePage": {
     "bannerTitle": "Révolutionnez l'Expérience Client",
@@ -174,10 +213,12 @@
   "LocaleSwitcher": {
     "de": "Allemand",
     "en": "Anglais",
-    "label": "Langue"
+    "label": "Langue",
+    "selectPreferableLanguage": "Sélectionner une Langue Préférée"
   },
   "CurrencySwitcher": {
-    "label": "Devise"
+    "label": "Devise",
+    "selectPreferableCurrency": "Sélectionner une Monnaie Préférée"
   },
   "RetailerCommon": {
     "required": "Obligatoire!",

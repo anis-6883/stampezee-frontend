@@ -21,12 +21,51 @@
     "copyright": "© Copyright 2024 StampEzee | 全著作権所有。",
     "searchWidgetPlaceholder": "ページを検索",
     "newsletterSuccessMessage": "ありがとうございます！",
-    "newsletterErrorMessage": "何かがうまくいかない！"
+    "newsletterErrorMessage": "何かがうまくいかない！",
+    "myProfile": "マイプロフィール",
+    "changePassword": "パスワードを変更",
+    "logout": "ログアウト"
   },
   "StatusIndicator": {
     "active": "アクティブ",
     "inactive": "非アクティブ",
     "status": "ステータス"
+  },
+  "DeleteConfirmationModal": {
+    "title": "削除の確認",
+    "description": "それを削除しますか？",
+    "warning": "警告！",
+    "info": "情報",
+    "associatedSubAdminAndStampsWillBeDeleted": "関連するサブ管理者とスタンプも削除されます！",
+    "notNow": "今はしない",
+    "confirm": "はい、確認します"
+  },
+  "ActivateConfirmModal": {
+    "title": "アクティベーション確認",
+    "description": "これを有効化しますか？",
+    "notNow": "今はしない",
+    "confirm": "はい、確認します"
+  },
+  "ConvertToAddOnModal": {
+    "title": "アドオンへの変換確認",
+    "description": "これをアドオンに変換しますか？",
+    "notNow": "今はしない",
+    "confirm": "はい、確認します"
+  },
+  "ChangePasswordModal": {
+    "title": "パスワードを変更する",
+    "oldPassword": "古いパスワード",
+    "newPassword": "新しいパスワード",
+    "confirmPassword": "パスワードを確認",
+    "passwordMustBeAtLeast8Characters": "パスワードは少なくとも 8 文字である必要があります！",
+    "doesNotMatchNewPasswordAndConfirmPassword": "新しいパスワードと確認パスワードが一致しません！",
+    "fieldsMarkedWithStarAreMandatory": "<span className=\"text-red-600\">*</span> が付いているフィールドは必須です！",
+    "passwordMustBeAtLeast8CharactersLong": "パスワードは少なくとも <span className=\"text-red-600\">8文字</span> である必要があります！",
+    "update": "更新",
+    "retailerPasswordUpdatedSuccessfully": "小売店のパスワードが正常に更新されました！"
+  },
+  "SwitchButton": {
+    "statusUpdatedSuccessfully": "ステータスが正常に更新されました！"
   },
   "HomePage": {
     "bannerTitle": "お客様の体験を革新する",
@@ -174,10 +213,12 @@
   "LocaleSwitcher": {
     "de": "ドイツ語",
     "en": "英語",
-    "label": "言語"
+    "label": "言語",
+    "selectPreferableLanguage": "好みの言語を選択"
   },
   "CurrencySwitcher": {
-    "label": "通貨"
+    "label": "通貨",
+    "selectPreferableCurrency": "好みの通貨を選択"
   },
   "RetailerCommon": {
     "required": "必須!",
