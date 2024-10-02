@@ -21,12 +21,51 @@
     "copyright": "© Copyright 2024 StampEzee | Все права защищены.",
     "searchWidgetPlaceholder": "Найти на странице",
     "newsletterSuccessMessage": "Спасибо за подписку!",
-    "newsletterErrorMessage": "Что-то пошло не так!"
+    "newsletterErrorMessage": "Что-то пошло не так!",
+    "myProfile": "Мой профиль",
+    "changePassword": "Изменить пароль",
+    "logout": "Выйти"
   },
   "StatusIndicator": {
     "active": "Активный",
     "inactive": "Неактивный",
     "status": "Статус"
+  },
+  "DeleteConfirmationModal": {
+    "title": "Подтверждение удаления",
+    "description": "Вы хотите удалить это?",
+    "warning": "Предупреждение!",
+    "info": "Информация",
+    "associatedSubAdminAndStampsWillBeDeleted": "Связанные суб-администраторы и марки также будут удалены!",
+    "notNow": "Не сейчас",
+    "confirm": "Да, подтвердить"
+  },
+  "ActivateConfirmModal": {
+    "title": "Подтверждение активации",
+    "description": "Вы хотите активировать это?",
+    "notNow": "Не сейчас",
+    "confirm": "Да, подтвердить"
+  },
+  "ConvertToAddOnModal": {
+    "title": "Подтверждение преобразования в дополнение",
+    "description": "Вы хотите преобразовать это в дополнение?",
+    "notNow": "Не сейчас",
+    "confirm": "Да, подтвердить"
+  },
+  "ChangePasswordModal": {
+    "title": "Изменить пароль",
+    "oldPassword": "Старый пароль",
+    "newPassword": "Новый пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "passwordMustBeAtLeast8Characters": "Пароль должен быть длиной не менее 8 символов!",
+    "doesNotMatchNewPasswordAndConfirmPassword": "Новый пароль и подтверждение пароля не совпадают!",
+    "fieldsMarkedWithStarAreMandatory": "Поля, отмеченные <span className=\"text-red-600\">*</span>, обязательны для заполнения!",
+    "passwordMustBeAtLeast8CharactersLong": "Пароль должен быть длиной не менее <span className=\"text-red-600\">8 символов</span>!",
+    "update": "Обновить",
+    "retailerPasswordUpdatedSuccessfully": "Пароль розничного магазина успешно обновлен!"
+  },
+  "SwitchButton": {
+    "statusUpdatedSuccessfully": "Статус успешно обновлен!"
   },
   "HomePage": {
     "bannerTitle": "Революция в клиентском опыте",
@@ -174,10 +213,12 @@
   "LocaleSwitcher": {
     "de": "Немецкий",
     "en": "Английский",
-    "label": "Язык"
+    "label": "Язык",
+    "selectPreferableLanguage": "Выберите предпочтительный язык"
   },
   "CurrencySwitcher": {
-    "label": "Валюта"
+    "label": "Валюта",
+    "selectPreferableCurrency": "Выберите предпочтительную валюту"
   },
   "RetailerCommon": {
     "required": "Обязательно!",

@@ -21,14 +21,52 @@
     "copyright": "© Copyright 2024 StampEzee | All Rights Reserved.",
     "searchWidgetPlaceholder": "Search your page",
     "newsletterSuccessMessage": "Thank you for subscribing!",
-    "newsletterErrorMessage": "Something went wrong!"
+    "newsletterErrorMessage": "Something went wrong!",
+    "myProfile": "My Profile",
+    "changePassword": "Change Password",
+    "logout": "Logout"
   },
   "StatusIndicator": {
     "active": "Active",
     "inactive": "Inactive",
     "status": "Status"
   },
-
+  "DeleteConfirmationModal": {
+    "title": "Delete Confirmation",
+    "description": "Do you want to delete it ?",
+    "warning": "Warning!",
+    "info": "Info",
+    "associatedSubAdminAndStampsWillBeDeleted": "Associated sub-admin and stamps will also deleted!",
+    "notNow": "Not Now",
+    "confirm": "Yes, Confirm"
+  },
+  "ActivateConfirmModal": {
+    "title": "Activate Confirmation",
+    "description": "Do you want to activate it ?",
+    "notNow": "Not Now",
+    "confirm": "Yes, Confirm"
+  },
+  "ConvertToAddOnModal": {
+    "title": "Convert to Add-On Confirmation",
+    "description": "Do you want to covert to add-on it ?",
+    "notNow": "Not Now",
+    "confirm": "Yes, Confirm"
+  },
+  "ChangePasswordModal": {
+    "title": "Change Password",
+    "oldPassword": "Old Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "passwordMustBeAtLeast8Characters": "Password must be at least 8 characters",
+    "doesNotMatchNewPasswordAndConfirmPassword": "Does not match new password and confirm password!",
+    "fieldsMarkedWithStarAreMandatory": "Fields marked with <span className=\"text-red-600\">*</span> are mandatory!",
+    "passwordMustBeAtLeast8CharactersLong": "Password must be at least <span className=\"text-red-600\">8 characters</span> long!",
+    "update": "Update",
+    "retailerPasswordUpdatedSuccessfully": "Retailer password updated successfully!"
+  },
+  "SwitchButton": {
+    "statusUpdatedSuccessfully": "Status updated successfully!"
+  },
   "HomePage": {
     "bannerTitle": "Revolutionize Your Customer Experience",
     "bannerDetails": "Engage, reward, and retain your customers with a touch of simplicity and technology, and bring the future of loyalty programs to your business.",
@@ -175,10 +213,12 @@
   "LocaleSwitcher": {
     "de": "Deutsch",
     "en": "English",
-    "label": "Language"
+    "label": "Language",
+    "selectPreferableLanguage": "Select a Preferable Language"
   },
   "CurrencySwitcher": {
-    "label": "Currency"
+    "label": "Currency",
+    "selectPreferableCurrency": "Select a Preferable Currency"
   },
   "RetailerCommon": {
     "required": "Required!",

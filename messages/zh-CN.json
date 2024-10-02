@@ -21,12 +21,51 @@
     "copyright": "© Copyright 2024 StampEzee | 全著作権所有。",
     "searchWidgetPlaceholder": "搜索页面",
     "newsletterSuccessMessage": "感谢订阅！",
-    "newsletterErrorMessage": "出了点问题！"
+    "newsletterErrorMessage": "出了点问题！",
+    "myProfile": "我的个人资料",
+    "changePassword": "更改密码",
+    "logout": "登出"
   },
   "StatusIndicator": {
     "active": "活跃",
     "inactive": "不活跃",
     "status": "状态"
+  },
+  "DeleteConfirmationModal": {
+    "title": "删除确认",
+    "description": "您要删除它吗？",
+    "warning": "警告！",
+    "info": "信息",
+    "associatedSubAdminAndStampsWillBeDeleted": "相关的子管理员和邮票也将被删除！",
+    "notNow": "暂不",
+    "confirm": "是的，确认"
+  },
+  "ActivateConfirmModal": {
+    "title": "激活确认",
+    "description": "您要激活它吗？",
+    "notNow": "暂不",
+    "confirm": "是的，确认"
+  },
+  "ConvertToAddOnModal": {
+    "title": "转换为附加组件确认",
+    "description": "您要将其转换为附加组件吗？",
+    "notNow": "暂不",
+    "confirm": "是的，确认"
+  },
+  "ChangePasswordModal": {
+    "title": "更改密码",
+    "oldPassword": "旧密码",
+    "newPassword": "新密码",
+    "confirmPassword": "确认密码",
+    "passwordMustBeAtLeast8Characters": "密码必须至少为 8 个字符！",
+    "doesNotMatchNewPasswordAndConfirmPassword": "新密码和确认密码不匹配！",
+    "fieldsMarkedWithStarAreMandatory": "带有 <span className=\"text-red-600\">*</span> 的字段为必填项！",
+    "passwordMustBeAtLeast8CharactersLong": "密码长度必须至少为 <span className=\"text-red-600\">8个字符</span>！",
+    "update": "更新",
+    "retailerPasswordUpdatedSuccessfully": "零售商密码更新成功！"
+  },
+  "SwitchButton": {
+    "statusUpdatedSuccessfully": "状态更新成功！"
   },
   "HomePage": {
     "bannerTitle": "革新您的客户体验",
@@ -174,10 +213,12 @@
   "LocaleSwitcher": {
     "de": "德语",
     "en": "英语",
-    "label": "语言"
+    "label": "语言",
+    "selectPreferableLanguage": "选择您喜欢的语言"
   },
   "CurrencySwitcher": {
-    "label": "货币"
+    "label": "货币",
+    "selectPreferableCurrency": "选择您喜欢的货币"
   },
   "RetailerCommon": {
     "required": "必需的！",

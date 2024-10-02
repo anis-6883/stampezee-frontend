@@ -9,6 +9,7 @@ import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { resetState } from '@/features/subscription/subscriptionSlice';
 import { signOut, useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -24,6 +25,7 @@ function DropdownMenu({
   setChangePasswordModalState: any;
   setUpdateProfileModalState: any;
 }) {
+  const t = useTranslations('AppLayout');
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user, role } = useSelector((state: RootState) => state.authSlice);
@@ -87,7 +89,7 @@ function DropdownMenu({
             onClick={() => setOpen(false)}
             className="group my-0.5 flex items-center rounded-md px-2.5 py-2 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-50/50"
           >
-            My Profile
+            {t('myProfile')}
           </Link>
         )}
         {role === 'super_admin' && (
@@ -108,7 +110,7 @@ function DropdownMenu({
           }}
           className="group my-0.5 flex items-center rounded-md px-2.5 py-2 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-50/50"
         >
-          Change Password
+          {role === ROLE.SUPER_ADMIN ? 'Change Password' : t('changePassword')}
         </button>
       </div>
       <div className="border-t border-gray-300 px-6 pb-6 pt-5">
@@ -117,7 +119,7 @@ function DropdownMenu({
           variant="text"
           onClick={handleLogout}
         >
-          Logout
+          {role === ROLE.SUPER_ADMIN ? 'Logout' : t('logout')}
         </Button>
       </div>
     </div>

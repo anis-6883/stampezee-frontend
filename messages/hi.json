@@ -21,12 +21,51 @@
     "copyright": "© Copyright 2024 StampEzee | सभी अधिकार सुरक्षित हैं।",
     "searchWidgetPlaceholder": "अपनी पेज पर खोजें",
     "newsletterSuccessMessage": "धन्यवाद उपयोगकर्ता जुड़ने के लिए!",
-    "newsletterErrorMessage": "कुछ गलत हो गया!"
+    "newsletterErrorMessage": "कुछ गलत हो गया!",
+    "myProfile": "मेरा प्रोफाइल",
+    "changePassword": "पासवर्ड बदलें",
+    "logout": "लॉग आउट"
   },
   "StatusIndicator": {
     "active": "सक्रिय",
     "inactive": "निष्क्रिय",
     "status": "स्थिति"
+  },
+  "DeleteConfirmationModal": {
+    "title": "हटाने की पुष्टि",
+    "description": "क्या आप इसे हटाना चाहते हैं?",
+    "warning": "चेतावनी!",
+    "info": "जानकारी",
+    "associatedSubAdminAndStampsWillBeDeleted": "संबंधित सब-एडमिन और स्टैम्प्स भी हटाए जाएंगे!",
+    "notNow": "अभी नहीं",
+    "confirm": "हाँ, पुष्टि करें"
+  },
+  "ActivateConfirmModal": {
+    "title": "सक्रिय करने की पुष्टि",
+    "description": "क्या आप इसे सक्रिय करना चाहते हैं?",
+    "notNow": "अभी नहीं",
+    "confirm": "हाँ, पुष्टि करें"
+  },
+  "ConvertToAddOnModal": {
+    "title": "ऐड-ऑन में परिवर्तन की पुष्टि",
+    "description": "क्या आप इसे ऐड-ऑन में बदलना चाहते हैं?",
+    "notNow": "अभी नहीं",
+    "confirm": "हाँ, पुष्टि करें"
+  },
+  "ChangePasswordModal": {
+    "title": "पासवर्ड बदलें",
+    "oldPassword": "पुराना पासवर्ड",
+    "newPassword": "नया पासवर्ड",
+    "confirmPassword": "पासवर्ड की पुष्टि करें",
+    "passwordMustBeAtLeast8Characters": "पासवर्ड कम से कम 8 अक्षरों का होना चाहिए!",
+    "doesNotMatchNewPasswordAndConfirmPassword": "नया पासवर्ड और पुष्टि पासवर्ड मेल नहीं खा रहे हैं!",
+    "fieldsMarkedWithStarAreMandatory": "<span className=\"text-red-600\">*</span> चिह्नित फ़ील्ड अनिवार्य हैं!",
+    "passwordMustBeAtLeast8CharactersLong": "पासवर्ड कम से कम <span className=\"text-red-600\">8 अक्षरों</span> का होना चाहिए!",
+    "update": "अपडेट करें",
+    "retailerPasswordUpdatedSuccessfully": "ट्रेलर का पासवर्ड सफलतापूर्वक अपडेट हो गया!"
+  },
+  "SwitchButton": {
+    "statusUpdatedSuccessfully": "स्थिति सफलतापूर्वक अपडेट हो गई!"
   },
   "HomePage": {
     "bannerTitle": "अपने ग्राहक अनुभव में क्रांति लाएं",
@@ -174,10 +213,12 @@
   "LocaleSwitcher": {
     "de": "जर्मन",
     "en": "अंग्रेज़ी",
-    "label": "भाषा"
+    "label": "भाषा",
+    "selectPreferableLanguage": "अपनी भाषा चुनें"
   },
   "CurrencySwitcher": {
-    "label": "मुद्रा"
+    "label": "मुद्रा",
+    "selectPreferableCurrency": "अपनी मुद्रा चुनें"
   },
   "RetailerCommon": {
     "required": "आवश्यक!",

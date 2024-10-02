@@ -1,24 +1,31 @@
 'use client';
 
+import { ROLE } from '@/config/constants';
+import { RootState } from '@/features/store';
+import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { FcLock, FcUnlock } from 'react-icons/fc';
+import { useSelector } from 'react-redux';
 import { Switch } from 'rizzui';
 
 export default function SwitchButton({ updateStatus, id, status }: { updateStatus: any; id: string; status: boolean }) {
   const [checked, setChecked] = React.useState<boolean>(true);
+  const { role } = useSelector((state: RootState) => state.authSlice);
+  const t = useTranslations('SwitchButton');
+  const tCommon = useTranslations('RetailerCommon');
 
   const handleUpdateStatus = async () => {
     setChecked((prev) => !prev);
     try {
       const result = await updateStatus({ branchId: id, data: { status: !checked } });
       if (result?.data?.status) {
-        toast.success('Status updated successfully');
+        toast.success(role === ROLE.SUPER_ADMIN ? 'Status updated successfully!' : t('statusUpdatedSuccessfully'));
       } else {
-        toast.error('Something went wrong!');
+        toast.error(role === ROLE.SUPER_ADMIN ? 'Something went wrong!' : tCommon('somethingWentWrong'));
       }
     } catch (err) {
-      toast.error('Something went wrong!');
+      toast.error(role === ROLE.SUPER_ADMIN ? 'Something went wrong!' : tCommon('somethingWentWrong'));
     }
   };
 
