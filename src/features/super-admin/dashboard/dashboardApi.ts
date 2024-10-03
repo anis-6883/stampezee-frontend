@@ -12,7 +12,12 @@ export const dashboardApi = apiSlice.injectEndpoints({
       providesTags: ['super-adminDashboard'],
       keepUnusedDataFor: 5,
     }),
+    getCustomerStatsWithCountryWise: builder.query({
+      query: () => `/api/secret-root/admin/super-admin/dashboard/country-wise-customer-stats`,
+      providesTags: ['super-adminDashboard'],
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
-export const { useGetDashboardCalcQuery, useGetRetailerStatsWithCountryWiseQuery } = dashboardApi;
+export const { useGetDashboardCalcQuery, useGetRetailerStatsWithCountryWiseQuery, useGetCustomerStatsWithCountryWiseQuery } = dashboardApi;

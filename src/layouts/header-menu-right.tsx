@@ -16,7 +16,9 @@ export default function HeaderMenuRight() {
   const { role } = useSelector((state: RootState) => state.authSlice);
   const { currencyExchangeRates: currencyExchanges } = useSelector((state: RootState) => state.currencyExchangeSlice);
   return (
-    <div className="ms-auto grid shrink-0 grid-cols-3 items-center gap-x-0 text-gray-700 ">
+    <div
+      className={`ms-auto grid shrink-0 ${role === ROLE.SUPER_ADMIN ? 'grid-cols-2' : 'grid-cols-3'} items-center gap-x-0 text-gray-700 `}
+    >
       <div className="text-base font-semibold text-danger">
         <Link className="flex items-center gap-x-2 " href={routes.publicRoutes.home}>
           <IoHomeOutline className="text-lg text-danger" />
