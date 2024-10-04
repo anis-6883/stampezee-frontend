@@ -52,7 +52,9 @@ export default function ActiveUsers({
   useEffect(() => {
     if (data?.length > 0) {
       const countryColorMap = data?.slice(0, 4)?.reduce((acc: any, country: any, index: number) => {
-        acc[country.country] = colors[index % colors.length]; // Assign color based on index
+        if(country.country){
+          acc[country.country] = colors[index % colors.length]; // Assign color based on index
+        }
         return acc;
       }, {});
       setColorMap(countryColorMap);
@@ -113,10 +115,10 @@ export default function ActiveUsers({
             !isLoading &&
             data?.slice(0, 4)?.map((country: any, index: number) => {
               return (
-                <div key={country.name} className="flex items-center gap-1">
+                <div key={country?.name ? country?.name : 1} className="flex items-center gap-1">
                   <Badge renderAsDot className={bgColors[index]} />
                   <Text className="text-gray-500 dark:text-gray-600">
-                    {country.name}
+                    {country?.name ? country?.name : "N/A"}
                     <Text as="span" className="font-lexend ms-1 font-medium text-gray-700">
                       {`${country.value}%`}
                     </Text>
