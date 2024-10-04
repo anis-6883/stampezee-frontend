@@ -10,6 +10,7 @@ import ActiveUsers from './ActiveUser';
 export default function RetailerAndCustomerStats({ className }: { className?: string }) {
   const { data: retailerWiseData, isLoading: isRetailerWiseDataLoading } = useGetRetailerStatsWithCountryWiseQuery({});
   const { data: customerWiseData, isLoading: isCustomerWiseDataLoading } = useGetCustomerStatsWithCountryWiseQuery({});
+  const transformedData = customerWiseData?.data?.countries?.filter((country: any) => country?.name);
   return (
     <div className={cn('grid grid-cols-12 gap-5', className)}>
       <ActiveUsers
@@ -21,7 +22,7 @@ export default function RetailerAndCustomerStats({ className }: { className?: st
       <ActiveUsers
         className="col-span-6"
         title="Active Customers"
-        data={customerWiseData?.data?.countries}
+        data={transformedData}
         isLoading={isCustomerWiseDataLoading}
       />
     </div>
