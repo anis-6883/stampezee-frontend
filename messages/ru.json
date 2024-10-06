@@ -6,6 +6,7 @@
     "contact_us": "Свяжитесь с нами",
     "dashboard": "Панель управления",
     "login": "Войти",
+    "signUp": "Зарегистрироваться",
     "socials": "Социальные сети",
     "contact": "Контакты",
     "newsletter": "ПОДПИШИТЕСЬ НА НАШУ РАССЫЛКУ",
@@ -209,6 +210,14 @@
   },
   "ProfilePage": {
     "title": "Профиль"
+  },
+  "PaymentCompletePage": {
+    "title": "Оплата успешно завершена!",
+    "buttonText": "Перейти к панели управления"
+  },
+  "PaymentCancelPage": {
+    "title": "Платеж не удался!",
+    "buttonText": "Перейти к панели управления"
   },
   "LocaleSwitcher": {
     "de": "Немецкий",
@@ -531,7 +540,7 @@
     "attachImage": "Прикрепить Изображение",
     "send": "Отправить",
     "resend": "Повторно Отправить",
-    "notificationSendSuccessfully": "Уведомление успешно отправлено!"
+    "notificationCreatedSuccessfully": "Уведомление успешно отправлено!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "Лимит отправки регулярных уведомлений",

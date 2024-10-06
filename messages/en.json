@@ -6,6 +6,7 @@
     "contact_us": "Contact Us",
     "dashboard": "Dashboard",
     "login": "Login",
+    "signUp": "Sign Up",
     "socials": "Socials",
     "contact": "Contact",
     "newsletter": "JOIN OUR NEWSLETTER",
@@ -210,6 +211,14 @@
   "ProfilePage": {
     "title": "Profile"
   },
+  "PaymentCompletePage": {
+    "title": "Payment Completed Successfully!",
+    "buttonText": "Go to Dashboard"
+  },
+  "PaymentCancelPage": {
+    "title": "Payment Failed!",
+    "buttonText": "Go to Dashboard"
+  },
   "LocaleSwitcher": {
     "de": "Deutsch",
     "en": "English",
@@ -266,7 +275,7 @@
   "RetailerMembership": {
     "switchPlan": "Switch a Plan",
     "selectPlan": "Select a Plan",
-    "selectAddOns": "Select Add-Ons",
+    "selectAddOn": "Select Add-On",
     "buttonText": "Selection Confirm"
   },
   "RetailerBilling": {
@@ -450,7 +459,7 @@
     "purchaseCustomStampAddOn": "Purchase Custom Stamp AddOn.",
     "clickHere": "Click Here",
     "thereIsNoActiveCustomImageAvailable": "There is no active custom image available!",
-    "createOrActiveCustomStamp": "Create or Active Custom Stamp.",
+    "createOrActiveCustomStamp": "Create or Manage Custom Stamp.",
     "selectOneFromDefaultOrCustomStampIsRequired": "Select one from default or custom stamp is required!",
     "stampCreatedSuccessfully": "Stamp created successfully!",
     "stampUpdatedSuccessfully": "Stamp updated successfully!",

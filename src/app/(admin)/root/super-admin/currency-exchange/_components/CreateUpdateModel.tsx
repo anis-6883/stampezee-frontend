@@ -34,7 +34,7 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Required!'),
+    name: Yup.string().trim().required('Required!'),
     exchangeRate: Yup.number()
       .test('integer', 'Please enter an integer value', (value: any) => {
         return !isNaN(parseFloat(value)) && isFinite(value);

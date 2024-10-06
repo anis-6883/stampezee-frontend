@@ -91,21 +91,21 @@ export default function RegisterForm({ terms, policy, locale }: { terms: any; po
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string().required(tCommon('required')),
-    firstName: Yup.string().required(tCommon('required')),
-    lastName: Yup.string(),
+    storeName: Yup.string().trim().required(tCommon('required')),
+    firstName: Yup.string().trim().required(tCommon('required')),
+    lastName: Yup.string().trim(),
     email: Yup.string()
       .test('email', tLogin('invalidEmail'), (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(value);
       })
       .required(tCommon('required')),
-    phone: Yup.string().required(tCommon('required')),
-    country: Yup.string().required(tCommon('required')),
-    province: Yup.string().required(tCommon('required')),
-    city: Yup.string().required(tCommon('required')),
-    postalCode: Yup.string().required(tCommon('required')),
-    address: Yup.string().required(tCommon('required')),
+    phone: Yup.string().trim().required(tCommon('required')),
+    country: Yup.string().trim().required(tCommon('required')),
+    province: Yup.string().trim().required(tCommon('required')),
+    city: Yup.string().trim().required(tCommon('required')),
+    postalCode: Yup.string().trim().required(tCommon('required')),
+    address: Yup.string().trim().required(tCommon('required')),
     isAgree: Yup.string().required(tCommon('required')),
     password: Yup.string().required(tCommon('required')).min(8, tCommon('atLeast8Characters')),
   });

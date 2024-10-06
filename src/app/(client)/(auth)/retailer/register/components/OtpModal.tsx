@@ -54,7 +54,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
         }
         if (callback?.ok && !callback?.error) {
           if (verifyResponse?.data?.role === ROLE.RETAILER) {
-            replace(routes.privateRoutes.retailer.dashboard);
+            replace(routes.privateRoutes.checkout);
           }
         }
       });
@@ -64,7 +64,6 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
   useEffect(() => {
     if (resendError) {
       setResendOtpSubmitting(false);
-      console.log('resendError: ', resendError);
       const myError = resendError as SerializedError;
       toast.error(myError?.data?.message || 'Something went wrong!');
     }
@@ -120,7 +119,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
             <div className="mt-10 grid grid-cols-12 items-center">
               <div className="col-span-8">
                 <p className="flex select-none items-center text-sm font-medium">
-                  Didn{"'"}t get any otp yet?
+                  Didn{"'"}t get any OTP yet?
                   {timer > 0 ? (
                     <span className="ml-1 font-bold text-danger">
                       {`${Math.floor(timer / 60)}`.padStart(2, '0') + ':' + `${timer % 60}`.padStart(2, '0')}

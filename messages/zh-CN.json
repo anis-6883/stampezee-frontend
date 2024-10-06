@@ -6,6 +6,7 @@
     "contact_us": "联系我们",
     "dashboard": "仪表盘",
     "login": "登录",
+    "signUp": "注册",
     "socials": "社交媒体",
     "contact": "联系",
     "newsletter": "订阅我们的通讯",
@@ -209,6 +210,14 @@
   },
   "ProfilePage": {
     "title": "个人资料"
+  },
+  "PaymentCompletePage": {
+    "title": "支付成功完成！",
+    "buttonText": "前往仪表板"
+  },
+  "PaymentCancelPage": {
+    "title": "支付失败！",
+    "buttonText": "前往仪表板"
   },
   "LocaleSwitcher": {
     "de": "德语",
@@ -531,7 +540,7 @@
     "attachImage": "附加图片",
     "send": "发送",
     "resend": "重新发送",
-    "notificationSendSuccessfully": "通知已成功发送！"
+    "notificationCreatedSuccessfully": "通知已成功发送！"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "常规通知发送限制",

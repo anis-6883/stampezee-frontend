@@ -42,7 +42,7 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required(tCommon('required')),
+    title: Yup.string().trim().required(tCommon('required')),
     image: Yup.mixed().required(tCommon('required')),
   });
 

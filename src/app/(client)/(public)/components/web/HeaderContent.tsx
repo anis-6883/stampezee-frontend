@@ -24,22 +24,22 @@ import BalanceCard from '../BalanceCard';
 const mobileMenuItems = [
   {
     id: 1,
-    name: 'Home',
+    name: 'home',
     link: routes.publicRoutes.home,
   },
   {
     id: 2,
-    name: 'Pricing',
+    name: 'pricing',
     link: routes.publicRoutes.pricing,
   },
   {
     id: 3,
-    name: 'FAQ',
+    name: 'faq',
     link: routes.publicRoutes.faqs,
   },
   {
     id: 4,
-    name: 'Contact Us',
+    name: 'contact_us',
     link: routes.publicRoutes.contactUs,
   },
 ];
@@ -165,25 +165,38 @@ export default function HeaderContent() {
                         >
                           <Link
                             href={`${item.link}`}
-                            className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${pathname === item.link ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                            className={`relative block rounded py-2 pl-4 transition-all duration-150 ease-in ${pathname === item.link ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                           >
-                            {item?.name}
+                            {t(item.name)}
                           </Link>
                         </li>
                       ))}
 
                       {!isLoggedIn ? (
-                        <li
-                          onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
-                          className=" transition duration-300 ease-in-out hover:bg-gray-100"
-                        >
-                          <Link
-                            href="/retailer/login"
-                            className={`relative block items-center rounded py-3 pl-4 transition-all  duration-150 ease-in dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                        <>
+                          <li
+                            onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
+                            className=" transition duration-300 ease-in-out hover:bg-gray-100"
                           >
-                            Login
-                          </Link>
-                        </li>
+                            <Link
+                              href="/retailer/login"
+                              className={`relative block items-center rounded py-2 pl-4 transition-all  duration-150 ease-in dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                            >
+                              <CustomButton color="danger" text={t('login')} className="!m-0 !px-3 !py-2 !text-xs" />
+                            </Link>
+                          </li>
+                          <li
+                            onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
+                            className=" transition duration-300 ease-in-out hover:bg-gray-100"
+                          >
+                            <Link
+                              href="/retailer/register"
+                              className={`relative block items-center rounded py-2 pl-4 transition-all  duration-150 ease-in dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                            >
+                              <CustomButton color="outline" text={t('signUp')} className="!m-0 !border-[#F5F5F5]  !px-3 !py-2 !text-xs" />
+                            </Link>
+                          </li>
+                        </>
                       ) : (
                         <li className="py-4 pl-3">
                           <Link href="/root/retailer/dashboard" className=" my-auto rounded-xl bg-red-500 p-2 text-white">
@@ -250,7 +263,7 @@ export default function HeaderContent() {
                       <li className="py-2 pl-3">
                         <AiOutlineGlobal
                           onClick={() => setModalState(true)}
-                          className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+                          className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-[#F5F5F5] ring-offset-2 ring-offset-background"
                         />
                       </li>
                     </ul>
@@ -306,9 +319,14 @@ export default function HeaderContent() {
                         <CustomButton color="danger" text={t('dashboard')} className="!m-0" />
                       </Link>
                     ) : (
-                      <Link href="/retailer/login" className={`relative  transition-all duration-150 ease-in hover:text-red-500`}>
-                        {t('login')}
-                      </Link>
+                      <div className="flex items-center justify-center gap-4">
+                        <Link href="/retailer/login" className={`relative  transition-all duration-150 ease-in hover:text-red-500`}>
+                          <CustomButton color="danger" text={t('login')} className="!m-0 !px-3 !py-2 !text-xs" />
+                        </Link>
+                        <Link href="/retailer/register" className={`relative  transition-all duration-150 ease-in hover:text-red-500`}>
+                          <CustomButton color="outline" text={t('signUp')} className="!m-0 !border-[#F5F5F5]  !px-3 !py-2 !text-xs" />
+                        </Link>
+                      </div>
                     )}
                     {isLoggedIn && (
                       <Menu as="div" className="relative inline-block text-left">
@@ -372,7 +390,7 @@ export default function HeaderContent() {
                     <div className="ml-3">
                       <AiOutlineGlobal
                         onClick={() => setModalState(true)}
-                        className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+                        className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-[#F5F5F5]"
                       />
                     </div>
                     <button

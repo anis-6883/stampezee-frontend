@@ -82,16 +82,16 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string().required(tRetailerCommon('required')),
-    firstName: Yup.string().required(tRetailerCommon('required')),
-    lastName: Yup.string(),
+    storeName: Yup.string().trim().required(tRetailerCommon('required')),
+    firstName: Yup.string().trim().required(tRetailerCommon('required')),
+    lastName: Yup.string().trim(),
     email: Yup.string().email('Invalid email').required(tRetailerCommon('required')),
     phone: Yup.string().required(tRetailerCommon('required')),
     country: Yup.string().required(tRetailerCommon('required')),
-    province: Yup.string().required(tRetailerCommon('required')),
-    city: Yup.string().required(tRetailerCommon('required')),
-    postalCode: Yup.string().required(tRetailerCommon('required')),
-    address: Yup.string().required(tRetailerCommon('required')),
+    province: Yup.string().trim().required(tRetailerCommon('required')),
+    city: Yup.string().trim().required(tRetailerCommon('required')),
+    postalCode: Yup.string().trim().required(tRetailerCommon('required')),
+    address: Yup.string().trim().required(tRetailerCommon('required')),
   });
 
   const handleSubmit = async (values: any) => {

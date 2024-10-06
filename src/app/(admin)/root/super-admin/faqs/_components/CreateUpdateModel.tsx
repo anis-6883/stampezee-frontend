@@ -35,8 +35,8 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('Required!'),
-    description: Yup.string().required('Required!'),
+    title: Yup.string().trim().required('Required!'),
+    description: Yup.string().trim().required('Required!'),
   });
 
   const submitHandler = async (values: any) => {

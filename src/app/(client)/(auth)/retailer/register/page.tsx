@@ -42,7 +42,7 @@ export default async function Page() {
             <RegisterForm terms={data?.data?.page?.terms} policy={data?.data?.page?.policy} locale={locale} />
 
             <div className="mt-5 text-center">
-              {t('alreadyHaveAccount')}
+              {t('alreadyHaveAccount')}{' '}
               <Link href={routes.publicRoutes.retailerLogin} className="font-semibold text-danger">
                 {t('signIn')}
               </Link>{' '}

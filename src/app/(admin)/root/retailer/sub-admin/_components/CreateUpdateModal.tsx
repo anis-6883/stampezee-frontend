@@ -91,7 +91,7 @@ export default function CreateUpdateModal({
 
   const validationSchema = Yup.object().shape({
     branchId: Yup.string().required(tCommon('required')),
-    firstName: Yup.string().required(tCommon('required')),
+    firstName: Yup.string().trim().required(tCommon('required')),
     email: Yup.string()
       .test('email', 'Provide valid email!', (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

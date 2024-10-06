@@ -90,7 +90,7 @@ export default function RegularNotificationTable({ offset, locale }: { offset: n
             onClick={() => {
               setFormData({
                 ...row.original,
-                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+                image: row.original.image ? `${row.original.image}` : null,
               });
               setCreateState(true);
             }}
