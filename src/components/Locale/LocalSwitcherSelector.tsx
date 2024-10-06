@@ -16,7 +16,7 @@ const languageOptions = [
   { label: 'English', value: 'en', country: 'United State' },
   { label: 'Arabic', value: 'ar', country: 'Saudi Arabia' },
   { label: 'Spanish', value: 'es', country: 'Spain' },
-  { label: 'France', value: 'fr', country: 'France' },
+  { label: 'French', value: 'fr', country: 'France' },
   { label: 'Hindi', value: 'hi', country: 'India' },
   { label: 'Russian', value: 'ru', country: 'Russia' },
   { label: 'Japanese', value: 'ja', country: 'Japan' },
@@ -126,9 +126,9 @@ export default function LocalSwitcherSelector({
                       contentClassName={`rounded-lg border hover:border-danger ${selectedOption === lang?.value ? '!border-danger ring-1 !ring-danger' : '!ring-0'}`}
                       inputClassName="[&:checked~span_.icon]:block"
                     >
-                      <span className="flex flex-col">
+                      <span className="flex flex-col items-center justify-center">
                         <Text as="b">{lang?.label}</Text>
-                        <span>{lang?.country}</span>
+                        {/* <span>{lang?.country}</span> */}
                       </span>
                     </AdvancedRadio>
                   ))}

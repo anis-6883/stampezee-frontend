@@ -9,11 +9,13 @@ import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/sub
 import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Subscription } from '@/types';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function OrderSession() {
+  const t = useTranslations('PaymentCompletePage');
   const { data: session, update }: any = useSession();
   const dispatch = useDispatch();
   const { user, isLoggedIn, accessToken } = useSelector((state: RootState) => state.authSlice);
@@ -59,7 +61,7 @@ export default function OrderSession() {
   }, [profile?.data, profileSuccess, data?.data]);
   return (
     <Link href="/root/retailer/dashboard">
-      <Button color="danger" text="Go to Dashboard" />
+      <Button color="danger" text={t('buttonText')} />
     </Link>
   );
 }

@@ -74,8 +74,8 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Required!'),
-    code: Yup.string().required('Required!').min(6, 'At least 6 characters long!'),
+    title: Yup.string().trim().required('Required!'),
+    code: Yup.string().trim().required('Required!').min(6, 'At least 6 characters long!'),
     discountType: Yup.string().required('Required!'),
     discount: Yup.string().when('discountType', {
       is: 'percentage',

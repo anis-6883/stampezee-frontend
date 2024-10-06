@@ -101,7 +101,7 @@ export default function LocationBaseNotifyTable({
                 address: row.original?.address?.name,
                 longitude: row.original?.address?.loc?.coordinates[0]?.toString() || '',
                 latitude: row.original?.address?.loc?.coordinates[1]?.toString() || '',
-                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+                image: row.original.image ? `${row.original.image}` : null,
               });
               setCreateState(true);
             }}

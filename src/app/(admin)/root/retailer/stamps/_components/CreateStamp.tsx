@@ -18,15 +18,18 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { HiPlus } from 'react-icons/hi2';
 import { IoAlertCircle } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine, RiDraftLine, RiDrinks2Fill } from 'react-icons/ri';
 import * as Yup from 'yup';
+import CreateStampModal from './CreateStampModal';
 import StampImgSkeleton from './StampImgSkeleton';
 import StampPublishedModal from './StampPublishedModal';
 
 export default function Create({ locale }: { locale: string }) {
   const { data: session }: any = useSession();
+  const [createState, setCreateState] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
@@ -37,6 +40,7 @@ export default function Create({ locale }: { locale: string }) {
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery({});
   const isAddons = session?.user?.totalCustomStampImage > 0 ? true : false;
   const t = useTranslations('RetailerCreateAndUpdateStamp');
+  const t2 = useTranslations('RetailerStampImageCreateUpdate');
   const tCommon = useTranslations('RetailerCommon');
 
   const initialValues = {
@@ -103,14 +107,14 @@ export default function Create({ locale }: { locale: string }) {
     branchId: Yup.string().required(tCommon('required')),
     stampImageId: Yup.string().required(tCommon('required')),
     categoryId: Yup.string().required(tCommon('required')),
-    title: Yup.string().required(tCommon('required')),
-    rules: Yup.string().required(tCommon('required')),
+    title: Yup.string().trim().required(tCommon('required')),
+    rules: Yup.string().trim().required(tCommon('required')),
     hasValidity: Yup.boolean().required(tCommon('required')),
     noOfStampsToCollect: Yup.number().min(1, 'Number of stamps to collect must be at least 1').required(tCommon('required')),
     rewardType: Yup.mixed().oneOf(['promotion', 'discount']).required(tCommon('required')),
     promotionReward: Yup.string().when('rewardType', {
       is: 'promotion',
-      then: () => Yup.string().required(tCommon('required')),
+      then: () => Yup.string().trim().required(tCommon('required')),
       otherwise: () => Yup.string(),
     }),
     discountReward: Yup.string().when('rewardType', {
@@ -346,13 +350,25 @@ export default function Create({ locale }: { locale: string }) {
 
               {isAddons && optionsData?.customImages?.length === 0 && (
                 <div className="border-l-4 border-red-400 bg-blue-50 p-4">
-                  <p className="mb-3 text-sm font-semibold">There is no active custom image available!</p>
+                  <p className="mb-3 text-sm font-semibold">{t('thereIsNoActiveCustomImageAvailable')}</p>
                   <p>
                     {t('createOrActiveCustomStamp')}.{' '}
                     <Link href={routes.privateRoutes.retailer.stampImage.home} className="font-semibold text-danger hover:cursor-pointer">
                       {t('clickHere')}
                     </Link>
                   </p>
+                </div>
+              )}
+
+              {optionsData?.customImages?.length !== session?.user?.totalCustomStampImage && (
+                <div>
+                  <Button
+                    className="w-[250px]"
+                    color="danger"
+                    onClick={() => setCreateState(true)}
+                    text={t2('addNewStampImage')}
+                    preIcon={<HiPlus className="text-base" />}
+                  />
                 </div>
               )}
 
@@ -406,6 +422,7 @@ export default function Create({ locale }: { locale: string }) {
         setIsSubmitting={setPublishSubmitting}
         values={values}
       />
+      <CreateStampModal modalState={createState} setModalState={setCreateState} locale={locale} />
     </div>
   );
 }

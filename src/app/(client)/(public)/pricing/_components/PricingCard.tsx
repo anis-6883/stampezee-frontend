@@ -21,6 +21,7 @@ export default function PricingCard({ item }: { item: any }) {
   const isRtl = locale === 'ar';
   const dispatch = useDispatch();
   const { currency } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { isLoggedIn } = useSelector((state: RootState) => state.authSlice);
   const { data: session }: any = useSession();
 
   const handleSubscription = (plan: Subscription) => {
@@ -104,7 +105,7 @@ export default function PricingCard({ item }: { item: any }) {
         ) : (
           <>
             {' '}
-            <Link href={routes.privateRoutes.checkout}>
+            <Link href={isLoggedIn ? routes.privateRoutes.checkout : routes.publicRoutes.retailerRegister}>
               <Button onClick={() => handleSubscription(item)} color="danger" text={t('pricingButtonText')} className="w-full" />
             </Link>
           </>

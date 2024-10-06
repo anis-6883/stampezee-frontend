@@ -53,21 +53,21 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string().required('Required!'),
-    firstName: Yup.string().required('Required!'),
-    lastName: Yup.string(),
+    storeName: Yup.string().trim().required('Required!'),
+    firstName: Yup.string().trim().required('Required!'),
+    lastName: Yup.string().trim(),
     email: Yup.string()
       .test('email', 'Provide valid email!', (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(value);
       })
       .required('Required!'),
-    phone: Yup.string().required('Required!'),
-    country: Yup.string().required('Required!'),
-    province: Yup.string().required('Required!'),
-    city: Yup.string().required('Required!'),
-    postalCode: Yup.string().required('Required!'),
-    address: Yup.string().required('Required!'),
+    phone: Yup.string().trim().required('Required!'),
+    country: Yup.string().trim().required('Required!'),
+    province: Yup.string().trim().required('Required!'),
+    city: Yup.string().trim().required('Required!'),
+    postalCode: Yup.string().trim().required('Required!'),
+    address: Yup.string().trim().required('Required!'),
     password: (formData?._id ? Yup.string() : Yup.string().required('Required!')).min(8, 'At least 8 characters long!'),
   });
 

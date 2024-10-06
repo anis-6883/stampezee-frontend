@@ -6,6 +6,7 @@
     "contact_us": "संपर्क करें",
     "dashboard": "डैशबोर्ड",
     "login": "लॉगिन",
+    "signUp": "साइन अप",
     "socials": "सोशल मीडिया",
     "contact": "संपर्क",
     "newsletter": "हमारे न्यूज़लेटर से जुड़ें",
@@ -209,6 +210,14 @@
   },
   "ProfilePage": {
     "title": "प्रोफाइल"
+  },
+  "PaymentCompletePage": {
+    "title": "भुगतान सफलतापूर्वक पूरा हुआ!",
+    "buttonText": "डैशबोर्ड पर जाएं"
+  },
+  "PaymentCancelPage": {
+    "title": "भुगतान असफल हुआ!",
+    "buttonText": "डैशबोर्ड पर जाएं"
   },
   "LocaleSwitcher": {
     "de": "जर्मन",
@@ -531,7 +540,7 @@
     "attachImage": "छवि संलग्न करें",
     "send": "भेजें",
     "resend": "पुनः भेजें",
-    "notificationSendSuccessfully": "सूचना सफलतापूर्वक भेजी गई!"
+    "notificationCreatedSuccessfully": "सूचना सफलतापूर्वक भेजी गई!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "नियमित सूचना भेजने की सीमा",

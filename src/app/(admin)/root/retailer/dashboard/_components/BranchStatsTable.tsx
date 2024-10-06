@@ -52,12 +52,12 @@ export default function BranchStatsTable() {
   const { totalActiveBranch } = data?.data || {};
 
   return (
-    <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="relative my-5 overflow-x-auto">
       <h2 className="mb-5 text-lg font-medium">
         {t2('branchStatistics')}: ({totalActiveBranch})
       </h2>
 
-      <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+      <table className="w-full text-left text-sm text-gray-500 shadow-md dark:text-gray-400 sm:rounded-lg rtl:text-right">
         <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             {tableHeaders.map((header) => (

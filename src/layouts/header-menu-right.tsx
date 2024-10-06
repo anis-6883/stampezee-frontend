@@ -30,7 +30,7 @@ export default function HeaderMenuRight() {
         <div className="">
           <AiOutlineGlobal
             onClick={() => setModalState(true)}
-            className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+            className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-[#F5F5F5] ring-offset-2 ring-offset-background"
           />
         </div>
       )}

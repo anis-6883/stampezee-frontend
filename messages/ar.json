@@ -6,6 +6,7 @@
     "contact_us": "اتصل بنا",
     "dashboard": "لوحة القيادة",
     "login": "تسجيل الدخول",
+    "signUp": "التسجيل",
     "socials": "مواقع التواصل الاجتماعي",
     "contact": "اتصال",
     "newsletter": "انضم إلى نشرتنا الإخبارية",
@@ -209,6 +210,14 @@
   },
   "ProfilePage": {
     "title": "Profile"
+  },
+  "PaymentCompletePage": {
+    "title": "تم إتمام الدفع بنجاح!",
+    "buttonText": "الذهاب إلى لوحة التحكم"
+  },
+  "PaymentCancelPage": {
+    "title": "فشل الدفع!",
+    "buttonText": "الذهاب إلى لوحة التحكم"
   },
   "LocaleSwitcher": {
     "de": "Deutsch",
@@ -531,7 +540,7 @@
     "attachImage": "إرفاق صورة",
     "send": "إرسال",
     "resend": "إعادة إرسال",
-    "notificationSendSuccessfully": "تم إرسال الإشعار بنجاح!"
+    "notificationCreatedSuccessfully": "تم إرسال الإشعار بنجاح!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "حد إرسال الإشعارات العادية",

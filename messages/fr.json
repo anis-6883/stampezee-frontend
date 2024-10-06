@@ -6,6 +6,7 @@
     "contact_us": "Nous contacter",
     "dashboard": "Tableau de bord",
     "login": "Connexion",
+    "signUp": "S'inscrire",
     "socials": "Réseaux sociaux",
     "contact": "Contact",
     "newsletter": "REJOIGNEZ NOTRE NEWSLETTER",
@@ -209,6 +210,14 @@
   },
   "ProfilePage": {
     "title": "Profil"
+  },
+  "PaymentCompletePage": {
+    "title": "Paiement réussi !",
+    "buttonText": "Aller au tableau de bord"
+  },
+  "PaymentCancelPage": {
+    "title": "Échec du paiement !",
+    "buttonText": "Aller au tableau de bord"
   },
   "LocaleSwitcher": {
     "de": "Allemand",
@@ -531,7 +540,7 @@
     "attachImage": "Joindre une Image",
     "send": "Envoyer",
     "resend": "Renvoyer",
-    "notificationSendSuccessfully": "La notification a été envoyée avec succès!"
+    "notificationCreatedSuccessfully": "La notification a été envoyée avec succès!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "Limite d'Envoi de Notification Régulière",

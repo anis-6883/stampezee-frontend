@@ -9,6 +9,7 @@ import { FaInfoCircle } from 'react-icons/fa';
 import WorldMap, { CountryContext } from 'react-svg-worldmap';
 import { useMedia } from 'react-use';
 import { Badge, Text } from 'rizzui';
+import UserStatsModal from './UserStatsModal';
 import WidgetCard from './WidgetCard';
 
 const bgColors = ['bg-[#148f77]', 'bg-[#f39c12]', 'bg-[#2e4053]', 'bg-[#a93226]', 'bg-[#b2babb]'];
@@ -48,11 +49,11 @@ export default function ActiveUsers({
   const [colorMap, setColorMap] = useState<Record<string, string>>({});
   const [ref, { width }] = useElementSize();
   const is4k = useMedia('(min-width: 2000px)', false);
-
+  const [modalState, setModalState] = useState(false);
   useEffect(() => {
     if (data?.length > 0) {
       const countryColorMap = data?.slice(0, 4)?.reduce((acc: any, country: any, index: number) => {
-        if(country.country){
+        if (country.country) {
           acc[country.country] = colors[index % colors.length]; // Assign color based on index
         }
         return acc;
@@ -118,7 +119,7 @@ export default function ActiveUsers({
                 <div key={country?.name ? country?.name : 1} className="flex items-center gap-1">
                   <Badge renderAsDot className={bgColors[index]} />
                   <Text className="text-gray-500 dark:text-gray-600">
-                    {country?.name ? country?.name : "N/A"}
+                    {country?.name ? country?.name : 'N/A'}
                     <Text as="span" className="font-lexend ms-1 font-medium text-gray-700">
                       {`${country.value}%`}
                     </Text>
@@ -127,8 +128,15 @@ export default function ActiveUsers({
               );
             })}
         </div>
-        <Button className="!m-0 !px-2 !py-1.5" text="See More" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
+        <Button
+          onClick={() => setModalState(true)}
+          className="!m-0 !px-2 !py-1.5"
+          text="See More"
+          color="danger"
+          preIcon={<FaInfoCircle className="text-base" />}
+        />
       </div>
+      <UserStatsModal modalState={modalState} setModalState={setModalState} activeUsersStats={data} />
     </WidgetCard>
   );
 }

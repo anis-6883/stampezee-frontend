@@ -6,6 +6,7 @@
     "contact_us": "문의하기",
     "dashboard": "대시보드",
     "login": "로그인",
+    "signUp": "가입",
     "socials": "소셜",
     "contact": "연락처",
     "newsletter": "뉴스레터 가입",
@@ -209,6 +210,14 @@
   },
   "ProfilePage": {
     "title": "프로필"
+  },
+  "PaymentCompletePage": {
+    "title": "결제가 성공적으로 완료되었습니다!",
+    "buttonText": "대시보드로 이동"
+  },
+  "PaymentCancelPage": {
+    "title": "결제 실패!",
+    "buttonText": "대시보드로 이동"
   },
   "LocaleSwitcher": {
     "de": "독일어",
@@ -532,7 +541,7 @@
     "attachImage": "이미지 첨부",
     "send": "보내기",
     "resend": "다시 보내기",
-    "notificationSendSuccessfully": "알림이 성공적으로 보내졌습니다!"
+    "notificationCreatedSuccessfully": "알림이 성공적으로 보내졌습니다!"
   },
   "RegularNotificationTable": {
     "regularNotificationSendLimit": "일반 알림 전송 제한",

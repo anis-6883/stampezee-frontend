@@ -68,9 +68,9 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required(tCommon('required')),
-    description: Yup.string().required(tCommon('required')),
-    address: Yup.string().required(tCommon('required')),
+    title: Yup.string().trim().required(tCommon('required')),
+    description: Yup.string().trim().required(tCommon('required')),
+    address: Yup.string().trim().required(tCommon('required')),
   });
 
   const submitHandler = async (values: any) => {
@@ -81,7 +81,11 @@ export default function CreateUpdateModel({
 
     if (formData?._id) {
       const ignoreList = [];
-      if (!isFile(values?.image)) ignoreList.push('image');
+
+      if (!values?.imageType) {
+        ignoreList.push('image');
+      }
+      // if (!isFile(values?.image))
 
       objToFormData = objectToFormData(values, ignoreList);
       createNotificationByLocation(objToFormData);
@@ -111,7 +115,7 @@ export default function CreateUpdateModel({
       setIsSubmitting(false);
     }
     if (createSuccess) {
-      toast.success(tRegular('notificationSendSuccessfully'));
+      toast.success(tRegular('notificationCreatedSuccessfully'));
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
@@ -143,8 +147,6 @@ export default function CreateUpdateModel({
         <div>
           <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
             {({ setFieldValue, values }) => {
-              console.log({ values });
-
               return (
                 <Form className="mt-5">
                   <InputField name="title" label={t('title')} placeholder="Buy 10 Pizza Get 1 Coke" />
@@ -190,7 +192,7 @@ export default function CreateUpdateModel({
                       <DragAndDropUpload
                         value={{ name: 'image', image: values.image }}
                         onChange={(image: any) => setFieldValue('image', image)}
-                        className="mt-2"
+                        className="mt-2 w-full"
                         size={1024 * 1000}
                         sizeText="1MB"
                       />

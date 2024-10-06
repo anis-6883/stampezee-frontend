@@ -17,7 +17,7 @@ export default function Page() {
       <StateCardView className="2xl:mb-8 mb-5" />
       <RetailerAndCustomerStats className="mb-5" />
       <div className="mb-5 grid grid-cols-12 gap-5">
-        <SignUpStatus className="col-span-6" />
+        <SignUpStatus className="col-span-12 md:col-span-6" />
       </div>
     </>
   );

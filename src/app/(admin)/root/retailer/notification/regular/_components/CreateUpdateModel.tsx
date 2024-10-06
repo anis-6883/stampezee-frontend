@@ -36,6 +36,7 @@ export default function CreateUpdateModel({
   const [createNotification, { isSuccess: createSuccess, error: createError }] = useCreateNotificationMutation();
   const t = useTranslations('SendAndResendNotification');
   const tCommon = useTranslations('RetailerCommon');
+
   const initialValues = {
     title: formData?.title || '',
     description: formData?.description || '',
@@ -44,8 +45,8 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required(tCommon('required')),
-    description: Yup.string().required(tCommon('required')),
+    title: Yup.string().trim().required(tCommon('required')),
+    description: Yup.string().trim().required(tCommon('required')),
   });
 
   const submitHandler = async (values: any) => {
@@ -57,7 +58,10 @@ export default function CreateUpdateModel({
 
     if (formData?._id) {
       const ignoreList = [];
-      if (!isFile(values?.image)) ignoreList.push('image');
+      // if (!isFile(values?.image)) ignoreList.push('image');
+      if (!values?.imageType) {
+        ignoreList.push('image');
+      }
 
       objToFormData = objectToFormData(values, ignoreList);
       createNotification(objToFormData);

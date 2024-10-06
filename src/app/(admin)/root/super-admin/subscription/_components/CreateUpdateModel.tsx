@@ -45,9 +45,9 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('Required!'),
+    title: Yup.string().trim().required('Required!'),
     price: Yup.mixed().required('Required!'),
-    slug: Yup.string().required('Required!'),
+    slug: Yup.string().trim().required('Required!'),
     type: Yup.mixed().oneOf(['subscription', 'addon']).required('Required!'),
     allowTotalBranch: Yup.string().when('type', {
       is: 'subscription',

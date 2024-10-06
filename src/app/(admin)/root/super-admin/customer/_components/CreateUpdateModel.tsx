@@ -45,10 +45,10 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object().shape({
-    fullName: Yup.string().required('Required!'),
+    fullName: Yup.string().trim().required('Required!'),
     email: Yup.string().email('Invalid email').required('Required!'),
-    phone: Yup.string().required('Required!'),
-    country: Yup.string().required('Required!'),
+    phone: Yup.string().trim().required('Required!'),
+    country: Yup.string().trim().required('Required!'),
     password: (formData?._id ? Yup.string() : Yup.string().required('Required!')).min(8, 'At least 8 characters long!'),
   });
 
