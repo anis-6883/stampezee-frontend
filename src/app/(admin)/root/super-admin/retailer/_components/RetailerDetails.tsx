@@ -52,14 +52,14 @@ export default function RetailerDetails({ id }: { id: string }) {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
-          <InfoRow label="Owner Name" value={fullName} isLoading={isLoading} />
-          <InfoRow label="Owner Email" value={email} isLoading={isLoading} />
-          <InfoRow label="Owner Phone" value={`${dialCode} ${phone}`} isLoading={isLoading} />
-          <InfoRow label="Province" value={province} isLoading={isLoading} />
-          <InfoRow label="City" value={city} isLoading={isLoading} />
-          <InfoRow label="Country" value={country} isLoading={isLoading} />
-          <InfoRow label="Postal Code" value={postalCode} isLoading={isLoading} />
-          <InfoRow label="Address" value={address} isLoading={isLoading} />
+          <InfoRow label="Owner Name" value={fullName ? fullName : 'N/A'} isLoading={isLoading} />
+          <InfoRow label="Owner Email" value={email ? email : 'N/A'} isLoading={isLoading} />
+          <InfoRow label="Owner Phone" value={dialCode && phone ? `${dialCode} ${phone}` : 'N/A'} isLoading={isLoading} />
+          <InfoRow label="Province" value={province ? province : 'N/A'} isLoading={isLoading} />
+          <InfoRow label="City" value={city ? city : 'N/A'} isLoading={isLoading} />
+          <InfoRow label="Country" value={country ? country : 'N/A'} isLoading={isLoading} />
+          <InfoRow label="Postal Code" value={postalCode ? postalCode : 'N/A'} isLoading={isLoading} />
+          <InfoRow label="Address" value={address ? address : 'N/A'} isLoading={isLoading} />
           <InfoRow
             label="Current Plan"
             value={currentPlan ?? <span className="text-danger">No Enrollment Yet!</span>}

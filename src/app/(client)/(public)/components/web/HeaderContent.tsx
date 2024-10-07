@@ -323,8 +323,12 @@ export default function HeaderContent() {
                         <Link href="/retailer/login" className={`relative  transition-all duration-150 ease-in hover:text-red-500`}>
                           <CustomButton color="danger" text={t('login')} className="!m-0 !px-3 !py-2 !text-xs" />
                         </Link>
-                        <Link href="/retailer/register" className={`relative  transition-all duration-150 ease-in hover:text-red-500`}>
-                          <CustomButton color="outline" text={t('signUp')} className="!m-0 !border-[#F5F5F5]  !px-3 !py-2 !text-xs" />
+                        <Link href="/retailer/register" className={`relative transition-all duration-150 ease-in hover:text-red-500`}>
+                          <CustomButton
+                            color="outline"
+                            text={t('signUp')}
+                            className={`!m-0 !border-[#F5F5F5] !px-3  !py-2 !text-xs ${isScrolled ? '!text-white' : ''} `}
+                          />
                         </Link>
                       </div>
                     )}

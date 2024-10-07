@@ -169,10 +169,12 @@ export default function RefundTable({ offset }: { offset: number }) {
             <span className="font-bold">Email:</span> {row?.original?.enrollsubscription?.retailer?.email}
           </p>
           <p>
-            <span className="font-bold">Phone:</span> {row?.original?.enrollsubscription?.retailer?.phone}
+            <span className="font-bold">Phone:</span>{' '}
+            {row?.original?.enrollsubscription?.retailer?.phone ? row?.original?.enrollsubscription?.retailer?.phone : 'N/A'}
           </p>
           <p>
-            <span className="font-bold">Country:</span> {row?.original?.enrollsubscription?.retailer?.country}
+            <span className="font-bold">Country:</span>{' '}
+            {row?.original?.enrollsubscription?.retailer?.country ? row?.original?.enrollsubscription?.retailer?.country : 'N/A'}
           </p>
         </div>
       </div>

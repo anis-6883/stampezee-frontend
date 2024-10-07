@@ -9,7 +9,7 @@ interface InfoRowProps {
 
 export const InfoRow: React.FC<InfoRowProps> = ({ label, value, isLoading = false }) => (
   <div className="flex items-center justify-between font-medium">
-    <span className="font-bold">{label}</span>
-    {isLoading ? <Skeleton className="h-6 w-32 rounded" /> : <span>{value !== undefined ? value : 'N/A'}</span>}
+    <span className="w-[30%] font-bold">{label}</span>
+    {isLoading ? <Skeleton className="h-6 w-32 rounded" /> : <span className="w-[70%]">{value !== undefined ? value : 'N/A'}</span>}
   </div>
 );
