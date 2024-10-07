@@ -115,13 +115,17 @@ export default function RefundTable({ offset }: { offset: number }) {
       header: 'Actions',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
-          <Button
-            className="!px-3 !py-2 !text-xs"
-            onClick={() => handleRefund(row.original)}
-            color="danger"
-            text="Refund"
-            preIcon={<FaRegPaperPlane className="text-base" />}
-          />
+          {row?.original?.refundStatus === 'completed' ? (
+            <span className="font-semibold text-danger">Refunded!</span>
+          ) : (
+            <Button
+              className="!px-3 !py-2 !text-xs"
+              onClick={() => handleRefund(row.original)}
+              color="danger"
+              text="Refund"
+              preIcon={<FaRegPaperPlane className="text-base" />}
+            />
+          )}
         </div>
       ),
       mantineTableHeadCellProps: {

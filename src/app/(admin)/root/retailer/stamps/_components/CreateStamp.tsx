@@ -18,7 +18,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { HiPlus } from 'react-icons/hi2';
 import { IoAlertCircle } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine, RiDraftLine, RiDrinks2Fill } from 'react-icons/ri';
@@ -54,7 +53,7 @@ export default function Create({ locale }: { locale: string }) {
     minPurchaseAmount: 0,
     rewardType: 'promotion',
     promotionReward: '',
-    discountReward: 2,
+    discountReward: 0,
     validDateRange: '',
     hasValidity: true,
   };
@@ -283,7 +282,7 @@ export default function Create({ locale }: { locale: string }) {
               {responseIsLoading ? (
                 <StampImgSkeleton />
               ) : (
-                <div className="mb-5 grid grid-cols-1 gap-4 md:grid-cols-8">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-8">
                   {optionsData?.defaultImages?.map((item: any) => (
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
@@ -357,18 +356,9 @@ export default function Create({ locale }: { locale: string }) {
                       {t('clickHere')}
                     </Link>
                   </p>
-                </div>
-              )}
-
-              {optionsData?.customImages?.length !== session?.user?.totalCustomStampImage && (
-                <div>
-                  <Button
-                    className="w-[250px]"
-                    color="danger"
-                    onClick={() => setCreateState(true)}
-                    text={t2('addNewStampImage')}
-                    preIcon={<HiPlus className="text-base" />}
-                  />
+                  <div className="mt-5">
+                    <Button className="w-[205px]" color="danger" onClick={() => setCreateState(true)} text={t2('addNewStampImage')} />
+                  </div>
                 </div>
               )}
 

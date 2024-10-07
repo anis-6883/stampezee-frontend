@@ -1,7 +1,7 @@
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import CloneStamp from '../../_components/CloneStamp';
 
 const pageHeader = {
@@ -30,10 +30,11 @@ export default async function Page({ params }: any) {
   pageHeader.breadcrumb[1].name = tStamp('stamps');
   pageHeader.breadcrumb[2].name = t('clone');
   pageHeader.title = t('cloneStamp');
+  const locale = await getLocale();
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <CloneStamp Id={id} offset={data?.data?.general?.timezone?.value} />
+      <CloneStamp Id={id} offset={data?.data?.general?.timezone?.value} locale={locale} />
     </div>
   );
 }

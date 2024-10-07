@@ -1,22 +1,33 @@
 'use client';
 
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
+import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 import { BsPatchCheck } from 'react-icons/bs';
-import { LuCircleDollarSign, LuUsers } from 'react-icons/lu';
+import { FaMoneyBillAlt } from 'react-icons/fa';
+import { LuUsers } from 'react-icons/lu';
 import { MdShoppingCartCheckout } from 'react-icons/md';
 import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
+import { useSelector } from 'react-redux';
 import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
-export default function StateCardView({ className }: { className: string }) {
+export default function StateCardView({ className, currency }: { className: string; currency?: string }) {
+  const [selectedCurrency, setSelectedCurrency] = useState<any>();
+  const { currencyExchangeRates } = useSelector((state: RootState) => state.currencyExchangeSlice);
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
   const t = useTranslations('RetailerDashboard');
 
   const { totalOrder, totalActiveStamp, totalRevenue, totalCustomer } = data?.data || {};
+
+  useEffect(() => {
+    const selectedCurrency: any = currencyExchangeRates?.find((item: any) => item?.name === currency);
+    setSelectedCurrency(selectedCurrency);
+  }, [currency, currencyExchangeRates]);
 
   return (
     <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>
@@ -42,10 +53,10 @@ export default function StateCardView({ className }: { className: string }) {
           />
 
           <MetricCard
-            icon={<LuCircleDollarSign className="text-2xl" />}
+            icon={<FaMoneyBillAlt className="text-2xl" />}
             key={1}
-            title={`${t('totalRevenue')} (CAD)`}
-            metric={totalRevenue}
+            title={`${t('totalRevenue')} (${currency})`}
+            metric={totalRevenue * selectedCurrency?.exchangeRate}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}

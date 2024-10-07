@@ -130,7 +130,7 @@ export default function Footer({ general }: any) {
                       />
                       <div className="rounded-full bg-[#E55555] px-4 py-2 text-sm font-bold text-white">
                         <button disabled={isSubmitting} className="flex items-center justify-center gap-1" type="submit">
-                          <span className="min-w-[97px] text-sm">{t('newsletterButtonText')}</span>{' '}
+                          <span className="w-auto text-sm">{t('newsletterButtonText')}</span>{' '}
                           {isSubmitting ? <ImSpinner9 className="animate-spin text-base" /> : <BsCheck2Circle className="text-base" />}
                         </button>
                       </div>

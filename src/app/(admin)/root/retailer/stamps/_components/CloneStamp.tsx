@@ -12,6 +12,7 @@ import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -22,8 +23,14 @@ import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 import StampPublishedModal from './StampPublishedModal';
 
-export default function CloneStamp({ Id, offset }: any) {
+import { useSession } from 'next-auth/react';
+import { IoAlertCircle } from 'react-icons/io5';
+import CreateStampModal from './CreateStampModal';
+
+export default function CloneStamp({ Id, offset, locale }: any) {
+  const { data: session }: any = useSession();
   const t = useTranslations('RetailerCreateAndUpdateStamp');
+  const t2 = useTranslations('RetailerStampImageCreateUpdate');
   const tCommon = useTranslations('RetailerCommon');
   const [submitting, setSubmitting] = useState(false);
 
@@ -32,6 +39,7 @@ export default function CloneStamp({ Id, offset }: any) {
   const [publishState, setPublishState] = useState(false);
 
   const [publishSubmitting, setPublishSubmitting] = useState(false);
+  const [createState, setCreateState] = useState(false);
 
   const [values, setValues] = useState({});
 
@@ -39,6 +47,8 @@ export default function CloneStamp({ Id, offset }: any) {
   const [optionsData, setOptionsData] = useState<any>();
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery(undefined);
   const { data: stampData } = useGetSingleStampsQuery(Id);
+
+  const isAddons = session?.user?.totalCustomStampImage > 0 ? true : false;
 
   useEffect(() => {
     if (responseData) {
@@ -300,7 +310,28 @@ export default function CloneStamp({ Id, offset }: any) {
                   ))}
                 </div>
               )}
-              {errors?.stampImageId && <span className="text-red-600">Select a stamp image of custom or default stamp</span>}
+
+              {isAddons && optionsData?.customImages?.length === 0 && (
+                <div className="border-l-4 border-red-400 bg-blue-50 p-4">
+                  <p className="mb-3 text-sm font-semibold">{t('thereIsNoActiveCustomImageAvailable')}</p>
+                  <p>
+                    {t('createOrActiveCustomStamp')}.{' '}
+                    <Link href={routes.privateRoutes.retailer.stampImage.home} className="font-semibold text-danger hover:cursor-pointer">
+                      {t('clickHere')}
+                    </Link>
+                  </p>
+                  <div className="mt-5">
+                    <Button className="w-[205px]" color="danger" onClick={() => setCreateState(true)} text={t2('addNewStampImage')} />
+                  </div>
+                </div>
+              )}
+
+              {errors?.stampImageId && touched?.stampImageId && (
+                <div className="flex items-center gap-x-1 text-danger">
+                  <IoAlertCircle className="text-lg" />
+                  <span>{t('selectOneFromDefaultOrCustomStampIsRequired')}</span>
+                </div>
+              )}
 
               <InputTextarea name="description" required={false} label={t('description')} placeholder="Write here..." />
 
@@ -343,6 +374,8 @@ export default function CloneStamp({ Id, offset }: any) {
         setIsSubmitting={setPublishSubmitting}
         values={values}
       />
+
+      <CreateStampModal modalState={createState} setModalState={setCreateState} locale={locale} />
     </div>
   );
 }
