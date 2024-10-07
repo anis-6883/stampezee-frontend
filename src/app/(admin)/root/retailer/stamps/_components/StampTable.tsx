@@ -24,6 +24,7 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
 import { IoCheckmarkCircle } from 'react-icons/io5';
+import { LuPartyPopper } from 'react-icons/lu';
 import { Badge } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
@@ -187,7 +188,13 @@ export default function StampTable({ offset }: { offset: number }) {
         <div className="flex items-center justify-center gap-2">
           <div className="text-white">
             {!row?.original?.isPublished ? (
-              <Button className="!m-0" onClick={() => handlePublishStamp(row?.original)} color="danger" text={t('publishNow')} />
+              <Button
+                postIcon={<LuPartyPopper className="text-xl" />}
+                className="!m-0 !px-3 !py-2"
+                onClick={() => handlePublishStamp(row?.original)}
+                color="danger"
+                text={t('publishNow')}
+              />
             ) : (
               <Badge className="!bg-success">
                 <IoCheckmarkCircle className="text-xl" /> {_.capitalize(t('published'))}
