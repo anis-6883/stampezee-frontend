@@ -45,11 +45,14 @@ export default function CustomerTable({ offset }: { offset: number }) {
             <span className="font-bold">{t('email')}:</span> {row?.original?.email}
           </p>
           <p>
-            <span className="font-bold">{t('phone')}:</span> {row?.original?.dialCode}
-            {row?.original?.phone}
+            <span className="font-bold">{t('phone')}:</span>{' '}
+            {row?.original?.dialCode && row?.original?.phone
+              ? `${row?.original?.dialCode}
+            ${row?.original?.phone}`
+              : 'N/A'}
           </p>
           <p>
-            <span className="font-bold">{t('country')}:</span> {row?.original?.country}
+            <span className="font-bold">{t('country')}:</span> {row?.original?.country ? row?.original?.country : 'N/A'}
           </p>
         </div>
       ),

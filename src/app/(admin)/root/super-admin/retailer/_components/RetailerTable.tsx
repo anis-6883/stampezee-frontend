@@ -94,8 +94,11 @@ export default function RetailerTable({ offset }: { offset: number }) {
             <span className="font-bold">Email:</span> {row?.original?.email}
           </p>
           <p>
-            <span className="font-bold">Phone:</span> {row?.original?.dialCode}
-            {row?.original?.phone}
+            <span className="font-bold">Phone:</span>{' '}
+            {row?.original?.dialCode && row?.original?.phone
+              ? `${row?.original?.dialCode}
+            ${row?.original?.phone}`
+              : 'N/A'}
           </p>
         </div>
       ),

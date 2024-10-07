@@ -75,6 +75,8 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     province: retailerProfile?.data?.province || '',
     city: retailerProfile?.data?.city || '',
     postalCode: retailerProfile?.data?.postalCode || '',
+    about: retailerProfile?.data?.about || '',
+    website: retailerProfile?.data?.website || '',
     address: retailerProfile?.data?.address || '',
     image: retailerProfile?.data?.image
       ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailerProfile?.data?.image}`
@@ -181,6 +183,11 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                   <InputField name="province" label={t('province')} placeholder="Ontario" />
                   <InputField name="city" label={t('city')} placeholder="Toronto" />
                   <InputField name="postalCode" label={t('postalCode')} placeholder="M3C" />
+                </div>
+
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  <InputField required={false} name="about" label="About" placeholder="Write About Here" />
+                  <InputField required={false} name="website" label="Website" placeholder="https://www.user.com" />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">

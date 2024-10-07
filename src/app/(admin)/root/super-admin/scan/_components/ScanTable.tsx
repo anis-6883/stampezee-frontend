@@ -151,11 +151,15 @@ export default function ScanTable({ offset }: { offset: number }) {
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Phone</td>
-                        <td className="px-6 py-4">{`${row?.original?.customer?.dialCode}${row?.original?.customer?.phone}`}</td>
+                        <td className="px-6 py-4">
+                          {row?.original?.customer?.dialCode && row?.original?.customer?.phone
+                            ? `${row?.original?.customer?.dialCode}${row?.original?.customer?.phone}`
+                            : 'N/A'}
+                        </td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Country</td>
-                        <td className="px-6 py-4">{row?.original?.customer?.country}</td>
+                        <td className="px-6 py-4">{row?.original?.customer?.country ? row?.original?.customer?.country : 'N/A'}</td>
                       </tr>
                     </tbody>
                   </table>
