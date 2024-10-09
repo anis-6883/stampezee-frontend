@@ -108,10 +108,10 @@ export default function HeaderContent() {
 
   return (
     <div>
-      <nav className={`fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>
-        <div className={`mx-auto flex max-w-[1300px] flex-wrap items-center justify-between p-2`}>
+      <nav className={` fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>
+        <div className={` mx-auto flex max-w-[1300px] flex-wrap items-center gap-x-10  p-2`}>
           <Link href={routes.publicRoutes.home} className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="/images/logo.png" className="h-14" alt="logo" />
+            <img src="/images/logo.png" className="h-20" alt="logo" />
             <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span>
           </Link>
           <div className="flex items-center space-x-3 md:order-2 md:space-x-0">
@@ -278,20 +278,20 @@ export default function HeaderContent() {
                 </Drawer>
 
                 <ul
-                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center justify-center rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
+                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center justify-center gap-x-10 rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                 >
                   <li className="w-max-content">
                     <Link
                       href={routes.publicRoutes.home}
-                      className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
+                      className={`relative text-[17px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
                     >
-                      {t('home')}
+                      how it works
                     </Link>
                   </li>
                   <li className="w-max-content">
                     <Link
                       href={routes.publicRoutes.pricing}
-                      className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.pricing ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                      className={`relative text-[17px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.pricing ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
                       {t('pricing')}
                     </Link>
@@ -299,7 +299,7 @@ export default function HeaderContent() {
                   <li>
                     <Link
                       href="/faqs"
-                      className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.faqs ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                      className={`relative text-[17px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.faqs ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
                       {t('faq')}
                     </Link>
@@ -307,7 +307,7 @@ export default function HeaderContent() {
                   <li>
                     <Link
                       href={routes.publicRoutes.contactUs}
-                      className={`relative transition-all duration-150 ease-in ${pathname === routes.publicRoutes.contactUs ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                      className={`relative text-[17px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.contactUs ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
                       {t('contact_us')}
                     </Link>
@@ -319,21 +319,31 @@ export default function HeaderContent() {
                         <CustomButton color="danger" text={t('dashboard')} className="!m-0" />
                       </Link>
                     ) : (
-                      <div className="flex items-center justify-center gap-4">
-                        <Link href="/retailer/login" className={`relative  transition-all duration-150 ease-in hover:text-red-500`}>
-                          <CustomButton color="danger" text={t('login')} className="!m-0 !px-3 !py-2 !text-xs" />
+                      <div className="flex items-center justify-center gap-x-10">
+                        <Link
+                          style={{ letterSpacing: '4px' }}
+                          href="/retailer/login"
+                          className={`rounded-full bg-red-600 px-4 py-2 text-[17px] font-bold uppercase text-white`}
+                        >
+                          {/* <CustomButton color="danger" text={t('login')} className="!m-0 !px-3 !py-2 !text-xs" /> */}
+                          Login
                         </Link>
-                        <Link href="/retailer/register" className={`relative transition-all duration-150 ease-in hover:text-red-500`}>
-                          <CustomButton
+                        <Link
+                          style={{ letterSpacing: '4px' }}
+                          href="/retailer/register"
+                          className={`rounded-full border border-red-600 px-4 py-2 text-[17px] font-bold uppercase text-black`}
+                        >
+                          {/* <CustomButton
                             color="outline"
                             text={t('signUp')}
                             className={`!m-0 !border-[#F5F5F5] !px-3  !py-2 !text-xs ${isScrolled ? '!text-white' : ''} `}
-                          />
+                          /> */}
+                          Sign-Up
                         </Link>
                       </div>
                     )}
                     {isLoggedIn && (
-                      <Menu as="div" className="relative inline-block text-left">
+                      <Menu as="div" className="relative ml-14 inline-block text-left">
                         <div className="mt-1">
                           <Menu.Button className="ml-2">
                             <img
@@ -391,7 +401,7 @@ export default function HeaderContent() {
                         </Transition>
                       </Menu>
                     )}
-                    <div className="ml-3">
+                    <div className="ml-14">
                       <AiOutlineGlobal
                         onClick={() => setModalState(true)}
                         className="h-8 w-8 cursor-pointer rounded-full p-1 ring-2 ring-[#F5F5F5]"

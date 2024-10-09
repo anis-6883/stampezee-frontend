@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle, BsPatchCheck } from 'react-icons/bs';
 import { IoCloseOutline, IoStorefrontOutline } from 'react-icons/io5';
-import { LuCircleDollarSign } from 'react-icons/lu';
+import { LuCalendarDays, LuCircleDollarSign } from 'react-icons/lu';
 import { RiTeamLine } from 'react-icons/ri';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
@@ -163,6 +163,15 @@ export default function CreateUpdateModel({
                       placeholder="9.99"
                       prefix={<LuCircleDollarSign className="text-xl" />}
                     />
+                    {formData?.slug === 'trial' && (
+                      <InputField
+                        name="duration"
+                        label="Duration (Days)"
+                        type="number"
+                        placeholder="7"
+                        prefix={<LuCalendarDays className="text-xl" />}
+                      />
+                    )}
                   </div>
                   <div className="my-3 flex gap-3">
                     {formData?.type === 'subscription' && (

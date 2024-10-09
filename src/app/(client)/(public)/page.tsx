@@ -13,14 +13,18 @@ export default function Page() {
   return (
     <div className="overflow-hidden">
       {/* rgba(22, 28, 36, 0.8),  */}
-      <div className="relative mx-auto mt-10 w-full">
-        <div className="h-[95vh] w-full bg-red-500 object-cover sm:h-[97vh]"></div>
+      <div className="hero-curve relative mx-auto mt-10 w-full">
+        <div className="h-[136vh] w-full  bg-[#FF3131] sm:h-[85vh]"></div>
         <div className="absolute inset-0"></div>
         <div className="absolute inset-0 mx-auto flex max-w-screen-xl items-center px-4 sm:px-6 lg:px-8">
           <div className="flex w-full flex-col-reverse items-center justify-between sm:flex-row">
             <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
-              <h1 className="text-3xl font-semibold text-white sm:text-4xl">{t('bannerTitle')}</h1>
-              <p className="mt-4 text-balance text-base font-medium text-white sm:text-xl">{t('bannerDetails')}</p>
+              <div className="flex flex-col gap-y-6">
+                <h1 className="text-3xl font-semibold text-white sm:text-7xl">Revolutionize</h1>
+                <h1 className="text-3xl font-semibold text-white sm:text-7xl">Your Customer </h1>
+                <h1 className="text-3xl font-semibold text-white sm:text-7xl">Experience</h1>
+              </div>
+              <p className="mt-4 text-balance py-7 text-base font-medium text-white sm:text-xl">{t('bannerDetails')}</p>
               <div className="mt-8">
                 <Link
                   href={routes.publicRoutes.pricing}
@@ -30,9 +34,9 @@ export default function Page() {
                 </Link>
               </div>
             </div>
-            <div className="mt-10 hidden justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex">
-              <div className="h-[55%] w-[55%] xl:h-[70%] xxl:w-[70%]">
-                <Image src="/default/hero-image.png" alt="hero image" className="h-full w-full " />
+            <div className=" mt-10 justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex">
+              <div className=" h-[55%] w-[55%] xl:h-[70%] xxl:w-[70%]">
+                <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
               </div>
             </div>
           </div>
