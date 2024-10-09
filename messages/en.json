@@ -517,6 +517,7 @@
     "email": "Email",
     "update": "Update",
     "owner": "Owner",
+    "businessCurrency": "Business Currency",
     "retailerProfileUpdated": "Retailer profile updated successfully!"
   },
   "RetailerBalanceCard": {

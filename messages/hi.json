@@ -517,6 +517,7 @@
     "email": "ईमेल",
     "update": "अद्यतन करें",
     "owner": "मालिक",
+    "businessCurrency": "व्यवसाय मुद्रा",
     "retailerProfileUpdated": "खुदरा विक्रेता प्रोफ़ाइल सफलतापूर्वक अद्यतन हुई!"
   },
   "RetailerBalanceCard": {

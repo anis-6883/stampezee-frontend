@@ -517,6 +517,7 @@
     "email": "Email",
     "update": "Mettre à Jour",
     "owner": "Propriétaire",
+    "businessCurrency": "Monnaie commerciale",
     "retailerProfileUpdated": "Le profil du détaillant a été mis à jour avec succès!"
   },
   "RetailerBalanceCard": {

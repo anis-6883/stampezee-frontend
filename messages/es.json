@@ -517,6 +517,7 @@
     "email": "Correo Electrónico",
     "update": "Actualizar",
     "owner": "Propietario",
+    "businessCurrency": "Moneda de negocios",
     "retailerProfileUpdated": "¡El perfil del minorista se ha actualizado con éxito!"
   },
   "RetailerBalanceCard": {

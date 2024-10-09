@@ -8,8 +8,10 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery, useRetailerUpdateProfileMutation } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { ICountrySelect } from '@/types';
 import countryData from '@/utils/get-country-list';
+import currencyData from '@/utils/get-currency-list';
 import { translateText } from '@/utils/GoogleTranslate';
 import objectToFormData from '@/utils/objectToFormData';
 import removeEmptyValues from '@/utils/removeEmptyValues';
@@ -32,8 +34,23 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
   const { data: session, update } = useSession();
   const { user } = useSelector((state: RootState) => state.authSlice);
 
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
+
   const [retailerUpdateProfile, { data: updateRetailerProfile, isSuccess, error }] = useRetailerUpdateProfileMutation();
   const { data: retailerProfile, isSuccess: isRetailerProfileSuccess } = useRetailerGetProfileQuery(null);
+
+  const currencyExchangeOptions = currencyData?.reduce((acc: any, curr: any) => {
+    currencyExchanges?.map((item: any) => {
+      if (item?.name === curr?.code) {
+        acc?.push({
+          value: curr?.code,
+          label: curr?.code,
+          symbol: curr?.unicode_symbol,
+        });
+      }
+    });
+    return acc;
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -81,6 +98,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     image: retailerProfile?.data?.image
       ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailerProfile?.data?.image}`
       : '/images/stamp-logo.png',
+    businessCurrency: retailerProfile?.data?.businessCurrency || 'CAD',
   };
 
   const validationSchema = Yup.object().shape({
@@ -94,6 +112,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     city: Yup.string().trim().required(tRetailerCommon('required')),
     postalCode: Yup.string().trim().required(tRetailerCommon('required')),
     address: Yup.string().trim().required(tRetailerCommon('required')),
+    businessCurrency: Yup.string().required(tRetailerCommon('required')),
   });
 
   const handleSubmit = async (values: any) => {
@@ -195,6 +214,37 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                   <InputField name="address" label={t('address')} placeholder="120 Bremner Blvd, Suite 800" />
                 </div>
 
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  <div className="flex flex-col gap-1">
+                    <div>
+                      <p className="font-medium">
+                        {t('businessCurrency')}
+                        <span className="text-red-500"> *</span>
+                      </p>
+                    </div>
+
+                    {isRetailerProfileSuccess && (
+                      <ReactSelect
+                        placeholder="Select your business currency"
+                        menuPlacement="top"
+                        options={currencyExchangeOptions}
+                        getOptionLabel={getOptionLabelForCurrency}
+                        getOptionValue={(option) => option.label}
+                        defaultValue={currencyExchangeOptions.filter(
+                          (currency: any) => currency.label === (retailerProfile?.data?.businessCurrency || 'CAD')
+                        )}
+                        onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) =>
+                          setFieldValue('businessCurrency', selectedOption?.label)
+                        }
+                        onBlur={() => setFieldTouched('businessCurrency', true)}
+                      />
+                    )}
+                    {touched.businessCurrency && errors.businessCurrency && (
+                      <FieldError error={errors?.businessCurrency as string} className="text-xs text-red-600" />
+                    )}
+                  </div>
+                </div>
+
                 <p className="flex flex-col text-end text-xs font-semibold">
                   <span dangerouslySetInnerHTML={{ __html: tRetailerCommon.raw('mandatoryFieldsMessage') }} />
                 </p>
@@ -221,5 +271,11 @@ const getOptionLabel = (option: any): any => (
   <div className="flex ">
     <img src={option.flag} alt={option.label} style={{ width: '20px', marginLeft: '5px' }} />
     <span className="ml-2">{option.label}</span>
+  </div>
+);
+
+const getOptionLabelForCurrency = (option: any): any => (
+  <div className="flex ">
+    <span className="ml-2">{`${option.label} - ${option.symbol}`}</span>
   </div>
 );
