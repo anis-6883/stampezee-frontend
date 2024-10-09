@@ -39,6 +39,11 @@ export const menuItems: { [key: string]: any } = {
       icon: <RiMoneyDollarCircleLine />,
     },
     {
+      name: 'Critical Payments',
+      href: routes.privateRoutes.superAdmin.payment.home,
+      icon: <RiMoneyDollarCircleLine />,
+    },
+    {
       name: 'Refunds',
       href: routes.privateRoutes.superAdmin.refund,
       icon: <RiRefund2Line />,
@@ -97,7 +102,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuLayoutDashboard />,
     },
     {
-      name: 'Plans & AddOns',
+      name: 'Plans & Add-on',
       href: routes.privateRoutes.retailer.membershipPlan,
       icon: <IoDiamondOutline />,
     },

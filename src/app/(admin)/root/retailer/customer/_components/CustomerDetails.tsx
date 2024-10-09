@@ -18,10 +18,10 @@ export default function CustomerDetails({ id, offset }: { id: string; offset: nu
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
           <InfoRow label={t('name')} value={fullName ? fullName : 'N/A'} isLoading={isLoading} />
-          <InfoRow label={t('email')} value={email ? email : 'N/A'} isLoading={isLoading} />
-          <InfoRow label={t('phone')} value={dialCode && phone ? `${dialCode}${phone}` : 'N/A'} isLoading={isLoading} />
+          {/* <InfoRow label={t('email')} value={email ? email : 'N/A'} isLoading={isLoading} />
+          <InfoRow label={t('phone')} value={dialCode && phone ? `${dialCode}${phone}` : 'N/A'} isLoading={isLoading} /> */}
           <InfoRow label={t('country')} value={country ? country : 'N/A'} isLoading={isLoading} />
-          <InfoRow label={t('address')} value={address?.name ? address?.name : 'N/A'} isLoading={isLoading} />
+          {/* <InfoRow label={t('address')} value={address?.name ? address?.name : 'N/A'} isLoading={isLoading} /> */}
         </div>
       </div>
 

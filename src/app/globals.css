@@ -686,6 +686,19 @@ div[style='z-index: 1000001;'],
   overflow: hidden;
 }
 
+/* Hero Section  */
+
+.hero-curve {
+  clip-path: polygon(0 10%, 100% 7%, 100% 84%, 0 93%);
+}
+
+/* @media (min-width: 768px) {
+  
+  .hero-curve {
+    clip-path: polygon(0 13%, 100% 4%, 100% 84%, 0 93%);
+  }
+} */
+
 input#react-select-5-input:focus {
   box-shadow: none !important;
 }

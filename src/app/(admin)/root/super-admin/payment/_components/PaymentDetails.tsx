@@ -9,9 +9,12 @@ import moment from 'moment';
 import Link from 'next/link';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { HiShoppingCart } from 'react-icons/hi2';
+import { ImCancelCircle } from 'react-icons/im';
 import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
+import { MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { RiDownloadCloud2Fill } from 'react-icons/ri';
+import { SlLock } from 'react-icons/sl';
 import { Badge } from 'rizzui';
 
 export default function PaymentDetails({ id, offset }: { id: string; offset: number }) {
@@ -218,6 +221,36 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
             </tbody>
           )}
         </table>
+      </div>
+
+      <div className="mt-20">
+        <div className="flex justify-end">
+          {isLoading || isError ? (
+            <Skeleton className="h-6 w-32 rounded" />
+          ) : status === true && moment().isBefore(validityToUtc) ? (
+            <Button
+              // onClick={() =>
+              //   getPortal({
+              //     customerId: stripe?.customerId,
+              //     returnUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/${routes.privateRoutes.retailer.billing.details(id)}`,
+              //   })
+              // }
+              isSubmitting={false}
+              className="!m-0"
+              color="danger"
+              text={stripe?.renewCancelAt === null ? 'Cancel Subscription Or Change Card' : 'Renew Subscription Or Change Card'}
+              postIcon={stripe?.renewCancelAt === null ? <ImCancelCircle className="text-xl" /> : <MdAutorenew className="text-xl" />}
+            />
+          ) : (
+            <Button
+              disabled={true}
+              className="!m-0"
+              color="danger"
+              text={'Subscription Canceled'}
+              postIcon={<SlLock className="text-xl" />}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ export default function CustomerTable({ offset }: { offset: number }) {
           <p>
             <span className="font-bold">{t('name')}:</span> {row?.original?.fullName}
           </p>
-          <p>
+          {/* <p>
             <span className="font-bold">{t('email')}:</span> {row?.original?.email}
           </p>
           <p>
@@ -50,7 +50,7 @@ export default function CustomerTable({ offset }: { offset: number }) {
               ? `${row?.original?.dialCode}
             ${row?.original?.phone}`
               : 'N/A'}
-          </p>
+          </p> */}
           <p>
             <span className="font-bold">{t('country')}:</span> {row?.original?.country ? row?.original?.country : 'N/A'}
           </p>
