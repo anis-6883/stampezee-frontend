@@ -517,6 +517,7 @@
     "email": "メール",
     "update": "更新する",
     "owner": "所有者",
+    "businessCurrency": "ビジネス通貨",
     "retailerProfileUpdated": "小売業者プロフィールが正常に更新されました！"
   },
   "RetailerBalanceCard": {

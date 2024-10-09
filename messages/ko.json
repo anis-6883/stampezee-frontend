@@ -518,6 +518,7 @@
     "email": "이메일",
     "update": "업데이트",
     "owner": "소유자",
+    "businessCurrency": "비즈니스 통화",
     "retailerProfileUpdated": "소매업자 프로필이 성공적으로 업데이트되었습니다!"
   },
   "RetailerBalanceCard": {

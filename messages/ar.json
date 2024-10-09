@@ -517,6 +517,7 @@
     "email": "البريد الإلكتروني",
     "update": "تحديث",
     "owner": "المالك",
+    "businessCurrency": "العملة التجارية",
     "retailerProfileUpdated": "تم تحديث ملف البائع التجزئة بنجاح!"
   },
   "RetailerBalanceCard": {

@@ -517,6 +517,7 @@
     "email": "电子邮件",
     "update": "更新",
     "owner": "所有者",
+    "businessCurrency": "商业货币",
     "retailerProfileUpdated": "零售商资料更新成功！"
   },
   "RetailerBalanceCard": {

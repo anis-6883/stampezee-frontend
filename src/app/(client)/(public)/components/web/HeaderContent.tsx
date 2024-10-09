@@ -394,7 +394,7 @@ export default function HeaderContent() {
                     <div className="ml-3">
                       <AiOutlineGlobal
                         onClick={() => setModalState(true)}
-                        className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-[#F5F5F5]"
+                        className="h-8 w-8 cursor-pointer rounded-full p-1 ring-2 ring-[#F5F5F5]"
                       />
                     </div>
                     <button

@@ -21,7 +21,7 @@ export default function HomeAndLocalButton() {
           </span>
         </Tooltip>
       </Link>
-      <Tooltip color="danger" className="bg-danger text-white" size="sm" placement="top" content="Global" arrowClassName="fill-danger">
+      <Tooltip color="danger" className="bg-danger text-white" size="sm" placement="top" content="Translate" arrowClassName="fill-danger">
         <span>
           <AiOutlineGlobal onClick={() => setModalState(true)} className="cursor-pointer text-xl text-danger" />
         </span>

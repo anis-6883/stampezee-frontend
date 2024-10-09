@@ -517,6 +517,7 @@
     "email": "Электронная почта",
     "update": "Обновить",
     "owner": "Владелец",
+    "businessCurrency": "Деловая валюта",
     "retailerProfileUpdated": "Профиль розничного продавца успешно обновлен!"
   },
   "RetailerBalanceCard": {

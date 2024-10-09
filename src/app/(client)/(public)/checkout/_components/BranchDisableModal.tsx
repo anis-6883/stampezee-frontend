@@ -3,7 +3,6 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { LuCheckCircle } from 'react-icons/lu';
 import { Modal } from 'rizzui';
 
 import { AdvancedCheckbox, CheckboxGroup, Text } from 'rizzui';
@@ -83,7 +82,7 @@ export default function BranchDisableModal({
               >
                 <span className="flex justify-between">
                   <Text as="b">{item.title}</Text>
-                  <LuCheckCircle className="icon hidden h-5 w-5 text-danger" />
+                  {/* <LuCheckCircle className="icon hidden h-5 w-5 text-danger" /> */}
                 </span>
               </AdvancedCheckbox>
             ))}
