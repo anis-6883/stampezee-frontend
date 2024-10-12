@@ -136,7 +136,7 @@ export default function HeaderContent() {
                 <Drawer
                   isOpen={drawerSate.isOpen}
                   placement={'left'}
-                  customSize="260px"
+                  customSize={260}
                   containerClassName="bg-white opacity-95"
                   onClose={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
                 >

@@ -7,11 +7,11 @@ import { ActionIcon } from 'rizzui';
 interface Props {
   view: JSX.Element;
   placement?: DrawerPlacements;
-  customSize?: string;
+  customSize?: number;
   className?: string;
 }
 
-export default function HamburgerButton({ view, placement = 'left', customSize = '320px', className }: Props) {
+export default function HamburgerButton({ view, placement = 'left', customSize = 320, className }: Props) {
   const { openDrawer } = useDrawer();
   return (
     <ActionIcon
