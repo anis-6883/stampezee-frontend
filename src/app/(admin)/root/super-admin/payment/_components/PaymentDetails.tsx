@@ -2,11 +2,16 @@
 
 import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useSingleSubscriptionPaymentQuery } from '@/features/super-admin/payment/paymentApi';
+import { routes } from '@/config/routes';
+import { SerializedError } from '@/features/api/apiSlice';
+import { useGetRetailerBillingPortalMutation, useSingleSubscriptionPaymentQuery } from '@/features/super-admin/payment/paymentApi';
 import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import moment from 'moment';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { HiShoppingCart } from 'react-icons/hi2';
 import { ImCancelCircle } from 'react-icons/im';
@@ -18,10 +23,25 @@ import { SlLock } from 'react-icons/sl';
 import { Badge } from 'rizzui';
 
 export default function PaymentDetails({ id, offset }: { id: string; offset: number }) {
+  const { push } = useRouter();
   const { data, isLoading, isError } = useSingleSubscriptionPaymentQuery(id);
+  const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetRetailerBillingPortalMutation();
   const { stripe, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, planSnapshot, retailer, payments } =
     data?.data || {};
   const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
+
+  useEffect(() => {
+    if (portalError) {
+      const myError = portalError as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+
+    if (!portalLoading && !portalError) {
+      if (portalData?.data?.url) {
+        push(portalData?.data?.url);
+      }
+    }
+  }, [portalData, portalError, portalLoading, push]);
 
   return (
     <div className="w-full">
@@ -229,13 +249,13 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
             <Skeleton className="h-6 w-32 rounded" />
           ) : status === true && moment().isBefore(validityToUtc) ? (
             <Button
-              // onClick={() =>
-              //   getPortal({
-              //     customerId: stripe?.customerId,
-              //     returnUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/${routes.privateRoutes.retailer.billing.details(id)}`,
-              //   })
-              // }
-              isSubmitting={false}
+              onClick={() =>
+                getPortal({
+                  customerId: stripe?.customerId,
+                  returnUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/${routes.privateRoutes.superAdmin.payment.details(id)}`,
+                })
+              }
+              isSubmitting={portalLoading}
               className="!m-0"
               color="danger"
               text={stripe?.renewCancelAt === null ? 'Cancel Subscription Or Change Card' : 'Renew Subscription Or Change Card'}

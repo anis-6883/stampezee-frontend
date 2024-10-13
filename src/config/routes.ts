@@ -88,6 +88,9 @@ export const routes = {
         home: `/root/super-admin/payment`,
         details: (id: number | string) => `/root/super-admin/payment/${id}`,
       },
+      criticalPayment: {
+        home: `/root/super-admin/critical-payment`,
+      },
       refund: `/root/super-admin/refund`,
       scan: `/root/super-admin/scan`,
       customer: {

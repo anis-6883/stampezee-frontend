@@ -6,7 +6,7 @@ import { IoDiamondOutline } from 'react-icons/io5';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
 import { MdOutlineCurrencyExchange, MdOutlineQrCodeScanner } from 'react-icons/md';
-import { PiBellRinging, PiStamp } from 'react-icons/pi';
+import { PiBellRinging, PiStamp, PiSyringeLight } from 'react-icons/pi';
 import { RiContactsLine, RiCoupon4Line, RiMoneyDollarCircleLine, RiRefund2Line } from 'react-icons/ri';
 import { TbUserShield } from 'react-icons/tb';
 
@@ -39,11 +39,6 @@ export const menuItems: { [key: string]: any } = {
       icon: <RiMoneyDollarCircleLine />,
     },
     {
-      name: 'Critical Payments',
-      href: routes.privateRoutes.superAdmin.payment.home,
-      icon: <RiMoneyDollarCircleLine />,
-    },
-    {
       name: 'Refunds',
       href: routes.privateRoutes.superAdmin.refund,
       icon: <RiRefund2Line />,
@@ -62,6 +57,11 @@ export const menuItems: { [key: string]: any } = {
       name: 'Push Notifications',
       href: routes.privateRoutes.superAdmin.notification,
       icon: <PiBellRinging />,
+    },
+    {
+      name: 'Critical Payments',
+      href: routes.privateRoutes.superAdmin.criticalPayment.home,
+      icon: <PiSyringeLight />,
     },
     {
       name: 'Currency Exchange Rate',

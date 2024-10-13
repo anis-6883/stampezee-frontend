@@ -16,7 +16,14 @@ export const paymentApi = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'payment', id: arg }],
       keepUnusedDataFor: 10,
     }),
+    getRetailerBillingPortal: builder.mutation({
+      query: (data) => ({
+        url: `/api/secret-root/admin/super-admin/payment/retailer-billing-portal`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetSubscriptionPaymentsQuery, useSingleSubscriptionPaymentQuery } = paymentApi;
+export const { useGetSubscriptionPaymentsQuery, useSingleSubscriptionPaymentQuery, useGetRetailerBillingPortalMutation } = paymentApi;
