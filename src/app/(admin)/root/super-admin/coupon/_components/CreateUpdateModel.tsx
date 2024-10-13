@@ -70,7 +70,7 @@ export default function CreateUpdateModel({
     validDateRange: formData?.validDateRange || '',
     allowFor: formData?.allowFor || 'all',
     allowedRetailers: formData?.allowedRetailers || [],
-    applicablePackage: formData?.applicablePackage || '',
+    applicablePackages: formData?.applicablePackages || [],
   };
 
   const validationSchema = Yup.object().shape({
@@ -89,7 +89,10 @@ export default function CreateUpdateModel({
       .min(1, 'Value must be greater then or equal to 1')
       .required('Required!'),
     validDateRange: Yup.string().required('Required!'),
-    applicablePackage: Yup.string().required('Required!'),
+    applicablePackages: Yup.array()
+      .of(Yup.string().required('Array must contain a string'))
+      .min(1, 'Select at least one package!')
+      .required('Required!'),
     allowedRetailers: Yup.string().when('allowFor', {
       is: 'specific',
       then: () =>
@@ -248,26 +251,28 @@ export default function CreateUpdateModel({
                       <div>
                         <div className="mb-2">
                           <p className="font-medium">
-                            Select Specific Plan / Addon
+                            Select Specific Plans / Add-ons
                             <span className="text-red-500"> *</span>
                           </p>
                         </div>
                         <ReactSelect
                           placeholder="Select One"
                           isSearchable
+                          isMulti={true}
                           options={planOptions}
                           getOptionValue={(option) => option.label}
-                          defaultValue={planOptions.filter((plan: any) => (values.applicablePackage === plan.value ? plan.value : null))}
+                          defaultValue={planOptions.filter((plan: any) => values.applicablePackages.includes(plan.value))}
                           onChange={(option: any) => {
-                            setFieldValue('applicablePackage', option.value);
+                            const packageIds = option.map((obj: any) => obj.value);
+                            setFieldValue('applicablePackages', packageIds);
                           }}
-                          onBlur={() => setFieldTouched('applicablePackage', true)}
+                          onBlur={() => setFieldTouched('applicablePackages', true)}
                           styles={{
                             control: (base) => ({
                               ...base,
                               boxShadow: 'none !important',
-                              ...(touched.applicablePackage &&
-                                errors.applicablePackage && {
+                              ...(touched.applicablePackages &&
+                                errors.applicablePackages && {
                                   minHeight: '43px !important',
                                   borderRadius: '7px !important',
                                   border: '1px solid #DC3545 !important',
@@ -279,10 +284,10 @@ export default function CreateUpdateModel({
                             }),
                           }}
                         />
-                        {touched.applicablePackage && errors.applicablePackage && (
+                        {touched.applicablePackages && errors.applicablePackages && (
                           <span className="mt-1 flex items-center gap-x-1 text-danger">
                             <IoAlertCircle className="text-lg" />
-                            <span>{errors.applicablePackage as string}</span>
+                            <span>{errors.applicablePackages as string}</span>
                           </span>
                         )}
                       </div>

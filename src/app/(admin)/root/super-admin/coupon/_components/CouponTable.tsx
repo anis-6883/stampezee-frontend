@@ -91,11 +91,11 @@ export default function CouponTable({ offset }: { offset: number }) {
             <span className="font-bold">Limit:</span> {row?.original?.limit}
           </p>
           <p>
-            <span className="font-bold">Allow Retailer/s:</span>{' '}
+            <span className="font-bold">Allow Retailer:</span>{' '}
             {row?.original?.allowFor === 'all' ? 'All' : row?.original?.allowedRetailers?.length}
           </p>
           <p>
-            <span className="font-bold">Applied Package:</span> {row?.original?.applicablePackage?.title}
+            <span className="font-bold">Applied Package:</span> {row?.original?.applicablePackages?.length}
           </p>
         </div>
       ),
@@ -145,7 +145,6 @@ export default function CouponTable({ offset }: { offset: number }) {
             onClick={() => {
               setFormData({
                 ...row.original,
-                applicablePackage: row.original.applicablePackage._id,
                 validDateRange: `${getFormattedDate(row?.original?.startedAt, offset)} to ${getFormattedDate(row?.original?.expiredAt, offset)}`,
               });
               setCreateState(true);
