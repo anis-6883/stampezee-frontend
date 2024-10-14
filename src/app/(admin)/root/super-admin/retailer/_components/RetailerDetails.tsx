@@ -26,6 +26,7 @@ export default function RetailerDetails({ id }: { id: string }) {
     totalCustomer,
     totalRevenue,
     totalOrder,
+    totalSubAdmin,
     branches,
   } = data?.data || {};
 
@@ -73,6 +74,7 @@ export default function RetailerDetails({ id }: { id: string }) {
         totalActiveStamp={totalActiveStamp}
         totalCustomer={totalCustomer}
         totalRevenue={totalRevenue}
+        totalSubAdmin={totalSubAdmin}
         isLoading={isLoading}
         isError={isError}
         className="2xl:mb-8 my-5"

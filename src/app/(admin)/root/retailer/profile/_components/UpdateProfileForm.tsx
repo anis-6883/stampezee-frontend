@@ -133,6 +133,12 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     dispatch(setValue({ target: 'user', value: { ...user, ...result?.data?.data } }));
   };
 
+  const defaultCurrencyValues = currencyExchangeOptions.filter(
+    (currency: any) => currency.label === retailerProfile?.data?.businessCurrency
+  );
+
+  console.log({ defaultCurrencyValues });
+
   return (
     <div>
       <div className="mt-8">
@@ -223,16 +229,14 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                       </p>
                     </div>
 
-                    {isRetailerProfileSuccess && (
+                    {defaultCurrencyValues?.length > 0 && (
                       <ReactSelect
                         placeholder="Select your business currency"
                         menuPlacement="top"
                         options={currencyExchangeOptions}
                         getOptionLabel={getOptionLabelForCurrency}
                         getOptionValue={(option) => option.label}
-                        defaultValue={currencyExchangeOptions.filter(
-                          (currency: any) => currency.label === (retailerProfile?.data?.businessCurrency || 'CAD')
-                        )}
+                        defaultValue={defaultCurrencyValues}
                         onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) =>
                           setFieldValue('businessCurrency', selectedOption?.label)
                         }

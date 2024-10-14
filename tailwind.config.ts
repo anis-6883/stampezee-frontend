@@ -55,6 +55,7 @@ export default {
         skeleton: 'skeletonWave 1.6s linear 0.5s infinite',
         'spinner-ease-spin': 'spinnerSpin 0.8s ease infinite',
         'spinner-linear-spin': 'spinnerSpin 0.8s linear infinite',
+        marquee: 'marquee 10s linear infinite',
       },
       backgroundImage: {
         skeleton: `linear-gradient(90deg,transparent,#ecebeb,transparent)`,
@@ -94,6 +95,10 @@ export default {
           '100%': {
             transform: 'rotate(360deg)',
           },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-70%)' },
         },
       },
       content: {

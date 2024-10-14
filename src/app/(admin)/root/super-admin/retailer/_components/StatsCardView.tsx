@@ -15,6 +15,7 @@ export default function StatsCardView({
   totalActiveStamp,
   totalCustomer,
   totalRevenue,
+  totalSubAdmin,
   isLoading,
   isError,
 }: {
@@ -23,6 +24,7 @@ export default function StatsCardView({
   totalActiveStamp: number;
   totalCustomer: number;
   totalRevenue: number;
+  totalSubAdmin: number;
   isLoading: boolean;
   isError: boolean;
 }) {
@@ -82,10 +84,10 @@ export default function StatsCardView({
             isLoading={isLoading || isError}
           />
           <MetricCard
-            icon={<BsPatchCheck className="text-2xl" />}
+            icon={<LuUsers className="text-2xl" />}
             key={1}
             title={'Total Sub Admin'}
-            metric={0}
+            metric={totalSubAdmin}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
