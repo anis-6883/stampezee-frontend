@@ -42,6 +42,7 @@ export default function CreateUpdateModel({
     descriptions: formData?.descriptions || getSubDetailsObject(false),
     type: formData?.type || 'subscription',
     slug: formData?.slug || '',
+    duration: formData?.duration || 0,
   };
 
   const validationSchema = Yup.object({
@@ -86,6 +87,7 @@ export default function CreateUpdateModel({
     const isFile = (obj: any): obj is File => obj instanceof File;
 
     let objToFormData: FormData;
+    console.log({ values });
 
     if (formData?._id) {
       const ignoreList = [];

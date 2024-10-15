@@ -29,6 +29,10 @@ export default function Header() {
         </Link>
 
         <SearchWidget />
+        <div className="ml-5 flex w-auto items-center justify-center gap-x-3 rounded-md border border-solid px-3 py-2">
+          <span className="font-bold">Timezone : </span>
+          <span className="font-bold">Asia/Kolkata (+5.5)</span>
+        </div>
       </div>
 
       <HeaderMenuRight />

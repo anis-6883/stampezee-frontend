@@ -6,6 +6,7 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
 import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
+import { useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
 import { RootState } from '@/features/store';
 import { resetState } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
@@ -19,7 +20,7 @@ import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { CiEdit } from 'react-icons/ci';
 import { MdBlock } from 'react-icons/md';
-import { RiRefund2Line } from 'react-icons/ri';
+import { RiChatDeleteLine, RiRefund2Line } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import BranchDisableModal from './BranchDisableModal';
@@ -39,7 +40,10 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   const [branchDisableModalState, setBranchDisableModalState] = useState(false);
   const [disableBranchOptions, setDisableBranchOptions] = useState([]);
   const [totalDisabledBranch, setTotalDisabledBranch] = useState<number>(0);
+  const [disableStampOptions, setDisableStampOptions] = useState([]);
+  const [totalDisabledStamp, setTotalDisabledStamp] = useState<number>(0);
   const [selectedBranches, setSelectedBranches] = useState<string[]>([]);
+  const [selectedStamps, setSelectedStamps] = useState<string[]>([]);
 
   const { isLoggedIn, user, accessToken } = useSelector((state: RootState) => state.authSlice);
 
@@ -48,6 +52,18 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   const { data: profile, isSuccess: profileSuccess, refetch } = useRetailerGetProfileQuery(null, { skip: !isLoggedIn });
 
   const { data: branches } = useAllBranchQuery({ page: 1, limit: 30 }, { skip: !accessToken });
+
+  const { data: stamps } = useGetAllStampsQuery({ page: 1, limit: 30 }, { skip: !accessToken });
+
+  useEffect(() => {
+    const disableStampOptions = stamps?.data?.docs?.map((item: any) => ({ value: item?._id, title: item?.title }));
+    const allowTotalStamp = subscription?.allowTotalStamp || 0;
+    const disabledTotalStamp = stamps?.data?.docs?.length - allowTotalStamp;
+    setDisableStampOptions(disableStampOptions);
+    setTotalDisabledStamp(disabledTotalStamp || 0);
+  }, [stamps, subscription]);
+
+  console.log({ disableStampOptions, totalDisabledStamp });
 
   useEffect(() => {
     const activeTotalBranch = branches?.data?.docs?.filter((item: any) => !item?.disabledBySystem && item?.source === 'subscription');
@@ -115,8 +131,8 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     }
 
     if (planChangeType === 'downgrade') {
-      if (selectedBranches?.length === totalDisabledBranch) {
-        checkOut({ slug: subscription.slug, branchIds: selectedBranches, currency: selectedCurrency });
+      if (selectedBranches?.length === totalDisabledBranch && selectedStamps?.length === totalDisabledStamp) {
+        checkOut({ slug: subscription.slug, branchIds: selectedBranches, stampIds: selectedStamps, currency: selectedCurrency });
       } else {
         setBranchDisableModalState(true);
       }
@@ -133,6 +149,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   };
 
   const disabledBranchItems = disableBranchOptions?.filter((item: any) => selectedBranches?.includes(item?.value));
+  const disabledStampItems = disableStampOptions?.filter((item: any) => selectedStamps?.includes(item?.value));
 
   return (
     <>
@@ -168,18 +185,36 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         </div>
       )}
 
-      {selectedBranches?.length > 0 && downgradeRefund > 0 && (
+      {(selectedBranches?.length > 0 || selectedStamps?.length > 0) && downgradeRefund > 0 && (
         <div className="mt-3 rounded-lg border border-danger p-3">
-          <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">
-            <MdBlock className="text-xl" /> {t('disableBranch')} :
-          </p>
-          <div>
-            {disabledBranchItems?.map((item: any) => (
-              <Badge className="m-1 bg-danger" key={item?.value}>
-                <span className="text-white">{item?.title}</span>
-              </Badge>
-            ))}
-          </div>
+          {selectedBranches?.length > 0 && (
+            <>
+              <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">
+                <MdBlock className="text-xl" /> {t('disableBranch')} :
+              </p>
+              <div>
+                {disabledBranchItems?.map((item: any) => (
+                  <Badge className="m-1 bg-danger" key={item?.value}>
+                    <span className="text-white">{item?.title}</span>
+                  </Badge>
+                ))}
+              </div>
+            </>
+          )}
+          {selectedStamps?.length > 0 && (
+            <>
+              <p className="mb-2 mt-2 flex items-center gap-x-1 text-sm font-semibold">
+                <RiChatDeleteLine className="text-xl" /> Delete Stamps :
+              </p>
+              <div>
+                {disabledStampItems?.map((item: any) => (
+                  <Badge className="m-1 bg-danger" key={item?.value}>
+                    <span className="text-white">{item?.title}</span>
+                  </Badge>
+                ))}
+              </div>
+            </>
+          )}
           <div className="mt-2 flex justify-end">
             <Button
               color="danger"
@@ -191,6 +226,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
           </div>
         </div>
       )}
+
       <Button
         disabled={isCheckoutButtonDisabled({
           plan: subscription,
@@ -216,6 +252,10 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         setSelectedBranches={setSelectedBranches}
         totalDisabledBranch={totalDisabledBranch}
         options={disableBranchOptions}
+        selectedStamps={selectedStamps}
+        setSelectedStamps={setSelectedStamps}
+        totalDisabledStamp={totalDisabledStamp}
+        disableStampOptions={disableStampOptions}
         modalState={branchDisableModalState}
         setModalState={setBranchDisableModalState}
       />

@@ -372,6 +372,7 @@ export interface Subscription {
   image: string;
   isBlocked?: boolean;
   allowTotalBranch?: number;
+  allowTotalStamp?: number;
 }
 
 export interface AddOn {
