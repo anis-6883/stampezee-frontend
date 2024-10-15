@@ -49,14 +49,14 @@ export default function Footer({ general }: any) {
     <div>
       <div className="container mx-auto max-w-[1300px] px-3 sm:px-5">
         <footer className="container mx-auto">
-          <hr className="mb-8 mt-10" />
-          <div className="">
+          {/* <hr className="mb-8 mt-10" /> */}
+          <div className="flex flex-col items-center justify-center gap-x-10 sm:flex-row">
             <div className="flex flex-col items-center md:items-start ">
               <Link className="w-[60px]" href={routes.publicRoutes.home}>
                 <img alt="logo" width={60} height={60} src="/images/logo.png" style={{ color: 'transparent' }} />
               </Link>
             </div>
-            <div className="mt-4 block font-medium">
+            <div className="mt-1 block font-medium sm:mt-4">
               <div className="mt-4 block font-medium">
                 <div className={`grid grid-cols-1 gap-4 text-center md:grid-cols-2 md:text-${isRtl ? 'right' : 'left'} lg:grid-cols-4`}>
                   <div className="mt-4 block font-medium">
@@ -64,15 +64,18 @@ export default function Footer({ general }: any) {
                       StampEzee
                     </div>
                     <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
+                      <Link className="mt-4 w-fit font-medium uppercase" href="/faqs/">
+                        HOW IT WORKS?
+                      </Link>
                       <Link className="mt-4 w-fit font-medium uppercase" href={routes.publicRoutes.pricing}>
                         {t('pricing')}
                       </Link>
                       <Link className="mt-4 w-fit font-medium uppercase" href="/faqs/">
                         {t('faq')}
                       </Link>
-                      {/* <Link className="mt-4 w-fit font-medium" href="/contact-us/">
-                      CONTACT
-                    </Link> */}
+                      <Link className="mt-4 w-fit font-medium" href="/contact-us/">
+                        CONTACT
+                      </Link>
                     </div>
                   </div>
                   <div className="mt-4  font-medium">
@@ -113,7 +116,7 @@ export default function Footer({ general }: any) {
                   </div>
                   <div className="mt-4 flex flex-col font-medium">
                     <div
-                      className={`block text-lg font-bold ${isRtl ? 'text-right' : 'text-left'}  ${locale === 'fr' ? 'sm:text-base' : locale === 'ru' ? 'sm:text-sm' : 'sm:text-xl'}`}
+                      className={`block text-lg font-bold ${isRtl ? 'text-right' : 'text-center sm:text-left'}  ${locale === 'fr' ? 'sm:text-base' : locale === 'ru' ? 'sm:text-sm' : 'sm:text-xl'}`}
                     >
                       {t('newsletter')}
                     </div>
@@ -136,7 +139,7 @@ export default function Footer({ general }: any) {
                             boxShadow: '0 0 #0000',
                           }}
                         />
-                        <div className="rounded-full bg-[#E55555] px-4 py-2 text-sm font-bold text-white">
+                        <div className="rounded-full bg-[#FF3131] px-4 py-2 text-sm font-bold text-white">
                           <button disabled={isSubmitting} className="flex items-center justify-center gap-1" type="submit">
                             <span className="w-auto text-sm">{t('newsletterButtonText')}</span>{' '}
                             {isSubmitting ? <ImSpinner9 className="animate-spin text-base" /> : <BsCheck2Circle className="text-base" />}
@@ -165,7 +168,7 @@ export default function Footer({ general }: any) {
           </div>
         </footer>
       </div>
-      <p className="mt-10 h-[11px] w-full bg-red-500"></p>
+      <p className="mt-10 h-[8px] w-full bg-gradient-to-r from-[#BA0000] to-[#FB7C7C]"></p>
     </div>
   );
 }

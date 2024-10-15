@@ -1,17 +1,17 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
+import DatePicker from '@/components/Formik/DatePicker';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import RangeSlider from '@/components/range-slider';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useCreateNotificationByLocationMutation } from '@/features/retailer/notification/notificationApi';
+import { useCreateNotificationBySuperAdminMutation } from '@/features/super-admin/notification/notificationApi';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
-import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
@@ -47,11 +47,8 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
   googleMapsApiKey: string;
 }) {
-  const t = useTranslations('SendAndResendLocationBasedNotification');
-  const tRegular = useTranslations('SendAndResendNotification');
-  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [createNotificationByLocation, { isSuccess: createSuccess, error: createError }] = useCreateNotificationByLocationMutation();
+  const [createNotificationBySuperAdmin, { isSuccess: createSuccess, error: createError }] = useCreateNotificationBySuperAdminMutation();
 
   const initialValues = {
     title: formData?.title || '',
@@ -61,14 +58,25 @@ export default function CreateUpdateModel({
     address: formData?.address || '',
     longitude: formData?.longitude || '',
     latitude: formData?.latitude || '',
-    radius: formData?.radius || 1,
+    radius: formData?.radius || '',
     type: formData?.type || 'all',
+    scheduleAt: formData?.scheduleAt || '',
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().trim().required(tCommon('required')),
-    description: Yup.string().trim().required(tCommon('required')),
-    address: Yup.string().trim().required(tCommon('required')),
+    title: Yup.string().trim().required('Required!'),
+    description: Yup.string().trim().required('Required!'),
+    type: Yup.string().required('Required!'),
+    address: Yup.string().when('type', {
+      is: 'location',
+      then: () => Yup.string().trim().required('Required!'),
+      otherwise: () => Yup.string(),
+    }),
+    radius: Yup.string().when('type', {
+      is: 'location',
+      then: () => Yup.string().trim().required('Required!'),
+      otherwise: () => Yup.string(),
+    }),
   });
 
   const submitHandler = async (values: any) => {
@@ -86,14 +94,14 @@ export default function CreateUpdateModel({
       // if (!isFile(values?.image))
 
       objToFormData = objectToFormData(values, ignoreList);
-      createNotificationByLocation(objToFormData);
+      createNotificationBySuperAdmin(objToFormData);
     } else {
       if (!values?.imageType) {
         objToFormData = objectToFormData(values, ['image', 'imageType']);
       } else {
         objToFormData = objectToFormData(values);
       }
-      createNotificationByLocation(objToFormData);
+      createNotificationBySuperAdmin(objToFormData);
     }
   };
 
@@ -117,11 +125,7 @@ export default function CreateUpdateModel({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="700px">
       <div className="m-auto select-none px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? (
-            <Title as="h4">{t('resendLocationBasedNotification')}</Title>
-          ) : (
-            <Title as="h4">{t('sendLocationBasedNotification')}</Title>
-          )}
+          {formData?._id ? <Title as="h4">Resend Notification</Title> : <Title as="h4">Send Notification</Title>}
 
           <ActionIcon
             size="sm"
@@ -137,25 +141,27 @@ export default function CreateUpdateModel({
         <div>
           <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
             {({ setFieldValue, values }) => {
-              console.log({ values });
               return (
                 <Form className="mt-5">
-                  <InputField name="title" label={t('title')} placeholder="Buy 10 Pizza Get 1 Coke" />
+                  <InputField name="title" label="Title" placeholder="Buy 10 Pizza Get 1 Coke" />
                   <div className="my-3">
-                    <InputTextarea rows={4} name="description" label={t('description')} placeholder="Write here..." />
+                    <InputTextarea rows={4} name="description" label="Description" placeholder="Write here..." />
                   </div>
 
-                  <div className="my-3">
+                  <div className="my-5 flex items-center gap-x-2">
                     <Checkbox
-                      rounded="full"
-                      labelPlacement="left"
+                      // rounded="full"
+                      labelPlacement="right"
                       labelWeight="semibold"
                       value={values.type}
+                      inputClassName={`!ring-0 checked:!bg-danger checked:!border-danger`}
                       onChange={(e) => setFieldValue('type', e.target.value === 'all' ? 'location' : 'all')}
-                      className="mr-4 py-2"
+                      // className="mr-4 py-2"
                       size="sm"
-                      label="Do you want to send location based notification ?"
+                      iconClassName="top-0"
+                      // label="Do you want to send location based notification ?"
                     />
+                    <p className="text-sm font-medium">Do you want to send location based notification ?</p>
                   </div>
 
                   {values?.type === 'location' && (
@@ -165,7 +171,7 @@ export default function CreateUpdateModel({
                       </div>
 
                       <div className="py-5">
-                        <span className=" font-medium">{t('radius')}</span>
+                        <span className=" font-medium">Radius</span>
                         <RangeSlider
                           className="mt-3"
                           value={values?.radius}
@@ -181,7 +187,7 @@ export default function CreateUpdateModel({
                     <SelectField
                       name="imageType"
                       required={false}
-                      label={t('imageType')}
+                      label="ImageType"
                       value={values?.imageType}
                       options={[
                         { id: 1, name: 'url', value: 'url' },
@@ -196,7 +202,7 @@ export default function CreateUpdateModel({
 
                   {values?.imageType === 'image' && (
                     <div className="my-4">
-                      <p className="font-medium">{t('attachImage')}</p>
+                      <p className="font-medium">Attach Image</p>
                       <DragAndDropUpload
                         value={{ name: 'image', image: values.image }}
                         onChange={(image: any) => setFieldValue('image', image)}
@@ -209,18 +215,24 @@ export default function CreateUpdateModel({
 
                   {values?.imageType === 'url' && (
                     <div className="my-4">
-                      <InputField required={false} name="image" label={t('imageUrl')} placeholder="https://picsum.photos/200" />
+                      <InputField required={false} name="image" label="Image URL" placeholder="https://picsum.photos/200" />
                     </div>
                   )}
 
+                  <div>
+                    <DatePicker label="Schedule At" name="scheduleAt" required={false} enableTime={true} />
+                  </div>
+
                   <p className="mt-4 text-end text-xs font-semibold">
-                    <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
+                    <span>
+                      Fields marked with <span className="text-red-600">*</span> are mandatory!
+                    </span>
                   </p>
                   <div className="mt-6 flex justify-end">
                     <Button
                       color="danger"
                       type="submit"
-                      text={formData?._id ? t('resend') : t('send')}
+                      text={formData?._id ? 'Resend' : 'Send'}
                       postIcon={<FaRegPaperPlane className="text-base" />}
                       isSubmitting={isSubmitting}
                     />

@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
-import DateRangePicker from '@/components/Formik/DateRange';
+import DatePicker from '@/components/Formik/DatePicker';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
@@ -49,7 +49,7 @@ export default function Create({ locale }: { locale: string }) {
     title: '',
     description: '',
     rules: '',
-    noOfStampsToCollect: 10,
+    noOfStampsToCollect: 0,
     minPurchaseAmount: 0,
     rewardType: 'promotion',
     promotionReward: '',
@@ -225,7 +225,7 @@ export default function Create({ locale }: { locale: string }) {
                     onChange={(option: { label: string; value: boolean }) => setFieldValue('hasValidity', option.value)}
                   />
                 </div>
-                {values?.hasValidity && <DateRangePicker label="Valid Date Range" name="validDateRange" />}
+                {values?.hasValidity && <DatePicker label="Valid Date Range" name="validDateRange" range={true} />}
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

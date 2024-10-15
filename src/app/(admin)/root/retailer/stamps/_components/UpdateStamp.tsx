@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
-import DateRangePicker from '@/components/Formik/DateRange';
+import DatePicker from '@/components/Formik/DatePicker';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
@@ -201,7 +201,7 @@ export default function Update({ Id, offset }: any) {
                     }}
                   />
                 </div>
-                {values?.hasValidity && <DateRangePicker label={t('validDateRange')} name="validDateRange" />}
+                {values?.hasValidity && <DatePicker label={t('validDateRange')} name="validDateRange" range={true} />}
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

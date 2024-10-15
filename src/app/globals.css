@@ -692,15 +692,21 @@ div[style='z-index: 1000001;'],
 /* Hero Section  */
 
 .hero-curve {
-  clip-path: polygon(0 10%, 100% 7%, 100% 84%, 0 93%);
+  clip-path: polygon(0 10%, 100% 0%, 100% 90%, 0 100%);
 }
 
-/* @media (min-width: 768px) {
-  
+.works-curve {
+  clip-path: polygon(0 0, 100% 12%, 100% 100%, 0 88%);
+}
+
+@media (max-width: 768px) {
   .hero-curve {
-    clip-path: polygon(0 13%, 100% 4%, 100% 84%, 0 93%);
+    clip-path: polygon(0 5%, 100% 0%, 100% 95%, 0 100%);
   }
-} */
+  .works-curve {
+    clip-path: polygon(0 0, 100% 2%, 100% 100%, 0 98%);
+  }
+}
 
 input#react-select-5-input:focus {
   box-shadow: none !important;

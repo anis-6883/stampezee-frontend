@@ -12,9 +12,17 @@ export const notificationApi = apiSlice.injectEndpoints({
       providesTags: ['superAdminNotifications'],
       keepUnusedDataFor: 10,
     }),
+    createNotificationBySuperAdmin: builder.mutation({
+      query: (data) => ({
+        url: '/api/secret-root/admin/super-admin/notification/send',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['superAdminNotifications'],
+    }),
   }),
 });
 
-export const { useSuperAdminNotificationsQuery } = notificationApi;
+export const { useSuperAdminNotificationsQuery, useCreateNotificationBySuperAdminMutation } = notificationApi;
 
 export default notificationApi;

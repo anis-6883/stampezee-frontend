@@ -1,4 +1,4 @@
-import { poppins } from '@/app/fonts';
+import { outfit } from '@/app/fonts';
 import '@/app/globals.css';
 import GlobalDrawer from '@/components/drawer-views/container';
 import GlobalModal from '@/components/modal-views/container';
@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
 
   return (
-    <html lang={locale} dir={direction} suppressHydrationWarning={true} className={poppins.className}>
+    <html lang={locale} dir={direction} suppressHydrationWarning={true} className={outfit.className}>
       <head>
         <meta name="google" content="notranslate" />
       </head>
