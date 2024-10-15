@@ -76,5 +76,6 @@ export const apiSlice = createApi({
     'retailerScanDetails',
     'superAdminCustomer',
     'criticalPayments',
+    'generalSettings',
   ],
 });

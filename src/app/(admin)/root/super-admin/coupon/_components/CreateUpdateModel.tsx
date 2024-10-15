@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
-import DateRangePicker from '@/components/Formik/DateRange';
+import DatePicker from '@/components/Formik/DatePicker';
 import InputField from '@/components/Formik/InputField';
 import SelectField from '@/components/Formik/SelectField';
 import { SerializedError } from '@/features/api/apiSlice';
@@ -332,7 +332,7 @@ export default function CreateUpdateModel({
                   </div>
 
                   <div className="grid grid-cols-1">
-                    <DateRangePicker label="Valid Date Range" name="validDateRange" />
+                    <DatePicker label="Valid Date Range" name="validDateRange" range={true} />
                   </div>
 
                   <p className="flex flex-col text-end text-xs font-semibold">

@@ -108,10 +108,10 @@ export default function HeaderContent() {
 
   return (
     <div>
-      <nav className={` fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>
-        <div className={` mx-auto flex max-w-[1300px] flex-wrap items-center gap-x-10  p-2`}>
+      <nav className={`fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>
+        <div className={`container mx-auto flex max-w-screen-xl flex-wrap items-center justify-between gap-x-10 p-2  sm:justify-center`}>
           <Link href={routes.publicRoutes.home} className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="/images/logo.png" className="h-20" alt="logo" />
+            <img src="/images/logo.png" className="h-14 sm:h-16" alt="logo" />
             <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span>
           </Link>
           <div className="flex items-center space-x-3 md:order-2 md:space-x-0">
@@ -125,7 +125,7 @@ export default function HeaderContent() {
                 }))
               }
             >
-              <RxHamburgerMenu className="text-3xl" />
+              <RxHamburgerMenu className=" text-3xl" />
             </span>
             <div className="mr-3">
               <div
@@ -141,7 +141,7 @@ export default function HeaderContent() {
                   onClose={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
                 >
                   <div className=" transition-all duration-300 ease-in-out">
-                    <div className="flex justify-end p-5">
+                    <div className="flex justify-end px-8 py-3">
                       <RxCross1
                         onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
                         className="cursor-pointer text-lg font-bold"
@@ -165,7 +165,7 @@ export default function HeaderContent() {
                         >
                           <Link
                             href={`${item.link}`}
-                            className={`relative block rounded py-2 pl-4 transition-all duration-150 ease-in ${pathname === item.link ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                            className={`relative block rounded py-2 pl-4 lowercase transition-all duration-150 ease-in ${pathname === item.link ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                           >
                             {t(item.name)}
                           </Link>
@@ -283,7 +283,7 @@ export default function HeaderContent() {
                   <li className="w-max-content">
                     <Link
                       href={routes.publicRoutes.home}
-                      className={`relative text-[17px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
+                      className={`relative text-[20px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
                     >
                       how it works
                     </Link>
@@ -291,7 +291,7 @@ export default function HeaderContent() {
                   <li className="w-max-content">
                     <Link
                       href={routes.publicRoutes.pricing}
-                      className={`relative text-[17px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.pricing ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                      className={`relative text-[20px] lowercase transition-all duration-150 ease-in ${pathname === routes.publicRoutes.pricing ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
                       {t('pricing')}
                     </Link>
@@ -299,7 +299,7 @@ export default function HeaderContent() {
                   <li>
                     <Link
                       href="/faqs"
-                      className={`relative text-[17px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.faqs ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                      className={`relative text-[20px] lowercase transition-all duration-150 ease-in ${pathname === routes.publicRoutes.faqs ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
                       {t('faq')}
                     </Link>
@@ -307,7 +307,7 @@ export default function HeaderContent() {
                   <li>
                     <Link
                       href={routes.publicRoutes.contactUs}
-                      className={`relative text-[17px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.contactUs ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                      className={`relative text-[20px] lowercase transition-all duration-150 ease-in ${pathname === routes.publicRoutes.contactUs ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
                     >
                       {t('contact_us')}
                     </Link>
@@ -331,7 +331,7 @@ export default function HeaderContent() {
                         <Link
                           style={{ letterSpacing: '4px' }}
                           href="/retailer/register"
-                          className={`rounded-full border border-red-600 px-4 py-2 text-[17px] font-bold uppercase text-black`}
+                          className={`rounded-full border border-red-600 px-4 py-2 text-[17px] font-bold uppercase ${isScrolled ? 'text-white' : 'text-black'}`}
                         >
                           {/* <CustomButton
                             color="outline"

@@ -10,9 +10,11 @@ interface DateRangeProps {
   label?: string;
   name: string;
   enableTime?: boolean;
+  range?: boolean;
+  required?: boolean;
 }
 
-const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name, enableTime = false }) => {
+const DatePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name, enableTime = false, range = false, required = true }) => {
   const { values, setFieldValue }: any = useFormikContext();
 
   return (
@@ -23,7 +25,7 @@ const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name,
             <div className=" flex flex-col gap-y-0.5">
               <div className=" flex gap-1">
                 <p className="mb-1 font-medium">
-                  {label} <span className="text-red-600">*</span>
+                  {label} {required && <span className="text-red-600">*</span>}
                 </p>
               </div>
               <div className="flex items-center">
@@ -31,7 +33,7 @@ const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name,
                   type="text"
                   className={`h-10 w-full rounded-l-md border-[1px] placeholder:text-sm ${meta.touched && meta.error ? '!border-danger' : '!border-gray-200'}`}
                   ref={ref}
-                  placeholder="YYYY-MM-DD to YYYY-MM-DD"
+                  placeholder={range ? 'YYYY-MM-DD to YYYY-MM-DD' : enableTime ? 'YYYY-MM-DD HH:II' : 'YYYY-MM-DD'}
                   aria-label="Select date range"
                 />
                 <div
@@ -56,7 +58,7 @@ const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name,
             },
             disableMobile: true,
             allowInput: false,
-            mode: 'range',
+            mode: range ? 'range' : 'single',
             dateFormat: enableTime ? 'Y-m-d H:i' : 'Y-m-d',
             enableTime,
           }}
@@ -66,4 +68,4 @@ const DateRangePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name,
   );
 };
 
-export default DateRangePicker;
+export default DatePicker;

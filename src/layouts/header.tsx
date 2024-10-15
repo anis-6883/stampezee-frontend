@@ -1,19 +1,24 @@
 'use client';
 
+import { Skeleton } from '@/components/ui/skeleton';
+import { ROLE } from '@/config/constants';
+import { RootState } from '@/features/store';
+import { useGetGeneralSettingsQuery } from '@/features/super-admin/general-settings/generalSettingsApi';
 import cn from '@/hooks/class-names';
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import { useWindowScroll } from '@/hooks/use-window-scroll';
 import HamburgerButton from '@/layouts/hamburger-button';
 import HeaderMenuRight from '@/layouts/header-menu-right';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 import SearchWidget from '../components/search/search';
 import Sidebar from './sidebar';
 
 export default function Header() {
   const isMounted = useIsMounted();
   const windowScroll = useWindowScroll();
-
-  // const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
+  const { role } = useSelector((state: RootState) => state.authSlice);
+  const { data, isLoading } = useGetGeneralSettingsQuery({});
 
   return (
     <header
@@ -29,10 +34,15 @@ export default function Header() {
         </Link>
 
         <SearchWidget />
-        <div className="ml-5 flex w-auto items-center justify-center gap-x-3 rounded-md border border-solid px-3 py-2">
-          <span className="font-bold">Timezone : </span>
-          <span className="font-bold">Asia/Kolkata (+5.5)</span>
-        </div>
+        {role === ROLE.SUPER_ADMIN && (
+          <div className="ml-5 flex w-auto items-center justify-center gap-x-3 rounded-md border border-solid px-3 py-2">
+            {isLoading ? (
+              <Skeleton className="h-5 w-40 rounded" />
+            ) : (
+              <span className="font-semibold">Timezone : {`${data?.data?.general?.timezone?.label}`} </span>
+            )}
+          </div>
+        )}
       </div>
 
       <HeaderMenuRight />

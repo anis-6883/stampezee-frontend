@@ -8,6 +8,7 @@ import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import { useState } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa6';
+import { LuClock4 } from 'react-icons/lu';
 import { Badge } from 'rizzui';
 import CreateUpdateModel from './CreateUpdateModal';
 
@@ -24,7 +25,7 @@ export default function NotificationTable({ offset, googleMapsApiKey }: { offset
 
   const structure = [
     {
-      header: 'Retailer Store / Super Admin',
+      header: 'Store / Admin',
       accessorKey: 'retailer.storeName',
       Cell: ({ row }: any) =>
         row?.original?.retailer ? (
@@ -101,8 +102,21 @@ export default function NotificationTable({ offset, googleMapsApiKey }: { offset
       ),
     },
     {
-      header: 'Send Time',
-      Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original?.createdAt, offset)}</div>,
+      header: (
+        <span className="flex items-center gap-x-2">
+          <FaRegPaperPlane className="text-sm" /> Sent Time / <LuClock4 className="text-lg" /> Scheduled At
+        </span>
+      ),
+      Cell: ({ row }: any) =>
+        row?.original?.scheduleAt ? (
+          <div className="text-md mx-auto flex items-center gap-x-2 text-start">
+            {convertDateByOffset(row?.original?.scheduleAt, offset)} <LuClock4 className="text-lg" />
+          </div>
+        ) : (
+          <div className="text-md mx-auto flex items-center gap-x-2 text-start">
+            {convertDateByOffset(row?.original?.createdAt, offset)} <FaRegPaperPlane className="text-sm" />
+          </div>
+        ),
       mantineTableHeadCellProps: {
         align: 'start',
       },
