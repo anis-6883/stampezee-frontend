@@ -65,7 +65,7 @@ export default function Footer({ general }: any) {
                     </div>
                     <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
                       <Link className="mt-4 w-fit font-medium uppercase" href="/faqs/">
-                        HOW IT WORKS?
+                        {t('home')}
                       </Link>
                       <Link className="mt-4 w-fit font-medium uppercase" href={routes.publicRoutes.pricing}>
                         {t('pricing')}
@@ -73,8 +73,8 @@ export default function Footer({ general }: any) {
                       <Link className="mt-4 w-fit font-medium uppercase" href="/faqs/">
                         {t('faq')}
                       </Link>
-                      <Link className="mt-4 w-fit font-medium" href="/contact-us/">
-                        CONTACT
+                      <Link className="mt-4 w-fit font-medium uppercase" href="/contact-us/">
+                        {t('contact_us')}
                       </Link>
                     </div>
                   </div>

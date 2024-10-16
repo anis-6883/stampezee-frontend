@@ -8,7 +8,7 @@ export default async function ClientLayout({ children }: { children: React.React
   return (
     <div>
       <HeaderContent />
-      <div className="lg:mt-[60px]">{children}</div>
+      <div className="mt-[20px] lg:mt-[65px]">{children}</div>
       <Footer general={data?.data?.general} />
     </div>
   );
