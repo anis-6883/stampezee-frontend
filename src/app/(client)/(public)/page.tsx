@@ -1,6 +1,6 @@
 import { routes } from '@/config/routes';
 import 'aos/dist/aos.css';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { HeroCard } from './components/HeroCard';
 import Image from './components/Image';
@@ -9,14 +9,16 @@ import WorksCard from './components/WorksCard';
 
 export default function Page() {
   const t = useTranslations('HomePage');
+  const locale = useLocale();
+  const isRtl = locale === 'ar';
 
   return (
     <div className="relative overflow-hidden">
       {/* rgba(22, 28, 36, 0.8),  */}
-      <div className="hero-curve  relative mx-auto mt-20 w-full sm:mt-10">
+      <div className={`${isRtl ? 'hero-curve-rtr' : 'hero-curve'} relative mx-auto mt-20 w-full sm:mt-10`}>
         <div className="h-[107vh] w-full  bg-[#FF3131] sm:h-[85vh]"></div>
         <div className="absolute inset-0"></div>
-        <div className="container absolute top-[60px] mx-auto flex max-w-screen-xl items-center justify-center sm:inset-0">
+        <div className={`container absolute top-[60px] ${isRtl ? '' : 'mx-auto'} flex max-w-screen-xl items-center sm:inset-0`}>
           <div className="flex w-full flex-col-reverse items-center justify-between sm:flex-row">
             <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
               <div className="flex flex-col gap-y-3 sm:gap-y-6">
@@ -46,7 +48,7 @@ export default function Page() {
       <HeroCard />
 
       {/* How It Works start */}
-      <section id="how_work" className=" works-curve bg-[#FCE8E8] py-10">
+      <section id="how_we_work" className={`${isRtl ? 'works-curve-rtr' : 'works-curve'} bg-[#FCE8E8] py-10`}>
         <div className="container mx-auto block  max-w-screen-xl gap-3 sm:gap-10">
           <div className="text-primary-black my-7 text-center text-3xl font-bold sm:text-7xl">{t('workMainTitle')}</div>
           <div className=" items-center justify-between md:flex">
@@ -129,7 +131,11 @@ export default function Page() {
       </div>
       {/* Revolution Card End  */}
       {/* Hero Image Start */}
-      <div className="absolute right-[-15rem] top-[33rem] mt-10 justify-center sm:right-60 sm:top-36 sm:mt-0 sm:w-1/2 md:flex lg:flex">
+      {/* sm:right-60 sm:top-36 */}
+      {/* right-[-15rem] top-[33rem] */}
+      <div
+        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36'}  mt-10 justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
+      >
         <div className=" h-[40%] w-[40%] xl:h-[50%] xxl:w-[50%]">
           <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
         </div>

@@ -64,7 +64,7 @@ export default function Footer({ general }: any) {
                       StampEzee
                     </div>
                     <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
-                      <Link className="mt-4 w-fit font-medium uppercase" href="/#how_work">
+                      <Link className="mt-4 w-fit font-medium uppercase" href="/#how_we_work">
                         {t('home')}
                       </Link>
                       <Link className="mt-4 w-fit font-medium uppercase" href={routes.publicRoutes.pricing}>

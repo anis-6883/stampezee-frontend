@@ -699,16 +699,30 @@ div[style='z-index: 1000001;'],
   clip-path: polygon(0 6%, 100% 0%, 100% 94%, 0 100%);
 }
 
+.hero-curve-rtr {
+  clip-path: polygon(0 0, 100% 6%, 100% 100%, 0 94%);
+}
+
 .works-curve {
   clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 92%);
+}
+
+.works-curve-rtr {
+  clip-path: polygon(0 8%, 100% 0%, 100% 92%, 0 100%);
 }
 
 @media (max-width: 768px) {
   .hero-curve {
     clip-path: polygon(0 5%, 100% 0%, 100% 95%, 0 100%);
   }
+  .hero-curve-rtr {
+    clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%);
+  }
   .works-curve {
     clip-path: polygon(0 0, 100% 2%, 100% 100%, 0 98%);
+  }
+  .works-curve-rtr {
+    clip-path: polygon(0 2%, 100% 0%, 100% 98%, 0 100%);
   }
 }
 
