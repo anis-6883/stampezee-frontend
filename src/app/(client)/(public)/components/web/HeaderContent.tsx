@@ -25,7 +25,7 @@ const mobileMenuItems = [
   {
     id: 1,
     name: 'home',
-    link: routes.publicRoutes.home,
+    link: '/#how_work',
   },
   {
     id: 2,
@@ -284,7 +284,7 @@ export default function HeaderContent() {
                 >
                   <li className="w-max-content">
                     <Link
-                      href="#how_work"
+                      href="/#how_work"
                       className={`relative text-[20px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
                     >
                       {t('home')}
