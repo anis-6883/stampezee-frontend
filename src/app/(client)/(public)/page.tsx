@@ -13,22 +13,22 @@ export default function Page() {
   return (
     <div className="relative overflow-hidden">
       {/* rgba(22, 28, 36, 0.8),  */}
-      <div className="hero-curve  relative mx-auto mt-28 w-full sm:mt-10">
+      <div className="hero-curve  relative mx-auto mt-20 w-full sm:mt-10">
         <div className="h-[107vh] w-full  bg-[#FF3131] sm:h-[85vh]"></div>
         <div className="absolute inset-0"></div>
-        <div className="container absolute top-[60px] mx-auto flex max-w-screen-xl items-center px-4 sm:inset-0 sm:px-6 lg:px-8">
+        <div className="container absolute top-[60px] mx-auto flex max-w-screen-xl items-center justify-center sm:inset-0">
           <div className="flex w-full flex-col-reverse items-center justify-between sm:flex-row">
             <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
               <div className="flex flex-col gap-y-3 sm:gap-y-6">
-                <h1 className="text-3xl font-semibold text-white sm:text-7xl">Revolutionize</h1>
-                <h1 className="text-3xl font-semibold text-white sm:text-7xl">Your Customer </h1>
-                <h1 className="text-3xl font-semibold text-white sm:text-7xl">Experience</h1>
+                <h1 className="text-3xl font-semibold text-white sm:text-7xl">{t('revolutionize')}</h1>
+                <h1 className="text-3xl font-semibold text-white sm:text-7xl"> {t('yourCustomer')}</h1>
+                <h1 className="text-3xl font-semibold text-white sm:text-7xl">{t('experience')}</h1>
               </div>
               <p className="mt-4 text-balance py-7 text-base font-medium text-white sm:text-xl">{t('bannerDetails')}</p>
               <div className="mt-8">
                 <Link
                   href={routes.publicRoutes.pricing}
-                  className="dark:bg-primary-red rounded-full bg-white px-8 py-4 text-lg font-semibold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:text-2xl"
+                  className="dark:bg-primary-red rounded-full bg-white px-8 py-4 text-lg font-semibold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:text-3xl"
                 >
                   {t('bannerButtonText')}
                 </Link>
@@ -47,30 +47,29 @@ export default function Page() {
 
       {/* How It Works start */}
       <section id="how_work" className=" works-curve bg-[#FCE8E8] py-10">
-        <div className="container mx-auto block  max-w-screen-xl px-4">
-          <div className="text-primary-black my-7 text-center text-3xl font-bold sm:text-4xl">{t('workMainTitle')}</div>
+        <div className="container mx-auto block  max-w-screen-xl gap-3 sm:gap-10">
+          <div className="text-primary-black my-7 text-center text-3xl font-bold sm:text-7xl">{t('workMainTitle')}</div>
           <div className=" items-center justify-between md:flex">
             <WorksCard
               image="/default/flex.svg"
-              title={'UNMATCHED'}
-              subTitle="FLEXIBILITY
-"
-              description={'Foster strong, lasting'}
-              subDescription="customer relationships."
+              title={t('workTitleOne')}
+              subTitle={t('workSubtitleOne')}
+              description={t('workDescriptionOne')}
+              subDescription={t('workSubDescriptionOne')}
             />
             <WorksCard
               image="/default/simple.svg"
-              title={'SIMPLICITY AT'}
-              subTitle="HAND"
-              description={'User-friendly, seamless'}
-              subDescription="interface."
+              title={t('workTitleTwo')}
+              subTitle={t('workSubtitleTwo')}
+              description={t('workDescriptionTwo')}
+              subDescription={t('workSubDescriptionTwo')}
             />
             <WorksCard
               image="/default/data.svg"
-              title={'DATA'}
-              subTitle="EMPOWERMENT"
-              description={'Make growth-driving,'}
-              subDescription="informed decisions."
+              title={t('workTitleThree')}
+              subTitle={t('workSubtitleThree')}
+              description={t('workDescriptionThree')}
+              subDescription={t('workSubDescriptionThree')}
             />
           </div>
         </div>
@@ -81,11 +80,12 @@ export default function Page() {
 
       <div>
         <div className="mt-5 text-center">
-          <p className="text-primary-black mb-7 text-[1.2rem] font-[600] leading-8">{t('testimonials')}</p>
-          <div className="text-primary-black mb-7 text-center text-3xl font-bold sm:text-4xl">{t('testimonialMainTitle')}</div>
+          <p className="text-primary-black mb-7 text-lg font-[600] leading-8 sm:text-3xl">{t('testimonials')}</p>
+          <div className="text-primary-black mb-7 text-center text-3xl font-bold sm:text-7xl">{t('testimonialMainTitle')}</div>
+          <div className="text-primary-black mb-7 text-center text-3xl font-bold sm:text-7xl">{t('testimonialMainSubtitle')}</div>
         </div>
 
-        <div className="container mx-auto mb-8 grid max-w-screen-xl grid-cols-1  gap-3 p-3 md:grid-cols-2 md:p-0 lg:grid-cols-3">
+        <div className="container mx-auto mb-8 grid max-w-screen-xl grid-cols-1 gap-3  px-10 py-8 sm:gap-10 md:grid-cols-2 md:p-0 lg:grid-cols-3">
           <Testimonial
             image={'/default/olivia.png'}
             name={t('testimonialTitleOne')}
@@ -110,31 +110,31 @@ export default function Page() {
       {/* TESTIMONIALS end */}
 
       {/* Revolution Card Start  */}
-      <div className="m-2 sm:m-0">
+      <div className="m-7 sm:m-0">
         <div className="container mx-auto  mb-9 max-w-screen-xl rounded-3xl bg-gradient-to-r from-[#BA0000] to-[#FB7C7C] px-10 py-8">
           <div className="flex flex-col items-center gap-y-6">
-            <span className="text-base font-semibold uppercase tracking-widest text-[#000000] sm:text-xl">
-              Ready to transform your customer experience?
-            </span>
-            <span className="text-3xl font-bold tracking-widest text-[#ffffff] sm:text-5xl">Join The Digital Loyal</span>
-            <span className="text-3xl font-bold tracking-widest text-[#ffffff] sm:text-5xl">Revolution Now!</span>
+            <span className="text-base font-semibold uppercase tracking-widest text-[#000000] sm:text-xl">{t('revolutionTitle')}</span>
+            <span className="text-3xl font-bold tracking-widest text-[#ffffff] sm:text-5xl">{t('revolutionBodyTitle')}</span>
+            <span className="text-3xl font-bold tracking-widest text-[#ffffff] sm:text-5xl">{t('revolutionBodySubtitle')}</span>
             <div className="mb-3 mt-8">
               <Link
                 href={routes.publicRoutes.pricing}
-                className="dark:bg-primary-red rounded-full bg-white px-8 py-4 text-lg font-semibold uppercase tracking-widest text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:text-2xl"
+                className="dark:bg-primary-red  rounded-full bg-white px-3 py-4 text-base font-semibold uppercase tracking-widest text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:px-8 sm:text-2xl"
               >
-                Get started now!
+                {t('revolutionButtonText')}
               </Link>
             </div>
           </div>
         </div>
       </div>
       {/* Revolution Card End  */}
-      <div className="absolute right-[-15rem] top-[35rem] mt-10 justify-center sm:right-60 sm:top-32 sm:mt-0 sm:w-1/2 md:flex lg:flex">
+      {/* Hero Image Start */}
+      <div className="absolute right-[-15rem] top-[33rem] mt-10 justify-center sm:right-60 sm:top-36 sm:mt-0 sm:w-1/2 md:flex lg:flex">
         <div className=" h-[40%] w-[40%] xl:h-[50%] xxl:w-[50%]">
           <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
         </div>
       </div>
+      {/* Hero Image End */}
     </div>
   );
 }

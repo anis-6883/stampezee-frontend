@@ -109,14 +109,16 @@ export default function HeaderContent() {
   return (
     <div>
       <nav className={`fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>
-        <div className={`container mx-auto flex max-w-screen-xl flex-wrap items-center justify-between gap-x-10 p-2  sm:justify-center`}>
-          <Link href={routes.publicRoutes.home} className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="/images/logo.png" className="h-14 sm:h-16" alt="logo" />
-            <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span>
-          </Link>
-          <div className="flex items-center space-x-3 md:order-2 md:space-x-0">
+        <div className={`container mx-auto flex max-w-screen-xl flex-wrap items-center justify-between px-5 py-4 sm:inset-0`}>
+          <div className="w-[12%]">
+            <Link href={routes.publicRoutes.home} className="flex items-center  rtl:space-x-reverse">
+              <img src="/images/logo.png" className="h-14 sm:h-[74px]" alt="logo" />
+              {/* <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span> */}
+            </Link>
+          </div>
+          <div className="flex w-[88%] items-center justify-end sm:justify-normal md:order-2 md:space-x-0">
             <span
-              className="cursor-pointer text-lg font-bold md:hidden lg:hidden"
+              className="cursor-pointer  text-lg font-bold md:hidden lg:hidden"
               onClick={() =>
                 setDrawerState((prevState) => ({
                   ...prevState,
@@ -278,14 +280,14 @@ export default function HeaderContent() {
                 </Drawer>
 
                 <ul
-                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center justify-center gap-x-10 rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
+                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center  gap-x-10  rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                 >
                   <li className="w-max-content">
                     <Link
-                      href={routes.publicRoutes.home}
+                      href="#how_work"
                       className={`relative text-[20px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
                     >
-                      how it works
+                      {t('home')}
                     </Link>
                   </li>
                   <li className="w-max-content">
@@ -312,33 +314,33 @@ export default function HeaderContent() {
                       {t('contact_us')}
                     </Link>
                   </li>
-                  <div className="ms-2 flex items-center justify-center gap-2">
+                  <div className="ms-2 flex items-center justify-center gap-x-10 space-x-8">
                     {isLoggedIn ? (
                       // className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white"
                       <Link href="/root/retailer/dashboard">
                         <CustomButton color="danger" text={t('dashboard')} className="!m-0" />
                       </Link>
                     ) : (
-                      <div className="flex items-center justify-center gap-x-10">
+                      <div className="flex items-center justify-center gap-x-10 space-x-8">
                         <Link
                           style={{ letterSpacing: '4px' }}
                           href="/retailer/login"
-                          className={`rounded-full bg-red-600 px-4 py-2 text-[17px] font-bold uppercase text-white`}
+                          className={`min-w-max rounded-full bg-[#FF3131] px-4 py-2 text-[17px] font-bold uppercase text-white`}
                         >
                           {/* <CustomButton color="danger" text={t('login')} className="!m-0 !px-3 !py-2 !text-xs" /> */}
-                          Login
+                          {t('login')}
                         </Link>
                         <Link
                           style={{ letterSpacing: '4px' }}
                           href="/retailer/register"
-                          className={`rounded-full border border-red-600 px-4 py-2 text-[17px] font-bold uppercase ${isScrolled ? 'text-white' : 'text-black'}`}
+                          className={`hover: min-w-max rounded-full border border-[#FF3131] px-4 py-2 text-[17px] font-bold uppercase transition-all duration-150 ease-in hover:bg-[#FF3131] hover:text-white ${isScrolled ? 'text-white' : 'text-black'}`}
                         >
                           {/* <CustomButton
                             color="outline"
                             text={t('signUp')}
                             className={`!m-0 !border-[#F5F5F5] !px-3  !py-2 !text-xs ${isScrolled ? '!text-white' : ''} `}
                           /> */}
-                          Sign-Up
+                          {t('signUp')}
                         </Link>
                       </div>
                     )}
@@ -401,7 +403,7 @@ export default function HeaderContent() {
                         </Transition>
                       </Menu>
                     )}
-                    <div className="ml-14">
+                    <div className="">
                       <AiOutlineGlobal
                         onClick={() => setModalState(true)}
                         className="h-8 w-8 cursor-pointer rounded-full p-1 ring-2 ring-[#F5F5F5]"
