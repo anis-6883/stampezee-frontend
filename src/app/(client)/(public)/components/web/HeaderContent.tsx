@@ -316,7 +316,6 @@ export default function HeaderContent() {
                   </li>
                   <div className="ms-2 flex items-center justify-center gap-x-10 space-x-8">
                     {isLoggedIn ? (
-                      // className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white"
                       <Link href="/root/retailer/dashboard">
                         <CustomButton color="danger" text={t('dashboard')} className="!m-0" />
                       </Link>
@@ -327,7 +326,6 @@ export default function HeaderContent() {
                           href="/retailer/login"
                           className={`min-w-max rounded-full bg-[#FF3131] px-4 py-2 text-[17px] font-bold uppercase text-white`}
                         >
-                          {/* <CustomButton color="danger" text={t('login')} className="!m-0 !px-3 !py-2 !text-xs" /> */}
                           {t('login')}
                         </Link>
                         <Link
@@ -335,11 +333,6 @@ export default function HeaderContent() {
                           href="/retailer/register"
                           className={`hover: min-w-max rounded-full border border-[#FF3131] px-4 py-2 text-[17px] font-bold uppercase transition-all duration-150 ease-in hover:bg-[#FF3131] hover:text-white ${isScrolled ? 'text-white' : 'text-black'}`}
                         >
-                          {/* <CustomButton
-                            color="outline"
-                            text={t('signUp')}
-                            className={`!m-0 !border-[#F5F5F5] !px-3  !py-2 !text-xs ${isScrolled ? '!text-white' : ''} `}
-                          /> */}
                           {t('signUp')}
                         </Link>
                       </div>
