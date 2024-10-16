@@ -87,7 +87,14 @@ export default function LocalSwitcherSelector({
   };
 
   return (
-    <Modal isOpen={modalState} onClose={() => setModalState(false)} customSize="630px">
+    <Modal
+      isOpen={modalState}
+      onClose={() => {
+        setModalState(false);
+        setCurrentTab(0);
+      }}
+      customSize="630px"
+    >
       <div className="m-auto px-7 pb-3 pt-5">
         <div className="flex items-center justify-end">
           <ActionIcon
@@ -95,6 +102,7 @@ export default function LocalSwitcherSelector({
             variant="text"
             onClick={() => {
               setModalState(false);
+              setCurrentTab(0);
             }}
           >
             <IoCloseOutline className="text-2xl text-danger" />

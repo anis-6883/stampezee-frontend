@@ -82,7 +82,7 @@ export default function HeaderContent() {
     window.addEventListener('orientationchange', handleResize);
 
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      if (window.scrollY > 20) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -284,7 +284,7 @@ export default function HeaderContent() {
                 >
                   <li className="w-max-content">
                     <Link
-                      href="/#how_work"
+                      href="/#how_we_work"
                       className={`relative text-[20px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
                     >
                       {t('home')}
@@ -338,13 +338,13 @@ export default function HeaderContent() {
                       </div>
                     )}
                     {isLoggedIn && (
-                      <Menu as="div" className="relative ml-14 inline-block text-left">
+                      <Menu as="div" className="relative inline-block text-left">
                         <div className="mt-1">
                           <Menu.Button className="ml-2">
                             <img
                               src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
                               alt="author"
-                              className="h-10 w-10 rounded-full p-1 ring-2 ring-red-300 dark:ring-red-500"
+                              className="max-h-10 max-w-10 rounded-full p-1 ring-2 ring-red-300 dark:ring-red-500"
                               width={500}
                               height={500}
                             />
