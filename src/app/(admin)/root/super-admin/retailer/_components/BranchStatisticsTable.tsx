@@ -63,7 +63,7 @@ const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isL
         <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             {tableHeaders.map((header) => (
-              <th key={header} scope="col" className="whitespace-nowrap px-6 py-3">
+              <th key={header} scope="col" className={`px-6 py-3 ${header === 'Branch Address' ? '!w-[50%]' : 'whitespace-nowrap'}`}>
                 {header}
               </th>
             ))}
@@ -91,8 +91,8 @@ const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isL
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   {item.name}
                 </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  {item.address.length > 25 ? `${item.address.slice(0, 25)}...` : item.address}
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900">
+                  {item.address}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   {item.subAdminName ?? <span className="text-danger">No Assigned</span>}

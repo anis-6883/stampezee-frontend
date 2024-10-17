@@ -2,9 +2,11 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetSingleRetailerQuery } from '@/features/super-admin/retailer/retailerApi';
+import AddonListTable from './AddonListTable';
 import BranchStatisticsTable from './BranchStatisticsTable';
 import { InfoRow } from './InfoRow';
 import StatsCardView from './StatsCardView';
+import SubAdminListTable from './SubAdminListTable';
 
 export default function RetailerDetails({ id }: { id: string }) {
   const { data, isLoading, isError } = useGetSingleRetailerQuery(id);
@@ -28,6 +30,8 @@ export default function RetailerDetails({ id }: { id: string }) {
     totalOrder,
     totalSubAdmin,
     branches,
+    subadmins,
+    addonSubscriptions,
   } = data?.data || {};
 
   return (
@@ -80,7 +84,18 @@ export default function RetailerDetails({ id }: { id: string }) {
         className="2xl:mb-8 my-5"
       />
 
-      <h2 className="my-5 text-lg font-medium">Branch Statistics: ({totalActiveBranch})</h2>
+      <div className="grid grid-cols-1 gap-x-10 md:grid-cols-6">
+        <div className="col-span-1 md:col-span-2">
+          <h2 className="my-5 text-lg font-bold">Active Add-Ons List:</h2>
+          <AddonListTable data={addonSubscriptions} isLoading={isLoading} isError={isError} />
+        </div>
+        <div className="col-span-1 md:col-span-4">
+          <h2 className="my-5 text-lg font-bold">Sub-admin List:</h2>
+          <SubAdminListTable data={subadmins} isLoading={isLoading} isError={isError} />
+        </div>
+      </div>
+
+      <h2 className="my-5 text-lg font-bold">Branch Statistics: ({totalActiveBranch})</h2>
       <BranchStatisticsTable data={branches} isLoading={isLoading} isError={isError} />
     </div>
   );
