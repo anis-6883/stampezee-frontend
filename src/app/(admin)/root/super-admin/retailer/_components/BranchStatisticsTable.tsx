@@ -63,7 +63,11 @@ const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isL
         <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             {tableHeaders.map((header) => (
-              <th key={header} scope="col" className={`px-6 py-3 ${header === 'Branch Address' ? '!w-[50%]' : 'whitespace-nowrap'}`}>
+              <th
+                key={header}
+                scope="col"
+                className={`px-6 py-3 ${header === 'Branch Address' && branchStatistics.length !== 0 ? '!w-[50%]' : 'whitespace-nowrap'}`}
+              >
                 {header}
               </th>
             ))}
