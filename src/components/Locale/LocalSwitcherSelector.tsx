@@ -13,15 +13,15 @@ import { useDispatch } from 'react-redux';
 import { ActionIcon, AdvancedRadio, Modal, Tab, Text } from 'rizzui';
 
 const languageOptions = [
-  { label: 'English', value: 'en', country: 'United State' },
-  { label: 'Arabic', value: 'ar', country: 'Saudi Arabia' },
-  { label: 'Spanish', value: 'es', country: 'Spain' },
-  { label: 'French', value: 'fr', country: 'France' },
-  { label: 'Hindi', value: 'hi', country: 'India' },
-  { label: 'Russian', value: 'ru', country: 'Russia' },
-  { label: 'Japanese', value: 'ja', country: 'Japan' },
-  { label: 'Korean', value: 'ko', country: 'Korea' },
-  { label: 'Chinese', value: 'zh-CN', country: 'China' },
+  { label: 'English', value: 'en', country: 'United State', flag: 'us' },
+  { label: 'Arabic', value: 'ar', country: 'Saudi Arabia', flag: 'sa' },
+  { label: 'Spanish', value: 'es', country: 'Spain', flag: 'es' },
+  { label: 'French', value: 'fr', country: 'France', flag: 'fr' },
+  { label: 'Hindi', value: 'hi', country: 'India', flag: 'in' },
+  { label: 'Russian', value: 'ru', country: 'Russia', flag: 'ru' },
+  { label: 'Japanese', value: 'ja', country: 'Japan', flag: 'jp' },
+  { label: 'Korean', value: 'ko', country: 'Korea', flag: 'kr' },
+  { label: 'Chinese', value: 'zh-CN', country: 'China', flag: 'cn' },
 ];
 
 export default function LocalSwitcherSelector({
@@ -134,7 +134,8 @@ export default function LocalSwitcherSelector({
                       contentClassName={`rounded-lg border hover:border-danger ${selectedOption === lang?.value ? '!border-danger ring-1 !ring-danger' : '!ring-0'}`}
                       inputClassName="[&:checked~span_.icon]:block"
                     >
-                      <span className="flex flex-col items-center justify-center">
+                      <span className="flex items-center justify-center gap-x-2">
+                        <img src={`https://flagcdn.com/${lang.flag}.svg`} height={10} width={25} alt={lang.flag} />
                         <Text as="b">{lang?.label}</Text>
                         {/* <span>{lang?.country}</span> */}
                       </span>
