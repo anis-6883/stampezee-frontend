@@ -1,5 +1,6 @@
 'use client';
 
+import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
@@ -15,19 +16,22 @@ import { useSelector } from 'react-redux';
 import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
-export default function StateCardView({ className, currency }: { className: string; currency?: string }) {
+export default function StateCardView({ className }: { className: string }) {
   const [selectedCurrency, setSelectedCurrency] = useState<any>();
   const { currencyExchangeRates } = useSelector((state: RootState) => state.currencyExchangeSlice);
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
+  const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
   const t = useTranslations('RetailerDashboard');
+
+  console.log('retailerProfile', retailerProfile?.data?.businessCurrency);
 
   const { totalOrder, totalActiveStamp, totalRevenue, totalCustomer } = data?.data || {};
 
   useEffect(() => {
-    const selectedCurrency: any = currencyExchangeRates?.find((item: any) => item?.name === currency);
+    const selectedCurrency: any = currencyExchangeRates?.find((item: any) => item?.name === retailerProfile?.data?.businessCurrency);
     setSelectedCurrency(selectedCurrency);
-  }, [currency, currencyExchangeRates]);
+  }, [currencyExchangeRates, retailerProfile?.data?.businessCurrency]);
 
   return (
     <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>
@@ -55,11 +59,11 @@ export default function StateCardView({ className, currency }: { className: stri
           <MetricCard
             icon={<FaMoneyBillAlt className="text-2xl" />}
             key={1}
-            title={`${t('totalRevenue')} (${currency})`}
+            title={`${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`}
             metric={totalRevenue * selectedCurrency?.exchangeRate}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isRetailerProfileLoading}
           />
 
           <MetricCard

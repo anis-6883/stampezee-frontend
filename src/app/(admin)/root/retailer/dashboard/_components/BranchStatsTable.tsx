@@ -1,23 +1,25 @@
 'use client';
 
 import { Skeleton } from '@/components/ui/skeleton';
+import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import { RootState } from '@/features/store';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-export default function BranchStatsTable({ currency }: { currency?: string }) {
+export default function BranchStatsTable() {
   const [selectedCurrency, setSelectedCurrency] = useState<any>();
   const { currencyExchangeRates } = useSelector((state: RootState) => state.currencyExchangeSlice);
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
+  const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
   const t = useTranslations('RetailerDashboardTable');
   const t2 = useTranslations('RetailerDashboard');
 
   useEffect(() => {
-    const selectedCurrency: any = currencyExchangeRates?.find((item: any) => item?.name === currency);
+    const selectedCurrency: any = currencyExchangeRates?.find((item: any) => item?.name === retailerProfile?.data?.businessCurrency);
     setSelectedCurrency(selectedCurrency);
-  }, [currency, currencyExchangeRates]);
+  }, [currencyExchangeRates, retailerProfile?.data?.businessCurrency]);
 
   const tableHeaders = [
     t('serialNo'),
@@ -27,7 +29,7 @@ export default function BranchStatsTable({ currency }: { currency?: string }) {
     t('subAdminEmail'),
     t('totalCustomer'),
     t('totalOrder'),
-    `${t('totalRevenue')} (${currency})`,
+    `${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`,
   ];
 
   if (isLoading || isError) {
