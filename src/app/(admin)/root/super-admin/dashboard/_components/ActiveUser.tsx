@@ -110,7 +110,7 @@ export default function ActiveUsers({
         )}
       </div>
 
-      <div className="col-span-full -mx-5 flex border-t border-dashed border-gray-200 px-5 pt-5 lg:-mx-7 lg:px-7">
+      <div className="col-span-full -mx-5 flex flex-col gap-y-3 border-t border-dashed border-gray-200 px-5 pt-5 sm:flex-row sm:gap-y-0 lg:-mx-7 lg:px-7">
         <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-x-3 gap-y-1.5 text-center">
           {data?.length > 0 &&
             !isLoading &&
