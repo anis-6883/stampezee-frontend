@@ -8,11 +8,13 @@ import { activeSubscription, setActiveSubscription, setRemainingBalance } from '
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Subscription } from '@/types';
+import Lottie from 'lottie-react';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import successAnimation from './successAnimation.json';
 
 export default function OrderSession() {
   const t = useTranslations('PaymentCompletePage');
@@ -61,6 +63,7 @@ export default function OrderSession() {
   }, [profile?.data, profileSuccess, data?.data]);
   return (
     <Link href="/root/retailer/dashboard">
+      <Lottie className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 transform" animationData={successAnimation} loop={true} />
       <Button color="danger" text={t('buttonText')} />
     </Link>
   );
