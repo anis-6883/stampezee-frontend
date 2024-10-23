@@ -107,6 +107,7 @@ export const Plans = ({ locale }: { locale: string }) => {
                 planChangeType,
                 total,
                 refundableThreshold,
+                // isSelectionBtn: false,
               })}
               className="text-white"
               color="danger"

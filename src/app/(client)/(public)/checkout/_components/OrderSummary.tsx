@@ -60,10 +60,8 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     const allowTotalStamp = subscription?.allowTotalStamp || 0;
     const disabledTotalStamp = stamps?.data?.docs?.length - allowTotalStamp;
     setDisableStampOptions(disableStampOptions);
-    setTotalDisabledStamp(disabledTotalStamp || 0);
+    setTotalDisabledStamp(disabledTotalStamp < 0 ? 0 : disabledTotalStamp);
   }, [stamps, subscription]);
-
-  console.log({ disableStampOptions, totalDisabledStamp });
 
   useEffect(() => {
     const activeTotalBranch = branches?.data?.docs?.filter((item: any) => !item?.disabledBySystem && item?.source === 'subscription');
