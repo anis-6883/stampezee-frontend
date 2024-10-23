@@ -12,7 +12,7 @@ export const countDaysLeft = (date: Date) => {
 export const calculateBalancePrice = (startDate: Date, expirationDate: Date, planPrice: number) => {
   const start = new Date(startDate);
   const end = new Date(expirationDate);
-  const today = new Date(); /* '2024-07-28T10:16:45.281+00:00' */
+  const today = new Date(); /* '2024-11-10T10:16:45.281+00:00' */
 
   if (isNaN(start.getTime()) || isNaN(end.getTime()) || start >= end) {
     throw 'Invalid start date or expiration date !';
@@ -46,6 +46,7 @@ export const isCheckoutButtonDisabled = ({
   planChangeType,
   total,
   refundableThreshold,
+  // isSelectionBtn = true,
 }: {
   plan: Subscription;
   isLoggedIn: boolean;
@@ -55,6 +56,7 @@ export const isCheckoutButtonDisabled = ({
   planChangeType: string;
   total: number;
   refundableThreshold: number;
+  // isSelectionBtn?: boolean;
 }) => {
   // if (!plan?.slug || activePlan?.slug === plan?.slug) {
   //   if (plan?.slug && plan?.slug !== 'trial' && plan?.slug === activePlan?.slug) {

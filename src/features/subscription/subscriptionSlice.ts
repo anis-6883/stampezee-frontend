@@ -175,7 +175,7 @@ const calculateSubTotal = (state: SubscriptionState) => {
       // downgrade and payment in stripe
       else {
         calculateTax(state);
-        state.total = roundToTwoDecimals(state.subTotal - state.tax - planSwitchCharge);
+        state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge);
       }
     }
     // when purchase a plan first time
