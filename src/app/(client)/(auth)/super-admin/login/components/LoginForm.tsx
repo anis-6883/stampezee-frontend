@@ -3,15 +3,18 @@
 import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
+import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useSuperAdminLoginMutation } from '@/features/auth/authApi';
 import { userLoggedIn } from '@/features/auth/authSlice';
 import { Form, Formik } from 'formik';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { SlEnvolope, SlLock } from 'react-icons/sl';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
@@ -27,7 +30,12 @@ export default function LoginForm() {
   };
 
   const loginSchema = Yup.object().shape({
-    email: Yup.string().required('Required!').email('Required valid email!'),
+    email: Yup.string()
+      .test('email', 'Provide valid email!', (value: any) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(value);
+      })
+      .required('Required!'),
     password: Yup.string().required('Required!'),
   });
 
@@ -40,9 +48,23 @@ export default function LoginForm() {
     }
 
     if (loginSuccess) {
-      toast.success('Welcome to Admin Panel!');
-      dispatch(userLoggedIn({ ...loginResponse?.data, isLoggedIn: true }));
-      replace(routes.superAdmin.dashboard);
+      dispatch(userLoggedIn(loginResponse?.data));
+
+      signIn('credentials', {
+        userData: JSON.stringify(loginResponse?.data),
+        redirect: false,
+      }).then((callback) => {
+        if (callback?.error) {
+          setIsSubmitting(false);
+          toast.error(callback?.error);
+        }
+        if (callback?.ok && !callback?.error) {
+          toast.success('Welcome to Admin Panel!');
+          if (loginResponse?.data?.role === ROLE.SUPER_ADMIN) {
+            replace(routes.privateRoutes.superAdmin.dashboard);
+          }
+        }
+      });
     }
   }, [dispatch, loginError, loginResponse, loginSuccess, replace]);
 
@@ -59,13 +81,14 @@ export default function LoginForm() {
       {() => (
         <Form>
           <div className="mx-auto mt-8 w-full space-y-4">
-            <InputField name="email" label="Email" placeholder="admin@email.com" />
-            <InputPassword name="password" label="Password" placeholder="******" />
+            <InputField prefix={<SlEnvolope className="text-xl" />} name="email" label="Email" placeholder="admin@email.com" />
+            <InputPassword prefix={<SlLock className="text-xl" />} name="password" label="Password" placeholder="******" />
 
             <p className="text-end text-xs font-semibold">
               Fields marked with <span className="text-red-600">*</span> are mandatory!
             </p>
             <Button
+              color="danger"
               className="w-full"
               type="submit"
               text="Submit"

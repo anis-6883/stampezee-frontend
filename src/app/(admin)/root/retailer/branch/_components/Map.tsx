@@ -1,13 +1,25 @@
-import { GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
+import { Circle, GoogleMap, Marker, StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import { Field, useFormikContext } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { IoAlertCircle } from 'react-icons/io5';
 import { Input, Loader } from 'rizzui';
 
-export default function MapComponent() {
-  const { setFieldValue, errors, touched, values }: any = useFormikContext();
+export default function MapComponent({
+  circle = false,
+  radius,
+  googleMapsApiKey,
+}: {
+  circle?: boolean;
+  radius?: number;
+  googleMapsApiKey: string;
+}) {
+  const { setFieldValue, values }: any = useFormikContext();
+  const t = useTranslations('RetailerBranches');
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyA0VpTwpD1F3VWNpyKWT84EQHqTYraMyC4', // Replace with your Google Maps API key
+    googleMapsApiKey: googleMapsApiKey, // Replace with your Google Maps API key
     libraries: ['places'], // Add 'places' library
   });
 
@@ -90,6 +102,15 @@ export default function MapComponent() {
     }
   }, [map, values]);
 
+  const defaultOptions = {
+    strokeOpacity: 0.5,
+    strokeWeight: 2,
+    fillOpacity: 0.05,
+    strokeColor: '#DC3545',
+    fillColor: '#DC3545',
+    setDraggable: true,
+  };
+
   return isLoaded ? (
     <div>
       <StandaloneSearchBox onLoad={onSearchBoxLoad} onPlacesChanged={onPlacesChanged}>
@@ -100,14 +121,25 @@ export default function MapComponent() {
               onChange={handleInputChange}
               label={
                 <span>
-                  Address <span className="text-red-600">*</span>
+                  {t('address')} <span className="text-red-600">*</span>
                 </span>
               }
               type="text"
               placeholder="Search for places..."
               ref={autocompleteRef}
               value={values.address}
-              inputClassName={`${meta.touched && meta.error ? '!border-red-500 ring-0' : 'border-gray-200'}`}
+              helperText={
+                meta.touched && meta.error ? (
+                  <span className="flex items-center gap-x-1">
+                    <IoAlertCircle className="text-lg" />
+                    <span>{meta.error}</span>
+                  </span>
+                ) : (
+                  ''
+                )
+              }
+              helperClassName="text-danger"
+              inputClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
             />
           )}
         </Field>
@@ -117,13 +149,18 @@ export default function MapComponent() {
           width: '100%',
           height: '400px',
         }}
-        zoom={15}
+        zoom={13}
         center={selectedLocation}
         onLoad={onLoad}
         onUnmount={onUnmount}
         onClick={handleMapClick}
       >
-        {selectedLocation && <Marker position={selectedLocation} />}
+        {selectedLocation && (
+          <>
+            <Marker position={selectedLocation} />
+            {circle && radius && <Circle center={selectedLocation} radius={radius * 1000} options={defaultOptions} />}
+          </>
+        )}
       </GoogleMap>
     </div>
   ) : (

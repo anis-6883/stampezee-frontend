@@ -1,5 +1,6 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
@@ -16,7 +17,6 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
-import Button from '../../../../../../components/Formik/Button';
 
 export default function CreateUpdateModel({
   setFormData,
@@ -30,7 +30,6 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [cretaeStampCategory, { isSuccess: createSuccess, error: createError }] = useCreateSuperAdminStampImageCategoryMutation();
   const [updateStampCategory, { isSuccess: updateSuccess, error: updateError }] = useUpdateSuperAdminStampImageCategoryMutation();
 
@@ -41,8 +40,8 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    name: Yup.string().required('Name is required'),
-    description: Yup.string(),
+    name: Yup.string().trim().required('Required!'),
+    description: Yup.string().trim(),
   });
 
   const submitHandler = async (values: any) => {
@@ -118,19 +117,21 @@ export default function CreateUpdateModel({
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
             {({ setFieldValue, values }) => (
               <Form className="mt-5">
-                <InputField name="name" label="Name" placeholder="Food" />
-                <div className="my-3">
-                  <InputTextarea required={false} name="description" label="Description" placeholder="Write here..." />
-                </div>
                 <div className="my-4">
-                  <p className="font-medium">Upload Image</p>
                   <DragAndDropUpload
                     value={{ name: 'image', image: values.image }}
                     onChange={(image: any) => setFieldValue('image', image)}
                     className="mt-2"
                     size={1024 * 1000}
                     sizeText="1MB"
+                    isRounded={true}
+                    uploadText="Upload"
+                    brandText={<span>Icon</span>}
                   />
+                </div>
+                <InputField name="name" label="Name" placeholder="Food" />
+                <div className="my-3">
+                  <InputTextarea required={false} name="description" label="Description" placeholder="Write here..." />
                 </div>
 
                 <p className="text-end text-xs font-semibold">
@@ -138,7 +139,7 @@ export default function CreateUpdateModel({
                 </p>
                 <div className="mt-6 flex justify-end">
                   <Button
-                    color={formData?._id ? 'warning' : 'primary'}
+                    color="danger"
                     type="submit"
                     text={formData?._id ? 'Update' : 'Submit'}
                     postIcon={<BsCheck2Circle className="text-base" />}

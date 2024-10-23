@@ -1,24 +1,32 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-
+import Button from '@/components/Formik/Button';
+import StatusIndicator from '@/components/shared/StatusIndicator';
+import { routes } from '@/config/routes';
 import {
   useDeleteStampImageMutation,
   useGetAllStampImagesQuery,
-  useUpdateStampStatusMutation,
+  useUpdateStampImageStatusMutation,
 } from '@/features/retailer/stamp-image/stampApi';
 import { IQueryType } from '@/types';
+import { countDaysLeft } from '@/utils';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
-import Button from '../../../../../../components/Formik/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function StampsImageTable() {
+export default function StampsImageTable({ locale }: { locale: string }) {
+  const t = useTranslations('RetailerStampImageTable');
+  const t2 = useTranslations('RetailerStampImageCreateUpdate');
+  const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -33,7 +41,7 @@ export default function StampsImageTable() {
   });
 
   const [deleteStampImage, { isSuccess, isError }] = useDeleteStampImageMutation();
-  const [updateStatus] = useUpdateStampStatusMutation();
+  const [updateStatus] = useUpdateStampImageStatusMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
@@ -55,13 +63,17 @@ export default function StampsImageTable() {
     }
   }, [isSuccess, isError]);
 
+  if (session?.user?.totalCustomStamp === 0) {
+    return redirect(routes.privateRoutes.retailer.dashboard);
+  }
+
   const structure = [
     {
-      header: 'Title',
+      header: t('title'),
       accessorKey: 'title',
     },
     {
-      header: 'Image',
+      header: t('image'),
       accessorKey: 'image',
       Cell: ({ row }: any) => (
         <div>
@@ -70,7 +82,7 @@ export default function StampsImageTable() {
       ),
     },
     {
-      header: 'Status',
+      header: t('status'),
       accessorKey: 'status',
       Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
       mantineTableHeadCellProps: {
@@ -81,24 +93,40 @@ export default function StampsImageTable() {
       },
     },
     {
-      header: 'Actions',
-      Cell: ({ row }: any) => (
-        <div className="flex items-center justify-center gap-2">
-          <Button
-            color="warning"
-            preIcon={<HiOutlinePencil className="text-base" />}
-            onClick={() => {
-              setFormData({
-                ...row.original,
-                image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
-              });
-              setCreateState(true);
-            }}
-          />
+      header: t('validityDate'),
+      Cell: ({ row }: any) => {
+        const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
+        return <span className="font-semibold text-danger">{countDays < 0 ? 'Expired' : `${countDays} days left`}</span>;
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
+    {
+      header: t('actions'),
+      Cell: ({ row }: any) => {
+        return (
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              tooltip="Edit"
+              color="warning"
+              preIcon={<HiOutlinePencil className="text-base" />}
+              onClick={() => {
+                setFormData({
+                  ...row.original,
+                  image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
+                });
+                setCreateState(true);
+              }}
+            />
 
-          <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
-        </div>
-      ),
+            <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+          </div>
+        );
+      },
       mantineTableHeadCellProps: {
         align: 'center',
       },
@@ -110,9 +138,24 @@ export default function StampsImageTable() {
 
   return (
     <>
-      <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-end">
-        <Button onClick={() => setCreateState(true)} text="Add New Stamp Image" preIcon={<HiPlus className="text-base" />} />
+      <CreateUpdateModel
+        setFormData={setFormData}
+        formData={formData}
+        modalState={createState}
+        setModalState={setCreateState}
+        locale={locale}
+      />
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+        <StatusIndicator />
+        <div>
+          <Button
+            className="w-full"
+            color="danger"
+            onClick={() => setCreateState(true)}
+            text={t2('addNewStampImage')}
+            preIcon={<HiPlus className="text-base" />}
+          />
+        </div>
       </div>
 
       <Table
@@ -136,7 +179,7 @@ export default function StampsImageTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Title"
+        searchPlaceHolder={t('placeHolder')}
       />
 
       <DeleteConfirmModal

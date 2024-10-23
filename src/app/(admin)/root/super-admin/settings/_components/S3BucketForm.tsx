@@ -1,34 +1,28 @@
-import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
-import Input from '@/components/shared/Form/Input';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
+import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
+import { RiKey2Line } from 'react-icons/ri';
 
 export default function S3BucketForm() {
   return (
-    <FormBlockWrapper title="AWS S3 Bucket Credentials">
+    <FormBlockWrapper title="AWS S3 Bucket Credentials" className="p-5">
       <div className="grid grid-cols-1 gap-x-4 gap-y-6 md:grid-cols-2">
-        {/* <Field name='awsRegion'>
-          {({ field }: { field: any }) => <Input {...field} label={<span>AWS Region</span>} placeholder='AWS Region' />}
-        </Field> */}
-
-        {/* <Field name='awsAccessKeyId'>
-          {({ field }: { field: any }) => <Input {...field} label={<span>AWS Access Key Id</span>} placeholder='AWS Access Key Id' />}
-        </Field> */}
-
-        {/* <Field name='awsSecretAccessKey'>
-          {({ field }: { field: any }) => (
-            <Input {...field} label={<span>AWS Secret Access Key</span>} placeholder='AWS Secret Access Key' />
-          )}
-        </Field> */}
-
-        {/* <Field name='awsBucketName'>
-          {({ field }: { field: any }) => <Input {...field} label={<span>AWS Bucket Name</span>} placeholder='AWS Bucket Name' />}
-        </Field> */}
-
         <InputField name="s3Bucket.awsRegion" label="AWS Region" placeholder="aws region" required={false} />
-        <InputPassword name="s3Bucket.awsAccessKeyId" label="AWS Access Key Id" placeholder="******" required={false} />
-        <InputPassword name="s3Bucket.awsSecretAccessKey" label="AWS Secret Access Key" placeholder="******" required={false} />
-        <InputPassword name="s3Bucket.awsBucketName" label="AWS Bucket Name" placeholder="******" required={false} />
+        <InputPassword
+          name="s3Bucket.awsAccessKeyId"
+          label="AWS Access Key Id"
+          placeholder="******"
+          required={false}
+          prefix={<RiKey2Line className="text-xl" />}
+        />
+        <InputPassword
+          name="s3Bucket.awsSecretAccessKey"
+          label="AWS Secret Access Key"
+          placeholder="******"
+          required={false}
+          prefix={<RiKey2Line className="text-xl" />}
+        />
+        <InputField name="s3Bucket.awsBucketName" label="AWS Bucket Name" placeholder="aws-s3" required={false} />
       </div>
     </FormBlockWrapper>
   );

@@ -16,8 +16,11 @@ export default function Table({
   enableDnD = false,
   sort,
   sortContext,
+  enableRowNumbers = false,
   searchPlaceHolder = 'Search',
   searchFieldWidth = '180px',
+  renderDetailPanel,
+  showGlobalFilter = true,
 }: ITableProps) {
   const { data, pagination } = response;
 
@@ -45,12 +48,12 @@ export default function Table({
     },
     positionGlobalFilter: 'left',
     initialState: {
-      showGlobalFilter: true,
+      showGlobalFilter: showGlobalFilter,
     },
     ...(enablePagination && {
       manualPagination: pagination,
       mantinePaginationProps: {
-        rowsPerPageOptions: ['10', '25', '50'],
+        rowsPerPageOptions: ['10', '20', '25', '50'],
         withEdges: false,
       },
       rowCount: pagination && pagination.totalDocuments,
@@ -80,6 +83,7 @@ export default function Table({
     enableColumnActions: false,
     onGlobalFilterChange: handleFilter,
     enableSorting: enableDnD,
+    enableRowNumbers: enableRowNumbers,
 
     ...(enableDnD && {
       enableRowDragging: true,
@@ -106,6 +110,7 @@ export default function Table({
         },
       }),
     }),
+    renderDetailPanel,
   });
 
   return <MantineReactTable table={table} />;

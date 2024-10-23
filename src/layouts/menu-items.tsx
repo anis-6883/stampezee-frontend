@@ -1,114 +1,171 @@
 import { routes } from '@/config/routes';
-import { BsQuestionCircle, BsShop } from 'react-icons/bs';
+import { BsPatchCheck, BsQuestionCircle, BsShop } from 'react-icons/bs';
+import { FaMoneyBillTransfer } from 'react-icons/fa6';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
-import { IoDiamondOutline, IoImageOutline } from 'react-icons/io5';
-import { LuBarChart3, LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
-import { MdQrCodeScanner } from 'react-icons/md';
-import { PiBellRinging, PiCurrencyDollar, PiStamp, PiTreeStructure } from 'react-icons/pi';
+import { IoDiamondOutline } from 'react-icons/io5';
+import { LiaMapMarkedAltSolid } from 'react-icons/lia';
+import { LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
+import { MdOutlineCurrencyExchange, MdOutlineQrCodeScanner } from 'react-icons/md';
+import { PiBellRinging, PiStamp, PiSyringeLight } from 'react-icons/pi';
+import { RiContactsLine, RiCoupon4Line, RiMoneyDollarCircleLine, RiRefund2Line } from 'react-icons/ri';
 import { TbUserShield } from 'react-icons/tb';
 
 export const menuItems: { [key: string]: any } = {
   super_admin: [
     {
       name: 'Dashboard',
-      href: routes.superAdmin.dashboard,
+      href: routes.privateRoutes.superAdmin.dashboard,
       icon: <LuLayoutDashboard />,
     },
     {
-      name: 'Customers',
-      href: routes.superAdmin.customer,
-      icon: <LuUsers />,
-    },
-    {
       name: 'Retailers',
-      href: routes.superAdmin.retailer.home,
+      href: routes.privateRoutes.superAdmin.retailer?.home,
       icon: <BsShop />,
     },
     {
-      name: 'Scans',
-      href: routes.superAdmin.scan,
-      icon: <MdQrCodeScanner />,
-    },
-    {
-      name: 'Stamp Categories',
-      href: routes.superAdmin.stampCategory.home,
-      icon: <LuListChecks />,
-    },
-    {
-      name: 'Stamp Images',
-      href: routes.superAdmin.stampImage.home,
-      icon: <PiStamp />,
-    },
-    {
       name: 'Subscriptions',
-      href: routes.superAdmin.subscription.home,
+      href: routes.privateRoutes.superAdmin.subscription.home,
       icon: <IoDiamondOutline />,
+    },
+
+    {
+      name: 'Coupons',
+      href: routes.privateRoutes.superAdmin.coupon.home,
+      icon: <RiCoupon4Line />,
+    },
+    {
+      name: 'Payments',
+      href: routes.privateRoutes.superAdmin.payment.home,
+      icon: <RiMoneyDollarCircleLine />,
+    },
+    {
+      name: 'Refunds',
+      href: routes.privateRoutes.superAdmin.refund,
+      icon: <RiRefund2Line />,
+    },
+    {
+      name: 'Customers',
+      href: routes.privateRoutes.superAdmin.customer.home,
+      icon: <LuUsers />,
+    },
+    {
+      name: 'Scans',
+      href: routes.privateRoutes.superAdmin.scan,
+      icon: <MdOutlineQrCodeScanner />,
     },
     {
       name: 'Push Notifications',
-      href: routes.superAdmin.notification,
+      href: routes.privateRoutes.superAdmin.notification,
       icon: <PiBellRinging />,
     },
     {
+      name: 'Critical Payments',
+      href: routes.privateRoutes.superAdmin.criticalPayment.home,
+      icon: <PiSyringeLight />,
+    },
+    {
+      name: 'Currency Exchange Rate',
+      href: routes.privateRoutes.superAdmin.currencyExchange?.home,
+      icon: <MdOutlineCurrencyExchange />,
+    },
+    {
+      name: 'Stamp Categories',
+      href: routes.privateRoutes.superAdmin.stampCategory.home,
+      icon: <LuListChecks />,
+    },
+    {
+      name: 'Default Stamp Images',
+      href: routes.privateRoutes.superAdmin.stampImage.home,
+      icon: <BsPatchCheck />,
+    },
+    {
       name: 'FAQs',
-      href: routes.superAdmin.faq.home,
+      href: routes.privateRoutes.superAdmin.faq.home,
       icon: <BsQuestionCircle />,
     },
     {
-      name: 'Billings',
-      href: routes.superAdmin.billing,
-      icon: <PiCurrencyDollar />,
+      name: 'Contacts',
+      href: routes.privateRoutes.superAdmin.contact,
+      icon: <RiContactsLine />,
     },
+
     {
       name: 'General Settings',
-      href: routes.superAdmin.settings,
+      href: routes.privateRoutes.superAdmin.settings,
       icon: <HiOutlineCog8Tooth />,
     },
   ],
   retailer: [
     {
       name: 'Dashboard',
-      href: routes.retailer.dashboard,
-      icon: <LuBarChart3 />,
+      href: routes.privateRoutes.retailer.dashboard,
+      icon: <LuLayoutDashboard />,
     },
     {
-      name: 'Customers',
-      href: routes.retailer.customer.home,
-      icon: <LuUsers />,
+      name: 'Plans & Add-on',
+      href: routes.privateRoutes.retailer.membershipPlan,
+      icon: <IoDiamondOutline />,
+    },
+    {
+      name: 'Billing',
+      href: routes.privateRoutes.retailer.billing.home,
+      icon: <FaMoneyBillTransfer />,
+    },
+    {
+      name: 'Refunds',
+      href: routes.privateRoutes.retailer.refund,
+      icon: <RiRefund2Line />,
+    },
+    {
+      name: 'Branches',
+      href: routes.privateRoutes.retailer.branch.home,
+      icon: <LiaMapMarkedAltSolid />,
     },
     {
       name: 'Sub-Admins',
-      href: routes.retailer.sub_admin.home,
+      href: routes.privateRoutes.retailer.sub_admin.home,
       icon: <TbUserShield />,
     },
     {
       name: 'Stamps',
-      href: routes.retailer.stamp.home,
+      href: routes.privateRoutes.retailer.stamp.home,
       icon: <PiStamp />,
     },
     {
-      name: 'Stamp Images',
-      href: routes.retailer.stampImage.home,
-      icon: <IoImageOutline />,
+      name: 'Scans',
+      href: routes.privateRoutes.retailer.scan,
+      icon: <MdOutlineQrCodeScanner />,
+    },
+    {
+      name: 'Customers',
+      href: routes.privateRoutes.retailer.customer.home,
+      icon: <LuUsers />,
+    },
+    {
+      name: 'Custom Stamp Images',
+      href: routes.privateRoutes.retailer.stampImage.home,
+      icon: <BsPatchCheck />,
     },
     {
       name: 'Push Notifications',
-      href: routes.retailer.notification.home,
+      href: routes.privateRoutes.retailer.regularNotification.home,
       icon: <PiBellRinging />,
-    },
-    {
-      name: 'Membership Plans',
-      href: routes.retailer.membershipPlan,
-      icon: <IoDiamondOutline />,
-    },
-    {
-      name: 'Branches',
-      href: routes.retailer.branch.home,
-      icon: <PiTreeStructure />,
+      dropdownItems: [
+        {
+          name: 'Regular',
+          href: routes.privateRoutes.retailer.regularNotification.home,
+          icon: <PiBellRinging />,
+        },
+        {
+          name: 'Location Based',
+          href: routes.privateRoutes.retailer.locationBasedNotification.home,
+          icon: <PiBellRinging />,
+        },
+      ],
     },
     {
       name: 'Manage Profile',
-      href: routes.retailer.profile,
+      href: routes.privateRoutes.retailer.profile,
       icon: <LuUserCog />,
     },
   ],

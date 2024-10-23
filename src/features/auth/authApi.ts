@@ -2,20 +2,6 @@ import { apiSlice } from '@/features/api/apiSlice';
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    logoutUser: builder.mutation({
-      query: () => {
-        return {
-          url: '/api/web/user-logout',
-          method: 'POST',
-        };
-      },
-    }),
-
-    getOwnProfile: builder.query({
-      query: () => `/api/web/get-profile`,
-      providesTags: ['userOwnProfile'],
-    }),
-
     // super-admin api start
     superAdminLogin: builder.mutation({
       query: (data) => {
@@ -37,14 +23,35 @@ export const authApi = apiSlice.injectEndpoints({
       invalidatesTags: ['superAdminProfile'],
     }),
     superAdminGetProfile: builder.query({
-      query: (id: string) => `/api/secret-root/admin/super-admin/profile`,
+      query: () => `/api/secret-root/admin/super-admin/profile`,
       providesTags: ['superAdminProfile'],
+      keepUnusedDataFor: 0,
+    }),
+    superAdminUpdateProfile: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/api/secret-root/admin/super-admin/profile`,
+          method: 'PUT',
+          body: data,
+        };
+      },
+      invalidatesTags: ['superAdminProfile'],
+    }),
+    superAdminChangePassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/api/secret-root/admin/super-admin/change-password`,
+          method: 'POST',
+          body: data,
+        };
+      },
     }),
 
     // retailer api start
     retailerGetProfile: builder.query({
       query: () => `api/web/retailer/profile`,
       providesTags: ['retailerProfile'],
+      keepUnusedDataFor: 0,
     }),
     retailerUpdateProfile: builder.mutation({
       query: (data) => {
@@ -54,12 +61,56 @@ export const authApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['userOwnProfile'],
+      invalidatesTags: ['retailerProfile'],
     }),
     retailerRegister: builder.mutation({
       query: (data) => {
         return {
           url: `api/web/retailer/register`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    retailerChangePassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/web/retailer/change-password`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    retailerForgotPassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/web/retailer/forget-password`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    retailerVerifyForgetPasswordOtp: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/web/retailer/forget-password-otp-verify`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    retailerForgetResendOtp: builder.mutation({
+      query: () => {
+        return {
+          url: `api/web/retailer/resend-forget-password-otp`,
+          method: 'POST',
+        };
+      },
+    }),
+    retailerChangeForgetPassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/web/retailer/change-forget-password`,
           method: 'POST',
           body: data,
         };
@@ -99,12 +150,17 @@ export const {
   useSuperAdminGetProfileQuery,
   useSuperAdminLoginMutation,
   useSuperAdminLogoutMutation,
+  useSuperAdminUpdateProfileMutation,
+  useSuperAdminChangePasswordMutation,
   useRetailerGetProfileQuery,
   useRetailerUpdateProfileMutation,
   useRetailerLoginMutation,
   useRetailerOtpVerifyMutation,
   useRetailerRegisterMutation,
-  useGetOwnProfileQuery,
-  useLogoutUserMutation,
   useRetailerResendOtpMutation,
+  useRetailerChangePasswordMutation,
+  useRetailerForgotPasswordMutation,
+  useRetailerVerifyForgetPasswordOtpMutation,
+  useRetailerChangeForgetPasswordMutation,
+  useRetailerForgetResendOtpMutation,
 } = authApi;

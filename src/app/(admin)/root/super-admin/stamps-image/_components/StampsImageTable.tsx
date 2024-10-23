@@ -1,7 +1,8 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
-
+import Button from '@/components/Formik/Button';
+import StatusIndicator from '@/components/shared/StatusIndicator';
 import {
   useDeleteSuperAdminStampImageMutation,
   useGetAllSuperAdminStampImagesQuery,
@@ -14,8 +15,6 @@ import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
-import Button from '../../../../../../components/Formik/Button';
-
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
@@ -62,6 +61,7 @@ export default function StampsImageTable() {
     {
       header: 'Title',
       accessorKey: 'title',
+      enableSorting: false,
     },
     {
       header: 'Image',
@@ -71,6 +71,7 @@ export default function StampsImageTable() {
           <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="h-10 w-10 rounded-full" />
         </div>
       ),
+      enableSorting: false,
     },
     {
       header: 'Status',
@@ -82,6 +83,7 @@ export default function StampsImageTable() {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      enableSorting: false,
     },
     {
       header: 'Actions',
@@ -114,8 +116,17 @@ export default function StampsImageTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-end">
-        <Button onClick={() => setCreateState(true)} text="Add New Stamp Image" preIcon={<HiPlus className="text-base" />} />
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+        <StatusIndicator />
+        <div>
+          <Button
+            className="w-full"
+            color="danger"
+            onClick={() => setCreateState(true)}
+            text="Add New Stamp Image"
+            preIcon={<HiPlus className="text-base" />}
+          />
+        </div>
       </div>
 
       <Table

@@ -6,7 +6,7 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}',
     './node_modules/rizzui/dist/*.{js,ts,jsx,tsx}', // must use this line to compile and generate our RizzUI components style
   ],
-  darkMode: ['class', '[data-theme="dark"]'],
+  darkMode: ['class'],
   theme: {
     screens: {
       xs: '480px',
@@ -37,11 +37,11 @@ export default {
         },
         primary: '#3872FA',
         secondary: '#5C636A',
-        warning: '#FFC107',
+        warning: '#FFA823',
         success: '#198754',
         danger: '#DC3545',
         info: '#0DCAF0',
-        light: '#D3D4D5',
+        light: '#FFFFFF',
       },
       fontFamily: {
         poppins: ['var(--font-poppins)'],
@@ -55,6 +55,7 @@ export default {
         skeleton: 'skeletonWave 1.6s linear 0.5s infinite',
         'spinner-ease-spin': 'spinnerSpin 0.8s ease infinite',
         'spinner-linear-spin': 'spinnerSpin 0.8s linear infinite',
+        marquee: 'marquee 10s linear infinite',
       },
       backgroundImage: {
         skeleton: `linear-gradient(90deg,transparent,#ecebeb,transparent)`,
@@ -94,6 +95,10 @@ export default {
           '100%': {
             transform: 'rotate(360deg)',
           },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-70%)' },
         },
       },
       content: {

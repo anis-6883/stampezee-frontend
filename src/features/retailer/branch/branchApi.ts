@@ -9,6 +9,7 @@ export const branchApi = apiSlice.injectEndpoints({
         return `/api/web/retailer/branch/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['branches'],
+      keepUnusedDataFor: 0,
     }),
     singleBranch: builder.query({
       query: ({ _id }) => `/api/web/retailer/branch/${_id}`,
@@ -28,7 +29,7 @@ export const branchApi = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
+      invalidatesTags: (result, error, arg: any) => ['branches', 'subAdmin', { type: 'branch', id: arg.id }],
     }),
     updateBranchStatus: builder.mutation({
       query: ({ data, branchId }) => ({
@@ -38,12 +39,33 @@ export const branchApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
     }),
+    activateBranch: builder.mutation({
+      query: (id) => ({
+        url: `/api/web/retailer/branch/activate/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
+    }),
+    convertToAddOnBranch: builder.mutation({
+      query: (id) => ({
+        url: `/api/web/retailer/branch/convert-to-addon/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
+    }),
+    renewBranch: builder.mutation({
+      query: (id) => ({
+        url: `/api/web/retailer/branch/renew/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
+    }),
     deleteBranch: builder.mutation({
       query: (id) => ({
         url: `/api/web/retailer/branch/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, arg: any) => ['branches', { type: 'branch', id: arg.id }],
+      invalidatesTags: (result, error, arg: any) => ['branches', 'subAdmin', 'retailerStamp', { type: 'branch', id: arg.id }],
     }),
   }),
 });
@@ -55,4 +77,7 @@ export const {
   useDeleteBranchMutation,
   useSingleBranchQuery,
   useUpdateBranchStatusMutation,
+  useActivateBranchMutation,
+  useRenewBranchMutation,
+  useConvertToAddOnBranchMutation,
 } = branchApi;

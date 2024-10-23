@@ -6,7 +6,7 @@ const pageHeader = {
   title: 'Manage Faqs',
   breadcrumb: [
     {
-      href: routes.superAdmin.dashboard,
+      href: routes.privateRoutes.superAdmin.dashboard,
       name: 'Dashboard',
     },
     {

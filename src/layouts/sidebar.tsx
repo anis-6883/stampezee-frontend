@@ -1,66 +1,151 @@
 'use client';
 
+import BalanceCard from '@/app/(client)/(public)/components/BalanceCard';
+import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import cn from '@/hooks/class-names';
-import _ from 'lodash';
+import { useIsMounted } from '@/hooks/use-is-mounted';
+import { useWindowScroll } from '@/hooks/use-window-scroll';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
 import { PiCaretDownBold } from 'react-icons/pi';
+import { SlLock } from 'react-icons/sl';
 import { useSelector } from 'react-redux';
 import { Collapse, Title } from 'rizzui';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { menuItems } from './menu-items';
 
-export default function Sidebar({ className }: { className?: string }) {
-  const pathname = usePathname();
-  const role = useSelector((state: RootState) => state.authSlice.role);
-  const user = useSelector((state: RootState) => state.authSlice.user);
+const blockedMenuUrls = [
+  routes.privateRoutes.retailer.customer.home,
+  routes.privateRoutes.retailer.sub_admin.home,
+  routes.privateRoutes.retailer.stamp.home,
+  routes.privateRoutes.retailer.stampImage.home,
+  routes.privateRoutes.retailer.branch.home,
+  routes.privateRoutes.retailer.regularNotification.home,
+  routes.privateRoutes.retailer.locationBasedNotification.home,
+  routes.privateRoutes.retailer.scan,
+];
 
-  let fullName = user?.firstName + ' ' + user?.lastName;
+const addonsBlockedMenuUrls = [
+  routes.privateRoutes.retailer.stampImage.home,
+  routes.privateRoutes.retailer.regularNotification.home,
+  routes.privateRoutes.retailer.locationBasedNotification.home,
+];
+
+const lockedMenuNames = ['Branches', 'Custom Stamp Images', 'Regular', 'Location Based'];
+
+const checkedLocked = (role: string, url: string, menuName: string, user: any) => {
+  if (user?.plan) {
+    if (user?.plan === 'trial') {
+      return role === 'retailer' && addonsBlockedMenuUrls.includes(url);
+    }
+    if (lockedMenuNames?.indexOf(menuName) >= 0) {
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Branches') {
+        return role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalBranch === 0;
+      }
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Custom Stamp Images') {
+        return (
+          role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalCustomStampImage === 0
+        );
+      }
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Regular') {
+        return (
+          role === 'retailer' &&
+          blockedMenuUrls.includes(url) &&
+          lockedMenuNames?.includes(menuName) &&
+          user?.totalRegularNotification === 0
+        );
+      }
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Location Based') {
+        return (
+          role === 'retailer' &&
+          blockedMenuUrls.includes(url) &&
+          lockedMenuNames?.includes(menuName) &&
+          user?.totalLocationNotification === 0
+        );
+      }
+    }
+    return false;
+  } else {
+    return role === 'retailer' && blockedMenuUrls.includes(url);
+  }
+};
+
+export default function Sidebar({ className }: { className?: string }) {
+  const t = useTranslations('RetailerSidebar');
+  const isMounted = useIsMounted();
+  const windowScroll = useWindowScroll();
+  const pathname = usePathname();
+  const { data: session }: any = useSession();
+  const { role, user } = useSelector((state: RootState) => state.authSlice);
+
+  let fullName = user?.firstName ? user?.firstName + ' ' + user?.lastName : '';
 
   if (fullName.length >= 18) {
-    fullName = user?.firstName + ' ' + user?.lastName.charAt(0).toUpperCase() + '.';
+    const lastName = user?.lastName ? user?.lastName.charAt(0).toUpperCase() : '';
+    fullName = user?.firstName + ' ' + lastName + '.';
   }
 
   return (
     <aside
       className={cn(
-        '2xl:w-72 fixed bottom-0 start-0 z-50 h-full w-[270px] border-e-2 border-gray-100 bg-white dark:bg-gray-100/50',
+        '2xl:w-72 fixed bottom-0 start-0 z-50 h-full w-[290px] overflow-auto border-e-2 border-gray-100 bg-white dark:bg-gray-100/50',
         className
       )}
     >
-      <div className="2xl:px-6 2xl:pt-2 sticky top-0 z-40 bg-gray-0/10 px-6 pb-2 pt-2 dark:bg-gray-100/5">
-        <Link href={role === 'super_admin' ? routes.superAdmin.dashboard : routes.retailer.dashboard} aria-label="Site Logo">
+      <div
+        className={cn(
+          '2xl:py-5 sticky top-0 z-50 flex items-center justify-center bg-gray-0/80 px-4 py-4 backdrop-blur-xl dark:bg-gray-50/50 md:px-5 lg:px-6 3xl:px-8 4xl:px-10',
+          ((isMounted && windowScroll.y) as number) > 2 ? 'card-shadow' : ''
+        )}
+      >
+        <Link
+          href={role === 'super_admin' ? routes.privateRoutes.superAdmin.dashboard : routes.privateRoutes.retailer.dashboard}
+          aria-label="Site Logo"
+        >
           <img src="/images/logo.png" width={80} height={50} alt="logo" className="m-auto pt-2" />
         </Link>
       </div>
 
-      <div className="mx-auto mt-4 flex w-[90%] items-center justify-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
-        <img
-          className="h-14 w-14 rounded-full p-2"
-          src={
-            user?.image
-              ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
-              : 'https://cdn.pixabay.com/photo/2020/04/12/10/57/store-5033746_640.png'
-          }
-          alt="Store Image"
-        />
-        <div>
-          <h3 className="text-lg font-bold">{fullName ? fullName : 'Blessy J'}</h3>
-          <span className="tex-lg text-gray-500">{_.startCase(_.toLower(role === 'super_admin' ? 'Super Admin' : role))}</span>
+      {session?.user?.role === ROLE.RETAILER && (
+        <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
+          <img
+            src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+            color="danger"
+            className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+            alt="brand"
+          />
+          <Title as="h6" className="break-all text-center font-bold">
+            {user?.storeName && user?.storeName.length > 20 ? user?.storeName.slice(0, 20) + '...' : user?.storeName}
+          </Title>
         </div>
-      </div>
+      )}
 
-      <SimpleBar className="h-[calc(100%-80px)]">
-        <div className="mt-4 pb-3 3xl:mt-6">
+      {session?.user?.role === ROLE.SUPER_ADMIN && (
+        <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
+          <img
+            src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+            color="danger"
+            className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+            alt="brand"
+          />
+          <Title as="h6" className="break-all text-center font-bold">
+            {fullName}
+          </Title>
+        </div>
+      )}
+
+      {session?.user?.plan && <BalanceCard />}
+
+      <SimpleBar>
+        <div className="mt-4  pb-3 3xl:mt-6">
           {menuItems[role]?.map((item: any, index: number) => {
-            const isActive =
-              item.name === 'Dashboard'
-                ? pathname === '/admin'
-                : pathname === (item?.href as string) || pathname.includes(item?.href as string);
+            const isActive = pathname === (item?.href as string) || pathname.includes(item?.href as string);
             const pathnameExistInDropdowns: any = item?.dropdownItems?.filter((dropdownItem: any) => dropdownItem.href === pathname);
             const isDropdownOpen = Boolean(pathnameExistInDropdowns?.length);
 
@@ -77,7 +162,7 @@ export default function Sidebar({ className }: { className?: string }) {
                             className={cn(
                               '2xl:mx-5 2xl:my-2 group relative mx-3 flex cursor-pointer items-center justify-between rounded-md px-3 py-2 font-medium lg:my-1',
                               isDropdownOpen
-                                ? 'before:top-2/5 2xl:before:-start-5 text-primary before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-primary'
+                                ? 'before:top-2/5 2xl:before:-start-5 text-danger before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-primary'
                                 : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:text-gray-700/90 dark:hover:text-gray-700'
                             )}
                           >
@@ -86,13 +171,13 @@ export default function Sidebar({ className }: { className?: string }) {
                                 <span
                                   className={cn(
                                     'me-2 inline-flex h-5 w-5 items-center justify-center rounded-md [&>svg]:h-[20px] [&>svg]:w-[20px]',
-                                    isDropdownOpen ? 'text-primary' : 'text-gray-800 dark:text-gray-500 dark:group-hover:text-gray-700'
+                                    isDropdownOpen ? 'text-danger' : 'text-gray-800 dark:text-gray-500 dark:group-hover:text-gray-700'
                                   )}
                                 >
                                   {item?.icon}
                                 </span>
                               )}
-                              {item.name}
+                              {role === ROLE.RETAILER ? t(item?.name) : item.name}
                             </span>
 
                             <PiCaretDownBold
@@ -114,8 +199,12 @@ export default function Sidebar({ className }: { className?: string }) {
                               key={dropdownItem?.name + index}
                               className={cn(
                                 '2xl:mx-5 mx-3.5 mb-0.5 flex items-center justify-between rounded-md px-3.5 py-2 font-medium capitalize last-of-type:mb-1 lg:last-of-type:mb-2',
+
+                                checkedLocked(role, dropdownItem?.href, dropdownItem.name, session?.user)
+                                  ? 'pointer-events-none cursor-not-allowed bg-gray-100'
+                                  : '',
                                 isChildActive
-                                  ? 'text-primary'
+                                  ? 'text-danger'
                                   : 'text-gray-500 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900'
                               )}
                             >
@@ -123,11 +212,16 @@ export default function Sidebar({ className }: { className?: string }) {
                                 <span
                                   className={cn(
                                     'me-[18px] ms-1 inline-flex h-1 w-1 rounded-full bg-current transition-all duration-200',
-                                    isChildActive ? 'bg-primary ring-[1px] ring-primary' : 'opacity-40'
+                                    isChildActive ? 'bg-danger ring-[1px] ring-danger' : 'opacity-40'
                                   )}
                                 />{' '}
-                                <span className="truncate">{dropdownItem?.name}</span>
+                                <span className="truncate">{role === ROLE.RETAILER ? t(dropdownItem?.name) : dropdownItem?.name}</span>
                               </div>
+                              {checkedLocked(role, dropdownItem?.href, dropdownItem.name, session?.user) && (
+                                <div className="text-end ">
+                                  <SlLock className="text-lg" />
+                                </div>
+                              )}
                             </Link>
                           );
                         })}
@@ -137,8 +231,11 @@ export default function Sidebar({ className }: { className?: string }) {
                         href={item?.href}
                         className={cn(
                           '2xl:mx-5 2xl:my-2 group relative mx-3 my-0.5 flex items-center justify-between rounded-md px-3 py-2 font-medium capitalize lg:my-1',
+                          checkedLocked(role, item?.href, item.name, session?.user)
+                            ? 'pointer-events-none cursor-not-allowed bg-gray-100'
+                            : '',
                           isActive
-                            ? 'before:top-2/5 2xl:before:-start-5 text-primary before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-primary'
+                            ? 'before:top-2/5 2xl:before:-start-5 text-danger before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-danger'
                             : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-700/90'
                         )}
                       >
@@ -147,14 +244,25 @@ export default function Sidebar({ className }: { className?: string }) {
                             <span
                               className={cn(
                                 'me-2 inline-flex h-5 w-5 items-center justify-center rounded-md [&>svg]:h-[20px] [&>svg]:w-[20px]',
-                                isActive ? 'text-primary' : 'text-gray-800 dark:text-gray-500 dark:group-hover:text-gray-700'
+                                isActive ? 'text-danger' : 'text-gray-800 dark:text-gray-500 dark:group-hover:text-gray-700'
                               )}
                             >
                               {item?.icon}
                             </span>
                           )}
-                          <span className="truncate">{item.name}</span>
+                          <span className="truncate">
+                            {role === ROLE.RETAILER ? t(item.name) : item.name}{' '}
+                            {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
+                            {item.name === 'Custom Stamp Images' && `(${session?.user?.totalCustomStampImage || 0})`}
+                            {item.name === 'Stamps' && `(${session?.user?.totalStamp || 0})`}
+                            {item.name === 'Sub-Admins' && `(${session?.user?.totalBranch || 0})`}
+                          </span>
                         </div>
+                        {checkedLocked(role, item?.href, item.name, session?.user) && (
+                          <div className="text-end ">
+                            <SlLock className="text-lg" />
+                          </div>
+                        )}
                       </Link>
                     )}
                   </>
@@ -166,7 +274,7 @@ export default function Sidebar({ className }: { className?: string }) {
                       index !== 0 && 'mt-6 3xl:mt-7'
                     )}
                   >
-                    {item.name}
+                    {role === ROLE.RETAILER ? t(item.name) : item.name}
                   </Title>
                 )}
               </Fragment>

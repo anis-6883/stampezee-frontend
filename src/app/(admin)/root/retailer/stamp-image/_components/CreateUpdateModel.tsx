@@ -1,30 +1,36 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateStampImageMutation, useUpdateStampImageMutation } from '@/features/retailer/stamp-image/stampApi';
+import { translateText } from '@/utils/GoogleTranslate';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
-import Button from '../../../../../../components/Formik/Button';
 
 export default function CreateUpdateModel({
+  locale,
   setFormData,
   formData,
   modalState,
   setModalState,
 }: {
+  locale: string;
   formData: any;
   modalState: boolean;
   setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
 }) {
+  const t2 = useTranslations('RetailerStampImageCreateUpdate');
+  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [createStampImage, { isSuccess: createSuccess, error: createError }] = useCreateStampImageMutation();
@@ -36,8 +42,8 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('Title is required'),
-    image: Yup.mixed().required('Image is required'),
+    title: Yup.string().trim().required(tCommon('required')),
+    image: Yup.mixed().required(tCommon('required')),
   });
 
   const submitHandler = async (values: any) => {
@@ -66,37 +72,55 @@ export default function CreateUpdateModel({
   useEffect(() => {
     if (createError) {
       const myError = createError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
+      if (locale === 'en') {
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([myError?.data?.message], locale, 'en');
+          const errorMessage = translatedMessage[0] || tCommon('errorMessage');
+          toast.error(errorMessage);
+        })();
+      }
       setIsSubmitting(false);
     }
     if (createSuccess) {
-      toast.success('Stamp Image created successfully!');
+      toast.success(t2('stampImageCreatedSuccessfully'));
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createError, createSuccess, setFormData, setModalState]);
 
   // Handle Update Response
   useEffect(() => {
     if (updateError) {
       const myError = updateError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
+      if (locale === 'en') {
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      } else {
+        (async () => {
+          const translatedMessage = await translateText([myError?.data?.message], locale, 'en');
+          const errorMessage = translatedMessage[0] || tCommon('errorMessage');
+          toast.error(errorMessage);
+        })();
+      }
       setIsSubmitting(false);
     }
     if (updateSuccess) {
-      toast.success('Stamp Image updated successfully!');
+      toast.success(t2('stampImageUpdatedSuccessfully'));
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setFormData, setModalState, updateError, updateSuccess]);
 
   return (
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Update A Stamp Image</Title> : <Title as="h4">Add New Stamp Image</Title>}
+          {formData?._id ? <Title as="h4">{t2('updateStampImage')}</Title> : <Title as="h4">{t2('addNewStampImage')}</Title>}
 
           <ActionIcon
             size="sm"
@@ -106,36 +130,40 @@ export default function CreateUpdateModel({
               setFormData({});
             }}
           >
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <div>
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
             {({ setFieldValue, values }) => (
               <Form className="mt-5">
-                <InputField name="title" label="Title" placeholder="Stamp One" />
-
                 <div className="my-4">
-                  <p className="font-medium">
-                    Upload Image <span className="text-red-600">*</span>
-                  </p>
                   <DragAndDropUpload
                     value={{ name: 'image', image: values.image }}
                     onChange={(image: any) => setFieldValue('image', image)}
                     className="mt-2"
                     size={1024 * 1000}
                     sizeText="1MB"
+                    isRounded={true}
+                    uploadText="Upload"
+                    brandText={
+                      <span>
+                        Image <span className="text-danger">*</span>
+                      </span>
+                    }
                   />
                 </div>
 
-                <p className="text-end text-xs font-semibold">
-                  Fields marked with <span className="text-red-600">*</span> are mandatory!
+                <InputField name="title" label={t2('title')} placeholder="Stamp One" />
+
+                <p className="mt-5 text-end text-xs font-semibold">
+                  <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
                 </p>
                 <div className="mt-6 flex justify-end">
                   <Button
-                    color={formData?._id ? 'warning' : 'primary'}
+                    color={'danger'}
                     type="submit"
-                    text={formData?._id ? 'Update' : 'Submit'}
+                    text={formData?._id ? t2('update') : t2('submit')}
                     postIcon={<BsCheck2Circle className="text-base" />}
                     isSubmitting={isSubmitting}
                   />

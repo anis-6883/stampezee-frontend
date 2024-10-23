@@ -1,0 +1,45 @@
+// OrderBalance.tsx
+'use client';
+
+import { RootState } from '@/features/store';
+import { calculateBalancePrice } from '@/utils';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import { useSelector } from 'react-redux';
+
+const OrderBalance = () => {
+  const t = useTranslations('CheckoutPage');
+  const { data: session }: any = useSession();
+  const { activeSubscription, currency } = useSelector((state: RootState) => state.subscriptionSlice);
+  const remainingAmount =
+    activeSubscription?.slug && activeSubscription?.slug !== 'trial'
+      ? calculateBalancePrice(session?.user?.planStartAt as Date, session?.user?.planValidAt as Date, session?.user?.planPayment)
+      : 0;
+
+  const usageAmount = activeSubscription?.slug && activeSubscription?.slug !== 'trial' ? session?.user?.planPayment : 0;
+
+  return (
+    activeSubscription?.slug &&
+    activeSubscription?.slug !== 'trial' && (
+      <div>
+        <h2 className="mb-4 text-xl font-semibold">{t('balance')}</h2>
+        <div className="mb-5 rounded-lg border p-4">
+          <div className="mb-2 flex justify-between">
+            <span>{t('currentAmount')}</span>
+            <span className="text-red-500">
+              {remainingAmount.toFixed(2)} {session?.user?.planPaymentCurrency}
+            </span>
+          </div>
+          <div className="mb-2 flex justify-between">
+            <span>{t('usageAmount')}</span>
+            <span className="text-red-500">
+              {Math.abs(remainingAmount - usageAmount).toFixed(2)} {session?.user?.planPaymentCurrency}
+            </span>
+          </div>
+        </div>
+      </div>
+    )
+  );
+};
+
+export default OrderBalance;

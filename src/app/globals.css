@@ -100,6 +100,9 @@
 }
 
 @layer utilities {
+  .paused {
+    animation-play-state: paused;
+  }
   .fill-opacity-10 {
     fill-opacity: 0.1;
   }
@@ -144,6 +147,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* ................................................... */
 /* Maintain React Table Search Input */
 /* ................................................... */
@@ -152,25 +159,48 @@ input.mantine-TextInput-input {
   border-color: #d5dadf;
 }
 
+div.mantine-Input-wrapper {
+  width: 100%;
+}
+
 input.mantine-Select-input {
   border-radius: 10px;
   border-color: #d5dadf;
 }
 
+/* Glossy effect */
+.bg-gopacity-30 {
+  transition: background-color 0.3s ease-in-out; /* Smooth transition for the background color */
+  background: rgba(51, 24, 24, 0.541);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.3px);
+  -webkit-backdrop-filter: blur(6.3px);
+}
+
+.text-relatable {
+  color: black; /* Replace 'your-color' with your desired color */
+}
+
+.bg-gopacity-60 {
+  transition: background-color 0.3s ease-in-out; /* Smooth transition for the background color */
+}
+
 /* ................................................... */
 /* React Select CSS Change */
 /* ................................................... */
-.css-13cymwt-control {
+.css-13cymwt-control,
+.css-9whwwe-control {
   min-height: 43px !important;
   border-radius: 7px !important;
-  border: 2px solid #cbd5e1 !important;
+  border: 1px solid #cbd5e1 !important;
 }
 
-.css-t3ipsp-control {
+.css-t3ipsp-control,
+.css-j619mi-control {
   min-height: 43px !important;
   border-color: #cbd5e1 !important;
   border-radius: 7px !important;
-  border: 2px solid #cbd5e1 !important;
+  border: 1px solid #cbd5e1 !important;
   box-shadow: none !important;
 }
 
@@ -662,3 +692,72 @@ div[style='z-index: 1000001;'],
   /* Ensure content within the container doesn't overflow */
   overflow: hidden;
 }
+
+/* Hero Section  */
+
+.hero-curve {
+  clip-path: polygon(0 6%, 100% 0%, 100% 94%, 0 100%);
+}
+
+.hero-curve-rtr {
+  clip-path: polygon(0 0, 100% 6%, 100% 100%, 0 94%);
+}
+
+.works-curve {
+  clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 92%);
+}
+
+.works-curve-rtr {
+  clip-path: polygon(0 8%, 100% 0%, 100% 92%, 0 100%);
+}
+
+@media (max-width: 768px) {
+  .hero-curve {
+    clip-path: polygon(0 5%, 100% 0%, 100% 95%, 0 100%);
+  }
+  .hero-curve-rtr {
+    clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%);
+  }
+  .works-curve {
+    clip-path: polygon(0 0, 100% 2%, 100% 100%, 0 98%);
+  }
+  .works-curve-rtr {
+    clip-path: polygon(0 2%, 100% 0%, 100% 98%, 0 100%);
+  }
+}
+
+input#react-select-5-input:focus {
+  box-shadow: none !important;
+}
+
+/* react mantine  */
+.mantine-1bauqbv {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* .rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.rtl .md\:text-left {
+  text-align: right;
+}
+
+.rtl .md\:items-start {
+  align-items: flex-end;
+}
+
+.rtl .md\:justify-start {
+  justify-content: flex-end;
+}
+
+.rtl .md\:items-end {
+  align-items: flex-end;
+}
+
+.rtl .md\:justify-end {
+  justify-content: flex-end;
+} */

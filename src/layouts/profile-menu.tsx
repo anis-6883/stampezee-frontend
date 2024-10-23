@@ -1,120 +1,161 @@
 'use client';
 
+import BalanceCard from '@/app/(client)/(public)/components/BalanceCard';
 import ChangePasswordModal from '@/components/changePasswordModal/ChangePasswordModal';
+import UpdateProfileModal from '@/components/updateProfileModal/UpdateProfileModal';
+import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
-import { SerializedError } from '@/features/api/apiSlice';
-import { useLogoutUserMutation } from '@/features/auth/authApi';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { resetState } from '@/features/subscription/subscriptionSlice';
+import { signOut, useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Button, Popover, Text, Title } from 'rizzui';
+import { Button, Popover, Title } from 'rizzui';
 
-const menuItems = [
-  {
-    name: 'My Profile',
-    href: '#',
-  },
-  {
-    name: 'Change Password',
-    // href: '#',
-  },
-];
-
-function DropdownMenu() {
-  const [createState, setCreateState] = useState(false);
-  const [formData, setFormData] = useState({});
+function DropdownMenu({
+  setOpen,
+  setChangePasswordModalState,
+  setUpdateProfileModalState,
+}: {
+  setOpen: any;
+  setChangePasswordModalState: any;
+  setUpdateProfileModalState: any;
+}) {
+  const t = useTranslations('AppLayout');
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { user, role } = useSelector((state: RootState) => state.authSlice);
-  const [logOut, { isSuccess, error }] = useLogoutUserMutation();
+  const { data: session }: any = useSession();
 
   // Handle Logout Response
-  useEffect(() => {
-    if (error) {
-      const myError = error as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
-    }
-    if (isSuccess) {
-      if (role === 'super_admin') {
-        replace(routes.superAdmin.login);
-      } else {
-        replace(routes.retailer.login);
-      }
-      dispatch(userLoggedOut(undefined));
-    }
-  }, [dispatch, error, isSuccess, replace, role]);
+  const handleLogout = async () => {
+    await signOut({
+      redirect: false,
+      callbackUrl: role === 'super_admin' ? routes.publicRoutes.superAdminLogin : routes.publicRoutes.retailerLogin,
+    });
+
+    dispatch(resetState());
+    dispatch(userLoggedOut(undefined));
+
+    replace(role === 'super_admin' ? routes.publicRoutes.superAdminLogin : routes.publicRoutes.retailerLogin);
+  };
+
+  let fullName = user?.firstName + ' ' + user?.lastName;
+
+  if (fullName.length >= 18) {
+    const lastName = user?.lastName ? user?.lastName.charAt(0).toUpperCase() : '';
+    fullName = user?.firstName + ' ' + lastName + '.';
+  }
 
   return (
     <div className="w-64 text-left rtl:text-right">
-      <ChangePasswordModal setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
-        <Avatar
-          src={
-            user?.image
-              ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
-              : 'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp'
-          }
-          name={user?.name ?? ''}
-        />
-        <div className="ms-3">
-          <Title as="h6" className="font-semibold">
-            {user?.name ?? ''}
+      {user?.role === ROLE.RETAILER && (
+        <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
+          <img
+            src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+            color="danger"
+            className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+            alt="brand"
+          />
+          <Title as="h6" className="break-all text-center font-bold">
+            {user?.storeName && user?.storeName.length > 20 ? user?.storeName.slice(0, 20) + '...' : user?.storeName}
           </Title>
-          <Text className="text-gray-600">{user?.email ?? ''}</Text>
         </div>
-      </div>
+      )}
+
+      {user?.role === ROLE.SUPER_ADMIN && (
+        <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
+          <img
+            src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+            color="danger"
+            className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+            alt="brand"
+          />
+          <Title as="h6" className="break-all text-center font-bold">
+            {fullName}
+          </Title>
+        </div>
+      )}
+
+      {session?.user?.plan && <BalanceCard />}
       <div className="grid px-3.5 py-3.5 font-medium text-gray-700">
-        {menuItems.map((item) => (
-          <button
-            key={item?.name ?? ''}
-            onClick={() => setCreateState(true)}
+        {role === 'retailer' && (
+          <Link
+            href={routes.privateRoutes.retailer.profile}
+            onClick={() => setOpen(false)}
             className="group my-0.5 flex items-center rounded-md px-2.5 py-2 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-50/50"
           >
-            {item?.name ?? ''}
+            {t('myProfile')}
+          </Link>
+        )}
+        {role === 'super_admin' && (
+          <button
+            onClick={() => {
+              setUpdateProfileModalState(true);
+              setOpen(false);
+            }}
+            className="group my-0.5 flex items-center rounded-md px-2.5 py-2 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-50/50"
+          >
+            Update Profile
           </button>
-        ))}
+        )}
+        <button
+          onClick={() => {
+            setChangePasswordModalState(true);
+            setOpen(false);
+          }}
+          className="group my-0.5 flex items-center rounded-md px-2.5 py-2 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-50/50"
+        >
+          {role === ROLE.SUPER_ADMIN ? 'Change Password' : t('changePassword')}
+        </button>
       </div>
       <div className="border-t border-gray-300 px-6 pb-6 pt-5">
         <Button
-          className="h-auto w-full justify-start p-0 font-medium text-gray-700 outline-none focus-within:text-gray-600 hover:text-gray-900 focus-visible:ring-0"
+          className="h-auto w-full justify-start p-0 font-medium text-gray-900 outline-none focus-within:text-gray-600 hover:text-danger focus-visible:ring-0"
           variant="text"
-          onClick={() => logOut(null)}
+          onClick={handleLogout}
         >
-          Sign Out
+          {role === ROLE.SUPER_ADMIN ? 'Logout' : t('logout')}
         </Button>
       </div>
     </div>
   );
 }
 
-export default function ProfileMenu({ buttonClassName, avatarClassName }: { buttonClassName?: string; avatarClassName?: string }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
+export default function ProfileMenu() {
+  const [changePasswordModalState, setChangePasswordModalState] = useState(false);
+  const [updateProfileModalState, setUpdateProfileModalState] = useState(false);
   const { user } = useSelector((state: RootState) => state.authSlice);
 
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
   return (
-    <Popover enableOverlay placement="bottom-start">
-      <Popover.Trigger>
-        <div className="w-12 cursor-pointer">
-          <Avatar
-            name="Jane Doe"
-            src={
-              user?.image
-                ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}`
-                : 'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-11.webp'
-            }
-            size="lg"
-          />
-        </div>
-      </Popover.Trigger>
-      <Popover.Content>{({ setOpen }) => <DropdownMenu />}</Popover.Content>
-    </Popover>
+    <>
+      <Popover enableOverlay placement="bottom-start">
+        <Popover.Trigger>
+          <div className="m-auto cursor-pointer">
+            <img
+              src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+              color="danger"
+              className="h-12 w-12 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+              alt="brand"
+            />
+          </div>
+        </Popover.Trigger>
+        <Popover.Content>
+          {({ setOpen }) => (
+            <DropdownMenu
+              setOpen={setOpen}
+              setChangePasswordModalState={setChangePasswordModalState}
+              setUpdateProfileModalState={setUpdateProfileModalState}
+            />
+          )}
+        </Popover.Content>
+      </Popover>
+      <ChangePasswordModal modalState={changePasswordModalState} setModalState={setChangePasswordModalState} />
+      <UpdateProfileModal modalState={updateProfileModalState} setModalState={setUpdateProfileModalState} />
+    </>
   );
 }

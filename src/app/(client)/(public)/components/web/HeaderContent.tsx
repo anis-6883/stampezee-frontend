@@ -1,45 +1,72 @@
 'use client';
 
-import { useGetOwnProfileQuery, useLogoutUserMutation } from '@/features/auth/authApi';
-import { setValue } from '@/features/auth/authSlice';
+import CustomButton from '@/components/Formik/Button';
+import LocalSwitcherSelector from '@/components/Locale/LocalSwitcherSelector';
+import { ROLE } from '@/config/constants';
+import { routes } from '@/config/routes';
+import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
+import { resetState } from '@/features/subscription/subscriptionSlice';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Menu, Transition } from '@headlessui/react';
+import { signOut, useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FcFaq } from 'react-icons/fc';
-import { IoBagAdd, IoPricetagsSharp } from 'react-icons/io5';
-import { MdOutlineContacts } from 'react-icons/md';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Button } from 'rizzui';
-import './HeaderStyle.css';
+import { AiOutlineGlobal } from 'react-icons/ai';
+import { IoLogOutOutline } from 'react-icons/io5';
+import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Drawer, Title } from 'rizzui';
+import BalanceCard from '../BalanceCard';
+
+const mobileMenuItems = [
+  {
+    id: 1,
+    name: 'home',
+    link: '/#how_work',
+  },
+  {
+    id: 2,
+    name: 'pricing',
+    link: routes.publicRoutes.pricing,
+  },
+  {
+    id: 3,
+    name: 'faq',
+    link: routes.publicRoutes.faqs,
+  },
+  {
+    id: 4,
+    name: 'contact_us',
+    link: routes.publicRoutes.contactUs,
+  },
+];
 
 export default function HeaderContent() {
-  const [logOut] = useLogoutUserMutation();
-  const [sidBer, setSidBer] = useState(false);
+  const pathname = usePathname();
+  const dispatch = useDispatch();
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
+  const { data: session }: any = useSession();
+  const [sideBar, setSideBar] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
-  const { push } = useRouter();
-  const { replace } = useRouter();
-  const dispatch = useDispatch();
-  const { user } = useSelector(
-    (state: RootState) => ({
-      user: state.authSlice.user,
-    }),
-    shallowEqual
-  );
-  const {} = useGetOwnProfileQuery({});
+  const { user, isLoggedIn } = useSelector((state: RootState) => state.authSlice);
+  const [drawerSate, setDrawerState] = useState({ isOpen: false });
+  const [modalState, setModalState] = useState<boolean>(false);
 
-  // Logout Handler
+  const t = useTranslations('AppLayout');
+
+  // Handle Logout Response
   const handleLogout = async () => {
-    logOut(null)
-      .then((res) => {
-        replace('/');
-        dispatch(setValue({ target: 'user', value: undefined }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(userLoggedOut(undefined));
+
+    await signOut({
+      redirect: false,
+      callbackUrl: '/',
+    });
+    dispatch(resetState());
   };
 
   useEffect(() => {
@@ -47,7 +74,7 @@ export default function HeaderContent() {
 
     const handleResize = () => {
       if (window.innerWidth > 767) {
-        setSidBer(sidBer);
+        setSideBar(sideBar);
       }
     };
 
@@ -55,7 +82,7 @@ export default function HeaderContent() {
     window.addEventListener('orientationchange', handleResize);
 
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      if (window.scrollY > 20) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -72,156 +99,118 @@ export default function HeaderContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /**
-   * Checks if the current URL path matches the provided path.
-   * @param path - The path to check against the current URL.
-   * @returns `true` if the current URL path matches the provided path, `false` otherwise.
-   */
-  function checkActiveButton(path: string) {
-    // Check if the current URL path matches the provided path
-    // If it does, return true, otherwise return false
-    if (currentUrl === path && currentUrl !== '') {
-      return true;
-    } else {
-      return false;
-    }
+  let fullName = user?.firstName + ' ' + user?.lastName;
+
+  if (fullName.length >= 18) {
+    const lastName = user?.lastName ? user?.lastName.charAt(0).toUpperCase() : '';
+    fullName = user?.firstName + ' ' + lastName + '.';
   }
 
-  function routeCheck(names: string) {
-    setCurrentUrl(names);
-  }
   return (
     <div>
       <nav className={`fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>
-        <div className={`${sidBer ? '' : ''} mx-auto flex max-w-[1300px] flex-wrap items-center justify-between p-2`}>
-          <Link onClick={() => routeCheck('/')} href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="/images/logo.png" className="h-12" alt="stamp-ezee Logo" />
-            <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span>
-          </Link>
-          <div className="flex items-center space-x-3 md:order-2 md:space-x-0">
-            <div className="mr-3 ">
+        <div className={`container mx-auto flex max-w-screen-xl flex-wrap items-center justify-between px-5 py-4 sm:inset-0`}>
+          <div className="w-[12%]">
+            <Link href={routes.publicRoutes.home} className="flex items-center  rtl:space-x-reverse">
+              <img src="/images/logo.png" className="h-14 sm:h-[74px]" alt="logo" />
+              {/* <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span> */}
+            </Link>
+          </div>
+          <div className="flex w-[88%] items-center justify-end sm:justify-normal md:order-2 md:space-x-0">
+            <span
+              className="cursor-pointer  text-lg font-bold md:hidden lg:hidden"
+              onClick={() =>
+                setDrawerState((prevState) => ({
+                  ...prevState,
+                  isOpen: true,
+                  placement: 'right',
+                }))
+              }
+            >
+              <RxHamburgerMenu className=" text-3xl" />
+            </span>
+            <div className="mr-3">
               <div
-                onClick={() => setSidBer(sidBer == true && !sidBer)}
-                className={`${sidBer ? 'fixed -top-2 left-0 h-[101vh] w-full overflow-hidden bg-[#14131385] transition-all duration-300 ease-in-out' : 'hidden'} z-10 items-center justify-between md:order-1 md:flex md:w-auto`}
+                onClick={() => setSideBar(sideBar == true && !sideBar)}
+                className={`${sideBar ? 'fixed -top-2 left-0 h-[100vh] w-full overflow-hidden bg-[#14131385] bg-red-600 transition-all duration-300 ease-in-out' : 'hidden'} z-10 items-center justify-between md:order-1 md:flex md:w-auto `}
                 id="navbar-cta"
               >
-                {sidBer ? (
-                  <div className="transition-all duration-300 ease-in-out">
-                    <ul className="h-[100vh] w-[252px] bg-white ">
-                      <li>
-                        <Link href="/" className="mb-5 flex items-center space-x-3 pl-4  rtl:space-x-reverse">
-                          <img src="images/logo.png" className="mt-4 h-14" alt="stamp-ezee Logo" />
+                <Drawer
+                  isOpen={drawerSate.isOpen}
+                  placement={'left'}
+                  customSize={260}
+                  containerClassName="bg-white opacity-95"
+                  onClose={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
+                >
+                  <div className=" transition-all duration-300 ease-in-out">
+                    <div className="flex justify-end px-8 py-3">
+                      <RxCross1
+                        onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
+                        className="cursor-pointer text-lg font-bold"
+                      />
+                    </div>
+                    <ul className=" p-3 ">
+                      <li className="p-3" onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}>
+                        <Link href="/" className="flex items-center justify-center rtl:space-x-reverse">
+                          <img src="images/logo.png" className="h-24" alt="stamp-ezee Logo" />
                           <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span>
                         </Link>
                       </li>
-                      <li className="transition duration-300 ease-in-out hover:bg-gray-100">
-                        <Link
-                          onClick={() => routeCheck('')}
-                          href="/#how_work"
-                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('') ? 'text-red-500 after:absolute after:left-1/2 after:top-[100%] after:mt-0.5 after:block after:-translate-x-1/2 after:transform after:content-["-_"]' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                      <div className="py-2">
+                        <hr className="border-t-1 border-gray-400" />
+                      </div>
+                      {mobileMenuItems?.map((item: any) => (
+                        <li
+                          key={item?.id}
+                          onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
+                          className="transition duration-300 ease-in-out hover:bg-gray-100"
                         >
-                          <IoBagAdd className="mr-3 text-[20px]" />
-                          How It Works
-                        </Link>
-                      </li>
-                      <li className="transition duration-300 ease-in-out hover:bg-gray-100">
-                        <Link
-                          onClick={() => routeCheck('/pricing')}
-                          href="/pricing"
-                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('/pricing') ? 'text-red-500 after:absolute after:left-1/2 after:top-[100%] after:mt-0.5 after:block after:-translate-x-1/2 after:transform after:content-["-_"]' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
-                        >
-                          <IoPricetagsSharp className="mr-3 text-[20px]" />
-                          Pricing
-                        </Link>
-                      </li>
-                      <li className="transition duration-300 ease-in-out hover:bg-gray-100">
-                        <Link
-                          onClick={() => routeCheck('/faqs')}
-                          href="/faqs"
-                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('/faqs') ? 'text-red-500 after:absolute after:left-1/2 after:top-[100%] after:mt-0.5 after:block after:-translate-x-1/2 after:transform after:content-["-_"]' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
-                        >
-                          <FcFaq className="mr-3 text-[20px]" />
-                          FAQ
-                        </Link>
-                      </li>
-                      <li className="transition duration-300 ease-in-out hover:bg-gray-100">
-                        <Link
-                          onClick={() => routeCheck('/contact-us')}
-                          href="/contact-us"
-                          className={`relative block rounded py-3 pl-4 transition-all duration-150 ease-in ${checkActiveButton('/contact-us') ? 'text-red-500 after:absolute after:left-1/2 after:top-[100%] after:mt-0.5 after:block after:-translate-x-1/2 after:transform after:content-["-_"]' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
-                        >
-                          <MdOutlineContacts className="mr-3 text-[20px]" />
-                          Contact
-                        </Link>
-                      </li>
+                          <Link
+                            href={`${item.link}`}
+                            className={`relative block rounded py-2 pl-4 lowercase transition-all duration-150 ease-in ${pathname === item.link ? 'text-red-500' : 'hover:text-gray-500'} flex items-center dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                          >
+                            {t(item.name)}
+                          </Link>
+                        </li>
+                      ))}
 
-                      <li className="mt-5 flex w-full items-center justify-center text-center">
-                        <button
-                          type="button"
-                          className="dark:hover:bg[#454F5B] bg-primary-red dark:bg-primary-red mt-3 w-10/12 rounded-lg px-4 py-2 text-center text-sm font-medium text-white duration-300 ease-in-out hover:bg-[#454F5B] focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-[#454F5B]"
-                        >
-                          Dashboard
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                ) : (
-                  <ul
-                    className={`${sidBer ? 'h-full' : ''} mt-4 flex flex-col items-center rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
-                  >
-                    <li className="w-max-content">
-                      <Link
-                        onClick={() => routeCheck('/')}
-                        href="/"
-                        className={`relative transition-all duration-150 ease-in ${checkActiveButton('/') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
-                      >
-                        Home
-                      </Link>
-                    </li>
-                    <li className="w-max-content">
-                      <Link
-                        onClick={() => routeCheck('/pricing')}
-                        href="/pricing"
-                        className={`relative transition-all duration-150 ease-in ${checkActiveButton('/pricing') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
-                      >
-                        Price
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/faqs"
-                        onClick={() => routeCheck('/faqs')}
-                        className={`relative transition-all duration-150 ease-in ${checkActiveButton('/faqs') ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-gray-500'}`}
-                      >
-                        FAQ
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        onClick={() => routeCheck('/contact-us')}
-                        href="/contact-us"
-                        className={`relative transition-all duration-150 ease-in ${checkActiveButton('/contact-us') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
-                      >
-                        Contact
-                      </Link>
-                    </li>
-                    <div className="ms-2 flex gap-2">
-                      {user ? (
-                        <Link href="root/retailer/dashboard" className=" my-auto rounded-xl bg-[#EF4444] p-2 text-white">
-                          Dashboard
-                        </Link>
+                      {!isLoggedIn ? (
+                        <>
+                          <li
+                            onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
+                            className=" transition duration-300 ease-in-out hover:bg-gray-100"
+                          >
+                            <Link
+                              href="/retailer/login"
+                              className={`relative block items-center rounded py-2 pl-4 transition-all  duration-150 ease-in dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                            >
+                              <CustomButton color="danger" text={t('login')} className="!m-0 !px-3 !py-2 !text-xs" />
+                            </Link>
+                          </li>
+                          <li
+                            onClick={() => setDrawerState((prevState) => ({ ...prevState, isOpen: false }))}
+                            className=" transition duration-300 ease-in-out hover:bg-gray-100"
+                          >
+                            <Link
+                              href="/retailer/register"
+                              className={`relative block items-center rounded py-2 pl-4 transition-all  duration-150 ease-in dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
+                            >
+                              <CustomButton color="outline" text={t('signUp')} className="!m-0 !border-[#F5F5F5]  !px-3 !py-2 !text-xs" />
+                            </Link>
+                          </li>
+                        </>
                       ) : (
-                        <Link
-                          href="/retailer/login"
-                          className={`relative  transition-all duration-150 ease-in ${checkActiveButton('/retailer/login') ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-slate-300'}`}
-                        >
-                          Login
-                        </Link>
+                        <li className="py-4 pl-3">
+                          <Link href="/root/retailer/dashboard" className=" my-auto rounded-xl bg-red-500 p-2 text-white">
+                            Dashboard
+                          </Link>
+                        </li>
                       )}
-                      {user && (
+
+                      {isLoggedIn && (
                         <Menu as="div" className="relative inline-block text-left">
                           <div>
-                            <Menu.Button className="ml-2">
+                            <Menu.Button className="ml-3 py-2">
                               <img
                                 src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/man.png'}
                                 alt="author"
@@ -240,17 +229,31 @@ export default function HeaderContent() {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className=" absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white p-2 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Items className=" absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white p-2 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <div className="py-1">
-                                <div className="flex gap-1">
-                                  <h2 className="font-bold">
-                                    {user?.firstName} {user?.lastName}
-                                  </h2>
+                                <div className="mb-5 flex flex-col items-center justify-center gap-y-4 border-b border-gray-300 p-6">
+                                  <img
+                                    src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+                                    color="danger"
+                                    className="h-16 w-16 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+                                    alt="brand"
+                                  />
+                                  {user?.role === ROLE.SUPER_ADMIN && (
+                                    <Title as="h5" className="break-all text-center font-bold">
+                                      {fullName}
+                                    </Title>
+                                  )}
+
+                                  {user?.role === ROLE.RETAILER && (
+                                    <Title as="h5" className="break-all text-center font-bold">
+                                      {user?.storeName && user?.storeName.length > 20
+                                        ? user?.storeName.slice(0, 20) + '...'
+                                        : user?.storeName}
+                                    </Title>
+                                  )}
                                 </div>
-                                <p className="mt-2 font-semibold">{user?.email}</p>
-                                <hr className="mt-3" />
-                                <br />
-                                <Button onClick={() => handleLogout()} variant="flat" className="h-7 w-full bg-[#EF4444] text-white">
+
+                                <Button onClick={handleLogout} variant="flat" className="h-7 w-full bg-red-500 text-white">
                                   Logout
                                 </Button>
                               </div>
@@ -258,35 +261,175 @@ export default function HeaderContent() {
                           </Transition>
                         </Menu>
                       )}
-                      <button
-                        data-collapse-toggle="navbar-cta"
-                        onClick={() => setSidBer(!sidBer)}
-                        type="button"
-                        className={`ml-2 inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden`}
-                        aria-controls="navbar-cta"
-                        aria-expanded="false"
-                      >
-                        <span className="sr-only">Open main menu</span>
-                        <svg className="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M1 1h15M1 7h15M1 13h15"
-                          />
-                        </svg>
-                      </button>
+
+                      <li className="py-2 pl-3">
+                        <AiOutlineGlobal
+                          onClick={() => setModalState(true)}
+                          className="h-9 w-9 cursor-pointer rounded-full p-1 ring-2 ring-[#F5F5F5] ring-offset-2 ring-offset-background"
+                        />
+                      </li>
+                    </ul>
+                    <div className="mx-3 pb-6">
+                      <hr className="border-t-1 border-gray-400" />
                     </div>
-                  </ul>
-                )}
+                    <div className="px-3 ">
+                      <p className="text-sm">© Copyright {new Date().getFullYear()} StampEzee</p>
+                      <p className="pt-1 text-sm">All Rights Reserved</p>
+                    </div>
+                  </div>
+                </Drawer>
+
+                <ul
+                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center  gap-x-10  rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
+                >
+                  <li className="w-max-content">
+                    <Link
+                      href="/#how_we_work"
+                      className={`relative text-[20px] transition-all duration-150 ease-in ${pathname === routes.publicRoutes.home ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-500' : 'hover:text-red-500'}`}
+                    >
+                      {t('home')}
+                    </Link>
+                  </li>
+                  <li className="w-max-content">
+                    <Link
+                      href={routes.publicRoutes.pricing}
+                      className={`relative text-[20px] lowercase transition-all duration-150 ease-in ${pathname === routes.publicRoutes.pricing ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                    >
+                      {t('pricing')}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/faqs"
+                      className={`relative text-[20px] lowercase transition-all duration-150 ease-in ${pathname === routes.publicRoutes.faqs ? 'text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                    >
+                      {t('faq')}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={routes.publicRoutes.contactUs}
+                      className={`relative text-[20px] lowercase transition-all duration-150 ease-in ${pathname === routes.publicRoutes.contactUs ? ' text-red-500 after:absolute after:left-1/2 after:top-full after:-mt-[7px] after:block after:-translate-x-1/2 after:transform after:content-["-_"] hover:text-red-300' : 'hover:text-red-500'}`}
+                    >
+                      {t('contact_us')}
+                    </Link>
+                  </li>
+                  <div className="ms-2 flex items-center justify-center gap-x-10 space-x-8">
+                    {isLoggedIn ? (
+                      <Link href="/root/retailer/dashboard">
+                        <CustomButton color="danger" text={t('dashboard')} className="!m-0" />
+                      </Link>
+                    ) : (
+                      <div className="flex items-center justify-center gap-x-10 space-x-8">
+                        <Link
+                          style={{ letterSpacing: '4px' }}
+                          href="/retailer/login"
+                          className={`min-w-max rounded-full bg-[#FF3131] px-4 py-2 text-[17px] font-bold uppercase text-white`}
+                        >
+                          {t('login')}
+                        </Link>
+                        <Link
+                          style={{ letterSpacing: '4px' }}
+                          href="/retailer/register"
+                          className={`hover: min-w-max rounded-full border border-[#FF3131] px-4 py-2 text-[17px] font-bold uppercase transition-all duration-150 ease-in hover:bg-[#FF3131] hover:text-white ${isScrolled ? 'text-white' : 'text-black'}`}
+                        >
+                          {t('signUp')}
+                        </Link>
+                      </div>
+                    )}
+                    {isLoggedIn && (
+                      <Menu as="div" className="relative inline-block text-left">
+                        <div className="mt-1">
+                          <Menu.Button className="ml-2">
+                            <img
+                              src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+                              alt="author"
+                              className="max-h-10 max-w-10 rounded-full p-1 ring-2 ring-red-300 dark:ring-red-500"
+                              width={500}
+                              height={500}
+                            />
+                          </Menu.Button>
+                        </div>
+
+                        <Transition
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items className="absolute right-0 z-10 mt-2 w-72 origin-top-right rounded-md bg-white p-2 px-4 text-black shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="py-1">
+                              <div className="mb-5 flex flex-col items-center justify-center gap-y-4 border-b border-gray-300 p-6">
+                                <img
+                                  src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+                                  color="danger"
+                                  className="h-16 w-16 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
+                                  alt="brand"
+                                />
+                                {user?.role === ROLE.SUPER_ADMIN && (
+                                  <Title as="h5" className="break-all text-center font-bold">
+                                    {fullName}
+                                  </Title>
+                                )}
+
+                                {user?.role === ROLE.RETAILER && (
+                                  <Title as="h5" className="break-all text-center font-bold">
+                                    {user?.storeName && user?.storeName.length > 20
+                                      ? user?.storeName.slice(0, 20) + '...'
+                                      : user?.storeName}
+                                  </Title>
+                                )}
+                              </div>
+                              {session?.user?.plan && <BalanceCard />}
+
+                              <Button
+                                onClick={() => handleLogout()}
+                                variant="flat"
+                                className="h-10 w-full bg-[#EF4444] text-base text-white"
+                              >
+                                Logout <IoLogOutOutline className="ml-2 text-xl" />
+                              </Button>
+                            </div>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    )}
+                    <div className="">
+                      <AiOutlineGlobal
+                        onClick={() => setModalState(true)}
+                        className="h-8 w-8 cursor-pointer rounded-full p-1 ring-2 ring-[#F5F5F5]"
+                      />
+                    </div>
+                    <button
+                      data-collapse-toggle="navbar-cta"
+                      onClick={() => setSideBar(!sideBar)}
+                      type="button"
+                      className={`ml-2 inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden`}
+                      aria-controls="navbar-cta"
+                      aria-expanded="false"
+                    >
+                      <span className="sr-only">Open main menu</span>
+                      <svg className="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M1 1h15M1 7h15M1 13h15"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </ul>
               </div>
             </div>
-
-            {/* user menu section */}
           </div>
         </div>
       </nav>
+
+      <LocalSwitcherSelector currencyExchanges={currencyExchanges} modalState={modalState} setModalState={setModalState} />
     </div>
   );
 }

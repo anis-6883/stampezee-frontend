@@ -1,23 +1,32 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import Button from '@/components/Formik/Button';
+import StatusIndicator from '@/components/shared/StatusIndicator';
+import { routes } from '@/config/routes';
 import {
   useDeleteSubAdminMutation,
   useGetAllSubAdminsQuery,
   useUpdateSubAdminStatusMutation,
 } from '@/features/retailer/sub-admin/subAdminApi';
 import { IQueryType } from '@/types';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
-import Button from '../../../../../../components/Formik/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModal from './CreateUpdateModal';
 
 export default function SubAdminTable() {
+  const t = useTranslations('RetailerSubAdminTable');
+  const t2 = useTranslations('RetailerSubAdmin');
+  const tCommon = useTranslations('RetailerCommon');
+  const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
   const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
   const [createState, setCreateState] = useState(false);
@@ -41,48 +50,59 @@ export default function SubAdminTable() {
   useEffect(() => {
     if (isError) {
       setDeleteSubmitting(false);
-      toast.error('Something went wrong. Please try again!');
+      toast.error(tCommon('errorMessage'));
       setDeleteState(false);
       setDeleteId(null);
     }
     if (isSuccess) {
       setDeleteSubmitting(false);
-      toast.success('Sub Admin deleted successfully!');
+      toast.success(t('subAdminDeletedSuccessfully'));
       setDeleteState(false);
       setDeleteId(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError]);
+
+  useEffect(() => {
+    if (!session?.user?.plan) {
+      return redirect(routes.privateRoutes.retailer.dashboard);
+    }
+  }, [session]);
 
   const structure = [
     {
-      header: 'Image',
+      header: t('image'),
       accessorKey: 'image',
       Cell: ({ row }: any) => (
         <div>
           {row.original.image ? (
             <div>
-              <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="w-14 rounded" />
+              <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}`} alt="image" className="w-12 rounded" />
             </div>
           ) : (
-            <img src={'/images/profile.png'} alt="image" className="w-14 rounded" />
+            <img src={'/images/profile.png'} alt="image" className="w-12 rounded" />
           )}
         </div>
       ),
     },
     {
-      header: 'First Name',
+      header: t('firstName'),
       accessorKey: 'firstName',
     },
     {
-      header: 'Last Name',
+      header: t('lastName'),
       accessorKey: 'lastName',
     },
     {
-      header: 'Email',
+      header: t('email'),
       accessorKey: 'email',
     },
     {
-      header: 'Status',
+      header: t('branch'),
+      accessorKey: 'branch.name',
+    },
+    {
+      header: t('status'),
       accessorKey: 'status',
       Cell: ({ row }: any) => <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />,
       mantineTableHeadCellProps: {
@@ -93,7 +113,7 @@ export default function SubAdminTable() {
       },
     },
     {
-      header: 'Actions',
+      header: t('actions'),
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Button
@@ -133,8 +153,17 @@ export default function SubAdminTable() {
 
   return (
     <>
-      <div className="mb-5 flex justify-end">
-        <Button text="Add New Sub-Admin" preIcon={<HiPlus className="text-base" />} onClick={() => setCreateState(true)} />
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+        <StatusIndicator />
+        <div>
+          <Button
+            className="w-full"
+            color="danger"
+            text={t2('addNewSubAdmin')}
+            preIcon={<HiPlus className="text-base" />}
+            onClick={() => setCreateState(true)}
+          />
+        </div>
       </div>
       <Table
         isFetching={isFetching}
@@ -157,7 +186,7 @@ export default function SubAdminTable() {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Name"
+        searchPlaceHolder={t('placeHolder')}
       />
 
       <CreateUpdateModal setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />

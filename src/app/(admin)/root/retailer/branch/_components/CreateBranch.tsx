@@ -1,21 +1,26 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import { routes } from '@/config/routes';
+import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateBranchMutation } from '@/features/retailer/branch/branchApi';
 import { Branch } from '@/types';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import * as Yup from 'yup';
-import Button from '../../../../../../components/Formik/Button';
-import MapComponent from './Map';
+import Map from './Map';
 
-export default function CreateBranch() {
+export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: string }) {
+  const t = useTranslations('RetailerBranches');
+  const t2 = useTranslations('RetailerBranchTable');
+  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [createBranch, { isError, isSuccess }] = useCreateBranchMutation();
+  const [createBranch, { error, isSuccess }] = useCreateBranchMutation();
   const router = useRouter();
 
   const initialValues = {
@@ -26,14 +31,14 @@ export default function CreateBranch() {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Required!'),
-    address: Yup.string().required('Required!'),
+    name: Yup.string().trim().required(tCommon('required')),
+    address: Yup.string().trim().required(tCommon('required')),
   });
 
   // Submit Handler
   const handleSubmit = async (values: Branch) => {
     if (values.latitude === '' || values.longitude === '') {
-      toast.error('Please select a location on the map!');
+      toast.error(t('pleaseSelectALocationOnTheMap'));
       return;
     }
     setIsSubmitting(true);
@@ -42,17 +47,19 @@ export default function CreateBranch() {
 
   // Handle Response
   useEffect(() => {
-    if (isError) {
+    if (error) {
       setIsSubmitting(false);
-      toast.error('Something went wrong. Please try again!');
+      const myError = error as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong. Please try again!');
     }
 
     if (isSuccess) {
-      router.push(routes.retailer.branch.home);
-      toast.success('Branch created successfully!');
+      router.push(routes.privateRoutes.retailer.branch.home);
+      toast.success(t2('branchCreated'));
       setIsSubmitting(false);
     }
-  }, [isError, isSuccess, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, isSuccess, router]);
 
   return (
     <Formik
@@ -64,13 +71,19 @@ export default function CreateBranch() {
     >
       {() => (
         <Form className="mt-5 grid gap-4">
-          <InputField name="name" label="Name" placeholder="ex. Ring Road Branch" />
-          <MapComponent />
+          <InputField name="name" label={t('name')} placeholder="ex. Ring Road Branch" />
+          <Map googleMapsApiKey={googleMapsApiKey} />
           <p className="text-end text-xs font-semibold">
-            Fields marked with <span className="text-red-600">*</span> are mandatory!
+            <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
           </p>
           <div className="mt-2 flex justify-end">
-            <Button type="submit" text="Submit" postIcon={<BsCheck2Circle className="text-base" />} isSubmitting={isSubmitting} />
+            <Button
+              color="danger"
+              type="submit"
+              text={t('submit')}
+              postIcon={<BsCheck2Circle className="text-base" />}
+              isSubmitting={isSubmitting}
+            />
           </div>
         </Form>
       )}

@@ -1,152 +1,161 @@
 'use client';
 
-import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
-import InputField from '@/components/Formik/InputField';
-import InputTextarea from '@/components/Formik/InputTextArea ';
 import { SerializedError } from '@/features/api/apiSlice';
-import {
-  useCreateSuperAdminStampImageCategoryMutation,
-  useUpdateSuperAdminStampImageCategoryMutation,
-} from '@/features/super-admin/stamp-category/stampCategoryApi';
-import objectToFormData from '@/utils/objectToFormData';
+import { useRetailerChangePasswordMutation, useSuperAdminChangePasswordMutation } from '@/features/auth/authApi';
+import { RootState } from '@/features/store';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
+import { ROLE } from '../../config/constants';
 import Button from '../Formik/Button';
+import InputPassword from '../Formik/InputPassword';
 
 export default function ChangePasswordModal({
-  setFormData,
-  formData,
   modalState,
   setModalState,
 }: {
-  formData: any;
   modalState: boolean;
-  setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
 }) {
+  const t = useTranslations('ChangePasswordModal');
+  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { role } = useSelector((state: RootState) => state.authSlice);
 
-  const [cretaeStampCategory, { isSuccess: createSuccess, error: createError }] = useCreateSuperAdminStampImageCategoryMutation();
-  const [updateStampCategory, { isSuccess: updateSuccess, error: updateError }] = useUpdateSuperAdminStampImageCategoryMutation();
+  const [retailerChangePassword, { isSuccess, error }] = useRetailerChangePasswordMutation();
+  const [superAdminChangePassword, { isSuccess: superAdminChangePasswordSuccess, error: superAdminChangePasswordError }] =
+    useSuperAdminChangePasswordMutation();
+
+  useEffect(() => {
+    if (role === 'retailer') {
+      if (error) {
+        const myError = error as SerializedError;
+        setIsSubmitting(false);
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      }
+
+      if (isSuccess) {
+        setIsSubmitting(false);
+        toast.success(t('retailerPasswordUpdatedSuccessfully'));
+      }
+    } else {
+      if (superAdminChangePasswordError) {
+        const myError = superAdminChangePasswordError as SerializedError;
+        setIsSubmitting(false);
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      }
+
+      if (superAdminChangePasswordSuccess) {
+        setIsSubmitting(false);
+        toast.success('Super admin password updated successfully!');
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, isSuccess, role, superAdminChangePasswordError, superAdminChangePasswordSuccess]);
 
   const initialValues = {
-    name: formData?.name || '',
-    description: formData?.description || '',
-    image: formData?.image || null,
+    oldPassword: '',
+    newPassword: '',
+    confirmPassword: '',
   };
 
-  const validationSchema = Yup.object({
-    name: Yup.string().required('Name is required'),
-    description: Yup.string(),
+  const validationSchema = Yup.object().shape({
+    oldPassword:
+      role === 'retailer'
+        ? Yup.string().required(tCommon('required')).min(8, t('passwordMustBeAtLeast8Characters'))
+        : Yup.string().required('Required!').min(6, 'Password must be at least 6 characters'),
+    newPassword:
+      role === 'retailer'
+        ? Yup.string().required(tCommon('required')).min(8, t('passwordMustBeAtLeast8Characters'))
+        : Yup.string().required('Required!').min(6, 'Password must be at least 6 characters'),
+    confirmPassword:
+      role === 'retailer'
+        ? Yup.string().required(tCommon('required')).min(8, t('passwordMustBeAtLeast8Characters'))
+        : Yup.string().required('Required!').min(6, 'Password must be at least 6 characters'),
   });
 
-  const submitHandler = async (values: any) => {
+  const handleSubmit = async (values: any, { resetForm }: any) => {
     setIsSubmitting(true);
-    const isFile = (obj: any): obj is File => obj instanceof File;
-
-    let objToFormData: FormData;
-
-    if (formData?._id) {
-      const ignoreList = [];
-      if (!isFile(values?.image)) ignoreList.push('image');
-
-      objToFormData = objectToFormData(values, ignoreList);
-      updateStampCategory({ id: formData._id, formData: objToFormData });
+    if (values?.newPassword !== values?.confirmPassword) {
+      toast.error(
+        role === ROLE.SUPER_ADMIN ? 'Does not match new password and confirm password!' : t('doesNotMatchNewPasswordAndConfirmPassword')
+      );
+      setIsSubmitting(false);
+      return;
+    }
+    let result: any;
+    if (role === 'retailer') {
+      result = await retailerChangePassword(values);
     } else {
-      if (!isFile(values?.image)) {
-        objToFormData = objectToFormData(values, ['image']);
-      } else {
-        objToFormData = objectToFormData(values);
-      }
-      cretaeStampCategory(objToFormData);
+      result = await superAdminChangePassword(values);
+    }
+    if (result?.data?.status) {
+      resetForm();
+      setModalState(false);
     }
   };
-
-  // Handle Create Response
-  useEffect(() => {
-    if (createError) {
-      const myError = createError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
-      setIsSubmitting(false);
-    }
-    if (createSuccess) {
-      toast.success('Stamp Category created successfully!');
-      setFormData({});
-      setIsSubmitting(false);
-      setModalState(false);
-    }
-  }, [createError, createSuccess, setFormData, setModalState]);
-
-  // Handle Update Response
-  useEffect(() => {
-    if (updateError) {
-      const myError = updateError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong. Please try again!.');
-      setIsSubmitting(false);
-    }
-    if (updateSuccess) {
-      toast.success('Stamp Category updated successfully!');
-      setFormData({});
-      setIsSubmitting(false);
-      setModalState(false);
-    }
-  }, [setFormData, setModalState, updateError, updateSuccess]);
 
   return (
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Update A Stamp Category</Title> : <Title as="h4">Add New Stamp Category</Title>}
+          <Title as="h4">{t('title')}</Title>
 
           <ActionIcon
             size="sm"
             variant="text"
             onClick={() => {
               setModalState(false);
-              setFormData({});
             }}
           >
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <div>
-          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
-            {({ setFieldValue, values }) => (
-              <Form className="mt-5">
-                <InputField name="name" label="Name" placeholder="Food" />
-                <div className="my-3">
-                  <InputTextarea required={false} name="description" label="Description" placeholder="Write here..." />
-                </div>
-                <div className="my-4">
-                  <p className="font-medium">Upload Image</p>
-                  <DragAndDropUpload
-                    value={{ name: 'image', image: values.image }}
-                    onChange={(image: any) => setFieldValue('image', image)}
-                    className="mt-2"
-                    size={1024 * 1000}
-                    sizeText="1MB"
-                  />
-                </div>
+          <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            {({ errors, setFieldValue, touched, setFieldTouched, values }) => {
+              return (
+                <Form className="grid gap-4">
+                  <InputPassword name="oldPassword" label={t('oldPassword')} placeholder="******" />
+                  <InputPassword name="newPassword" label={t('newPassword')} placeholder="******" />
+                  <InputPassword name="confirmPassword" label={t('confirmPassword')} placeholder="******" />
 
-                <p className="text-end text-xs font-semibold">
-                  Fields marked with <span className="text-red-600">*</span> are mandatory!
-                </p>
-                <div className="mt-6 flex justify-end">
-                  <Button
-                    color={formData?._id ? 'warning' : 'primary'}
-                    type="submit"
-                    text={formData?._id ? 'Update' : 'Submit'}
-                    postIcon={<BsCheck2Circle className="text-base" />}
-                    isSubmitting={isSubmitting}
-                  />
-                </div>
-              </Form>
-            )}
+                  <p className="flex flex-col text-end text-xs font-semibold">
+                    {role === ROLE.SUPER_ADMIN ? (
+                      <span>
+                        Fields marked with <span className="text-red-600">*</span> are mandatory!
+                      </span>
+                    ) : (
+                      <span dangerouslySetInnerHTML={{ __html: t.raw('fieldsMarkedWithStarAreMandatory') }} />
+                    )}
+
+                    {role === ROLE.SUPER_ADMIN ? (
+                      <span>
+                        Password must be at least <span className="text-red-600">8 characters</span> long!
+                      </span>
+                    ) : (
+                      <span dangerouslySetInnerHTML={{ __html: t.raw('passwordMustBeAtLeast8CharactersLong') }} />
+                    )}
+                  </p>
+
+                  <div className="mt-2 flex justify-end">
+                    <Button
+                      type="submit"
+                      color="danger"
+                      text={role === ROLE.SUPER_ADMIN ? 'Update' : t('update')}
+                      postIcon={<BsCheck2Circle className="text-base" />}
+                      isSubmitting={isSubmitting}
+                    />
+                  </div>
+                </Form>
+              );
+            }}
           </Formik>
         </div>
       </div>

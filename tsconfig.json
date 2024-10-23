@@ -36,7 +36,8 @@
     ".next/types/**/*.ts",
     "next.config.js",
     ".next/types/app/(client)/(public)/pricing/page.tsx",
-    "src/utils/get-timezone-list. codpyts"
+    "src/utils/get-timezone-list.ts",
+    "src/features/retailer/billing/billingApi.sx"
   ],
-  "exclude": ["node_modules", "path/to/aos/directory"]
+  "exclude": ["node_modules", "path/to/aos/directory", ".next"]
 }

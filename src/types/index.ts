@@ -15,6 +15,9 @@ export interface ITableProps {
   sortContext?: string;
   searchPlaceHolder?: string;
   searchFieldWidth?: string;
+  enableRowNumbers?: boolean;
+  renderDetailPanel?: any;
+  showGlobalFilter?: boolean;
 }
 
 export interface ICountrySelect {
@@ -34,6 +37,7 @@ export interface IPagination {
   hasNext?: boolean;
   hasPrev?: boolean;
   totalDocs?: number;
+  type?: string;
 }
 
 export interface IOption {
@@ -46,12 +50,14 @@ export type IResponse = {
   message: string;
   pagination?: IPagination;
   data: any;
+  notificationLimit?: number;
 };
 
 export interface IAuthState {
   user?: any | undefined;
   role: string;
   isLoggedIn: boolean;
+  accessToken: string | null;
 }
 
 export interface IQueryType {
@@ -354,3 +360,119 @@ export interface IAllBranchQueryArgs {
   limit: number;
 }
 // stamp image
+
+export interface Subscription {
+  _id: string;
+  title: string;
+  price: number;
+  duration: number;
+  descriptions: string[];
+  slug: string;
+  type: string;
+  image: string;
+  isBlocked?: boolean;
+  allowTotalBranch?: number;
+  allowTotalStamp?: number;
+}
+
+export interface AddOn {
+  _id: string;
+  title: string;
+  price: number;
+  slug: string;
+  descriptions: string[];
+  isAddOnsSelect?: boolean;
+}
+
+export interface Coupon {
+  _id: string;
+  title: string;
+  discountType: string;
+  discount: number;
+  minPurchaseAmount: number;
+  limit: number;
+}
+
+// General Settings
+
+interface ITimezone {
+  label?: string;
+  value?: string;
+}
+
+interface IGeneral {
+  timezone?: ITimezone;
+  companyName?: string;
+  dialCode: string;
+  phone: string;
+  country: string;
+  province: string;
+  city: string;
+  postalCode: string;
+  address: string;
+  androidDownloadLink?: string;
+  iosDownloadLink?: string;
+  contactEmail?: string;
+  facebook: string;
+  linkedin: string;
+  instagram: string;
+  tiktok: string;
+}
+
+interface IMail {
+  host?: string;
+  port?: string;
+  username?: string;
+  password?: string;
+}
+
+interface INotification {
+  firebaseServerKey?: string;
+  firebaseTopics?: string;
+}
+
+interface IS3Bucket {
+  awsRegion?: string;
+  awsAccessKeyId?: string;
+  awsSecretAccessKey?: string;
+  awsBucketName?: string;
+}
+
+export interface ICurrency {
+  country?: string;
+  currency?: string;
+}
+
+interface IStripe {
+  stripeSecretKey?: string;
+  stripeWebhookSecretKey?: string;
+  planChangeCost?: number | string;
+  refundableThreshold?: number | string;
+  taxTitle?: string;
+  taxCost?: number | string;
+  taxStatus?: string;
+  defaultCurrency?: ICurrency;
+}
+
+interface IGoogleMap {
+  googleMapsApiKey?: string;
+}
+
+interface IPage {
+  policy?: string;
+  terms?: string;
+}
+
+export interface IGeneralSettingData {
+  general?: IGeneral;
+  mail?: IMail;
+  notification?: INotification;
+  s3Bucket?: IS3Bucket;
+  stripe?: IStripe;
+  googleMap?: IGoogleMap;
+  page?: IPage;
+}
+
+export interface IGeneralSetting {
+  data?: IGeneralSettingData;
+}

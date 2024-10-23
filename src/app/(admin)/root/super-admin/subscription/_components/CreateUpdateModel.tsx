@@ -1,19 +1,21 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
+import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import { SerializedError } from '@/features/api/apiSlice';
-
-import { useUpdateSubscriptionMutation } from '@/features/super-admin/Subscription/stampImageApi';
+import { useUpdateSubscriptionMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import getSubDetailsObject from '@/utils/get-subscription-details-object';
 import objectToFormData from '@/utils/objectToFormData';
 import { FieldArray, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { BsCheck2Circle } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { BsCheck2Circle, BsPatchCheck } from 'react-icons/bs';
+import { IoCloseOutline, IoStorefrontOutline } from 'react-icons/io5';
+import { LuCalendarDays, LuCircleDollarSign } from 'react-icons/lu';
+import { RiTeamLine } from 'react-icons/ri';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
-import Button from '../../../../../../components/Formik/Button';
 
 export default function CreateUpdateModel({
   setFormData,
@@ -27,52 +29,78 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [updateSubscription, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubscriptionMutation();
 
-  let initialValues;
-
-  if (formData?.type === 'subscription') {
-    initialValues = {
-      title: formData?.title || '',
-      allowTotalTeamMember: formData?.allowTotalTeamMember || null,
-      allowTotalBranch: formData?.allowTotalBranch || null,
-      price: formData?.price || null,
-      descriptions: formData?.descriptions || getSubDetailsObject(false),
-    };
-  } else {
-    initialValues = {
-      title: formData?.title || '',
-      limit: formData?.limit || null,
-      price: formData?.price || null,
-      descriptions: formData?.descriptions || getSubDetailsObject(false),
-    };
-  }
+  const initialValues = {
+    title: formData?.title || '',
+    price: formData?.price || 0,
+    image: formData?.image || null,
+    allowTotalTeamMember: formData?.allowTotalTeamMember || null,
+    allowTotalBranch: formData?.allowTotalBranch || null,
+    allowTotalStamp: formData?.allowTotalStamp || null,
+    limit: formData?.limit || null,
+    descriptions: formData?.descriptions || getSubDetailsObject(false),
+    type: formData?.type || 'subscription',
+    slug: formData?.slug || '',
+    duration: formData?.duration || 0,
+  };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('Title is required'),
-    price: Yup.mixed().required('Price is required'),
+    title: Yup.string().trim().required('Required!'),
+    price: Yup.mixed().required('Required!'),
+    slug: Yup.string().trim().required('Required!'),
+    type: Yup.mixed().oneOf(['subscription', 'addon']).required('Required!'),
+    allowTotalBranch: Yup.string().when('type', {
+      is: 'subscription',
+      then: () => Yup.string().required('Required!'),
+      otherwise: () => Yup.number().nullable(),
+    }),
+    allowTotalTeamMember: Yup.string().when('type', {
+      is: 'subscription',
+      then: () => Yup.number().required('Required!'),
+      otherwise: () => Yup.number().nullable(),
+    }),
+    allowTotalStamp: Yup.string().when('type', {
+      is: 'subscription',
+      then: () => Yup.number().required('Required!'),
+      otherwise: () => Yup.number().nullable(),
+    }),
+    limit: Yup.string().when('type', {
+      is: 'addon',
+      then: () => Yup.number().required('Required!'),
+      otherwise: () => Yup.number().nullable(),
+    }),
+    descriptions: Yup.string().when('type', {
+      is: 'subscription',
+      then: () =>
+        Yup.array()
+          .of(Yup.string().required('Array must contain a string'))
+          .min(1, 'Array must contain at least one string')
+          .required('Required!'),
+      otherwise: () => Yup.array().nullable(),
+    }),
   });
 
+  // Submit Handler
   const submitHandler = async (values: any) => {
     setIsSubmitting(true);
     const isFile = (obj: any): obj is File => obj instanceof File;
 
     let objToFormData: FormData;
+    console.log({ values });
 
     if (formData?._id) {
       const ignoreList = [];
+      if (values?.type === 'subscription') {
+        ignoreList.push('limit');
+      } else {
+        ignoreList.push('allowTotalBranch', 'allowTotalTeamMember', 'allowTotalStamp');
+      }
       if (!isFile(values?.image)) ignoreList.push('image');
 
       objToFormData = objectToFormData(values, ignoreList);
 
-      updateSubscription({ id: formData._id, data: values });
-    } else {
-      if (!isFile(values?.image)) {
-        objToFormData = objectToFormData(values, ['image']);
-      } else {
-        objToFormData = objectToFormData(values);
-      }
+      updateSubscription({ id: formData._id, data: objToFormData });
     }
   };
 
@@ -92,7 +120,7 @@ export default function CreateUpdateModel({
   }, [setFormData, setModalState, updateError, updateSuccess]);
 
   return (
-    <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
+    <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="650px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
           {formData?._id ? <Title as="h4">Update A Subscription</Title> : <Title as="h4">Add New Subscription</Title>}
@@ -105,83 +133,137 @@ export default function CreateUpdateModel({
               setFormData({});
             }}
           >
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <div>
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
-            {({ setFieldValue, values }) => (
-              <Form className="mt-5">
-                <div className="">
-                  <div className="flex gap-2">
+            {({ values, setFieldValue }) => {
+              return (
+                <Form className="mt-5">
+                  {formData?._id && formData?.type === 'subscription' && (
+                    <div className="my-5 flex justify-center">
+                      <DragAndDropUpload
+                        value={{ name: 'image', image: values.image }}
+                        onChange={(image: any) => setFieldValue('image', image)}
+                        className="mt-2"
+                        size={1024 * 1000}
+                        sizeText="1MB"
+                        isRounded={true}
+                        uploadText="Upload Image"
+                      />
+                    </div>
+                  )}
+
+                  <div className="flex gap-3">
                     <InputField name="title" label="Title" placeholder="Title" />
-                    <InputField name="price" label="Price" type="number" placeholder="999" />
-                  </div>
-                  <div className="my-3 flex gap-5">
-                    {formData?.type === 'subscription' && (
-                      <InputField name="allowTotalBranch" label="Total Branch" type="number" placeholder="0" />
+                    <InputField
+                      name="price"
+                      disabled={formData?.slug === 'trial' ? true : false}
+                      label="Price (CAD)"
+                      type="number"
+                      placeholder="9.99"
+                      prefix={<LuCircleDollarSign className="text-xl" />}
+                    />
+                    {formData?.slug === 'trial' && (
+                      <InputField
+                        name="duration"
+                        label="Duration (Days)"
+                        type="number"
+                        placeholder="7"
+                        prefix={<LuCalendarDays className="text-xl" />}
+                      />
                     )}
+                  </div>
+                  <div className="my-3 flex gap-3">
                     {formData?.type === 'subscription' && (
-                      <InputField name="allowTotalTeamMember" label="Total Team Member" type="number" placeholder="0" />
+                      <InputField
+                        name="allowTotalBranch"
+                        label="Total Branch"
+                        type="number"
+                        placeholder="0"
+                        prefix={<IoStorefrontOutline className="text-xl" />}
+                      />
+                    )}
+
+                    {formData?.type === 'subscription' && (
+                      <InputField
+                        name="allowTotalTeamMember"
+                        label="Total Team Member"
+                        type="number"
+                        placeholder="0"
+                        prefix={<RiTeamLine className="text-xl" />}
+                      />
+                    )}
+
+                    {formData?.type === 'subscription' && (
+                      <InputField
+                        name="allowTotalStamp"
+                        label="Total Stamp"
+                        type="number"
+                        placeholder="0"
+                        prefix={<BsPatchCheck className="text-xl" />}
+                      />
                     )}
 
                     {formData?.type !== 'subscription' && <InputField name="limit" type="number" label="Limit" placeholder="0" />}
                   </div>
-                </div>
 
-                <div className="relative mt-4 grid grid-cols-1 gap-4">
-                  <FieldArray
-                    name="descriptions"
-                    render={(arrayHelpers) => (
-                      <div>
-                        {values?.descriptions?.map((des: any, index: number) => (
-                          <div key={des.id} className="z-1 relative mb-4 flex items-center gap-2">
-                            {index !== 0 && (
-                              <div
-                                className="absolute right-0 top-0 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-red-500 text-white"
-                                onClick={() => arrayHelpers.remove(index)}
-                              >
-                                -
-                              </div>
-                            )}
-                            <div className="flex-grow">
-                              <div className="flex flex-col">
-                                <InputField
-                                  label={`Description ${index + 1}`}
-                                  name={`descriptions[${index}]`}
-                                  placeholder="Write here..."
-                                  required={false}
-                                />
+                  <div className="relative mt-4 grid grid-cols-1 gap-4">
+                    <FieldArray
+                      name="descriptions"
+                      render={(arrayHelpers) => (
+                        <div>
+                          {values?.descriptions?.map((des: any, index: number) => (
+                            <div key={des.id} className="z-1 relative mb-4 flex items-center gap-2">
+                              {index !== 0 && (
+                                <div
+                                  className="absolute right-0 top-0 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-red-500 text-white"
+                                  onClick={() => arrayHelpers.remove(index)}
+                                >
+                                  -
+                                </div>
+                              )}
+                              <div className="flex-grow">
+                                <div className="flex flex-col">
+                                  <InputField
+                                    label={`Description (${index + 1})`}
+                                    name={`descriptions[${index}]`}
+                                    placeholder="Write here..."
+                                    required={true}
+                                  />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
 
-                        <div
-                          className="flex h-5 w-8 cursor-pointer items-center justify-center rounded-full bg-[#5534eb] text-white"
-                          onClick={() => arrayHelpers.push('')}
-                        >
-                          +
+                          <button
+                            type="button"
+                            className="flex cursor-pointer items-center justify-center rounded-lg bg-danger px-3 py-1 text-white"
+                            onClick={() => arrayHelpers.push('')}
+                          >
+                            + Add
+                          </button>
                         </div>
-                      </div>
-                    )}
-                  />
-                </div>
+                      )}
+                    />
+                  </div>
 
-                <p className="mt-3 text-end text-xs font-semibold">
-                  Fields marked with <span className="text-red-600">*</span> are mandatory!
-                </p>
-                <div className="mt-6 flex justify-end">
-                  <Button
-                    color={formData?._id ? 'warning' : 'primary'}
-                    type="submit"
-                    text={formData?._id ? 'Update' : 'Submit'}
-                    postIcon={<BsCheck2Circle className="text-base" />}
-                    isSubmitting={isSubmitting}
-                  />
-                </div>
-              </Form>
-            )}
+                  <p className="mt-3 text-end text-xs font-semibold">
+                    Fields marked with <span className="text-red-600">*</span> are mandatory!
+                  </p>
+                  <div className="mt-6 flex justify-end">
+                    <Button
+                      color="danger"
+                      type="submit"
+                      text={formData?._id ? 'Update' : 'Submit'}
+                      postIcon={<BsCheck2Circle className="text-base" />}
+                      isSubmitting={isSubmitting}
+                    />
+                  </div>
+                </Form>
+              );
+            }}
           </Formik>
         </div>
       </div>

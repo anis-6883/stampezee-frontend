@@ -1,17 +1,18 @@
-'use client';
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
+import { metaObject } from '@/config/site.config';
+import { getLocale, getTranslations } from 'next-intl/server';
 import CreateStamp from '../_components/CreateStamp';
 
 const pageHeader = {
   title: 'Create A Stamp',
   breadcrumb: [
     {
-      href: routes.retailer.dashboard,
+      href: routes.privateRoutes.retailer.dashboard,
       name: 'Dashboard',
     },
     {
-      href: routes.retailer.stamp.home,
+      href: routes.privateRoutes.retailer.stamp.home,
       name: 'Stamps',
     },
     {
@@ -20,11 +21,20 @@ const pageHeader = {
   ],
 };
 
-export default function page() {
+export const metadata = { ...metaObject(pageHeader.title) };
+
+export default async function page() {
+  const t = await getTranslations('RetailerCreateAndUpdateStamp');
+  const tStamp = await getTranslations('RetailerStamp');
+  pageHeader.breadcrumb[0].name = tStamp('dashboard');
+  pageHeader.breadcrumb[1].name = tStamp('stamps');
+  pageHeader.breadcrumb[2].name = t('createStamp');
+  pageHeader.title = t('createStamp');
+  const locale = await getLocale();
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <CreateStamp />
+      <CreateStamp locale={locale} />
     </>
   );
 }

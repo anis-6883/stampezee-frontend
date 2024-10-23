@@ -2,9 +2,10 @@ import { IAuthState, IUser } from '@/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState: IAuthState = {
-  user: undefined,
+  user: null,
   isLoggedIn: false,
   role: '',
+  accessToken: null,
 };
 
 const authSlice = createSlice({
@@ -18,15 +19,19 @@ const authSlice = createSlice({
     userLoggedIn: (state, action) => {
       state.user = action.payload;
       state.role = action.payload.role;
-      state.isLoggedIn = action?.payload?.isLoggedIn ?? false;
+      state.isLoggedIn = true;
+      state.accessToken = action.payload.accessToken;
     },
-    userLoggedOut: (state, action) => {
-      // state.user = undefined;
+    userLoggedOut: (state) => {
       state.isLoggedIn = false;
+      state.accessToken = null;
+    },
+    setAccessToken: (state, action) => {
+      state.accessToken = action.payload;
     },
   },
 });
 
-export const { userLoggedIn, userLoggedOut, setValue } = authSlice.actions;
+export const { userLoggedIn, userLoggedOut, setValue, setAccessToken } = authSlice.actions;
 
 export default authSlice;

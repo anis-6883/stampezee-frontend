@@ -1,38 +1,20 @@
+import Button from '@/components/Formik/Button';
+import { routes } from '@/config/routes';
 import Link from 'next/link';
-import { PiHouseLineBold } from 'react-icons/pi';
-import { Button, Title } from 'rizzui';
+import { IoHomeOutline } from 'react-icons/io5';
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#F8FAFC]">
-      <div className="sticky top-0 z-40 flex justify-center py-5 backdrop-blur-lg lg:backdrop-blur-none xl:py-10">
-        {/* <Link href='/'>
-          <Image src={siteConfig.logo} alt={siteConfig.title} className='dark:invert' priority />
-        </Link> */}
-      </div>
-
-      <div className="flex grow items-center px-6 xl:px-10">
-        <div className="mx-auto text-center">
-          <img
-            src={'/not-found.png'}
-            alt="not found"
-            className="2xl:mb-16 mx-auto mb-8 aspect-[360/326] max-w-[256px] xs:max-w-[370px] lg:mb-12"
-          />
-          <Title as="h1" className="text-[22px] font-bold leading-normal text-gray-1000 lg:text-3xl">
-            Sorry, the page not found
-          </Title>
-          <p className="mt-3 text-sm leading-loose text-gray-500 lg:mt-6 lg:text-base lg:leading-loose">
-            We have been spending long hours in order to launch our new website. Join our
-            <br className="hidden sm:inline-block" />
-            mailing list or follow us on Facebook for get latest update.
-          </p>
-          <Link href={'/'}>
-            <Button as="span" size="xl" color="primary" className="mt-8 h-12 px-4 xl:h-14 xl:px-6">
-              <PiHouseLineBold className="mr-1.5 text-lg" />
-              Back to home
-            </Button>
-          </Link>
-        </div>
+    <div className="flex h-screen items-center justify-center bg-white">
+      <div className="text-center">
+        <h1 className="text-9xl font-bold text-[#DC2626]">404</h1>
+        <p className="mt-4 text-2xl">The page you requested was not found!</p>
+        <p className="my-2 text-lg text-gray-600">
+          Sorry! The page you were looking for could not be found. This page may have been moved or deleted.
+        </p>
+        <Link className="inline-block" href={routes.publicRoutes.home}>
+          <Button className="!m-0 text-center" color="danger" text="Go to Home" preIcon={<IoHomeOutline className="text-base" />} />
+        </Link>
       </div>
     </div>
   );

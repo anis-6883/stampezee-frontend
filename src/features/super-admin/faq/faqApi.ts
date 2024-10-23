@@ -6,7 +6,7 @@ export const faqApi = apiSlice.injectEndpoints({
       query: (queries) => {
         const values = Object.values(queries);
         if (values.length) return `/api/secret-root/admin/super-admin/faq/all?${new URLSearchParams(queries as any)}`;
-        return `/api/secret-root/admin/super-admin/faq/all`; // Ensure it returns a base URL if no queries are present
+        return `/api/secret-root/admin/super-admin/faq/all`;
       },
       providesTags: ['faq'],
     }),

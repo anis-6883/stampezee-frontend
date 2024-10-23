@@ -1,4 +1,5 @@
 import { Field } from 'formik';
+import { IoAlertCircle } from 'react-icons/io5';
 import { Password } from 'rizzui';
 
 export default function InputPassword({
@@ -6,11 +7,13 @@ export default function InputPassword({
   label,
   placeholder,
   required = true,
+  prefix,
 }: {
   name: string;
   label: string;
   placeholder?: string;
   required?: boolean;
+  prefix?: React.ReactNode;
 }) {
   return (
     <div className="w-full">
@@ -25,8 +28,19 @@ export default function InputPassword({
             }
             placeholder={placeholder}
             autoComplete="off"
-            // error={meta.touched && meta.error && <div className="mt-1 text-xs text-red-500">{meta.error}</div>}
-            inputClassName={`${meta.touched && meta.error ? '!border-red-500 ring-0' : 'border-gray-200'}`}
+            prefix={prefix}
+            helperText={
+              meta.touched && meta.error ? (
+                <span className="flex items-center gap-x-1">
+                  <IoAlertCircle className="text-lg" />
+                  <span>{meta.error}</span>
+                </span>
+              ) : (
+                ''
+              )
+            }
+            helperClassName="text-danger"
+            inputClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
           />
         )}
       </Field>

@@ -3,8 +3,9 @@
 import InputField from '@/components/Formik/InputField';
 import { routes } from '@/config/routes';
 import { useSingleBranchQuery, useUpdateBranchMutation } from '@/features/retailer/branch/branchApi';
-import getChangedFormData from '@/utils/getChangedFormData';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -13,7 +14,10 @@ import * as Yup from 'yup';
 import Button from '../../../../../../components/Formik/Button';
 import MapComponent from './Map';
 
-export default function UpdateBranch({ branchId }: any) {
+export default function UpdateBranch({ branchId, googleMapsApiKey }: any) {
+  const t = useTranslations('RetailerBranches');
+  const t2 = useTranslations('RetailerBranchTable');
+  const tCommon = useTranslations('RetailerCommon');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [updateBranch, { isSuccess, isError }] = useUpdateBranchMutation();
   const {
@@ -32,8 +36,8 @@ export default function UpdateBranch({ branchId }: any) {
   });
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Required!'),
-    address: Yup.string().required('Required!'),
+    name: Yup.string().required(tCommon('required')),
+    address: Yup.string().required(tCommon('required')),
   });
 
   useEffect(() => {
@@ -56,7 +60,7 @@ export default function UpdateBranch({ branchId }: any) {
   // Submit Handler
   const handleSubmit = async (values: any & { _id: string }) => {
     if (values.latitude === '' || values.longitude === '') {
-      toast.error('Please select a location on the map!');
+      toast.error(t('pleaseSelectALocationOnTheMap'));
       return;
     }
 
@@ -67,7 +71,7 @@ export default function UpdateBranch({ branchId }: any) {
       longitude: String(values.longitude),
       latitude: String(values.latitude),
     };
-    const changedData = getChangedFormData(parsedValues, formData, ['_id']);
+    const changedData = removeEmptyValues(parsedValues, ['_id']);
 
     updateBranch({ data: changedData, branchId: branchId }).unwrap();
   };
@@ -80,23 +84,24 @@ export default function UpdateBranch({ branchId }: any) {
     }
 
     if (isSuccess) {
-      router.push(routes.retailer.branch.home);
-      toast.success('Branch updated successfully!');
+      router.push(routes.privateRoutes.retailer.branch.home);
+      toast.success(t2('branchUpdated'));
       setIsSubmitting(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError, isSuccess, router]);
 
   return (
     <Formik initialValues={formData} enableReinitialize validationSchema={validationSchema} onSubmit={handleSubmit}>
       {() => (
         <Form className="mt-5 grid gap-4">
-          <InputField name="name" label="Name" placeholder="ex. Ring Road Branch" />
-          <MapComponent />
+          <InputField name="name" label={t('name')} placeholder="ex. Ring Road Branch" />
+          <MapComponent googleMapsApiKey={googleMapsApiKey} />
           <div className="mt-2 flex justify-end">
             <Button
-              color="warning"
+              color="danger"
               type="submit"
-              text="Update"
+              text={t('update')}
               postIcon={<BsCheck2Circle className="text-base" />}
               isSubmitting={isSubmitting}
             />

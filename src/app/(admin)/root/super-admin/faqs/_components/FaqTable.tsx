@@ -1,6 +1,7 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import StatusIndicator from '@/components/shared/StatusIndicator';
 import {
   useDeleteFaqMutation,
   useGetAllFaqQuery,
@@ -130,8 +131,17 @@ export default function FaqTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-end">
-        <Button onClick={() => setCreateState(true)} text="Add New Faq" preIcon={<HiPlus className="text-base" />} />
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+        <StatusIndicator />
+        <div>
+          <Button
+            className="w-full"
+            color="danger"
+            onClick={() => setCreateState(true)}
+            text="Add New Faq"
+            preIcon={<HiPlus className="text-base" />}
+          />
+        </div>
       </div>
       <Table
         isFetching={isFetching}
@@ -158,6 +168,7 @@ export default function FaqTable() {
         sort={updateSortingFaq}
         sortContext="faq"
         enableRowActions={false}
+        searchPlaceHolder="Search by Title"
       />
 
       <DeleteConfirmModal

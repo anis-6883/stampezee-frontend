@@ -1,0 +1,371 @@
+'use client';
+
+import Button from '@/components/Formik/Button';
+import DatePicker from '@/components/Formik/DatePicker';
+import InputField from '@/components/Formik/InputField';
+import SelectField from '@/components/Formik/SelectField';
+import { SerializedError } from '@/features/api/apiSlice';
+import {
+  useCreateCouponAdminMutation,
+  useGetAllCouponRetailersQuery,
+  useUpdateCouponMutation,
+} from '@/features/super-admin/coupon/couponApi';
+import removeEmptyValues from '@/utils/removeEmptyValues';
+import { Skeleton } from '@mantine/core';
+import { Form, Formik } from 'formik';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { BsCheck2Circle } from 'react-icons/bs';
+import { IoAlertCircle, IoCloseOutline } from 'react-icons/io5';
+import { LuCircleDollarSign } from 'react-icons/lu';
+import { RiDiscountPercentLine } from 'react-icons/ri';
+import ReactSelect from 'react-select';
+import { ActionIcon, Modal, Title } from 'rizzui';
+import * as Yup from 'yup';
+
+export default function CreateUpdateModel({
+  setFormData,
+  formData,
+  modalState,
+  setModalState,
+}: {
+  formData: any;
+  modalState: boolean;
+  setFormData: (data: any) => void;
+  setModalState: (state: boolean) => void;
+}) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showRetailers, setShowRetailers] = useState(formData?.allowFor !== 'all');
+  const [createCoupon, { isSuccess: createSuccess, error: createError }] = useCreateCouponAdminMutation();
+  const [updateCoupon, { isSuccess: updateSuccess, error: updateError }] = useUpdateCouponMutation();
+  const { data, isLoading, isError } = useGetAllCouponRetailersQuery(
+    {},
+    {
+      skip: !showRetailers || !modalState,
+    }
+  );
+
+  const retailerOptions = data
+    ? data?.data?.retailers.map((retailer: any) => ({
+        value: retailer._id,
+        label: retailer.storeName,
+        image: retailer.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailer.image}` : '/images/stamp-logo.png',
+      }))
+    : [];
+
+  const planOptions = data
+    ? data?.data?.subscriptions.map((plan: any) => ({
+        value: plan._id,
+        label: plan.title,
+      }))
+    : [];
+
+  const initialValues = {
+    title: formData?.title || '',
+    code: formData?.code || '',
+    description: formData?.description || '',
+    discountType: formData?.discountType || 'percentage',
+    discount: formData?.discount || '',
+    limit: formData?.limit || '',
+    validDateRange: formData?.validDateRange || '',
+    allowFor: formData?.allowFor || 'all',
+    allowedRetailers: formData?.allowedRetailers || [],
+    applicablePackages: formData?.applicablePackages || [],
+  };
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().trim().required('Required!'),
+    code: Yup.string().trim().required('Required!').min(6, 'At least 6 characters long!'),
+    discountType: Yup.string().required('Required!'),
+    discount: Yup.string().when('discountType', {
+      is: 'percentage',
+      then: () => Yup.number().max(50, 'Value must be less then or equal to 50!').required('Required!'),
+      otherwise: () => Yup.number().required('Required!'),
+    }),
+    limit: Yup.number()
+      .test('integer', 'Please enter an integer value', (value: any) => {
+        return !isNaN(parseFloat(value)) && isFinite(value);
+      })
+      .min(1, 'Value must be greater then or equal to 1')
+      .required('Required!'),
+    validDateRange: Yup.string().required('Required!'),
+    applicablePackages: Yup.array()
+      .of(Yup.string().required('Array must contain a string'))
+      .min(1, 'Select at least one package!')
+      .required('Required!'),
+    allowedRetailers: Yup.string().when('allowFor', {
+      is: 'specific',
+      then: () =>
+        Yup.array().of(Yup.string().required('Array must contain a string')).min(1, 'Select at least one retailer!').required('Required!'),
+      otherwise: () => Yup.array().nullable(),
+    }),
+  });
+
+  // Submit Handler
+  const handleSubmit = async (values: any) => {
+    setIsSubmitting(true);
+    const filteredValues = removeEmptyValues(values, ['validDateRange']);
+    const dateRange = values.validDateRange.split('to').map((date: string) => date.trim());
+
+    filteredValues.startedAt = dateRange[0];
+    filteredValues.expiredAt = dateRange[1];
+
+    if (formData?._id) {
+      updateCoupon({ id: formData._id, formData: filteredValues });
+    } else {
+      createCoupon(filteredValues);
+    }
+  };
+
+  // Create Response Handler
+  useEffect(() => {
+    if (createError) {
+      const myError = createError as SerializedError;
+      setIsSubmitting(false);
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+
+    if (createSuccess) {
+      toast.success('Coupon created successfully!');
+      setFormData({});
+      setIsSubmitting(false);
+      setModalState(false);
+      setIsSubmitting(false);
+    }
+  }, [createError, createSuccess, setModalState, setFormData]);
+
+  // Update Response Handler
+  useEffect(() => {
+    if (updateError) {
+      const myError = updateError as SerializedError;
+      setIsSubmitting(false);
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+
+    if (updateSuccess) {
+      toast.success('Coupon Update successfully!');
+      setFormData({});
+      setIsSubmitting(false);
+      setModalState(false);
+      setIsSubmitting(false);
+    }
+  }, [updateError, updateSuccess, setModalState, setFormData]);
+
+  return (
+    <div>
+      <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="700px">
+        <div className="m-auto px-7 pb-8 pt-6">
+          <div className="mb-7 flex items-center justify-between">
+            {formData?._id ? <Title as="h4">Update A Coupon</Title> : <Title as="h4">Add New Coupon</Title>}
+
+            <ActionIcon
+              size="sm"
+              variant="text"
+              onClick={() => {
+                setModalState(false);
+                setFormData({});
+              }}
+            >
+              <IoCloseOutline className="text-2xl text-danger" />
+            </ActionIcon>
+          </div>
+          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            {({ setFieldValue, values, errors, touched, setFieldTouched }) => {
+              console.log(values);
+
+              return (
+                <Form className="grid gap-4">
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <InputField name="title" label="Title" placeholder="Black Friday" />
+                    <InputField name="code" label="Code" placeholder="BLACK2024" />
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-y-4">
+                    <SelectField
+                      value={values?.allowFor}
+                      options={[
+                        { label: 'All', value: 'all' },
+                        { label: 'Specific', value: 'specific' },
+                      ]}
+                      onChange={(option: { label: string; value: string }) => {
+                        if (option.value === 'specific') setShowRetailers(true);
+                        if (option.value === 'all') setFieldValue('allowedRetailers', []);
+                        setFieldValue('allowFor', option.value);
+                      }}
+                      name="allowFor"
+                      label="Allow For"
+                    />
+
+                    {values?.allowFor !== 'all' ? (
+                      showRetailers && !isLoading && !isError ? (
+                        <div>
+                          <div className="mb-2">
+                            <p className="font-medium">
+                              Select Specific Retailer
+                              <span className="text-red-500"> *</span>
+                            </p>
+                          </div>
+                          <ReactSelect
+                            placeholder="Select Retailers"
+                            isSearchable
+                            options={retailerOptions}
+                            isMulti={true}
+                            getOptionLabel={getOptionLabel}
+                            getOptionValue={(option) => option.label}
+                            defaultValue={retailerOptions.filter((retailer: any) => values.allowedRetailers.includes(retailer.value))}
+                            onChange={(option: any) => {
+                              const retailerIds = option.map((obj: any) => obj.value);
+                              setFieldValue('allowedRetailers', retailerIds);
+                            }}
+                            onBlur={() => setFieldTouched('allowedRetailers', true)}
+                            styles={{
+                              control: (base) => ({
+                                ...base,
+                                boxShadow: 'none !important',
+                                ...(touched.allowedRetailers &&
+                                  errors.allowedRetailers && {
+                                    minHeight: '43px !important',
+                                    borderRadius: '7px !important',
+                                    border: '1px solid #DC3545 !important',
+                                  }),
+                              }),
+                              input: (base) => ({
+                                ...base,
+                                boxShadow: 'none !important',
+                              }),
+                            }}
+                          />
+                          {touched.allowedRetailers && errors.allowedRetailers && (
+                            <span className="mt-1 flex items-center gap-x-1 text-danger">
+                              <IoAlertCircle className="text-lg" />
+                              <span>{errors.allowedRetailers as string}</span>
+                            </span>
+                          )}
+                        </div>
+                      ) : (
+                        <Skeleton className="h-10 w-full rounded" />
+                      )
+                    ) : null}
+
+                    {!isLoading && !isError ? (
+                      <div>
+                        <div className="mb-2">
+                          <p className="font-medium">
+                            Select Specific Plans / Add-ons
+                            <span className="text-red-500"> *</span>
+                          </p>
+                        </div>
+                        <ReactSelect
+                          placeholder="Select One"
+                          isSearchable
+                          isMulti={true}
+                          options={planOptions}
+                          getOptionValue={(option) => option.label}
+                          defaultValue={planOptions.filter((plan: any) => values.applicablePackages.includes(plan.value))}
+                          onChange={(option: any) => {
+                            const packageIds = option.map((obj: any) => obj.value);
+                            setFieldValue('applicablePackages', packageIds);
+                          }}
+                          onBlur={() => setFieldTouched('applicablePackages', true)}
+                          styles={{
+                            control: (base) => ({
+                              ...base,
+                              boxShadow: 'none !important',
+                              ...(touched.applicablePackages &&
+                                errors.applicablePackages && {
+                                  minHeight: '43px !important',
+                                  borderRadius: '7px !important',
+                                  border: '1px solid #DC3545 !important',
+                                }),
+                            }),
+                            input: (base) => ({
+                              ...base,
+                              boxShadow: 'none !important',
+                            }),
+                          }}
+                        />
+                        {touched.applicablePackages && errors.applicablePackages && (
+                          <span className="mt-1 flex items-center gap-x-1 text-danger">
+                            <IoAlertCircle className="text-lg" />
+                            <span>{errors.applicablePackages as string}</span>
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <Skeleton className="h-10 w-full rounded" />
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1">
+                    <InputField name="description" label="Description" placeholder="Write here..." required={false} />
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-x-3 md:grid-cols-3">
+                    <SelectField
+                      value={values?.discountType}
+                      options={[
+                        { label: 'Percentage', value: 'percentage' },
+                        { label: 'Flat', value: 'flat' },
+                      ]}
+                      onChange={(option: { label: string; value: string }) => setFieldValue('discountType', option.value)}
+                      name="discountType"
+                      label="Discount Type"
+                    />
+                    {values.discountType === 'percentage' ? (
+                      <InputField
+                        type="number"
+                        name="discount"
+                        label="Discount Amount"
+                        placeholder="10"
+                        prefix={<RiDiscountPercentLine className="text-xl" />}
+                      />
+                    ) : (
+                      <InputField
+                        type="number"
+                        name="discount"
+                        label="Discount Amount"
+                        placeholder="10"
+                        prefix={<LuCircleDollarSign className="text-xl" />}
+                      />
+                    )}
+                    <InputField type="number" name="limit" label="Limit" placeholder="1" />
+                  </div>
+
+                  <div className="grid grid-cols-1">
+                    <DatePicker label="Valid Date Range" name="validDateRange" range={true} />
+                  </div>
+
+                  <p className="flex flex-col text-end text-xs font-semibold">
+                    <span>
+                      Base Currency: <span className="text-red-600">CAD</span>
+                    </span>
+                    <span>
+                      Fields marked with <span className="text-red-600">*</span> are mandatory!
+                    </span>
+                    <span>Need double-click to select a single date!</span>
+                  </p>
+                  <div className="flex justify-end">
+                    <Button
+                      color="danger"
+                      type="submit"
+                      text={formData?._id ? 'Update' : 'Submit'}
+                      postIcon={<BsCheck2Circle className="text-base" />}
+                      isSubmitting={isSubmitting}
+                    />
+                  </div>
+                </Form>
+              );
+            }}
+          </Formik>
+        </div>
+      </Modal>
+    </div>
+  );
+}
+
+const getOptionLabel = (option: any): any => (
+  <div className="flex ">
+    <img src={option.image} alt={option.label} style={{ width: '20px', marginLeft: '5px' }} />
+    <span className="ml-2">{option.label}</span>
+  </div>
+);

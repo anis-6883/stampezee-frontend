@@ -34,6 +34,21 @@ export const stampApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['retailerStamp'],
     }),
+    updateStampStatus: builder.mutation<IResponse, any>({
+      query: ({ data, branchId }) => ({
+        url: `/api/web/retailer/stamp/status/${branchId}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['retailerStamp'],
+    }),
+    publishStamp: builder.mutation<IResponse, any>({
+      query: (id) => ({
+        url: `/api/web/retailer/stamp/publish/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['retailerStamp'],
+    }),
     deleteStamp: builder.mutation<IResponse, any>({
       query: (id) => ({
         url: `/api/web/retailer/stamp/${id}`,
@@ -46,6 +61,7 @@ export const stampApi = apiSlice.injectEndpoints({
       query: () => {
         return `/api/web/retailer/stamp/branch-category-image-list`;
       },
+      providesTags: ['branches', 'superAdminRetailerStampCategory', 'retailerStamp'],
     }),
     singleBranch: builder.query<{ success: boolean }, { _id: string }>({
       query: ({ _id }) => `/api/web/retailer/branch/${_id}`,
@@ -58,9 +74,11 @@ export const {
   useGetAllStampsQuery,
   useCreateStampMutation,
   useUpdateStampMutation,
+  usePublishStampMutation,
   useDeleteStampMutation,
   useBranchCategoryImageListQuery,
   useGetSingleStampsQuery,
+  useUpdateStampStatusMutation,
 } = stampApi;
 
 export default stampApi;

@@ -1,0 +1,125 @@
+import { Skeleton } from '@/components/ui/skeleton';
+import React from 'react';
+
+interface BranchStatistics {
+  _id: string;
+  name: string;
+  address: string;
+  totalCustomer: number;
+  totalOrder: number;
+  totalRevenue: number;
+  subAdminName: string;
+  subAdminEmail: string;
+}
+
+interface BranchStatisticsTableProps {
+  data: BranchStatistics[] | undefined;
+  isLoading: boolean;
+  isError: boolean;
+}
+
+const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isLoading, isError }) => {
+  const tableHeaders = [
+    'Serial No.',
+    'Branch Name',
+    'Branch Address',
+    'Sub Admin Name',
+    'Sub Admin Email',
+    'Total Customer',
+    'Total Order',
+    'Total Revenue (CAD)',
+  ];
+
+  if (isLoading || isError) {
+    return (
+      <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+        <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            {tableHeaders.map((header) => (
+              <th key={header} scope="col" className="whitespace-nowrap px-6 py-3">
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {tableHeaders.map((_, index) => (
+              <td key={index} scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                <Skeleton className="h-6 w-32 rounded" />
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    );
+  }
+
+  const branchStatistics = data || [];
+
+  return (
+    <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
+      <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+        <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            {tableHeaders.map((header) => (
+              <th
+                key={header}
+                scope="col"
+                className={`px-6 py-3 ${header === 'Branch Address' && branchStatistics.length !== 0 ? '!w-[50%]' : 'whitespace-nowrap'}`}
+              >
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {branchStatistics.length === 0 ? (
+            <tr>
+              <td colSpan={8} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
+                <div className="flex flex-col justify-center py-5">
+                  <img src="/images/no-data.svg" alt="No data" className="m-auto h-40 w-40" />
+                  <span>No Data Available!</span>
+                </div>
+              </td>
+            </tr>
+          ) : (
+            branchStatistics.map((item, index) => (
+              <tr
+                key={item._id}
+                className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+              >
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                  {index + 1}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                  {item.name}
+                </td>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900">
+                  {item.address}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                  {item.subAdminName ?? <span className="text-danger">No Assigned</span>}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                  {item.subAdminEmail ?? <span className="text-danger">No Assigned</span>}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                  {item.totalCustomer}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                  {item.totalOrder}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                  ${item.totalRevenue}
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default BranchStatisticsTable;

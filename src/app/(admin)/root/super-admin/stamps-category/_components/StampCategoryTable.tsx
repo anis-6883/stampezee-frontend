@@ -1,6 +1,8 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import Button from '@/components/Formik/Button';
+import StatusIndicator from '@/components/shared/StatusIndicator';
 import {
   useDeleteSuperAdminStampImageCategoryMutation,
   useGetAllSuperAdminStampImagesCategoryQuery,
@@ -13,7 +15,6 @@ import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
-import Button from '../../../../../../components/Formik/Button';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
@@ -75,15 +76,15 @@ export default function StampCategoryTable() {
       ),
     },
     {
-      header: 'Image',
+      header: 'Icon',
       accessorKey: 'image',
       enableSorting: false,
       Cell: ({ row }: any) => (
         <div>
           <img
-            src={row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : '/images/categoryPlaceHolder.png'}
+            src={row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : '/images/stamp-logo.png'}
             alt="image"
-            className="h-10 w-10 rounded-full"
+            className="h-12 w-12 rounded-full"
           />
         </div>
       ),
@@ -105,6 +106,7 @@ export default function StampCategoryTable() {
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Button
+            tooltip="Edit"
             color="warning"
             preIcon={<HiOutlinePencil className="text-base" />}
             onClick={() => {
@@ -116,7 +118,7 @@ export default function StampCategoryTable() {
             }}
           />
 
-          <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+          <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -131,8 +133,17 @@ export default function StampCategoryTable() {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-4 flex justify-end">
-        <Button onClick={() => setCreateState(true)} text="Add New Stamp Category" preIcon={<HiPlus className="text-base" />} />
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+        <StatusIndicator />
+        <div>
+          <Button
+            className="w-full"
+            color="danger"
+            onClick={() => setCreateState(true)}
+            text="Add New Stamp Category"
+            preIcon={<HiPlus className="text-base" />}
+          />
+        </div>
       </div>
       <Table
         isFetching={isFetching}
@@ -159,6 +170,7 @@ export default function StampCategoryTable() {
         sort={sort}
         sortContext="category"
         enableRowActions={false}
+        searchPlaceHolder="Search by Category Name"
       />
 
       <DeleteConfirmModal

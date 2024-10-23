@@ -12,6 +12,9 @@ export default function DragAndDropUpload({
   size,
   sizeText,
   isRounded = false,
+  uploadText = 'Upload Image',
+  brandText = '',
+  dimension = '250X250',
 }: {
   className: string;
   value: any;
@@ -19,41 +22,54 @@ export default function DragAndDropUpload({
   size: number;
   sizeText: string;
   isRounded?: boolean;
+  uploadText?: string;
+  brandText?: string | React.ReactNode;
+  dimension?: string;
 }) {
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string>('');
   const { errors } = useFormikContext<any>();
 
   useEffect(() => {
-    if (typeof value.image === 'string' && value.image != null) {
+    if (typeof value?.image === 'string' && value.image != null) {
       setPreview(value.image as any);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value?.image]);
 
   const onDrop = useCallback(
     (acceptedFiles: any) => {
       const file = acceptedFiles[0];
-      // console.log(file, 'file uplode ');
-
-      // Check if the file is present and is an image
       if (file && file.type.startsWith('image/')) {
-        // Check if the file size is within limits (1 MB in this example)
         if (file.size <= size) {
-          const fileWithPreview = Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          });
-          setPreview(fileWithPreview.preview);
-          onChange(fileWithPreview);
-          setError(''); // Clear any previous errors
+          const img = new Image();
+          img.onload = () => {
+            if (
+              img?.width === img?.height &&
+              img.width >= Number(dimension?.split('X')[0]) &&
+              img.height >= Number(dimension?.split('X')[1])
+            ) {
+              const fileWithPreview = Object.assign(file, {
+                preview: URL.createObjectURL(file),
+              });
+              setPreview(fileWithPreview.preview);
+              onChange(fileWithPreview);
+              setError('');
+            } else {
+              setError(`Min. ${dimension?.split('X')[0]} px with width & height must be same!`);
+            }
+          };
+          img.onerror = () => {
+            setError('Could not read image dimensions. Please choose a valid image file!');
+          };
+          img.src = URL.createObjectURL(file);
         } else {
-          setError('File size exceeds 1MB. Please choose a smaller file.');
+          setError('File size exceeds 1MB. Please choose a smaller file!');
         }
       } else {
-        setError('Invalid file type. Please choose a valid image file.');
+        setError('Invalid file type. Please choose a valid image file!');
       }
     },
-    [onChange, size]
+    [onChange, size, dimension]
   );
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -61,12 +77,11 @@ export default function DragAndDropUpload({
       'image/png': ['.png'],
       'image/jpeg': ['.jpg', '.jpeg'],
     },
-    maxSize: size, // 1 MB
+    // maxSize: size,
     onDrop,
   });
 
   useEffect(() => {
-    // Revoke the data uri to avoid memory leaks
     return () => {
       if (preview) {
         URL.revokeObjectURL(preview);
@@ -77,27 +92,21 @@ export default function DragAndDropUpload({
   const removeFile = () => {
     setPreview(null);
     onChange(null);
-    setError(''); // Clear any previous errors
+    setError('');
   };
 
   return (
-    <>
-      <div
-        {...getRootProps({
-          className: className,
-        })}
-      >
+    <div className="flex flex-col items-center justify-center gap-y-2">
+      <div {...getRootProps({ className: className })}>
+        <input {...getInputProps()} />
         {value && preview ? (
           <div className="relative flex items-center gap-3">
             <img
               src={preview}
               alt="Uploaded Image"
-              width={0}
-              height={0}
               sizes="100vw"
-              className={cn('z-30 h-[120px] w-[120px] rounded-md border border-gray-200 object-contain p-1', isRounded && 'rounded-full')}
+              className={cn('z-30 h-[120px] w-[120px] rounded-md border border-gray-200 object-cover p-2', isRounded && 'rounded-full')}
             />
-            {/* {value && value.name && <p className="mt-2 text-[14px] font-bold text-gray-800">{value.name}</p>} */}
             {!isRounded ? (
               <button type="button" className="rounded bg-red-500 p-1" onClick={removeFile}>
                 <FaTrashAlt className="hover:fill-secondary-400 h-5 w-5 fill-white transition-colors" />
@@ -105,7 +114,7 @@ export default function DragAndDropUpload({
             ) : (
               <FaTrashAlt
                 onClick={removeFile}
-                className="hover:fill-secondary-400 absolute right-2 top-0 z-50 h-4 w-4 transform cursor-pointer fill-red-500 transition-all duration-700 ease-in-out hover:scale-125"
+                className="hover:fill-secondary-400 absolute right-3 top-0 z-50 h-4 w-4 transform cursor-pointer fill-red-500 transition-all duration-700 ease-in-out hover:scale-125"
               />
             )}
           </div>
@@ -113,46 +122,40 @@ export default function DragAndDropUpload({
           <div
             className={cn(
               'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-2',
-              errors.image && '!border-red-500 ring-0 ',
-              isRounded && 'h-[120px] w-[120px] gap-0 rounded-full'
+              errors.image && '!border-danger ring-0',
+              isRounded && 'h-[120px] w-[120px] gap-0 rounded-full',
+              isRounded && error && '!border-danger ring-0'
             )}
           >
-            <input {...getInputProps()} />
-            <MdCloudUpload className={cn('text-4xl text-primary', isRounded && 'text-4xl')} />
-            {error ? (
-              <p className="text-sm text-red-500">{error}</p>
-            ) : (
-              <>
-                <h3 className="mt-2 text-sm font-medium text-gray-900">
-                  <label htmlFor="file-upload" className="relative cursor-pointer">
-                    {!isRounded ? (
-                      <div>
-                        <span>Drag and drop</span>
-                        <span className="text-primary"> or browse</span>
-                        <span> to upload!</span>
-                      </div>
-                    ) : (
-                      <span className="-mt-2 p-1 text-xs">Upload Image</span>
-                    )}
-                    <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                  </label>
-                </h3>
-                {!isRounded && <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to {sizeText}</p>}
-              </>
-            )}
+            <div>
+              <MdCloudUpload className={cn('text-4xl text-danger', isRounded && 'text-4xl')} />
+            </div>
+
+            <>
+              <h3 className="mt-2 text-sm font-medium text-gray-900">
+                <label htmlFor="file-upload" className="relative cursor-pointer">
+                  {!isRounded ? (
+                    <div>
+                      <span>Drag and drop</span>
+                      <span {...getRootProps({ className: className })} className="text-danger">
+                        {' '}
+                        or browse
+                      </span>
+                      <span> to upload!</span>
+                    </div>
+                  ) : (
+                    <span className="-mt-2 p-1 text-xs">{uploadText}</span>
+                  )}
+                </label>
+              </h3>
+              {!isRounded && <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to {sizeText}</p>}
+            </>
           </div>
         )}
+        {brandText && <h2 className="py-3 text-center font-medium">{brandText}</h2>}
       </div>
-    </>
-  );
-}
 
-{
-  /* <DragAndDropUpload
-value={{ name: 'image', image: values.image }}
-onChange={(image: any) => setFieldValue('image', image)}
-className="mt-2"
-size={1024 * 1000}
-sizeText="1MB"
-/> */
+      {error && <p className=" text-sm text-danger">{error}</p>}
+    </div>
+  );
 }
