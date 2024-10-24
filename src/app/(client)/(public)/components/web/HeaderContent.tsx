@@ -116,7 +116,7 @@ export default function HeaderContent() {
               {/* <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span> */}
             </Link>
           </div>
-          <div className="flex w-[88%] items-center justify-end sm:justify-normal md:order-2 md:space-x-0">
+          <div className="flex w-[88%] items-center justify-end md:order-2 md:space-x-0">
             <span
               className="cursor-pointer  text-lg font-bold md:hidden lg:hidden"
               onClick={() =>
