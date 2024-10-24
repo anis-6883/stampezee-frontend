@@ -1,5 +1,5 @@
+import FormBlockWrapper from '@/components/FormBlockWrapper';
 import QuillLoader from '@/components/reactQuill/QuillLoader';
-import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
 import dynamic from 'next/dynamic';
 
 const QuillEditor = dynamic(() => import('@/components/reactQuill/QuillEditor'), {

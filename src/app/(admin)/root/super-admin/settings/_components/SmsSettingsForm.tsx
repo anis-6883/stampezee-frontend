@@ -1,4 +1,4 @@
-import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
+import FormBlockWrapper from '@/components/FormBlockWrapper';
 import { Field, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { Input, Select } from 'rizzui';
