@@ -1,18 +1,17 @@
 'use client';
 
+import DatePicker from '@/components/Formik/DatePicker';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetDashboardRevenueQuery } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
-import { Text, Title } from 'rizzui';
+import { useState } from 'react';
+import { Select, Text, Title } from 'rizzui';
 import CircleProgressbar from './CircleProgressbar';
 import WidgetCard from './WidgetCard';
 
 export default function Revenue({ className }: { className?: string }) {
   const { data: dashboardRevenue, isLoading, isError } = useGetDashboardRevenueQuery(undefined);
-
-  if (!isLoading && !isError && dashboardRevenue) {
-    console.log(dashboardRevenue);
-  }
+  const [showDate, setShowDate] = useState({ label: 'No Date', value: 'no-date' });
 
   const {
     activeSubscription = 0,
@@ -22,6 +21,11 @@ export default function Revenue({ className }: { className?: string }) {
     subscriptionPercentage = 0,
     addonPercentage = 0,
   } = dashboardRevenue?.data || {};
+
+  const options = [
+    { label: 'No Date', value: 'no-date' },
+    { label: 'With Date', value: 'with-date' },
+  ];
 
   const data = [
     {
@@ -44,6 +48,8 @@ export default function Revenue({ className }: { className?: string }) {
     },
   ];
 
+  console.log(showDate);
+
   return (
     <WidgetCard
       title={
@@ -59,10 +65,17 @@ export default function Revenue({ className }: { className?: string }) {
           Active Subscriptions
         </p>
       }
-      titleClassName="font-normal text-gray-500 text-sm sm:text-sm 2xl:text-base font-inter"
+      titleClassName="font-normal text-gray-500 text-sm sm:text-sm 2xl:text-base"
       descriptionClassName="mt-2"
       headerClassName="col-span-full"
       className={cn('relative grid h-full grid-cols-2 pb-0 @2xl:gap-8 @3xl:gap-5 lg:pb-0', className)}
+      action={
+        <div className="flex items-center justify-between gap-5">
+          {showDate.value === 'with-date' && <DatePicker range={true} />}
+
+          <Select size="md" className="w-32" options={options} value={showDate} onChange={setShowDate} />
+        </div>
+      }
     >
       {isLoading || isError || !dashboardRevenue ? (
         <>
@@ -75,7 +88,7 @@ export default function Revenue({ className }: { className?: string }) {
         </>
       ) : (
         <>
-          <div className="col-span-full mt-5 grid w-full grid-cols-3 justify-around gap-5 @2xl:gap-12 @7xl:gap-8 @[1429px]:gap-4 @[1553px]:gap-8">
+          <div className="col-span-full mt-10 grid w-full grid-cols-3 justify-around gap-5 @2xl:gap-12 @7xl:gap-8 @[1429px]:gap-4 @[1553px]:gap-8">
             {data.map((item: any) => (
               <div key={item.name} className={cn('grid gap-6 text-center')}>
                 <CircleProgressbar

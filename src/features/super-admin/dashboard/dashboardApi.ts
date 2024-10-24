@@ -8,7 +8,11 @@ export const dashboardApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     getDashboardRevenue: builder.query({
-      query: () => `/api/secret-root/admin/super-admin/dashboard/revenue-stats`,
+      query: (queries) => {
+        const values = Object.values(queries);
+        if (values.length) return `/api/secret-root/admin/super-admin/dashboard/revenue-stats?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/dashboard/revenue-stats`;
+      },
       providesTags: ['admin-dashboard-revenue-stats'],
       keepUnusedDataFor: 5,
     }),
