@@ -134,7 +134,7 @@ export default function Page() {
       {/* sm:right-60 sm:top-36 */}
       {/* right-[-15rem] top-[33rem] */}
       <div
-        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40 md:left-36 md:top-20' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36 md:right-44 md:top-20'}  mt-10 justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
+        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40 md:left-36 md:top-20 lg:left-36 lg:top-40' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36 md:right-44 md:top-20 lg:right-44 lg:top-40'}  mt-10 justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
       >
         <div className=" h-[40%] w-[40%] md:h-[60%] md:w-[60%] xl:h-[50%] xxl:w-[50%]">
           <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
