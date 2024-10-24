@@ -16,6 +16,14 @@ export const billingApi = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'billing', id: arg }],
       keepUnusedDataFor: 10,
     }),
+    createBillingPdf: builder.mutation({
+      query: (id) => ({
+        url: `/api/web/retailer/billing/download-pdf/${id}`,
+        method: 'POST',
+        // body: data,
+        responseHandler: (response) => response.blob(),
+      }),
+    }),
     getBillingPortal: builder.mutation({
       query: (data) => ({
         url: `/api/web/retailer/billing/portal`,
@@ -26,4 +34,4 @@ export const billingApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAllBillingQuery, useSingleBillingQuery, useGetBillingPortalMutation } = billingApi;
+export const { useAllBillingQuery, useSingleBillingQuery, useGetBillingPortalMutation, useCreateBillingPdfMutation } = billingApi;

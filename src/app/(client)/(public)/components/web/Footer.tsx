@@ -60,7 +60,9 @@ export default function Footer({ general }: any) {
               <div className="mt-4 block font-medium">
                 <div className={`grid grid-cols-1 gap-4 text-center md:grid-cols-2 md:text-${isRtl ? 'right' : 'left'} lg:grid-cols-4`}>
                   <div className="mt-4 block font-medium">
-                    <div className={`block ${isRtl ? 'text-right' : 'text-center sm:text-left'} text-lg font-bold sm:text-xl`}>
+                    <div
+                      className={`block ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'} text-lg font-bold sm:text-xl`}
+                    >
                       StampEzee
                     </div>
                     <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
@@ -79,7 +81,9 @@ export default function Footer({ general }: any) {
                     </div>
                   </div>
                   <div className="mt-4  font-medium">
-                    <div className={`block ${isRtl ? 'text-right' : 'text-center sm:text-left'} text-lg font-bold  sm:text-xl`}>
+                    <div
+                      className={`block ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'} text-lg font-bold  sm:text-xl`}
+                    >
                       {' '}
                       {t('socials')}
                     </div>
@@ -99,7 +103,9 @@ export default function Footer({ general }: any) {
                     </div>
                   </div>
                   <div className="mt-4 font-medium">
-                    <div className={`block ${isRtl ? 'text-right' : 'text-center sm:text-left'} text-lg font-bold  sm:text-xl`}>
+                    <div
+                      className={`block ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'} text-lg font-bold  sm:text-xl`}
+                    >
                       {t('contact')}
                     </div>
                     <div className="MuiStack-root css-yd8sa2 flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
@@ -116,7 +122,7 @@ export default function Footer({ general }: any) {
                   </div>
                   <div className="mt-4 flex flex-col font-medium">
                     <div
-                      className={`block text-lg font-bold ${isRtl ? 'text-right' : 'text-center sm:text-left'}  ${locale === 'fr' ? 'sm:text-base' : locale === 'ru' ? 'sm:text-sm' : 'sm:text-xl'}`}
+                      className={`block text-lg font-bold ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'}  ${locale === 'fr' ? 'sm:text-base' : locale === 'ru' ? 'sm:text-sm' : 'sm:text-xl'}`}
                     >
                       {t('newsletter')}
                     </div>

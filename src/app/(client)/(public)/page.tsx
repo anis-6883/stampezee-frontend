@@ -113,7 +113,7 @@ export default function Page() {
 
       {/* Revolution Card Start  */}
       <div className="m-7 sm:m-0">
-        <div className="container mx-auto  mb-9 max-w-screen-xl rounded-3xl bg-gradient-to-r from-[#BA0000] to-[#FB7C7C] px-10 py-8">
+        <div className="container mx-auto max-w-screen-xl rounded-3xl bg-gradient-to-r from-[#BA0000] to-[#FB7C7C] px-10 py-8">
           <div className="flex flex-col items-center gap-y-6">
             <span className="text-base font-semibold uppercase tracking-widest text-[#000000] sm:text-xl">{t('revolutionTitle')}</span>
             <span className="text-3xl font-bold tracking-widest text-[#ffffff] sm:text-5xl">{t('revolutionBodyTitle')}</span>
@@ -134,9 +134,9 @@ export default function Page() {
       {/* sm:right-60 sm:top-36 */}
       {/* right-[-15rem] top-[33rem] */}
       <div
-        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36'}  mt-10 justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
+        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40 md:left-36 md:top-20' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36 md:right-44 md:top-20'}  mt-10 justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
       >
-        <div className=" h-[40%] w-[40%] xl:h-[50%] xxl:w-[50%]">
+        <div className=" h-[40%] w-[40%] md:h-[60%] md:w-[60%] xl:h-[50%] xxl:w-[50%]">
           <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
         </div>
       </div>
