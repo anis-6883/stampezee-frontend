@@ -2,7 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
-import StatusIndicator from '@/components/shared/StatusIndicator';
+import StatusIndicator from '@/components/StatusIndicator';
 import { routes } from '@/config/routes';
 import {
   useCustomerStatusUpdateBySuperAdminMutation,

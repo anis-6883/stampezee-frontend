@@ -1,7 +1,7 @@
+import FormBlockWrapper from '@/components/FormBlockWrapper';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
 import SelectField from '@/components/Formik/SelectField';
-import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
 import countryData from '@/utils/get-country-list';
 import { useFormikContext } from 'formik';
 import { LuCircleDollarSign } from 'react-icons/lu';

@@ -4,22 +4,22 @@ export const dashboardApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getDashboardCalc: builder.query({
       query: () => `/api/secret-root/admin/super-admin/dashboard/calc`,
-      providesTags: ['super-adminDashboard'],
+      providesTags: ['admin-dashboard-calc'],
       keepUnusedDataFor: 5,
     }),
     getDashboardRevenue: builder.query({
       query: () => `/api/secret-root/admin/super-admin/dashboard/revenue-stats`,
-      providesTags: ['super-adminDashboard'],
+      providesTags: ['admin-dashboard-revenue-stats'],
       keepUnusedDataFor: 5,
     }),
     getRetailerStatsWithCountryWise: builder.query({
       query: () => `/api/secret-root/admin/super-admin/dashboard/country-wise-retailer-stats`,
-      providesTags: ['super-adminDashboard'],
+      providesTags: ['admin-dashboard-country-wise-retailer-stats'],
       keepUnusedDataFor: 5,
     }),
     getCustomerStatsWithCountryWise: builder.query({
       query: () => `/api/secret-root/admin/super-admin/dashboard/country-wise-customer-stats`,
-      providesTags: ['super-adminDashboard'],
+      providesTags: ['admin-dashboard-country-wise-customer-stats'],
       keepUnusedDataFor: 5,
     }),
   }),

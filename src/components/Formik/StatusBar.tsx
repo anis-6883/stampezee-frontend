@@ -24,7 +24,6 @@ const StatusBar: React.FC<StatusBarProps> = ({ setFieldValue, checkedStatus = tr
 
   return (
     <div className="status-bar">
-      {/* <Switch label="Status" variant="outline" labelPlacement="right" checked={status} onChange={handleToggle} /> */}
       <Switch
         label="Status"
         switchKnobClassName="bg-[#3872FA]"

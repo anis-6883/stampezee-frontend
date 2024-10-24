@@ -17,7 +17,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import { useDispatch, useSelector } from 'react-redux';
 import { ActionIcon, Modal, Title } from 'rizzui';
-import Button from '../Formik/Button';
+import Button from './Formik/Button';
 
 export default function UpdateProfileModal({
   modalState,
@@ -41,11 +41,6 @@ export default function UpdateProfileModal({
     image: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${superAdminProfile?.data?.image}` || null,
     email: superAdminProfile?.data?.email,
   };
-
-  //   const validationSchema = Yup.object({
-  //     title: Yup.string().required('Title is required'),
-  //     image: Yup.mixed().required('Image is required'),
-  //   });
 
   const submitHandler = async (values: any) => {
     setIsSubmitting(true);
