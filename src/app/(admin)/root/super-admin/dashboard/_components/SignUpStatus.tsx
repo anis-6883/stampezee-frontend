@@ -29,7 +29,7 @@ export default function SignUpStatus({ className }: { className?: string }) {
 
   return (
     <div className={cn('flex flex-col gap-5 border-0 p-0 lg:p-0', className)}>
-      <div className="grid items-start rounded-lg border border-gray-300 p-5 @xl:grid-cols-2 lg:p-7">
+      <div className="grid h-full items-start rounded-lg border border-gray-300 p-5 @xl:grid-cols-2 lg:p-7">
         <Title as="h3" className="col-span-full mb-8 text-base font-semibold sm:text-lg">
           Total Signup Status
         </Title>

@@ -1,8 +1,8 @@
 'use client';
 
 import BalanceCard from '@/app/(client)/(public)/components/BalanceCard';
-import ChangePasswordModal from '@/components/changePasswordModal/ChangePasswordModal';
-import UpdateProfileModal from '@/components/updateProfileModal/UpdateProfileModal';
+import ChangePasswordModal from '@/components/ChangePasswordModal';
+import UpdateProfileModal from '@/components/UpdateProfileModal';
 import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { userLoggedOut } from '@/features/auth/authSlice';

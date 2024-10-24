@@ -77,5 +77,9 @@ export const apiSlice = createApi({
     'superAdminCustomer',
     'criticalPayments',
     'generalSettings',
+    'admin-dashboard-calc',
+    'admin-dashboard-revenue-stats',
+    'admin-dashboard-country-wise-retailer-stats',
+    'admin-dashboard-country-wise-customer-stats',
   ],
 });

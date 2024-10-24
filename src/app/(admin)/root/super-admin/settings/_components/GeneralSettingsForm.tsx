@@ -1,6 +1,6 @@
+import FormBlockWrapper from '@/components/FormBlockWrapper';
 import InputField from '@/components/Formik/InputField';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
-import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
 import { Skeleton } from '@/components/ui/skeleton';
 import countryData from '@/utils/get-country-list';
 import timeZoneData from '@/utils/get-timezone-list';

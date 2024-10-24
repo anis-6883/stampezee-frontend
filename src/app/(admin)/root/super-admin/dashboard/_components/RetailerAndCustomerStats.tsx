@@ -2,7 +2,6 @@
 
 import {
   useGetCustomerStatsWithCountryWiseQuery,
-  useGetDashboardRevenueQuery,
   useGetRetailerStatsWithCountryWiseQuery,
 } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
@@ -11,9 +10,6 @@ import ActiveUsers from './ActiveUser';
 export default function RetailerAndCustomerStats({ className }: { className?: string }) {
   const { data: retailerWiseData, isLoading: isRetailerWiseDataLoading } = useGetRetailerStatsWithCountryWiseQuery({});
   const { data: customerWiseData, isLoading: isCustomerWiseDataLoading } = useGetCustomerStatsWithCountryWiseQuery({});
-  const { data: dashboardRevenue } = useGetDashboardRevenueQuery({});
-
-  console.log({ dashboardRevenue: dashboardRevenue?.data });
 
   const transformedData = customerWiseData?.data?.countries?.filter((country: any) => country?.name);
   return (

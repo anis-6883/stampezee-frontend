@@ -1,5 +1,6 @@
 'use client';
 
+import { ROLE } from '@/config/constants';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerChangePasswordMutation, useSuperAdminChangePasswordMutation } from '@/features/auth/authApi';
 import { RootState } from '@/features/store';
@@ -12,9 +13,8 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
-import { ROLE } from '../../config/constants';
-import Button from '../Formik/Button';
-import InputPassword from '../Formik/InputPassword';
+import Button from './Formik/Button';
+import InputPassword from './Formik/InputPassword';
 
 export default function ChangePasswordModal({
   modalState,

@@ -1,5 +1,5 @@
+import FormBlockWrapper from '@/components/FormBlockWrapper';
 import InputPassword from '@/components/Formik/InputPassword';
-import FormBlockWrapper from '@/components/shared/Form/FormBlockWrapper';
 import { RiKey2Line } from 'react-icons/ri';
 
 export default function GoogleMapForm() {

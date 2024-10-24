@@ -1,6 +1,6 @@
 import Button from '@/components/Formik/Button';
 import PageHeader from '@/components/page-header';
-import StatusIndicator from '@/components/shared/StatusIndicator';
+import StatusIndicator from '@/components/StatusIndicator';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
