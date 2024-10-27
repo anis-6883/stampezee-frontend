@@ -4,14 +4,27 @@ import DatePicker from '@/components/Formik/DatePicker';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetDashboardRevenueQuery } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Select, Text, Title } from 'rizzui';
 import CircleProgressbar from './CircleProgressbar';
 import WidgetCard from './WidgetCard';
 
 export default function Revenue({ className }: { className?: string }) {
-  const { data: dashboardRevenue, isLoading, isError } = useGetDashboardRevenueQuery(undefined);
+  const [dateRange, setDateRange] = useState('');
+  const {
+    data: dashboardRevenue,
+    isLoading,
+    isFetching,
+    isError,
+    refetch,
+  } = useGetDashboardRevenueQuery({
+    dateRange,
+  });
   const [showDate, setShowDate] = useState({ label: 'No Date', value: 'no-date' });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch, dateRange]);
 
   const {
     activeSubscription = 0,
@@ -22,33 +35,31 @@ export default function Revenue({ className }: { className?: string }) {
     addonPercentage = 0,
   } = dashboardRevenue?.data || {};
 
-  const options = [
+  const dateOptions = [
     { label: 'No Date', value: 'no-date' },
     { label: 'With Date', value: 'with-date' },
   ];
 
   const data = [
     {
-      name: 'Total Revenue',
+      name: 'Total Earning',
       value: `$${totalRevenueInCAD.toFixed(2)}`,
       percentage: 100,
       color: '#3872FA',
     },
     {
-      name: 'Subscription Revenue',
+      name: 'Subscription Earning',
       value: `${subscriptionPercentage}%`,
       percentage: subscriptionPercentage,
       color: '#10b981',
     },
     {
-      name: 'Add-On Revenue',
+      name: 'Add-On Earning',
       value: `${addonPercentage}%`,
       percentage: addonPercentage,
       color: '#f1416c',
     },
   ];
-
-  console.log(showDate);
 
   return (
     <WidgetCard
@@ -60,7 +71,11 @@ export default function Revenue({ className }: { className?: string }) {
       description={
         <p className="flex gap-x-2">
           <span className="font-lexend 2xl:text-2xl text-xl font-semibold text-gray-900">
-            {isLoading || isError || !dashboardRevenue ? <Skeleton className="h-6 w-28 rounded" /> : <span>{activeSubscription}</span>}
+            {isFetching || isLoading || isError || !dashboardRevenue ? (
+              <Skeleton className="h-6 w-28 rounded" />
+            ) : (
+              <span>{activeSubscription}</span>
+            )}
           </span>
           Active Subscriptions
         </p>
@@ -71,20 +86,30 @@ export default function Revenue({ className }: { className?: string }) {
       className={cn('relative grid h-full grid-cols-2 pb-0 @2xl:gap-8 @3xl:gap-5 lg:pb-0', className)}
       action={
         <div className="flex items-center justify-between gap-5">
-          {showDate.value === 'with-date' && <DatePicker range={true} />}
+          {showDate.value === 'with-date' && <DatePicker range={true} changeHandler={setDateRange} />}
 
-          <Select size="md" className="w-32" options={options} value={showDate} onChange={setShowDate} />
+          <Select
+            size="md"
+            className="w-32"
+            selectClassName="!ring-0"
+            options={dateOptions}
+            value={showDate}
+            onChange={(value: any) => {
+              if (value.value === 'no-date') setDateRange('');
+              setShowDate(value);
+            }}
+          />
         </div>
       }
     >
-      {isLoading || isError || !dashboardRevenue ? (
+      {isFetching || isLoading || isError || !dashboardRevenue ? (
         <>
-          <div className="col-span-full flex">
-            <Skeleton className="m-auto h-44 w-44 rounded-full" />
-            <Skeleton className="m-auto h-44 w-44 rounded-full" />
-            <Skeleton className="m-auto h-44 w-44 rounded-full" />
+          <div className="col-span-full my-6 flex">
+            <Skeleton className="m-auto h-52 w-52 rounded-full" />
+            <Skeleton className="m-auto h-52 w-52 rounded-full" />
+            <Skeleton className="m-auto h-52 w-52 rounded-full" />
           </div>
-          <Skeleton className="col-span-full m-auto h-20" />
+          <Skeleton className="col-span-full m-auto my-5 h-28" />
         </>
       ) : (
         <>
@@ -110,13 +135,13 @@ export default function Revenue({ className }: { className?: string }) {
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#10b981' }} />
                 <span className="text-base">
-                  <span className="font-semibold">Subscription Revenue:</span> ${totalSubscriptionRevenueInCAD.toFixed(2)}
+                  <span className="font-semibold">Subscription Earning:</span> ${totalSubscriptionRevenueInCAD.toFixed(2)}
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#f1416c' }} />
                 <span className="text-base">
-                  <span className="font-semibold">Add-On Revenue:</span> ${totalAddonRevenueInCAD.toFixed(2)}
+                  <span className="font-semibold">Add-On Earning:</span> ${totalAddonRevenueInCAD.toFixed(2)}
                 </span>
               </div>
             </div>

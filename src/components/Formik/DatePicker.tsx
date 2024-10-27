@@ -8,9 +8,10 @@ interface DateRangeProps {
   enableTime?: boolean;
   range?: boolean;
   required?: boolean;
+  changeHandler: (value: string) => void;
 }
 
-const DatePicker: React.FC<DateRangeProps> = ({ label, enableTime = false, range = false, required = true }) => {
+const DatePicker: React.FC<DateRangeProps> = ({ label, enableTime = false, range = false, required = true, changeHandler }) => {
   return (
     <Flatpickr
       render={({ defaultValue, value, ...props }, ref) => (
@@ -44,7 +45,8 @@ const DatePicker: React.FC<DateRangeProps> = ({ label, enableTime = false, range
       options={{
         onChange: function (_, selectedDates) {
           //   setFieldValue(name, selectedDates);
-          console.log({ selectedDates });
+          // console.log({ selectedDates });
+          changeHandler(selectedDates);
         },
         disableMobile: true,
         allowInput: false,
