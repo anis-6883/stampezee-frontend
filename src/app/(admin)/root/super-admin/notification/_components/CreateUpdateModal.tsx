@@ -1,8 +1,8 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
-import DatePicker from '@/components/Formik/DatePicker';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
+import FormikDatePicker from '@/components/Formik/FormikDatePicker';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
@@ -220,7 +220,7 @@ export default function CreateUpdateModel({
                   )}
 
                   <div>
-                    <DatePicker label="Schedule At" name="scheduleAt" required={false} enableTime={true} />
+                    <FormikDatePicker label="Schedule At" name="scheduleAt" required={false} enableTime={true} />
                   </div>
 
                   <p className="mt-4 text-end text-xs font-semibold">

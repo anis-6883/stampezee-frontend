@@ -1,7 +1,6 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
-import DatePicker from '@/components/Formik/DatePicker';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
@@ -23,6 +22,7 @@ import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 import StampPublishedModal from './StampPublishedModal';
 
+import FormikDatePicker from '@/components/Formik/FormikDatePicker';
 import { useSession } from 'next-auth/react';
 import { IoAlertCircle } from 'react-icons/io5';
 import CreateStampModal from './CreateStampModal';
@@ -211,7 +211,7 @@ export default function CloneStamp({ Id, offset, locale }: any) {
                     }}
                   />
                 </div>
-                {values?.hasValidity && <DatePicker label={t('validDateRange')} name="validDateRange" range={true} />}
+                {values?.hasValidity && <FormikDatePicker label={t('validDateRange')} name="validDateRange" range={true} />}
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

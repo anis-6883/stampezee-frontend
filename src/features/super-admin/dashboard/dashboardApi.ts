@@ -8,7 +8,21 @@ export const dashboardApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     getDashboardRevenue: builder.query({
-      query: () => `/api/secret-root/admin/super-admin/dashboard/revenue-stats`,
+      query: (queries) => {
+        const { dateRange }: { dateRange: string } = queries;
+
+        if (dateRange) {
+          console.log('From rtk: ', dateRange);
+          if (dateRange.includes('to')) {
+            const dates = dateRange.replaceAll(' ', '').split('to');
+            const [start, end] = dates;
+            return `/api/secret-root/admin/super-admin/dashboard/revenue-stats?start=${start}&end=${end}`;
+          }
+          return `/api/secret-root/admin/super-admin/dashboard/revenue-stats?start=${dateRange}&end=${dateRange}`;
+        }
+
+        return `/api/secret-root/admin/super-admin/dashboard/revenue-stats`;
+      },
       providesTags: ['admin-dashboard-revenue-stats'],
       keepUnusedDataFor: 5,
     }),
