@@ -215,7 +215,7 @@ export default function RegisterForm({ terms, policy, locale }: { terms: any; po
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <InputField name="email" label={t('email')} placeholder="john@email.com" />
+                  <InputField name="email" label={t('email')} placeholder="company@email.com" />
                   <InputPassword name="password" label={t('password')} placeholder="********" />
                 </div>
 

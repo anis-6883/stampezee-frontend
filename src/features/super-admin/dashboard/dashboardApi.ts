@@ -7,6 +7,11 @@ export const dashboardApi = apiSlice.injectEndpoints({
       providesTags: ['admin-dashboard-calc'],
       keepUnusedDataFor: 5,
     }),
+    getTopOutlets: builder.query({
+      query: () => `/api/secret-root/admin/super-admin/dashboard/top-outlets`,
+      providesTags: ['admin-dashboard-top-outlets'],
+      keepUnusedDataFor: 5,
+    }),
     getDashboardRevenue: builder.query({
       query: (queries) => {
         const { dateRange }: { dateRange: string } = queries;
@@ -40,8 +45,9 @@ export const dashboardApi = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetTopOutletsQuery,
   useGetDashboardCalcQuery,
+  useGetDashboardRevenueQuery,
   useGetRetailerStatsWithCountryWiseQuery,
   useGetCustomerStatsWithCountryWiseQuery,
-  useGetDashboardRevenueQuery,
 } = dashboardApi;

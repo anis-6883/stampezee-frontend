@@ -79,11 +79,7 @@ export default function ActiveUsers({
   });
 
   return (
-    <WidgetCard
-      title={title}
-      className={cn('relative grid grid-cols-1 place-content-between gap-3', className)}
-      titleClassName="font-semibold"
-    >
+    <WidgetCard title={title} className={cn('relative grid grid-cols-1 place-content-between', className)} titleClassName="font-semibold">
       <div
         ref={ref}
         className="col-span-full flex flex-col [&>figure]:flex [&>figure]:items-center [&>figure]:justify-center [&_figure]:!bg-transparent [&_svg]:dark:invert"
@@ -111,7 +107,7 @@ export default function ActiveUsers({
       </div>
 
       <div className="col-span-full -mx-5 flex flex-col gap-y-3 border-t border-dashed border-gray-200 px-5 pt-5 sm:flex-row sm:gap-y-0 lg:-mx-7 lg:px-7">
-        <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-x-3 gap-y-1.5 text-center">
+        <div className="mx-auto flex w-full flex-wrap justify-center gap-x-3 gap-y-1.5 text-center md:col-span-5">
           {data?.length > 0 &&
             !isLoading &&
             data?.slice(0, 4)?.map((country: any, index: number) => {
@@ -128,13 +124,15 @@ export default function ActiveUsers({
               );
             })}
         </div>
-        <Button
-          onClick={() => setModalState(true)}
-          className="!m-0 !px-2 !py-1.5"
-          text="See More"
-          color="danger"
-          preIcon={<FaInfoCircle className="text-base" />}
-        />
+        <div>
+          <Button
+            onClick={() => setModalState(true)}
+            className="!m-0 w-full !px-2 !py-1.5 md:!w-32"
+            text="See More"
+            color="danger"
+            preIcon={<FaInfoCircle className="text-base" />}
+          />
+        </div>
       </div>
       <UserStatsModal modalState={modalState} setModalState={setModalState} activeUsersStats={data} />
     </WidgetCard>

@@ -81,5 +81,6 @@ export const apiSlice = createApi({
     'admin-dashboard-revenue-stats',
     'admin-dashboard-country-wise-retailer-stats',
     'admin-dashboard-country-wise-customer-stats',
+    'admin-dashboard-top-outlets',
   ],
 });
