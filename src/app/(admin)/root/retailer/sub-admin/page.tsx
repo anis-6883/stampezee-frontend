@@ -12,7 +12,7 @@ const pageHeader = {
       name: 'Dashboard',
     },
     {
-      name: 'Sub-Admins',
+      name: 'Manage Sub-Admins',
     },
   ],
 };
@@ -22,8 +22,9 @@ export const metadata = { ...metaObject(pageHeader.title) };
 export default async function Page() {
   const t = await getTranslations('RetailerSubAdmin');
   pageHeader.breadcrumb[0].name = t('dashboard');
-  pageHeader.breadcrumb[1].name = t('subAdmins');
+  pageHeader.breadcrumb[1].name = t('title');
   pageHeader.title = t('title');
+
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />

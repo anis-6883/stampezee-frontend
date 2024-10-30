@@ -92,6 +92,7 @@ export default function SubAdminTable() {
     {
       header: t('lastName'),
       accessorKey: 'lastName',
+      Cell: ({ row }: any) => <span>{row?.original?.lastName ?? 'N/A'}</span>,
     },
     {
       header: t('email'),

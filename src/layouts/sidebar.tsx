@@ -112,7 +112,7 @@ export default function Sidebar({ className }: { className?: string }) {
         </Link>
       </div>
 
-      {session?.user?.role === ROLE.RETAILER && (
+      {role === ROLE.RETAILER && (
         <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
           <img
             src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
@@ -126,7 +126,7 @@ export default function Sidebar({ className }: { className?: string }) {
         </div>
       )}
 
-      {session?.user?.role === ROLE.SUPER_ADMIN && (
+      {role === ROLE.SUPER_ADMIN && (
         <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
           <img
             src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
@@ -255,7 +255,6 @@ export default function Sidebar({ className }: { className?: string }) {
                             {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
                             {item.name === 'Custom Stamp Images' && `(${session?.user?.totalCustomStampImage || 0})`}
                             {item.name === 'Stamps' && `(${session?.user?.totalStamp || 0})`}
-                            {item.name === 'Sub-Admins' && `(${session?.user?.totalBranch || 0})`}
                           </span>
                         </div>
                         {checkedLocked(role, item?.href, item.name, session?.user) && (
