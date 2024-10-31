@@ -15,8 +15,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle, BsPatchCheck } from 'react-icons/bs';
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
-import { HiMiniXCircle } from 'react-icons/hi2';
-import { IoStorefrontOutline } from 'react-icons/io5';
+import { IoCloseOutline, IoStorefrontOutline } from 'react-icons/io5';
 import { LiaCoinsSolid } from 'react-icons/lia';
 import { RiTeamLine } from 'react-icons/ri';
 import { RxLapTimer } from 'react-icons/rx';
@@ -243,7 +242,7 @@ export default function UpdateSubscription({ id }: { id: any }) {
                                 className="absolute right-[6px] top-[6px] flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-red-500 text-white"
                                 onClick={() => arrayHelpers.remove(index)}
                               >
-                                <HiMiniXCircle className="text-2xl" />
+                                <IoCloseOutline className="text-2xl" />
                               </div>
                             )}
                             <div className="flex-grow">
@@ -374,7 +373,7 @@ export default function UpdateSubscription({ id }: { id: any }) {
                                 className="absolute right-0 top-0 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-red-500 text-white"
                                 onClick={() => arrayHelpers.remove(index)}
                               >
-                                <HiMiniXCircle className="text-2xl" />
+                                <IoCloseOutline className="text-2xl" />
                               </div>
                             )}
                             <div className="flex-grow">

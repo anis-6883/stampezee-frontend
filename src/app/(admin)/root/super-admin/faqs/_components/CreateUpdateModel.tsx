@@ -9,7 +9,7 @@ import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -93,7 +93,7 @@ export default function CreateUpdateModel({
               setFormData({});
             }}
           >
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <div>

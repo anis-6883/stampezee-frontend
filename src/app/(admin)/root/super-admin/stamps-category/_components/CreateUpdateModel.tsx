@@ -14,7 +14,7 @@ import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
+import { IoCloseOutline } from 'react-icons/io5';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -110,7 +110,7 @@ export default function CreateUpdateModel({
               setFormData({});
             }}
           >
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <div>
@@ -134,7 +134,7 @@ export default function CreateUpdateModel({
                   <InputTextarea required={false} name="description" label="Description" placeholder="Write here..." />
                 </div>
 
-                <p className="text-end text-xs font-semibold">
+                <p className="mt-5 text-end text-xs font-semibold">
                   Fields marked with <span className="text-red-600">*</span> are mandatory!
                 </p>
                 <div className="mt-6 flex justify-end">

@@ -10,8 +10,8 @@ import { useRouter } from 'next/navigation';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { HiMiniXCircle } from 'react-icons/hi2';
 import { ImSpinner9 } from 'react-icons/im';
+import { IoCloseOutline } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
 import { ActionIcon, Modal, PinCode, Title } from 'rizzui';
 
@@ -104,7 +104,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
         <div className="mb-7 flex items-center justify-between">
           <Title as="h3">OTP Verification!</Title>
           <ActionIcon size="sm" variant="text" onClick={() => setModalState(false)}>
-            <HiMiniXCircle className="text-2xl text-danger" />
+            <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <p className="my-5 text-sm font-medium">
