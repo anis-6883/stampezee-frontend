@@ -21,14 +21,11 @@ export default function Explore() {
       <div className="absolute inset-0  mx-auto  max-w-screen-xl items-center">
         <div className="flex h-full items-center justify-center sm:ml-3 sm:block">
           <div className="bottom-[28%]  sm:absolute">
-            <div
-              data-aos="flip-left"
-              className="text-center text-[2.5rem] font-bold leading-10 text-[#DF2828] sm:mb-3 sm:text-left md:text-[4rem]"
-            >
+            <div data-aos="flip-left" className="text-center text-2xl font-bold leading-10 text-[#DF2828] sm:mb-3 sm:text-left sm:text-6xl">
               <span style={{ opacity: 1, transform: 'none' }}>{t('explore')}</span>
             </div>
             <br />
-            <div className="flex gap-3 text-[1rem] font-bold	leading-10	text-white md:text-[3rem]">
+            <div className="flex gap-3 text-2xl font-bold	leading-10	text-white sm:text-6xl">
               <div className="">
                 <span style={{ opacity: 1, transform: 'none' }}>{t('title')}</span>
               </div>

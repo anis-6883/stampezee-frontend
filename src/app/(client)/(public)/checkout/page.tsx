@@ -1,9 +1,12 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/auth-options';
+import { ROLE } from '@/config/constants';
+import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { getUserCurrency } from '@/services/currency';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import { getServerSession } from 'next-auth';
 import { getLocale, getTranslations } from 'next-intl/server';
+import { redirect } from 'next/navigation';
 import AddOnsList from './_components/AddOnsList';
 import OrderBalance from './_components/OrderBalance';
 import OrderSummary from './_components/OrderSummary';
@@ -14,10 +17,13 @@ export const metadata = {
 };
 
 export default async function Page() {
+  const session: any = await getServerSession(authOptions);
+  if (session?.user?.role === ROLE.SUPER_ADMIN) {
+    redirect(routes.privateRoutes.superAdmin.dashboard);
+  }
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
   const selectedCurrency = await getUserCurrency();
   const locale = await getLocale();
-  const session: any = await getServerSession(authOptions);
   const t = await getTranslations('CheckoutPage');
 
   return (

@@ -204,7 +204,7 @@
     "termsAndConditions": "使用条款",
     "and": "和",
     "privacyPolicy": "隐私政策",
-    "submit": "提交",
+    "next": "下一個",
     "otpSentMessage": "OTP 已发送到您的邮箱！"
   },
   "ForgotPasswordPage": {

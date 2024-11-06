@@ -1,25 +1,18 @@
-export default function Testimonial({
-  image,
-  name,
-  position,
-  description,
-}: {
+type TestimonialProps = {
   image: string;
   name: string;
   position: string;
   description: string;
-}) {
+};
+
+export default function Testimonial({ image, name, position, description }: TestimonialProps) {
   return (
-    <section className="my-4 rounded-sm dark:bg-[#FCE8E8] dark:text-gray-800">
-      <div className="container mx-auto flex flex-col items-center justify-center lg:flex-row lg:flex-wrap lg:justify-evenly">
-        <div className="my-2 flex max-w-sm flex-col rounded-3xl shadow-lg">
-          <div className="flex  flex-col items-center justify-center rounded-3xl bg-[#FCE8E8] p-8 dark:bg-violet-600 dark:text-gray-50">
-            <img src={image} alt="" className="-mt-16 mb-2 h-16 w-16 rounded-full bg-cover bg-center dark:bg-[#FCE8E8] " />
-            <p className="text-2xl font-bold leading-tight sm:text-3xl">{name}</p>
-            <p className="text-[1rem] text-sm font-[400] leading-tight">{position}</p>
-            <p className="mt-3 text-center text-xl font-[400]">{description}</p>
-          </div>
-        </div>
+    <section className="my-4 flex justify-center">
+      <div className="flex min-h-[497px] w-[380px] flex-col items-center justify-start rounded-3xl bg-[#FCE8E8] p-8 text-center shadow-lg dark:bg-violet-600 dark:text-gray-50">
+        <img src={image} alt={`${name}'s profile`} className="mx-auto -mt-20 mb-6 h-24 w-24 rounded-full  object-cover shadow-lg" />
+        <p className="mb-1 text-2xl font-bold sm:text-3xl">{name}</p>
+        <p className="mb-4 text-sm font-bold text-gray-600 dark:text-gray-300 sm:text-base">{position}</p>
+        <p className="mt-4 text-center text-xl font-[400] text-gray-700 dark:text-gray-100 sm:text-2xl">{description}</p>
       </div>
     </section>
   );

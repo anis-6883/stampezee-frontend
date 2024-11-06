@@ -60,7 +60,7 @@ export default function Accordion({ locale }: { locale: string }) {
               aria-expanded={status === '1'}
               aria-controls="accordion-collapse-body-1"
             >
-              <span>{item?.title}</span>
+              <span className="text-base sm:text-xl">{item?.title}</span>
               <svg
                 data-accordion-icon=""
                 className={`h-3 w-3 shrink-0 ${status === item?._id ? 'rotate-180 transition duration-300 ease-in-out' : 'transition duration-300 ease-in-out'}`}
@@ -81,7 +81,7 @@ export default function Accordion({ locale }: { locale: string }) {
             aria-labelledby="accordion-collapse-heading-1"
           >
             <div className=" border-none p-5 dark:bg-gray-900">
-              <p className="mb-2 text-pretty pb-4 text-gray-500 dark:text-gray-400">{item?.description}</p>
+              <p className="mb-2 text-pretty pb-4 text-base text-gray-500 dark:text-gray-400 sm:text-lg">{item?.description}</p>
             </div>
           </div>
         </div>

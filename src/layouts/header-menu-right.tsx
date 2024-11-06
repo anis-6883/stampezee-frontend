@@ -19,12 +19,14 @@ export default function HeaderMenuRight() {
     <div
       className={`ms-auto grid shrink-0 ${role === ROLE.SUPER_ADMIN ? 'grid-cols-2' : 'grid-cols-3'} items-center gap-x-0 text-gray-700 `}
     >
-      <div className="text-base font-semibold text-danger">
-        <Link className="flex items-center gap-x-2 " href={routes.publicRoutes.home}>
-          <IoHomeOutline className="text-lg text-danger" />
-          {role === ROLE.SUPER_ADMIN ? 'Go To Home' : t('goToHome')}
-        </Link>
-      </div>
+      {role === ROLE.RETAILER && (
+        <div className="text-base font-semibold text-danger">
+          <Link className="flex items-center gap-x-2 " href={routes.publicRoutes.home}>
+            <IoHomeOutline className="text-lg text-danger" />
+            {t('goToHome')}
+          </Link>
+        </div>
+      )}
       <ProfileMenu />
       {role === ROLE.RETAILER && (
         <div className="">

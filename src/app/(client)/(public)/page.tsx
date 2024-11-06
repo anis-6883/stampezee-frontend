@@ -1,13 +1,22 @@
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth-options';
+import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import 'aos/dist/aos.css';
+import { getServerSession } from 'next-auth';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { HeroCard } from './components/HeroCard';
 import Image from './components/Image';
 import Testimonial from './components/Testimonial';
 import WorksCard from './components/WorksCard';
 
-export default function Page() {
+export default async function Page() {
+  const session = await getServerSession(authOptions);
+
+  if (session?.user?.role === ROLE.SUPER_ADMIN) {
+    redirect(routes.privateRoutes.superAdmin.dashboard);
+  }
   const t = useTranslations('HomePage');
   const locale = useLocale();
   const isRtl = locale === 'ar';
@@ -81,13 +90,13 @@ export default function Page() {
       {/* TESTIMONIALS start */}
 
       <div>
-        <div className="mt-5 text-center">
+        <div className=" mt-5 text-center">
           <p className="text-primary-black mb-7 text-lg font-[600] leading-8 sm:text-3xl">{t('testimonials')}</p>
           <div className="text-primary-black mb-7 text-center text-3xl font-bold sm:text-7xl">{t('testimonialMainTitle')}</div>
           <div className="text-primary-black mb-7 text-center text-3xl font-bold sm:text-7xl">{t('testimonialMainSubtitle')}</div>
         </div>
 
-        <div className="container mx-auto mb-8 grid max-w-screen-xl grid-cols-1 gap-3  px-10 py-8 sm:gap-10 md:grid-cols-2 md:p-0 lg:grid-cols-3">
+        <div className="container mx-auto mb-8 mt-[30px] grid max-w-[1000px] grid-cols-1 gap-10 px-10 py-8  sm:mb-20 sm:mt-[76px] sm:gap-10 md:grid-cols-2 md:p-0 lg:grid-cols-3">
           <Testimonial
             image={'/default/olivia.png'}
             name={t('testimonialTitleOne')}

@@ -207,7 +207,7 @@ export default function RegisterForm({ terms, policy, locale }: { terms: any; po
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                   <InputField name="province" label={t('province')} placeholder="Ontario" />
                   <InputField name="city" label={t('city')} placeholder="Toronto" />
-                  <InputField name="postalCode" label={t('postalCode')} placeholder="M3C" />
+                  <InputField name="postalCode" label={t('postalCode')} placeholder="M3M5K5" />
                 </div>
 
                 <div className="grid grid-cols-1">
@@ -257,7 +257,7 @@ export default function RegisterForm({ terms, policy, locale }: { terms: any; po
                   color="danger"
                   className="w-full"
                   type="submit"
-                  text={t('submit')}
+                  text={t('next')}
                   postIcon={<BsCheck2Circle className="text-base" />}
                   isSubmitting={isSubmitting}
                 />

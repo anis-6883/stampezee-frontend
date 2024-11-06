@@ -204,7 +204,7 @@
     "termsAndConditions": "Условиями использования",
     "and": "и",
     "privacyPolicy": "Политикой конфиденциальности",
-    "submit": "Отправить",
+    "next": "следующий",
     "otpSentMessage": "OTP отправлен на вашу электронную почту!"
   },
   "ForgotPasswordPage": {

@@ -204,7 +204,7 @@
     "termsAndConditions": "Términos de uso",
     "and": "y",
     "privacyPolicy": "Política de privacidad",
-    "submit": "Enviar",
+    "next": "próxima",
     "otpSentMessage": "OTP enviado a tu correo electrónico!"
   },
   "ForgotPasswordPage": {
