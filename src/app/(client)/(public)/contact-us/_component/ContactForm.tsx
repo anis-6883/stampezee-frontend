@@ -104,7 +104,7 @@ const ContactForm = ({ token, locale }: { token: string; locale: string }) => {
               <InputTextarea name="message" label={t('message')} placeholder="Write here..." />
             </div>
 
-            <p className="flex flex-col text-end text-xs font-semibold">
+            <p className="flex flex-col text-end text-base font-semibold">
               <span>
                 Fields marked with <span className="text-red-600">*</span> are mandatory!
               </span>

@@ -203,7 +203,7 @@
     "termsAndConditions": "이용 약관",
     "and": "및",
     "privacyPolicy": "개인정보 처리방침",
-    "submit": "제출",
+    "next": "다음",
     "otpSentMessage": "OTP가 이메일로 전송되었습니다!"
   },
   "ForgotPasswordPage": {

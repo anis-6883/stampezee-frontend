@@ -204,7 +204,7 @@
     "termsAndConditions": "شروط الاستخدام",
     "and": "و",
     "privacyPolicy": "سياسة الخصوصية",
-    "submit": "إرسال",
+    "next": "التالي",
     "otpSentMessage": "تم إرسال OTP إلى بريدك الإلكتروني!"
   },
   "ForgotPasswordPage": {

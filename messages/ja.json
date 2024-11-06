@@ -203,7 +203,7 @@
     "termsAndConditions": "利用規約",
     "and": "および",
     "privacyPolicy": "プライバシーポリシー",
-    "submit": "送信",
+    "next": "次",
     "otpSentMessage": "OTP があなたのメールに送信されました！"
   },
   "ForgotPasswordPage": {

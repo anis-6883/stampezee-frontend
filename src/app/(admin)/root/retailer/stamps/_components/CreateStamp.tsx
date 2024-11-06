@@ -260,7 +260,7 @@ export default function Create({ locale }: { locale: string }) {
                 {values.rewardType === 'discount' && (
                   <InputField
                     name="discountReward"
-                    label={t('discountReward')}
+                    label={t('discount')}
                     placeholder="Ex. Get 1 Coke"
                     type="number"
                     prefix={<RiDiscountPercentLine className="text-xl" />}

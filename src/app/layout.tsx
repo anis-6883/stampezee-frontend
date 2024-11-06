@@ -3,6 +3,7 @@ import '@/app/globals.css';
 import GlobalDrawer from '@/components/drawer-views/container';
 import GlobalModal from '@/components/modal-views/container';
 import NextProgress from '@/components/next-progress';
+import { ROLE } from '@/config/constants';
 import { siteConfig } from '@/config/site.config';
 import { getUserCurrency } from '@/services/currency';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
@@ -30,7 +31,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
 
   return (
-    <html lang={locale} dir={direction} suppressHydrationWarning={true} className={outfit.className}>
+    <html
+      lang={locale}
+      dir={session?.user?.role === ROLE.SUPER_ADMIN ? 'ltr' : direction}
+      suppressHydrationWarning={true}
+      className={outfit.className}
+    >
       <head>
         <meta name="google" content="notranslate" />
       </head>

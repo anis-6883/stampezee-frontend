@@ -106,6 +106,8 @@ export default function HeaderContent() {
     fullName = user?.firstName + ' ' + lastName + '.';
   }
 
+  console.log({ currencyExchanges });
+
   return (
     <div>
       <nav className={`fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>

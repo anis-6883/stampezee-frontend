@@ -92,7 +92,7 @@ export default function PricingCard({ item }: { item: any }) {
           {item.descriptions.map((info: any) => (
             <li className="flex items-center space-x-3" key={info}>
               <IoCheckmarkDoneCircle className="text-2xl text-danger" />
-              <span>{info}</span>
+              <span className="text-base">{info}</span>
             </li>
           ))}
         </ul>

@@ -204,7 +204,7 @@
     "termsAndConditions": "Terms of use",
     "and": "and",
     "privacyPolicy": "Privacy Policy",
-    "submit": "Submit",
+    "next": "Next",
     "otpSentMessage": "OTP sent on your email!"
   },
   "ForgotPasswordPage": {
@@ -217,7 +217,7 @@
     "goToLogin": "Go To Login",
     "verifyOtp": "Verify OTP",
     "otpMessage": "We sent an OTP to your Email. You have 2 minutes to complete this verification. Thank you!",
-    "otpMessage2": "Didn't get any otp yet?",
+    "otpMessage2": "Didn't get any OTP yet?",
     "resend": "Resend OTP",
     "newPassword": "New Password",
     "confirmPassword": "Confirm Password"

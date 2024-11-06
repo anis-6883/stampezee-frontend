@@ -118,7 +118,7 @@ export default function BranchStatsTable() {
                   {item.totalOrder}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.totalRevenue * selectedCurrency?.exchangeRate}
+                  {item.totalRevenue * selectedCurrency?.exchangeRate || 0}
                 </td>
               </tr>
             ))
