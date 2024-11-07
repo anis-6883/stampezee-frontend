@@ -24,19 +24,24 @@ export default async function Page() {
   return (
     <div className="relative overflow-hidden">
       {/* rgba(22, 28, 36, 0.8),  */}
-      <div className={`${isRtl ? 'hero-curve-rtr' : 'hero-curve'} relative mx-auto mt-20 w-full sm:mt-10`}>
-        <div className="h-[107vh] w-full  bg-[#FF3131] sm:h-[85vh]"></div>
+      <div className={`${isRtl ? 'hero-curve-rtr' : 'hero-curve'} relative mx-auto mt-[4.4rem] w-full sm:mt-10`}>
+        <div className="h-screen w-full  bg-[#FF3131] sm:h-[82vh]"></div>
         <div className="absolute inset-0"></div>
-        <div className={`container absolute top-[60px] ${isRtl ? '' : 'mx-auto'} flex max-w-screen-xl items-center sm:inset-0`}>
+        <div
+          className={`container absolute top-[60px] ${isRtl ? '' : 'mx-auto'} flex max-w-screen-xl items-center px-0 sm:inset-0 sm:px-10`}
+        >
           <div className="flex w-full flex-col-reverse items-center justify-between sm:flex-row">
+            <div className="mt-2 block h-[40%] w-[40%] sm:hidden md:h-[60%] md:w-[60%] xl:h-[50%] xxl:w-[50%]">
+              <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
+            </div>
             <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
-              <div className="flex flex-col gap-y-3 sm:gap-y-6">
+              <div className="flex flex-col gap-y-1 sm:gap-y-6">
                 <h1 className="text-3xl font-semibold text-white sm:text-7xl">{t('revolutionize')}</h1>
                 <h1 className="text-3xl font-semibold text-white sm:text-7xl"> {t('yourCustomer')}</h1>
                 <h1 className="text-3xl font-semibold text-white sm:text-7xl">{t('experience')}</h1>
               </div>
-              <p className="mt-4 text-balance py-7 text-base font-medium text-white sm:text-xl">{t('bannerDetails')}</p>
-              <div className="mt-8">
+              <p className="mt-1 text-balance py-7 text-base font-medium text-white sm:mt-4 sm:text-xl">{t('bannerDetails')}</p>
+              <div className="mt-2 sm:mt-8">
                 <Link
                   href={routes.publicRoutes.pricing}
                   className="dark:bg-primary-red rounded-full bg-white px-8 py-4 text-lg font-semibold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:text-3xl"
@@ -59,7 +64,7 @@ export default async function Page() {
       {/* How It Works start */}
       <section id="how_we_work" className={`${isRtl ? 'works-curve-rtr' : 'works-curve'} bg-[#FCE8E8] py-10`}>
         <div className="container mx-auto block  max-w-screen-xl gap-3 sm:gap-10">
-          <div className="text-primary-black my-7 text-center text-3xl font-bold sm:text-7xl">{t('workMainTitle')}</div>
+          <div className="my-7 text-center text-3xl font-bold text-black sm:text-7xl">{t('workMainTitle')}</div>
           <div className=" items-center justify-between md:flex">
             <WorksCard
               image="/default/flex.svg"
@@ -91,12 +96,12 @@ export default async function Page() {
 
       <div>
         <div className=" mt-5 text-center">
-          <p className="text-primary-black mb-7 text-lg font-[600] leading-8 sm:text-3xl">{t('testimonials')}</p>
-          <div className="text-primary-black mb-7 text-center text-3xl font-bold sm:text-7xl">{t('testimonialMainTitle')}</div>
-          <div className="text-primary-black mb-7 text-center text-3xl font-bold sm:text-7xl">{t('testimonialMainSubtitle')}</div>
+          <p className="mb-7 text-lg font-[600] leading-8 text-black sm:text-3xl">{t('testimonials')}</p>
+          <div className="mb-7 text-center text-3xl font-bold text-black sm:text-7xl">{t('testimonialMainTitle')}</div>
+          <div className="mb-7 text-center text-3xl font-bold text-black sm:text-7xl">{t('testimonialMainSubtitle')}</div>
         </div>
 
-        <div className="container mx-auto mb-8 mt-[30px] grid max-w-[1000px] grid-cols-1 gap-10 px-10 py-8  sm:mb-20 sm:mt-[76px] sm:gap-10 md:grid-cols-2 md:p-0 lg:grid-cols-3">
+        <div className="container mx-auto mb-8 mt-[30px] grid max-w-screen-xl grid-cols-1 gap-10 px-10 py-8  sm:mb-20 sm:mt-[76px] sm:gap-10 md:grid-cols-2 md:p-0 lg:grid-cols-3">
           <Testimonial
             image={'/default/olivia.png'}
             name={t('testimonialTitleOne')}
@@ -143,12 +148,13 @@ export default async function Page() {
       {/* sm:right-60 sm:top-36 */}
       {/* right-[-15rem] top-[33rem] */}
       <div
-        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40 md:left-36 md:top-20 lg:left-36 lg:top-40' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36 md:right-44 md:top-20 lg:right-44 lg:top-40'}  mt-10 justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
+        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40 md:left-36 md:top-20 lg:left-36 lg:top-40' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36 md:right-44 md:top-20 lg:right-0 lg:top-32'}  mt-10 items-center justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
       >
-        <div className=" h-[40%] w-[40%] md:h-[60%] md:w-[60%] xl:h-[50%] xxl:w-[50%]">
+        <div className="hidden h-[40%] w-[40%] sm:block md:h-[60%] md:w-[60%] xl:h-[50%] xxl:w-[50%]">
           <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
         </div>
       </div>
+
       {/* Hero Image End */}
     </div>
   );

@@ -124,7 +124,11 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       return;
     }
     if (activeSubscription?.slug && addOn.slug) {
-      checkOut({ slug: addOn.slug, currency: selectedCurrency });
+      if (code) {
+        checkOut({ slug: addOn.slug, code, currency: selectedCurrency });
+      } else {
+        checkOut({ slug: addOn.slug, currency: selectedCurrency });
+      }
       return;
     }
 

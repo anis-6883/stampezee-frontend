@@ -106,8 +106,8 @@ export const isCheckCouponDisabled = ({
     activeSubscription?.slug == subscription?.slug ||
     subscription?.slug === 'trial' ||
     coupon ||
-    planChangeType === 'downgrade' ||
-    addOn?.slug
+    planChangeType === 'downgrade'
+    // addOn?.slug
   ) {
     return true;
   }

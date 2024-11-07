@@ -29,10 +29,10 @@ export default function WorksCard({
         <div data-aos="fade-up-right">
           <Image src={image} className="mx-auto h-[150px] w-[150px]" alt="image" />
         </div>
-        <div className="text-primary-black mb-2 text-xl font-bold sm:text-3xl">{title}</div>
-        <div className="text-primary-black mb-2 text-xl font-bold sm:text-3xl">{subTitle}</div>
-        <p className="text-primary-black text-balance text-base font-bold sm:text-xl">{description}</p>
-        <p className="text-primary-black text-balance text-base font-bold sm:text-xl">{subDescription}</p>
+        <div className="mb-2 text-xl font-bold text-black sm:text-3xl">{title}</div>
+        <div className=" mb-6 text-xl font-bold text-black sm:text-3xl">{subTitle}</div>
+        <p className="text-balance text-base text-black sm:text-xl">{description}</p>
+        <p className="text-balance text-base text-black sm:text-xl">{subDescription}</p>
       </div>
     </div>
   );

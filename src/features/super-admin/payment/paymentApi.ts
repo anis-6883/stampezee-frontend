@@ -16,6 +16,14 @@ export const paymentApi = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'payment', id: arg }],
       keepUnusedDataFor: 10,
     }),
+    createBillingPdfBySuperAdmin: builder.mutation({
+      query: (id) => ({
+        url: `/api/secret-root/admin/super-admin/payment/download-pdf/${id}`,
+        method: 'POST',
+        // body: data,
+        responseHandler: (response) => response.blob(),
+      }),
+    }),
     getRetailerBillingPortal: builder.mutation({
       query: (data) => ({
         url: `/api/secret-root/admin/super-admin/payment/retailer-billing-portal`,
@@ -26,4 +34,9 @@ export const paymentApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSubscriptionPaymentsQuery, useSingleSubscriptionPaymentQuery, useGetRetailerBillingPortalMutation } = paymentApi;
+export const {
+  useGetSubscriptionPaymentsQuery,
+  useSingleSubscriptionPaymentQuery,
+  useGetRetailerBillingPortalMutation,
+  useCreateBillingPdfBySuperAdminMutation,
+} = paymentApi;

@@ -64,7 +64,7 @@ const CouponForm = ({ locale }: { locale: string }) => {
 
   const handleCoupon = async (values: any) => {
     setIsCouponSubmitting(true);
-    const { data }: any = await createCoupon({ code: values?.code, slug: subscription?.slug });
+    const { data }: any = await createCoupon({ code: values?.code, slug: subscription?.slug || addOn?.slug });
 
     if (data?.status) {
       dispatch(setCode(values.code));
