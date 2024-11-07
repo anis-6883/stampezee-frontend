@@ -27,21 +27,21 @@ export default async function Page() {
   const t = await getTranslations('CheckoutPage');
 
   return (
-    <div className="mx-auto mt-20 w-full max-w-[1300px]">
+    <div className="mx-auto mt-28 w-full max-w-[1300px]">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="mb-6 text-3xl font-bold">{t('checkout')}</h1>
+        <h1 className="mb-6 text-3xl font-bold sm:text-5xl">{t('checkout')}</h1>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <h2 className="mb-4 text-xl font-semibold">{t('plans')}</h2>
+            <h2 className="mb-4 text-2xl font-semibold sm:text-4xl">{t('plans')}</h2>
             {session?.user?.plan && session?.user?.plan !== 'trial' ? (
-              <p className="mb-6 text-gray-600">{t('switchPlan')}</p>
+              <p className="mb-6 text-lg text-gray-600">{t('switchPlan')}</p>
             ) : (
-              <p className="mb-6 text-gray-600">{t('selectPlan')}</p>
+              <p className="mb-6 text-lg text-gray-600">{t('selectPlan')}</p>
             )}
             <SubscriptionList locale={locale} />
             <div className="mt-6">
-              <h2 className="mb-4 text-xl font-semibold">{t('addOns')}</h2>
-              <p className="mb-6 text-gray-600">{t('selectAddOn')}</p>
+              <h2 className="mb-4 text-2xl font-semibold sm:text-4xl">{t('addOns')}</h2>
+              <p className="mb-6 text-lg text-gray-600">{t('selectAddOn')}</p>
               {/* <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
                 <p className="font-medium text-blue-700">Select Multiple Add on</p>
                 <p className="text-blue-700">You can able to selected multiple add on</p>
@@ -51,7 +51,7 @@ export default async function Page() {
           </div>
           <div>
             <OrderBalance />
-            <h2 className="mb-4 text-xl font-semibold">{t('orderSummary')}</h2>
+            <h2 className="mb-4 text-xl font-semibold sm:text-2xl">{t('orderSummary')}</h2>
             <OrderSummary stripeInfo={data?.data?.stripe} selectedCurrency={selectedCurrency} locale={locale} />
           </div>
         </div>
