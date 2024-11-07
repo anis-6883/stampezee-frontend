@@ -115,7 +115,7 @@ export default function StampTable({ offset }: { offset: number }) {
                 />
               </div>
             ) : (
-              <img src={'/images/profile.png'} alt="image" className="h-10 w-10 rounded" />
+              <img src={'/images/logo.png'} alt="image" className="h-10 w-10 rounded" />
             )}
           </div>
           <div>

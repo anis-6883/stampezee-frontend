@@ -51,9 +51,9 @@ export default function Footer({ general }: any) {
         <footer className="container mx-auto">
           {/* <hr className="mb-8 mt-10" /> */}
           <div className="flex flex-col items-center justify-center gap-x-10 sm:flex-row">
-            <div className="flex flex-col items-center md:items-start ">
-              <Link className="w-[60px]" href={routes.publicRoutes.home}>
-                <img alt="logo" width={60} height={60} src="/images/logo.png" style={{ color: 'transparent' }} />
+            <div className="mt-3 flex flex-col items-center sm:mt-12 md:items-start ">
+              <Link className="w-[110px]" href={routes.publicRoutes.home}>
+                <img alt="logo" width={110} height={110} src="/images/logo.png" style={{ color: 'transparent' }} />
               </Link>
             </div>
             <div className="mt-1 block font-medium sm:mt-4">
@@ -61,68 +61,68 @@ export default function Footer({ general }: any) {
                 <div className={`grid grid-cols-1 gap-4 text-center md:grid-cols-2 md:text-${isRtl ? 'right' : 'left'} lg:grid-cols-4`}>
                   <div className="mt-4 block font-medium">
                     <div
-                      className={`block ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'} text-lg font-bold sm:text-xl`}
+                      className={`mb-4 block text-black ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'} text-xl font-bold sm:text-2xl`}
                     >
                       StampEzee
                     </div>
-                    <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
-                      <Link className="mt-4 w-fit font-medium uppercase" href="/#how_we_work">
+                    <div className="flex flex-col items-center justify-center text-sm sm:text-base md:items-start md:justify-start">
+                      <Link className="mt-4 w-fit font-medium uppercase text-black" href="/#how_we_work">
                         {t('home')}
                       </Link>
-                      <Link className="mt-4 w-fit font-medium uppercase" href={routes.publicRoutes.pricing}>
+                      <Link className="mt-4 w-fit font-medium uppercase text-black" href={routes.publicRoutes.pricing}>
                         {t('pricing')}
                       </Link>
-                      <Link className="mt-4 w-fit font-medium uppercase" href="/faqs/">
+                      <Link className="mt-4 w-fit font-medium uppercase text-black" href="/faqs/">
                         {t('faq')}
                       </Link>
-                      <Link className="mt-4 w-fit font-medium uppercase" href="/contact-us/">
+                      <Link className="mt-4 w-fit font-medium uppercase text-black" href="/contact-us/">
                         {t('contact_us')}
                       </Link>
                     </div>
                   </div>
                   <div className="mt-4  font-medium">
                     <div
-                      className={`block ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'} text-lg font-bold  sm:text-xl`}
+                      className={`mb-4 block text-black ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'} text-xl font-bold  sm:text-2xl`}
                     >
                       {' '}
                       {t('socials')}
                     </div>
-                    <div className="flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
-                      <Link className="mt-4 w-fit font-medium" href={general?.facebook}>
+                    <div className="flex flex-col items-center justify-center text-sm sm:text-base md:items-start md:justify-start">
+                      <Link className="mt-4 w-fit font-medium text-black" href={general?.facebook}>
                         {t('facebook')}
                       </Link>
-                      <Link className="mt-4 w-fit font-medium" href={general?.instagram}>
+                      <Link className="mt-4 w-fit font-medium text-black" href={general?.instagram}>
                         {t('instagram')}
                       </Link>
-                      <Link className="mt-4 w-fit font-medium" href={general?.tiktok}>
+                      <Link className="mt-4 w-fit font-medium text-black" href={general?.tiktok}>
                         {t('tiktok')}
                       </Link>
-                      <Link className="mt-4 w-fit font-medium" href={general?.linkedin}>
+                      <Link className="mt-4 w-fit font-medium text-black" href={general?.linkedin}>
                         {t('linkedin')}
                       </Link>
                     </div>
                   </div>
                   <div className="mt-4 font-medium">
                     <div
-                      className={`block ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'} text-lg font-bold  sm:text-xl`}
+                      className={`mb-4 block text-black ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'} text-xl font-bold  sm:text-2xl`}
                     >
                       {t('contact')}
                     </div>
-                    <div className="MuiStack-root css-yd8sa2 flex flex-col items-center justify-center text-xs sm:text-sm md:items-start md:justify-start">
-                      <Link className="mt-4 w-fit font-medium uppercase" href="/privacy-policy" target="_blank">
+                    <div className="MuiStack-root css-yd8sa2 flex flex-col items-center justify-center text-sm sm:text-base md:items-start md:justify-start">
+                      <Link className="mt-4 w-fit font-medium uppercase text-black" href="/privacy-policy" target="_blank">
                         {t('privacy')}
                       </Link>
-                      <Link className="mt-4 w-fit font-medium uppercase" href={routes.publicRoutes.contactUs}>
+                      <Link className="mt-4 w-fit font-medium uppercase text-black" href={routes.publicRoutes.contactUs}>
                         {t('contact_us')}
                       </Link>
-                      <Link className="mt-4 w-fit font-medium uppercase" href="/terms" target="_blank">
+                      <Link className="mt-4 w-fit font-medium uppercase text-black" href="/terms" target="_blank">
                         {t('terms')}
                       </Link>
                     </div>
                   </div>
                   <div className="mt-4 flex flex-col font-medium">
                     <div
-                      className={`block text-lg font-bold ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'}  ${locale === 'fr' ? 'sm:text-base' : locale === 'ru' ? 'sm:text-sm' : 'sm:text-xl'}`}
+                      className={`mb-4 block text-xl font-bold text-black ${isRtl ? 'text-center sm:text-right' : 'text-center sm:text-left'}  ${locale === 'fr' ? 'sm:text-base' : locale === 'ru' ? 'sm:text-sm' : 'sm:text-xl'}`}
                     >
                       {t('newsletter')}
                     </div>

@@ -4,17 +4,20 @@ import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useGetRetailerBillingPortalMutation, useSingleSubscriptionPaymentQuery } from '@/features/super-admin/payment/paymentApi';
+import {
+  useCreateBillingPdfBySuperAdminMutation,
+  useGetRetailerBillingPortalMutation,
+  useSingleSubscriptionPaymentQuery,
+} from '@/features/super-admin/payment/paymentApi';
 import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import moment from 'moment';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { HiShoppingCart } from 'react-icons/hi2';
-import { ImCancelCircle } from 'react-icons/im';
+import { ImCancelCircle, ImSpinner9 } from 'react-icons/im';
 import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
@@ -24,6 +27,7 @@ import { Badge } from 'rizzui';
 
 export default function PaymentDetails({ id, offset }: { id: string; offset: number }) {
   const { push } = useRouter();
+  const [createBillingPdfBySuperAdmin, { data: pdfBuffer, isLoading: isPdfBufferLoading }] = useCreateBillingPdfBySuperAdminMutation();
   const { data, isLoading, isError } = useSingleSubscriptionPaymentQuery(id);
   const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetRetailerBillingPortalMutation();
   const { stripe, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, planSnapshot, retailer, payments } =
@@ -42,6 +46,28 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
       }
     }
   }, [portalData, portalError, portalLoading, push]);
+
+  useEffect(() => {
+    if (pdfBuffer) {
+      const downloadUrl = window.URL.createObjectURL(new Blob([pdfBuffer], { type: 'application/pdf' }));
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.setAttribute('download', 'invoice.pdf'); // Set the filename
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(downloadUrl); // Clean up the URL object
+    }
+  }, [pdfBuffer]);
+
+  const handlePdfDownload = async (id: any) => {
+    try {
+      await createBillingPdfBySuperAdmin(id);
+    } catch (err) {
+      toast.error('Error occur for invoice download!');
+      console.error('Error downloading invoice:', err);
+    }
+  };
 
   return (
     <div className="w-full">
@@ -225,14 +251,21 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">{convertDateByOffset(payment?.createdAt, offset)}</td>
                       <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                        <Link href={payment?.invoicePdf} target="_blank">
-                          <Button
-                            className="!m-0 !px-2 !py-1.5"
-                            color="danger"
-                            text="Download PDF"
-                            postIcon={<RiDownloadCloud2Fill className="text-lg" />}
-                          />
-                        </Link>
+                        {/* <Link href={payment?.invoicePdf} target="_blank"> */}
+                        <Button
+                          className="!m-0 !px-2 !py-1.5"
+                          color="danger"
+                          onClick={() => handlePdfDownload(payment?._id)}
+                          text="Download PDF"
+                          postIcon={
+                            isPdfBufferLoading ? (
+                              <ImSpinner9 className="animate-spin text-lg" />
+                            ) : (
+                              <RiDownloadCloud2Fill className="text-lg" />
+                            )
+                          }
+                        />
+                        {/* </Link> */}
                       </td>
                     </tr>
                   );

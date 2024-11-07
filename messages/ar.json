@@ -466,6 +466,7 @@
     "selectDefaultImage": "اختر الصورة الافتراضية",
     "selectCustomImage": "اختر الصورة المخصصة",
     "description": "الوصف",
+    "noDefaultImageBySuperAdmin": "No default image by super admin",
     "draft": "مسودة",
     "publish": "نشر",
     "createBranch": "إنشاء فرع",

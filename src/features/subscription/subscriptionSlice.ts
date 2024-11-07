@@ -96,10 +96,17 @@ const calculateTax = (state: SubscriptionState) => {
 };
 
 const calculateDiscount = (state: SubscriptionState) => {
-  if (state?.coupon && state?.subscription?.slug) {
+  if (state?.coupon && (state?.subscription?.slug || state?.addOn?.slug)) {
+    let price = 0;
+    if (state?.subscription?.slug) {
+      price = state?.subscription?.price;
+    }
+    if (state?.addOn?.slug) {
+      price = state?.addOn?.price;
+    }
     state.couponDiscount =
       state.coupon.discountType === 'percentage'
-        ? roundToTwoDecimals((Math.abs(state?.subscription?.price) * state.coupon.discount) / 100)
+        ? roundToTwoDecimals((Math.abs(price) * state.coupon.discount) / 100)
         : roundToTwoDecimals(state.coupon.discount * state.currency?.exchangeRate);
   }
 };
@@ -153,7 +160,7 @@ const calculateSubTotal = (state: SubscriptionState) => {
   if (state.subscriptionType === 'addOn') {
     state.subTotal = addOnsPrice;
     calculateTax(state);
-    state.total = state.subTotal + state.tax;
+    state.total = state.subTotal + state.tax - couponDiscount;
     state.downgradeRefund = 0;
   }
 
