@@ -22,16 +22,16 @@ const OrderBalance = () => {
     activeSubscription?.slug &&
     activeSubscription?.slug !== 'trial' && (
       <div>
-        <h2 className="mb-4 text-xl font-semibold">{t('balance')}</h2>
+        <h2 className="mb-4 text-xl font-semibold sm:text-2xl">{t('balance')}</h2>
         <div className="mb-5 rounded-lg border p-4">
           <div className="mb-2 flex justify-between">
-            <span>{t('currentAmount')}</span>
+            <span className="text-base">{t('currentAmount')}</span>
             <span className="text-red-500">
               {remainingAmount.toFixed(2)} {session?.user?.planPaymentCurrency}
             </span>
           </div>
           <div className="mb-2 flex justify-between">
-            <span>{t('usageAmount')}</span>
+            <span className="text-base">{t('usageAmount')}</span>
             <span className="text-red-500">
               {Math.abs(remainingAmount - usageAmount).toFixed(2)} {session?.user?.planPaymentCurrency}
             </span>

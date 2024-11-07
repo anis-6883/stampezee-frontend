@@ -3,7 +3,7 @@ import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import 'aos/dist/aos.css';
 import { getServerSession } from 'next-auth';
-import { useLocale, useTranslations } from 'next-intl';
+import { getLocale, getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { HeroCard } from './components/HeroCard';
@@ -17,8 +17,8 @@ export default async function Page() {
   if (session?.user?.role === ROLE.SUPER_ADMIN) {
     redirect(routes.privateRoutes.superAdmin.dashboard);
   }
-  const t = useTranslations('HomePage');
-  const locale = useLocale();
+  const t = await getTranslations('HomePage');
+  const locale = await getLocale();
   const isRtl = locale === 'ar';
 
   return (
