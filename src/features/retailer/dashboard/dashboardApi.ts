@@ -6,6 +6,10 @@ export const dashboardApi = apiSlice.injectEndpoints({
       query: () => `/api/web/retailer/dashboard/calc`,
       keepUnusedDataFor: 5,
     }),
+    avgCollectedStamp: builder.query({
+      query: () => `/api/web/retailer/dashboard/avg-collected-stamp`,
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 

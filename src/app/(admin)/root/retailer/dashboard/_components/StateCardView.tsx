@@ -24,8 +24,6 @@ export default function StateCardView({ className }: { className: string }) {
   const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
   const t = useTranslations('RetailerDashboard');
 
-  console.log('retailerProfile', retailerProfile?.data?.businessCurrency);
-
   const { totalOrder, totalActiveStamp, totalRevenue, totalCustomer } = data?.data || {};
 
   useEffect(() => {
