@@ -28,8 +28,9 @@ import StampPublishedModal from './StampPublishedModal';
 
 export default function Create({ locale }: { locale: string }) {
   const { data: session }: any = useSession();
-  const [createState, setCreateState] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  const [createState, setCreateState] = useState<boolean>(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [isClickCustomStampBtn, setIsClickCustomStampBtn] = useState<boolean>(false);
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
   const [submitAction, setSubmitAction] = useState<string | null>(null);
@@ -42,7 +43,7 @@ export default function Create({ locale }: { locale: string }) {
   const t2 = useTranslations('RetailerStampImageCreateUpdate');
   const tCommon = useTranslations('RetailerCommon');
 
-  const initialValues = {
+  let initialValues = {
     branchId: '',
     stampImageId: '',
     categoryId: '',
@@ -57,6 +58,42 @@ export default function Create({ locale }: { locale: string }) {
     validDateRange: '',
     hasValidity: true,
   };
+
+  const data = localStorage.getItem('values');
+  if (data) {
+    const valueFromLocalStorage: any = JSON.parse(data);
+    initialValues = {
+      branchId: valueFromLocalStorage?.branchId || '',
+      stampImageId: valueFromLocalStorage?.stampImageId || '',
+      categoryId: valueFromLocalStorage?.categoryId || '',
+      title: valueFromLocalStorage?.title || '',
+      description: valueFromLocalStorage?.description || '',
+      rules: valueFromLocalStorage?.rules || '',
+      noOfStampsToCollect: valueFromLocalStorage?.noOfStampsToCollect || 0,
+      minPurchaseAmount: valueFromLocalStorage?.minPurchaseAmount || 0,
+      rewardType: valueFromLocalStorage?.rewardType || 'promotion',
+      promotionReward: valueFromLocalStorage?.promotionReward || '',
+      discountReward: valueFromLocalStorage?.discountReward || 0,
+      validDateRange: valueFromLocalStorage?.validDateRange || '',
+      hasValidity: valueFromLocalStorage?.hasValidity || true,
+    };
+  }
+
+  // const initialValues = {
+  //   branchId: '',
+  //   stampImageId: '',
+  //   categoryId: '',
+  //   title: '',
+  //   description: '',
+  //   rules: '',
+  //   noOfStampsToCollect: 0,
+  //   minPurchaseAmount: 0,
+  //   rewardType: 'promotion',
+  //   promotionReward: '',
+  //   discountReward: 0,
+  //   validDateRange: '',
+  //   hasValidity: true,
+  // };
 
   useEffect(() => {
     if (responseData) {
@@ -90,6 +127,7 @@ export default function Create({ locale }: { locale: string }) {
       const result = await createStamp(changedData).unwrap();
       router.push(routes.privateRoutes.retailer.stamp.home);
       toast.success(t('stampCreatedSuccessfully'));
+      localStorage.removeItem('values');
     } catch (error: any) {
       console.error('Failed to create Stamp:', error);
       if (locale === 'en') {
@@ -340,7 +378,11 @@ export default function Create({ locale }: { locale: string }) {
                   <p className="mb-3 font-semibold">Attach your Custom Stamp Image!</p>
                   <p>
                     {t('purchaseCustomStampAddOn')}.{' '}
-                    <Link href={routes.privateRoutes.retailer.membershipPlan} className="font-semibold text-danger hover:cursor-pointer">
+                    <Link
+                      onClick={() => localStorage.setItem('values', JSON.stringify(values))}
+                      href={`${routes.privateRoutes.retailer.membershipPlan}`}
+                      className="font-semibold text-danger hover:cursor-pointer"
+                    >
                       {t('clickHere')}
                     </Link>
                   </p>
@@ -357,7 +399,14 @@ export default function Create({ locale }: { locale: string }) {
                     </Link>
                   </p>
                   <div className="mt-5">
-                    <Button className="w-[205px]" color="danger" onClick={() => setCreateState(true)} text={t2('addNewStampImage')} />
+                    <Button
+                      className="w-[205px]"
+                      color="danger"
+                      onClick={() => {
+                        setCreateState(true);
+                      }}
+                      text={t2('addNewStampImage')}
+                    />
                   </div>
                 </div>
               )}
@@ -369,7 +418,7 @@ export default function Create({ locale }: { locale: string }) {
                 </div>
               )}
 
-              <InputTextarea name="description" required={false} label={t('description')} placeholder="Write here..." />
+              <InputTextarea name="description" required={false} label={t('offerDetails')} placeholder="Write here..." />
 
               <p className="mt-4 flex flex-col text-end text-xs font-semibold">
                 <span>

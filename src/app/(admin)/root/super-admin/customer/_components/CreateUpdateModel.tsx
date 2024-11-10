@@ -54,13 +54,23 @@ export default function CreateUpdateModel({
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
-
+    let transformData = {};
     if (formData?._id) {
-      const changeData = removeEmptyValues(values, ['password']);
-      updateCustomerBySuperAdmin({ id: formData._id, formData: changeData });
+      if (!values?.address) {
+        transformData = removeEmptyValues(values, ['address', 'password']);
+      } else {
+        transformData = removeEmptyValues(values, ['password']);
+      }
+
+      updateCustomerBySuperAdmin({ id: formData._id, formData: transformData });
     } else {
-      console.log('values', values);
-      createCustomerBySuperAdmin(values);
+      if (!values?.address) {
+        transformData = removeEmptyValues(values, ['address']);
+      } else {
+        transformData = values;
+      }
+
+      createCustomerBySuperAdmin(transformData);
     }
   };
 
@@ -88,7 +98,7 @@ export default function CreateUpdateModel({
     }
 
     if (updateSuccess) {
-      toast.success('Retailer Update successfully!');
+      toast.success('Customer Update successfully!');
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
