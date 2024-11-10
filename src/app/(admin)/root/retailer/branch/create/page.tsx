@@ -31,6 +31,7 @@ export default async function Page() {
   pageHeader.breadcrumb[1].name = t('branches');
   pageHeader.breadcrumb[2].name = t('create');
   pageHeader.title = t('addNewBranch');
+
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
