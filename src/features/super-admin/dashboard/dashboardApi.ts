@@ -17,7 +17,6 @@ export const dashboardApi = apiSlice.injectEndpoints({
         const { dateRange }: { dateRange: string } = queries;
 
         if (dateRange) {
-          console.log('From rtk: ', dateRange);
           if (dateRange.includes('to')) {
             const dates = dateRange.replaceAll(' ', '').split('to');
             const [start, end] = dates;

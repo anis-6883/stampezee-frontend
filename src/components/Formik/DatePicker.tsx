@@ -15,9 +15,9 @@ const DatePicker: React.FC<DateRangeProps> = ({ label, enableTime = false, range
   return (
     <Flatpickr
       render={({ defaultValue, value, ...props }, ref) => (
-        <div className=" flex flex-col gap-y-0.5">
+        <div className="flex flex-col gap-y-0.5">
           {label && (
-            <div className=" flex gap-1">
+            <div className="flex gap-1">
               <p className="mb-1 font-medium">
                 {label} {required && <span className="text-red-600">*</span>}
               </p>
