@@ -6,6 +6,10 @@ export const dashboardApi = apiSlice.injectEndpoints({
       query: () => `/api/web/retailer/dashboard/calc`,
       keepUnusedDataFor: 5,
     }),
+    rewardCollectPercentage: builder.query({
+      query: () => `/api/web/retailer/dashboard/reward-collect-percentage`,
+      keepUnusedDataFor: 5,
+    }),
     avgCollectedStamp: builder.query({
       query: (queries) => {
         const { dateRange }: { dateRange: string } = queries;
@@ -26,4 +30,4 @@ export const dashboardApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetRetailerDashboardCalcQuery, useAvgCollectedStampQuery } = dashboardApi;
+export const { useGetRetailerDashboardCalcQuery, useAvgCollectedStampQuery, useRewardCollectPercentageQuery } = dashboardApi;

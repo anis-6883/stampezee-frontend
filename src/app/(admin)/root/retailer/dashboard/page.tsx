@@ -3,6 +3,7 @@ import { metaObject } from '@/config/site.config';
 import { getTranslations } from 'next-intl/server';
 import BranchStatsTable from './_components/BranchStatsTable';
 import RewardCollectStats from './_components/RewardCollectStats';
+import RewardPieStatus from './_components/RewardPieStatus';
 import StateCardView from './_components/StateCardView';
 
 const pageHeader = {
@@ -22,6 +23,7 @@ export default async function Page() {
         <div className="col-span-12 md:col-span-6">
           <RewardCollectStats />
         </div>
+        <RewardPieStatus className="col-span-12 md:col-span-6" />
       </div>
       <BranchStatsTable />
     </>
