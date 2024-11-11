@@ -18,7 +18,7 @@ import { translateData } from '@/utils/GoogleTranslate';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { IoCheckmarkDoneCircle, IoCheckmarkDoneOutline } from 'react-icons/io5';
+import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -134,6 +134,7 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
       ) : (
         <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
           {plans?.map((item: Subscription, index: number) => {
+            if (session?.user?.takeFreeTrial && item?.slug === 'trial') return null;
             return item?.isBlocked ? (
               <div key={item._id} className={`relative cursor-not-allowed rounded-lg border p-4`}>
                 {session?.user?.plan !== 'trial' && session?.user?.plan === item?.slug && (
@@ -146,7 +147,7 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
                     <span className="text-sm font-medium">{t('active')}</span>
                   </div>
                 )}
-                {session?.user?.takeFreeTrial && item?.slug === 'trial' && (
+                {/* {session?.user?.takeFreeTrial && item?.slug === 'trial' && (
                   <div
                     className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
                   >
@@ -155,7 +156,7 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
                     </span>
                     <span className="text-sm font-medium">{t('applied')}</span>
                   </div>
-                )}
+                )} */}
                 <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
                 {!selectedCurrencyExchangeRate?.name ? (
                   <Skeleton className="w-50 h-8 rounded" />

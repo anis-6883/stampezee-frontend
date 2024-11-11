@@ -11,7 +11,7 @@ import 'aos/dist/aos.css';
 import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { IoCheckmarkDoneCircle, IoCheckmarkDoneOutline } from 'react-icons/io5';
+import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -45,6 +45,10 @@ export default function PricingCard({ item }: { item: any }) {
     dispatch(resetAddOns());
   };
 
+  if (session?.user?.takeFreeTrial && item?.slug === 'trial') {
+    return null;
+  }
+
   return (
     <div className="relative mx-auto flex h-full w-full max-w-lg flex-col justify-between rounded-lg border-gray-100 bg-white p-3 text-gray-900 opacity-80 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8">
       {session?.user?.plan === item?.slug && (
@@ -57,7 +61,7 @@ export default function PricingCard({ item }: { item: any }) {
           <span className="text-sm font-medium">{t('active')}</span>
         </div>
       )}
-      {session?.user?.takeFreeTrial && item?.slug === 'trial' && (
+      {/* {session?.user?.takeFreeTrial && item?.slug === 'trial' && (
         <div
           className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
         >
@@ -66,7 +70,7 @@ export default function PricingCard({ item }: { item: any }) {
           </span>
           <span className="text-sm font-medium">{t('applied')}</span>
         </div>
-      )}
+      )} */}
       <div>
         <h3 className="mb-4 text-xl font-semibold">{item.title}</h3>
         {!currency?.name ? (
