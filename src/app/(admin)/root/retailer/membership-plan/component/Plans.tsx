@@ -24,7 +24,7 @@ export const Plans = ({ locale }: { locale: string }) => {
   const { data } = useGetSubscriptionQuery(undefined);
   const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
   const { data: session }: any = useSession();
-  const { activeSubscription, subscription, addOn, planChangeType, total, refundableThreshold, currency, defaultCurrency } = useSelector(
+  const { activeSubscription, subscription, addOns, planChangeType, total, refundableThreshold, currency, defaultCurrency } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
   const { isLoggedIn } = useSelector((state: RootState) => state.authSlice);
@@ -67,7 +67,7 @@ export const Plans = ({ locale }: { locale: string }) => {
     dispatch(setActiveSubscription(updateActiveSubscription as activeSubscription));
 
     // subscription update into redux state
-    if (session?.user?.takeFreeTrial && !addOn?.slug) {
+    if (session?.user?.takeFreeTrial && !addOns?.length) {
       const pursedSubscription = data?.data?.find((item: Subscription) => {
         if (item?.type === 'subscription' && item?.slug === session?.user?.plan) {
           return true;
@@ -101,7 +101,7 @@ export const Plans = ({ locale }: { locale: string }) => {
               disabled={isCheckoutButtonDisabled({
                 plan: subscription,
                 activePlan: activeSubscription,
-                addOn,
+                addOns,
                 isLoggedIn,
                 hasPurchasePlan: session?.user?.plan ? true : false,
                 planChangeType,

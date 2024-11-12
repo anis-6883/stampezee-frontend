@@ -40,7 +40,7 @@ export const checkedMinPurchaseAmount = (total: number, minPurchaseAmount: numbe
 export const isCheckoutButtonDisabled = ({
   plan,
   activePlan,
-  addOn,
+  addOns,
   isLoggedIn,
   hasPurchasePlan,
   planChangeType,
@@ -52,7 +52,7 @@ export const isCheckoutButtonDisabled = ({
   isLoggedIn: boolean;
   hasPurchasePlan: boolean;
   activePlan: activeSubscription;
-  addOn: AddOn;
+  addOns: AddOn[];
   planChangeType: string;
   total: number;
   refundableThreshold: number;
@@ -66,7 +66,7 @@ export const isCheckoutButtonDisabled = ({
   // }
   if (isLoggedIn) {
     if (hasPurchasePlan) {
-      if (plan?.slug === activePlan?.slug && !addOn?.slug) {
+      if (plan?.slug === activePlan?.slug && !addOns?.length) {
         return true;
       }
       if (Math.abs(total) < refundableThreshold && activePlan?.slug && activePlan?.slug !== 'trial' && planChangeType !== 'downgrade') {
@@ -77,7 +77,7 @@ export const isCheckoutButtonDisabled = ({
       }
       return false;
     } else {
-      return !plan?.slug && !addOn?.slug;
+      return !plan?.slug;
     }
   } else {
     return !plan?.slug;
@@ -89,13 +89,13 @@ export const isCheckCouponDisabled = ({
   activeSubscription,
   coupon,
   isLoggedIn,
-  addOn,
+  addOns,
   planChangeType,
 }: {
   subscription: Subscription;
   activeSubscription: activeSubscription;
   coupon: any;
-  addOn: AddOn;
+  addOns: AddOn[];
   isLoggedIn: boolean;
   planChangeType: string;
 }) => {
@@ -106,8 +106,8 @@ export const isCheckCouponDisabled = ({
     activeSubscription?.slug == subscription?.slug ||
     subscription?.slug === 'trial' ||
     coupon ||
-    planChangeType === 'downgrade'
-    // addOn?.slug
+    planChangeType === 'downgrade' ||
+    (!addOns?.length && !subscription?.slug)
   ) {
     return true;
   }

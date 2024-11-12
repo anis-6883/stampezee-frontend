@@ -2,7 +2,8 @@
 'use client';
 
 import { RootState } from '@/features/store';
-import { removeCode, removeCoupon } from '@/features/subscription/subscriptionSlice';
+import { removeAddOns, removeCode, removeCoupon } from '@/features/subscription/subscriptionSlice';
+import { AddOn } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
 import { useTranslations } from 'next-intl';
 import { ImBin } from 'react-icons/im';
@@ -13,7 +14,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
   const t = useTranslations('CheckoutPage');
   const {
     subscription,
-    addOn,
+    addOns,
     activeSubscription,
     remainingBalance,
     subTotal,
@@ -32,27 +33,49 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
     price: remainingBalance,
   }).toFixed(2);
 
+  const handleRemoveAddOn = (addOnId: string) => {
+    dispatch(removeAddOns(addOnId));
+  };
+
+  console.log('Coupon', coupon?.appliedSlugs);
+
   return (
     <div>
-      <h2 className="pb-2 text-lg font-medium">{addOn.slug ? t('addOn') : t('plan')}</h2>
+      <h2 className="pb-2 text-lg font-medium">{addOns?.length > 0 ? t('planAndAddons') : t('plan')}</h2>
       <hr className="p-2 text-lg font-bold" />
-      {addOn.slug ? (
-        <div className="mb-2 flex justify-between">
-          <span>{addOn?.title}</span>
-          <span className="text-red-500">
-            {addOn?.price ? addOn?.price?.toFixed(2) : Number(0).toFixed(2)} {selectedCurrency}
-          </span>
-        </div>
-      ) : (
-        <div className="mb-2 flex justify-between">
-          <span>{subscription?.title}</span>
-          <span className="text-red-500">
-            {subscription?.price ? subscription?.price?.toFixed(2) : Number(0).toFixed(2)} {selectedCurrency}
-          </span>
+      <div className="mb-2 flex justify-between">
+        <span>
+          {subscription?.title}
+          {coupon?.appliedSlugs?.includes(subscription?.slug) && (
+            <span>{` (${coupon?.discountType === 'percentage' ? `${coupon?.discount}%` : coupon?.discount} off)`}</span>
+          )}
+        </span>
+        <span className="text-red-500">
+          {subscription?.price ? `${subscription?.price?.toFixed(2)}` : Number(0).toFixed(2)} {selectedCurrency}
+        </span>
+      </div>
+      {addOns?.length > 0 && (
+        <div>
+          {addOns.map((addOn: AddOn, index: number) => (
+            <div key={index} className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+              <span className="col-span-6">
+                {addOn.title}{' '}
+                {coupon?.appliedSlugs?.includes(addOn?.slug) && (
+                  <span>{` (${coupon?.discountType === 'percentage' ? `${coupon?.discount}%` : coupon?.discount})`}</span>
+                )}
+              </span>
+              <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
+                <ImBin />
+              </button>
+              <span className="col-span-4 justify-self-end text-red-500">
+                {addOn?.price ? addOn?.price?.toFixed(2) : Number(0).toFixed(2)} {selectedCurrency}
+              </span>
+            </div>
+          ))}
         </div>
       )}
 
-      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && !addOn.slug && (
+      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && addOns.length < 0 && (
         <div className="mb-2 flex justify-between">
           <span>{t('remainingAmount')}</span>
           <span className="text-red-500">
@@ -80,7 +103,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </div>
       )}
 
-      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && !addOn.slug && downgradeRefund <= 0 && total !== 0 && (
+      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && addOns.length < 0 && downgradeRefund <= 0 && total !== 0 && (
         <div className="mb-2 flex justify-between">
           <span className="font-semibold">{t('planChangeCost')}</span>
           <span className="text-red-500">
@@ -105,7 +128,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
           >
             <ImBin />
           </button>
-          <span className="col-span-4 justify-self-end">
+          <span className="col-span-4 justify-self-end text-red-500">
             {`-${couponDiscount?.toFixed(2)}`} {selectedCurrency}
           </span>
         </div>

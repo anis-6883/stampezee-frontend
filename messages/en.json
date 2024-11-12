@@ -161,6 +161,7 @@
     "purchaseAlertMessageAfter": "Please add more items to continue",
     "plan": "Plan",
     "addOn": "Add-On",
+    "planAndAddons": "Plan & Add-Ons",
     "freeTrialActivated": "Free trial activated!",
     "downgradeSuccessfully": "Downgrade Successfully!",
     "branchDisableMessage": "For downgrading, you must <span className=\"font-bold text-danger\">select {totalDisabledBranch} branch/s</span> to disable by the system!",

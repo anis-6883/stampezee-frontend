@@ -32,7 +32,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   const t = useTranslations('CheckoutPage');
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
-  const { code, subscription, addOn, downgradeRefund, total, activeSubscription, planChangeType, refundableThreshold } = useSelector(
+  const { code, subscription, addOns, downgradeRefund, total, activeSubscription, planChangeType, refundableThreshold } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
   const [modalState, setModalState] = useState(false);
@@ -123,11 +123,11 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       // setModalState(true);
       return;
     }
-    if (activeSubscription?.slug && addOn.slug) {
+    if (activeSubscription?.slug && addOns.length > 0) {
       if (code) {
-        checkOut({ slug: addOn.slug, code, currency: selectedCurrency });
+        checkOut({ slug: addOns?.map((addOn) => addOn?.slug), code, currency: selectedCurrency });
       } else {
-        checkOut({ slug: addOn.slug, currency: selectedCurrency });
+        checkOut({ slug: addOns?.map((addOn) => addOn?.slug), currency: selectedCurrency });
       }
       return;
     }
@@ -143,9 +143,9 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     }
     if (subscription?.slug) {
       if (code) {
-        checkOut({ slug: subscription?.slug, code, currency: selectedCurrency });
+        checkOut({ slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)], code, currency: selectedCurrency });
       } else {
-        checkOut({ slug: subscription?.slug, currency: selectedCurrency });
+        checkOut({ slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)], currency: selectedCurrency });
       }
     }
   };
@@ -160,10 +160,10 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         <hr className=" text-lg font-bold" />
         <CouponForm locale={locale} />
 
-        {subscription?.slug !== activeSubscription?.slug && (subscription?.slug || addOn?.slug) && (
+        {subscription?.slug !== activeSubscription?.slug && (subscription?.slug || addOns?.length > 0) && (
           <PlanAddOns stripeInfo={stripeInfo} selectedCurrency={selectedCurrency} />
         )}
-        {(subscription?.slug === activeSubscription?.slug || !subscription?.slug) && !addOn.slug && (
+        {(subscription?.slug === activeSubscription?.slug || !subscription?.slug) && (
           <div className="py-4 text-center font-medium text-red-500">{t('cartEmpty')}</div>
         )}
       </div>
@@ -235,7 +235,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
           activePlan: activeSubscription,
           isLoggedIn,
           hasPurchasePlan: session?.user?.plan ? true : false,
-          addOn,
+          addOns,
           planChangeType,
           total,
           refundableThreshold: stripeInfo?.refundableThreshold,

@@ -2,7 +2,7 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { RootState } from '@/features/store';
-import { resetSubscription, setAddOns } from '@/features/subscription/subscriptionSlice';
+import { setAddOns } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn, Subscription } from '@/types';
 import { translateData } from '@/utils/GoogleTranslate';
@@ -17,7 +17,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
   const [addOnList, setAddOnList] = useState([]);
   const {
     subscription,
-    addOn: addOnData,
+    addOns: addOnsData,
     currency: selectedCurrencyExchangeRate,
   } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data, isLoading } = useGetSubscriptionQuery(undefined);
@@ -49,7 +49,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
 
   const handleAddOnSelect = (addOn: AddOn) => {
     dispatch(setAddOns(addOn));
-    dispatch(resetSubscription());
+    // dispatch(resetSubscription());
   };
 
   return isLoading || translateLoading ? (
@@ -63,11 +63,11 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
     <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
       {addOnList?.map((addOn: AddOn, index: number) => (
         <div key={index}>
-          {session?.user?.plan && session?.user?.plan !== 'trial' ? (
+          {subscription?.slug && subscription?.slug !== 'trial' ? (
             <div
               onClick={() => handleAddOnSelect(addOn)}
               className={`relative cursor-pointer rounded-lg border p-4 ${
-                addOnData?.slug === addOn.slug ? '!border-danger !ring-1 ring-danger' : 'border'
+                addOnsData?.find((item: any) => item._id === addOn._id)?.isAddOnsSelect ? '!border-danger !ring-1 ring-danger' : 'border'
               } hover:border-red-600`}
             >
               <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>

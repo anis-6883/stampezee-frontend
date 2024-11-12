@@ -161,6 +161,7 @@
     "purchaseAlertMessageAfter": "Veuillez ajouter d'autres articles pour continuer",
     "plan": "Plan",
     "addOn": "Module complémentaire",
+    "planAndAddons": "Plan et modules complémentaires",
     "freeTrialActivated": "Essai gratuit activé !",
     "downgradeSuccessfully": "Baisse de plan réussie !",
     "branchDisableMessage": "Pour baisse, tu dois <span className=\"font-bold text-danger\">sélectionner {totalDisabledBranch} succursale/s</span> pour désactiver par le système !",
