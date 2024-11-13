@@ -31,7 +31,28 @@ export const billingApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    attachPaymentMethod: builder.mutation({
+      query: (data) => ({
+        url: `/api/web/retailer/billing/attach-payment-method`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    setupPaymentIntent: builder.mutation({
+      query: () => ({
+        url: `/api/web/retailer/billing/setup-payment-intent`,
+        method: 'POST',
+        // body: data,
+      }),
+    }),
   }),
 });
 
-export const { useAllBillingQuery, useSingleBillingQuery, useGetBillingPortalMutation, useCreateBillingPdfMutation } = billingApi;
+export const {
+  useAllBillingQuery,
+  useSingleBillingQuery,
+  useGetBillingPortalMutation,
+  useCreateBillingPdfMutation,
+  useAttachPaymentMethodMutation,
+  useSetupPaymentIntentMutation,
+} = billingApi;

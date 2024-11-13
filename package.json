@@ -21,6 +21,8 @@
     "@mantine/hooks": "^6.0.21",
     "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.2.3",
+    "@stripe/react-stripe-js": "^2.9.0",
+    "@stripe/stripe-js": "^4.10.0",
     "@tabler/icons-react": "^3.2.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@types/react-dom": "^18.3.0",

@@ -123,7 +123,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       // setModalState(true);
       return;
     }
-    if (activeSubscription?.slug && addOns.length > 0) {
+    if (activeSubscription?.slug && activeSubscription?.slug !== 'trial' && addOns.length > 0) {
       if (code) {
         checkOut({ slug: addOns?.map((addOn) => addOn?.slug), code, currency: selectedCurrency });
       } else {

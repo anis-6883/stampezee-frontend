@@ -61,7 +61,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
               <span className="col-span-6">
                 {addOn.title}{' '}
                 {coupon?.appliedSlugs?.includes(addOn?.slug) && (
-                  <span>{` (${coupon?.discountType === 'percentage' ? `${coupon?.discount}%` : coupon?.discount})`}</span>
+                  <span>{` (${coupon?.discountType === 'percentage' ? `${coupon?.discount}%` : coupon?.discount} off)`}</span>
                 )}
               </span>
               <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">

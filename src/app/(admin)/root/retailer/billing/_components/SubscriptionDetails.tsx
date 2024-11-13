@@ -4,13 +4,20 @@ import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useCreateBillingPdfMutation, useGetBillingPortalMutation, useSingleBillingQuery } from '@/features/retailer/billing/billingApi';
+import {
+  useCreateBillingPdfMutation,
+  useGetBillingPortalMutation,
+  useSetupPaymentIntentMutation,
+  useSingleBillingQuery,
+} from '@/features/retailer/billing/billingApi';
 import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import _ from 'lodash';
 import moment from 'moment';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { HiShoppingCart } from 'react-icons/hi2';
@@ -21,6 +28,11 @@ import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { RiDownloadCloud2Fill } from 'react-icons/ri';
 import { SlLock } from 'react-icons/sl';
 import { Badge } from 'rizzui';
+import CheckoutForm from './CheckoutForm';
+
+const stripePromise = loadStripe(
+  'pk_test_51Psj0QAUADTrRdVYFcCLaeO8Up43DJu2Kipj8K14ndt1ZVNb3gqOEy1Ms6MAnyFmmU4XNuBPnDR6UYwL5cZFoQ9200o0DFRfqp'
+);
 
 export default function SubscriptionDetails({ id, offset }: { id: string; offset: number }) {
   const t = useTranslations('RetailerBillingDetailsCard');
@@ -29,10 +41,20 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
   const { push } = useRouter();
 
   const { data, isLoading, isError } = useSingleBillingQuery(id);
+  const [setupPaymentIntent, { data: paymentIntent }] = useSetupPaymentIntentMutation();
   const [createBillingPdf, { data: pdfBuffer, isLoading: isPdfBufferLoading }] = useCreateBillingPdfMutation();
   const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetBillingPortalMutation();
   const { stripe, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, planSnapshot, payments } = data?.data || {};
   const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
+  const [clientSecret, setClientSecret] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      const res: any = await setupPaymentIntent({});
+
+      setClientSecret(res?.data?.data?.client_secret);
+    })();
+  }, []);
 
   useEffect(() => {
     if (portalError) {
@@ -68,6 +90,13 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
       console.error('Error downloading invoice:', err);
     }
   };
+
+  const appearance: { theme: 'flat' | 'stripe' | 'night' } = {
+    theme: 'stripe', // Replace 'stripe' with 'flat' or 'night' if you want to try a different theme
+  };
+
+  // Enable the skeleton loader UI for optimal loading.
+  const loader = 'auto';
 
   return (
     <div className="w-full">
@@ -286,6 +315,12 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
             />
           )}
         </div>
+
+        {clientSecret && (
+          <Elements options={{ clientSecret, appearance, loader }} stripe={stripePromise}>
+            <CheckoutForm />
+          </Elements>
+        )}
       </div>
     </div>
   );
