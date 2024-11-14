@@ -307,7 +307,7 @@
     "running": "Выполняется",
     "ended": "Завершено",
     "subscriptionDetails": "Детали подписки",
-    "placeHolder": "Поиск по ID подписки"
+    "placeHolder": "Поиск по идентификатору платежного намерения или номеру счета-фактуры"
   },
   "RetailerBillingDetails": {
     "title": "Детали подписки",

@@ -6,6 +6,7 @@ import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import {
   useCreateBillingPdfMutation,
+  useGetAllPaymentMethodQuery,
   useGetBillingPortalMutation,
   useSetupPaymentIntentMutation,
   useSingleBillingQuery,
@@ -28,7 +29,7 @@ import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { RiDownloadCloud2Fill } from 'react-icons/ri';
 import { SlLock } from 'react-icons/sl';
 import { Badge } from 'rizzui';
-import CheckoutForm from './CheckoutForm';
+import AddPaymentCardForm from './AddPaymentCardForm';
 
 const stripePromise = loadStripe(
   'pk_test_51Psj0QAUADTrRdVYFcCLaeO8Up43DJu2Kipj8K14ndt1ZVNb3gqOEy1Ms6MAnyFmmU4XNuBPnDR6UYwL5cZFoQ9200o0DFRfqp'
@@ -40,6 +41,10 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
   const t3 = useTranslations('RetailerBillingInvoiceTable');
   const { push } = useRouter();
 
+  const { data: allPaymentMethod, isLoading: isAllPaymentMethod } = useGetAllPaymentMethodQuery({
+    customerId: 'cus_RCz82TruUZHQfB',
+    limit: 4,
+  });
   const { data, isLoading, isError } = useSingleBillingQuery(id);
   const [setupPaymentIntent, { data: paymentIntent }] = useSetupPaymentIntentMutation();
   const [createBillingPdf, { data: pdfBuffer, isLoading: isPdfBufferLoading }] = useCreateBillingPdfMutation();
@@ -97,6 +102,8 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
 
   // Enable the skeleton loader UI for optimal loading.
   const loader = 'auto';
+
+  console.log('allPaymentMethod', allPaymentMethod);
 
   return (
     <div className="w-full">
@@ -318,7 +325,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
 
         {clientSecret && (
           <Elements options={{ clientSecret, appearance, loader }} stripe={stripePromise}>
-            <CheckoutForm />
+            <AddPaymentCardForm />
           </Elements>
         )}
       </div>

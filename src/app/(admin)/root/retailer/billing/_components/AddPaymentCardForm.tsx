@@ -1,8 +1,11 @@
+import Button from '@/components/Formik/Button';
 import { useAttachPaymentMethodMutation } from '@/features/retailer/billing/billingApi';
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
+import { HiPlus } from 'react-icons/hi2';
+import { ImSpinner9 } from 'react-icons/im';
 
-const CheckoutForm: React.FC = () => {
+const AddPaymentCardForm: React.FC = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [attachPaymentMethod] = useAttachPaymentMethodMutation();
@@ -55,14 +58,19 @@ const CheckoutForm: React.FC = () => {
     <>
       <form id="payment-form" onSubmit={handleSubmit}>
         <PaymentElement id="payment-element" options={paymentElementOptions} />
-        <button disabled={isLoading || !stripe || !elements} id="submit">
-          <span id="button-text">{isLoading ? <div className="spinner" id="spinner"></div> : 'Add'}</span>
-        </button>
-        {/* Show any error or success messages */}
+        <Button
+          disabled={isLoading || !stripe || !elements}
+          type="submit"
+          className="!m-0"
+          color="danger"
+          text="Add Payment Method"
+          preIcon={isLoading ? <ImSpinner9 className="animate-spin text-lg" /> : <HiPlus className="text-base" />}
+        />
+
         {message && <div id="payment-message">{message}</div>}
       </form>
     </>
   );
 };
 
-export default CheckoutForm;
+export default AddPaymentCardForm;

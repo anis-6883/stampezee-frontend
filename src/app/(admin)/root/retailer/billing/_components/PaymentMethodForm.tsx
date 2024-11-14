@@ -31,7 +31,7 @@ const useOptions = (): { style: { base: object; invalid: object } } => {
   return options;
 };
 
-const SplitForm: React.FC = () => {
+const PaymentMethodForm: React.FC = () => {
   const stripe = useStripe();
   const elements = useElements();
   const options = useOptions();
@@ -120,4 +120,4 @@ const SplitForm: React.FC = () => {
   );
 };
 
-export default SplitForm;
+export default PaymentMethodForm;

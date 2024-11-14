@@ -6,14 +6,10 @@ import { routes } from '@/config/routes';
 import { useAllBillingQuery } from '@/features/retailer/billing/billingApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
-import moment from 'moment';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
-import { GiSandsOfTime } from 'react-icons/gi';
-import { PiFlagCheckeredFill } from 'react-icons/pi';
-import { Badge } from 'rizzui';
 
 export default function BillingTable({ offset }: { offset: number }) {
   const t = useTranslations('RetailerBillingTable');
@@ -30,20 +26,20 @@ export default function BillingTable({ offset }: { offset: number }) {
       header: t('planAndAddOn'),
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
-        return row?.original?.planSnapshot?.type === 'subscription' ? (
-          <div>{`${row?.original?.planSnapshot?.title}`} Plan</div>
-        ) : (
-          <div>{`${row?.original?.planSnapshot?.title}`} Add-On</div>
-        );
+        return row?.original?.subscriptions?.map((subscription: any) => (
+          <div className="my-1" key={subscription?._id}>
+            {subscription?.title}
+          </div>
+        ));
       },
       size: 200,
     },
     {
-      header: t('subscriptionId'),
+      header: t('paymentInfo'),
       accessorKey: 'stripe.subscriptionId',
     },
     {
-      header: t('balance'),
+      header: t('totalAmount'),
       accessorKey: 'balanceInfo.planCurrentPrice',
       Cell: ({ row }: any) => (
         <div className="flex items-center gap-2 font-medium">
@@ -53,36 +49,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       size: 100,
     },
     {
-      header: t('planStatus'),
-      accessorKey: 'status',
-      Cell: ({ row }: any) => {
-        const validityTo = moment.utc(row?.original?.validityTo).utcOffset(Number(offset));
-
-        return (
-          <div className="flex items-center justify-center gap-2">
-            <div className="text-white">
-              {row?.original?.status === true && moment().isBefore(validityTo) ? (
-                <Badge className="!bg-success">
-                  <GiSandsOfTime className="mr-1 text-xl" /> {t('running')}
-                </Badge>
-              ) : (
-                <Badge className="!bg-danger">
-                  <PiFlagCheckeredFill className="mr-1 text-xl" /> {t('ended')}
-                </Badge>
-              )}
-            </div>
-          </div>
-        );
-      },
-      mantineTableHeadCellProps: {
-        align: 'center',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
-    },
-    {
-      header: t('expireDate'),
+      header: t('paymentDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>{convertDateByOffset(row?.original?.validityTo, offset)}</p>

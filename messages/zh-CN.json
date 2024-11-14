@@ -307,7 +307,7 @@
     "running": "运行中",
     "ended": "结束",
     "subscriptionDetails": "订阅详情",
-    "placeHolder": "按支付 ID 搜索"
+    "placeHolder": "按付款意圖 ID 或發票號碼搜索"
   },
   "RetailerBillingDetails": {
     "title": "订阅详情",

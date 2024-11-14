@@ -31,6 +31,12 @@ export const billingApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getAllPaymentMethod: builder.query({
+      query: ({ customerId, limit }) => ({
+        url: `/api/web/retailer/billing/payment-method/all/${customerId}?limit=${limit}`,
+        method: 'GET',
+      }),
+    }),
     attachPaymentMethod: builder.mutation({
       query: (data) => ({
         url: `/api/web/retailer/billing/attach-payment-method`,
@@ -55,4 +61,5 @@ export const {
   useCreateBillingPdfMutation,
   useAttachPaymentMethodMutation,
   useSetupPaymentIntentMutation,
+  useGetAllPaymentMethodQuery,
 } = billingApi;

@@ -307,7 +307,7 @@
     "running": "실행중",
     "ended": "종료",
     "subscriptionDetails": "구독 상세",
-    "placeHolder": "결제 ID로 검색"
+    "placeHolder": "결제 의도 ID 또는 송장 번호로 검색"
   },
   "RetailerBillingDetails": {
     "title": "구독 세부 사항",

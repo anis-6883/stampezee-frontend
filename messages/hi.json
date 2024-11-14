@@ -307,7 +307,7 @@
     "running": "चल रहा है",
     "ended": "समाप्त",
     "subscriptionDetails": "सदस्यता का विवरण",
-    "placeHolder": "भुगतान ID द्वारा खोजें"
+    "placeHolder": "भुगतान आशय आईडी या चालान संख्या द्वारा खोजें"
   },
   "RetailerBillingDetails": {
     "title": "सदस्यता विवरण",

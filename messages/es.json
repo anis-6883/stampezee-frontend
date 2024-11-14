@@ -307,7 +307,7 @@
     "running": "En ejecución",
     "ended": "Finalizado",
     "subscriptionDetails": "Detalles de la Suscripción",
-    "placeHolder": "Buscar por ID de Suscripción"
+    "placeHolder": "Búsqueda por ID de intención de pago o número de factura"
   },
   "RetailerBillingDetails": {
     "title": "Detalles de la suscripción",

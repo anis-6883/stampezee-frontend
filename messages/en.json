@@ -306,8 +306,11 @@
     "actions": "Actions",
     "running": "Running",
     "ended": "Ended",
+    "paymentInfo": "Payment Info",
+    "totalAmount": "Total Amount",
+    "paymentDate": "Payment Date",
     "subscriptionDetails": "Subscription Details",
-    "placeHolder": "Search By Subscription ID"
+    "placeHolder": "Search By Payment Intent Id or Invoice Number"
   },
   "RetailerBillingDetails": {
     "title": "Subscription Details",

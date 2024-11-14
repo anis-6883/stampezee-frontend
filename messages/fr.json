@@ -307,7 +307,7 @@
     "running": "En cours",
     "ended": "Terminé",
     "subscriptionDetails": "Détails de l'abonnement",
-    "placeHolder": "Rechercher par ID d'Abonnement"
+    "placeHolder": "Rechercher par ID d'intention de paiement ou numéro de facture"
   },
   "RetailerBillingDetails": {
     "title": "Détails de l'abonnement",

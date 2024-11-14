@@ -307,7 +307,7 @@
     "running": "نشط",
     "ended": "منتهي",
     "subscriptionDetails": "تفاصيل الاشتراك",
-    "placeHolder": "ابحث بمعرف الدفع"
+    "placeHolder": "البحث حسب معرف نية الدفع أو رقم الفاتورة"
   },
   "RetailerBillingDetails": {
     "title": "تفاصيل الاشتراك",
