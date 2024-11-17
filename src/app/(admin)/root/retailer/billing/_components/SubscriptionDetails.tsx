@@ -5,15 +5,12 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import {
+  useCancelSubscriptionMutation,
   useCreateBillingPdfMutation,
-  useGetAllPaymentMethodQuery,
   useGetBillingPortalMutation,
-  useSetupPaymentIntentMutation,
   useSingleBillingQuery,
 } from '@/features/retailer/billing/billingApi';
 import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import _ from 'lodash';
 import moment from 'moment';
 import { useTranslations } from 'next-intl';
@@ -29,11 +26,11 @@ import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { RiDownloadCloud2Fill } from 'react-icons/ri';
 import { SlLock } from 'react-icons/sl';
 import { Badge } from 'rizzui';
-import AddPaymentCardForm from './AddPaymentCardForm';
+import PackageCancelModal from './PackageCancelModal';
 
-const stripePromise = loadStripe(
-  'pk_test_51Psj0QAUADTrRdVYFcCLaeO8Up43DJu2Kipj8K14ndt1ZVNb3gqOEy1Ms6MAnyFmmU4XNuBPnDR6UYwL5cZFoQ9200o0DFRfqp'
-);
+// const stripePromise = loadStripe(
+//   'pk_test_51Psj0QAUADTrRdVYFcCLaeO8Up43DJu2Kipj8K14ndt1ZVNb3gqOEy1Ms6MAnyFmmU4XNuBPnDR6UYwL5cZFoQ9200o0DFRfqp'
+// );
 
 export default function SubscriptionDetails({ id, offset }: { id: string; offset: number }) {
   const t = useTranslations('RetailerBillingDetailsCard');
@@ -41,25 +38,54 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
   const t3 = useTranslations('RetailerBillingInvoiceTable');
   const { push } = useRouter();
 
-  const { data: allPaymentMethod, isLoading: isAllPaymentMethod } = useGetAllPaymentMethodQuery({
-    customerId: 'cus_RCz82TruUZHQfB',
-    limit: 4,
-  });
+  // const { data: allPaymentMethod, isLoading: isAllPaymentMethod } = useGetAllPaymentMethodQuery({
+  //   customerId: 'cus_RCz82TruUZHQfB',
+  //   limit: 4,
+  // });
   const { data, isLoading, isError } = useSingleBillingQuery(id);
-  const [setupPaymentIntent, { data: paymentIntent }] = useSetupPaymentIntentMutation();
+  // const [setupPaymentIntent, { data: paymentIntent }] = useSetupPaymentIntentMutation();
   const [createBillingPdf, { data: pdfBuffer, isLoading: isPdfBufferLoading }] = useCreateBillingPdfMutation();
+  const [
+    cancelSubscription,
+    { data: cancelSubscriptionData, error: cancelSubscriptionError, isSuccess, isError: isCancelSubscriptionError },
+  ] = useCancelSubscriptionMutation();
   const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetBillingPortalMutation();
-  const { stripe, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, planSnapshot, payments } = data?.data || {};
+  const { stripe, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, payments, enrollSubscriptions } =
+    data?.data || {};
   const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
-  const [clientSecret, setClientSecret] = useState('');
+  // const [clientSecret, setClientSecret] = useState('');
 
+  // cancel subscription state
+  const [modalState, setModalState] = useState(false);
+  const [cancelSubscriptionId, setCancelSubscriptionId] = useState(null);
+  const [cancelSubmitting, setCancelSubmitting] = useState(false);
+  const [isPlan, setIsPlan] = useState(false);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const res: any = await setupPaymentIntent({});
+
+  //     setClientSecret(res?.data?.data?.client_secret);
+  //   })();
+  // }, []);
+
+  // Handle cancel subscription Response
   useEffect(() => {
-    (async () => {
-      const res: any = await setupPaymentIntent({});
-
-      setClientSecret(res?.data?.data?.client_secret);
-    })();
-  }, []);
+    if (isCancelSubscriptionError) {
+      setCancelSubmitting(false);
+      const myError = cancelSubscriptionError as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong!');
+      setModalState(false);
+      setCancelSubscriptionId(null);
+    }
+    if (isSuccess) {
+      setCancelSubmitting(false);
+      console.log('dfdf', cancelSubscriptionData?.message);
+      toast.success(cancelSubscriptionData?.message || 'Subscription cancel successfully!');
+      setModalState(false);
+      setCancelSubscriptionId(null);
+    }
+  }, [cancelSubscriptionData?.message, cancelSubscriptionError, isCancelSubscriptionError, isSuccess]);
 
   useEffect(() => {
     if (portalError) {
@@ -96,24 +122,25 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
     }
   };
 
-  const appearance: { theme: 'flat' | 'stripe' | 'night' } = {
-    theme: 'stripe', // Replace 'stripe' with 'flat' or 'night' if you want to try a different theme
-  };
+  // const appearance: { theme: 'flat' | 'stripe' | 'night' } = {
+  //   theme: 'stripe', // Replace 'stripe' with 'flat' or 'night' if you want to try a different theme
+  // };
 
-  // Enable the skeleton loader UI for optimal loading.
-  const loader = 'auto';
-
-  console.log('allPaymentMethod', allPaymentMethod);
+  // // Enable the skeleton loader UI for optimal loading.
+  // const loader = 'auto';
 
   return (
     <div className="w-full">
+      {/* subscriptions details  */}
+
       <div className="mb-3.5">
         {isLoading || isError ? (
           <Skeleton className="my-3 h-8 w-32 rounded" />
         ) : (
           <h3 className="text-lg font-medium">
-            {planSnapshot?.title}{' '}
-            <span className="font-semibold">({planSnapshot?.type === 'subscription' ? t2('plan') : t2('addOn')})</span>
+            {`(${enrollSubscriptions?.map((enrollSubscription: any) => enrollSubscription?.title)?.join(',')})`}
+            {/* {planSnapshot?.title}
+            <span className="font-semibold">({planSnapshot?.type === 'subscription' ? t2('plan') : t2('addOn')})</span> */}
           </h3>
         )}
       </div>
@@ -142,7 +169,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
               </Badge>
             )}
           </div>
-          <div className="flex items-center justify-between font-medium">
+          {/* <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">{t('balance')}</span>
             {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
@@ -151,7 +178,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                 {balanceInfo?.planCurrentPrice} {balanceInfo?.currency}
               </span>
             )}
-          </div>
+          </div> */}
           <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">{t('purchasedAt')}</span>{' '}
             {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(createdAt, offset)}</span>}
@@ -189,7 +216,130 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
             {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(validityTo, offset)}</span>}
           </div>
         </div>
+
+        {/* <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
+          <h2 className="my-5 text-lg font-medium">Payment methods</h2>
+          <hr />
+          {allPaymentMethod?.data?.data?.map((item: any) => (
+            <div key={item?.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <img
+                src={
+                  'https://platform.vox.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/13674554/Mastercard_logo.jpg?quality=90&strip=all&crop=0%2C16.666666666667%2C100%2C66.666666666667&w=750'
+                }
+                alt={'card'}
+                style={{ width: '50px', marginRight: '10px' }}
+              />
+              <div className="flex items-center justify-center">
+                <span className="text-base font-medium capitalize">{item?.card?.brand} </span>
+                <span className="text-center text-base font-medium capitalize"> ....{4545}</span>
+              </div>
+            </div>
+          ))}
+          <div className="">
+            <Button type="submit" className="!m-0" color="danger" text="Add Payment Method" preIcon={<HiPlus className="text-base" />} />
+          </div>
+        </div> */}
       </div>
+
+      {/* Packages  */}
+      <h2 className="my-5 text-lg font-medium">{'Enroll Subscriptions'}</h2>
+      <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="whitespace-nowrap px-6 py-3">
+                {t3('serialNo')}
+              </th>
+              <th scope="col" className="whitespace-nowrap px-6 py-3">
+                Plan / Add-on
+              </th>
+              <th scope="col" className="whitespace-nowrap px-6 py-3">
+                subscription Item Id
+              </th>
+
+              <th scope="col" className="whitespace-nowrap px-6 py-3">
+                {t3('action')}
+              </th>
+            </tr>
+          </thead>
+          {isLoading || isError ? (
+            <tbody>
+              <tr>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                  <Skeleton className="h-6 w-32 rounded" />
+                </td>
+              </tr>
+            </tbody>
+          ) : (
+            <tbody>
+              {enrollSubscriptions?.length <= 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
+                    {t3('noTransaction')}
+                  </td>
+                </tr>
+              ) : (
+                enrollSubscriptions?.map((enrollSubscription: any, index: number) => {
+                  if (enrollSubscription?.deletedByRetailer) return null;
+                  return (
+                    <tr
+                      key={enrollSubscription?._id}
+                      className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                    >
+                      <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        {++index}
+                      </td>
+                      <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        {enrollSubscription?.title}
+                      </td>
+                      <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        {enrollSubscription?.subscriptionItemId}
+                      </td>
+
+                      <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
+                        {stripe?.renewCancelAt && enrollSubscription?.type === 'addon' ? (
+                          <span className="font-semibold text-danger">Renew depend on plan!</span>
+                        ) : (
+                          <Button
+                            className="!m-0 !px-2 !py-1.5"
+                            color="danger"
+                            onClick={() => {
+                              setModalState(true);
+                              enrollSubscription?.type === 'subscription' ? setIsPlan(true) : setIsPlan(false);
+                              setCancelSubscriptionId(enrollSubscription?._id);
+                            }}
+                            text={stripe?.renewCancelAt === null ? 'Cancel' : 'Renew'}
+                            postIcon={
+                              stripe?.renewCancelAt === null ? <ImCancelCircle className="text-xl" /> : <MdAutorenew className="text-xl" />
+                            }
+                          />
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          )}
+        </table>
+      </div>
+
+      {/* invoices  */}
 
       <h2 className="my-5 text-lg font-medium">{t2('invoices')}</h2>
       <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
@@ -249,7 +399,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                 </tr>
               ) : (
                 payments.map((payment: any, index: number) => {
-                  const amount = (Number(payment?.amountTotal) / 100).toFixed(2);
+                  const amount = Number(payment?.amountTotal).toFixed(2);
                   return (
                     <tr
                       key={payment?._id}
@@ -294,7 +444,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
         </table>
       </div>
 
-      <div className="mt-20">
+      <div className="mt-14">
         <div className="flex justify-end">
           {isLoading || isError ? (
             <Skeleton className="h-6 w-32 rounded" />
@@ -323,12 +473,25 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
           )}
         </div>
 
-        {clientSecret && (
+        {/* {clientSecret && (
           <Elements options={{ clientSecret, appearance, loader }} stripe={stripePromise}>
             <AddPaymentCardForm />
           </Elements>
-        )}
+        )} */}
       </div>
+
+      <PackageCancelModal
+        cancelSubscriptionId={cancelSubscriptionId}
+        cancelSubscriptionHandler={cancelSubscription}
+        modalState={modalState}
+        setModalState={setModalState}
+        isSubmitting={cancelSubmitting}
+        setIsSubmitting={setCancelSubmitting}
+        isPlan={isPlan}
+        getPortal={getPortal}
+        stripe={stripe}
+        id={id}
+      />
     </div>
   );
 }

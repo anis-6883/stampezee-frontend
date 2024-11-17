@@ -55,27 +55,18 @@ export default function PaymentTable({ offset }: { offset: number }) {
       header: 'Plan/Add-on',
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
-        return row?.original?.planSnapshot?.type === 'subscription' ? (
-          <div>
-            <div>
-              <span className="font-semibold">Plan:</span> {`${row?.original?.planSnapshot?.title}`}
-            </div>
-            <div>
-              <span className="font-semibold">Subscription ID:</span> {`${row?.original?.stripe?.subscriptionId}`}
-            </div>
+        return row?.original?.enrollSubscriptions?.map((subscription: any) => (
+          <div className="my-1" key={subscription?._id}>
+            {subscription?.title}
           </div>
-        ) : (
-          <div>
-            <div>
-              <span className="font-semibold">Add-on:</span> {`${row?.original?.planSnapshot?.title}`}
-            </div>
-            <div>
-              <span className="font-semibold">Subscription ID:</span> {`${row?.original?.stripe?.subscriptionId}`}
-            </div>
-          </div>
-        );
+        ));
       },
       size: 300,
+    },
+    {
+      header: 'Subscription ID',
+      accessorKey: 'stripe.subscriptionId',
+      size: 200,
     },
     {
       header: 'Plan Status',

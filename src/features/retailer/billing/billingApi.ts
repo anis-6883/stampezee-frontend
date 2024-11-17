@@ -13,7 +13,7 @@ export const billingApi = apiSlice.injectEndpoints({
     }),
     singleBilling: builder.query({
       query: (_id) => `/api/web/retailer/billing/find/${_id}`,
-      providesTags: (result, error, arg) => [{ type: 'billing', id: arg }],
+      providesTags: ['billings'],
       keepUnusedDataFor: 10,
     }),
     createBillingPdf: builder.mutation({
@@ -44,6 +44,14 @@ export const billingApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    cancelSubscription: builder.mutation({
+      query: (data) => ({
+        url: `/api/web/retailer/billing/cancel-addon-subscription`,
+        method: 'DELETE',
+        body: data,
+      }),
+      invalidatesTags: ['billings'],
+    }),
     setupPaymentIntent: builder.mutation({
       query: () => ({
         url: `/api/web/retailer/billing/setup-payment-intent`,
@@ -62,4 +70,5 @@ export const {
   useAttachPaymentMethodMutation,
   useSetupPaymentIntentMutation,
   useGetAllPaymentMethodQuery,
+  useCancelSubscriptionMutation,
 } = billingApi;

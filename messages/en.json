@@ -310,7 +310,7 @@
     "totalAmount": "Total Amount",
     "paymentDate": "Payment Date",
     "subscriptionDetails": "Subscription Details",
-    "placeHolder": "Search By Payment Intent Id or Invoice Number"
+    "placeHolder": "Search By Subscription ID"
   },
   "RetailerBillingDetails": {
     "title": "Subscription Details",

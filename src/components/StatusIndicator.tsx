@@ -30,7 +30,7 @@ export default function StatusIndicator() {
         <Switch
           checked={false}
           switchClassName="cursor-auto bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-blue-500/50 hover:bg-gradient-to-br focus:ring-blue-300"
-          switchKnobClassName="bg-light"
+          switchKnobClassName={status ? 'bg-light' : 'bg-red-500'}
           variant="flat"
           labelClassName="select-none"
           offIcon={<FcLock />}

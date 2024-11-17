@@ -37,8 +37,6 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
     dispatch(removeAddOns(addOnId));
   };
 
-  console.log('Coupon', coupon?.appliedSlugs);
-
   return (
     <div>
       <h2 className="pb-2 text-lg font-medium">{addOns?.length > 0 ? t('planAndAddons') : t('plan')}</h2>
@@ -75,7 +73,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </div>
       )}
 
-      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && addOns.length < 0 && (
+      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && (
         <div className="mb-2 flex justify-between">
           <span>{t('remainingAmount')}</span>
           <span className="text-red-500">

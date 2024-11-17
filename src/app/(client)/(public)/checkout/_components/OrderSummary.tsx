@@ -153,6 +153,8 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   const disabledBranchItems = disableBranchOptions?.filter((item: any) => selectedBranches?.includes(item?.value));
   const disabledStampItems = disableStampOptions?.filter((item: any) => selectedStamps?.includes(item?.value));
 
+  console.log({ activeSubscription, subscription });
+
   return (
     <>
       <div className="rounded-lg border p-4">
