@@ -103,7 +103,7 @@ export const isCheckCouponDisabled = ({
     return true;
   }
   if (
-    activeSubscription?.slug == subscription?.slug ||
+    (activeSubscription?.slug == subscription?.slug && !addOns?.length) ||
     subscription?.slug === 'trial' ||
     coupon ||
     planChangeType === 'downgrade' ||

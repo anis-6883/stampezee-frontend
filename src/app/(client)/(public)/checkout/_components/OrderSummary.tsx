@@ -8,8 +8,9 @@ import { setValue } from '@/features/auth/authSlice';
 import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 import { useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
 import { RootState } from '@/features/store';
-import { resetState } from '@/features/subscription/subscriptionSlice';
+import { removeAddOns, removeCode, removeCoupon, resetState } from '@/features/subscription/subscriptionSlice';
 import { useCreateCheckOutMutation } from '@/features/super-admin/subscription/subscriptionApi';
+import { AddOn } from '@/types';
 import { hasCheckedPurchaseAlert, isCheckoutButtonDisabled } from '@/utils';
 import { translateText } from '@/utils/GoogleTranslate';
 import { useSession } from 'next-auth/react';
@@ -19,6 +20,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { CiEdit } from 'react-icons/ci';
+import { ImBin } from 'react-icons/im';
 import { MdBlock } from 'react-icons/md';
 import { RiChatDeleteLine, RiRefund2Line } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,9 +34,20 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   const t = useTranslations('CheckoutPage');
   const dispatch = useDispatch();
   const { data: session, update }: any = useSession();
-  const { code, subscription, addOns, downgradeRefund, total, activeSubscription, planChangeType, refundableThreshold } = useSelector(
-    (state: RootState) => state.subscriptionSlice
-  );
+  const {
+    code,
+    subscription,
+    coupon,
+    couponDiscount,
+    subTotal,
+    tax,
+    addOns,
+    downgradeRefund,
+    total,
+    activeSubscription,
+    planChangeType,
+    refundableThreshold,
+  } = useSelector((state: RootState) => state.subscriptionSlice);
   const [modalState, setModalState] = useState(false);
 
   const [branchDisableModalState, setBranchDisableModalState] = useState(false);
@@ -125,9 +138,9 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     }
     if (activeSubscription?.slug && activeSubscription?.slug !== 'trial' && addOns.length > 0) {
       if (code) {
-        checkOut({ slug: addOns?.map((addOn) => addOn?.slug), code, currency: selectedCurrency });
+        checkOut({ slugs: addOns?.map((addOn) => addOn?.slug), code, currency: selectedCurrency });
       } else {
-        checkOut({ slug: addOns?.map((addOn) => addOn?.slug), currency: selectedCurrency });
+        checkOut({ slugs: addOns?.map((addOn) => addOn?.slug), currency: selectedCurrency });
       }
       return;
     }
@@ -153,7 +166,9 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   const disabledBranchItems = disableBranchOptions?.filter((item: any) => selectedBranches?.includes(item?.value));
   const disabledStampItems = disableStampOptions?.filter((item: any) => selectedStamps?.includes(item?.value));
 
-  console.log({ activeSubscription, subscription });
+  const handleRemoveAddOn = (addOnId: string) => {
+    dispatch(removeAddOns(addOnId));
+  };
 
   return (
     <>
@@ -162,10 +177,74 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         <hr className=" text-lg font-bold" />
         <CouponForm locale={locale} />
 
+        {subscription?.slug === activeSubscription?.slug && addOns?.length > 0 && (
+          <div>
+            <h2 className="pb-2 text-lg font-medium">Add-Ons</h2>
+            <hr className="p-2 text-lg font-bold" />
+            {addOns?.length > 0 && (
+              <div>
+                {addOns.map((addOn: AddOn, index: number) => (
+                  <div key={index} className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                    <span className="col-span-6">
+                      {addOn.title}{' '}
+                      {coupon?.appliedSlugs?.includes(addOn?.slug) && (
+                        <span>{` (${coupon?.discountType === 'percentage' ? `${coupon?.discount}%` : coupon?.discount} off)`}</span>
+                      )}
+                    </span>
+                    <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">
+                      <ImBin />
+                    </button>
+                    <span className="col-span-4 justify-self-end">{addOn ? parseFloat(addOn?.price?.toFixed(2)).toFixed(2) : 0} CAD</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="mb-2 flex justify-between">
+              <span className="font-semibold">Subtotal</span>
+              <span className="text-red-500">{Math.abs(subTotal).toFixed(2)} CAD</span>
+            </div>
+            <hr className="p-2 text-lg font-bold" />
+            {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && (
+              <div className="mb-2 flex justify-between">
+                <span>
+                  <span className="font-semibold">{stripeInfo?.taxTitle}</span> ({stripeInfo?.taxCost}%)
+                </span>
+                <span className="text-red-500">{tax.toFixed(2)} CAD</span>
+              </div>
+            )}
+
+            {coupon && (
+              <div className="mb-2 grid w-full grid-cols-12 items-center gap-x-3">
+                <span className="col-span-7">
+                  <span className="font-semibold">{t('coupon')}:</span>{' '}
+                  {`${coupon?.title.length > 10 ? `${coupon?.title.slice(0, 10)}...` : coupon?.title} ${coupon?.discountType === 'percentage' ? `(${coupon?.discount}%)` : ''}`}
+                </span>
+                <button
+                  onClick={() => {
+                    dispatch(removeCoupon());
+                    dispatch(removeCode());
+                  }}
+                  className="col-span-1 text-red-500"
+                >
+                  <ImBin />
+                </button>
+                <span className="col-span-4 justify-self-end text-red-500">
+                  {`-${couponDiscount?.toFixed(2)}`} {selectedCurrency}
+                </span>
+              </div>
+            )}
+
+            <div className="flex justify-between text-xl font-bold">
+              <span>Total</span>
+              <span className="text-red-500">{Math.abs(total).toFixed(2)} CAD</span>
+            </div>
+          </div>
+        )}
+
         {subscription?.slug !== activeSubscription?.slug && (subscription?.slug || addOns?.length > 0) && (
           <PlanAddOns stripeInfo={stripeInfo} selectedCurrency={selectedCurrency} />
         )}
-        {(subscription?.slug === activeSubscription?.slug || !subscription?.slug) && (
+        {((subscription?.slug === activeSubscription?.slug && addOns.length === 0) || !subscription?.slug) && (
           <div className="py-4 text-center font-medium text-red-500">{t('cartEmpty')}</div>
         )}
       </div>

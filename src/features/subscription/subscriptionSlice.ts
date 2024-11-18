@@ -169,7 +169,13 @@ const calculateSubTotal = (state: SubscriptionState) => {
 
   // when select a addOn
   if (state.subscriptionType === 'addOn') {
-    state.subTotal = addOnsPrice + planPrice;
+    // when buy just addons
+    if (state?.activeSubscription?.slug === state?.subscription?.slug && state?.addOns?.length > 0) {
+      state.subTotal = addOnsPrice;
+    } else {
+      // when buy addons and plan
+      state.subTotal = addOnsPrice + planPrice;
+    }
     calculateTax(state);
     state.total = state.subTotal + state.tax - couponDiscount;
     state.downgradeRefund = 0;

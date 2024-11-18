@@ -36,8 +36,19 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
   const [createBillingPdfBySuperAdmin, { data: pdfBuffer, isLoading: isPdfBufferLoading }] = useCreateBillingPdfBySuperAdminMutation();
   const { data, isLoading, isError } = useSingleSubscriptionPaymentQuery(id);
   const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetRetailerBillingPortalMutation();
-  const { stripe, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, enrollSubscriptions, retailer, payments } =
-    data?.data || {};
+  const {
+    stripe,
+    planExists,
+    enrollStatus,
+    validityTo,
+    validityFrom,
+    createdAt,
+    status,
+    balanceInfo,
+    enrollSubscriptions,
+    retailer,
+    payments,
+  } = data?.data || {};
   const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
 
   // cancel subscription state
@@ -446,6 +457,8 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
         getPortal={getPortal}
         stripe={stripe}
         id={id}
+        planExists={planExists}
+        enrollSubscriptions={enrollSubscriptions}
       />
     </div>
   );

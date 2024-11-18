@@ -22,6 +22,8 @@ export default function PackageCancelModal({
   id,
   stripe,
   isPlan = false,
+  planExists,
+  enrollSubscriptions,
 }: {
   modalState?: boolean;
   cancelSubscriptionId: string | null;
@@ -32,6 +34,8 @@ export default function PackageCancelModal({
   isPlan?: boolean;
   id?: any;
   stripe?: any;
+  planExists: any;
+  enrollSubscriptions: any;
   setIsSubmitting: (state: boolean) => void;
 }) {
   const t = useTranslations('DeleteConfirmationModal');
@@ -39,7 +43,8 @@ export default function PackageCancelModal({
   const handleCancel = () => {
     setIsSubmitting(true);
     if (cancelSubscriptionId) {
-      if (isPlan) {
+      const totalAddon = enrollSubscriptions?.filter((item: any) => !item?.deletedByRetailer)?.length;
+      if (isPlan || (!planExists && totalAddon < 2)) {
         getPortal({
           customerId: stripe?.customerId,
           returnUrl:

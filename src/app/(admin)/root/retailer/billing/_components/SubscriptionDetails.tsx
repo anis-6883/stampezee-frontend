@@ -50,7 +50,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
     { data: cancelSubscriptionData, error: cancelSubscriptionError, isSuccess, isError: isCancelSubscriptionError },
   ] = useCancelSubscriptionMutation();
   const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetBillingPortalMutation();
-  const { stripe, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, payments, enrollSubscriptions } =
+  const { stripe, planExists, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, payments, enrollSubscriptions } =
     data?.data || {};
   const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
   // const [clientSecret, setClientSecret] = useState('');
@@ -80,7 +80,6 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
     }
     if (isSuccess) {
       setCancelSubmitting(false);
-      console.log('dfdf', cancelSubscriptionData?.message);
       toast.success(cancelSubscriptionData?.message || 'Subscription cancel successfully!');
       setModalState(false);
       setCancelSubscriptionId(null);
@@ -105,11 +104,11 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
       const downloadUrl = window.URL.createObjectURL(new Blob([pdfBuffer], { type: 'application/pdf' }));
       const link = document.createElement('a');
       link.href = downloadUrl;
-      link.setAttribute('download', 'invoice.pdf'); // Set the filename
+      link.setAttribute('download', 'invoice.pdf');
       document.body.appendChild(link);
       link.click();
       link.remove();
-      window.URL.revokeObjectURL(downloadUrl); // Clean up the URL object
+      window.URL.revokeObjectURL(downloadUrl);
     }
   }, [pdfBuffer]);
 
@@ -128,6 +127,8 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
 
   // // Enable the skeleton loader UI for optimal loading.
   // const loader = 'auto';
+
+  console.log('enrollSubscriptions', enrollSubscriptions);
 
   return (
     <div className="w-full">
@@ -491,6 +492,8 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
         getPortal={getPortal}
         stripe={stripe}
         id={id}
+        planExists={planExists}
+        enrollSubscriptions={enrollSubscriptions}
       />
     </div>
   );
