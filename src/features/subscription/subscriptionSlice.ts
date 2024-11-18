@@ -168,51 +168,54 @@ const calculateSubTotal = (state: SubscriptionState) => {
     }) || 0;
 
   // when select a addOn
-  if (state.subscriptionType === 'addOn') {
-    // when buy just addons
-    if (state?.activeSubscription?.slug === state?.subscription?.slug && state?.addOns?.length > 0) {
-      state.subTotal = addOnsPrice;
-    } else {
-      // when buy addons and plan
-      state.subTotal = addOnsPrice + planPrice;
-    }
-    calculateTax(state);
-    state.total = state.subTotal + state.tax - couponDiscount;
-    state.downgradeRefund = 0;
-  }
+  // if (state.subscriptionType === 'addOn') {
+  //   // when buy just addons
+  //   if (state?.activeSubscription?.slug === state?.subscription?.slug && state?.addOns?.length > 0) {
+  //     state.subTotal = addOnsPrice;
+  //     calculateTax(state);
+  //     state.total = state.subTotal + state.tax - couponDiscount;
+  //   } else {
+  //     // when buy addons and plan
+  //     state.subTotal = addOnsPrice + planPrice - remainingBalance;
+  //     calculateTax(state);
+  //     state.total = state.subTotal + state.tax + planSwitchCharge - couponDiscount;
+  //   }
+
+  //   state.downgradeRefund = 0;
+  // }
 
   // when select a plan
-  if (state.subscriptionType === 'plan') {
-    // upgrade or downgrade plan
-    if (state.planChangeType === 'upgrade') {
-      state.subTotal = Math.abs(roundToTwoDecimals(remainingBalance - planPrice));
-      state.downgradeRefund = 0;
-      calculateTax(state);
-      state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge - couponDiscount);
-    } else if (state.planChangeType === 'downgrade') {
-      state.subTotal = Math.abs(roundToTwoDecimals(remainingBalance - planPrice));
-      // downgrade and refundable
-      const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price);
-      if (refundAmount >= 0) {
-        state.total = roundToTwoDecimals(state.subTotal);
-      }
-      // downgrade and payment in stripe
-      else {
-        calculateTax(state);
-        state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge);
-      }
+  // if (state.subscriptionType === 'plan') {
+  // upgrade or downgrade plan
+  if (state.planChangeType === 'upgrade') {
+    state.subTotal = Math.abs(roundToTwoDecimals(planPrice + addOnsPrice));
+    state.downgradeRefund = 0;
+    calculateTax(state);
+    state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge - couponDiscount - remainingBalance);
+  } else if (state.planChangeType === 'downgrade') {
+    state.subTotal = Math.abs(roundToTwoDecimals(remainingBalance - planPrice));
+    // downgrade and refundable
+    const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price);
+    if (refundAmount >= 0) {
+      state.total = roundToTwoDecimals(state.subTotal);
     }
-    // when purchase a plan first time
+    // downgrade and payment in stripe
     else {
-      state.subTotal = planPrice + addOnsPrice;
-      state.downgradeRefund = 0;
       calculateTax(state);
-      state.total =
-        state?.subscription?.slug === 'trial'
-          ? roundToTwoDecimals(remainingBalance - (state.subTotal - couponDiscount))
-          : roundToTwoDecimals(remainingBalance - (state.subTotal + state.tax - couponDiscount));
+      state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge);
     }
   }
+  // when purchase a plan first time
+  else {
+    state.subTotal = planPrice + addOnsPrice;
+    state.downgradeRefund = 0;
+    calculateTax(state);
+    state.total =
+      state?.subscription?.slug === 'trial'
+        ? roundToTwoDecimals(remainingBalance - (state.subTotal - couponDiscount))
+        : roundToTwoDecimals(remainingBalance - (state.subTotal + state.tax - couponDiscount));
+  }
+  // }
 };
 
 // Redux slice

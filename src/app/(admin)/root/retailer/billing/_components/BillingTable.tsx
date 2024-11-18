@@ -6,14 +6,13 @@ import { routes } from '@/config/routes';
 import { useAllBillingQuery } from '@/features/retailer/billing/billingApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
-import _ from 'lodash';
 import moment from 'moment';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
-import { HiShoppingCart } from 'react-icons/hi2';
-import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
+import { GiSandsOfTime } from 'react-icons/gi';
+import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { Badge } from 'rizzui';
 
 export default function BillingTable({ offset }: { offset: number }) {
@@ -32,11 +31,15 @@ export default function BillingTable({ offset }: { offset: number }) {
       header: t('planAndAddOn'),
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
-        return row?.original?.enrollSubscriptions?.map((subscription: any) => (
-          <div className="my-1" key={subscription?._id}>
-            {subscription?.title}
-          </div>
-        ));
+        return row?.original?.enrollSubscriptions?.map((subscription: any) => {
+          if (subscription?.deletedByRetailer) return null;
+
+          return (
+            <div className="my-1" key={subscription?._id}>
+              {subscription?.title}
+            </div>
+          );
+        });
       },
       size: 200,
     },
@@ -46,7 +49,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       size: 200,
     },
     {
-      header: t1('enrollStatus'),
+      header: 'Status',
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         const validityTo = moment.utc(row?.original?.validityTo).utcOffset(Number(offset));
@@ -54,17 +57,13 @@ export default function BillingTable({ offset }: { offset: number }) {
         return (
           <div className="flex items-center justify-center gap-2">
             <div className="text-white">
-              {row?.original?.enrollStatus === 'purchase' ? (
-                <Badge className="bg-primary text-white">
-                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
-                </Badge>
-              ) : row?.original?.enrollStatus === 'upgrade' ? (
+              {row?.original?.status === true ? (
                 <Badge className="!bg-success text-white">
-                  <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                  <GiSandsOfTime className="mr-1 text-xl" /> {t('running')}
                 </Badge>
               ) : (
                 <Badge className="!bg-danger text-white">
-                  <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                  <PiFlagCheckeredFill className="mr-1 text-xl" /> {t('ended')}
                 </Badge>
               )}
             </div>

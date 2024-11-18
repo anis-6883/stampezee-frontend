@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { HiShoppingCart } from 'react-icons/hi2';
-import { ImCancelCircle, ImSpinner9 } from 'react-icons/im';
+import { ImBin, ImCancelCircle, ImSpinner9 } from 'react-icons/im';
 import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
@@ -139,7 +139,10 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
           <Skeleton className="my-3 h-8 w-32 rounded" />
         ) : (
           <h3 className="text-lg font-medium">
-            {`(${enrollSubscriptions?.map((enrollSubscription: any) => enrollSubscription?.title)?.join(',')})`}
+            {`(${enrollSubscriptions
+              ?.filter((enrollSubscription: any) => !enrollSubscription?.deletedByRetailer)
+              ?.map((item: any) => item?.title)
+              .join(',')})`}
             {/* {planSnapshot?.title}
             <span className="font-semibold">({planSnapshot?.type === 'subscription' ? t2('plan') : t2('addOn')})</span> */}
           </h3>
@@ -317,6 +320,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                           <span className="font-semibold text-danger">Renew depend on plan!</span>
                         ) : (
                           <Button
+                            disabled={!status}
                             className="!m-0 !px-2 !py-1.5"
                             color="danger"
                             onClick={() => {
@@ -324,9 +328,9 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                               enrollSubscription?.type === 'subscription' ? setIsPlan(true) : setIsPlan(false);
                               setCancelSubscriptionId(enrollSubscription?._id);
                             }}
-                            text={stripe?.renewCancelAt === null ? 'Cancel' : 'Renew'}
+                            text={stripe?.renewCancelAt === null ? 'Remove' : 'Renew'}
                             postIcon={
-                              stripe?.renewCancelAt === null ? <ImCancelCircle className="text-xl" /> : <MdAutorenew className="text-xl" />
+                              stripe?.renewCancelAt === null ? <ImBin className="text-base" /> : <MdAutorenew className="text-xl" />
                             }
                           />
                         )}

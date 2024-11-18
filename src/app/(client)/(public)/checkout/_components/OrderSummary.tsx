@@ -28,6 +28,7 @@ import { Badge } from 'rizzui';
 import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
 import PlanAddOns from './PlanAddons';
+import UpgradeConfirmModal from './UpgradeConfirmModal';
 
 export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: any) {
   const { push, replace } = useRouter();
@@ -48,7 +49,8 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     planChangeType,
     refundableThreshold,
   } = useSelector((state: RootState) => state.subscriptionSlice);
-  const [modalState, setModalState] = useState(false);
+  const [upgradeModalState, setUpgradeModalState] = useState(false);
+  const [payableAmount, setPayableAmount] = useState(0);
 
   const [branchDisableModalState, setBranchDisableModalState] = useState(false);
   const [disableBranchOptions, setDisableBranchOptions] = useState([]);
@@ -102,30 +104,36 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
           })
         );
         replace(routes.privateRoutes.retailer.dashboard);
+        dispatch(resetState());
       } else {
-        if (checkOutResponse?.data?.url) {
-          replace(checkOutResponse?.data?.url);
+        if (checkOutResponse?.data?.addonExists) {
+          setUpgradeModalState(true);
+          setPayableAmount(checkOutResponse?.data?.payableAmount);
         } else {
-          if (locale === 'en') {
-            toast.success(checkOutResponse?.message || 'Downgrade Successfully!');
+          if (checkOutResponse?.data?.url) {
+            replace(checkOutResponse?.data?.url);
           } else {
-            (async () => {
-              const translatedMessage = await translateText([checkOutResponse?.message], locale, 'en');
-              toast.success(translatedMessage[0] || t('downgradeSuccessfully'));
-            })();
+            if (locale === 'en') {
+              toast.success(checkOutResponse?.message || 'Downgrade Successfully!');
+            } else {
+              (async () => {
+                const translatedMessage = await translateText([checkOutResponse?.message], locale, 'en');
+                toast.success(translatedMessage[0] || t('downgradeSuccessfully'));
+              })();
+            }
+            update({ ...session?.user, ...profile?.data });
+            dispatch(
+              setValue({
+                target: 'user',
+                value: { ...user, ...profile?.data },
+              })
+            );
+            replace(routes?.privateRoutes?.retailer?.dashboard);
+            setSelectedBranches([]);
           }
-          update({ ...session?.user, ...profile?.data });
-          dispatch(
-            setValue({
-              target: 'user',
-              value: { ...user, ...profile?.data },
-            })
-          );
-          replace(routes?.privateRoutes?.retailer?.dashboard);
-          setSelectedBranches([]);
+          dispatch(resetState());
         }
       }
-      dispatch(resetState());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkOutResponse, replace, profileSuccess, checkoutError]);
@@ -138,9 +146,9 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     }
     if (activeSubscription?.slug && activeSubscription?.slug !== 'trial' && addOns.length > 0) {
       if (code) {
-        checkOut({ slugs: addOns?.map((addOn) => addOn?.slug), code, currency: selectedCurrency });
+        checkOut({ slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)], code, currency: selectedCurrency });
       } else {
-        checkOut({ slugs: addOns?.map((addOn) => addOn?.slug), currency: selectedCurrency });
+        checkOut({ slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)], currency: selectedCurrency });
       }
       return;
     }
@@ -168,6 +176,11 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
 
   const handleRemoveAddOn = (addOnId: string) => {
     dispatch(removeAddOns(addOnId));
+  };
+
+  const handleUpgradeConfirm = () => {
+    replace(checkOutResponse?.data?.url);
+    dispatch(resetState());
   };
 
   return (
@@ -341,6 +354,14 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         disableStampOptions={disableStampOptions}
         modalState={branchDisableModalState}
         setModalState={setBranchDisableModalState}
+      />
+      <UpgradeConfirmModal
+        modalState={upgradeModalState}
+        setModalState={setUpgradeModalState}
+        payableAmount={payableAmount}
+        total={total}
+        selectedCurrency={selectedCurrency}
+        handleUpgradeConfirm={handleUpgradeConfirm}
       />
     </>
   );

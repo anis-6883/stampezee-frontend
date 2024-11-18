@@ -73,16 +73,6 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </div>
       )}
 
-      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && (
-        <div className="mb-2 flex justify-between">
-          <span>{t('remainingAmount')}</span>
-          <span className="text-red-500">
-            -{remainingAmount ? remainingAmount : 0}
-            {` ${selectedCurrency}`}
-          </span>
-        </div>
-      )}
-
       <div className="mb-2 flex justify-between">
         <span className="font-semibold">{t('subtotal')}</span>
         <span className="text-red-500">
@@ -101,7 +91,17 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         </div>
       )}
 
-      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && addOns.length < 0 && downgradeRefund <= 0 && total !== 0 && (
+      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && (
+        <div className="mb-2 flex justify-between">
+          <span>{t('remainingAmount')}</span>
+          <span className="text-red-500">
+            -{remainingAmount ? remainingAmount : 0}
+            {` ${selectedCurrency}`}
+          </span>
+        </div>
+      )}
+
+      {activeSubscription?.slug && activeSubscription?.slug !== 'trial' && downgradeRefund <= 0 && total !== 0 && (
         <div className="mb-2 flex justify-between">
           <span className="font-semibold">{t('planChangeCost')}</span>
           <span className="text-red-500">

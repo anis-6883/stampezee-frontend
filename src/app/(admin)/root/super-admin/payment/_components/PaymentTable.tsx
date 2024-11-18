@@ -55,11 +55,15 @@ export default function PaymentTable({ offset }: { offset: number }) {
       header: 'Plan/Add-on',
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
-        return row?.original?.enrollSubscriptions?.map((subscription: any) => (
-          <div className="my-1" key={subscription?._id}>
-            {subscription?.title}
-          </div>
-        ));
+        return row?.original?.enrollSubscriptions?.map((subscription: any) => {
+          if (subscription?.deletedByRetailer) return null;
+
+          return (
+            <div className="my-1" key={subscription?._id}>
+              {subscription?.title}
+            </div>
+          );
+        });
       },
       size: 300,
     },
