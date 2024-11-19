@@ -144,7 +144,18 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       // setModalState(true);
       return;
     }
-    if (activeSubscription?.slug && activeSubscription?.slug !== 'trial' && addOns.length > 0) {
+
+    // when buy just addons
+    if (activeSubscription?.slug === subscription?.slug && addOns?.length > 0) {
+      if (code) {
+        checkOut({ slugs: addOns?.map((addOn) => addOn?.slug), code, currency: selectedCurrency });
+      } else {
+        checkOut({ slugs: addOns?.map((addOn) => addOn?.slug), currency: selectedCurrency });
+      }
+      return;
+    }
+    // subscription upgrade with addons
+    if (planChangeType === 'upgrade' && activeSubscription?.slug && activeSubscription?.slug !== 'trial' && addOns.length > 0) {
       if (code) {
         checkOut({ slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)], code, currency: selectedCurrency });
       } else {
@@ -153,15 +164,24 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       return;
     }
 
+    // subscription downgrade
+
     if (planChangeType === 'downgrade') {
       if (selectedBranches?.length === totalDisabledBranch && selectedStamps?.length === totalDisabledStamp) {
-        checkOut({ slug: subscription.slug, branchIds: selectedBranches, stampIds: selectedStamps, currency: selectedCurrency });
+        checkOut({
+          slugs: [subscription.slug, ...addOns?.map((addOn) => addOn?.slug)],
+          branchIds: selectedBranches,
+          stampIds: selectedStamps,
+          currency: selectedCurrency,
+        });
       } else {
         setBranchDisableModalState(true);
       }
 
       return;
     }
+    // 1. new subscription buy with addons and without addons
+    // 2. subscription upgrade without addons
     if (subscription?.slug) {
       if (code) {
         checkOut({ slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)], code, currency: selectedCurrency });
@@ -362,6 +382,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         total={total}
         selectedCurrency={selectedCurrency}
         handleUpgradeConfirm={handleUpgradeConfirm}
+        planChangeType={planChangeType}
       />
     </>
   );

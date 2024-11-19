@@ -6,12 +6,14 @@ import { routes } from '@/config/routes';
 import { useAllBillingQuery } from '@/features/retailer/billing/billingApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
-import moment from 'moment';
+import _ from 'lodash';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 import { GiSandsOfTime } from 'react-icons/gi';
+import { HiShoppingCart } from 'react-icons/hi2';
+import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { Badge } from 'rizzui';
 
@@ -52,8 +54,6 @@ export default function BillingTable({ offset }: { offset: number }) {
       header: 'Status',
       accessorKey: 'status',
       Cell: ({ row }: any) => {
-        const validityTo = moment.utc(row?.original?.validityTo).utcOffset(Number(offset));
-
         return (
           <div className="flex items-center justify-center gap-2">
             <div className="text-white">
@@ -78,21 +78,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       },
       size: 200,
     },
-    {
-      header: t('expireDate'),
-      Cell: ({ row }: any) => (
-        <div className="text-md mx-auto text-start">
-          <p>{convertDateByOffset(row?.original?.validityTo, offset)}</p>
-        </div>
-      ),
-      mantineTableHeadCellProps: {
-        align: 'start',
-      },
-      mantineTableBodyCellProps: {
-        align: 'center',
-      },
-      size: 230,
-    },
+
     {
       header: t('paymentDate'),
       Cell: ({ row }: any) => (
@@ -107,6 +93,38 @@ export default function BillingTable({ offset }: { offset: number }) {
         align: 'center',
       },
       size: 230,
+    },
+
+    {
+      header: t1('enrollStatus'),
+      Cell: ({ row }: any) => {
+        return (
+          <div className="flex items-center justify-center gap-2">
+            <div className="text-white">
+              {row?.original?.enrollStatus === 'purchase' ? (
+                <Badge className="bg-primary text-white">
+                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : row?.original?.enrollStatus === 'upgrade' ? (
+                <Badge className="!bg-success text-white">
+                  <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : (
+                <Badge className="!bg-danger text-white">
+                  <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              )}
+            </div>
+          </div>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+      size: 200,
     },
 
     {

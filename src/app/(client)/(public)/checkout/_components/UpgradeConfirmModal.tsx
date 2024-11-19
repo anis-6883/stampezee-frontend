@@ -12,11 +12,13 @@ export default function UpgradeConfirmModal({
   payableAmount,
   total,
   handleUpgradeConfirm,
+  planChangeType,
 }: {
   modalState?: boolean;
   payableAmount: number;
   total: number;
   selectedCurrency: string;
+  planChangeType: string;
   setModalState: (state: boolean) => void;
   handleUpgradeConfirm: () => void;
 }) {
@@ -35,7 +37,7 @@ export default function UpgradeConfirmModal({
           </Link>
         </div>
 
-        <h2 className="my-5 text-center text-lg font-semibold text-danger">Upgrade Confirmation!</h2>
+        <h2 className="my-5 text-center text-lg font-semibold text-danger">{`${planChangeType === 'downgrade' ? 'Downgrade' : 'Upgrade'} Confirmation!`}</h2>
 
         <span className="text-center text-base font-medium">
           Your upgrade includes an additional charge for retaining your previous add-on(s).
@@ -44,7 +46,8 @@ export default function UpgradeConfirmModal({
         </span>
 
         <h2 className="my-5 text-lg font-semibold text-danger">
-          The total payable amount is {`${total} + ${payableAmount} ${selectedCurrency}`}
+          The total payable amount is{' '}
+          {`${total} + ${payableAmount} = ${(Number(total) + Number(payableAmount)).toFixed(2)} ${selectedCurrency}`}
         </h2>
         <div className="mt-10 flex justify-end gap-2">
           <Button

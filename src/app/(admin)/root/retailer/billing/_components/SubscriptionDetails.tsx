@@ -128,8 +128,6 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
   // // Enable the skeleton loader UI for optimal loading.
   // const loader = 'auto';
 
-  console.log('enrollSubscriptions', enrollSubscriptions);
-
   return (
     <div className="w-full">
       {/* subscriptions details  */}

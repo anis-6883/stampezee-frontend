@@ -6,11 +6,14 @@ import { routes } from '@/config/routes';
 import { useGetSubscriptionPaymentsQuery } from '@/features/super-admin/payment/paymentApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
+import _ from 'lodash';
 import moment from 'moment';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 import { GiSandsOfTime } from 'react-icons/gi';
+import { HiShoppingCart } from 'react-icons/hi2';
+import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { Badge } from 'rizzui';
 
@@ -65,7 +68,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
           );
         });
       },
-      size: 300,
+      size: 200,
     },
     {
       header: 'Subscription ID',
@@ -115,6 +118,38 @@ export default function PaymentTable({ offset }: { offset: number }) {
         align: 'center',
       },
       size: 220,
+    },
+
+    {
+      header: 'Enroll Status',
+      Cell: ({ row }: any) => {
+        return (
+          <div className="flex items-center justify-center gap-2">
+            <div className="text-white">
+              {row?.original?.enrollStatus === 'purchase' ? (
+                <Badge className="bg-primary text-white">
+                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : row?.original?.enrollStatus === 'upgrade' ? (
+                <Badge className="!bg-success text-white">
+                  <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : (
+                <Badge className="!bg-danger text-white">
+                  <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              )}
+            </div>
+          </div>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+      size: 200,
     },
     {
       header: 'Actions',

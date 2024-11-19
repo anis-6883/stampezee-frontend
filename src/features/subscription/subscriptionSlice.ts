@@ -73,7 +73,7 @@ const calculateAddOnsPrice = (addOns: AddOn[]) => {
 };
 
 const calculateTaxAmount = (subTotal: number, taxPercentage: number) => {
-  return roundToTwoDecimals((subTotal * taxPercentage) / 100);
+  return (subTotal * taxPercentage) / 100;
 };
 
 // Set Remaining Balance
@@ -143,10 +143,12 @@ const calculateDowngradeRefund = (state: SubscriptionState, targetPlan: Subscrip
       defaultCurrencyExchangeRate: state.activeSubscription?.planPaymentCurrency,
       price: state.remainingBalance,
     }) || 0;
-  const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price);
+  const addOnsPrice = calculateAddOnsPrice(state.addOns);
+  const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price - addOnsPrice);
+
   return refundAmount >= 0
-    ? roundToTwoDecimals(remainingBalance - targetPlan.price)
-    : roundToTwoDecimals(remainingBalance - (targetPlan.price + state.tax + state.planChangeCost));
+    ? roundToTwoDecimals(refundAmount)
+    : roundToTwoDecimals(remainingBalance - (targetPlan.price + addOnsPrice + state.tax + state.planChangeCost));
 };
 
 // Calculate Total and SubTotal And Updated State
@@ -193,27 +195,36 @@ const calculateSubTotal = (state: SubscriptionState) => {
     calculateTax(state);
     state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge - couponDiscount - remainingBalance);
   } else if (state.planChangeType === 'downgrade') {
-    state.subTotal = Math.abs(roundToTwoDecimals(remainingBalance - planPrice));
+    state.subTotal = Math.abs(roundToTwoDecimals(planPrice + addOnsPrice));
     // downgrade and refundable
-    const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price);
+    const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price - addOnsPrice);
     if (refundAmount >= 0) {
-      state.total = roundToTwoDecimals(state.subTotal);
+      state.total = roundToTwoDecimals(refundAmount);
     }
     // downgrade and payment in stripe
     else {
       calculateTax(state);
-      state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge);
+      state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge - remainingBalance);
     }
+    state.downgradeRefund = calculateDowngradeRefund(state, state.subscription);
   }
   // when purchase a plan first time
   else {
-    state.subTotal = planPrice + addOnsPrice;
-    state.downgradeRefund = 0;
-    calculateTax(state);
-    state.total =
-      state?.subscription?.slug === 'trial'
-        ? roundToTwoDecimals(remainingBalance - (state.subTotal - couponDiscount))
-        : roundToTwoDecimals(remainingBalance - (state.subTotal + state.tax - couponDiscount));
+    // when buy just addons
+    if (state?.activeSubscription?.slug === state?.subscription?.slug && state?.addOns?.length > 0) {
+      state.subTotal = addOnsPrice;
+      calculateTax(state);
+      state.total = state.subTotal + state.tax - couponDiscount;
+      state.downgradeRefund = 0;
+    } else {
+      state.subTotal = planPrice + addOnsPrice;
+      state.downgradeRefund = 0;
+      calculateTax(state);
+      state.total =
+        state?.subscription?.slug === 'trial'
+          ? roundToTwoDecimals(remainingBalance - (state.subTotal - couponDiscount))
+          : roundToTwoDecimals(remainingBalance - (state.subTotal + state.tax - couponDiscount));
+    }
   }
   // }
 };
@@ -404,7 +415,6 @@ const subscriptionSlice = createSlice({
         state.subscription = action.payload;
       }
       calculateSubTotal(state);
-      state.downgradeRefund = calculateDowngradeRefund(state, action.payload);
     },
     resetState: (state) => {
       const { planChangeCost, taxPercentage, taxStatus, currency, refundableThreshold, defaultCurrency } = state;
