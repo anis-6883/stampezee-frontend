@@ -40,7 +40,8 @@ export default function UpgradeConfirmModal({
         <h2 className="my-5 text-center text-lg font-semibold text-danger">{`${planChangeType === 'downgrade' ? 'Downgrade' : 'Upgrade'} Confirmation!`}</h2>
 
         <span className="text-center text-base font-medium">
-          Your upgrade includes an additional charge for retaining your previous add-on(s).
+          Your {`${planChangeType === 'downgrade' ? 'downgrade' : 'upgrade'}`} includes an additional charge for retaining your previous
+          add-on(s).
           <span className=" text-danger"> The total extra payable amount is {`${payableAmount} ${selectedCurrency}`}</span>. Confirm to
           proceed with your enhanced plan!
         </span>
