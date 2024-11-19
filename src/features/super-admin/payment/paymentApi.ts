@@ -13,7 +13,7 @@ export const paymentApi = apiSlice.injectEndpoints({
     }),
     singleSubscriptionPayment: builder.query({
       query: (_id) => `/api/secret-root/admin/super-admin/payment/subscription/find/${_id}`,
-      providesTags: (result, error, arg) => [{ type: 'payment', id: arg }],
+      providesTags: ['payments'],
       keepUnusedDataFor: 10,
     }),
     createBillingPdfBySuperAdmin: builder.mutation({
@@ -23,6 +23,14 @@ export const paymentApi = apiSlice.injectEndpoints({
         // body: data,
         responseHandler: (response) => response.blob(),
       }),
+    }),
+    cancelSubscriptionByAdmin: builder.mutation({
+      query: (data) => ({
+        url: `/api/secret-root/admin/super-admin/payment/cancel-addon-subscription`,
+        method: 'DELETE',
+        body: data,
+      }),
+      invalidatesTags: ['payments'],
     }),
     getRetailerBillingPortal: builder.mutation({
       query: (data) => ({
@@ -39,4 +47,5 @@ export const {
   useSingleSubscriptionPaymentQuery,
   useGetRetailerBillingPortalMutation,
   useCreateBillingPdfBySuperAdminMutation,
+  useCancelSubscriptionByAdminMutation,
 } = paymentApi;

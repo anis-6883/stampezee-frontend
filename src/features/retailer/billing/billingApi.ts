@@ -13,7 +13,7 @@ export const billingApi = apiSlice.injectEndpoints({
     }),
     singleBilling: builder.query({
       query: (_id) => `/api/web/retailer/billing/find/${_id}`,
-      providesTags: (result, error, arg) => [{ type: 'billing', id: arg }],
+      providesTags: ['billings'],
       keepUnusedDataFor: 10,
     }),
     createBillingPdf: builder.mutation({
@@ -31,7 +31,44 @@ export const billingApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getAllPaymentMethod: builder.query({
+      query: ({ customerId, limit }) => ({
+        url: `/api/web/retailer/billing/payment-method/all/${customerId}?limit=${limit}`,
+        method: 'GET',
+      }),
+    }),
+    attachPaymentMethod: builder.mutation({
+      query: (data) => ({
+        url: `/api/web/retailer/billing/attach-payment-method`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    cancelSubscription: builder.mutation({
+      query: (data) => ({
+        url: `/api/web/retailer/billing/cancel-addon-subscription`,
+        method: 'DELETE',
+        body: data,
+      }),
+      invalidatesTags: ['billings'],
+    }),
+    setupPaymentIntent: builder.mutation({
+      query: () => ({
+        url: `/api/web/retailer/billing/setup-payment-intent`,
+        method: 'POST',
+        // body: data,
+      }),
+    }),
   }),
 });
 
-export const { useAllBillingQuery, useSingleBillingQuery, useGetBillingPortalMutation, useCreateBillingPdfMutation } = billingApi;
+export const {
+  useAllBillingQuery,
+  useSingleBillingQuery,
+  useGetBillingPortalMutation,
+  useCreateBillingPdfMutation,
+  useAttachPaymentMethodMutation,
+  useSetupPaymentIntentMutation,
+  useGetAllPaymentMethodQuery,
+  useCancelSubscriptionMutation,
+} = billingApi;

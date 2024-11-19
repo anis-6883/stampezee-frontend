@@ -120,6 +120,7 @@
     "purchaseAlertMessageAfter": "يرجى إضافة المزيد من العناصر للمتابعة",
     "plan": "الخطة",
     "addOn": "الإضافة",
+    "planAndAddons": "الخطة والإضافات",
     "freeTrialActivated": "تم تنشيط التجربة المجانية!",
     "downgradeSuccessfully": "تم تنزيل الخطة بنجاح!",
     "branchDisableMessage": "للتنزيل، يجب عليك <span className=\"font-bold text-danger\">تحديد {totalDisabledBranch} فرع/فروع</span> لتعطيلها بواسطة النظام!",
@@ -306,7 +307,7 @@
     "running": "نشط",
     "ended": "منتهي",
     "subscriptionDetails": "تفاصيل الاشتراك",
-    "placeHolder": "ابحث بمعرف الدفع"
+    "placeHolder": "البحث حسب معرف نية الدفع أو رقم الفاتورة"
   },
   "RetailerBillingDetails": {
     "title": "تفاصيل الاشتراك",

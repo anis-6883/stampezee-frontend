@@ -161,6 +161,7 @@
     "purchaseAlertMessageAfter": "कृपया आगे बढ़ने के लिए अधिक आइटम जोड़ें",
     "plan": "योजना",
     "addOn": "ऐड-ऑन",
+    "planAndAddons": "योजना और ऐड-ऑन",
     "freeTrialActivated": "मुफ्त ट्रायल सक्रिय हो गया!",
     "downgradeSuccessfully": "अपग्रेड सफलतापूर्वक किया गया!",
     "branchDisableMessage": "डाउनग्रेड करने के लिए, आपको <span className=\"font-bold text-danger\">{totalDisabledBranch} शाखा/शाखाओं का चयन</span> करना होगा जिसे सिस्टम द्वारा अक्षम किया जाएगा!",
@@ -306,7 +307,7 @@
     "running": "चल रहा है",
     "ended": "समाप्त",
     "subscriptionDetails": "सदस्यता का विवरण",
-    "placeHolder": "भुगतान ID द्वारा खोजें"
+    "placeHolder": "भुगतान आशय आईडी या चालान संख्या द्वारा खोजें"
   },
   "RetailerBillingDetails": {
     "title": "सदस्यता विवरण",

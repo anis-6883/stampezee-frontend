@@ -161,6 +161,7 @@
     "purchaseAlertMessageAfter": "Добавьте больше товаров, чтобы продолжить",
     "plan": "План",
     "addOn": "Дополнение",
+    "planAndAddons": "План и дополнения",
     "freeTrialActivated": "Бесплатная пробная версия активирована!",
     "downgradeSuccessfully": "Успешное снижение уровня!",
     "branchDisableMessage": "Для снижения уровня необходимо выбрать <span className=\"font-bold text-danger\">{totalDisabledBranch} филиал/ов</span>, которые будут отключены системой!",
@@ -306,7 +307,7 @@
     "running": "Выполняется",
     "ended": "Завершено",
     "subscriptionDetails": "Детали подписки",
-    "placeHolder": "Поиск по ID подписки"
+    "placeHolder": "Поиск по идентификатору платежного намерения или номеру счета-фактуры"
   },
   "RetailerBillingDetails": {
     "title": "Детали подписки",

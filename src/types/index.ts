@@ -391,6 +391,7 @@ export interface Coupon {
   discount: number;
   minPurchaseAmount: number;
   limit: number;
+  appliedSlugs: string[];
 }
 
 // General Settings

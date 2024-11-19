@@ -21,7 +21,7 @@ const CouponForm = ({ locale }: { locale: string }) => {
   const dispatch = useDispatch();
   const t = useTranslations('CheckoutPage');
   const tCommon = useTranslations('RetailerCommon');
-  const { coupon, addOn, subscription, activeSubscription, planChangeType, currency } = useSelector(
+  const { coupon, addOns, subscription, activeSubscription, planChangeType, currency } = useSelector(
     (state: RootState) => state.subscriptionSlice
   );
   const [isCouponSubmitting, setIsCouponSubmitting] = useState<boolean>(false);
@@ -64,7 +64,7 @@ const CouponForm = ({ locale }: { locale: string }) => {
 
   const handleCoupon = async (values: any) => {
     setIsCouponSubmitting(true);
-    const { data }: any = await createCoupon({ code: values?.code, slug: subscription?.slug || addOn?.slug });
+    const { data }: any = await createCoupon({ code: values?.code, slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn.slug)] });
 
     if (data?.status) {
       dispatch(setCode(values.code));
@@ -78,7 +78,7 @@ const CouponForm = ({ locale }: { locale: string }) => {
           <Form className="grid grid-cols-12 justify-between gap-x-2">
             <div className="col-span-7">
               <InputField
-                disabled={isCheckCouponDisabled({ activeSubscription, subscription, addOn, isLoggedIn, coupon, planChangeType })}
+                disabled={isCheckCouponDisabled({ activeSubscription, subscription, addOns, isLoggedIn, coupon, planChangeType })}
                 label=""
                 placeholder="X1Y2Z3"
                 required={false}
@@ -87,7 +87,7 @@ const CouponForm = ({ locale }: { locale: string }) => {
             </div>
             <div className="col-span-5">
               <Button
-                disabled={isCheckCouponDisabled({ activeSubscription, subscription, isLoggedIn, coupon, planChangeType, addOn })}
+                disabled={isCheckCouponDisabled({ activeSubscription, subscription, isLoggedIn, coupon, planChangeType, addOns })}
                 color="danger"
                 text={t('couponButtonText')}
                 className="w-full"

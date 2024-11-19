@@ -161,6 +161,7 @@
     "purchaseAlertMessageAfter": "Please add more items to continue",
     "plan": "Plan",
     "addOn": "Add-On",
+    "planAndAddons": "Plan & Add-Ons",
     "freeTrialActivated": "Free trial activated!",
     "downgradeSuccessfully": "Downgrade Successfully!",
     "branchDisableMessage": "For downgrading, you must <span className=\"font-bold text-danger\">select {totalDisabledBranch} branch/s</span> to disable by the system!",
@@ -305,6 +306,9 @@
     "actions": "Actions",
     "running": "Running",
     "ended": "Ended",
+    "paymentInfo": "Payment Info",
+    "totalAmount": "Total Amount",
+    "paymentDate": "Payment Date",
     "subscriptionDetails": "Subscription Details",
     "placeHolder": "Search By Subscription ID"
   },

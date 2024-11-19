@@ -160,6 +160,7 @@
     "purchaseAlertMessageAfter": "続行するにはさらにアイテムを追加してください",
     "plan": "プラン",
     "addOn": "アドオン",
+    "planAndAddons": "プランとアドオン",
     "freeTrialActivated": "無料試用が有効になりました！",
     "downgradeSuccessfully": "プランの降格が成功しました！",
     "branchDisableMessage": "降格するには、<span className=\"font-bold text-danger\">{totalDisabledBranch} 支店/支店を選択</span>する必要があります！",
@@ -305,7 +306,7 @@
     "running": "実行中",
     "ended": "終了",
     "subscriptionDetails": "サブスクリプションの詳細",
-    "placeHolder": "支払いIDで検索"
+    "placeHolder": "支払い意図IDまたは請求書番号で検索"
   },
   "RetailerBillingDetails": {
     "title": "サブスクリプションの詳細",

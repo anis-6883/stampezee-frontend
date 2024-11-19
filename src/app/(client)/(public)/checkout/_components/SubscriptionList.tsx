@@ -106,7 +106,7 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
       dispatch(removeCode());
       dispatch(removeCoupon());
     }
-    dispatch(resetAddOns());
+    // dispatch(resetAddOns());
   };
 
   return (

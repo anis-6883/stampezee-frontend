@@ -206,7 +206,19 @@ export default function CreateUpdateModel({
                       />
                     )}
 
-                    {formData?.type !== 'subscription' && <InputField name="limit" type="number" label="Limit" placeholder="0" />}
+                    {formData?.type !== 'subscription' && (
+                      <InputField
+                        disabled={
+                          formData?.slug === 'branch' || formData?.slug === 'stamp' || formData?.slug === 'custom_stamp_image'
+                            ? true
+                            : false
+                        }
+                        name="limit"
+                        type="number"
+                        label="Limit"
+                        placeholder="0"
+                      />
+                    )}
                   </div>
 
                   <div className="relative mt-4 grid grid-cols-1 gap-4">

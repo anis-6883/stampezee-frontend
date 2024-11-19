@@ -18,7 +18,7 @@ export interface Currency {
 interface SubscriptionState {
   subscription: Subscription;
   activeSubscription: activeSubscription;
-  addOn: AddOn;
+  addOns: AddOn[];
   coupon: Coupon | null;
   code: string;
   subTotal: number;
@@ -41,7 +41,7 @@ interface SubscriptionState {
 const initialState: SubscriptionState = {
   subscription: { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' },
   activeSubscription: { _id: '', title: '', price: 0, duration: 0, descriptions: [], slug: '', type: '', image: '' },
-  addOn: { _id: '', title: '', price: 0, descriptions: [], slug: '' },
+  addOns: [],
   coupon: null,
   code: '',
   subTotal: 0,
@@ -68,8 +68,12 @@ export const roundToTwoDecimals = (value: number) => {
   return parseFloat(value.toFixed(2));
 };
 
+const calculateAddOnsPrice = (addOns: AddOn[]) => {
+  return roundToTwoDecimals(addOns.reduce((total: number, addOn: AddOn) => total + addOn.price, 0));
+};
+
 const calculateTaxAmount = (subTotal: number, taxPercentage: number) => {
-  return roundToTwoDecimals((subTotal * taxPercentage) / 100);
+  return (subTotal * taxPercentage) / 100;
 };
 
 // Set Remaining Balance
@@ -87,23 +91,30 @@ const updateBalance = (state: SubscriptionState) => {
 
 const calculateTax = (state: SubscriptionState) => {
   if (state.taxStatus === 'on') {
-    if (state.subscriptionType === 'plan') {
-      state.tax = calculateTaxAmount(Math.abs(state?.subscription?.price), state.taxPercentage);
-    } else {
-      state.tax = calculateTaxAmount(Math.abs(state?.addOn?.price), state.taxPercentage);
-    }
+    state.tax = calculateTaxAmount(Math.abs(state.subTotal), state.taxPercentage);
   }
 };
 
 const calculateDiscount = (state: SubscriptionState) => {
-  if (state?.coupon && (state?.subscription?.slug || state?.addOn?.slug)) {
+  if (state?.coupon && (state?.subscription?.slug || state?.addOns?.length > 0)) {
     let price = 0;
     if (state?.subscription?.slug) {
-      price = state?.subscription?.price;
+      state?.coupon?.appliedSlugs?.map((slug) => {
+        if (state?.subscription?.slug === slug) {
+          price = state?.subscription?.price;
+        }
+      });
     }
-    if (state?.addOn?.slug) {
-      price = state?.addOn?.price;
+    if (state?.addOns?.length > 0) {
+      price += state?.addOns?.reduce((acc, curr) => {
+        if (state?.coupon?.appliedSlugs?.includes(curr?.slug)) {
+          acc += curr?.price;
+        }
+
+        return acc;
+      }, 0);
     }
+
     state.couponDiscount =
       state.coupon.discountType === 'percentage'
         ? roundToTwoDecimals((Math.abs(price) * state.coupon.discount) / 100)
@@ -132,16 +143,18 @@ const calculateDowngradeRefund = (state: SubscriptionState, targetPlan: Subscrip
       defaultCurrencyExchangeRate: state.activeSubscription?.planPaymentCurrency,
       price: state.remainingBalance,
     }) || 0;
-  const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price);
+  const addOnsPrice = calculateAddOnsPrice(state.addOns);
+  const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price - addOnsPrice);
+
   return refundAmount >= 0
-    ? roundToTwoDecimals(remainingBalance - targetPlan.price)
-    : roundToTwoDecimals(remainingBalance - (targetPlan.price + state.tax + state.planChangeCost));
+    ? roundToTwoDecimals(refundAmount)
+    : roundToTwoDecimals(remainingBalance - (targetPlan.price + addOnsPrice + state.tax + state.planChangeCost));
 };
 
 // Calculate Total and SubTotal And Updated State
 const calculateSubTotal = (state: SubscriptionState) => {
   const planPrice = state.subscription?.price || 0;
-  const addOnsPrice = state?.addOn?.price;
+  const addOnsPrice = calculateAddOnsPrice(state.addOns);
 
   // Calculate Plan Change Cost with Current Currency
   const planSwitchCharge =
@@ -157,45 +170,63 @@ const calculateSubTotal = (state: SubscriptionState) => {
     }) || 0;
 
   // when select a addOn
-  if (state.subscriptionType === 'addOn') {
-    state.subTotal = addOnsPrice;
-    calculateTax(state);
-    state.total = state.subTotal + state.tax - couponDiscount;
-    state.downgradeRefund = 0;
-  }
+  // if (state.subscriptionType === 'addOn') {
+  //   // when buy just addons
+  //   if (state?.activeSubscription?.slug === state?.subscription?.slug && state?.addOns?.length > 0) {
+  //     state.subTotal = addOnsPrice;
+  //     calculateTax(state);
+  //     state.total = state.subTotal + state.tax - couponDiscount;
+  //   } else {
+  //     // when buy addons and plan
+  //     state.subTotal = addOnsPrice + planPrice - remainingBalance;
+  //     calculateTax(state);
+  //     state.total = state.subTotal + state.tax + planSwitchCharge - couponDiscount;
+  //   }
+
+  //   state.downgradeRefund = 0;
+  // }
 
   // when select a plan
-  if (state.subscriptionType === 'plan') {
-    // upgrade or downgrade plan
-    if (state.planChangeType === 'upgrade') {
-      state.subTotal = Math.abs(roundToTwoDecimals(remainingBalance - planPrice));
-      state.downgradeRefund = 0;
-      calculateTax(state);
-      state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge - couponDiscount);
-    } else if (state.planChangeType === 'downgrade') {
-      state.subTotal = Math.abs(roundToTwoDecimals(remainingBalance - planPrice));
-      // downgrade and refundable
-      const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price);
-      if (refundAmount >= 0) {
-        state.total = roundToTwoDecimals(state.subTotal);
-      }
-      // downgrade and payment in stripe
-      else {
-        calculateTax(state);
-        state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge);
-      }
+  // if (state.subscriptionType === 'plan') {
+  // upgrade or downgrade plan
+  if (state.planChangeType === 'upgrade') {
+    state.subTotal = Math.abs(roundToTwoDecimals(planPrice + addOnsPrice));
+    state.downgradeRefund = 0;
+    calculateTax(state);
+    state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge - couponDiscount - remainingBalance);
+  } else if (state.planChangeType === 'downgrade') {
+    state.subTotal = Math.abs(roundToTwoDecimals(planPrice + addOnsPrice));
+    // downgrade and refundable
+    const refundAmount = roundToTwoDecimals(remainingBalance - state.subscription.price - addOnsPrice);
+    if (refundAmount >= 0) {
+      state.total = roundToTwoDecimals(refundAmount);
     }
-    // when purchase a plan first time
+    // downgrade and payment in stripe
     else {
-      state.subTotal = planPrice;
+      calculateTax(state);
+      state.total = roundToTwoDecimals(state.subTotal + state.tax + planSwitchCharge - remainingBalance);
+    }
+    state.downgradeRefund = calculateDowngradeRefund(state, state.subscription);
+  }
+  // when purchase a plan first time
+  else {
+    // when buy just addons
+    if (state?.activeSubscription?.slug === state?.subscription?.slug && state?.addOns?.length > 0) {
+      state.subTotal = addOnsPrice;
+      calculateTax(state);
+      state.total = state.subTotal + state.tax - couponDiscount;
+      state.downgradeRefund = 0;
+    } else {
+      state.subTotal = planPrice + addOnsPrice;
       state.downgradeRefund = 0;
       calculateTax(state);
       state.total =
         state?.subscription?.slug === 'trial'
-          ? roundToTwoDecimals(remainingBalance - (planPrice - couponDiscount))
-          : roundToTwoDecimals(remainingBalance - (planPrice + state.tax - couponDiscount));
+          ? roundToTwoDecimals(remainingBalance - (state.subTotal - couponDiscount))
+          : roundToTwoDecimals(remainingBalance - (state.subTotal + state.tax - couponDiscount));
     }
   }
+  // }
 };
 
 // Redux slice
@@ -251,11 +282,10 @@ const subscriptionSlice = createSlice({
     },
     setAddOns: (state, action: PayloadAction<AddOn>) => {
       // add-on toggle handle
-      if (state.addOn.slug === action.payload.slug) {
-        state.addOn = { _id: '', title: '', price: 0, descriptions: [], slug: '' };
-      } else {
-        state.addOn = action.payload;
-      }
+      const newAddOn: any = state.addOns.find((item: any) => item._id === action.payload._id);
+      state.addOns = newAddOn
+        ? state.addOns.filter((item: any) => item._id !== newAddOn._id)
+        : [...state.addOns, { ...action.payload, isAddOnsSelect: true }];
       state.subscriptionType = 'addOn';
 
       calculateSubTotal(state);
@@ -272,14 +302,14 @@ const subscriptionSlice = createSlice({
           price: state?.subscription?.price,
         }),
       };
-      state.addOn = {
-        ...state.addOn,
+      state.addOns = state?.addOns?.map((addOn) => ({
+        ...addOn,
         price: calculateCurrencyExchangeRate({
           selectedCurrencyExchangeRate: action.payload,
           defaultCurrencyExchangeRate: state.currency,
-          price: state?.addOn?.price,
+          price: addOn?.price,
         }),
-      };
+      }));
       state.tax = calculateCurrencyExchangeRate({
         selectedCurrencyExchangeRate: action.payload,
         defaultCurrencyExchangeRate: state.currency,
@@ -330,12 +360,12 @@ const subscriptionSlice = createSlice({
       calculateTax(state);
     },
     resetAddOns: (state) => {
-      state.addOn = { _id: '', title: '', price: 0, descriptions: [], slug: '' };
+      state.addOns = [];
       // calculateSubTotal(state);
     },
     removeAddOns: (state, action: PayloadAction<string>) => {
-      state.addOn = { _id: '', title: '', price: 0, descriptions: [], slug: '' };
-      // calculateSubTotal(state);
+      state.addOns = state.addOns.filter((item: any) => item._id !== action.payload);
+      calculateSubTotal(state);
     },
     applyCoupon: (state, action) => {
       state.coupon = action.payload;
@@ -385,7 +415,6 @@ const subscriptionSlice = createSlice({
         state.subscription = action.payload;
       }
       calculateSubTotal(state);
-      state.downgradeRefund = calculateDowngradeRefund(state, action.payload);
     },
     resetState: (state) => {
       const { planChangeCost, taxPercentage, taxStatus, currency, refundableThreshold, defaultCurrency } = state;

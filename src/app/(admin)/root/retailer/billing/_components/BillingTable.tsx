@@ -6,17 +6,20 @@ import { routes } from '@/config/routes';
 import { useAllBillingQuery } from '@/features/retailer/billing/billingApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
-import moment from 'moment';
+import _ from 'lodash';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 import { GiSandsOfTime } from 'react-icons/gi';
+import { HiShoppingCart } from 'react-icons/hi2';
+import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { Badge } from 'rizzui';
 
 export default function BillingTable({ offset }: { offset: number }) {
   const t = useTranslations('RetailerBillingTable');
+  const t1 = useTranslations('RetailerBillingDetailsCard');
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useAllBillingQuery({
@@ -30,43 +33,36 @@ export default function BillingTable({ offset }: { offset: number }) {
       header: t('planAndAddOn'),
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
-        return row?.original?.planSnapshot?.type === 'subscription' ? (
-          <div>{`${row?.original?.planSnapshot?.title}`} Plan</div>
-        ) : (
-          <div>{`${row?.original?.planSnapshot?.title}`} Add-On</div>
-        );
+        return row?.original?.enrollSubscriptions?.map((subscription: any) => {
+          if (subscription?.deletedByRetailer) return null;
+
+          return (
+            <div className="my-1" key={subscription?._id}>
+              {subscription?.title}
+            </div>
+          );
+        });
       },
       size: 200,
     },
     {
       header: t('subscriptionId'),
       accessorKey: 'stripe.subscriptionId',
+      size: 200,
     },
     {
-      header: t('balance'),
-      accessorKey: 'balanceInfo.planCurrentPrice',
-      Cell: ({ row }: any) => (
-        <div className="flex items-center gap-2 font-medium">
-          {row?.original?.balanceInfo?.planCurrentPrice?.toFixed(2)} {row?.original?.balanceInfo?.currency}
-        </div>
-      ),
-      size: 100,
-    },
-    {
-      header: t('planStatus'),
+      header: 'Status',
       accessorKey: 'status',
       Cell: ({ row }: any) => {
-        const validityTo = moment.utc(row?.original?.validityTo).utcOffset(Number(offset));
-
         return (
           <div className="flex items-center justify-center gap-2">
             <div className="text-white">
-              {row?.original?.status === true && moment().isBefore(validityTo) ? (
-                <Badge className="!bg-success">
+              {row?.original?.status === true ? (
+                <Badge className="!bg-success text-white">
                   <GiSandsOfTime className="mr-1 text-xl" /> {t('running')}
                 </Badge>
               ) : (
-                <Badge className="!bg-danger">
+                <Badge className="!bg-danger text-white">
                   <PiFlagCheckeredFill className="mr-1 text-xl" /> {t('ended')}
                 </Badge>
               )}
@@ -80,12 +76,14 @@ export default function BillingTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      size: 200,
     },
+
     {
-      header: t('expireDate'),
+      header: t('paymentDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>{convertDateByOffset(row?.original?.validityTo, offset)}</p>
+          <p>{convertDateByOffset(row?.original?.createdAt, offset)}</p>
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -96,6 +94,39 @@ export default function BillingTable({ offset }: { offset: number }) {
       },
       size: 230,
     },
+
+    {
+      header: t1('enrollStatus'),
+      Cell: ({ row }: any) => {
+        return (
+          <div className="flex items-center justify-center gap-2">
+            <div className="text-white">
+              {row?.original?.enrollStatus === 'purchase' ? (
+                <Badge className="bg-primary text-white">
+                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : row?.original?.enrollStatus === 'upgrade' ? (
+                <Badge className="!bg-success text-white">
+                  <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : (
+                <Badge className="!bg-danger text-white">
+                  <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              )}
+            </div>
+          </div>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+      size: 200,
+    },
+
     {
       header: t('actions'),
       Cell: ({ row }: any) => {
@@ -121,30 +152,32 @@ export default function BillingTable({ offset }: { offset: number }) {
   ];
 
   return (
-    <Table
-      isFetching={isFetching}
-      isLoading={isLoading}
-      response={
-        isLoading
-          ? {
-              data: [],
-              pagination: {
-                totalDocuments: 0,
-              },
-            }
-          : {
-              data: data?.data.docs || [],
-              pagination: {
-                totalDocuments: data?.data.totalDocs || 0,
-              },
-            }
-      }
-      structure={structure}
-      setQuery={setQuery}
-      query={query}
-      searchPlaceHolder={t('placeHolder')}
-      searchFieldWidth="250px"
-      enableRowNumbers={true}
-    />
+    <>
+      <Table
+        isFetching={isFetching}
+        isLoading={isLoading}
+        response={
+          isLoading
+            ? {
+                data: [],
+                pagination: {
+                  totalDocuments: 0,
+                },
+              }
+            : {
+                data: data?.data.docs || [],
+                pagination: {
+                  totalDocuments: data?.data.totalDocs || 0,
+                },
+              }
+        }
+        structure={structure}
+        setQuery={setQuery}
+        query={query}
+        searchPlaceHolder={t('placeHolder')}
+        searchFieldWidth="250px"
+        enableRowNumbers={true}
+      />
+    </>
   );
 }
