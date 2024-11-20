@@ -150,6 +150,7 @@
     "cartEmpty": "カートが空です。プランを選択してください！",
     "refundMessage": "返金されます",
     "disableBranch": "無効にする支店",
+    "deleteStamps": "スタンプを削除:",
     "edit": "編集",
     "checkoutButtonText": "チェックアウトを確認",
     "balance": "残高",
@@ -340,6 +341,13 @@
     "action": "操作",
     "downloadPdf": "PDFをダウンロード",
     "noTransaction": "まだ取引は行われていません!"
+  },
+  "RetailerBillingPackagesTable": {
+    "enrollSubscriptions": "サブスクリプションに登録",
+    "subscriptionItemId": "サブスクリプションアイテムID",
+    "renewStatus": "プランに応じて更新!",
+    "remove": "削除",
+    "renew": "更新"
   },
   "RetailerRefund": {
     "title": "返金管理",

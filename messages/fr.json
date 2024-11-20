@@ -151,6 +151,7 @@
     "cartEmpty": "Votre panier est vide. Sélectionnez un plan!",
     "refundMessage": "Vous recevrez",
     "disableBranch": "Désactiver Succursales",
+    "deleteStamps": "Supprimer les tampons :",
     "edit": "Modifier",
     "checkoutButtonText": "Confirmer le paiement",
     "balance": "Solde",
@@ -341,6 +342,13 @@
     "action": "Action",
     "downloadPdf": "Télécharger PDF",
     "noTransaction": "Aucune transaction n'a encore eu lieu!"
+  },
+  "RetailerBillingPackagesTable": {
+    "enrollSubscriptions": "S'inscrire aux abonnements",
+    "subscriptionItemId": "ID de l'élément d'abonnement",
+    "renewStatus": "Renouveler en fonction du plan!",
+    "remove": "Supprimer",
+    "renew": "Renouveler"
   },
   "RetailerRefund": {
     "title": "Gérer les Remboursements",

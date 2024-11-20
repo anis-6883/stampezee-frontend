@@ -37,6 +37,10 @@ export default function SignUpStatus({ className }: { className?: string }) {
           <div className="mx-auto h-44 w-44">
             {isLoading || isError || dashBoardData === undefined ? (
               <Skeleton className="m-auto h-36 w-36 rounded-full" />
+            ) : dashBoardData?.data?.signup?.retailer == 0 && dashBoardData?.data?.signup?.customer == 0 ? (
+              <div className="flex h-full items-center justify-center">
+                <span className="font-medium text-danger">No Stats Available!</span>
+              </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart className="[&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-white">

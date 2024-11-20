@@ -110,6 +110,7 @@
     "cartEmpty": "سلتك فارغة حالياً. اختر خطة!",
     "refundMessage": "ستحصل على",
     "disableBranch": "تعطيل الفرع/الفروع",
+    "deleteStamps": "حذف الطوابع :",
     "edit": "تعديل",
     "checkoutButtonText": "تأكيد الدفع",
     "balance": "الرصيد",
@@ -341,6 +342,13 @@
     "action": "إجراء",
     "downloadPdf": "تحميل PDF",
     "noTransaction": "لم تتم أي معاملة بعد!"
+  },
+  "RetailerBillingPackagesTable": {
+    "enrollSubscriptions": "اشترك في الاشتراكات",
+    "subscriptionItemId": "معرف عنصر الاشتراك",
+    "renewStatus": "التجديد يعتمد على الخطة!",
+    "remove": "إزالة",
+    "renew": "تجديد"
   },
   "RetailerRefund": {
     "title": "إدارة الاستردادات",

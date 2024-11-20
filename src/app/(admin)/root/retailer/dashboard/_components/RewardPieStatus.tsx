@@ -51,6 +51,10 @@ export default function RewardPieStatus({ className }: { className?: string }) {
           <div className="mx-auto h-44 w-44">
             {isLoading || isError || rewardCollect === undefined ? (
               <Skeleton className="m-auto h-36 w-36 rounded-full" />
+            ) : rewardCollectedTruePercentage === 0 && rewardCollectedFalsePercentage === 0 ? (
+              <div className="flex h-full items-center justify-center">
+                <span className="font-medium text-danger">No Stats Available!</span>
+              </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart className="[&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-white">

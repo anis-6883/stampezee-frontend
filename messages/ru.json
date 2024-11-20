@@ -143,6 +143,7 @@
     "total": "Итого",
     "remainingAmount": "Оставшаяся сумма",
     "subtotal": "Промежуточный итог",
+    "deleteStamps": "Удалить штампы:",
     "vat": "НДС",
     "planChangeCost": "Стоимость смены плана",
     "checkout": "Оформить заказ",
@@ -341,6 +342,13 @@
     "action": "Действие",
     "downloadPdf": "Скачать PDF",
     "noTransaction": "Пока не было никаких транзакций!"
+  },
+  "RetailerBillingPackagesTable": {
+    "enrollSubscriptions": "Зарегистрировать подписки",
+    "subscriptionItemId": "Идентификатор элемента подписки",
+    "renewStatus": "Обновить в зависимости от плана!",
+    "remove": "Удалить",
+    "renew": "Обновить"
   },
   "RetailerRefund": {
     "title": "Управление Возвратами",

@@ -150,6 +150,7 @@
     "cartEmpty": "장바구니가 비어 있습니다. 플랜을 선택하세요!",
     "refundMessage": "환불 받게 됩니다",
     "disableBranch": "지점 비활성화",
+    "deleteStamps": "스탬프 삭제 :",
     "edit": "편집",
     "checkoutButtonText": "결제 확인",
     "balance": "잔액",
@@ -341,6 +342,13 @@
     "action": "작업",
     "downloadPdf": "PDF 다운로드",
     "noTransaction": "아직 거래가 발생하지 않았습니다!"
+  },
+  "RetailerBillingPackagesTable": {
+    "enrollSubscriptions": "구독 등록",
+    "subscriptionItemId": "구독 항목 ID",
+    "renewStatus": "계획에 따라 갱신!",
+    "remove": "제거",
+    "renew": "갱신"
   },
   "RetailerRefund": {
     "title": "환불 관리",
