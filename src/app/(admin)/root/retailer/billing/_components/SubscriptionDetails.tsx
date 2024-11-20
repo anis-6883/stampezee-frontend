@@ -323,10 +323,11 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                                   setSelectedItem({ name: enrollSubscription?.branch[0]?.name, type: 'branch' });
                                 }
                                 if (enrollSubscription?.slug === 'stamp') {
-                                  setSelectedItem({ name: enrollSubscription?.stamp[0]?.name, type: 'stamp' });
+                                  console.log('dfdf', enrollSubscription?.stamp);
+                                  setSelectedItem({ name: enrollSubscription?.stamp[0]?.title, type: 'stamp' });
                                 }
                                 if (enrollSubscription?.slug === 'custom_stamp_image') {
-                                  setSelectedItem({ name: enrollSubscription?.stamp_image[0]?.name, type: 'stamp image' });
+                                  setSelectedItem({ name: enrollSubscription?.stamp_image[0]?.title, type: 'stamp image' });
                                 }
                               }
                               setCancelSubscriptionId(enrollSubscription?._id);
