@@ -151,6 +151,7 @@
     "cartEmpty": "आपकी गाड़ी अभी खाली है। एक योजना चुनें!",
     "refundMessage": "आपको वापस मिलेगा",
     "disableBranch": "शाखा/शाखाओं को अक्षम करें",
+    "deleteStamps": "टिकटें हटाएं :",
     "edit": "संपादित करें",
     "checkoutButtonText": "चेकआउट की पुष्टि करें",
     "balance": "शेष",
@@ -341,6 +342,13 @@
     "action": "क्रिया",
     "downloadPdf": "पीडीएफ डाउनलोड करें",
     "noTransaction": "अभी तक कोई लेन-देन नहीं हुआ!"
+  },
+  "RetailerBillingPackagesTable": {
+    "enrollSubscriptions": "सदस्यता में शामिल करें",
+    "subscriptionItemId": "सदस्यता आइटम आईडी",
+    "renewStatus": "योजना के आधार पर नवीनीकरण!",
+    "remove": "हटाएं",
+    "renew": "नवीनीकरण"
   },
   "RetailerRefund": {
     "title": "रिफंड प्रबंधित करें",

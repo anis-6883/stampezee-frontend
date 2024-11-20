@@ -56,6 +56,7 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
   const [cancelSubscriptionId, setCancelSubscriptionId] = useState(null);
   const [cancelSubmitting, setCancelSubmitting] = useState(false);
   const [isPlan, setIsPlan] = useState(false);
+  const [selectedItem, setSelectedItem] = useState({ name: '', type: '' });
 
   // Handle cancel subscription Response
   useEffect(() => {
@@ -112,20 +113,6 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
 
   return (
     <div className="w-full">
-      <div className="mb-3.5">
-        {isLoading || isError ? (
-          <Skeleton className="my-3 h-8 w-32 rounded" />
-        ) : (
-          <h3 className="text-lg font-medium">
-            {`(${enrollSubscriptions
-              ?.filter((enrollSubscription: any) => !enrollSubscription?.deletedByRetailer)
-              ?.map((item: any) => item?.title)
-              .join(',')})`}
-            {/* {planSnapshot?.title}
-            <span className="font-semibold">({planSnapshot?.type === 'subscription' ? t2('plan') : t2('addOn')})</span> */}
-          </h3>
-        )}
-      </div>
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
           <div className="flex flex-col items-center justify-between font-medium md:flex-row">
@@ -286,7 +273,7 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
                       </td>
 
                       <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                        {stripe?.renewCancelAt && enrollSubscription?.type === 'addon' ? (
+                        {stripe?.renewCancelAt && enrollSubscription?.type === 'addon' && planExists ? (
                           <span className="font-semibold text-danger">Renew depend on plan!</span>
                         ) : (
                           <Button
@@ -295,7 +282,21 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
                             color="danger"
                             onClick={() => {
                               setModalState(true);
-                              enrollSubscription?.type === 'subscription' ? setIsPlan(true) : setIsPlan(false);
+                              if (enrollSubscription?.type === 'subscription') {
+                                setIsPlan(true);
+                                setSelectedItem({ name: '', type: '' });
+                              } else {
+                                setIsPlan(false);
+                                if (enrollSubscription?.slug === 'branch') {
+                                  setSelectedItem({ name: enrollSubscription?.branch[0]?.name, type: 'branch' });
+                                }
+                                if (enrollSubscription?.slug === 'stamp') {
+                                  setSelectedItem({ name: enrollSubscription?.stamp[0]?.name, type: 'stamp' });
+                                }
+                                if (enrollSubscription?.slug === 'custom_stamp_image') {
+                                  setSelectedItem({ name: enrollSubscription?.stamp_image[0]?.name, type: 'stamp image' });
+                                }
+                              }
                               setCancelSubscriptionId(enrollSubscription?._id);
                             }}
                             text={stripe?.renewCancelAt === null ? 'Remove' : 'Renew'}
@@ -463,6 +464,7 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
         id={id}
         planExists={planExists}
         enrollSubscriptions={enrollSubscriptions}
+        selectedItem={selectedItem}
       />
     </div>
   );

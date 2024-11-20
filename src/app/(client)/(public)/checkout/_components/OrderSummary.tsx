@@ -212,7 +212,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
 
         {subscription?.slug === activeSubscription?.slug && addOns?.length > 0 && (
           <div>
-            <h2 className="pb-2 text-lg font-medium">Add-Ons</h2>
+            <h2 className="pb-2 text-lg font-medium">{t('addOns')}</h2>
             <hr className="p-2 text-lg font-bold" />
             {addOns?.length > 0 && (
               <div>
@@ -233,8 +233,10 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
               </div>
             )}
             <div className="mb-2 flex justify-between">
-              <span className="font-semibold">Subtotal</span>
-              <span className="text-red-500">{Math.abs(subTotal).toFixed(2)} CAD</span>
+              <span className="font-semibold">{t('subtotal')}</span>
+              <span className="text-red-500">
+                {Math.abs(subTotal).toFixed(2)} {selectedCurrency}
+              </span>
             </div>
             <hr className="p-2 text-lg font-bold" />
             {stripeInfo?.taxStatus === 'on' && subscription?.slug !== 'trial' && (
@@ -242,7 +244,9 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
                 <span>
                   <span className="font-semibold">{stripeInfo?.taxTitle}</span> ({stripeInfo?.taxCost}%)
                 </span>
-                <span className="text-red-500">{tax.toFixed(2)} CAD</span>
+                <span className="text-red-500">
+                  {tax.toFixed(2)} {selectedCurrency}
+                </span>
               </div>
             )}
 
@@ -269,7 +273,9 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
 
             <div className="flex justify-between text-xl font-bold">
               <span>Total</span>
-              <span className="text-red-500">{Math.abs(total).toFixed(2)} CAD</span>
+              <span className="text-red-500">
+                {Math.abs(total).toFixed(2)} {selectedCurrency}
+              </span>
             </div>
           </div>
         )}
@@ -320,7 +326,8 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
           {selectedStamps?.length > 0 && (
             <>
               <p className="mb-2 mt-2 flex items-center gap-x-1 text-sm font-semibold">
-                <RiChatDeleteLine className="text-xl" /> Delete Stamps :
+                <RiChatDeleteLine className="text-xl" />
+                {t('deleteStamps')}
               </p>
               <div>
                 {disabledStampItems?.map((item: any) => (

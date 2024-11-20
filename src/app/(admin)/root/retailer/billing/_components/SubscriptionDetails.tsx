@@ -36,6 +36,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
   const t = useTranslations('RetailerBillingDetailsCard');
   const t2 = useTranslations('RetailerBillingDetails');
   const t3 = useTranslations('RetailerBillingInvoiceTable');
+  const t4 = useTranslations('RetailerBillingPackagesTable');
   const { push } = useRouter();
 
   // const { data: allPaymentMethod, isLoading: isAllPaymentMethod } = useGetAllPaymentMethodQuery({
@@ -53,6 +54,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
   const { stripe, planExists, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, payments, enrollSubscriptions } =
     data?.data || {};
   const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
+  const [selectPaymentId, setSelectPaymentId] = useState('');
   // const [clientSecret, setClientSecret] = useState('');
 
   // cancel subscription state
@@ -60,6 +62,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
   const [cancelSubscriptionId, setCancelSubscriptionId] = useState(null);
   const [cancelSubmitting, setCancelSubmitting] = useState(false);
   const [isPlan, setIsPlan] = useState(false);
+  const [selectedItem, setSelectedItem] = useState({ name: '', type: '' });
 
   // useEffect(() => {
   //   (async () => {
@@ -113,6 +116,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
   }, [pdfBuffer]);
 
   const handlePdfDownload = async (id: any) => {
+    setSelectPaymentId(id);
     try {
       await createBillingPdf(id);
     } catch (err) {
@@ -128,24 +132,11 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
   // // Enable the skeleton loader UI for optimal loading.
   // const loader = 'auto';
 
+  const totalAddon = enrollSubscriptions?.filter((item: any) => !item?.deletedByRetailer)?.length;
+
   return (
     <div className="w-full">
       {/* subscriptions details  */}
-
-      <div className="mb-3.5">
-        {isLoading || isError ? (
-          <Skeleton className="my-3 h-8 w-32 rounded" />
-        ) : (
-          <h3 className="text-lg font-medium">
-            {`(${enrollSubscriptions
-              ?.filter((enrollSubscription: any) => !enrollSubscription?.deletedByRetailer)
-              ?.map((item: any) => item?.title)
-              .join(',')})`}
-            {/* {planSnapshot?.title}
-            <span className="font-semibold">({planSnapshot?.type === 'subscription' ? t2('plan') : t2('addOn')})</span> */}
-          </h3>
-        )}
-      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
@@ -244,7 +235,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
       </div>
 
       {/* Packages  */}
-      <h2 className="my-5 text-lg font-medium">{'Enroll Subscriptions'}</h2>
+      <h2 className="my-5 text-lg font-medium">{t4('enrollSubscriptions')}</h2>
       <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -256,7 +247,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                 Plan / Add-on
               </th>
               <th scope="col" className="whitespace-nowrap px-6 py-3">
-                subscription Item Id
+                {t4('subscriptionItemId')}
               </th>
 
               <th scope="col" className="whitespace-nowrap px-6 py-3">
@@ -314,8 +305,8 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                       </td>
 
                       <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                        {stripe?.renewCancelAt && enrollSubscription?.type === 'addon' ? (
-                          <span className="font-semibold text-danger">Renew depend on plan!</span>
+                        {stripe?.renewCancelAt && enrollSubscription?.type === 'addon' && planExists ? (
+                          <span className="font-semibold text-danger">{t4('renewStatus')}</span>
                         ) : (
                           <Button
                             disabled={!status}
@@ -323,10 +314,24 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                             color="danger"
                             onClick={() => {
                               setModalState(true);
-                              enrollSubscription?.type === 'subscription' ? setIsPlan(true) : setIsPlan(false);
+                              if (enrollSubscription?.type === 'subscription') {
+                                setIsPlan(true);
+                                setSelectedItem({ name: '', type: '' });
+                              } else {
+                                setIsPlan(false);
+                                if (enrollSubscription?.slug === 'branch') {
+                                  setSelectedItem({ name: enrollSubscription?.branch[0]?.name, type: 'branch' });
+                                }
+                                if (enrollSubscription?.slug === 'stamp') {
+                                  setSelectedItem({ name: enrollSubscription?.stamp[0]?.name, type: 'stamp' });
+                                }
+                                if (enrollSubscription?.slug === 'custom_stamp_image') {
+                                  setSelectedItem({ name: enrollSubscription?.stamp_image[0]?.name, type: 'stamp image' });
+                                }
+                              }
                               setCancelSubscriptionId(enrollSubscription?._id);
                             }}
-                            text={stripe?.renewCancelAt === null ? 'Remove' : 'Renew'}
+                            text={stripe?.renewCancelAt === null ? t4('remove') : t4('renew')}
                             postIcon={
                               stripe?.renewCancelAt === null ? <ImBin className="text-base" /> : <MdAutorenew className="text-xl" />
                             }
@@ -429,7 +434,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
                           onClick={() => handlePdfDownload(payment?._id)}
                           text={t3('downloadPdf')}
                           postIcon={
-                            isPdfBufferLoading ? (
+                            isPdfBufferLoading && selectPaymentId === payment?._id ? (
                               <ImSpinner9 className="animate-spin text-lg" />
                             ) : (
                               <RiDownloadCloud2Fill className="text-lg" />
@@ -496,6 +501,7 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
         id={id}
         planExists={planExists}
         enrollSubscriptions={enrollSubscriptions}
+        selectedItem={selectedItem}
       />
     </div>
   );

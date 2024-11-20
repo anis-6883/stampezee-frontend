@@ -10,13 +10,13 @@ export const stampApi = apiSlice.injectEndpoints({
         if (values.length) return `/api/web/retailer/stamp/all?${new URLSearchParams(queries as any)}`;
         return `/api/web/retailer/stamp-/all`; // Ensure it returns a base URL if no queries are present
       },
-      providesTags: ['retailerStamp'],
+      providesTags: ['retailerStamp', 'branches'],
     }),
     getSingleStamps: builder.query<IResponse, any>({
       query: (id) => {
         return `/api/web/retailer/stamp/${id}`;
       },
-      providesTags: ['retailerStamp'],
+      providesTags: ['retailerStamp', 'branches'],
     }),
     createStamp: builder.mutation<IResponse, any>({
       query: (newStamp) => ({

@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { axiosBackendUrl } from './axios/getAxios';
 
-const API_KEY = 'AIzaSyA0VpTwpD1F3VWNpyKWT84EQHqTYraMyC4';
 const API_URL = 'https://translation.googleapis.com/language/translate/v2';
 
 const translateText = async (text: string[], targetLanguage: string, sourceLanguage: string) => {
-  const response = await axios.post(`${API_URL}?key=${API_KEY}`, {
+  const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
+  const response = await axios.post(`${API_URL}?key=${data?.data?.googleMap?.googleMapsApiKey}`, {
     q: text,
     target: targetLanguage,
     source: sourceLanguage ?? 'en',

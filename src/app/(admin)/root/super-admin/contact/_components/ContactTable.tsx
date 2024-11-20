@@ -2,19 +2,14 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import { useGetAllContactBySuperAdminQuery } from '@/features/super-admin/contact/contactApi';
-import { useDeleteSuperAdminRetailerMutation, useUpdateRetailerStatusMutation } from '@/features/super-admin/retailer/retailerApi';
 import { IQueryType } from '@/types';
-import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
+import { convertDateByOffset } from '@/utils/getFormatDate';
+import { useState } from 'react';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function ContactTable() {
+export default function ContactTable({ offset }: { offset: number }) {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
-  const [deleteState, setDeleteState] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
-  const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllContactBySuperAdminQuery({
@@ -22,34 +17,6 @@ export default function ContactTable() {
     limit: query.pageSize,
     ...searchQuery,
   });
-
-  if (!isLoading) {
-    console.log('Data: ', data);
-  }
-
-  const [deleteRetailer, { isSuccess, isError }] = useDeleteSuperAdminRetailerMutation();
-
-  const [updateStatus] = useUpdateRetailerStatusMutation();
-
-  const handleDelete = async (rowData: any) => {
-    setDeleteState(true);
-    setDeleteId(rowData._id);
-  };
-
-  useEffect(() => {
-    if (isError) {
-      setDeleteSubmitting(false);
-      toast.error('Something went wrong. Please try again!');
-      setDeleteState(false);
-      setDeleteId(null);
-    }
-    if (isSuccess) {
-      setDeleteSubmitting(false);
-      toast.success('Stamps Image deleted successfully!');
-      setDeleteState(false);
-      setDeleteId(null);
-    }
-  }, [isSuccess, isError]);
 
   const structure = [
     {
@@ -71,47 +38,21 @@ export default function ContactTable() {
       header: 'Message',
       accessorKey: 'message',
     },
-    // {
-    //   header: 'Status',
-    //   accessorKey: 'status',
-    //   Cell: ({ row }: any) => {
-    //     return <SwitchButton updateStatus={updateStatus} id={row?.original?._id} status={row?.original?.status} />;
-
-    //     // return row?.original?.status ? <div>Yes</div> : <div>No</div>;
-    //   },
-    //   mantineTableHeadCellProps: {
-    //     align: 'center',
-    //   },
-    //   mantineTableBodyCellProps: {
-    //     align: 'center',
-    //   },
-    // },
-    // {
-    //   header: 'Actions',
-    //   Cell: ({ row }: any) => (
-    //     <div className="flex items-center justify-center gap-2">
-    //       <Button
-    //         color="warning"
-    //         preIcon={<HiOutlinePencil className="text-base" />}
-    //         onClick={() => {
-    //           setFormData({
-    //             ...row.original,
-    //             image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
-    //           });
-    //           setCreateState(true);
-    //         }}
-    //       />
-
-    //       <Button onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
-    //     </div>
-    //   ),
-    //   mantineTableHeadCellProps: {
-    //     align: 'center',
-    //   },
-    //   mantineTableBodyCellProps: {
-    //     align: 'center',
-    //   },
-    // },
+    {
+      header: 'Sent At',
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">
+          <p>{convertDateByOffset(row?.original?.createdAt, offset)}</p>
+        </div>
+      ),
+      mantineTableHeadCellProps: {
+        align: 'start',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+      size: 230,
+    },
   ];
 
   return (
@@ -119,6 +60,7 @@ export default function ContactTable() {
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
 
       <Table
+        enableRowNumbers
         isFetching={isFetching}
         isLoading={isLoading}
         response={
@@ -141,15 +83,6 @@ export default function ContactTable() {
         query={query}
         searchPlaceHolder="Search By Name, Store, Email"
         searchFieldWidth="270px"
-      />
-
-      <DeleteConfirmModal
-        deleteId={deleteId}
-        deleteHandler={deleteRetailer}
-        modalState={deleteState}
-        setModalState={setDeleteState}
-        isSubmitting={deleteSubmitting}
-        setIsSubmitting={setDeleteSubmitting}
       />
     </>
   );

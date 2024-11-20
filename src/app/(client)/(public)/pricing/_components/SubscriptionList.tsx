@@ -93,6 +93,8 @@ export default function SubscriptionList({ locale }: { locale: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile?.data, profileSuccess, data?.data, currencyExchanges, currency]);
 
+  console.log('df', subscription?.length);
+
   return (
     <div>
       {isLoading || translateLoading ? (
@@ -103,7 +105,7 @@ export default function SubscriptionList({ locale }: { locale: string }) {
           <Skeleton className="w-68 h-96 rounded" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${session?.user?.takeFreeTrial ? 'lg:grid-cols-3' : 'lg:grid-cols-4'}`}>
           {subscription?.map((item: any) => <PricingCard key={item._id} item={item} />)}
         </div>
       )}

@@ -33,6 +33,7 @@ import StampPublishedModal from './StampPublishedModal';
 export default function StampTable({ offset }: { offset: number }) {
   const t = useTranslations('RetailerStampTable');
   const tStamp = useTranslations('RetailerStamp');
+  const t2 = useTranslations('RetailerBranchTable');
   const { data: session }: any = useSession();
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -136,7 +137,7 @@ export default function StampTable({ offset }: { offset: number }) {
           </div>
         </div>
       ),
-      size: 350,
+      size: 300,
     },
     {
       header: t('reward'),
@@ -155,7 +156,28 @@ export default function StampTable({ offset }: { offset: number }) {
           </p>
         </div>
       ),
-      size: 250,
+      size: 200,
+    },
+    {
+      header: t2('source'),
+      accessorKey: 'source',
+      Cell: ({ row }: any) => (
+        <div className="flex items-center justify-center gap-2">
+          <div className="text-white">
+            {row?.original?.source === 'addon' ? (
+              <Badge className="!bg-danger">{_.capitalize(row?.original?.source)}</Badge>
+            ) : (
+              <Badge className="bg-primary">{_.capitalize(row?.original?.source)}</Badge>
+            )}
+          </div>
+        </div>
+      ),
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
     },
     {
       header: t('validityDate'),

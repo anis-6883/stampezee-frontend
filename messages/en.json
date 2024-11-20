@@ -151,6 +151,7 @@
     "cartEmpty": "Your cart is currently empty. Select a plan!",
     "refundMessage": "You will get back",
     "disableBranch": "Disable Branches",
+    "deleteStamps": "Delete Stamps :",
     "edit": "Edit",
     "checkoutButtonText": "Confirm Checkout",
     "balance": "Balance",
@@ -344,6 +345,13 @@
     "action": "Action",
     "downloadPdf": "Download PDF",
     "noTransaction": "No transaction happened yet!"
+  },
+  "RetailerBillingPackagesTable": {
+    "enrollSubscriptions": "Enroll Subscriptions",
+    "subscriptionItemId": "Subscription Item Id",
+    "renewStatus": "Renew depend on plan!",
+    "remove": "Remove",
+    "renew": "Renew"
   },
   "RetailerRefund": {
     "title": "Manage Refunds",

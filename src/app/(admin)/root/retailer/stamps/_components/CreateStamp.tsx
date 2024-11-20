@@ -30,7 +30,6 @@ export default function Create({ locale }: { locale: string }) {
   const { data: session }: any = useSession();
   const [createState, setCreateState] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [isClickCustomStampBtn, setIsClickCustomStampBtn] = useState<boolean>(false);
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
   const [submitAction, setSubmitAction] = useState<string | null>(null);

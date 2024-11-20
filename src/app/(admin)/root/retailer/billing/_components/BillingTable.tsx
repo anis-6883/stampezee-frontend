@@ -19,6 +19,7 @@ import { Badge } from 'rizzui';
 
 export default function BillingTable({ offset }: { offset: number }) {
   const t = useTranslations('RetailerBillingTable');
+  const t3 = useTranslations('RetailerBranchTable');
   const t1 = useTranslations('RetailerBillingDetailsCard');
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
@@ -51,7 +52,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       size: 200,
     },
     {
-      header: 'Status',
+      header: t3('status'),
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         return (

@@ -24,6 +24,7 @@ export default function PackageCancelModal({
   isPlan = false,
   planExists,
   enrollSubscriptions,
+  selectedItem,
 }: {
   modalState?: boolean;
   cancelSubscriptionId: string | null;
@@ -36,6 +37,7 @@ export default function PackageCancelModal({
   stripe?: any;
   planExists: any;
   enrollSubscriptions: any;
+  selectedItem: any;
   setIsSubmitting: (state: boolean) => void;
 }) {
   const t = useTranslations('DeleteConfirmationModal');
@@ -72,7 +74,20 @@ export default function PackageCancelModal({
           </ActionIcon>
         </div>
         <p className="text-base font-medium">
-          {stripe?.renewCancelAt === null ? 'Do you want to cancel it ?' : 'Do you want to renew it ?'}
+          {stripe?.renewCancelAt === null ? (
+            selectedItem?.name ? (
+              <span>
+                Do you want to cancel it ? This will delete your associated{' '}
+                <span className="text-danger">
+                  {selectedItem?.name} {selectedItem?.type}.
+                </span>
+              </span>
+            ) : (
+              'Do you want to cancel it ?'
+            )
+          ) : (
+            'Do you want to renew it ?'
+          )}
         </p>
         {isPlan && (
           <div className="my-3">
