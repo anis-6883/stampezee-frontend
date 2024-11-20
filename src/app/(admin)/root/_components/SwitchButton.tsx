@@ -37,7 +37,7 @@ export default function SwitchButton({ updateStatus, id, status }: { updateStatu
     <Switch
       onChange={handleUpdateStatus}
       checked={checked}
-      switchClassName={`${status ? 'bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-blue-500/50 hover:bg-gradient-to-br focus:ring-blue-300' : 'bg-gradient-to-r from-red-500 via-red-600 to-red-700 shadow-red-500/50 hover:bg-gradient-to-br focus:ring-red-300'}`}
+      switchClassName={`${checked ? 'bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-blue-500/50 hover:bg-gradient-to-br focus:ring-blue-300' : 'bg-gradient-to-r from-red-500 via-red-600 to-red-700 shadow-red-500/50 hover:bg-gradient-to-br focus:ring-red-300'}`}
       switchKnobClassName={'bg-light'}
       variant="flat"
       labelClassName="select-none"
