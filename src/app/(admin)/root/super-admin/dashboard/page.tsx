@@ -1,6 +1,6 @@
 import PageHeader from '@/components/page-header';
 import { metaObject } from '@/config/site.config';
-// import RetailerAndCustomerStats from './_components/RetailerAndCustomerStats';
+import RetailerAndCustomerStats from './_components/RetailerAndCustomerStats';
 import Revenue from './_components/Revenue';
 import SignUpStatus from './_components/SignUpStatus';
 import StateCardView from './_components/StateCardView';
@@ -24,7 +24,7 @@ export default function Page() {
         <SignUpStatus className="col-span-12 md:col-span-6" />
       </div>
       <TopBranchTable />
-      {/* <RetailerAndCustomerStats className="my-5" /> */}
+      <RetailerAndCustomerStats className="my-5" />
     </>
   );
 }
