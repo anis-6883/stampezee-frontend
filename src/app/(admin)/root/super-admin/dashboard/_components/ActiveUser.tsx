@@ -32,6 +32,7 @@ function createTextLabels(width: number) {
       style: { ...label.style, fontSize: '70%' },
     }));
   }
+
   return labels;
 }
 
@@ -74,7 +75,7 @@ export default function ActiveUsers({
   };
 
   const getHref = ({ countryName }: CountryContext) => ({
-    href: `https://en.wikipedia.org/wiki/${encodeURIComponent(countryName)}`,
+    href: `https://en.wikipedia.org/wiki/${encodeURIComponent(countryName || '')}`,
     target: '_blank',
   });
 

@@ -44,10 +44,11 @@ function DropdownMenu({
     replace(role === 'super_admin' ? routes.publicRoutes.superAdminLogin : routes.publicRoutes.retailerLogin);
   };
 
-  let fullName = user?.firstName;
+  let fullName = user?.firstName ? user?.firstName + ' ' + user?.lastName : '';
 
   if (fullName.length >= 18) {
-    fullName = user?.firstName;
+    const lastName = user?.lastName ? user?.lastName.charAt(0).toUpperCase() : '';
+    fullName = user?.firstName + ' ' + lastName + '.';
   }
 
   return (

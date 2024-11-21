@@ -12,6 +12,7 @@ export default function RetailerAndCustomerStats({ className }: { className?: st
   const { data: retailerWiseData, isLoading: isRetailerWiseDataLoading } = useGetRetailerStatsWithCountryWiseQuery({});
   const { data: customerWiseData, isLoading: isCustomerWiseDataLoading } = useGetCustomerStatsWithCountryWiseQuery({});
 
+
   if (isRetailerWiseDataLoading || isCustomerWiseDataLoading) {
     return (
       <div className="m-auto">
