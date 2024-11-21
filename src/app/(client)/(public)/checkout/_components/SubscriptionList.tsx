@@ -134,10 +134,10 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
       ) : (
         <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
           {plans?.map((item: Subscription, index: number) => {
-            if (session?.user?.takeFreeTrial && item?.slug === 'trial') return null;
+            if (session?.user?.takeFreeTrial && item?.slug === 'trial' && session?.user?.plan !== 'trial') return null;
             return item?.isBlocked ? (
               <div key={item._id} className={`relative cursor-not-allowed rounded-lg border p-4`}>
-                {session?.user?.plan !== 'trial' && session?.user?.plan === item?.slug && (
+                {session?.user?.plan === item?.slug && (
                   <div
                     className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
                   >

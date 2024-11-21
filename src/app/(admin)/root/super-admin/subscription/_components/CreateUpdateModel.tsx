@@ -13,7 +13,6 @@ import toast from 'react-hot-toast';
 import { BsCheck2Circle, BsPatchCheck } from 'react-icons/bs';
 import { IoCloseOutline, IoStorefrontOutline } from 'react-icons/io5';
 import { LuCalendarDays, LuCircleDollarSign } from 'react-icons/lu';
-import { RiTeamLine } from 'react-icons/ri';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
@@ -186,7 +185,7 @@ export default function CreateUpdateModel({
                       />
                     )}
 
-                    {formData?.type === 'subscription' && (
+                    {/* {formData?.type === 'subscription' && (
                       <InputField
                         name="allowTotalTeamMember"
                         label="Total Team Member"
@@ -194,7 +193,7 @@ export default function CreateUpdateModel({
                         placeholder="0"
                         prefix={<RiTeamLine className="text-xl" />}
                       />
-                    )}
+                    )} */}
 
                     {formData?.type === 'subscription' && (
                       <InputField

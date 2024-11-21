@@ -105,7 +105,9 @@ export default function SubscriptionList({ locale }: { locale: string }) {
           <Skeleton className="w-68 h-96 rounded" />
         </div>
       ) : (
-        <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${session?.user?.takeFreeTrial ? 'lg:grid-cols-3' : 'lg:grid-cols-4'}`}>
+        <div
+          className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${session?.user?.takeFreeTrial && session?.user?.plan !== 'trial' ? 'lg:grid-cols-3' : 'lg:grid-cols-4'}`}
+        >
           {subscription?.map((item: any) => <PricingCard key={item._id} item={item} />)}
         </div>
       )}
