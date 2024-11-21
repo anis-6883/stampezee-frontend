@@ -20,9 +20,10 @@ import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
 function capitalizeWords(input: string): string {
+  if (!input) return '';
   return input
     .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map((word) => word?.charAt(0)?.toUpperCase() + word?.slice(1)?.toLowerCase())
     .join(' ');
 }
 
