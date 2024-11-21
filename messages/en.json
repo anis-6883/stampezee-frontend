@@ -288,6 +288,22 @@
     "totalOrder": "Total Order",
     "totalRevenue": "Total Revenue"
   },
+  "retailerDashboardStampAndCustomerStats": {
+    "stampCollect": "Stamp Collect",
+    "activeStampCollect": "Active Stamp Collect",
+    "noDate": "No Date",
+    "withDate": "With Date",
+    "stampCollectStatus": "Avg. Collected Stamp per Customer",
+    "totalCollectedStamp": "Total Collected Stamp",
+    "totalUniqueCustomer": "Total Unique Customer",
+    "rewardCollectStatus": "Reward Collect Status",
+    "rewardEligible": "Reward Eligible",
+    "rewardEfficacy": "Reward Efficacy",
+    "collected": "Collected",
+    "notCollected": "Not Collected",
+    "noStatsAvailable": "No Stats Available!",
+    "noDataAvailable": "No Data Available!"
+  },
   "RetailerMembership": {
     "switchPlan": "Switch a Plan",
     "selectPlan": "Select a Plan",

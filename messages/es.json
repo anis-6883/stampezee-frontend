@@ -288,6 +288,22 @@
     "totalOrder": "Total de Pedidos",
     "totalRevenue": "Ingresos Totales"
   },
+  "retailerDashboardStampAndCustomerStats": {
+    "stampCollect": "Colección de Sello",
+    "activeStampCollect": "Colección de Sello Activa",
+    "noDate": "Sin Fecha",
+    "withDate": "Con Fecha",
+    "stampCollectStatus": "Promedio de Sellos Recogidos por Cliente",
+    "totalCollectedStamp": "Total de Sellos Recogidos",
+    "totalUniqueCustomer": "Total de Clientes Únicos",
+    "rewardCollectStatus": "Estado de Recolección de Recompensas",
+    "rewardEligible": "Elegible para Recompensa",
+    "rewardEfficacy": "Eficacia de la Recompensa",
+    "collected": "Recogido",
+    "notCollected": "No Recogido",
+    "noStatsAvailable": "¡No hay estadísticas disponibles!",
+    "noDataAvailable": "¡No hay datos disponibles!"
+  },
   "RetailerMembership": {
     "switchPlan": "Cambiar un Plan",
     "selectPlan": "Selecciona un Plan",
@@ -304,6 +320,7 @@
     "balance": "Saldo",
     "planStatus": "Estado del Plan",
     "expireDate": "Fecha de Expiración",
+    "paymentDate": "Fecha de pago",
     "actions": "Acciones",
     "running": "En ejecución",
     "ended": "Finalizado",

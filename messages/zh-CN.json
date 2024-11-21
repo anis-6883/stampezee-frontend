@@ -288,6 +288,22 @@
     "totalOrder": "总订单数",
     "totalRevenue": "总收入"
   },
+  "retailerDashboardStampAndCustomerStats": {
+    "stampCollect": "邮票收集",
+    "activeStampCollect": "活跃邮票收集",
+    "noDate": "无日期",
+    "withDate": "有日期",
+    "stampCollectStatus": "每位客户平均收集的邮票",
+    "totalCollectedStamp": "总收集邮票",
+    "totalUniqueCustomer": "总独特客户",
+    "rewardCollectStatus": "奖励收集状态",
+    "rewardEligible": "符合奖励资格",
+    "rewardEfficacy": "奖励有效性",
+    "collected": "已收集",
+    "notCollected": "未收集",
+    "noStatsAvailable": "无统计数据!",
+    "noDataAvailable": "无数据!"
+  },
   "RetailerMembership": {
     "switchPlan": "切换计划",
     "selectPlan": "选择计划",
@@ -304,6 +320,7 @@
     "balance": "余额",
     "planStatus": "计划状态",
     "expireDate": "到期日期",
+    "paymentDate": "付款日期",
     "actions": "操作",
     "running": "运行中",
     "ended": "结束",

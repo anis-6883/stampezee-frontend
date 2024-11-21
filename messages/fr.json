@@ -288,6 +288,22 @@
     "totalOrder": "Total des Commandes",
     "totalRevenue": "Revenu Total"
   },
+  "retailerDashboardStampAndCustomerStats": {
+    "stampCollect": "Collection de Timbres",
+    "activeStampCollect": "Collection de Timbres Active",
+    "noDate": "Aucune Date",
+    "withDate": "Avec Date",
+    "stampCollectStatus": "Moyenne de Timbres Collectés par Client",
+    "totalCollectedStamp": "Total des Timbres Collectés",
+    "totalUniqueCustomer": "Total des Clients Uniques",
+    "rewardCollectStatus": "État de Collecte de Récompenses",
+    "rewardEligible": "Éligible pour Récompense",
+    "rewardEfficacy": "Efficacité des Récompenses",
+    "collected": "Collecté",
+    "notCollected": "Non Collecté",
+    "noStatsAvailable": "Aucune Statistique Disponible !",
+    "noDataAvailable": "Aucune Donnée Disponible !"
+  },
   "RetailerMembership": {
     "switchPlan": "Changer un Plan",
     "selectPlan": "Sélectionner un Plan",
@@ -304,6 +320,7 @@
     "balance": "Solde",
     "planStatus": "Statut du Plan",
     "expireDate": "Date d’Expiration",
+    "paymentDate": "Date de paiement",
     "actions": "Actions",
     "running": "En cours",
     "ended": "Terminé",

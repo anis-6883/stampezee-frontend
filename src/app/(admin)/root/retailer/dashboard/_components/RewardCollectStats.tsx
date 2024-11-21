@@ -4,14 +4,16 @@ import DatePicker from '@/components/Formik/DatePicker';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAvgCollectedStampQuery } from '@/features/retailer/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { Select, Text, Title } from 'rizzui';
 import CircleProgressbar from './CircleProgressbar';
 import WidgetCard from './WidgetCard';
 
 export default function RewardCollectStats({ className }: { className?: string }) {
+  const t = useTranslations('retailerDashboardStampAndCustomerStats');
   const [dateRange, setDateRange] = useState('');
-  const [showDate, setShowDate] = useState({ label: 'No Date', value: 'no-date' });
+  const [showDate, setShowDate] = useState({ label: t('noDate'), value: 'no-date' });
   const {
     data: avgCollectStamp,
     isLoading,
@@ -29,13 +31,13 @@ export default function RewardCollectStats({ className }: { className?: string }
   const { avgStampCollect = 0, totalCustomer = 0, totalStampsCollected = 0 } = avgCollectStamp?.data || {};
 
   const dateOptions = [
-    { label: 'No Date', value: 'no-date' },
-    { label: 'With Date', value: 'with-date' },
+    { label: t('noDate'), value: 'no-date' },
+    { label: t('withDate'), value: 'with-date' },
   ];
 
   const data = [
     {
-      name: 'Avg. Collected Stamp per Customer',
+      name: t('stampCollectStatus'),
       value: `${avgStampCollect}`,
       percentage: 100,
       color: '#3872FA',
@@ -46,7 +48,7 @@ export default function RewardCollectStats({ className }: { className?: string }
     <WidgetCard
       title={
         <Title as="h3" className="col-span-full text-base font-semibold text-black sm:text-lg">
-          Stamp Collect
+          {t('stampCollect')}
         </Title>
       }
       description={
@@ -58,7 +60,7 @@ export default function RewardCollectStats({ className }: { className?: string }
               <span>{totalStampsCollected}</span>
             )}
           </span>
-          Active Stamp Collect
+          {t('activeStampCollect')}
         </p>
       }
       titleClassName="font-normal text-gray-500 text-sm sm:text-sm 2xl:text-base"
@@ -115,13 +117,13 @@ export default function RewardCollectStats({ className }: { className?: string }
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#10b981' }} />
                 <span className="text-base">
-                  <span className="font-semibold">Total Unique Customer:</span> {totalCustomer}
+                  <span className="font-semibold">{t('totalUniqueCustomer')}:</span> {totalCustomer}
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#f1416c' }} />
                 <span className="text-base">
-                  <span className="font-semibold">Total Collected Stamp:</span> {totalStampsCollected}
+                  <span className="font-semibold">{t('totalCollectedStamp')}:</span> {totalStampsCollected}
                 </span>
               </div>
             </div>
