@@ -3,17 +3,19 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRewardCollectPercentageQuery } from '@/features/retailer/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
+import { useTranslations } from 'next-intl';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { Text, Title } from 'rizzui';
 
 export default function RewardPieStatus({ className }: { className?: string }) {
+  const t = useTranslations('retailerDashboardStampAndCustomerStats');
   const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery(null);
 
   const { rewardCollectedTruePercentage = 0, rewardCollectedFalsePercentage = 0, totalEligibleForReward = 0 } = rewardCollect?.data || {};
 
   const data = [
-    { name: 'Collected:', value: Number(rewardCollectedTruePercentage), color: '#3872FA' },
-    { name: 'Not Collected:', value: Number(rewardCollectedFalsePercentage), color: '#eab308' },
+    { name: `${t('collected')}:`, value: Number(rewardCollectedTruePercentage), color: '#3872FA' },
+    { name: `${t('notCollected')}:`, value: Number(rewardCollectedFalsePercentage), color: '#eab308' },
   ];
 
   const RADIAN = Math.PI / 180;
@@ -34,7 +36,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
       <div className="grid h-full items-start rounded-lg border border-gray-300 p-5 @xl:grid-cols-2 lg:p-7">
         <div>
           <Title as="h3" className="col-span-full text-base font-semibold sm:text-lg">
-            Reward Collect Status
+            {t('rewardCollectStatus')}
           </Title>
           <p className="flex gap-x-2">
             <span className="font-lexend 2xl:text-2xl text-xl font-semibold text-gray-900">
@@ -44,7 +46,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
                 <span>{totalEligibleForReward}</span>
               )}
             </span>
-            Reward Eligible
+            {t('rewardEligible')}
           </p>
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">
@@ -53,7 +55,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
               <Skeleton className="m-auto h-36 w-36 rounded-full" />
             ) : rewardCollectedTruePercentage === 0 && rewardCollectedFalsePercentage === 0 ? (
               <div className="flex h-full items-center justify-center">
-                <span className="font-medium text-danger">No Stats Available!</span>
+                <span className="font-medium text-danger">{t('noStatsAvailable')}</span>
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
@@ -77,7 +79,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
               </ResponsiveContainer>
             )}
           </div>
-          <p className="mt-4 text-center font-semibold text-gray-800">Reward Efficacy</p>
+          <p className="mt-4 text-center font-semibold text-gray-800">{t('rewardEfficacy')}</p>
         </div>
         <div className="">
           {isLoading || isError || rewardCollect === undefined ? (

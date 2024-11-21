@@ -15,6 +15,7 @@ export default function BranchStatsTable() {
   const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
   const t = useTranslations('RetailerDashboardTable');
   const t2 = useTranslations('RetailerDashboard');
+  const t3 = useTranslations('retailerDashboardStampAndCustomerStats');
 
   useEffect(() => {
     const selectedCurrency: any = currencyExchangeRates?.find((item: any) => item?.name === retailerProfile?.data?.businessCurrency);
@@ -86,7 +87,7 @@ export default function BranchStatsTable() {
               <td colSpan={8} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
                 <div className="flex flex-col justify-center py-5">
                   <img src="/images/no-data.svg" alt="No data" className="m-auto h-40 w-40" />
-                  <span>No Data Available!</span>
+                  <span>{t3('noDataAvailable')}</span>
                 </div>
               </td>
             </tr>

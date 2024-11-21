@@ -288,6 +288,22 @@
     "totalOrder": "총 주문 수",
     "totalRevenue": "총 수익"
   },
+  "retailerDashboardStampAndCustomerStats": {
+    "stampCollect": "스탬프 수집",
+    "activeStampCollect": "활성 스탬프 수집",
+    "noDate": "날짜 없음",
+    "withDate": "날짜 있음",
+    "stampCollectStatus": "고객당 평균 수집된 스탬프",
+    "totalCollectedStamp": "수집된 스탬프 총합",
+    "totalUniqueCustomer": "고유 고객 총 수",
+    "rewardCollectStatus": "보상 수집 상태",
+    "rewardEligible": "보상 자격 있음",
+    "rewardEfficacy": "보상 효율",
+    "collected": "수집됨",
+    "notCollected": "수집되지 않음",
+    "noStatsAvailable": "통계가 없습니다!",
+    "noDataAvailable": "데이터가 없습니다!"
+  },
   "RetailerMembership": {
     "switchPlan": "플랜 변경",
     "selectPlan": "플랜 선택",
@@ -304,6 +320,7 @@
     "balance": "잔액",
     "planStatus": "플랜 상태",
     "expireDate": "만료일",
+    "paymentDate": "지불 날짜",
     "actions": "작업",
     "running": "실행중",
     "ended": "종료",

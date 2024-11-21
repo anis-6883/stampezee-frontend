@@ -288,6 +288,22 @@
     "totalOrder": "Общее Количество Заказов",
     "totalRevenue": "Общий Доход"
   },
+  "retailerDashboardStampAndCustomerStats": {
+    "stampCollect": "Сбор марок",
+    "activeStampCollect": "Активный сбор марок",
+    "noDate": "Нет данных",
+    "withDate": "С датой",
+    "stampCollectStatus": "Среднее количество собранных марок на клиента",
+    "totalCollectedStamp": "Общее количество собранных марок",
+    "totalUniqueCustomer": "Общее количество уникальных клиентов",
+    "rewardCollectStatus": "Статус сбора награды",
+    "rewardEligible": "Право на награду",
+    "rewardEfficacy": "Эффективность награды",
+    "collected": "Собрано",
+    "notCollected": "Не собрано",
+    "noStatsAvailable": "Статистика недоступна!",
+    "noDataAvailable": "Данные недоступны!"
+  },
   "RetailerMembership": {
     "switchPlan": "Изменить план",
     "selectPlan": "Выберите план",
@@ -304,6 +320,7 @@
     "balance": "Баланс",
     "planStatus": "Статус Плана",
     "expireDate": "Дата истечения",
+    "paymentDate": "Дата платежа",
     "actions": "Действия",
     "running": "Выполняется",
     "ended": "Завершено",

@@ -288,6 +288,22 @@
     "totalOrder": "कुल ऑर्डर",
     "totalRevenue": "कुल राजस्व"
   },
+  "retailerDashboardStampAndCustomerStats": {
+    "stampCollect": "स्टांप संग्रह",
+    "activeStampCollect": "सक्रिय स्टांप संग्रह",
+    "noDate": "कोई तारीख नहीं",
+    "withDate": "तारीख के साथ",
+    "stampCollectStatus": "प्रति ग्राहक औसत एकत्रित स्टांप",
+    "totalCollectedStamp": "कुल एकत्रित स्टांप",
+    "totalUniqueCustomer": "कुल अद्वितीय ग्राहक",
+    "rewardCollectStatus": "इनाम संग्रह स्थिति",
+    "rewardEligible": "इनाम के लिए पात्र",
+    "rewardEfficacy": "इनाम की प्रभावकारिता",
+    "collected": "संग्रहित",
+    "notCollected": "संग्रहित नहीं",
+    "noStatsAvailable": "कोई आँकड़े उपलब्ध नहीं हैं!",
+    "noDataAvailable": "कोई डेटा उपलब्ध नहीं है!"
+  },
   "RetailerMembership": {
     "switchPlan": "योजना बदलें",
     "selectPlan": "योजना चुनें",
@@ -304,6 +320,7 @@
     "balance": "शेष राशि",
     "planStatus": "प्लान की स्थिति",
     "expireDate": "समाप्ति तिथि",
+    "paymentDate": "भुगतान तिथि",
     "actions": "क्रियाएँ",
     "running": "चल रहा है",
     "ended": "समाप्त",

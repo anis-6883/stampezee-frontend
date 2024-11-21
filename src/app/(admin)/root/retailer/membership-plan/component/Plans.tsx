@@ -92,7 +92,7 @@ export const Plans = ({ locale }: { locale: string }) => {
 
         <hr className="my-6" />
 
-        <h2 className="mb-4 text-xl font-semibold">{t('selectAddOn')}</h2>
+        <h2 className="mb-4 text-xl font-semibold">{t('selectAddOns')}</h2>
         <AddOnsList isMemberShip={true} locale={locale} />
         <hr className="my-3" />
         <div className="mt-10 flex items-center justify-end gap-2">

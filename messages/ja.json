@@ -287,6 +287,22 @@
     "totalOrder": "総注文数",
     "totalRevenue": "総収益"
   },
+  "retailerDashboardStampAndCustomerStats": {
+    "stampCollect": "スタンプ収集",
+    "activeStampCollect": "アクティブスタンプ収集",
+    "noDate": "日付なし",
+    "withDate": "日付あり",
+    "stampCollectStatus": "顧客ごとの平均収集スタンプ数",
+    "totalCollectedStamp": "総収集スタンプ数",
+    "totalUniqueCustomer": "総ユニーク顧客数",
+    "rewardCollectStatus": "報酬収集状況",
+    "rewardEligible": "報酬対象",
+    "rewardEfficacy": "報酬の効果",
+    "collected": "収集済み",
+    "notCollected": "収集されていない",
+    "noStatsAvailable": "統計情報は利用できません！",
+    "noDataAvailable": "データは利用できません！"
+  },
   "RetailerMembership": {
     "switchPlan": "プランを変更",
     "selectPlan": "プランを選択",
@@ -303,6 +319,7 @@
     "balance": "残高",
     "planStatus": "プランのステータス",
     "expireDate": "有効期限",
+    "paymentDate": "支払日",
     "actions": "操作",
     "running": "実行中",
     "ended": "終了",

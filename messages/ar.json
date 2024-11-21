@@ -288,6 +288,22 @@
     "totalOrder": "إجمالي الطلبات",
     "totalRevenue": "إجمالي الإيرادات"
   },
+  "retailerDashboardStampAndCustomerStats": {
+    "stampCollect": "جمع الطوابع",
+    "activeStampCollect": "جمع الطوابع النشط",
+    "noDate": "لا توجد بيانات",
+    "withDate": "مع تاريخ",
+    "stampCollectStatus": "متوسط الطوابع المجمعة لكل عميل",
+    "totalCollectedStamp": "إجمالي الطوابع المجمعة",
+    "totalUniqueCustomer": "إجمالي العملاء الفريدين",
+    "rewardCollectStatus": "حالة جمع المكافآت",
+    "rewardEligible": "مؤهل للمكافأة",
+    "rewardEfficacy": "فعالية المكافأة",
+    "collected": "تم جمعها",
+    "notCollected": "لم يتم جمعها",
+    "noStatsAvailable": "لا توجد إحصائيات متاحة!",
+    "noDataAvailable": "لا توجد بيانات متاحة!"
+  },
   "RetailerMembership": {
     "switchPlan": "تبديل خطة",
     "selectPlan": "اختر خطة",
@@ -304,6 +320,7 @@
     "balance": "الرصيد",
     "planStatus": "حالة الخطة",
     "expireDate": "تاريخ الانتهاء",
+    "paymentDate": "تاريخ الدفع",
     "actions": "الإجراءات",
     "running": "نشط",
     "ended": "منتهي",
