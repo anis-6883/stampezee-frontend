@@ -19,13 +19,13 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
-function capitalizeWords(input: string): string {
-  if (!input) return '';
-  return input
-    .split(' ')
-    .map((word) => word?.charAt(0)?.toUpperCase() + word?.slice(1)?.toLowerCase())
-    .join(' ');
-}
+// function capitalizeWords(input: string): string {
+//   if (!input) return '';
+//   return input
+//     .split(' ')
+//     .map((word) => word?.charAt(0)?.toUpperCase() + word?.slice(1)?.toLowerCase())
+//     .join(' ');
+// }
 
 export default function StampCategoryTable() {
   const [formData, setFormData] = useState({});
@@ -72,7 +72,7 @@ export default function StampCategoryTable() {
       enableSorting: false,
       Cell: ({ row }: any) => (
         <div>
-          <p>{capitalizeWords(row?.original?.name)}</p>
+          <p>{row?.original?.name}</p>
         </div>
       ),
     },

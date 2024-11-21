@@ -87,8 +87,8 @@ export default function Sidebar({ className }: { className?: string }) {
   let fullName = user?.firstName ? user?.firstName + ' ' + user?.lastName : '';
 
   if (fullName.length >= 18) {
-    const lastName = user?.lastName ? user?.lastName?.charAt(0)?.toUpperCase() : '';
-    fullName = user?.firstName + ' ' + lastName + '.';
+    // const lastName = user?.lastName ? user?.lastName?.charAt(0)?.toUpperCase() : '';
+    fullName = user?.firstName + ' ' + user?.lastName + '.';
   }
 
   return (
