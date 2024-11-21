@@ -55,7 +55,7 @@ export default function ActiveUsers({
     if (data?.length > 0) {
       const countryColorMap = data?.slice(0, 4)?.reduce((acc: any, country: any, index: number) => {
         if (country?.country) {
-          acc[country?.country] = colors[index % colors?.length]; // Assign color based on index
+          acc[country?.country] = colors[index % colors.length]; // Assign color based on index
         }
         return acc;
       }, {});
@@ -65,7 +65,7 @@ export default function ActiveUsers({
 
   const getSCustomStyle = ({ countryValue, countryCode, minValue, maxValue, color }: CountryContext) => {
     return {
-      fill: colorMap[countryCode?.toLocaleLowerCase()] ? colorMap[countryCode.toLocaleLowerCase()] : color,
+      fill: colorMap[countryCode?.toLocaleLowerCase()] ? colorMap[countryCode?.toLocaleLowerCase()] : color,
       fillOpacity: countryValue ? 0.1 + (1.5 * (countryValue - minValue)) / (maxValue - minValue) : 1,
       stroke: 'green',
       strokeWidth: 1,
