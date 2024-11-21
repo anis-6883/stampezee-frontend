@@ -4,7 +4,7 @@ import { metaObject } from '@/config/site.config';
 import Revenue from './_components/Revenue';
 import SignUpStatus from './_components/SignUpStatus';
 import StateCardView from './_components/StateCardView';
-// import TopBranchTable from './_components/TopBranchTable';
+import TopBranchTable from './_components/TopBranchTable';
 
 const pageHeader = {
   title: 'Super Admin Dashboard',
@@ -23,7 +23,7 @@ export default function Page() {
         </div>
         <SignUpStatus className="col-span-12 md:col-span-6" />
       </div>
-      {/* <TopBranchTable /> */}
+      <TopBranchTable />
       {/* <RetailerAndCustomerStats className="my-5" /> */}
     </>
   );
