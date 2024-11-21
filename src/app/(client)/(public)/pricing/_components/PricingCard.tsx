@@ -45,7 +45,7 @@ export default function PricingCard({ item }: { item: any }) {
     dispatch(resetAddOns());
   };
 
-  if (session?.user?.takeFreeTrial && item?.slug === 'trial') {
+  if (session?.user?.takeFreeTrial && item?.slug === 'trial' && session?.user?.plan !== 'trial') {
     return null;
   }
 

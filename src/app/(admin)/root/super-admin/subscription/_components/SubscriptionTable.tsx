@@ -49,10 +49,10 @@ export default function StampsImageTable() {
                   <span className="font-semibold">Allowed Branch: </span>
                   {row.original.allowTotalBranch ?? 'N/A'}
                 </h2>
-                <h2>
+                {/* <h2>
                   <span className="font-semibold">Allowed Members: </span>
                   {row.original.allowTotalTeamMember ?? 'N/A'}
-                </h2>
+                </h2> */}
                 <h2>
                   <span className="font-semibold">Allowed Stamp: </span>
                   {row.original.allowTotalStamp ?? 'N/A'}
