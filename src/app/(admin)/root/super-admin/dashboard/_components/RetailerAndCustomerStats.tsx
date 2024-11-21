@@ -11,19 +11,19 @@ export default function RetailerAndCustomerStats({ className }: { className?: st
   const { data: retailerWiseData, isLoading: isRetailerWiseDataLoading } = useGetRetailerStatsWithCountryWiseQuery({});
   const { data: customerWiseData, isLoading: isCustomerWiseDataLoading } = useGetCustomerStatsWithCountryWiseQuery({});
 
-  const transformedData = customerWiseData?.data?.countries?.filter((country: any) => country?.name);
+  const transformedData = customerWiseData?.data?.countries?.filter((country: any) => country?.name && country?.country);
   return (
     <div className={cn('grid grid-cols-12 gap-5', className)}>
       <ActiveUsers
         className="col-span-12 md:col-span-6"
         title="Active Retailers"
-        data={retailerWiseData?.data?.countries}
+        data={retailerWiseData?.data?.countries || []}
         isLoading={isRetailerWiseDataLoading}
       />
       <ActiveUsers
         className="col-span-12 md:col-span-6"
         title="Active Customers"
-        data={transformedData}
+        data={transformedData || []}
         isLoading={isCustomerWiseDataLoading}
       />
     </div>

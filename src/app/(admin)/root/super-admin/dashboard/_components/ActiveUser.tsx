@@ -32,6 +32,7 @@ function createTextLabels(width: number) {
       style: { ...label.style, fontSize: '70%' },
     }));
   }
+
   return labels;
 }
 
@@ -53,8 +54,8 @@ export default function ActiveUsers({
   useEffect(() => {
     if (data?.length > 0) {
       const countryColorMap = data?.slice(0, 4)?.reduce((acc: any, country: any, index: number) => {
-        if (country.country) {
-          acc[country.country] = colors[index % colors.length]; // Assign color based on index
+        if (country?.country) {
+          acc[country?.country] = colors[index % colors?.length]; // Assign color based on index
         }
         return acc;
       }, {});
@@ -64,7 +65,7 @@ export default function ActiveUsers({
 
   const getSCustomStyle = ({ countryValue, countryCode, minValue, maxValue, color }: CountryContext) => {
     return {
-      fill: colorMap[countryCode.toLocaleLowerCase()] ? colorMap[countryCode.toLocaleLowerCase()] : color,
+      fill: colorMap[countryCode?.toLocaleLowerCase()] ? colorMap[countryCode.toLocaleLowerCase()] : color,
       fillOpacity: countryValue ? 0.1 + (1.5 * (countryValue - minValue)) / (maxValue - minValue) : 1,
       stroke: 'green',
       strokeWidth: 1,
@@ -74,7 +75,7 @@ export default function ActiveUsers({
   };
 
   const getHref = ({ countryName }: CountryContext) => ({
-    href: `https://en.wikipedia.org/wiki/${encodeURIComponent(countryName)}`,
+    href: `https://en.wikipedia.org/wiki/${encodeURIComponent(countryName || '')}`,
     target: '_blank',
   });
 
