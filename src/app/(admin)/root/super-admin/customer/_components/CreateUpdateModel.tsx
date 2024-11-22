@@ -37,7 +37,7 @@ export default function CreateUpdateModel({
   const initialValues = {
     fullName: formData?.fullName || '',
     address: formData?.address || '',
-    email: formData?.email || '',
+    email: formData?.contactEmail ? formData?.contactEmail : formData?.email ?? '',
     dialCode: formData?.dialCode ? formData?.dialCode : '+1',
     phone: formData?.phone || '',
     country: formData?.country ? formData?.country : 'Canada',
@@ -188,7 +188,7 @@ export default function CreateUpdateModel({
                   </div>
 
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                    <InputField name="email" label="Email" placeholder="john@email.com" />
+                    <InputField name="email" label="Email" placeholder="john@email.com" disabled={formData?.contactEmail} />
                     {!formData._id && <InputPassword name="password" label="Password" placeholder="********" />}
                   </div>
 

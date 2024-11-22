@@ -69,7 +69,7 @@ export default function CustomerTable({ offset }: { offset: number }) {
             <span className="font-bold">Name:</span> {row?.original?.fullName}
           </p>
           <p>
-            <span className="font-bold">Email:</span> {row?.original?.email}
+            <span className="font-bold">Email:</span> {row?.original?.contactEmail ?? row?.original?.email}
           </p>
           <p>
             <span className="font-bold">Phone:</span>{' '}
