@@ -19,6 +19,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
     remainingBalance,
     subTotal,
     total,
+    code,
     tax,
     coupon,
     couponDiscount,
@@ -35,6 +36,10 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
 
   const handleRemoveAddOn = (addOnId: string) => {
     dispatch(removeAddOns(addOnId));
+    if (code) {
+      dispatch(removeCode());
+      dispatch(removeCoupon());
+    }
   };
 
   return (

@@ -196,14 +196,16 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
 
   const handleRemoveAddOn = (addOnId: string) => {
     dispatch(removeAddOns(addOnId));
+    if (code) {
+      dispatch(removeCode());
+      dispatch(removeCoupon());
+    }
   };
 
   const handleUpgradeConfirm = () => {
     replace(checkOutResponse?.data?.url);
     dispatch(resetState());
   };
-
-  console.log({ subscription, activeSubscription });
 
   return (
     <>
