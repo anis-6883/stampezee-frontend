@@ -2,7 +2,7 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { RootState } from '@/features/store';
-import { setAddOns } from '@/features/subscription/subscriptionSlice';
+import { removeCode, removeCoupon, setAddOns } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { AddOn, Subscription } from '@/types';
 import { translateData } from '@/utils/GoogleTranslate';
@@ -17,6 +17,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
   const [addOnList, setAddOnList] = useState([]);
   const {
     subscription,
+    code,
     addOns: addOnsData,
     currency: selectedCurrencyExchangeRate,
   } = useSelector((state: RootState) => state.subscriptionSlice);
@@ -49,6 +50,10 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
 
   const handleAddOnSelect = (addOn: AddOn) => {
     dispatch(setAddOns(addOn));
+    if (code) {
+      dispatch(removeCode());
+      dispatch(removeCoupon());
+    }
     // dispatch(resetSubscription());
   };
 
