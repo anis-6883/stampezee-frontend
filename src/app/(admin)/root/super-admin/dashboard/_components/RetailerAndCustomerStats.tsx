@@ -20,7 +20,7 @@ export default function RetailerAndCustomerStats({ className }: { className?: st
     );
   }
 
-  const transformedData = customerWiseData?.data?.countries?.filter((country: any) => country?.name);
+  const transformedData = customerWiseData?.data?.countries?.filter((country: any) => country?.name && country?.country);
 
   return (
     <div className={cn('grid grid-cols-12 gap-5', className)}>
