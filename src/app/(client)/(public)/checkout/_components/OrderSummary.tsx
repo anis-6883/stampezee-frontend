@@ -203,6 +203,8 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     dispatch(resetState());
   };
 
+  console.log({ subscription, activeSubscription });
+
   return (
     <>
       <div className="rounded-lg border p-4">
@@ -210,7 +212,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         <hr className=" text-lg font-bold" />
         <CouponForm locale={locale} />
 
-        {subscription?.slug === activeSubscription?.slug && addOns?.length > 0 && (
+        {subscription?.slug === activeSubscription?.slug && activeSubscription?.slug !== 'trial' && addOns?.length > 0 && (
           <div>
             <h2 className="pb-2 text-lg font-medium">{t('addOns')}</h2>
             <hr className="p-2 text-lg font-bold" />
@@ -283,7 +285,9 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         {subscription?.slug !== activeSubscription?.slug && (subscription?.slug || addOns?.length > 0) && (
           <PlanAddOns stripeInfo={stripeInfo} selectedCurrency={selectedCurrency} />
         )}
-        {((subscription?.slug === activeSubscription?.slug && addOns.length === 0) || !subscription?.slug) && (
+        {((subscription?.slug === activeSubscription?.slug && addOns.length === 0) ||
+          !subscription?.slug ||
+          (subscription?.slug === activeSubscription?.slug && activeSubscription?.slug === 'trial')) && (
           <div className="py-4 text-center font-medium text-red-500">{t('cartEmpty')}</div>
         )}
       </div>
