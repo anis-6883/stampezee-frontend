@@ -46,9 +46,9 @@ export default function CreateUpdateModel({
   );
 
   const retailerOptions = data
-    ? data?.data?.retailers.map((retailer: any) => ({
+    ? data?.data?.retailers.map((retailer: any, index: number) => ({
         value: retailer._id,
-        label: retailer.storeName,
+        label: `${retailer.storeName}-${index + 1}`,
         image: retailer.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailer.image}` : '/images/stamp-logo.png',
       }))
     : [];
@@ -105,10 +105,15 @@ export default function CreateUpdateModel({
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
     const filteredValues = removeEmptyValues(values, ['validDateRange']);
-    const dateRange = values.validDateRange.split('to').map((date: string) => date.trim());
 
-    filteredValues.startedAt = dateRange[0];
-    filteredValues.expiredAt = dateRange[1];
+    if (values?.validDateRange?.includes('to')) {
+      const dateRange = values.validDateRange.split('to').map((date: string) => date.trim());
+      filteredValues.startedAt = dateRange[0];
+      filteredValues.expiredAt = dateRange[1];
+    } else {
+      filteredValues.startedAt = values?.validDateRange;
+      filteredValues.expiredAt = values?.validDateRange;
+    }
 
     if (formData?._id) {
       updateCoupon({ id: formData._id, formData: filteredValues });
@@ -366,6 +371,6 @@ export default function CreateUpdateModel({
 const getOptionLabel = (option: any): any => (
   <div className="flex ">
     <img src={option.image} alt={option.label} style={{ width: '20px', marginLeft: '5px' }} />
-    <span className="ml-2">{option.label}</span>
+    <span className="ml-2">{option?.label?.split('-')[0]}</span>
   </div>
 );
