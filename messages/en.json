@@ -307,7 +307,7 @@
   "RetailerMembership": {
     "switchPlan": "Switch a Plan",
     "selectPlan": "Select a Plan",
-    "selectAddOn": "Select Add-On",
+    "selectAddOns": "Select Add-Ons",
     "buttonText": "Selection Confirm"
   },
   "RetailerBilling": {
