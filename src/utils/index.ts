@@ -6,7 +6,7 @@ export const countDaysLeft = (date: Date) => {
   var now = moment();
   var inputDate = moment(date);
   var difference = inputDate.diff(now, 'days');
-  return difference;
+  return difference + 1;
 };
 
 export const calculateBalancePrice = (startDate: Date, expirationDate: Date, planPrice: number) => {
