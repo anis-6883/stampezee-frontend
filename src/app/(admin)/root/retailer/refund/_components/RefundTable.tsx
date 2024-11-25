@@ -24,19 +24,18 @@ export default function RefundTable({ offset }: { offset: number }) {
   const structure = [
     {
       header: t('plan'),
-      accessorKey: 'enrollsubscription.planSnapshot.title',
+      accessorKey: 'enrollment.planExists',
+      Cell: ({ row }: any) => <div className="text-md mx-auto text-start capitalize">{row?.original?.enrollment?.planExists}</div>,
     },
     {
       header: t('validityDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">{t('startedAt')}:</span>{' '}
-            {convertDateByOffset(row?.original?.enrollsubscription?.validityFrom, offset)}
+            <span className="font-bold">{t('startedAt')}:</span> {convertDateByOffset(row?.original?.enrollment?.validityFrom, offset)}
           </p>
           <p>
-            <span className="font-bold">{t('expiredAt')}:</span>{' '}
-            {convertDateByOffset(row?.original?.enrollsubscription?.validityTo, offset)}
+            <span className="font-bold">{t('expiredAt')}:</span> {convertDateByOffset(row?.original?.enrollment?.validityTo, offset)}
           </p>
         </div>
       ),
@@ -50,10 +49,10 @@ export default function RefundTable({ offset }: { offset: number }) {
     },
     {
       header: t('enrollStatus'),
-      accessorKey: 'enrollsubscription.enrollStatus',
+      accessorKey: 'enrollment.enrollStatus',
       Cell: ({ row }: any) => (
         <Badge className="!bg-danger text-white">
-          <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollsubscription?.enrollStatus)}
+          <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollment?.enrollStatus)}
         </Badge>
       ),
     },
