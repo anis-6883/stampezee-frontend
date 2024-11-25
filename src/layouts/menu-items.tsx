@@ -5,7 +5,7 @@ import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { IoDiamondOutline } from 'react-icons/io5';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { LuLayoutDashboard, LuListChecks, LuUserCog, LuUsers } from 'react-icons/lu';
-import { MdOutlineCurrencyExchange, MdOutlineQrCodeScanner } from 'react-icons/md';
+import { MdOutlineCurrencyExchange, MdOutlineQrCodeScanner, MdOutlineUnsubscribe } from 'react-icons/md';
 import { PiBellRinging, PiStamp, PiSyringeLight } from 'react-icons/pi';
 import { RiContactsLine, RiCoupon4Line, RiMoneyDollarCircleLine, RiRefund2Line } from 'react-icons/ri';
 import { TbUserShield } from 'react-icons/tb';
@@ -88,7 +88,11 @@ export const menuItems: { [key: string]: any } = {
       href: routes.privateRoutes.superAdmin.contact,
       icon: <RiContactsLine />,
     },
-
+    {
+      name: 'Newsletters',
+      href: routes.privateRoutes.superAdmin.newsletter,
+      icon: <MdOutlineUnsubscribe />,
+    },
     {
       name: 'General Settings',
       href: routes.privateRoutes.superAdmin.settings,

@@ -98,6 +98,7 @@ export const routes = {
         details: (id: number | string) => `/root/super-admin/customer/${id}`,
       },
       contact: `/root/super-admin/contact`,
+      newsletter: `/root/super-admin/newsletter`,
       settings: `/root/super-admin/settings`,
     },
   },
