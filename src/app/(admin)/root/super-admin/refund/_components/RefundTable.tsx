@@ -44,17 +44,18 @@ export default function RefundTable({ offset }: { offset: number }) {
   const structure = [
     {
       header: 'Plan',
-      accessorKey: 'enrollsubscription.planSnapshot.title',
+      accessorKey: 'enrollment.planExists',
+      Cell: ({ row }: any) => <div className="text-md mx-auto text-start capitalize">{row?.original?.enrollment?.planExists}</div>,
     },
     {
       header: 'Validity Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Started At:</span> {convertDateByOffset(row?.original?.enrollsubscription?.validityFrom, offset)}
+            <span className="font-bold">Started At:</span> {convertDateByOffset(row?.original?.enrollment?.validityFrom, offset)}
           </p>
           <p>
-            <span className="font-bold">Expired At:</span> {convertDateByOffset(row?.original?.enrollsubscription?.validityTo, offset)}
+            <span className="font-bold">Expired At:</span> {convertDateByOffset(row?.original?.enrollment?.validityTo, offset)}
           </p>
         </div>
       ),
@@ -147,10 +148,10 @@ export default function RefundTable({ offset }: { offset: number }) {
       <div className="flex ">
         <div className="flex w-28 flex-col justify-center gap-2 border-r-2">
           <div className="mx-auto">
-            {row.original?.enrollsubscription?.retailer?.image ? (
+            {row.original?.enrollment?.retailer?.image ? (
               <div>
                 <img
-                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original?.enrollsubscription?.retailer?.image}`}
+                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original?.enrollment?.retailer?.image}`}
                   alt="image"
                   className="h-full w-12 rounded"
                 />
@@ -161,24 +162,24 @@ export default function RefundTable({ offset }: { offset: number }) {
           </div>
           <div>
             <div className="text-md">
-              <p className="text-center font-semibold">{row?.original?.enrollsubscription?.retailer?.storeName}</p>
+              <p className="text-center font-semibold">{row?.original?.enrollment?.retailer?.storeName}</p>
             </div>
           </div>
         </div>
         <div className="text-md ml-3 text-start">
           <p>
-            <span className="font-bold">FullName:</span> {row?.original?.enrollsubscription?.retailer?.fullName}
+            <span className="font-bold">FullName:</span> {row?.original?.enrollment?.retailer?.fullName}
           </p>
           <p>
-            <span className="font-bold">Email:</span> {row?.original?.enrollsubscription?.retailer?.email}
+            <span className="font-bold">Email:</span> {row?.original?.enrollment?.retailer?.email}
           </p>
           <p>
             <span className="font-bold">Phone:</span>{' '}
-            {row?.original?.enrollsubscription?.retailer?.phone ? row?.original?.enrollsubscription?.retailer?.phone : 'N/A'}
+            {row?.original?.enrollment?.retailer?.phone ? row?.original?.enrollment?.retailer?.phone : 'N/A'}
           </p>
           <p>
             <span className="font-bold">Country:</span>{' '}
-            {row?.original?.enrollsubscription?.retailer?.country ? row?.original?.enrollsubscription?.retailer?.country : 'N/A'}
+            {row?.original?.enrollment?.retailer?.country ? row?.original?.enrollment?.retailer?.country : 'N/A'}
           </p>
         </div>
       </div>

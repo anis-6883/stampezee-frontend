@@ -139,7 +139,7 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
               <div key={item._id} className={`relative cursor-not-allowed rounded-lg border p-4`}>
                 {session?.user?.plan === item?.slug && (
                   <div
-                    className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
+                    className={`absolute z-0 ${isRtl ? 'left-2' : 'right-2'} top-2 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
                   >
                     <span className="font-medium">
                       <MdStar />

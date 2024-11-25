@@ -64,10 +64,18 @@ const CouponForm = ({ locale }: { locale: string }) => {
 
   const handleCoupon = async (values: any) => {
     setIsCouponSubmitting(true);
-    const { data }: any = await createCoupon({ code: values?.code, slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn.slug)] });
+    if (activeSubscription?.slug) {
+      const { data }: any = await createCoupon({ code: values?.code, slugs: [...addOns?.map((addOn) => addOn.slug)] });
 
-    if (data?.status) {
-      dispatch(setCode(values.code));
+      if (data?.status) {
+        dispatch(setCode(values.code));
+      }
+    } else {
+      const { data }: any = await createCoupon({ code: values?.code, slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn.slug)] });
+
+      if (data?.status) {
+        dispatch(setCode(values.code));
+      }
     }
   };
 
