@@ -64,7 +64,7 @@ const CouponForm = ({ locale }: { locale: string }) => {
 
   const handleCoupon = async (values: any) => {
     setIsCouponSubmitting(true);
-    if (activeSubscription?.slug) {
+    if (activeSubscription?.slug && activeSubscription?.slug !== 'trial') {
       const { data }: any = await createCoupon({ code: values?.code, slugs: [...addOns?.map((addOn) => addOn.slug)] });
 
       if (data?.status) {
