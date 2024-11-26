@@ -66,6 +66,8 @@ export default function ScanTable({ offset }: { offset: number }) {
   ];
 
   const renderDetailPanel = ({ row }: any) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const customerEmail = row?.original?.customer?.email?.split(/[-\s]/)?.find((part: string) => emailRegex.test(part));
     return (
       <div className="mx-20 flex justify-start">
         <div className="w-1/2">
@@ -160,7 +162,7 @@ export default function ScanTable({ offset }: { offset: number }) {
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('email')}</td>
-                        <td className="px-6 py-4">{row?.original?.customer?.email}</td>
+                        <td className="px-6 py-4">{customerEmail}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('phone')}</td>
