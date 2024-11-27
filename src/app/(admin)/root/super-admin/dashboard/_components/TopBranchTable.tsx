@@ -66,31 +66,35 @@ export default function TopBranchTable() {
               </td>
             </tr>
           ) : (
-            topOutlets.slice(0, 10).map((item: any, index: number) => (
-              <tr
-                key={item._id}
-                className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-              >
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {index + 1}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  <Link href={routes.privateRoutes.superAdmin.retailer.details(item.retailer._id)}>{item.retailer.storeName}</Link>
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.retailer.email}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.branch.name}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.branch.address}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.totalAmountInCAD.toFixed(2)}
-                </td>
-              </tr>
-            ))
+            topOutlets.slice(0, 10).map((item: any, index: number) => {
+              const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+              const retailerEmail = item.retailer.email?.split(/[-\s]/)?.find((part: string) => emailRegex.test(part));
+              return (
+                <tr
+                  key={item._id}
+                  className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                >
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    {index + 1}
+                  </td>
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    <Link href={routes.privateRoutes.superAdmin.retailer.details(item.retailer._id)}>{item.retailer.storeName}</Link>
+                  </td>
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    {retailerEmail}
+                  </td>
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    {item.branch.name}
+                  </td>
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    {item.branch.address}
+                  </td>
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    {item.totalAmountInCAD.toFixed(2)}
+                  </td>
+                </tr>
+              );
+            })
           )}
         </tbody>
       </table>

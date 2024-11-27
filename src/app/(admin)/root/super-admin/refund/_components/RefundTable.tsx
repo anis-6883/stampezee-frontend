@@ -144,6 +144,8 @@ export default function RefundTable({ offset }: { offset: number }) {
   };
 
   const RenderDetailPanel = ({ row }: any) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const retailerEmail = row?.original?.enrollment?.retailer?.email?.split(/[-\s]/)?.find((part: string) => emailRegex.test(part));
     return (
       <div className="flex ">
         <div className="flex w-28 flex-col justify-center gap-2 border-r-2">
@@ -171,7 +173,7 @@ export default function RefundTable({ offset }: { offset: number }) {
             <span className="font-bold">FullName:</span> {row?.original?.enrollment?.retailer?.fullName}
           </p>
           <p>
-            <span className="font-bold">Email:</span> {row?.original?.enrollment?.retailer?.email}
+            <span className="font-bold">Email:</span> {retailerEmail}
           </p>
           <p>
             <span className="font-bold">Phone:</span>{' '}
