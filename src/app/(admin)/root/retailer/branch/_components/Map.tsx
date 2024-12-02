@@ -40,15 +40,34 @@ export default function MapComponent({
     setSearchBox(ref);
   };
 
-  const handleMapClick = (e: google.maps.MapMouseEvent) => {
-    const { latLng }: { latLng: any } = e;
+  const handleMapClick = async (e: google.maps.MapMouseEvent) => {
+    if (!isLoaded) return; // Ensure the API is loaded
 
-    setSelectedLocation({
-      lat: latLng.lat(),
-      lng: latLng.lng(),
-    });
-    setFieldValue('latitude', String(latLng.lat()));
-    setFieldValue('longitude', String(latLng.lng()));
+    const { latLng } = e;
+
+    if (!latLng) return;
+
+    const lat = latLng.lat();
+    const lng = latLng.lng();
+
+    setSelectedLocation({ lat, lng });
+    setFieldValue('latitude', String(lat));
+    setFieldValue('longitude', String(lng));
+
+    try {
+      const geocoder = new google.maps.Geocoder(); // Initialize geocoder
+      const response = await geocoder.geocode({ location: { lat, lng } });
+
+      if (response.results && response.results.length > 0) {
+        const address = response.results[0].formatted_address;
+        setFieldValue('address', address);
+      } else {
+        console.log('No address found for this location.');
+      }
+    } catch (error) {
+      console.error('Geocoder failed:', error);
+    }
+
     if (map) {
       map.panTo(latLng); // Pan the map to the selected location
     }
