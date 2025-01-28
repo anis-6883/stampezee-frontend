@@ -14,7 +14,7 @@ import { ActionIcon, AdvancedRadio, Modal, Tab, Text } from 'rizzui';
 
 const languageOptions = [
   { label: 'English', value: 'en', country: 'United State', flag: 'us' },
-  { label: 'Arabic', value: 'ar', country: 'Saudi Arabia', flag: 'sa' },
+  { label: 'Kuwait', value: 'ar', country: 'Kuwait', flag: 'kw' },
   { label: 'Spanish', value: 'es', country: 'Spain', flag: 'es' },
   { label: 'French', value: 'fr', country: 'France', flag: 'fr' },
   { label: 'Hindi', value: 'hi', country: 'India', flag: 'in' },
@@ -126,7 +126,6 @@ export default function LocalSwitcherSelector({
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {languageOptions?.map((lang: any) => (
                     <AdvancedRadio
-                      // disabled={checkDisableBranch(item)}
                       key={lang.value}
                       onClick={() => handleLanguageChange(lang?.value)}
                       name="language"
@@ -137,7 +136,6 @@ export default function LocalSwitcherSelector({
                       <span className="flex items-center justify-center gap-x-2">
                         <img src={`https://flagcdn.com/${lang.flag}.svg`} height={10} width={25} alt={lang.flag} />
                         <Text as="b">{lang?.label}</Text>
-                        {/* <span>{lang?.country}</span> */}
                       </span>
                     </AdvancedRadio>
                   ))}
@@ -150,7 +148,6 @@ export default function LocalSwitcherSelector({
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {currencyExchangeOptions?.map((currency: any) => (
                     <AdvancedRadio
-                      // disabled={checkDisableBranch(item)}
                       key={currency.id}
                       onClick={() => handleCurrencyChange(currency?.code)}
                       name="currency"
@@ -163,7 +160,6 @@ export default function LocalSwitcherSelector({
                         <span>
                           {currency?.code} - {currency?.unicode_symbol}
                         </span>
-                        {/* <LuCheckCircle className="icon hidden h-5 w-5 text-danger" /> */}
                       </span>
                     </AdvancedRadio>
                   ))}

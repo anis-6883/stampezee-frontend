@@ -8,6 +8,14 @@ const currencyData = [
     unicode_symbol: '$',
   },
   {
+    code: 'KWD',
+    id: 'KWD',
+    localized_full_name: 'Kuwaiti Dinar',
+    name: 'Kuwaiti Dinars',
+    symbol: 'KD',
+    unicode_symbol: 'د.ك',
+  },
+  {
     code: 'BRL',
     id: 'BRL',
     localized_full_name: 'Brazilian real',
