@@ -112,19 +112,43 @@ export default function RetailerTable({ offset }: { offset: number }) {
     },
     {
       header: 'Plan Statistics',
-      Cell: ({ row }: any) => (
-        <div className="text-md mx-auto text-start">
-          <p>
-            <span className="font-bold">Plan:</span> {row?.original.currentPlan ?? <span className="text-danger">No Enrollment Yet</span>}
-          </p>
-          <p>
-            <span className="font-bold">Total Active Branch:</span> {row?.original.totalActiveBranch}
-          </p>
-          <p>
-            <span className="font-bold">Total Active Stamp:</span> {row?.original.totalActiveStamp}
-          </p>
-        </div>
-      ),
+      Cell: ({ row }: any) => {
+        let currentPlan = '';
+        switch (row?.original.currentPlan) {
+          case 'trial':
+            currentPlan = 'Free Trial';
+            break;
+          case 'basic':
+            currentPlan = 'Basic Plan';
+            break;
+          case 'pro':
+            currentPlan = 'Pro Plan';
+            break;
+          case 'advanced':
+            currentPlan = 'Advanced Plan';
+            break;
+
+          default:
+            currentPlan = 'No Enrollment Yet';
+            break;
+        }
+
+        return (
+          <div className="text-md mx-auto text-start">
+            <p className="flex items-center gap-x-1">
+              <span className="font-bold">Plan:</span>
+              <span className={`${!currentPlan && 'text-danger'}`}>{currentPlan}</span>
+            </p>
+            <p>
+              <span className="font-bold">Total Active Branch:</span> {row?.original.totalActiveBranch}
+            </p>
+            <p>
+              <span className="font-bold">Total Active Stamp:</span> {row?.original.totalActiveStamp}
+            </p>
+          </div>
+        );
+      },
+
       mantineTableHeadCellProps: {
         align: 'start',
       },
