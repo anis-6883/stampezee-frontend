@@ -112,7 +112,6 @@ export default function HeaderContent() {
           <div className="w-[12%]">
             <Link href={routes.publicRoutes.home} className="flex items-center  rtl:space-x-reverse">
               <img src="/images/logo.png" className="h-10 w-10 sm:h-[74px] sm:w-[74px]" alt="logo" />
-              {/* <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span> */}
             </Link>
           </div>
           <div className="flex w-[88%] items-center justify-end md:order-2 md:space-x-0">
@@ -180,7 +179,7 @@ export default function HeaderContent() {
                             className=" transition duration-300 ease-in-out hover:bg-gray-100"
                           >
                             <Link
-                              href="/retailer/login"
+                              href={routes.publicRoutes.retailerLogin}
                               className={`relative block items-center rounded py-2 pl-4 text-base transition-all  duration-150 ease-in dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                             >
                               <CustomButton color="danger" text={t('login')} className="!m-0 !px-3 !py-2 !text-xs" />
@@ -191,7 +190,7 @@ export default function HeaderContent() {
                             className=" transition duration-300 ease-in-out hover:bg-gray-100"
                           >
                             <Link
-                              href="/retailer/register"
+                              href={routes.publicRoutes.pricing}
                               className={`relative block items-center rounded py-2 pl-4 text-base transition-all  duration-150 ease-in dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                             >
                               <CustomButton color="outline" text={t('signUp')} className="!m-0 !border-[#F5F5F5]  !px-3 !py-2 !text-xs" />
@@ -200,7 +199,7 @@ export default function HeaderContent() {
                         </>
                       ) : (
                         <li className="py-4 pl-3">
-                          <Link href="/root/retailer/dashboard" className=" my-auto rounded-xl bg-red-500 p-2 text-white">
+                          <Link href={routes.privateRoutes.retailer.dashboard} className=" my-auto rounded-xl bg-red-500 p-2 text-white">
                             Dashboard
                           </Link>
                         </li>
@@ -315,21 +314,21 @@ export default function HeaderContent() {
                   </li>
                   <div className="ms-2 flex items-center justify-center gap-x-10 space-x-8">
                     {isLoggedIn ? (
-                      <Link href="/root/retailer/dashboard">
+                      <Link href={routes.privateRoutes.retailer.dashboard}>
                         <CustomButton color="danger" text={t('dashboard')} className="!m-0" />
                       </Link>
                     ) : (
                       <div className="flex items-center justify-center gap-x-10 space-x-8">
                         <Link
                           style={{ letterSpacing: '4px' }}
-                          href="/retailer/login"
+                          href={routes.publicRoutes.retailerLogin}
                           className={`min-w-max rounded-full bg-[#FF3131] px-4 py-2 text-[17px] font-bold uppercase text-white`}
                         >
                           {t('login')}
                         </Link>
                         <Link
                           style={{ letterSpacing: '4px' }}
-                          href="/retailer/register"
+                          href={routes.publicRoutes.pricing}
                           className={`hover: min-w-max rounded-full border border-[#FF3131] px-4 py-2 text-[17px] font-bold uppercase transition-all duration-150 ease-in hover:bg-[#FF3131] hover:text-white ${isScrolled ? 'text-white' : 'text-black'}`}
                         >
                           {t('signUp')}
