@@ -94,11 +94,7 @@ export default function RetailerTable({ offset }: { offset: number }) {
             <span className="font-bold">Email:</span> {row?.original?.email}
           </p>
           <p>
-            <span className="font-bold">Phone:</span>{' '}
-            {row?.original?.dialCode && row?.original?.phone
-              ? `${row?.original?.dialCode}
-            ${row?.original?.phone}`
-              : 'N/A'}
+            <span className="font-bold">Join Date:</span> {convertDateByOffset(row?.original?.createdAt, offset)}
           </p>
         </div>
       ),
@@ -127,7 +123,6 @@ export default function RetailerTable({ offset }: { offset: number }) {
           case 'advanced':
             currentPlan = 'Advanced Plan';
             break;
-
           default:
             currentPlan = 'No Enrollment Yet';
             break;
@@ -155,15 +150,6 @@ export default function RetailerTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 200,
-    },
-    {
-      header: 'Joining Date',
-      Cell: ({ row }: any) => (
-        <div className="text-md mx-auto text-start">
-          <p> {convertDateByOffset(row?.original?.createdAt, offset)}</p>
-        </div>
-      ),
       size: 200,
     },
     {

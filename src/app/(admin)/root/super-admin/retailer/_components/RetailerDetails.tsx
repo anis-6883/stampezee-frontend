@@ -10,7 +10,7 @@ import SubAdminListTable from './SubAdminListTable';
 
 export default function RetailerDetails({ id }: { id: string }) {
   const { data, isLoading, isError } = useGetSingleRetailerQuery(id);
-  const {
+  let {
     storeName,
     fullName,
     email,
@@ -33,6 +33,24 @@ export default function RetailerDetails({ id }: { id: string }) {
     subadmins,
     addonSubscriptions,
   } = data?.data || {};
+
+  switch (currentPlan) {
+    case 'trial':
+      currentPlan = 'Free Trial';
+      break;
+    case 'basic':
+      currentPlan = 'Basic Plan';
+      break;
+    case 'pro':
+      currentPlan = 'Pro Plan';
+      break;
+    case 'advanced':
+      currentPlan = 'Advanced Plan';
+      break;
+    default:
+      currentPlan = 'No Enrollment Yet';
+      break;
+  }
 
   return (
     <div className="w-full">
@@ -67,7 +85,7 @@ export default function RetailerDetails({ id }: { id: string }) {
           <InfoRow label="Address" value={address ? address : 'N/A'} isLoading={isLoading} />
           <InfoRow
             label="Current Plan"
-            value={currentPlan ?? <span className="text-danger">No Enrollment Yet!</span>}
+            value={<span className={`${!currentPlan && 'text-danger'}`}>{currentPlan}</span>}
             isLoading={isLoading}
           />
         </div>

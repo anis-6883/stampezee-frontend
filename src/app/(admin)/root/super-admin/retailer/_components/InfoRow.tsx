@@ -3,7 +3,7 @@ import React from 'react';
 
 interface InfoRowProps {
   label: string;
-  value: string | number | undefined;
+  value: string | number | React.ReactNode;
   isLoading?: boolean;
 }
 
