@@ -2,6 +2,7 @@
 
 import Button from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
+import FormikDatePicker from '@/components/Formik/FormikDatePicker';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
@@ -42,6 +43,7 @@ export default function CreateUpdateModel({
     description: formData?.description || '',
     image: formData?.image || '',
     imageType: formData?.image ? 'image' : '',
+    scheduleAt: formData?.scheduleAt || '',
   };
 
   const validationSchema = Yup.object({
@@ -52,16 +54,11 @@ export default function CreateUpdateModel({
   const submitHandler = async (values: any) => {
     setIsSubmitting(true);
 
-    const isFile = (obj: any): obj is File => obj instanceof File;
-
     let objToFormData: FormData;
 
     if (formData?._id) {
       const ignoreList = [];
-      // if (!isFile(values?.image)) ignoreList.push('image');
-      if (!values?.imageType) {
-        ignoreList.push('image');
-      }
+      if (!values?.imageType) ignoreList.push('image');
 
       objToFormData = objectToFormData(values, ignoreList);
       createNotification(objToFormData);
@@ -162,7 +159,11 @@ export default function CreateUpdateModel({
                   </div>
                 )}
 
-                <p className="flex flex-col text-end text-xs font-semibold">
+                <div>
+                  <FormikDatePicker label="Schedule At" name="scheduleAt" required={false} enableTime={true} />
+                </div>
+
+                <p className="mt-2 flex flex-col text-end text-xs font-semibold">
                   <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
                 </p>
                 <div className="mt-6 flex justify-end">

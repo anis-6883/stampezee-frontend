@@ -2,6 +2,7 @@
 
 import Button from '@/components/Formik/Button';
 import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
+import FormikDatePicker from '@/components/Formik/FormikDatePicker';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
@@ -65,6 +66,7 @@ export default function CreateUpdateModel({
     longitude: formData?.longitude || '',
     latitude: formData?.latitude || '',
     radius: formData?.radius || 1,
+    scheduleAt: formData?.scheduleAt || '',
   };
 
   const validationSchema = Yup.object({
@@ -204,6 +206,10 @@ export default function CreateUpdateModel({
                       <InputField required={false} name="image" label={t('imageUrl')} placeholder="https://picsum.photos/200" />
                     </div>
                   )}
+
+                  <div>
+                    <FormikDatePicker label="Schedule At" name="scheduleAt" required={false} enableTime={true} />
+                  </div>
 
                   <p className="mt-4 text-end text-xs font-semibold">
                     <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
