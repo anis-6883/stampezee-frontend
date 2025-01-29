@@ -60,6 +60,7 @@ function updateGeneralSetting(generalSetting: IGeneralSetting) {
     },
     stripe: {
       stripeSecretKey: generalSetting?.data?.stripe?.stripeSecretKey || '',
+      stripePublishKey: generalSetting?.data?.stripe?.stripePublishKey || '',
       stripeWebhookSecretKey: generalSetting?.data?.stripe?.stripeWebhookSecretKey || '',
       planChangeCost: generalSetting?.data?.stripe?.planChangeCost || '',
       refundableThreshold: generalSetting?.data?.stripe?.refundableThreshold || '',
@@ -122,6 +123,7 @@ export default function SettingsMainForm() {
     },
     stripe: {
       stripeSecretKey: '',
+      stripePublishKey: '',
       stripeWebhookSecretKey: '',
       planChangeCost: '',
       refundableThreshold: '',

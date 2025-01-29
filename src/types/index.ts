@@ -446,6 +446,7 @@ export interface ICurrency {
 
 interface IStripe {
   stripeSecretKey?: string;
+  stripePublishKey?: string;
   stripeWebhookSecretKey?: string;
   planChangeCost?: number | string;
   refundableThreshold?: number | string;

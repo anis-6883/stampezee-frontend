@@ -39,6 +39,44 @@ export const paymentApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getAllPaymentMethodByAdmin: builder.query({
+      query: ({ customerId, limit }) => ({
+        url: `/api/secret-root/admin/super-admin/payment/payment-method/all/${customerId}?limit=${limit}`,
+        method: 'GET',
+      }),
+      providesTags: ['payment-card'],
+    }),
+    attachPaymentMethodByAdmin: builder.mutation({
+      query: (data) => ({
+        url: `/api/secret-root/admin/super-admin/payment/attach-payment-method`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['payment-card'],
+    }),
+    detachPaymentMethodByAdmin: builder.mutation({
+      query: (data) => ({
+        url: `/api/secret-root/admin/super-admin/payment/detach-payment-method`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['payment-card'],
+    }),
+    setDefaultPaymentMethodByAdmin: builder.mutation({
+      query: (data) => ({
+        url: `/api/secret-root/admin/super-admin/payment/default-payment-method`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['payment-card'],
+    }),
+    setupPaymentIntentByAdmin: builder.mutation({
+      query: () => ({
+        url: `/api/secret-root/admin/super-admin/payment/setup-payment-intent`,
+        method: 'POST',
+        // body: data,
+      }),
+    }),
   }),
 });
 
@@ -48,4 +86,9 @@ export const {
   useGetRetailerBillingPortalMutation,
   useCreateBillingPdfBySuperAdminMutation,
   useCancelSubscriptionByAdminMutation,
+  useAttachPaymentMethodByAdminMutation,
+  useDetachPaymentMethodByAdminMutation,
+  useGetAllPaymentMethodByAdminQuery,
+  useSetDefaultPaymentMethodByAdminMutation,
+  useSetupPaymentIntentByAdminMutation,
 } = paymentApi;

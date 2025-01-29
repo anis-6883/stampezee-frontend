@@ -82,5 +82,6 @@ export const apiSlice = createApi({
     'admin-dashboard-country-wise-retailer-stats',
     'admin-dashboard-country-wise-customer-stats',
     'admin-dashboard-top-outlets',
+    'payment-card',
   ],
 });

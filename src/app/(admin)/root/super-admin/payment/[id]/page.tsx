@@ -30,7 +30,7 @@ export default async function Page({ params }: any) {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <PaymentDetails id={id} offset={data?.data?.general?.timezone?.value} />
+      <PaymentDetails id={id} offset={data?.data?.general?.timezone?.value} stripePublishKey={data?.data?.stripe?.stripePublishKey} />
     </div>
   );
 }

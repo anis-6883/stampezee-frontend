@@ -11,6 +11,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
+
 import { LuUserCircle2 } from 'react-icons/lu';
 import { SlEnvolope } from 'react-icons/sl';
 import * as Yup from 'yup';

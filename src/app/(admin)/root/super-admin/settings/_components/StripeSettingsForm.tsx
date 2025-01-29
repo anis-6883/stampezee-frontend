@@ -26,6 +26,13 @@ export default function StripeSettingsForm() {
         prefix={<RiKey2Line className="text-xl" />}
       />
       <InputPassword
+        name="stripe.stripePublishKey"
+        label="Stripe Publish Key"
+        placeholder="*******"
+        required={false}
+        prefix={<RiKey2Line className="text-xl" />}
+      />
+      <InputPassword
         name="stripe.stripeWebhookSecretKey"
         label="Stripe Webhook Secret Key"
         placeholder="*******"

@@ -37,7 +37,7 @@ export default function CreateUpdateModel({
   const initialValues = {
     fullName: formData?.fullName || '',
     address: formData?.address || '',
-    email: formData?.contactEmail ? formData?.contactEmail : formData?.email ?? '',
+    email: formData?.contactEmail ? formData?.contactEmail : (formData?.email ?? ''),
     dialCode: formData?.dialCode ? formData?.dialCode : '+1',
     phone: formData?.phone || '',
     country: formData?.country ? formData?.country : 'Canada',

@@ -2,14 +2,22 @@ import Button from '@/components/Formik/Button';
 import { useAttachPaymentMethodMutation } from '@/features/retailer/billing/billingApi';
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
-import { HiPlus } from 'react-icons/hi2';
+import toast from 'react-hot-toast';
+import { BsCheck2Circle } from 'react-icons/bs';
 import { ImSpinner9 } from 'react-icons/im';
 
-const AddPaymentCardForm: React.FC = () => {
+const AddPaymentCardForm = ({
+  setModalState,
+  setClientSecret,
+  customerId,
+}: {
+  setModalState: any;
+  setClientSecret: any;
+  customerId: string;
+}) => {
   const stripe = useStripe();
   const elements = useElements();
   const [attachPaymentMethod] = useAttachPaymentMethodMutation();
-
   const [message, setMessage] = useState<string | null>(null); // state for message, which can be a string or null
   const [isLoading, setIsLoading] = useState<boolean>(false); // state for loading, which is a boolean
 
@@ -39,12 +47,16 @@ const AddPaymentCardForm: React.FC = () => {
         setMessage(error.message || 'An error occurred while saving your payment method.');
       } else if (setupIntent) {
         // Optionally call your API to attach the payment method if needed
-        await attachPaymentMethod({ paymentMethodId: setupIntent.payment_method, customerId: 'cus_RCz82TruUZHQfB' });
+        await attachPaymentMethod({ paymentMethodId: setupIntent.payment_method, customerId });
         setMessage('Payment method added successfully!');
+        toast.success('Payment method added successfully!');
+        setModalState(false);
+        setClientSecret('');
       }
     } catch (error) {
       console.log('Unexpected error:', error);
       setMessage('An unexpected error occurred.');
+      toast.error('Something went wrong!');
     }
 
     setIsLoading(false);
@@ -58,16 +70,16 @@ const AddPaymentCardForm: React.FC = () => {
     <>
       <form id="payment-form" onSubmit={handleSubmit}>
         <PaymentElement id="payment-element" options={paymentElementOptions} />
-        <Button
-          disabled={isLoading || !stripe || !elements}
-          type="submit"
-          className="!m-0"
-          color="danger"
-          text="Add Payment Method"
-          preIcon={isLoading ? <ImSpinner9 className="animate-spin text-lg" /> : <HiPlus className="text-base" />}
-        />
-
-        {message && <div id="payment-message">{message}</div>}
+        <div className="flex items-center justify-end">
+          <Button
+            disabled={isLoading || !stripe || !elements}
+            type="submit"
+            className="!mt-4 !px-3 !py-2"
+            color="primary"
+            text="Submit"
+            postIcon={isLoading ? <ImSpinner9 className="animate-spin text-lg" /> : <BsCheck2Circle className="text-base" />}
+          />
+        </div>
       </form>
     </>
   );

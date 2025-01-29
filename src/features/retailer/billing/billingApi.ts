@@ -36,6 +36,7 @@ export const billingApi = apiSlice.injectEndpoints({
         url: `/api/web/retailer/billing/payment-method/all/${customerId}?limit=${limit}`,
         method: 'GET',
       }),
+      providesTags: ['payment-card'],
     }),
     attachPaymentMethod: builder.mutation({
       query: (data) => ({
@@ -43,6 +44,23 @@ export const billingApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['payment-card'],
+    }),
+    detachPaymentMethod: builder.mutation({
+      query: (data) => ({
+        url: `/api/web/retailer/billing/detach-payment-method`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['payment-card'],
+    }),
+    setDefaultPaymentMethod: builder.mutation({
+      query: (data) => ({
+        url: `/api/web/retailer/billing/default-payment-method`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['payment-card'],
     }),
     cancelSubscription: builder.mutation({
       query: (data) => ({
@@ -71,4 +89,6 @@ export const {
   useSetupPaymentIntentMutation,
   useGetAllPaymentMethodQuery,
   useCancelSubscriptionMutation,
+  useDetachPaymentMethodMutation,
+  useSetDefaultPaymentMethodMutation,
 } = billingApi;

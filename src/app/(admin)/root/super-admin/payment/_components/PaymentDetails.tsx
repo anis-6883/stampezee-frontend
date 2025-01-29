@@ -7,7 +7,10 @@ import { SerializedError } from '@/features/api/apiSlice';
 import {
   useCancelSubscriptionByAdminMutation,
   useCreateBillingPdfBySuperAdminMutation,
+  useDetachPaymentMethodByAdminMutation,
+  useGetAllPaymentMethodByAdminQuery,
   useGetRetailerBillingPortalMutation,
+  useSetDefaultPaymentMethodByAdminMutation,
   useSingleSubscriptionPaymentQuery,
 } from '@/features/super-admin/payment/paymentApi';
 import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
@@ -16,19 +19,39 @@ import moment from 'moment';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { GiSandsOfTime } from 'react-icons/gi';
-import { HiShoppingCart } from 'react-icons/hi2';
+import { HiPlus, HiShoppingCart } from 'react-icons/hi2';
 import { ImBin, ImCancelCircle, ImSpinner9 } from 'react-icons/im';
 import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
-import { MdAutorenew } from 'react-icons/md';
+import { MdAddCard, MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
-import { RiDownloadCloud2Fill } from 'react-icons/ri';
+import { RiDeleteBackLine, RiDownloadCloud2Fill } from 'react-icons/ri';
 import { SlLock } from 'react-icons/sl';
-import { Badge } from 'rizzui';
+import { Badge, Dropdown } from 'rizzui';
 import PackageCancelModal from '../../../retailer/billing/_components/PackageCancelModal';
+import AddPaymentCardModal from './AddPaymentCardModal';
 
-export default function PaymentDetails({ id, offset }: { id: string; offset: number }) {
+const cardImageMap: any = {
+  visa: '/images/visa.svg',
+  mastercard: '/images/mastercard.svg',
+  amex: '/images/amex.svg',
+  default: '/images/default-card.svg',
+};
+
+export default function PaymentDetails({ id, offset, stripePublishKey }: { id: string; offset: number; stripePublishKey: string }) {
   const { push } = useRouter();
+
+  const [
+    setDefaultPaymentMethod,
+    { error: defaultPaymentMethodError, isSuccess: defaultPaymentMethodSuccess, isError: isDefaultPaymentMethodError },
+  ] = useSetDefaultPaymentMethodByAdminMutation();
+
+  const [
+    detachPaymentMethod,
+    { error: detachPaymentMethodError, isSuccess: detachPaymentMethodSuccess, isError: isDetachPaymentMethodError },
+  ] = useDetachPaymentMethodByAdminMutation();
+
   const [
     cancelSubscriptionByAdmin,
     { data: cancelSubscriptionData, error: cancelSubscriptionError, isSuccess, isError: isCancelSubscriptionError },
@@ -57,6 +80,19 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
   const [cancelSubmitting, setCancelSubmitting] = useState(false);
   const [isPlan, setIsPlan] = useState(false);
   const [selectedItem, setSelectedItem] = useState({ name: '', type: '' });
+
+  const [addPaymentCardModal, setAddPaymentCardModal] = useState(false);
+
+  const [defaultPaymentSubmitting, setDefaultPaymentSubmitting] = useState(false);
+  const [defaultPaymentId, setDefaultPaymentId] = useState<string | null>(null);
+
+  const { data: allPaymentMethod, isLoading: isAllPaymentMethod } = useGetAllPaymentMethodByAdminQuery(
+    {
+      customerId: stripe?.customerId,
+      limit: 10,
+    },
+    { skip: !stripe?.customerId }
+  );
 
   // Handle cancel subscription Response
   useEffect(() => {
@@ -89,6 +125,33 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
     }
   }, [portalData, portalError, portalLoading, push]);
 
+  // Handle default payment method Response
+  useEffect(() => {
+    if (isDefaultPaymentMethodError) {
+      setDefaultPaymentSubmitting(false);
+      const myError = defaultPaymentMethodError as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong!');
+      setDefaultPaymentId(null);
+    }
+    if (defaultPaymentMethodSuccess) {
+      setDefaultPaymentSubmitting(false);
+      toast.success('Add default card successfully!');
+      setDefaultPaymentId(null);
+    }
+  }, [defaultPaymentMethodError, isDefaultPaymentMethodError, defaultPaymentMethodSuccess]);
+
+  // Handle detach payment method Response
+  useEffect(() => {
+    if (isDetachPaymentMethodError) {
+      const myError = detachPaymentMethodError as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+    if (detachPaymentMethodSuccess) {
+      toast.success('Delete card successfully!');
+    }
+  }, [detachPaymentMethodError, detachPaymentMethodSuccess, isDetachPaymentMethodError]);
+
+  // Handle Pdf download response
   useEffect(() => {
     if (pdfBuffer) {
       const downloadUrl = window.URL.createObjectURL(new Blob([pdfBuffer], { type: 'application/pdf' }));
@@ -111,9 +174,19 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
     }
   };
 
+  const handleSetDefaultPaymentMethod = async ({ paymentMethodId, customerId }: { paymentMethodId: string; customerId: string }) => {
+    setDefaultPaymentSubmitting(true);
+    setDefaultPaymentId(paymentMethodId);
+    await setDefaultPaymentMethod({ paymentMethodId, customerId });
+  };
+
+  const handleDetachPaymentMethod = async (paymentMethodId: string) => {
+    await detachPaymentMethod({ paymentMethodId });
+  };
+
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
           <div className="flex flex-col items-center justify-between font-medium md:flex-row">
             <span className="font-bold">Store</span>{' '}
@@ -200,6 +273,85 @@ export default function PaymentDetails({ id, offset }: { id: string; offset: num
             <span className="font-bold">Next Invoice</span>{' '}
             {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(validityTo, offset)}</span>}
           </div>
+        </div>
+
+        {/* Payment methods  */}
+        <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
+          <h2 className="border-b-[1px] pb-1 text-lg font-medium">Payment Methods</h2>
+
+          {isAllPaymentMethod ? (
+            [1, 2, 3, 4]?.map((item) => <Skeleton key={item} className="h-10 w-60 rounded" />)
+          ) : allPaymentMethod?.data?.length === 0 ? (
+            <div className="text-center text-base font-semibold text-black">No Data Available</div>
+          ) : (
+            <>
+              {allPaymentMethod?.data?.map((item: any) => (
+                <div key={item?.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                  <img
+                    src={cardImageMap.hasOwnProperty(item?.card?.brand) ? cardImageMap[item?.card?.brand] : cardImageMap['default']}
+                    alt={'card'}
+                    style={{ width: '50px', marginRight: '10px' }}
+                  />
+                  <div className="flex items-center justify-center">
+                    <span className="text-base font-medium capitalize">{item?.card?.brand} </span>
+                    <span className="text-center text-base font-medium capitalize"> ....{item?.card?.last4}</span>
+                  </div>
+                  {allPaymentMethod?.data?.length > 1 ? (
+                    <>
+                      {item?.isDefault ? (
+                        <Badge className="ml-5 !bg-[#FF7C56] text-white">Default</Badge>
+                      ) : status === true && moment().isBefore(validityToUtc) ? (
+                        <Dropdown placement="bottom-start" className="ml-10">
+                          <Dropdown.Trigger>
+                            <BsThreeDotsVertical className=" text-base" />
+                          </Dropdown.Trigger>
+                          <Dropdown.Menu className="w-[170px]">
+                            <Dropdown.Item
+                              onClick={() => handleSetDefaultPaymentMethod({ paymentMethodId: item?.id, customerId: item?.customer })}
+                              className="hover:bg-gray-200"
+                            >
+                              <div className="flex cursor-pointer items-center justify-center text-base">
+                                <MdAddCard className=" text-base" />
+                                <span className="ml-3 text-[14px] font-normal text-black">Set as default</span>
+                              </div>
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleDetachPaymentMethod(item?.id)} className="hover:bg-gray-200">
+                              <div className="flex cursor-pointer items-center justify-center text-base">
+                                <RiDeleteBackLine className=" text-base" />
+                                <span className="ml-3 text-[14px] font-normal text-black">Delete</span>
+                              </div>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      ) : null}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              ))}
+            </>
+          )}
+
+          {status === true && moment().isBefore(validityToUtc) && (
+            <div className="flex items-center justify-end">
+              <Button
+                onClick={() => setAddPaymentCardModal(true)}
+                type="submit"
+                className="!m-0 !px-2.5 !py-2"
+                color="danger"
+                text="Add New Card"
+                preIcon={<HiPlus className="text-base" />}
+              />
+            </div>
+          )}
+
+          <AddPaymentCardModal
+            modalState={addPaymentCardModal}
+            setModalState={setAddPaymentCardModal}
+            customerId={stripe?.customerId}
+            stripePublishKey={stripePublishKey}
+          />
         </div>
       </div>
 

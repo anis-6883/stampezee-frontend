@@ -7,7 +7,10 @@ import { SerializedError } from '@/features/api/apiSlice';
 import {
   useCancelSubscriptionMutation,
   useCreateBillingPdfMutation,
+  useDetachPaymentMethodMutation,
+  useGetAllPaymentMethodQuery,
   useGetBillingPortalMutation,
+  useSetDefaultPaymentMethodMutation,
   useSingleBillingQuery,
 } from '@/features/retailer/billing/billingApi';
 import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
@@ -17,34 +20,45 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { GiSandsOfTime } from 'react-icons/gi';
-import { HiShoppingCart } from 'react-icons/hi2';
+import { HiPlus, HiShoppingCart } from 'react-icons/hi2';
 import { ImBin, ImCancelCircle, ImSpinner9 } from 'react-icons/im';
 import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
-import { MdAutorenew } from 'react-icons/md';
+import { MdAddCard, MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
-import { RiDownloadCloud2Fill } from 'react-icons/ri';
+import { RiDeleteBackLine, RiDownloadCloud2Fill } from 'react-icons/ri';
 import { SlLock } from 'react-icons/sl';
-import { Badge } from 'rizzui';
+import { Badge, Dropdown } from 'rizzui';
+import AddPaymentCardModal from './AddPaymentCardModal';
 import PackageCancelModal from './PackageCancelModal';
 
-// const stripePromise = loadStripe(
-//   'pk_test_51Psj0QAUADTrRdVYFcCLaeO8Up43DJu2Kipj8K14ndt1ZVNb3gqOEy1Ms6MAnyFmmU4XNuBPnDR6UYwL5cZFoQ9200o0DFRfqp'
-// );
+const cardImageMap: any = {
+  visa: '/images/visa.svg',
+  mastercard: '/images/mastercard.svg',
+  amex: '/images/amex.svg',
+  default: '/images/default-card.svg',
+};
 
-export default function SubscriptionDetails({ id, offset }: { id: string; offset: number }) {
+export default function SubscriptionDetails({ id, offset, stripePublishKey }: { id: string; offset: number; stripePublishKey: string }) {
   const t = useTranslations('RetailerBillingDetailsCard');
   const t2 = useTranslations('RetailerBillingDetails');
   const t3 = useTranslations('RetailerBillingInvoiceTable');
   const t4 = useTranslations('RetailerBillingPackagesTable');
   const { push } = useRouter();
 
-  // const { data: allPaymentMethod, isLoading: isAllPaymentMethod } = useGetAllPaymentMethodQuery({
-  //   customerId: 'cus_RCz82TruUZHQfB',
-  //   limit: 4,
-  // });
+  const [
+    setDefaultPaymentMethod,
+    { error: defaultPaymentMethodError, isSuccess: defaultPaymentMethodSuccess, isError: isDefaultPaymentMethodError },
+  ] = useSetDefaultPaymentMethodMutation();
+
+  const [
+    detachPaymentMethod,
+    { error: detachPaymentMethodError, isSuccess: detachPaymentMethodSuccess, isError: isDetachPaymentMethodError },
+  ] = useDetachPaymentMethodMutation();
+
   const { data, isLoading, isError } = useSingleBillingQuery(id);
-  // const [setupPaymentIntent, { data: paymentIntent }] = useSetupPaymentIntentMutation();
+
   const [createBillingPdf, { data: pdfBuffer, isLoading: isPdfBufferLoading }] = useCreateBillingPdfMutation();
   const [
     cancelSubscription,
@@ -55,22 +69,25 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
     data?.data || {};
   const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
   const [selectPaymentId, setSelectPaymentId] = useState('');
-  // const [clientSecret, setClientSecret] = useState('');
 
-  // cancel subscription state
   const [modalState, setModalState] = useState(false);
   const [cancelSubscriptionId, setCancelSubscriptionId] = useState(null);
   const [cancelSubmitting, setCancelSubmitting] = useState(false);
   const [isPlan, setIsPlan] = useState(false);
   const [selectedItem, setSelectedItem] = useState({ name: '', type: '' });
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const res: any = await setupPaymentIntent({});
+  const [addPaymentCardModal, setAddPaymentCardModal] = useState(false);
 
-  //     setClientSecret(res?.data?.data?.client_secret);
-  //   })();
-  // }, []);
+  const [defaultPaymentSubmitting, setDefaultPaymentSubmitting] = useState(false);
+  const [defaultPaymentId, setDefaultPaymentId] = useState<string | null>(null);
+
+  const { data: allPaymentMethod, isLoading: isAllPaymentMethod } = useGetAllPaymentMethodQuery(
+    {
+      customerId: stripe?.customerId,
+      limit: 10,
+    },
+    { skip: !stripe?.customerId }
+  );
 
   // Handle cancel subscription Response
   useEffect(() => {
@@ -89,6 +106,32 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
     }
   }, [cancelSubscriptionData?.message, cancelSubscriptionError, isCancelSubscriptionError, isSuccess]);
 
+  // Handle default payment method Response
+  useEffect(() => {
+    if (isDefaultPaymentMethodError) {
+      setDefaultPaymentSubmitting(false);
+      const myError = defaultPaymentMethodError as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong!');
+      setDefaultPaymentId(null);
+    }
+    if (defaultPaymentMethodSuccess) {
+      setDefaultPaymentSubmitting(false);
+      toast.success('Add default card successfully!');
+      setDefaultPaymentId(null);
+    }
+  }, [defaultPaymentMethodError, isDefaultPaymentMethodError, defaultPaymentMethodSuccess]);
+
+  // Handle detach payment method Response
+  useEffect(() => {
+    if (isDetachPaymentMethodError) {
+      const myError = detachPaymentMethodError as SerializedError;
+      toast.error(myError?.data?.message || 'Something went wrong!');
+    }
+    if (detachPaymentMethodSuccess) {
+      toast.success('Delete card successfully!');
+    }
+  }, [detachPaymentMethodError, detachPaymentMethodSuccess, isDetachPaymentMethodError]);
+
   useEffect(() => {
     if (portalError) {
       const myError = portalError as SerializedError;
@@ -101,6 +144,8 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
       }
     }
   }, [portalData, portalError, portalLoading, push]);
+
+  // Handle Pdf download response
 
   useEffect(() => {
     if (pdfBuffer) {
@@ -125,20 +170,21 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
     }
   };
 
-  // const appearance: { theme: 'flat' | 'stripe' | 'night' } = {
-  //   theme: 'stripe', // Replace 'stripe' with 'flat' or 'night' if you want to try a different theme
-  // };
+  const handleSetDefaultPaymentMethod = async ({ paymentMethodId, customerId }: { paymentMethodId: string; customerId: string }) => {
+    setDefaultPaymentSubmitting(true);
+    setDefaultPaymentId(paymentMethodId);
+    await setDefaultPaymentMethod({ paymentMethodId, customerId });
+  };
 
-  // // Enable the skeleton loader UI for optimal loading.
-  // const loader = 'auto';
-
-  const totalAddon = enrollSubscriptions?.filter((item: any) => !item?.deletedByRetailer)?.length;
+  const handleDetachPaymentMethod = async (paymentMethodId: string) => {
+    await detachPaymentMethod({ paymentMethodId });
+  };
 
   return (
     <div className="w-full">
       {/* subscriptions details  */}
 
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-x-4 md:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
           <div className="flex flex-col justify-between font-medium md:flex-row">
             <span className="font-semibold">{t('subscriptionID')}</span>
@@ -210,28 +256,84 @@ export default function SubscriptionDetails({ id, offset }: { id: string; offset
           </div>
         </div>
 
-        {/* <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
-          <h2 className="my-5 text-lg font-medium">Payment methods</h2>
-          <hr />
-          {allPaymentMethod?.data?.data?.map((item: any) => (
-            <div key={item?.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <img
-                src={
-                  'https://platform.vox.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/13674554/Mastercard_logo.jpg?quality=90&strip=all&crop=0%2C16.666666666667%2C100%2C66.666666666667&w=750'
-                }
-                alt={'card'}
-                style={{ width: '50px', marginRight: '10px' }}
+        {/* Payment methods  */}
+        <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
+          <h2 className="border-b-[1px] pb-1 text-lg font-medium">Payment Methods</h2>
+
+          {isAllPaymentMethod ? (
+            [1, 2, 3, 4]?.map((item) => <Skeleton key={item} className="h-10 w-60 rounded" />)
+          ) : allPaymentMethod?.data?.length === 0 ? (
+            <div className="text-center text-base font-semibold text-black">No Data Available</div>
+          ) : (
+            <>
+              {allPaymentMethod?.data?.map((item: any) => (
+                <div key={item?.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                  <img
+                    src={cardImageMap.hasOwnProperty(item?.card?.brand) ? cardImageMap[item?.card?.brand] : cardImageMap['default']}
+                    alt={'card'}
+                    style={{ width: '50px', marginRight: '10px' }}
+                  />
+                  <div className="flex items-center justify-center">
+                    <span className="text-base font-medium capitalize">{item?.card?.brand} </span>
+                    <span className="text-center text-base font-medium capitalize"> ....{item?.card?.last4}</span>
+                  </div>
+                  {allPaymentMethod?.data?.length > 1 ? (
+                    <>
+                      {item?.isDefault ? (
+                        <Badge className="ml-5 !bg-[#FF7C56] text-white">Default</Badge>
+                      ) : status === true && moment().isBefore(validityToUtc) ? (
+                        <Dropdown placement="bottom-start" className="ml-10">
+                          <Dropdown.Trigger>
+                            <BsThreeDotsVertical className=" text-base" />
+                          </Dropdown.Trigger>
+                          <Dropdown.Menu className="w-[170px]">
+                            <Dropdown.Item
+                              onClick={() => handleSetDefaultPaymentMethod({ paymentMethodId: item?.id, customerId: item?.customer })}
+                              className="hover:bg-gray-200"
+                            >
+                              <div className="flex cursor-pointer items-center justify-center text-base">
+                                <MdAddCard className=" text-base" />
+                                <span className="ml-3 text-[14px] font-normal text-black">Set as default</span>
+                              </div>
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleDetachPaymentMethod(item?.id)} className="hover:bg-gray-200">
+                              <div className="flex cursor-pointer items-center justify-center text-base">
+                                <RiDeleteBackLine className=" text-base" />
+                                <span className="ml-3 text-[14px] font-normal text-black">Delete</span>
+                              </div>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      ) : null}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              ))}
+            </>
+          )}
+
+          {status === true && moment().isBefore(validityToUtc) && (
+            <div className="flex items-center justify-end">
+              <Button
+                onClick={() => setAddPaymentCardModal(true)}
+                type="submit"
+                className="!m-0 !px-2.5 !py-2"
+                color="danger"
+                text="Add New Card"
+                preIcon={<HiPlus className="text-base" />}
               />
-              <div className="flex items-center justify-center">
-                <span className="text-base font-medium capitalize">{item?.card?.brand} </span>
-                <span className="text-center text-base font-medium capitalize"> ....{4545}</span>
-              </div>
             </div>
-          ))}
-          <div className="">
-            <Button type="submit" className="!m-0" color="danger" text="Add Payment Method" preIcon={<HiPlus className="text-base" />} />
-          </div>
-        </div> */}
+          )}
+
+          <AddPaymentCardModal
+            modalState={addPaymentCardModal}
+            setModalState={setAddPaymentCardModal}
+            customerId={stripe?.customerId}
+            stripePublishKey={stripePublishKey}
+          />
+        </div>
       </div>
 
       {/* Packages  */}
