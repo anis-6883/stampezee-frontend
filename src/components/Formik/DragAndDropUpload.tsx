@@ -105,7 +105,7 @@ export default function DragAndDropUpload({
               src={preview}
               alt="Uploaded Image"
               sizes="100vw"
-              className={cn('z-30 h-[120px] w-[120px] rounded-md border border-gray-200 object-cover p-2', isRounded && 'rounded-full')}
+              className={cn('h-[120px] w-[120px] rounded-md border border-gray-200 object-cover p-2', isRounded && 'rounded-full')}
             />
             {!isRounded ? (
               <button type="button" className="rounded bg-red-500 p-1" onClick={removeFile}>
@@ -114,7 +114,7 @@ export default function DragAndDropUpload({
             ) : (
               <FaTrashAlt
                 onClick={removeFile}
-                className="hover:fill-secondary-400 absolute right-3 top-0 z-50 h-4 w-4 transform cursor-pointer fill-red-500 transition-all duration-700 ease-in-out hover:scale-125"
+                className="hover:fill-secondary-400 absolute right-3 top-0 z-10 h-4 w-4 transform cursor-pointer fill-red-500 transition-all duration-700 ease-in-out hover:scale-125"
               />
             )}
           </div>

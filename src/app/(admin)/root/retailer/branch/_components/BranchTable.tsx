@@ -2,6 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import StatusIndicator from '@/components/StatusIndicator';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import {
@@ -23,6 +24,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FcLock, FcUnlock } from 'react-icons/fc';
 import { HiOutlinePencil } from 'react-icons/hi';
+import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
 import { IoPower } from 'react-icons/io5';
 import { SiConvertio } from 'react-icons/si';
@@ -35,6 +37,7 @@ import SwitchButton from '../../../_components/SwitchButton';
 export default function BranchTable({ offset }: { offset: number }) {
   const { data: session }: any = useSession();
   const t = useTranslations('RetailerBranchTable');
+  const t2 = useTranslations('RetailerBranches');
   const [deleteBranch, { isSuccess, isError }] = useDeleteBranchMutation();
   const [updateStatus] = useUpdateBranchStatusMutation();
   const [activateBranch, { isSuccess: activateBranchSuccess, isError: activateBranchError }] = useActivateBranchMutation();
@@ -266,8 +269,23 @@ export default function BranchTable({ offset }: { offset: number }) {
     },
   ];
 
+  const totalAllowBranch = session?.user?.totalBranch;
+  const totalCreatedBranch = data?.data.totalDocs;
+
   return (
     <>
+      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+        <StatusIndicator />
+        <Link href={routes.privateRoutes.retailer.branch.create}>
+          <Button
+            disabled={totalCreatedBranch < totalAllowBranch ? false : true}
+            className="!m-0 w-full"
+            color="danger"
+            text={t2('addNewBranch')}
+            preIcon={<HiPlus className="text-base" />}
+          />
+        </Link>
+      </div>
       <Table
         isFetching={isFetching}
         isLoading={isLoading}

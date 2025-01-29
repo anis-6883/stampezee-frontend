@@ -137,8 +137,6 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     (currency: any) => currency.label === retailerProfile?.data?.businessCurrency
   );
 
-  console.log({ defaultCurrencyValues });
-
   return (
     <div>
       <div className="mt-8">
