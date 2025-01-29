@@ -20,6 +20,7 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { menuItems } from './menu-items';
 
+// user has no current plan sidebar locked url list
 const blockedMenuUrls = [
   routes.privateRoutes.retailer.customer.home,
   routes.privateRoutes.retailer.sub_admin.home,
@@ -31,28 +32,35 @@ const blockedMenuUrls = [
   routes.privateRoutes.retailer.scan,
 ];
 
+//current plan is free trail then sidebar locked url list
 const addonsBlockedMenuUrls = [
   routes.privateRoutes.retailer.stampImage.home,
   routes.privateRoutes.retailer.regularNotification.home,
   routes.privateRoutes.retailer.locationBasedNotification.home,
 ];
 
-const lockedMenuNames = ['Branches', 'Custom Stamp Images', 'Regular', 'Location Based'];
+const lockedMenuNames = ['Branches', 'Custom Stamp Images', 'Regular', 'Location Based', 'Push Notifications'];
 
 const checkedLocked = (role: string, url: string, menuName: string, user: any) => {
+  // if user has current plan
   if (user?.plan) {
+    // free trail checked lock
     if (user?.plan === 'trial') {
       return role === 'retailer' && addonsBlockedMenuUrls.includes(url);
     }
+    // if sidebar menu name contain lockedMenuNames
     if (lockedMenuNames?.indexOf(menuName) >= 0) {
+      // if sidebar menu name is Branches
       if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Branches') {
         return role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalBranch === 0;
       }
+      // if sidebar menu name is Custom Stamp Images
       if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Custom Stamp Images') {
         return (
           role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalCustomStampImage === 0
         );
       }
+      // if sidebar menu name is Regular
       if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Regular') {
         return (
           role === 'retailer' &&
@@ -61,6 +69,7 @@ const checkedLocked = (role: string, url: string, menuName: string, user: any) =
           user?.totalRegularNotification === 0
         );
       }
+      // if sidebar menu name is Location Based
       if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Location Based') {
         return (
           role === 'retailer' &&
@@ -69,9 +78,21 @@ const checkedLocked = (role: string, url: string, menuName: string, user: any) =
           user?.totalLocationNotification === 0
         );
       }
+      // if sidebar menu name is Push Notifications
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Push Notifications') {
+        return (
+          role === 'retailer' &&
+          blockedMenuUrls.includes(url) &&
+          lockedMenuNames?.includes(menuName) &&
+          user?.totalLocationNotification === 0 &&
+          user?.totalRegularNotification === 0
+        );
+      }
     }
     return false;
-  } else {
+  }
+  // if user has no current plan and role retailer then sidebar menu locked
+  else {
     return role === 'retailer' && blockedMenuUrls.includes(url);
   }
 };
@@ -163,7 +184,10 @@ export default function Sidebar({ className }: { className?: string }) {
                               '2xl:mx-5 2xl:my-2 group relative mx-3 flex cursor-pointer items-center justify-between rounded-md px-3 py-2 font-medium lg:my-1',
                               isDropdownOpen
                                 ? 'before:top-2/5 2xl:before:-start-5 text-danger before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-primary'
-                                : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:text-gray-700/90 dark:hover:text-gray-700'
+                                : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:text-gray-700/90 dark:hover:text-gray-700',
+                              checkedLocked(role, item?.href, item.name, session?.user)
+                                ? 'pointer-events-none cursor-not-allowed bg-gray-100'
+                                : ''
                             )}
                           >
                             <span className="flex items-center">
@@ -180,13 +204,19 @@ export default function Sidebar({ className }: { className?: string }) {
                               {role === ROLE.RETAILER ? t(item?.name) : item.name}
                             </span>
 
-                            <PiCaretDownBold
-                              strokeWidth={3}
-                              className={cn(
-                                'h-3.5 w-3.5 -rotate-90 text-gray-500 transition-transform duration-200 rtl:rotate-90',
-                                open && 'rotate-0 rtl:rotate-0'
-                              )}
-                            />
+                            {checkedLocked(role, item?.href, item.name, session?.user) ? (
+                              <div className="text-end ">
+                                <SlLock className="text-lg" />
+                              </div>
+                            ) : (
+                              <PiCaretDownBold
+                                strokeWidth={3}
+                                className={cn(
+                                  'h-3.5 w-3.5 -rotate-90 text-gray-500 transition-transform duration-200 rtl:rotate-90',
+                                  open && 'rotate-0 rtl:rotate-0'
+                                )}
+                              />
+                            )}
                           </div>
                         )}
                       >
