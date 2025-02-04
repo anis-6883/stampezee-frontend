@@ -88,7 +88,10 @@ export default function CouponTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Limit:</span> {row?.original?.limit}
+            <span className="font-bold">Total User Limit:</span> {row?.original?.totalUserLimit}
+          </p>
+          <p>
+            <span className="font-bold">Per User Limit:</span> {row?.original?.perUserLimit}
           </p>
           <p>
             <span className="font-bold">Allow Retailer:</span>{' '}

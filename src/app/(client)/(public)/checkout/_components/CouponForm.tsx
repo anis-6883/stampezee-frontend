@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { MdBlock } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
@@ -84,7 +85,7 @@ const CouponForm = ({ locale }: { locale: string }) => {
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleCoupon}>
         {() => (
           <Form className="grid grid-cols-12 justify-between gap-x-2">
-            <div className="col-span-7">
+            <div className="col-span-7 space-y-3">
               <InputField
                 disabled={isCheckCouponDisabled({ activeSubscription, subscription, addOns, isLoggedIn, coupon, planChangeType })}
                 label=""
@@ -92,6 +93,12 @@ const CouponForm = ({ locale }: { locale: string }) => {
                 required={false}
                 name="code"
               />
+              {subscription?.slug === 'trial' && (
+                <div className="flex items-center justify-start gap-x-1">
+                  <MdBlock className="text-lg" />{' '}
+                  <span className="text-[15px] font-medium text-red-500">{`No coupon for free trial!`}</span>
+                </div>
+              )}
             </div>
             <div className="col-span-5">
               <Button

@@ -10,6 +10,7 @@ export default function InputField({
   disabled = false,
   type = 'text',
   prefix,
+  suffix,
   className = '',
 }: {
   name: string;
@@ -18,6 +19,7 @@ export default function InputField({
   required?: boolean;
   type?: string;
   prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
   disabled?: boolean;
   className?: string;
 }) {
@@ -29,16 +31,16 @@ export default function InputField({
             {...field}
             label={
               label ? (
-                <span>
+                <div className="flex items-center">
                   {label} {required && <span className="text-red-600">*</span>}
-                </span>
+                </div>
               ) : null
             }
             type={type}
             placeholder={placeholder}
             disabled={disabled}
             autoComplete="off"
-            inputClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
+            inputClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'} ${disabled && '!border-gray-100 bg-gray-100'}`}
             prefix={prefix}
             className={className}
             helperText={
@@ -52,6 +54,7 @@ export default function InputField({
               )
             }
             helperClassName="text-danger"
+            suffix={suffix}
           />
         )}
       </Field>

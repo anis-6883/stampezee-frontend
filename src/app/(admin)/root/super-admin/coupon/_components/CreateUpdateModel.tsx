@@ -20,7 +20,7 @@ import { IoAlertCircle, IoCloseOutline } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine } from 'react-icons/ri';
 import ReactSelect from 'react-select';
-import { ActionIcon, Modal, Title } from 'rizzui';
+import { ActionIcon, Modal, Switch, Title } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function CreateUpdateModel({
@@ -35,6 +35,8 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [totalUserLimitChecked, setTotalUserLimitChecked] = useState<boolean>(false);
+  const [perUserLimitChecked, setPerUserLimitChecked] = useState<boolean>(false);
   const [showRetailers, setShowRetailers] = useState(formData?.allowFor !== 'all');
   const [createCoupon, { isSuccess: createSuccess, error: createError }] = useCreateCouponAdminMutation();
   const [updateCoupon, { isSuccess: updateSuccess, error: updateError }] = useUpdateCouponMutation();
@@ -66,11 +68,13 @@ export default function CreateUpdateModel({
     description: formData?.description || '',
     discountType: formData?.discountType || 'percentage',
     discount: formData?.discount || '',
-    limit: formData?.limit || '',
+    // limit: formData?.limit || '',
     validDateRange: formData?.validDateRange || '',
     allowFor: formData?.allowFor || 'all',
     allowedRetailers: formData?.allowedRetailers || [],
     applicablePackages: formData?.applicablePackages || [],
+    totalUserLimit: formData?.userLimit || 0,
+    perUserLimit: formData?.perUserLimit || 0,
   };
 
   const validationSchema = Yup.object().shape({
@@ -82,12 +86,12 @@ export default function CreateUpdateModel({
       then: () => Yup.number().max(50, 'Value must be less then or equal to 50!').required('Required!'),
       otherwise: () => Yup.number().required('Required!'),
     }),
-    limit: Yup.number()
-      .test('integer', 'Please enter an integer value', (value: any) => {
-        return !isNaN(parseFloat(value)) && isFinite(value);
-      })
-      .min(1, 'Value must be greater then or equal to 1')
-      .required('Required!'),
+    // limit: Yup.number()
+    //   .test('integer', 'Please enter an integer value', (value: any) => {
+    //     return !isNaN(parseFloat(value)) && isFinite(value);
+    //   })
+    //   .min(1, 'Value must be greater then or equal to 1')
+    //   .required('Required!'),
     validDateRange: Yup.string().required('Required!'),
     applicablePackages: Yup.array()
       .of(Yup.string().required('Array must contain a string'))
@@ -99,6 +103,8 @@ export default function CreateUpdateModel({
         Yup.array().of(Yup.string().required('Array must contain a string')).min(1, 'Select at least one retailer!').required('Required!'),
       otherwise: () => Yup.array().nullable(),
     }),
+    // totalUserLimit: Yup.number().required('Required!'),
+    // perUserLimit: Yup.number().required('Required!'),
   });
 
   // Submit Handler
@@ -305,7 +311,7 @@ export default function CreateUpdateModel({
                     <InputField name="description" label="Description" placeholder="Write here..." required={false} />
                   </div>
 
-                  <div className="grid grid-cols-1 gap-x-3 md:grid-cols-3">
+                  <div className="grid grid-cols-1 gap-x-3 md:grid-cols-2">
                     <SelectField
                       value={values?.discountType}
                       options={[
@@ -333,7 +339,50 @@ export default function CreateUpdateModel({
                         prefix={<LuCircleDollarSign className="text-xl" />}
                       />
                     )}
-                    <InputField type="number" name="limit" label="Limit" placeholder="1" />
+                    {/* <InputField type="number" name="limit" label="Limit" placeholder="1" /> */}
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <InputField
+                      disabled={!totalUserLimitChecked}
+                      type="number"
+                      name="totalUserLimit"
+                      required={false}
+                      label={
+                        <div className="flex items-center gap-x-1">
+                          <Switch
+                            switchClassName={`${totalUserLimitChecked ? '' : 'bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 shadow-gray-500/50 hover:bg-gradient-to-br focus:ring-gray-300'}`}
+                            switchKnobClassName={'bg-light'}
+                            variant="flat"
+                            label=""
+                            size="sm"
+                            checked={totalUserLimitChecked}
+                            onChange={() => setTotalUserLimitChecked((prev) => !prev)}
+                          />
+                          <span>Total User Limit</span>
+                        </div>
+                      }
+                    />
+                    <InputField
+                      disabled={!perUserLimitChecked}
+                      type="number"
+                      required={false}
+                      name="perUserLimit"
+                      label={
+                        <div className="flex items-center gap-x-1">
+                          <Switch
+                            switchClassName={`${perUserLimitChecked ? '' : 'bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 shadow-gray-500/50 hover:bg-gradient-to-br focus:ring-gray-300'}`}
+                            switchKnobClassName={'bg-light'}
+                            variant="flat"
+                            label=""
+                            size="sm"
+                            checked={perUserLimitChecked}
+                            onChange={() => setPerUserLimitChecked((prev) => !prev)}
+                          />
+                          <span>Per User Limit</span>
+                        </div>
+                      }
+                    />
                   </div>
 
                   <div className="grid grid-cols-1">

@@ -19,16 +19,18 @@ import moment from 'moment';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { GiSandsOfTime } from 'react-icons/gi';
-import { HiShoppingCart } from 'react-icons/hi2';
+import { HiPlus, HiShoppingCart } from 'react-icons/hi2';
 import { ImBin, ImCancelCircle, ImSpinner9 } from 'react-icons/im';
 import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
-import { MdAutorenew } from 'react-icons/md';
+import { MdAddCard, MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
-import { RiDownloadCloud2Fill } from 'react-icons/ri';
+import { RiDeleteBackLine, RiDownloadCloud2Fill } from 'react-icons/ri';
 import { SlLock } from 'react-icons/sl';
-import { Badge } from 'rizzui';
+import { Badge, Dropdown } from 'rizzui';
 import PackageCancelModal from '../../../retailer/billing/_components/PackageCancelModal';
+import AddPaymentCardModal from './AddPaymentCardModal';
 
 const cardImageMap: any = {
   visa: '/images/visa.svg',
@@ -274,7 +276,7 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
         </div>
 
         {/* Payment methods  */}
-        {/* <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
+        <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
           <h2 className="border-b-[1px] pb-1 text-lg font-medium">Payment Methods</h2>
 
           {isAllPaymentMethod ? (
@@ -350,7 +352,7 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
             customerId={stripe?.customerId}
             stripePublishKey={stripePublishKey}
           />
-        </div> */}
+        </div>
       </div>
 
       <h2 className="my-5 text-lg font-medium">{'Enroll Subscriptions'}</h2>
