@@ -13,6 +13,7 @@ import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
 import { IoAlarmOutline } from 'react-icons/io5';
+import { LuClock4 } from 'react-icons/lu';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function LocationBaseNotifyTable({
@@ -71,9 +72,33 @@ export default function LocationBaseNotifyTable({
         </div>
       ),
     },
+    // {
+    //   header: t('sendTime'),
+    //   Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original?.createdAt, offset)}</div>,
+    //   mantineTableHeadCellProps: {
+    //     align: 'start',
+    //   },
+    //   mantineTableBodyCellProps: {
+    //     align: 'center',
+    //   },
+    //   size: 150,
+    // },
     {
-      header: t('sendTime'),
-      Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original?.createdAt, offset)}</div>,
+      header: (
+        <span className="flex items-center gap-x-2">
+          <FaRegPaperPlane className="text-sm" /> Sent Time / <LuClock4 className="text-lg" /> Scheduled At
+        </span>
+      ),
+      Cell: ({ row }: any) =>
+        row?.original?.scheduleAt ? (
+          <div className="text-md mx-auto flex items-center gap-x-2 text-start">
+            {convertDateByOffset(row?.original?.scheduleAt, offset)} <LuClock4 className="text-lg" />
+          </div>
+        ) : (
+          <div className="text-md mx-auto flex items-center gap-x-2 text-start">
+            {convertDateByOffset(row?.original?.createdAt, offset)} <FaRegPaperPlane className="text-sm" />
+          </div>
+        ),
       mantineTableHeadCellProps: {
         align: 'start',
       },
@@ -91,7 +116,7 @@ export default function LocationBaseNotifyTable({
       accessorKey: 'radius',
     },
     {
-      header: t('actions'),
+      header: <span>{t('actions')}</span>,
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Button
