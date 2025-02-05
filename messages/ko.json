@@ -401,7 +401,7 @@
     "address": "주소",
     "source": "소스",
     "expiryDay": "만료일",
-    "status": "상태",
+    "billingCycle": "청구 주기",
     "actions": "작업",
     "placeHolder": "지점 이름으로 검색",
     "expired": "만료",

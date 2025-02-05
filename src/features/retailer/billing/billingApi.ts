@@ -64,7 +64,7 @@ export const billingApi = apiSlice.injectEndpoints({
     }),
     cancelSubscription: builder.mutation({
       query: (data) => ({
-        url: `/api/web/retailer/billing/cancel-addon-subscription`,
+        url: `/api/web/retailer/billing/cancel-subscription`,
         method: 'DELETE',
         body: data,
       }),

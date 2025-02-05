@@ -26,7 +26,7 @@ export const paymentApi = apiSlice.injectEndpoints({
     }),
     cancelSubscriptionByAdmin: builder.mutation({
       query: (data) => ({
-        url: `/api/secret-root/admin/super-admin/payment/cancel-addon-subscription`,
+        url: `/api/secret-root/admin/super-admin/payment/cancel-subscription`,
         method: 'DELETE',
         body: data,
       }),

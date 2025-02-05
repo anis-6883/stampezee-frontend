@@ -400,7 +400,7 @@
     "address": "住所",
     "source": "ソース",
     "expiryDay": "有効期限日",
-    "status": "ステータス",
+    "billingCycle": "請求サイクル (せいきゅうサイクル)",
     "actions": "操作",
     "placeHolder": "支店名で検索",
     "expired": "期限切れ",

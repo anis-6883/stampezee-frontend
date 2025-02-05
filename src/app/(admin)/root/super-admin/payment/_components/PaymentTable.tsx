@@ -59,11 +59,13 @@ export default function PaymentTable({ offset }: { offset: number }) {
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
         return row?.original?.enrollSubscriptions?.map((subscription: any) => {
-          if (subscription?.deletedByRetailer) return null;
-
           return (
             <div className="my-1" key={subscription?._id}>
-              {subscription?.title}
+              {subscription?.deletedByRetailerAt ? (
+                <span className="line-through">{subscription?.title}</span>
+              ) : (
+                <span>{subscription?.title}</span>
+              )}
             </div>
           );
         });
@@ -76,7 +78,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
       size: 200,
     },
     {
-      header: 'Plan Status',
+      header: 'Billing Cycle',
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         const validityTo = moment.utc(row?.original?.validityTo).utcOffset(Number(offset));

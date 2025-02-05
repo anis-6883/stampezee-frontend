@@ -401,7 +401,7 @@
     "address": "पता",
     "source": "स्रोत",
     "expiryDay": "समाप्ति दिवस",
-    "status": "स्थिति",
+    "billingCycle": "बिलिंग चक्र",
     "actions": "क्रियाएँ",
     "placeHolder": "शाखा नाम द्वारा खोजें",
     "expired": "समाप्त",

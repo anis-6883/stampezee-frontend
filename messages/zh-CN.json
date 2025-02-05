@@ -401,7 +401,7 @@
     "address": "地址",
     "source": "来源",
     "expiryDay": "到期日",
-    "status": "状态",
+    "billingCycle": "账单周期",
     "actions": "操作",
     "placeHolder": "按分支名称搜索",
     "expired": "已过期",

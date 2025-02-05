@@ -2,7 +2,6 @@
 
 import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import {
   useCancelSubscriptionByAdminMutation,
@@ -22,12 +21,11 @@ import toast from 'react-hot-toast';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { HiPlus, HiShoppingCart } from 'react-icons/hi2';
-import { ImBin, ImCancelCircle, ImSpinner9 } from 'react-icons/im';
+import { ImBin, ImSpinner9 } from 'react-icons/im';
 import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { MdAddCard, MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { RiDeleteBackLine, RiDownloadCloud2Fill } from 'react-icons/ri';
-import { SlLock } from 'react-icons/sl';
 import { Badge, Dropdown } from 'rizzui';
 import PackageCancelModal from '../../../retailer/billing/_components/PackageCancelModal';
 import AddPaymentCardModal from './AddPaymentCardModal';
@@ -250,7 +248,7 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
             )}
           </div>
           <div className="flex items-center justify-between font-medium">
-            <span className="font-bold">Plan Status</span>{' '}
+            <span className="font-bold">Billing Cycle</span>{' '}
             {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : status === true && moment().isBefore(validityToUtc) ? (
@@ -408,7 +406,6 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
                 </tr>
               ) : (
                 enrollSubscriptions?.map((enrollSubscription: any, index: number) => {
-                  if (enrollSubscription?.deletedByRetailer) return null;
                   return (
                     <tr
                       key={enrollSubscription?._id}
@@ -418,40 +415,37 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
                         {++index}
                       </td>
                       <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                        {enrollSubscription?.title}
+                        {enrollSubscription?.deletedByRetailerAt ? (
+                          <span className="line-through">{enrollSubscription?.title}</span>
+                        ) : (
+                          enrollSubscription?.title
+                        )}
                       </td>
                       <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                        {enrollSubscription?.subscriptionItemId}
+                        {enrollSubscription?.deletedByRetailerAt ? (
+                          <span className="line-through">{enrollSubscription?.subscriptionItemId}</span>
+                        ) : (
+                          enrollSubscription?.subscriptionItemId
+                        )}
                       </td>
 
                       <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                        {stripe?.renewCancelAt && enrollSubscription?.type === 'addon' && planExists ? (
-                          <span className="font-semibold text-danger">Renew depend on plan!</span>
+                        {enrollSubscription?.deletedByRetailerAt ? (
+                          <span className="font-semibold text-danger">
+                            {convertDateByOffset(enrollSubscription?.deletedByRetailerAt, offset)} (Canceled At)
+                          </span>
                         ) : (
                           <Button
                             disabled={!status}
-                            className="!m-0 !px-2 !py-1.5"
+                            className="!m-0 !rounded-full !px-2.5 !py-1.5"
                             color="danger"
                             onClick={() => {
                               setModalState(true);
-                              if (enrollSubscription?.type === 'subscription') {
-                                setIsPlan(true);
-                                setSelectedItem({ name: '', type: '' });
-                              } else {
-                                setIsPlan(false);
-                                if (enrollSubscription?.slug === 'branch') {
-                                  setSelectedItem({ name: enrollSubscription?.branch[0]?.name, type: 'branch' });
-                                }
-                                if (enrollSubscription?.slug === 'stamp') {
-                                  setSelectedItem({ name: enrollSubscription?.stamp[0]?.name, type: 'stamp' });
-                                }
-                                if (enrollSubscription?.slug === 'custom_stamp_image') {
-                                  setSelectedItem({ name: enrollSubscription?.stamp_image[0]?.name, type: 'stamp image' });
-                                }
-                              }
                               setCancelSubscriptionId(enrollSubscription?._id);
+                              if (enrollSubscription?.type === 'subscription') setIsPlan(true);
+                              else setIsPlan(false);
                             }}
-                            text={stripe?.renewCancelAt === null ? 'Remove' : 'Renew'}
+                            text={'Remove'}
                             postIcon={
                               stripe?.renewCancelAt === null ? <ImBin className="text-base" /> : <MdAutorenew className="text-xl" />
                             }
@@ -573,36 +567,6 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
         </table>
       </div>
 
-      <div className="mt-20">
-        <div className="flex justify-end">
-          {isLoading || isError ? (
-            <Skeleton className="h-6 w-32 rounded" />
-          ) : status === true && moment().isBefore(validityToUtc) ? (
-            <Button
-              onClick={() =>
-                getPortal({
-                  customerId: stripe?.customerId,
-                  returnUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/${routes.privateRoutes.superAdmin.payment.details(id)}`,
-                })
-              }
-              isSubmitting={portalLoading}
-              className="!m-0"
-              color="danger"
-              text={stripe?.renewCancelAt === null ? 'Cancel Subscription Or Change Card' : 'Renew Subscription Or Change Card'}
-              postIcon={stripe?.renewCancelAt === null ? <ImCancelCircle className="text-xl" /> : <MdAutorenew className="text-xl" />}
-            />
-          ) : (
-            <Button
-              disabled={true}
-              className="!m-0"
-              color="danger"
-              text={'Subscription Canceled'}
-              postIcon={<SlLock className="text-xl" />}
-            />
-          )}
-        </div>
-      </div>
-
       <PackageCancelModal
         cancelSubscriptionId={cancelSubscriptionId}
         cancelSubscriptionHandler={cancelSubscriptionByAdmin}
@@ -611,12 +575,6 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
         isSubmitting={cancelSubmitting}
         setIsSubmitting={setCancelSubmitting}
         isPlan={isPlan}
-        getPortal={getPortal}
-        stripe={stripe}
-        id={id}
-        planExists={planExists}
-        enrollSubscriptions={enrollSubscriptions}
-        selectedItem={selectedItem}
       />
     </div>
   );

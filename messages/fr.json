@@ -401,7 +401,7 @@
     "address": "Adresse",
     "source": "Source",
     "expiryDay": "Jour d’Expiration",
-    "status": "Statut",
+    "billingCycle": "Cycle de facturation",
     "actions": "Actions",
     "placeHolder": "Rechercher par Nom d’Agence",
     "expired": "Expiré",

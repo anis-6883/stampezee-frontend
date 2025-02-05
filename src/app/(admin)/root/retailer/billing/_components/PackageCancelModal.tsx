@@ -2,7 +2,6 @@
 
 import Button from '@/components/Formik/Button';
 import { ROLE } from '@/config/constants';
-import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import { useTranslations } from 'next-intl';
 import { BsCheck2Circle, BsExclamationTriangle } from 'react-icons/bs';
@@ -18,26 +17,15 @@ export default function PackageCancelModal({
   setModalState,
   isSubmitting,
   setIsSubmitting,
-  getPortal,
-  id,
-  stripe,
   isPlan = false,
-  planExists,
-  enrollSubscriptions,
-  selectedItem,
 }: {
   modalState?: boolean;
   cancelSubscriptionId: string | null;
   cancelSubscriptionHandler: (id: any) => void;
-  getPortal: (data: any) => void;
   setModalState: (state: boolean) => void;
   isSubmitting?: boolean;
   isPlan?: boolean;
-  id?: any;
-  stripe?: any;
-  planExists: any;
-  enrollSubscriptions: any;
-  selectedItem: any;
+
   setIsSubmitting: (state: boolean) => void;
 }) {
   const t = useTranslations('DeleteConfirmationModal');
@@ -45,18 +33,7 @@ export default function PackageCancelModal({
   const handleCancel = () => {
     setIsSubmitting(true);
     if (cancelSubscriptionId) {
-      const totalAddon = enrollSubscriptions?.filter((item: any) => !item?.deletedByRetailer)?.length;
-      if (isPlan || (!planExists && totalAddon < 2)) {
-        getPortal({
-          customerId: stripe?.customerId,
-          returnUrl:
-            role === ROLE.SUPER_ADMIN
-              ? `${process.env.NEXT_PUBLIC_FRONTEND_URL}/${routes.privateRoutes.superAdmin.payment.details(id)}`
-              : `${process.env.NEXT_PUBLIC_FRONTEND_URL}/${routes.privateRoutes.retailer.billing.details(id)}`,
-        });
-      } else {
-        cancelSubscriptionHandler({ enrollSubscriptionId: cancelSubscriptionId });
-      }
+      cancelSubscriptionHandler({ enrollSubscriptionId: cancelSubscriptionId });
       setModalState(false);
     }
   };
@@ -73,22 +50,7 @@ export default function PackageCancelModal({
             <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
-        <p className="text-base font-medium">
-          {stripe?.renewCancelAt === null ? (
-            selectedItem?.name ? (
-              <span>
-                Do you want to cancel it ? This will delete your associated{' '}
-                <span className="text-danger">
-                  {selectedItem?.name} {selectedItem?.type}.
-                </span>
-              </span>
-            ) : (
-              'Do you want to cancel it ?'
-            )
-          ) : (
-            'Do you want to renew it ?'
-          )}
-        </p>
+        <p className="text-base font-medium">Do you want to cancel it ?</p>
         {isPlan && (
           <div className="my-3">
             <div
@@ -107,7 +69,7 @@ export default function PackageCancelModal({
               <span className="sr-only">{'Info'}</span>
               <div>
                 <span className="font-medium">{'Warning!'}</span> <br />
-                {stripe?.renewCancelAt === null ? 'Associated add-ons will also deleted!' : 'Associated add-ons will also renewed!'}
+                Associated add-ons will also deleted! If eligible for refund, we will be processed according to our refund policy.
               </div>
             </div>
           </div>
@@ -115,6 +77,7 @@ export default function PackageCancelModal({
         <div className="mt-10 flex justify-end gap-2">
           <Button
             color="danger"
+            className="!rounded-full"
             onClick={() => setModalState(false)}
             text={role === ROLE.SUPER_ADMIN ? 'Not Now' : t('notNow')}
             postIcon={<MdDoNotDisturb className="text-base" />}

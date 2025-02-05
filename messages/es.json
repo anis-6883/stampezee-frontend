@@ -401,7 +401,7 @@
     "address": "Dirección",
     "source": "Fuente",
     "expiryDay": "Día de Expiración",
-    "status": "Estado",
+    "billingCycle": "Ciclo de facturación",
     "actions": "Acciones",
     "placeHolder": "Buscar por Nombre de Sucursal",
     "expired": "Expirado",

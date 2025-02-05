@@ -401,7 +401,7 @@
     "address": "العنوان",
     "source": "المصدر",
     "expiryDay": "يوم الانتهاء",
-    "status": "الحالة",
+    "billingCycle": "دورة الفوترة",
     "actions": "الإجراءات",
     "placeHolder": "البحث باسم الفرع",
     "expired": "منتهي",

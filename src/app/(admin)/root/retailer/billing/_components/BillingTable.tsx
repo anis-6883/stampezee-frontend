@@ -35,16 +35,24 @@ export default function BillingTable({ offset }: { offset: number }) {
       accessorKey: 'planSnapshot.title',
       Cell: ({ row }: any) => {
         return row?.original?.enrollSubscriptions?.map((subscription: any) => {
-          if (subscription?.deletedByRetailer) return null;
-
           return (
             <div className="my-1" key={subscription?._id}>
-              {subscription?.title}
+              {subscription?.deletedByRetailerAt ? (
+                <span className="line-through">{subscription?.title}</span>
+              ) : (
+                <span>{subscription?.title}</span>
+              )}
             </div>
           );
         });
       },
-      size: 200,
+      mantineTableHeadCellProps: {
+        align: 'start',
+      },
+      mantineTableBodyCellProps: {
+        align: 'start',
+      },
+      size: 120,
     },
     {
       header: t('subscriptionId'),
@@ -52,7 +60,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       size: 200,
     },
     {
-      header: t3('status'),
+      header: t3('billingCycle'),
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         return (

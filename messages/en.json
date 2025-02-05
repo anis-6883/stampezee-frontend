@@ -403,7 +403,7 @@
     "address": "Address",
     "source": "Source",
     "expiryDay": "Expiry Day",
-    "status": "Status",
+    "billingCycle": "Billing Cycle",
     "actions": "Actions",
     "placeHolder": "Search By Branch Name",
     "expired": "Expired",
