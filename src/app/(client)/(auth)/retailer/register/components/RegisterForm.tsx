@@ -210,8 +210,20 @@ export default function RegisterForm({ terms, policy, locale }: { terms: any; po
                   <InputField name="postalCode" label={t('postalCode')} placeholder="M3M5K5" />
                 </div>
 
-                <div className="grid grid-cols-1">
-                  <InputField name="address" label={t('address')} placeholder="120 Bremner Blvd, Suite 800" />
+                <div className="grid grid-cols-12 items-center justify-center gap-x-1">
+                  <div className="col-span-9">
+                    <InputField name="address" label={t('address')} placeholder="120 Bremner Blvd, Suite 800" />
+                  </div>
+                  <div className="col-span-3">
+                    <Button
+                      color="danger"
+                      className="!mt-3 w-full"
+                      type="button"
+                      text={'Map View'}
+                      // postIcon={<BsCheck2Circle className="text-base" />}
+                      // isSubmitting={isSubmitting}
+                    />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">

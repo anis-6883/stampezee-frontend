@@ -73,7 +73,7 @@ export default function CreateUpdateModel({
     allowFor: formData?.allowFor || 'all',
     allowedRetailers: formData?.allowedRetailers || [],
     applicablePackages: formData?.applicablePackages || [],
-    totalUserLimit: formData?.userLimit || 0,
+    totalUserLimit: formData?.totalUserLimit || 0,
     perUserLimit: formData?.perUserLimit || 0,
   };
 
@@ -175,6 +175,8 @@ export default function CreateUpdateModel({
               onClick={() => {
                 setModalState(false);
                 setFormData({});
+                setPerUserLimitChecked(false);
+                setTotalUserLimitChecked(false);
               }}
             >
               <IoCloseOutline className="text-2xl text-danger" />

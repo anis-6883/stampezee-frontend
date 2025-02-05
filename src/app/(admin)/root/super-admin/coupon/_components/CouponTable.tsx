@@ -88,10 +88,12 @@ export default function CouponTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Total User Limit:</span> {row?.original?.totalUserLimit}
+            <span className="font-bold">Total User Limit:</span>{' '}
+            {row?.original?.totalUserLimit === 0 ? 'Unlimited' : row?.original?.totalUserLimit}
           </p>
           <p>
-            <span className="font-bold">Per User Limit:</span> {row?.original?.perUserLimit}
+            <span className="font-bold">Per User Limit:</span>{' '}
+            {row?.original?.perUserLimit === 0 ? 'Unlimited' : row?.original?.perUserLimit}
           </p>
           <p>
             <span className="font-bold">Allow Retailer:</span>{' '}
