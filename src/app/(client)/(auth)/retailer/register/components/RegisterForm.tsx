@@ -17,23 +17,39 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { HiOutlineMap } from 'react-icons/hi2';
 import { IoAlertCircle } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
 import ReactSelect, { OnChangeValue } from 'react-select';
 import { Checkbox, FieldError } from 'rizzui';
 import * as Yup from 'yup';
+import AddressInput from './AddressInput';
+import MapModal from './MapModal';
 import OtpModal from './OtpModal';
 import PolicyModal from './PolicyModal';
 import TermsModal from './TermsModal';
 
-export default function RegisterForm({ terms, policy, locale }: { terms: any; policy: any; locale: string }) {
+export default function RegisterForm({
+  terms,
+  policy,
+  locale,
+  googleMapsApiKey,
+}: {
+  terms: any;
+  policy: any;
+  locale: string;
+  googleMapsApiKey: string;
+}) {
   const t = useTranslations('RegisterPage');
   const tCommon = useTranslations('RetailerCommon');
   const tLogin = useTranslations('LoginPage');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalState, setModalState] = useState(false);
+  const [mapModalState, setMapModalState] = useState(false);
   const [termsModalState, setTermsModalState] = useState(false);
   const [privacyPolicyModalState, setPrivacyPolicyModalState] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<google.maps.LatLngLiteral>({ lat: 23.7582377, lng: 90.3632155 });
+
   const [register, { data: registerResponse, isSuccess, error }] = useRetailerRegisterMutation();
   const dispatch = useDispatch();
 
@@ -86,6 +102,8 @@ export default function RegisterForm({ terms, policy, locale }: { terms: any; po
     city: '',
     postalCode: '',
     address: '',
+    longitude: '',
+    latitude: '',
     password: '',
     isAgree: '',
   };
@@ -210,17 +228,23 @@ export default function RegisterForm({ terms, policy, locale }: { terms: any; po
                   <InputField name="postalCode" label={t('postalCode')} placeholder="M3M5K5" />
                 </div>
 
-                <div className="grid grid-cols-12 items-center justify-center gap-x-1">
+                <div className="grid grid-cols-12 items-center justify-center gap-x-3">
                   <div className="col-span-9">
-                    <InputField name="address" label={t('address')} placeholder="120 Bremner Blvd, Suite 800" />
+                    <AddressInput
+                      googleMapsApiKey={googleMapsApiKey}
+                      setSelectedLocation={setSelectedLocation}
+                      setFieldValue={setFieldValue}
+                      address={values?.address}
+                    />
                   </div>
-                  <div className="col-span-3">
+                  <div className={`col-span-3 mt-6`}>
                     <Button
                       color="danger"
-                      className="!mt-3 w-full"
+                      className="w-full"
                       type="button"
                       text={'Map View'}
-                      // postIcon={<BsCheck2Circle className="text-base" />}
+                      onClick={() => setMapModalState(true)}
+                      postIcon={<HiOutlineMap className="text-base" />}
                       // isSubmitting={isSubmitting}
                     />
                   </div>
@@ -272,6 +296,14 @@ export default function RegisterForm({ terms, policy, locale }: { terms: any; po
                   text={t('next')}
                   postIcon={<BsCheck2Circle className="text-base" />}
                   isSubmitting={isSubmitting}
+                />
+                <MapModal
+                  modalState={mapModalState}
+                  setModalState={setMapModalState}
+                  googleMapsApiKey={googleMapsApiKey}
+                  selectedLocation={selectedLocation}
+                  setSelectedLocation={setSelectedLocation}
+                  setFieldValue={setFieldValue}
                 />
               </Form>
             );

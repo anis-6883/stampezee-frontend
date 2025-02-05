@@ -39,7 +39,12 @@ export default async function Page() {
           <div className="mt-4 px-3">
             <h1 className="text-center text-xl font-bold xl:text-xl">{t('title')}</h1>
 
-            <RegisterForm terms={data?.data?.page?.terms} policy={data?.data?.page?.policy} locale={locale} />
+            <RegisterForm
+              terms={data?.data?.page?.terms}
+              policy={data?.data?.page?.policy}
+              locale={locale}
+              googleMapsApiKey={data?.data?.googleMap?.googleMapsApiKey}
+            />
 
             <div className="mt-5 text-center">
               {t('alreadyHaveAccount')}{' '}

@@ -403,6 +403,7 @@
     "expiryDay": "Día de Expiración",
     "billingCycle": "Ciclo de facturación",
     "actions": "Acciones",
+    "status": "Estado",
     "placeHolder": "Buscar por Nombre de Sucursal",
     "expired": "Expirado",
     "daysLeft": "días restantes",

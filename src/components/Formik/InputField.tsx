@@ -45,10 +45,10 @@ export default function InputField({
             className={className}
             helperText={
               meta.touched && meta.error ? (
-                <span className="flex items-center gap-x-1">
+                <div className="flex items-center gap-x-1">
                   <IoAlertCircle className="text-lg" />
                   <span>{meta.error}</span>
-                </span>
+                </div>
               ) : (
                 ''
               )

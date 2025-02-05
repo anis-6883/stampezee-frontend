@@ -404,6 +404,7 @@
     "source": "Source",
     "expiryDay": "Expiry Day",
     "billingCycle": "Billing Cycle",
+    "status": "Status",
     "actions": "Actions",
     "placeHolder": "Search By Branch Name",
     "expired": "Expired",
