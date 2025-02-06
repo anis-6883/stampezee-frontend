@@ -10,10 +10,10 @@ import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { ICountrySelect } from '@/types';
+import { appendFormData } from '@/utils';
 import countryData from '@/utils/get-country-list';
 import currencyData from '@/utils/get-currency-list';
 import { translateText } from '@/utils/GoogleTranslate';
-import objectToFormData from '@/utils/objectToFormData';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { timeZoneList } from '@/utils/timezone-list';
 import { Form, Formik } from 'formik';
@@ -82,7 +82,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     flag: country.flag,
   }));
 
-  const timezoneOptions = timeZoneList?.map((timezone) => ({ value: timezone?.label, label: timezone?.label }));
+  const timezoneOptions = timeZoneList?.map((timezone) => ({ value: timezone?.value, label: timezone?.label }));
 
   const initialValues = {
     storeName: retailerProfile?.data?.storeName || '',
@@ -103,7 +103,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
       : '/images/stamp-logo.png',
     businessCurrency: retailerProfile?.data?.businessCurrency || 'CAD',
     timezone: retailerProfile?.data?.timezone || {
-      value: String(-4),
+      value: -4,
       label: 'America/Toronto (-4)',
     },
   };
@@ -122,6 +122,14 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     businessCurrency: Yup.string().required(tRetailerCommon('required')),
   });
 
+  function createFormData(data: any): FormData {
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      appendFormData(formData, key, (data as any)[key]);
+    });
+    return formData;
+  }
+
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
     const changeFormData = removeEmptyValues(values, ['email']);
@@ -130,9 +138,10 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     const isFile = (obj: any): obj is File => obj instanceof File;
 
     if (!isFile(values?.image)) {
-      objToFormData = objectToFormData(changeFormData, ['image']);
+      delete changeFormData.image;
+      objToFormData = createFormData(changeFormData);
     } else {
-      objToFormData = objectToFormData(changeFormData);
+      objToFormData = createFormData(changeFormData);
     }
 
     const result: any = await retailerUpdateProfile(objToFormData);

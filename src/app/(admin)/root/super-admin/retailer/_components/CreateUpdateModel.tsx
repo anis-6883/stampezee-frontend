@@ -9,13 +9,14 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateSuperAdminRetailerMutation, useUpdateSuperAdminRetailerMutation } from '@/features/super-admin/retailer/retailerApi';
 import countryData from '@/utils/get-country-list';
 import objectToFormData from '@/utils/objectToFormData';
+import { timeZoneList } from '@/utils/timezone-list';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { IoCloseOutline } from 'react-icons/io5';
-import ReactSelect from 'react-select';
-import { ActionIcon, Modal, Title } from 'rizzui';
+import ReactSelect, { OnChangeValue } from 'react-select';
+import { ActionIcon, FieldError, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function CreateUpdateModel({
@@ -50,6 +51,10 @@ export default function CreateUpdateModel({
     image: formData?.image || '',
     about: formData?.about || '',
     website: formData?.website || '',
+    timezone: formData?.timezone || {
+      value: -4,
+      label: 'America/Toronto (-4)',
+    },
   };
 
   const validationSchema = Yup.object().shape({
@@ -131,6 +136,7 @@ export default function CreateUpdateModel({
     label: country.country,
     flag: country.flag,
   }));
+  const timezoneOptions = timeZoneList?.map((timezone) => ({ value: timezone?.value, label: timezone?.label }));
 
   return (
     <div>
@@ -170,7 +176,7 @@ export default function CreateUpdateModel({
                     <InputField name="lastName" label="Last Name" placeholder="Doe" required={false} />
                   </div>
 
-                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                     <PhoneNumber
                       enableSearch={true}
                       name="phone"
@@ -207,6 +213,33 @@ export default function CreateUpdateModel({
                         onChange={(selectedOption) => setFieldValue('country', selectedOption?.label)}
                         onBlur={() => setFieldTouched('country', true)}
                       />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <div>
+                        <p className="font-medium">
+                          Timezone
+                          <span className="text-red-500"> *</span>
+                        </p>
+                      </div>
+
+                      <ReactSelect
+                        key={values.timezone.label}
+                        placeholder="Select your timezone"
+                        menuPlacement="top"
+                        options={timezoneOptions}
+                        isDisabled={false}
+                        isClearable={false}
+                        isSearchable={true}
+                        name="timezone"
+                        defaultValue={timezoneOptions?.filter((item) => String(item?.label) === values?.timezone.label)}
+                        onChange={(selectedOption: OnChangeValue<any, false>) => setFieldValue('timezone', selectedOption)}
+                        onBlur={() => setFieldTouched('timezone', true)}
+                      />
+
+                      {touched.timezone && errors.timezone && (
+                        <FieldError error={errors?.timezone as string} className="text-xs text-red-600" />
+                      )}
                     </div>
                   </div>
 

@@ -180,3 +180,24 @@ export const generateRandomColor = () => {
   // Return the color in the desired format
   return `bg-[${hexColor}]`;
 };
+
+export function appendFormData(formData: FormData, key: string, value: any): void {
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    if (key === 'image' && value.path) {
+      formData.append(key, value);
+    } else {
+      // Handle other nested objects
+      Object.keys(value).forEach((subKey) => {
+        appendFormData(formData, `${key}[${subKey}]`, value[subKey]);
+      });
+    }
+  } else if (Array.isArray(value)) {
+    // Handle arrays
+    value.forEach((item, index) => {
+      appendFormData(formData, `${key}[${index}]`, item);
+    });
+  } else {
+    // Append primitive values
+    formData.append(key, value);
+  }
+}

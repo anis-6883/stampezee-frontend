@@ -9,6 +9,7 @@ import { useIsMounted } from '@/hooks/use-is-mounted';
 import { useWindowScroll } from '@/hooks/use-window-scroll';
 import HamburgerButton from '@/layouts/hamburger-button';
 import HeaderMenuRight from '@/layouts/header-menu-right';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import SearchWidget from '../components/search/search';
@@ -17,6 +18,7 @@ import Sidebar from './sidebar';
 export default function Header() {
   const isMounted = useIsMounted();
   const windowScroll = useWindowScroll();
+  const { data: session }: any = useSession();
   const { role } = useSelector((state: RootState) => state.authSlice);
   const { data, isLoading } = useGetGeneralSettingsQuery(null, { skip: role !== ROLE.SUPER_ADMIN });
 
@@ -40,6 +42,16 @@ export default function Header() {
               <Skeleton className="h-5 w-40 rounded" />
             ) : (
               <span className="font-semibold">Timezone : {`${data?.data?.general?.timezone?.label}`} </span>
+            )}
+          </div>
+        )}
+
+        {role === ROLE.RETAILER && (
+          <div className="ml-5 flex w-auto items-center justify-center gap-x-3 rounded-md border border-solid px-3 py-2">
+            {isLoading ? (
+              <Skeleton className="h-5 w-40 rounded" />
+            ) : (
+              <span className="font-semibold">Timezone : {`${session?.user?.timezone?.label}`} </span>
             )}
           </div>
         )}
