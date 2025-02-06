@@ -68,7 +68,7 @@ export const billingApi = apiSlice.injectEndpoints({
         method: 'DELETE',
         body: data,
       }),
-      invalidatesTags: ['billings', 'branches', 'retailerStamp', 'subAdmin'],
+      invalidatesTags: ['billings', 'branches', 'retailerStamp', 'subAdmin', 'retailerProfile'],
     }),
     setupPaymentIntent: builder.mutation({
       query: () => ({

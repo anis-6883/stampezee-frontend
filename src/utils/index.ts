@@ -15,7 +15,7 @@ export const calculateBalancePrice = (startDate: Date, expirationDate: Date, pla
   const today = new Date(); /* '2024-11-10T10:16:45.281+00:00' */
 
   if (isNaN(start.getTime()) || isNaN(end.getTime()) || start >= end) {
-    throw 'Invalid start date or expiration date !';
+    return 0;
   }
 
   const totalDuration = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);

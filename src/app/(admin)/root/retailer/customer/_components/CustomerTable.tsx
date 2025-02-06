@@ -13,7 +13,7 @@ import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 
-export default function CustomerTable({ offset }: { offset: number }) {
+export default function CustomerTable() {
   const t = useTranslations('RetailerCustomerTable');
   const { data: session }: any = useSession();
 
@@ -62,7 +62,7 @@ export default function CustomerTable({ offset }: { offset: number }) {
       header: t('joinedDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p> {convertDateByOffset(row?.original?.createdAt, offset)}</p>
+          <p> {convertDateByOffset(row?.original?.createdAt, session?.user?.timezone?.value || 0)}</p>
         </div>
       ),
       size: 200,

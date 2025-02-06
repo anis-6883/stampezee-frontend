@@ -16,7 +16,7 @@ import { IoAlarmOutline } from 'react-icons/io5';
 import { LuClock4 } from 'react-icons/lu';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function RegularNotificationTable({ offset, locale }: { offset: number; locale: string }) {
+export default function RegularNotificationTable({ locale }: { locale: string }) {
   const t = useTranslations('RegularNotificationTable');
   const t2 = useTranslations('SendAndResendNotification');
   const { data: session }: any = useSession();
@@ -77,11 +77,11 @@ export default function RegularNotificationTable({ offset, locale }: { offset: n
       Cell: ({ row }: any) =>
         row?.original?.scheduleAt ? (
           <div className="text-md mx-auto flex items-center gap-x-2 text-start">
-            {convertDateByOffset(row?.original?.scheduleAt, offset)} <LuClock4 className="text-lg" />
+            {convertDateByOffset(row?.original?.scheduleAt, session?.user?.timezone?.value || 0)} <LuClock4 className="text-lg" />
           </div>
         ) : (
           <div className="text-md mx-auto flex items-center gap-x-2 text-start">
-            {convertDateByOffset(row?.original?.createdAt, offset)} <FaRegPaperPlane className="text-sm" />
+            {convertDateByOffset(row?.original?.createdAt, session?.user?.timezone?.value || 0)} <FaRegPaperPlane className="text-sm" />
           </div>
         ),
       mantineTableHeadCellProps: {

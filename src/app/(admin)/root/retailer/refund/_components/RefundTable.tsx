@@ -5,13 +5,15 @@ import { useAllRefundQuery } from '@/features/retailer/refund/refundApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { IoArrowDownCircle, IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
 
-export default function RefundTable({ offset }: { offset: number }) {
+export default function RefundTable() {
+  const { data: session }: any = useSession();
   const t = useTranslations('RetailerRefundTable');
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
@@ -32,10 +34,12 @@ export default function RefundTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">{t('startedAt')}:</span> {convertDateByOffset(row?.original?.enrollment?.validityFrom, offset)}
+            <span className="font-bold">{t('startedAt')}:</span>{' '}
+            {convertDateByOffset(row?.original?.enrollment?.validityFrom, session?.user?.timezone?.value || 0)}
           </p>
           <p>
-            <span className="font-bold">{t('expiredAt')}:</span> {convertDateByOffset(row?.original?.enrollment?.validityTo, offset)}
+            <span className="font-bold">{t('expiredAt')}:</span>{' '}
+            {convertDateByOffset(row?.original?.enrollment?.validityTo, session?.user?.timezone?.value || 0)}
           </p>
         </div>
       ),
@@ -104,7 +108,7 @@ export default function RefundTable({ offset }: { offset: number }) {
       header: t('refundDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>{convertDateByOffset(row?.original?.refundedAt, offset)}</p>
+          <p>{convertDateByOffset(row?.original?.refundedAt, session?.user?.timezone?.value || 0)}</p>
         </div>
       ),
       mantineTableHeadCellProps: {

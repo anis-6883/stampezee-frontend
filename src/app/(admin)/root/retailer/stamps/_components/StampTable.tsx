@@ -30,7 +30,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import StampPublishedModal from './StampPublishedModal';
 
-export default function StampTable({ offset }: { offset: number }) {
+export default function StampTable() {
   const t = useTranslations('RetailerStampTable');
   const tStamp = useTranslations('RetailerStamp');
   const t2 = useTranslations('RetailerBranchTable');
@@ -156,7 +156,7 @@ export default function StampTable({ offset }: { offset: number }) {
           </p>
         </div>
       ),
-      size: 200,
+      size: 230,
     },
     {
       header: t2('source'),
@@ -185,10 +185,12 @@ export default function StampTable({ offset }: { offset: number }) {
         return row?.original?.hasValidity ? (
           <div className="text-md mx-auto text-start">
             <p>
-              <span className="font-bold">{t('startedAt')}:</span> {convertDateByOffset(row?.original?.startedAt, offset)}
+              <span className="font-bold">{t('startedAt')}:</span>{' '}
+              {convertDateByOffset(row?.original?.startedAt, session?.user?.timezone?.value || 0)}
             </p>
             <p>
-              <span className="font-bold">{t('expiredAt')}:</span> {convertDateByOffset(row?.original?.expiredAt, offset)}
+              <span className="font-bold">{t('expiredAt')}:</span>{' '}
+              {convertDateByOffset(row?.original?.expiredAt, session?.user?.timezone?.value || 0)}
             </p>
           </div>
         ) : (

@@ -14,7 +14,7 @@ import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { Tab } from 'rizzui';
 import Table from '../../../_components/Table';
 
-export default function ScanTable({ offset }: { offset: number }) {
+export default function ScanTable() {
   const t = useTranslations('RetailerStampScanTable');
   const tScanTab = useTranslations('RetailerScanTab');
   const { data: session }: any = useSession();
@@ -39,7 +39,11 @@ export default function ScanTable({ offset }: { offset: number }) {
     },
     {
       header: t('scanDate'),
-      Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original.scan.time, offset)}</div>,
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">
+          {convertDateByOffset(row?.original.scan.time, session?.user?.timezone?.value || 0)}
+        </div>
+      ),
     },
     {
       header: t('branch'),
@@ -90,7 +94,7 @@ export default function ScanTable({ offset }: { offset: number }) {
                     <tbody>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('scanTime')}</td>
-                        <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, offset)}</td>
+                        <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, session?.user?.timezone?.value || 0)}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('stampTitle')}</td>

@@ -7,6 +7,7 @@ import { useAllBillingQuery } from '@/features/retailer/billing/billingApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -17,7 +18,8 @@ import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { Badge } from 'rizzui';
 
-export default function BillingTable({ offset }: { offset: number }) {
+export default function BillingTable() {
+  const { data: session }: any = useSession();
   const t = useTranslations('RetailerBillingTable');
   const t3 = useTranslations('RetailerBranchTable');
   const t1 = useTranslations('RetailerBillingDetailsCard');
@@ -92,7 +94,7 @@ export default function BillingTable({ offset }: { offset: number }) {
       header: t('paymentDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>{convertDateByOffset(row?.original?.createdAt, offset)}</p>
+          <p>{convertDateByOffset(row?.original?.createdAt, session?.user?.timezone?.value || 0)}</p>
         </div>
       ),
       mantineTableHeadCellProps: {

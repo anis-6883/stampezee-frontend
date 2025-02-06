@@ -31,11 +31,7 @@ export default async function Page() {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <LocationBaseNotifyTable
-        locale={locale}
-        offset={data?.data?.general?.timezone?.value}
-        googleMapsApiKey={data?.data?.googleMap?.googleMapsApiKey}
-      />
+      <LocationBaseNotifyTable locale={locale} googleMapsApiKey={data?.data?.googleMap?.googleMapsApiKey} />
     </div>
   );
 }

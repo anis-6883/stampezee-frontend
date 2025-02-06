@@ -82,7 +82,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     flag: country.flag,
   }));
 
-  const timezoneOptions = timeZoneList?.map((timezone) => ({ value: timezone?.value, label: timezone?.label }));
+  const timezoneOptions = timeZoneList?.map((timezone) => ({ value: timezone?.label, label: timezone?.label }));
 
   const initialValues = {
     storeName: retailerProfile?.data?.storeName || '',
@@ -280,7 +280,10 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                       isSearchable={true}
                       name="timezone"
                       defaultValue={timezoneOptions?.filter((item) => String(item?.label) === values?.timezone.label)}
-                      onChange={(selectedOption: OnChangeValue<any, false>) => setFieldValue('timezone', selectedOption)}
+                      onChange={(selectedOption: OnChangeValue<any, false>) => {
+                        const selectedTimezone = timeZoneList.find((item) => item.label === selectedOption?.label);
+                        setFieldValue('timezone', selectedTimezone);
+                      }}
                       onBlur={() => setFieldTouched('timezone', true)}
                     />
 
