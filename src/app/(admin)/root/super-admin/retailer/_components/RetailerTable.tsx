@@ -22,7 +22,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function RetailerTable({ offset }: { offset: number }) {
+export default function RetailerTable({ offset, googleMapsApiKey }: { offset: number; googleMapsApiKey: string }) {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -199,7 +199,13 @@ export default function RetailerTable({ offset }: { offset: number }) {
 
   return (
     <>
-      <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
+      <CreateUpdateModel
+        googleMapsApiKey={googleMapsApiKey}
+        setFormData={setFormData}
+        formData={formData}
+        modalState={createState}
+        setModalState={setCreateState}
+      />
       <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
         <StatusIndicator />
         <div>

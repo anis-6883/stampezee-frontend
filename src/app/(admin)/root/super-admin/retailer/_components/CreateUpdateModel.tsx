@@ -7,8 +7,9 @@ import InputPassword from '@/components/Formik/InputPassword';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateSuperAdminRetailerMutation, useUpdateSuperAdminRetailerMutation } from '@/features/super-admin/retailer/retailerApi';
+import { appendFormData } from '@/utils';
 import countryData from '@/utils/get-country-list';
-import objectToFormData from '@/utils/objectToFormData';
+import removeEmptyValues from '@/utils/removeEmptyValues';
 import { timeZoneList } from '@/utils/timezone-list';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
@@ -18,17 +19,20 @@ import { IoCloseOutline } from 'react-icons/io5';
 import ReactSelect, { OnChangeValue } from 'react-select';
 import { ActionIcon, FieldError, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
+import AddressMap from './AddressMap';
 
 export default function CreateUpdateModel({
   setFormData,
   formData,
   modalState,
   setModalState,
+  googleMapsApiKey,
 }: {
   formData: any;
   modalState: boolean;
   setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
+  googleMapsApiKey: string;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [register, { isSuccess: createSuccess, error: createError }] = useCreateSuperAdminRetailerMutation();
@@ -55,6 +59,8 @@ export default function CreateUpdateModel({
       value: -4,
       label: 'America/Toronto (-4)',
     },
+    longitude: formData?.longitude || '',
+    latitude: formData?.latitude || '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -76,23 +82,34 @@ export default function CreateUpdateModel({
     password: (formData?._id ? Yup.string() : Yup.string().required('Required!')).min(8, 'At least 8 characters long!'),
   });
 
+  function createFormData(data: any): FormData {
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      appendFormData(formData, key, (data as any)[key]);
+    });
+    return formData;
+  }
+
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
     const isFile = (obj: any): obj is File => obj instanceof File;
 
     let objToFormData: FormData;
 
-    if (formData?._id) {
-      const ignoreList = ['email'];
-      if (!isFile(values?.image)) ignoreList.push('image');
+    const updatedData = removeEmptyValues(values, ['about', 'website', 'isAgree']);
 
-      objToFormData = objectToFormData(values, ignoreList);
+    if (formData?._id) {
+      delete updatedData?.email;
+      if (!isFile(updatedData?.image)) delete updatedData?.image;
+
+      objToFormData = createFormData(updatedData);
       updateRtailar({ id: formData._id, formData: objToFormData });
     } else {
-      if (!isFile(values?.image)) {
-        objToFormData = objectToFormData(values, ['image']);
+      if (!isFile(updatedData?.image)) {
+        delete updatedData?.image;
+        objToFormData = createFormData(updatedData);
       } else {
-        objToFormData = objectToFormData(values);
+        objToFormData = createFormData(updatedData);
       }
       register(objToFormData);
     }
@@ -244,7 +261,8 @@ export default function CreateUpdateModel({
                   </div>
 
                   <div className="grid grid-cols-1">
-                    <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" />
+                    {/* <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" /> */}
+                    <AddressMap googleMapsApiKey={googleMapsApiKey} />
                   </div>
 
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
