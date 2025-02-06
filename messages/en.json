@@ -267,7 +267,7 @@
     "Push Notifications": "Push Notifications",
     "Regular": "Regular",
     "Location Based": "Location Based",
-    "Manage Profile": "Manage Profile"
+    "Manage Profile": "Business Profile"
   },
   "RetailerDashboard": {
     "title": "Retailer Dashboard",
@@ -562,6 +562,7 @@
     "update": "Update",
     "owner": "Owner",
     "businessCurrency": "Business Currency",
+    "timezone": "Timezone",
     "retailerProfileUpdated": "Retailer profile updated successfully!"
   },
   "RetailerBalanceCard": {

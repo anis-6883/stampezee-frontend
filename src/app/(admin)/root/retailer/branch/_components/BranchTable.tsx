@@ -38,6 +38,7 @@ export default function BranchTable({ offset }: { offset: number }) {
   const { data: session }: any = useSession();
   const t = useTranslations('RetailerBranchTable');
   const t2 = useTranslations('RetailerBranches');
+  const t3 = useTranslations('RetailerStampTable');
   const [deleteBranch, { isSuccess, isError }] = useDeleteBranchMutation();
   const [updateStatus] = useUpdateBranchStatusMutation();
   const [activateBranch, { isSuccess: activateBranchSuccess, isError: activateBranchError }] = useActivateBranchMutation();
@@ -177,7 +178,7 @@ export default function BranchTable({ offset }: { offset: number }) {
       },
     },
     {
-      header: t('status'),
+      header: t3('status'),
       accessorKey: 'status',
       Cell: ({ row }: any) => {
         const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);

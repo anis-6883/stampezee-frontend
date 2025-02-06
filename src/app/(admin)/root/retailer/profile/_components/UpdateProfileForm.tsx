@@ -15,6 +15,7 @@ import currencyData from '@/utils/get-currency-list';
 import { translateText } from '@/utils/GoogleTranslate';
 import objectToFormData from '@/utils/objectToFormData';
 import removeEmptyValues from '@/utils/removeEmptyValues';
+import { timeZoneList } from '@/utils/timezone-list';
 import { Form, Formik } from 'formik';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -81,6 +82,8 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     flag: country.flag,
   }));
 
+  const timezoneOptions = timeZoneList?.map((timezone) => ({ value: timezone?.label, label: timezone?.label }));
+
   const initialValues = {
     storeName: retailerProfile?.data?.storeName || '',
     firstName: retailerProfile?.data?.firstName || '',
@@ -99,6 +102,10 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
       ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailerProfile?.data?.image}`
       : '/images/stamp-logo.png',
     businessCurrency: retailerProfile?.data?.businessCurrency || 'CAD',
+    timezone: retailerProfile?.data?.timezone || {
+      value: String(-4),
+      label: 'America/Toronto (-4)',
+    },
   };
 
   const validationSchema = Yup.object().shape({
@@ -243,6 +250,33 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                     )}
                     {touched.businessCurrency && errors.businessCurrency && (
                       <FieldError error={errors?.businessCurrency as string} className="text-xs text-red-600" />
+                    )}
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <div>
+                      <p className="font-medium">
+                        {t('timezone')}
+                        <span className="text-red-500"> *</span>
+                      </p>
+                    </div>
+
+                    <ReactSelect
+                      key={values.timezone.label}
+                      placeholder="Select your timezone"
+                      menuPlacement="top"
+                      options={timezoneOptions}
+                      isDisabled={false}
+                      isClearable={false}
+                      isSearchable={true}
+                      name="timezone"
+                      defaultValue={timezoneOptions?.filter((item) => String(item?.label) === values?.timezone.label)}
+                      onChange={(selectedOption: OnChangeValue<any, false>) => setFieldValue('timezone', selectedOption)}
+                      onBlur={() => setFieldTouched('timezone', true)}
+                    />
+
+                    {touched.timezone && errors.timezone && (
+                      <FieldError error={errors?.timezone as string} className="text-xs text-red-600" />
                     )}
                   </div>
                 </div>
