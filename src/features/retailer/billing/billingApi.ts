@@ -38,6 +38,12 @@ export const billingApi = apiSlice.injectEndpoints({
       }),
       providesTags: ['payment-card'],
     }),
+    getAllExistingBilling: builder.query({
+      query: () => ({
+        url: `/api/web/retailer/billing/all-existing-addons`,
+        method: 'GET',
+      }),
+    }),
     attachPaymentMethod: builder.mutation({
       query: (data) => ({
         url: `/api/web/retailer/billing/attach-payment-method`,
@@ -91,4 +97,5 @@ export const {
   useCancelSubscriptionMutation,
   useDetachPaymentMethodMutation,
   useSetDefaultPaymentMethodMutation,
+  useGetAllExistingBillingQuery,
 } = billingApi;

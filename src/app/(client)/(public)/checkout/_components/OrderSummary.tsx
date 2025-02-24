@@ -5,6 +5,7 @@ import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
+import { useGetAllExistingBillingQuery } from '@/features/retailer/billing/billingApi';
 import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 import { useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
 import { RootState } from '@/features/store';
@@ -22,12 +23,15 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { CiEdit } from 'react-icons/ci';
 import { ImBin } from 'react-icons/im';
 import { MdBlock } from 'react-icons/md';
+import { PiRepeatThin } from 'react-icons/pi';
 import { RiChatDeleteLine, RiRefund2Line } from 'react-icons/ri';
+import { SiTicktick } from 'react-icons/si';
 import { useDispatch, useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
 import PlanAddOns from './PlanAddons';
+import { PrevAddonModal } from './PrevAddonModal';
 import UpgradeConfirmModal from './UpgradeConfirmModal';
 
 export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: any) {
@@ -49,6 +53,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     planChangeType,
     refundableThreshold,
   } = useSelector((state: RootState) => state.subscriptionSlice);
+  const [isExistingDisableModal, setIsExistingDisableModal] = useState(false);
   const [upgradeModalState, setUpgradeModalState] = useState(false);
   const [payableAmount, setPayableAmount] = useState(0);
 
@@ -59,16 +64,18 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   const [totalDisabledStamp, setTotalDisabledStamp] = useState<number>(0);
   const [selectedBranches, setSelectedBranches] = useState<string[]>([]);
   const [selectedStamps, setSelectedStamps] = useState<string[]>([]);
+  const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
 
   const { isLoggedIn, user, accessToken } = useSelector((state: RootState) => state.authSlice);
 
-  // const subSlugs = [subscription?.slug, ...addOns?.map((item: AddOn) => item.slug)];
   const [checkOut, { data: checkOutResponse, isLoading: checkOutLoading, error: checkoutError }] = useCreateCheckOutMutation();
   const { data: profile, isSuccess: profileSuccess, refetch } = useRetailerGetProfileQuery(null, { skip: !isLoggedIn });
 
   const { data: branches } = useAllBranchQuery({ page: 1, limit: 30 }, { skip: !accessToken });
 
   const { data: stamps } = useGetAllStampsQuery({ page: 1, limit: 30 }, { skip: !accessToken });
+
+  const { data: existingAddons } = useGetAllExistingBillingQuery(null, { skip: !accessToken });
 
   useEffect(() => {
     const disableStampOptions = stamps?.data?.docs?.map((item: any) => ({ value: item?._id, title: item?.title }));
@@ -183,16 +190,35 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     // 1. new subscription buy with addons and without addons
     // 2. subscription upgrade without addons
     if (subscription?.slug) {
-      if (code) {
-        checkOut({ slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)], code, currency: selectedCurrency });
+      if (selectedAddons?.length > 0) {
+        if (code) {
+          checkOut({
+            slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)],
+            code,
+            currency: selectedCurrency,
+            prevAddonEnrollmentIds: selectedAddons,
+          });
+        } else {
+          checkOut({
+            slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)],
+            currency: selectedCurrency,
+            prevAddonEnrollmentIds: selectedAddons,
+          });
+        }
       } else {
-        checkOut({ slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)], currency: selectedCurrency });
+        if (code) {
+          checkOut({ slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)], code, currency: selectedCurrency });
+        } else {
+          checkOut({ slugs: [subscription?.slug, ...addOns?.map((addOn) => addOn?.slug)], currency: selectedCurrency });
+        }
       }
     }
   };
 
   const disabledBranchItems = disableBranchOptions?.filter((item: any) => selectedBranches?.includes(item?.value));
   const disabledStampItems = disableStampOptions?.filter((item: any) => selectedStamps?.includes(item?.value));
+
+  const selectedPrevExistingAddons = existingAddons?.data?.filter((item: any) => selectedAddons?.includes(item?._id));
 
   const handleRemoveAddOn = (addOnId: string) => {
     dispatch(removeAddOns(addOnId));
@@ -356,6 +382,37 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         </div>
       )}
 
+      {existingAddons?.data?.length > 0 && !session?.user?.plan && subscription?.slug && (
+        <div className="mt-3 rounded-lg border border-danger p-3">
+          <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">A previous add-on is available. Use it?</p>
+          {selectedPrevExistingAddons?.length > 0 && (
+            <>
+              <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">
+                <SiTicktick className="text-xl" /> {'Selected Prev. Addons!'} :
+              </p>
+              <div>
+                {selectedPrevExistingAddons?.map((item: any) => {
+                  return item?.enrollSubscriptions?.map((enroll: any) => (
+                    <Badge className="m-1 bg-danger" key={enroll?._id}>
+                      <span className="text-white">{enroll?.planSnapshot?.title}</span>
+                    </Badge>
+                  ));
+                })}
+              </div>
+            </>
+          )}
+          <div className="mt-2 flex justify-end">
+            <Button
+              color="danger"
+              text={'Continue'}
+              className="!m-0 !px-3 !py-2 !text-xs"
+              onClick={() => setIsExistingDisableModal(true)}
+              postIcon={<PiRepeatThin className="text-base" />}
+            />
+          </div>
+        </div>
+      )}
+
       <Button
         disabled={isCheckoutButtonDisabled({
           plan: subscription,
@@ -376,6 +433,14 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       />
 
       {/* <LoginAlert modalState={modalState} setModalState={setModalState} /> */}
+
+      <PrevAddonModal
+        modalState={isExistingDisableModal}
+        setModalState={setIsExistingDisableModal}
+        existingAddons={existingAddons?.data}
+        selectedAddons={selectedAddons}
+        setSelectedAddons={setSelectedAddons}
+      />
       <BranchDisableModal
         selectedBranches={selectedBranches}
         setSelectedBranches={setSelectedBranches}

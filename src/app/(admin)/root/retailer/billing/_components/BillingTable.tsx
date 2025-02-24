@@ -54,7 +54,7 @@ export default function BillingTable() {
       mantineTableBodyCellProps: {
         align: 'start',
       },
-      size: 120,
+      size: 220,
     },
     {
       header: t('subscriptionId'),
@@ -87,7 +87,7 @@ export default function BillingTable() {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 200,
+      size: 170,
     },
 
     {
@@ -103,7 +103,7 @@ export default function BillingTable() {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 230,
+      size: 200,
     },
 
     {
@@ -135,7 +135,7 @@ export default function BillingTable() {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 200,
+      size: 120,
     },
 
     {

@@ -75,7 +75,7 @@ const AddPaymentCardForm = ({
             disabled={isLoading || !stripe || !elements}
             type="submit"
             className="!mt-4 !px-3 !py-2"
-            color="primary"
+            color="danger"
             text="Submit"
             postIcon={isLoading ? <ImSpinner9 className="animate-spin text-lg" /> : <BsCheck2Circle className="text-base" />}
           />

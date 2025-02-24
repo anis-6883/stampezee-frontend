@@ -70,7 +70,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
           );
         });
       },
-      size: 200,
+      size: 220,
     },
     {
       header: 'Subscription ID',
@@ -119,7 +119,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 220,
+      size: 200,
     },
 
     {
@@ -151,7 +151,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 200,
+      size: 120,
     },
     {
       header: 'Actions',

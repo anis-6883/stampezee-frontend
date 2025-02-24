@@ -420,7 +420,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                         ) : (
                           <Button
                             disabled={!status}
-                            className="!m-0 !rounded-full !px-2.5 !py-1.5"
+                            className="!m-0 !px-2.5 !py-1.5"
                             color="danger"
                             onClick={() => {
                               setModalState(true);

@@ -41,7 +41,6 @@ export const subscriptionApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      // invalidatesTags: ['superAdminSubscription'],
     }),
   }),
 });

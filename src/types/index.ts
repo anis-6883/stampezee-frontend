@@ -18,6 +18,7 @@ export interface ITableProps {
   enableRowNumbers?: boolean;
   renderDetailPanel?: any;
   showGlobalFilter?: boolean;
+  mantinePaperProps?: any;
 }
 
 export interface ICountrySelect {

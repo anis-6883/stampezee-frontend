@@ -21,6 +21,11 @@ export default function Table({
   searchFieldWidth = '180px',
   renderDetailPanel,
   showGlobalFilter = true,
+  mantinePaperProps = {
+    sx: {
+      borderRadius: '10px',
+    },
+  },
 }: ITableProps) {
   const { data, pagination } = response;
 
@@ -39,6 +44,7 @@ export default function Table({
 
   const table = useMantineReactTable({
     columns,
+    mantinePaperProps,
     data,
     ...tableProperties,
     mantineSearchTextInputProps: {

@@ -842,3 +842,9 @@ input#react-select-5-input:focus {
   border-radius: 4px;
   background: white;
 }
+
+/* stripe Css  */
+
+.StripeElement {
+  max-width: 545px;
+}

@@ -77,7 +77,7 @@ export default function PackageCancelModal({
         <div className="mt-10 flex justify-end gap-2">
           <Button
             color="danger"
-            className="!rounded-full"
+            className=""
             onClick={() => setModalState(false)}
             text={role === ROLE.SUPER_ADMIN ? 'Not Now' : t('notNow')}
             postIcon={<MdDoNotDisturb className="text-base" />}
