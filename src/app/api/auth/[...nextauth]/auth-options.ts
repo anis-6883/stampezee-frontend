@@ -1,5 +1,4 @@
 import { routes } from '@/config/routes';
-import getAccessToken from '@/utils/axios/getAccessToken';
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -29,9 +28,10 @@ export const authOptions: NextAuthOptions = {
       }
 
       // Get Access Token
-      if (new Date().getTime() < data?.token?.expiresIn) return data?.token;
+      // if (new Date().getTime() < data?.token?.expiresIn) return data?.token;
 
-      return await getAccessToken(data?.token);
+      // return await getAccessToken(data?.token);
+      return data?.token;
     },
     async session({ session, token }) {
       return {
