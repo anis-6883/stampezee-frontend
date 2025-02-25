@@ -145,7 +145,13 @@ export default function LoginForm({ locale }: { locale: string }) {
       {() => (
         <Form>
           <div className="mx-auto mt-8 w-full space-y-4">
-            <InputField prefix={<SlEnvolope className="text-xl" />} name="email" label={t('email')} placeholder="retailer@email.com" />
+            <InputField
+              autoComplete="off"
+              prefix={<SlEnvolope className="text-xl" />}
+              name="email"
+              label={t('email')}
+              placeholder="retailer@email.com"
+            />
             <InputPassword prefix={<SlLock className="text-xl" />} name="password" label={t('password')} placeholder="********" />
 
             <p className="text-end text-xs font-semibold">

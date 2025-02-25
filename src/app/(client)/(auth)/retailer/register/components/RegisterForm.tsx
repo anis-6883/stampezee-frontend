@@ -147,7 +147,7 @@ export default function RegisterForm({
         <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
           {({ errors, setFieldValue, touched, setFieldTouched, values }) => {
             return (
-              <Form className="grid gap-4">
+              <Form autoComplete="off" className="grid gap-4">
                 <InputField name="storeName" label={t('storeName')} placeholder="Burger King" />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <InputField name="firstName" label={`${t('firstName')} (${t('owner')})`} placeholder="John" />

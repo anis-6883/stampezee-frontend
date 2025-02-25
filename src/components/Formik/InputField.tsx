@@ -12,6 +12,7 @@ export default function InputField({
   prefix,
   suffix,
   className = '',
+  autoComplete = 'new-password',
 }: {
   name: string;
   label: string | React.ReactNode;
@@ -22,6 +23,7 @@ export default function InputField({
   suffix?: React.ReactNode;
   disabled?: boolean;
   className?: string;
+  autoComplete?: 'off' | 'new-password';
 }) {
   return (
     <div className="w-full">
@@ -39,7 +41,7 @@ export default function InputField({
             type={type}
             placeholder={placeholder}
             disabled={disabled}
-            autoComplete="off"
+            autoComplete={autoComplete}
             inputClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'} ${disabled && '!border-gray-100 bg-gray-100'}`}
             prefix={prefix}
             className={className}

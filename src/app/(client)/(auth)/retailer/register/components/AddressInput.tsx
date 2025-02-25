@@ -83,6 +83,10 @@ export default function AddressInput({
               type="text"
               placeholder="Search for places..."
               ref={autocompleteRef}
+              autoComplete="new-password"
+              onFocus={(e) => {
+                e.target.setAttribute('autocomplete', 'new-password');
+              }}
               value={address}
               helperText={
                 meta.touched && meta.error ? (

@@ -55,6 +55,9 @@ export default function MapModal({
 
     setSelectedLocation({ lat, lng });
 
+    setFieldValue('latitude', String(lat));
+    setFieldValue('longitude', String(lng));
+
     try {
       const geocoder = new google.maps.Geocoder(); // Initialize geocoder
       const response = await geocoder.geocode({ location: { lat, lng } });

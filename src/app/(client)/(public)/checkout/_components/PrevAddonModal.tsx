@@ -41,7 +41,9 @@ export function PrevAddonModal({
             <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"></span>
           </Link>
         </div>
-        <p className="mb-3 mt-5 text-center text-base font-medium">Want to continue with previous addons? Choose the ones you need!</p>
+        <p className="mb-3 mt-5 text-center text-base font-medium">
+          Would you like to continue with your previous add-ons? Select the ones you need!
+        </p>
 
         <div className="flex flex-col gap-y-2">
           {existingAddons?.map((item: any) => (
