@@ -128,6 +128,7 @@
     "title": "私たちのサブスクリプションとアドオン",
     "subscriptions": "サブスクリプション",
     "subtitle": "私たちのプラン",
+    "ourAddons": "(日本語): 私たちのアドオン",
     "pricingButtonText": "始める",
     "applied": "適用済み",
     "active": "アクティブ"
@@ -165,7 +166,10 @@
     "freeTrialActivated": "無料試用が有効になりました！",
     "downgradeSuccessfully": "プランの降格が成功しました！",
     "branchDisableMessage": "降格するには、<span className=\"font-bold text-danger\">{totalDisabledBranch} 支店/支店を選択</span>する必要があります！",
-    "confirm": "確認"
+    "confirm": "確認",
+    "prevAddonMessage": "以前のアドオンが利用可能です。使用しますか？",
+    "selectedPreviousAddons": "選択された以前のアドオン",
+    "continue": "続ける"
   },
   "LoginPage": {
     "credentials": "資格情報: jane@doe.com / next-intl",
@@ -348,6 +352,13 @@
     "running": "進行中",
     "ended": "終了",
     "subscriptionCancelAt": "サブスクリプションがキャンセルされた日時"
+  },
+  "RetailerBillingPaymentCard": {
+    "paymentMethod": "支払い方法",
+    "addNewCard": "新しいカードを追加",
+    "default": "デフォルト",
+    "setAsDefault": "デフォルトに設定",
+    "noDataAvailable": "利用可能なデータがありません"
   },
   "RetailerBillingInvoiceTable": {
     "serialNo": "シリアル番号",

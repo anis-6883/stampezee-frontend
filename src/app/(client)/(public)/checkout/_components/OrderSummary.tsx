@@ -384,11 +384,11 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
 
       {existingAddons?.data?.length > 0 && !session?.user?.plan && subscription?.slug && (
         <div className="mt-3 rounded-lg border border-danger p-3">
-          <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">Previous add-ons are available. Would you like to use it?</p>
+          <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">{t('prevAddonMessage')}</p>
           {selectedPrevExistingAddons?.length > 0 && (
             <>
               <p className="mb-2 flex items-center gap-x-1 text-sm font-semibold">
-                <SiTicktick className="text-xl" /> {'Selected Prev. Addons'} :
+                <SiTicktick className="text-xl" /> {t('selectedPreviousAddons')} :
               </p>
               <div>
                 {selectedPrevExistingAddons?.map((item: any) => {
@@ -404,7 +404,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
           <div className="mt-2 flex justify-end">
             <Button
               color="danger"
-              text={'Continue'}
+              text={t('continue')}
               className="!m-0 !px-3 !py-2 !text-xs"
               onClick={() => setIsExistingDisableModal(true)}
               postIcon={<PiRepeatThin className="text-base" />}

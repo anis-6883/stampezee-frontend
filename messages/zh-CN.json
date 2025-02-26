@@ -129,6 +129,7 @@
     "title": "我们的订阅和附加功能",
     "subscriptions": "订阅",
     "subtitle": "我们的套餐",
+    "ourAddons": "我们的附加组件",
     "pricingButtonText": "开始使用",
     "applied": "已应用",
     "active": "活动"
@@ -166,7 +167,10 @@
     "freeTrialActivated": "免费试用已激活！",
     "downgradeSuccessfully": "成功降级！",
     "branchDisableMessage": "降级需要选择<span className=\"font-bold text-danger\">{totalDisabledBranch} 分支/分支</span>，系统将禁用它们！",
-    "confirm": "确认"
+    "confirm": "确认",
+    "prevAddonMessage": "以前的附加组件可用。您想使用它吗？",
+    "selectedPreviousAddons": "已选择的以前附加组件",
+    "continue": "继续"
   },
   "LoginPage": {
     "credentials": "凭证: jane@doe.com / next-intl",
@@ -349,6 +353,13 @@
     "running": "正在运行",
     "ended": "已结束",
     "subscriptionCancelAt": "取消订阅于"
+  },
+  "RetailerBillingPaymentCard": {
+    "paymentMethod": "支付方式",
+    "addNewCard": "添加新卡",
+    "default": "默认",
+    "setAsDefault": "设为默认",
+    "noDataAvailable": "没有可用数据"
   },
   "RetailerBillingInvoiceTable": {
     "serialNo": "序列号",

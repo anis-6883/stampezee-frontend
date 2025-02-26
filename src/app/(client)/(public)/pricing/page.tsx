@@ -38,7 +38,7 @@ export default async function Page() {
       {/* Addon List  */}
       <div className=" ms-px-0 container  mx-auto mt-16 max-w-screen-xl px-5">
         <div className="mx-auto  text-start">
-          <p className="mb-4 text-xl font-medium tracking-tight text-gray-900 dark:text-white sm:text-4xl">{'Our Add-ons'}</p>
+          <p className="mb-4 text-xl font-medium tracking-tight text-gray-900 dark:text-white sm:text-4xl">{t('ourAddons')}</p>
         </div>
 
         <AddOnListForPricing locale={locale} />

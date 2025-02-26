@@ -44,6 +44,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
   const t3 = useTranslations('RetailerBillingInvoiceTable');
   const t4 = useTranslations('RetailerBillingPackagesTable');
   const t5 = useTranslations('RetailerBranchTable');
+  const t6 = useTranslations('RetailerBillingPaymentCard');
   const { push } = useRouter();
 
   const [
@@ -257,12 +258,12 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
 
         {/* Payment methods  */}
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
-          <h2 className="border-b-[1px] pb-1 text-lg font-medium">Payment Methods</h2>
+          <h2 className="border-b-[1px] pb-1 text-lg font-medium">{t6('paymentMethod')}</h2>
 
           {isAllPaymentMethod ? (
             [1, 2, 3, 4]?.map((item) => <Skeleton key={item} className="h-10 w-60 rounded" />)
           ) : allPaymentMethod?.data?.length === 0 ? (
-            <div className="text-center text-base font-semibold text-black">No Data Available</div>
+            <div className="text-center text-base font-semibold text-black">{t6('noDataAvailable')}</div>
           ) : (
             <>
               {allPaymentMethod?.data?.map((item: any) => (
@@ -279,7 +280,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                   {allPaymentMethod?.data?.length > 1 ? (
                     <>
                       {item?.isDefault ? (
-                        <Badge className="ml-5 !bg-[#FF7C56] text-white">Default</Badge>
+                        <Badge className="ml-5 !bg-[#FF7C56] text-white">{t6('default')}</Badge>
                       ) : status === true && moment().isBefore(validityToUtc) ? (
                         <Dropdown placement="bottom-start" className="ml-10">
                           <Dropdown.Trigger>
@@ -292,7 +293,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                             >
                               <div className="flex cursor-pointer items-center justify-center text-base">
                                 <MdAddCard className=" text-base" />
-                                <span className="ml-3 text-[14px] font-normal text-black">Set as default</span>
+                                <span className="ml-3 text-[14px] font-normal text-black">{t6('setAsDefault')}</span>
                               </div>
                             </Dropdown.Item>
                             <Dropdown.Item onClick={() => handleDetachPaymentMethod(item?.id)} className="hover:bg-gray-200">
@@ -320,7 +321,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                 type="submit"
                 className="!m-0 !px-2.5 !py-2"
                 color="danger"
-                text="Add New Card"
+                text={t6('addNewCard')}
                 preIcon={<HiPlus className="text-base" />}
               />
             </div>
@@ -428,7 +429,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                               if (enrollSubscription?.type === 'subscription') setIsPlan(true);
                               else setIsPlan(false);
                             }}
-                            text={'Remove'}
+                            text={t4('remove')}
                             postIcon={
                               stripe?.renewCancelAt === null ? <ImBin className="text-base" /> : <MdAutorenew className="text-xl" />
                             }

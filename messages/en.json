@@ -129,6 +129,7 @@
     "title": "Our Subscription and Add-on",
     "subscriptions": "Subscriptions",
     "subtitle": "Our Plans",
+    "ourAddons": "Our Add-ons",
     "pricingButtonText": "Get started",
     "applied": "Applied",
     "active": "Active"
@@ -166,7 +167,10 @@
     "freeTrialActivated": "Free trial activated!",
     "downgradeSuccessfully": "Downgrade Successfully!",
     "branchDisableMessage": "For downgrading, you must <span className=\"font-bold text-danger\">select {totalDisabledBranch} branch/s</span> to disable by the system!",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "prevAddonMessage": "Previous add-ons are available. Would you like to use it?",
+    "selectedPreviousAddons": "Selected Prev. Addons",
+    "continue": "Continue"
   },
   "LoginPage": {
     "credentials": "Credentials: jane@doe.com / next-intl",
@@ -351,6 +355,13 @@
     "running": "Running",
     "ended": "Ended",
     "subscriptionCancelAt": "Subscription Cancel At"
+  },
+  "RetailerBillingPaymentCard": {
+    "paymentMethod": "Payment Methods",
+    "addNewCard": "Add New Card",
+    "default": "Default",
+    "setAsDefault": "Set as default",
+    "noDataAvailable": "No Data Available"
   },
   "RetailerBillingInvoiceTable": {
     "serialNo": "Serial No.",

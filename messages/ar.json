@@ -88,6 +88,7 @@
     "title": "اشتراكنا وإضافاتنا",
     "subscriptions": "الاشتراكات",
     "subtitle": "خططنا",
+    "ourAddons": "إضافاتنا",
     "pricingButtonText": "البدء",
     "applied": "تم تطبيق",
     "active": "نشط"
@@ -125,7 +126,10 @@
     "freeTrialActivated": "تم تنشيط التجربة المجانية!",
     "downgradeSuccessfully": "تم تنزيل الخطة بنجاح!",
     "branchDisableMessage": "للتنزيل، يجب عليك <span className=\"font-bold text-danger\">تحديد {totalDisabledBranch} فرع/فروع</span> لتعطيلها بواسطة النظام!",
-    "confirm": "تأكيد"
+    "confirm": "تأكيد",
+    "prevAddonMessage": "الإضافات السابقة متاحة. هل ترغب في استخدامها؟",
+    "selectedPreviousAddons": "الإضافات السابقة المحددة",
+    "continue": "متابعة"
   },
   "HomePage": {
     "bannerTitle": "إحداث ثورة في تجربة عملائك",
@@ -337,6 +341,13 @@
     "cancelSubscriptionOrChangeCard": "إلغاء الاشتراك أو تغيير البطاقة",
     "renewSubscriptionOrChangeCard": "تجديد الاشتراك أو تغيير البطاقة",
     "subscriptionCanceled": "تم إلغاء الاشتراك"
+  },
+  "RetailerBillingPaymentCard": {
+    "paymentMethod": "طرق الدفع",
+    "addNewCard": "إضافة بطاقة جديدة",
+    "default": "افتراضي",
+    "setAsDefault": "تعيين كافتراضي",
+    "noDataAvailable": "لا توجد بيانات متاحة"
   },
   "RetailerBillingDetailsCard": {
     "subscriptionID": "معرف الاشتراك",
