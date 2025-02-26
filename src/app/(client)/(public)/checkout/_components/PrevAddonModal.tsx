@@ -46,7 +46,7 @@ export function PrevAddonModal({
         </p>
 
         <div className="flex flex-col gap-y-2">
-          {existingAddons?.map((item: any) => (
+          {existingAddons?.map((item: any, index: number) => (
             <div key={item?._id} className="w-full rounded-lg border border-red-500 p-3">
               <button
                 onClick={() => handleParentCheckbox(item?._id)}
@@ -56,7 +56,9 @@ export function PrevAddonModal({
                 <div className="transform text-2xl text-red-500 transition-transform duration-200 hover:scale-110">
                   {selectedAddons?.includes(item?._id) ? <IoCheckbox /> : <IoSquareOutline />}
                 </div>
-                <span className="text-lg font-semibold text-gray-800">{item?.stripe?.subscriptionId}</span>
+                <span className="flex items-center gap-x-1 text-lg font-semibold text-gray-800">
+                  {`Bundle ${index + 1}`} <span className="text-sm">{`(${item?.stripe?.subscriptionId?.slice(0, 12)})`}</span>
+                </span>
               </button>
 
               <div className="pl-8">
