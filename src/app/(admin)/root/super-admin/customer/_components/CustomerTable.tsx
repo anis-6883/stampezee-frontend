@@ -100,7 +100,7 @@ export default function CustomerTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="">
           <p>
-            <span className="font-bold">Total Collect Stamp:</span> {row?.original?.totalCollectStamp}
+            <span className="font-bold">Total Stamps Collected:</span> {row?.original?.totalCollectStamp}
           </p>
           <p>
             <span className="font-bold">Total Scan:</span> {row?.original?.totalScan}
