@@ -14,7 +14,7 @@ import { ActionIcon, AdvancedRadio, Modal, Tab, Text } from 'rizzui';
 
 const languageOptions = [
   { label: 'English', value: 'en', country: 'United State', flag: 'us' },
-  { label: 'Kuwait', value: 'ar', country: 'Kuwait', flag: 'kw' },
+  { label: 'Arabic', value: 'ar', country: 'Arabic', flag: 'kw' },
   { label: 'Spanish', value: 'es', country: 'Spain', flag: 'es' },
   { label: 'French', value: 'fr', country: 'France', flag: 'fr' },
   { label: 'Hindi', value: 'hi', country: 'India', flag: 'in' },

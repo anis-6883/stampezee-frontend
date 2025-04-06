@@ -30,7 +30,7 @@ export default function RetailerDetails({ id }: { id: string }) {
     totalOrder,
     totalSubAdmin,
     branches,
-    subadmins,
+    sub_admins,
     addonSubscriptions,
   } = data?.data || {};
 
@@ -109,7 +109,7 @@ export default function RetailerDetails({ id }: { id: string }) {
         </div>
         <div className="col-span-1 md:col-span-4">
           <h2 className="my-5 text-lg font-bold">Sub-admin List:</h2>
-          <SubAdminListTable data={subadmins} isLoading={isLoading} isError={isError} />
+          <SubAdminListTable data={sub_admins} isLoading={isLoading} isError={isError} />
         </div>
       </div>
 
