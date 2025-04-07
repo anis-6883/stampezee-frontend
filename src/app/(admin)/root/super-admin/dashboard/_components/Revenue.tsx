@@ -47,18 +47,18 @@ export default function Revenue({ className }: { className?: string }) {
       percentage: 100,
       color: '#3872FA',
     },
-    {
-      name: 'Subscription Earning',
-      value: `${subscriptionPercentage}%`,
-      percentage: subscriptionPercentage,
-      color: '#10b981',
-    },
-    {
-      name: 'Add-On Earning',
-      value: `${addonPercentage}%`,
-      percentage: addonPercentage,
-      color: '#f1416c',
-    },
+    // {
+    //   name: 'Subscription Earning',
+    //   value: `${subscriptionPercentage}%`,
+    //   percentage: subscriptionPercentage,
+    //   color: '#10b981',
+    // },
+    // {
+    //   name: 'Add-On Earning',
+    //   value: `${addonPercentage}%`,
+    //   percentage: addonPercentage,
+    //   color: '#f1416c',
+    // },
   ];
 
   return (
@@ -113,9 +113,9 @@ export default function Revenue({ className }: { className?: string }) {
         </>
       ) : (
         <>
-          <div className="col-span-full mt-10 grid w-full grid-cols-3 justify-around gap-5 @2xl:gap-12 @7xl:gap-8 @[1429px]:gap-4 @[1553px]:gap-8">
+          <div className="col-span-full mt-10  flex w-full items-center justify-center gap-5 @2xl:gap-12 @7xl:gap-8 @[1429px]:gap-4 @[1553px]:gap-8">
             {data.map((item: any) => (
-              <div key={item.name} className={cn('grid gap-6 text-center')}>
+              <div key={item.name} className={cn('grid w-[230px] gap-6 text-center')}>
                 <CircleProgressbar
                   percentage={item.percentage}
                   size={120}
@@ -138,12 +138,12 @@ export default function Revenue({ className }: { className?: string }) {
                   <span className="font-semibold">Subscription Earning:</span> ${totalSubscriptionRevenueInCAD.toFixed(2)}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5">
+              {/* <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#f1416c' }} />
                 <span className="text-base">
                   <span className="font-semibold">Add-On Earning:</span> ${totalAddonRevenueInCAD.toFixed(2)}
                 </span>
-              </div>
+              </div> */}
             </div>
           </div>
         </>
