@@ -19,16 +19,7 @@ interface BranchStatisticsTableProps {
 }
 
 const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isLoading, isError }) => {
-  const tableHeaders = [
-    'Serial No.',
-    'Branch Name',
-    'Branch Address',
-    'Sub Admin Name',
-    'Sub Admin Email',
-    'Total Customer',
-    'Total Order',
-    'Total Revenue (CAD)',
-  ];
+  const tableHeaders = ['Serial No.', 'Branch Name', 'Branch Address', 'Total Customer', 'Total Order', 'Total Revenue (CAD)'];
 
   if (isLoading || isError) {
     return (
@@ -97,12 +88,6 @@ const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isL
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium text-gray-900">
                   {item.address}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  {item.subAdminName ?? <span className="text-danger">No Assigned</span>}
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  {item.subAdminEmail ?? <span className="text-danger">No Assigned</span>}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   {item.totalCustomer}

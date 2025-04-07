@@ -135,7 +135,7 @@ export default function Revenue({ className }: { className?: string }) {
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#10b981' }} />
                 <span className="text-base">
-                  <span className="font-semibold">Subscription Earning:</span> ${totalSubscriptionRevenueInCAD.toFixed(2)}
+                  <span className="font-semibold">Subscription Earning:</span> ${totalRevenueInCAD.toFixed(2)}
                 </span>
               </div>
               {/* <div className="flex items-center gap-1.5">
