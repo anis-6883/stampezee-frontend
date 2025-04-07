@@ -92,7 +92,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
                 </Badge>
               ) : (
                 <Badge className="!bg-danger">
-                  <PiFlagCheckeredFill className="mr-1 text-xl" /> Ended
+                  <PiFlagCheckeredFill className="mr-1 text-xl" /> Cancelled
                 </Badge>
               )}
             </div>

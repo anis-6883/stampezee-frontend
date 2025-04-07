@@ -240,7 +240,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
               </Badge>
             ) : (
               <Badge className="!bg-danger text-white">
-                <PiFlagCheckeredFill className="mr-1 text-xl" /> {t('ended')}
+                <PiFlagCheckeredFill className="mr-1 text-xl" /> {'cancelled'}
               </Badge>
             )}
           </div>

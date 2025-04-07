@@ -257,7 +257,7 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
               </Badge>
             ) : (
               <Badge className="!bg-danger text-white">
-                <PiFlagCheckeredFill className="mr-1 text-xl" /> Ended
+                <PiFlagCheckeredFill className="mr-1 text-xl" /> Cancelled
               </Badge>
             )}
           </div>

@@ -26,8 +26,8 @@ export default function RefundTable() {
   const structure = [
     {
       header: t('plan'),
-      accessorKey: 'enrollment.planExists',
-      Cell: ({ row }: any) => <div className="text-md mx-auto text-start capitalize">{row?.original?.enrollment?.planExists}</div>,
+      accessorKey: 'plan',
+      Cell: ({ row }: any) => <div className="text-md mx-auto text-start capitalize">{row?.original?.plan}</div>,
     },
     {
       header: t('validityDate'),
