@@ -190,7 +190,7 @@ export default function HeaderContent() {
                             className=" transition duration-300 ease-in-out hover:bg-gray-100"
                           >
                             <Link
-                              href={routes.publicRoutes.pricing}
+                              href={routes.publicRoutes.retailerRegister}
                               className={`relative block items-center rounded py-2 pl-4 text-base transition-all  duration-150 ease-in dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                             >
                               <CustomButton color="outline" text={t('signUp')} className="!m-0 !border-[#F5F5F5]  !px-3 !py-2 !text-xs" />
@@ -328,7 +328,7 @@ export default function HeaderContent() {
                         </Link>
                         <Link
                           style={{ letterSpacing: '4px' }}
-                          href={routes.publicRoutes.pricing}
+                          href={routes.publicRoutes.retailerRegister}
                           className={`hover: min-w-max rounded-full border border-[#FF3131] px-4 py-2 text-[17px] font-bold uppercase transition-all duration-150 ease-in hover:bg-[#FF3131] hover:text-white ${isScrolled ? 'text-white' : 'text-black'}`}
                         >
                           {t('signUp')}

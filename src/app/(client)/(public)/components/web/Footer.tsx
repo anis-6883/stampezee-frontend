@@ -75,9 +75,6 @@ export default function Footer({ general }: any) {
                       <Link className="mt-4 w-fit font-medium uppercase text-black" href="/faqs/">
                         {t('faq')}
                       </Link>
-                      <Link className="mt-4 w-fit font-medium uppercase text-black" href="/contact-us/">
-                        {t('contact_us')}
-                      </Link>
                     </div>
                   </div>
                   <div className="mt-4  font-medium">
@@ -109,11 +106,11 @@ export default function Footer({ general }: any) {
                       {t('contact')}
                     </div>
                     <div className="MuiStack-root css-yd8sa2 flex flex-col items-center justify-center text-sm sm:text-base md:items-start md:justify-start">
-                      <Link className="mt-4 w-fit font-medium uppercase text-black" href="/privacy-policy" target="_blank">
-                        {t('privacy')}
-                      </Link>
                       <Link className="mt-4 w-fit font-medium uppercase text-black" href={routes.publicRoutes.contactUs}>
                         {t('contact_us')}
+                      </Link>
+                      <Link className="mt-4 w-fit font-medium uppercase text-black" href="/privacy-policy" target="_blank">
+                        {t('privacy')}
                       </Link>
                       <Link className="mt-4 w-fit font-medium uppercase text-black" href="/terms" target="_blank">
                         {t('terms')}

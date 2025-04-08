@@ -16,7 +16,7 @@ export default function ForgotPassword() {
 
   return (
     <section className="">
-      <div className="w-[500px] text-gray-900">
+      <div className="text-gray-900 sm:w-[500px]">
         <Link href={routes.publicRoutes.home}>
           <img src="/images/logo.png" className="mx-auto w-28 pb-5" alt="logo" />
         </Link>
@@ -42,7 +42,7 @@ export default function ForgotPassword() {
           )}
         </div>
       </div>
-      <div className="card w-[500px] bg-white">
+      <div className="card bg-white sm:w-[500px]">
         <ForgotEmailInput currentTab={currentTab} setCurrentTab={setCurrentTab} setCurrentStep={setCurrentStep} />
         <ForgetOtpInput currentTab={currentTab} setCurrentTab={setCurrentTab} setCurrentStep={setCurrentStep} />
         <ForgotPasswordForm currentTab={currentTab} />
