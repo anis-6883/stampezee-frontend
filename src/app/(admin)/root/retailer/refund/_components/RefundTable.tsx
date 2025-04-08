@@ -53,10 +53,10 @@ export default function RefundTable() {
     },
     {
       header: t('enrollStatus'),
-      accessorKey: 'enrollment.enrollStatus',
+      accessorKey: 'reason',
       Cell: ({ row }: any) => (
         <Badge className="!bg-danger text-white">
-          <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollment?.enrollStatus)}
+          <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.reason)}
         </Badge>
       ),
     },
