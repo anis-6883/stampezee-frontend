@@ -327,6 +327,7 @@
     "paymentDate": "Fecha de pago",
     "actions": "Acciones",
     "running": "En ejecución",
+    "cancelled": "cancelado",
     "ended": "Finalizado",
     "subscriptionDetails": "Detalles de la Suscripción",
     "placeHolder": "Búsqueda por ID de intención de pago o número de factura"

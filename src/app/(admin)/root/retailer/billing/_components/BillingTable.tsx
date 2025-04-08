@@ -74,7 +74,7 @@ export default function BillingTable() {
                 </Badge>
               ) : (
                 <Badge className="!bg-danger text-white">
-                  <PiFlagCheckeredFill className="mr-1 text-xl" /> {'cancelled'}
+                  <PiFlagCheckeredFill className="mr-1 text-xl" /> {t('cancelled')}
                 </Badge>
               )}
             </div>

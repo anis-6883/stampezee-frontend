@@ -327,6 +327,7 @@
     "paymentDate": "Date de paiement",
     "actions": "Actions",
     "running": "En cours",
+    "cancelled": "annulé",
     "ended": "Terminé",
     "subscriptionDetails": "Détails de l'abonnement",
     "placeHolder": "Rechercher par ID d'intention de paiement ou numéro de facture"

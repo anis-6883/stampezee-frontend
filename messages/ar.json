@@ -327,6 +327,7 @@
     "paymentDate": "تاريخ الدفع",
     "actions": "الإجراءات",
     "running": "نشط",
+    "cancelled": "تم الإلغاء",
     "ended": "منتهي",
     "subscriptionDetails": "تفاصيل الاشتراك",
     "placeHolder": "البحث حسب معرف نية الدفع أو رقم الفاتورة"

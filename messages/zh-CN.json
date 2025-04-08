@@ -327,6 +327,7 @@
     "paymentDate": "付款日期",
     "actions": "操作",
     "running": "运行中",
+    "cancelled": "已取消",
     "ended": "结束",
     "subscriptionDetails": "订阅详情",
     "placeHolder": "按付款意圖 ID 或發票號碼搜索"

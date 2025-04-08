@@ -327,6 +327,7 @@
     "paymentDate": "भुगतान तिथि",
     "actions": "क्रियाएँ",
     "running": "चल रहा है",
+    "cancelled": "रद्द किया गया",
     "ended": "समाप्त",
     "subscriptionDetails": "सदस्यता का विवरण",
     "placeHolder": "भुगतान आशय आईडी या चालान संख्या द्वारा खोजें"

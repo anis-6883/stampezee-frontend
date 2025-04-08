@@ -326,6 +326,7 @@
     "expireDate": "Expire Date",
     "actions": "Actions",
     "running": "Running",
+    "cancelled": "Cancelled",
     "ended": "Ended",
     "paymentInfo": "Payment Info",
     "totalAmount": "Total Amount",

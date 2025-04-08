@@ -326,6 +326,7 @@
     "paymentDate": "支払日",
     "actions": "操作",
     "running": "実行中",
+    "cancelled": "キャンセルされました",
     "ended": "終了",
     "subscriptionDetails": "サブスクリプションの詳細",
     "placeHolder": "支払い意図IDまたは請求書番号で検索"
