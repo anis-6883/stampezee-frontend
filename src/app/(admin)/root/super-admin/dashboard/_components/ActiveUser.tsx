@@ -91,7 +91,7 @@ export default function ActiveUsers({
           </div>
         ) : data?.length === 0 ? (
           <div className="m-auto">
-            <Text className="text-center text-lg font-semibold">No data available!</Text>
+            <Text className="pb-6 text-center text-lg font-semibold">No data available!</Text>
           </div>
         ) : (
           <WorldMap
@@ -125,15 +125,17 @@ export default function ActiveUsers({
               );
             })}
         </div>
-        <div>
-          <Button
-            onClick={() => setModalState(true)}
-            className="!m-0 w-full !px-2 !py-1.5 md:!w-32"
-            text="See More"
-            color="danger"
-            preIcon={<FaInfoCircle className="text-base" />}
-          />
-        </div>
+        {data?.length > 0 && (
+          <div>
+            <Button
+              onClick={() => setModalState(true)}
+              className="!m-0 w-full !px-2 !py-1.5 md:!w-32"
+              text="See More"
+              color="danger"
+              preIcon={<FaInfoCircle className="text-base" />}
+            />
+          </div>
+        )}
       </div>
       <UserStatsModal modalState={modalState} setModalState={setModalState} activeUsersStats={data} />
     </WidgetCard>
