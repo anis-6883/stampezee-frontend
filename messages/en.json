@@ -570,11 +570,13 @@
     "city": "City",
     "postalCode": "Postal Code",
     "address": "Address",
+    "website": "Website",
+    "about": "About",
+    "timezone": "Timezone",
     "email": "Email",
     "update": "Update",
     "owner": "Owner",
     "businessCurrency": "Business Currency",
-    "timezone": "Timezone",
     "retailerProfileUpdated": "Retailer profile updated successfully!"
   },
   "RetailerBalanceCard": {

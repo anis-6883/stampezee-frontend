@@ -50,8 +50,8 @@ export default function CriticalPaymentTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Enroll Subscription ID',
-      accessorKey: 'enrollSubscriptionId',
+      header: 'Enrollment ID',
+      accessorKey: 'enrollmentId',
     },
 
     {

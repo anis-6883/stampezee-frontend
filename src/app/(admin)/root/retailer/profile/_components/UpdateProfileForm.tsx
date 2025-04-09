@@ -225,8 +225,8 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <InputField required={false} name="about" label="About" placeholder="Write About Here" />
-                  <InputField required={false} name="website" label="Website" placeholder="https://www.user.com" />
+                  <InputField required={false} name="about" label={t('about')} placeholder="Write About Here" />
+                  <InputField required={false} name="website" label={t('website')} placeholder="https://www.user.com" />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
