@@ -50,8 +50,8 @@ export default function CriticalPaymentTable({ offset }: { offset: number }) {
 
   const structure = [
     {
-      header: 'Enrollment ID',
-      accessorKey: 'enrollmentId',
+      header: 'Stripe Invoice ID',
+      accessorKey: 'stripeInvoiceId',
     },
 
     {
@@ -135,7 +135,7 @@ export default function CriticalPaymentTable({ offset }: { offset: number }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Subscription ID or Store Name"
+        searchPlaceHolder="Search By Stripe Invoice ID"
         searchFieldWidth="340px"
         enableRowNumbers={true}
       />
