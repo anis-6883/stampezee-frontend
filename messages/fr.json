@@ -543,7 +543,8 @@
     "name": "Nom",
     "email": "Email",
     "phone": "Téléphone",
-    "country": "Pays"
+    "country": "Pays",
+    "customerPayment": "Paiement client"
   },
   "RetailerStampScanTable": {
     "stampTitle": "Titre du Timbre",

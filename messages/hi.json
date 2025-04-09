@@ -543,7 +543,8 @@
     "name": "नाम",
     "email": "ईमेल",
     "phone": "फोन",
-    "country": "देश"
+    "country": "देश",
+    "customerPayment": "ग्राहक भुगतान"
   },
   "RetailerStampScanTable": {
     "stampTitle": "स्टैम्प शीर्षक",

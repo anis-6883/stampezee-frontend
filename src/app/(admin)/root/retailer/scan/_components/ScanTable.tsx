@@ -97,6 +97,10 @@ export default function ScanTable() {
                         <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, session?.user?.timezone?.value || 0)}</td>
                       </tr>
                       <tr className="border-b bg-white">
+                        <td className="px-6 py-4">{tScanTab('customerPayment')}</td>
+                        <td className="px-6 py-4">{`${row?.original?.scan?.amount} ${row?.original?.scan?.amountCurrency}`}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('stampTitle')}</td>
                         <td className="px-6 py-4">{row?.original?.offer?.title}</td>
                       </tr>

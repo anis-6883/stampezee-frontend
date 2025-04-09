@@ -543,7 +543,8 @@
     "name": "Имя",
     "email": "Электронная Почта",
     "phone": "Телефон",
-    "country": "Страна"
+    "country": "Страна",
+    "customerPayment": "Оплата клиента"
   },
   "RetailerStampScanTable": {
     "stampTitle": "Название Штампа",

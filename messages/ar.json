@@ -544,7 +544,8 @@
     "name": "الاسم",
     "email": "البريد الإلكتروني",
     "phone": "الهاتف",
-    "country": "الدولة"
+    "country": "الدولة",
+    "customerPayment": "دفع العميل"
   },
   "RetailerStampScanTable": {
     "stampTitle": "عنوان الطابع",

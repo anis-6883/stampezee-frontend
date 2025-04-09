@@ -542,7 +542,8 @@
     "name": "名前",
     "email": "メール",
     "phone": "電話",
-    "country": "国"
+    "country": "国",
+    "customerPayment": "顧客の支払い"
   },
   "RetailerStampScanTable": {
     "stampTitle": "スタンプタイトル",

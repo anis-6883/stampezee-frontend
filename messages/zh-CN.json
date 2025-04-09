@@ -543,7 +543,8 @@
     "name": "姓名",
     "email": "电子邮件",
     "phone": "电话",
-    "country": "国家"
+    "country": "国家",
+    "customerPayment": "客户付款"
   },
   "RetailerStampScanTable": {
     "stampTitle": "邮票标题",

@@ -544,7 +544,8 @@
     "name": "Nombre",
     "email": "Correo Electrónico",
     "phone": "Teléfono",
-    "country": "País"
+    "country": "País",
+    "customerPayment": "Pago del cliente"
   },
   "RetailerStampScanTable": {
     "stampTitle": "Título de Estampa",

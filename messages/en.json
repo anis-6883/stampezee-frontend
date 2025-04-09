@@ -530,6 +530,7 @@
     "offerAndScan": "Offer & Scan",
     "branch": "Branch",
     "customer": "Customer",
+    "customerPayment": "Customer Payment",
     "scanTime": "Scan Time",
     "stampTitle": "Stamp Title",
     "stampCategory": "Stamp Category",

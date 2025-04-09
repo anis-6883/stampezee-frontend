@@ -543,7 +543,8 @@
     "name": "이름",
     "email": "이메일",
     "phone": "전화",
-    "country": "국가"
+    "country": "국가",
+    "customerPayment": "고객 결제"
   },
   "RetailerStampScanTable": {
     "stampTitle": "스탬프 제목",
