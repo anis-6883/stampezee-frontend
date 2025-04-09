@@ -8,7 +8,7 @@ export const refundApi = apiSlice.injectEndpoints({
         if (values.length) return `/api/web/retailer/refund/all?${new URLSearchParams(queries as any)}`;
         return `/api/web/retailer/refund/all`; // Ensure it returns a base URL if no queries are present
       },
-      //   providesTags: ['refund'],
+      providesTags: ['refund'],
     }),
   }),
 });

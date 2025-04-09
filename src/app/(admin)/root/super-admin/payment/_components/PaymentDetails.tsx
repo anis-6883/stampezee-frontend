@@ -103,7 +103,6 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
     }
     if (isSuccess) {
       setCancelSubmitting(false);
-
       toast.success(cancelSubscriptionData?.message || 'Subscription cancel successfully!');
       setModalState(false);
       setCancelSubscriptionId(null);

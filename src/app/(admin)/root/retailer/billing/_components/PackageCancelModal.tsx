@@ -69,8 +69,9 @@ export default function PackageCancelModal({
               <span className="sr-only">{'Info'}</span>
               <div>
                 <span className="font-medium">{'Warning!'}</span> <br />
-                Associated add-ons will be deleted. Refunds, if eligible, will be processed as per our policy. Add-ons are non-refundable.
-                If you re-purchase before the next billing, you will be given permission to restore previous add-ons!
+                Associated add-ons will remain active until the end of the current billing cycle. Refunds, if eligible, will be processed as
+                per our policy. Add-ons are non-refundable. If you re-purchase before the next billing, you will be given permission to
+                restore previous add-ons!
               </div>
             </div>
           </div>

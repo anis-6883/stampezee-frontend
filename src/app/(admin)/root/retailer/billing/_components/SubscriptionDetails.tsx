@@ -45,6 +45,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
   const t4 = useTranslations('RetailerBillingPackagesTable');
   const t5 = useTranslations('RetailerBranchTable');
   const t6 = useTranslations('RetailerBillingPaymentCard');
+  const t7 = useTranslations('RetailerBillingTable');
   const { push } = useRouter();
 
   const [
@@ -240,7 +241,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
               </Badge>
             ) : (
               <Badge className="!bg-danger text-white">
-                <PiFlagCheckeredFill className="mr-1 text-xl" /> {'cancelled'}
+                <PiFlagCheckeredFill className="mr-1 text-xl" /> {t7('cancelled')}
               </Badge>
             )}
           </div>

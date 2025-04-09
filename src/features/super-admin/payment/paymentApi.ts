@@ -30,7 +30,7 @@ export const paymentApi = apiSlice.injectEndpoints({
         method: 'DELETE',
         body: data,
       }),
-      invalidatesTags: ['payments'],
+      invalidatesTags: ['payments', 'superAdminRefund'],
     }),
     getRetailerBillingPortal: builder.mutation({
       query: (data) => ({

@@ -83,5 +83,6 @@ export const apiSlice = createApi({
     'admin-dashboard-country-wise-customer-stats',
     'admin-dashboard-top-outlets',
     'payment-card',
+    'refund',
   ],
 });
