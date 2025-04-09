@@ -236,7 +236,7 @@ export default function Update({ Id, offset }: any) {
                 {values.rewardType === 'discount' && (
                   <InputField
                     name="discountReward"
-                    label={t('discountReward')}
+                    label={t('discount')}
                     placeholder="Ex. Get 1 Coke"
                     type="number"
                     prefix={<RiDiscountPercentLine className="text-xl" />}
@@ -302,7 +302,7 @@ export default function Update({ Id, offset }: any) {
               )}
               {errors?.stampImageId && <span className="text-red-600">Select a stamp image of custom or default stamp</span>}
 
-              <InputTextarea name="description" required={false} label={t('description')} placeholder="Write here..." />
+              <InputTextarea name="description" required={false} label={t('offerDetails')} placeholder="Write here..." />
 
               <p className="mt-4 flex flex-col text-end text-xs font-semibold">
                 <span>

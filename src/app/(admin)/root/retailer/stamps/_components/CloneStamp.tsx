@@ -246,7 +246,7 @@ export default function CloneStamp({ Id, offset, locale }: any) {
                 {values.rewardType === 'discount' && (
                   <InputField
                     name="discountReward"
-                    label={t('discountReward')}
+                    label={t('discount')}
                     placeholder="Ex. Get 1 Coke"
                     type="number"
                     prefix={<RiDiscountPercentLine className="text-xl" />}
@@ -333,7 +333,7 @@ export default function CloneStamp({ Id, offset, locale }: any) {
                 </div>
               )}
 
-              <InputTextarea name="description" required={false} label={t('description')} placeholder="Write here..." />
+              <InputTextarea name="description" required={false} label={t('offerDetails')} placeholder="Write here..." />
 
               <p className="mt-4 flex flex-col text-end text-xs font-semibold">
                 <span>

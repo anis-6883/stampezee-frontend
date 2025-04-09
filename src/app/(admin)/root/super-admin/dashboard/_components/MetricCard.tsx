@@ -2,6 +2,8 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import cn from '@/hooks/class-names';
+import Link from 'next/link';
+import { FaRegEye } from 'react-icons/fa6';
 import { Text } from 'rizzui';
 
 const metricCardClasses = {
@@ -28,6 +30,8 @@ type MetricCardTypes = {
   chartClassName?: string;
   className?: string;
   isLoading?: boolean;
+  isDetailsView?: boolean;
+  detailsLink?: string;
 };
 
 export default function MetricCard({
@@ -45,31 +49,41 @@ export default function MetricCard({
   chartClassName,
   children,
   isLoading = false,
+  isDetailsView = false,
+  detailsLink = '#',
 }: React.PropsWithChildren<MetricCardTypes>) {
   return (
-    <div className={cn(metricCardClasses.base, metricCardClasses.rounded[rounded], className)}>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          {icon ? (
-            <div className={cn('flex h-11 w-11 items-center justify-center rounded-lg bg-gray-100 lg:h-12 lg:w-12', iconClassName)}>
-              {icon}
+    <div className="relative">
+      <div className={cn(metricCardClasses.base, metricCardClasses.rounded[rounded], className)}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            {icon ? (
+              <div className={cn('flex h-11 w-11 items-center justify-center rounded-lg bg-gray-100 lg:h-12 lg:w-12', iconClassName)}>
+                {icon}
+              </div>
+            ) : null}
+
+            <div className={cn(icon && 'ps-3', contentClassName)}>
+              <Text className={cn('mb-0.5 text-gray-500', titleClassName)}>{title}</Text>
+              <Text className={cn('font-lexend 2xl:xl:text-xl text-lg font-semibold text-gray-900 dark:text-gray-700', metricClassName)}>
+                {isLoading ? <Skeleton className="h-5 w-28 rounded" /> : metric}
+              </Text>
+
+              {info ? info : null}
             </div>
-          ) : null}
-
-          <div className={cn(icon && 'ps-3', contentClassName)}>
-            <Text className={cn('mb-0.5 text-gray-500', titleClassName)}>{title}</Text>
-            <Text className={cn('font-lexend 2xl:xl:text-xl text-lg font-semibold text-gray-900 dark:text-gray-700', metricClassName)}>
-              {isLoading ? <Skeleton className="h-5 w-28 rounded" /> : metric}
-            </Text>
-
-            {info ? info : null}
           </div>
+
+          {chart ? <div className={cn('h-12 w-20', chartClassName)}>{chart}</div> : null}
         </div>
-
-        {chart ? <div className={cn('h-12 w-20', chartClassName)}>{chart}</div> : null}
+        {children}
       </div>
-
-      {children}
+      {isDetailsView && (
+        <div className="absolute bottom-3 right-3">
+          <Link href={detailsLink}>
+            <FaRegEye className="text-lg text-gray-500 hover:text-black" />
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

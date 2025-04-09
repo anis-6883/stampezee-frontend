@@ -1,5 +1,6 @@
 'use client';
 
+import { routes } from '@/config/routes';
 import { useGetDashboardCalcQuery } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
@@ -39,6 +40,8 @@ export default function StateCardView({ className }: { className: string }) {
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
+            isDetailsView
+            detailsLink={routes.privateRoutes.superAdmin.retailer.home}
           />
           <MetricCard
             icon={<LuUsers className="text-2xl" />}
@@ -48,6 +51,8 @@ export default function StateCardView({ className }: { className: string }) {
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
+            isDetailsView
+            detailsLink={routes.privateRoutes.superAdmin.customer.home}
           />
           <MetricCard
             icon={<PiCalendarPlusDuotone className="text-2xl" />}
@@ -57,6 +62,8 @@ export default function StateCardView({ className }: { className: string }) {
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
+            isDetailsView
+            detailsLink={routes.privateRoutes.superAdmin.retailer.home}
           />
           <MetricCard
             icon={<PiCalendarPlusDuotone className="text-2xl" />}
@@ -66,6 +73,8 @@ export default function StateCardView({ className }: { className: string }) {
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
+            isDetailsView
+            detailsLink={routes.privateRoutes.superAdmin.customer.home}
           />
         </div>
       </div>

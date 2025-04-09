@@ -31,7 +31,7 @@ export default function SignUpStatus({ className }: { className?: string }) {
     <div className={cn('flex flex-col gap-5 border-0 p-0 lg:p-0', className)}>
       <div className="grid h-full items-start rounded-lg border border-gray-300 p-5 @xl:grid-cols-2 lg:p-7">
         <Title as="h3" className="col-span-full mb-8 text-base font-semibold sm:text-lg">
-          Total Signup Status
+          Total Signup Ratio
         </Title>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">
           <div className="mx-auto h-44 w-44">
@@ -63,7 +63,7 @@ export default function SignUpStatus({ className }: { className?: string }) {
               </ResponsiveContainer>
             )}
           </div>
-          <p className="mt-4 text-center font-semibold text-gray-800">Signup Efficacy</p>
+          <p className="mt-4 text-center font-semibold text-gray-800">Retailer vs. Customer</p>
         </div>
         <div className="">
           {isLoading || isError || dashBoardData === undefined ? (
