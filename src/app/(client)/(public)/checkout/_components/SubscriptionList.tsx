@@ -111,19 +111,6 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
 
   return (
     <div>
-      {/* {(!session?.user?.plan || session?.user?.plan === 'trial') && (
-        <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
-          <p className="font-medium text-blue-700">Change Plan</p>
-          <p className="text-blue-700">You will be billed immediately when switching plans</p>
-        </div>
-      )}
-      {session?.user?.plan && session?.user?.plan !== 'trial' && (
-        <div className="mb-6 border-l-4 border-yellow-400 bg-yellow-50 p-4">
-          <p className="font-medium text-yellow-500">Upgrade or downgrade plan</p>
-          <p className="text-yellow-500">You will be charged {planChangeCost} CAD when switching plans</p>
-        </div>
-      )} */}
-
       {isLoading || translateLoading ? (
         <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
           <Skeleton className="w-68 h-48 rounded" />
@@ -134,7 +121,8 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
       ) : (
         <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
           {plans?.map((item: Subscription, index: number) => {
-            if (session?.user?.takeFreeTrial && item?.slug === 'trial' && session?.user?.plan !== 'trial') return null;
+            // && session?.user?.plan !== 'trial'
+            if (session?.user?.takeFreeTrial && item?.slug === 'trial') return null;
             return item?.isBlocked ? (
               <div key={item._id} className={`relative cursor-not-allowed rounded-lg border p-4`}>
                 {session?.user?.plan === item?.slug && (

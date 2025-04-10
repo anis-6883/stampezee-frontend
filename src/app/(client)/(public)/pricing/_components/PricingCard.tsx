@@ -44,8 +44,8 @@ export default function PricingCard({ item }: { item: any }) {
     }
     dispatch(resetAddOns());
   };
-
-  if (session?.user?.takeFreeTrial && item?.slug === 'trial' && session?.user?.plan !== 'trial') {
+  // && session?.user?.plan !== 'trial'
+  if (session?.user?.takeFreeTrial && item?.slug === 'trial') {
     return null;
   }
 
@@ -61,16 +61,7 @@ export default function PricingCard({ item }: { item: any }) {
           <span className="text-sm font-medium">{t('active')}</span>
         </div>
       )}
-      {/* {session?.user?.takeFreeTrial && item?.slug === 'trial' && (
-        <div
-          className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
-        >
-          <span className="font-medium">
-            <IoCheckmarkDoneOutline className="text-lg" />
-          </span>
-          <span className="text-sm font-medium">{t('applied')}</span>
-        </div>
-      )} */}
+
       <div>
         <h3 className="mb-4 text-xl font-semibold">{item.title}</h3>
         {!currency?.name ? (

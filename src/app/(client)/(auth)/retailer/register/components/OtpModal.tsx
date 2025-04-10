@@ -4,6 +4,7 @@ import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerOtpVerifyMutation, useRetailerResendOtpMutation } from '@/features/auth/authApi';
 import { userLoggedIn } from '@/features/auth/authSlice';
+import { RootState } from '@/features/store';
 import { useTimer } from '@/hooks/use-timer';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -12,7 +13,7 @@ import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { ImSpinner9 } from 'react-icons/im';
 import { IoCloseOutline } from 'react-icons/io5';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ActionIcon, Modal, PinCode, Title } from 'rizzui';
 
 export default function OtpModal({ modalState, setModalState }: { setModalState: (state: boolean) => void; modalState: boolean }) {
@@ -25,6 +26,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
   const { replace } = useRouter();
   const dispatch = useDispatch();
   const { reset, timer } = useTimer(120);
+  const { subscription } = useSelector((state: RootState) => state?.subscriptionSlice);
 
   useEffect(() => {
     if (modalState) {
@@ -54,12 +56,16 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
         }
         if (callback?.ok && !callback?.error) {
           if (verifyResponse?.data?.role === ROLE.RETAILER) {
-            replace(routes.privateRoutes.checkout);
+            if (!subscription?.slug || subscription?.slug === 'trial') {
+              replace(routes.privateRoutes.retailer.dashboard);
+            } else {
+              replace(routes.privateRoutes.checkout);
+            }
           }
         }
       });
     }
-  }, [dispatch, replace, verifyError, verifyResponse, verifySuccess]);
+  }, [dispatch, replace, subscription?.slug, verifyError, verifyResponse, verifySuccess]);
 
   useEffect(() => {
     if (resendError) {
@@ -85,7 +91,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
         setIsSubmitting(false);
         setOtpValidMsg('Please, Enter Valid OTP!');
       } else {
-        verifyEmail({ otp });
+        verifyEmail({ otp, selectFreeTrial: !subscription?.slug || subscription?.slug === 'trial' ? true : false });
       }
     } else {
       setOtpValidMsg('Please, Enter Valid OTP!');
