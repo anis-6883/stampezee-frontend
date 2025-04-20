@@ -117,16 +117,39 @@ export default function RegisterForm({
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string().trim().required(tCommon('required')),
-    firstName: Yup.string().trim().required(tCommon('required')),
-    lastName: Yup.string().trim(),
+    storeName: Yup.string()
+      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your name correctly?')
+      .trim()
+      .required(tCommon('required')),
+    firstName: Yup.string()
+      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your name correctly?')
+      .trim()
+      .required(tCommon('required')),
+    lastName: Yup.string()
+      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your name correctly?')
+      .trim(),
     email: Yup.string()
       .test('email', tLogin('invalidEmail'), (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(value);
       })
       .required(tCommon('required')),
-    phone: Yup.string().trim().required(tCommon('required')),
+    phone: Yup.string()
+      .trim()
+      .test('bd-phone-length', 'Number must be 10 digits', function (value) {
+        const { dialCode } = this.parent;
+        const country = dialCode?.replace('+', '');
+
+        if (country === '880') {
+          // BD number should be 10 digits (excluding +880)
+          const phoneWithoutDialCode = value?.replace(country, '');
+          return phoneWithoutDialCode?.length === 10;
+        }
+
+        // Allow other countries for now (or add their validation here)
+        return true;
+      })
+      .required(tCommon('required')),
     country: Yup.string().trim().required(tCommon('required')),
     province: Yup.string().trim().required(tCommon('required')),
     city: Yup.string().trim().required(tCommon('required')),
@@ -164,7 +187,7 @@ export default function RegisterForm({
                       </p>
                     }
                     country="ca"
-                    preferredCountries={['ca']}
+                    preferredCountries={['ca', 'bd']}
                     onChange={(value, countryData: any) => {
                       setFieldValue('dialCode', `+${countryData.dialCode}`);
                       setFieldValue('phone', value.slice(countryData.dialCode.length));
@@ -174,6 +197,7 @@ export default function RegisterForm({
                     labelClassName="!mb-1"
                     helperClassName="text-danger"
                     value={`${values?.dialCode}${values?.phone}`}
+                    enableAreaCodes={true}
                   />
                   <div className="flex flex-col gap-1">
                     <div>
