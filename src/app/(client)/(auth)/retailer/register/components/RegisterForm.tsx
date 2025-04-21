@@ -118,15 +118,17 @@ export default function RegisterForm({
 
   const validationSchema = Yup.object().shape({
     storeName: Yup.string()
-      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your name correctly?')
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
-      .required(tCommon('required')),
+      .required(tCommon('required'))
+      .min(2, 'At least 2 characters!')
+      .max(100, 'maximum 100 characters!'),
     firstName: Yup.string()
-      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your name correctly?')
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
       .required(tCommon('required')),
     lastName: Yup.string()
-      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your name correctly?')
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim(),
     email: Yup.string()
       .test('email', tLogin('invalidEmail'), (value: any) => {
@@ -154,15 +156,15 @@ export default function RegisterForm({
     province: Yup.string()
       .trim()
       .required(tCommon('required'))
-      .test('not-just-numbers', 'Invalid province', (value) => !!value && /[a-zA-Z]/.test(value)),
+      .test('not-just-numbers', 'Invalid province', (value) => !!value && /^[a-zA-Z]+$/.test(value)),
     city: Yup.string()
       .trim()
       .required(tCommon('required'))
-      .test('not-just-numbers', 'Invalid city', (value) => !!value && /[a-zA-Z]/.test(value)),
+      .test('not-just-numbers', 'Invalid city', (value) => !!value && /^[a-zA-Z]+$/.test(value)),
     postalCode: Yup.string()
       .trim()
       .required(tCommon('required'))
-      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your postalCode correctly?'),
+      .matches(/^[a-zA-Z0-9]+$/, 'Are you sure you entered your postalCode correctly?'),
     address: Yup.string()
       .trim()
       .required(tCommon('required'))
@@ -171,7 +173,11 @@ export default function RegisterForm({
     password: Yup.string()
       .matches(/^\S.*\S$|^\S{1}$/, 'Password cannot start or end with a space')
       .required(tCommon('required'))
-      .min(8, tCommon('atLeast8Characters')),
+      .min(8, tCommon('atLeast8Characters'))
+      .matches(/[0-9]/, 'Password must contain at least one number')
+      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+      .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+      .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
   });
 
   const handleSubmit = async (values: any, { setFieldError }: any) => {

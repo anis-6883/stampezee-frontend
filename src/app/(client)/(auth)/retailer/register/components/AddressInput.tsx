@@ -35,13 +35,14 @@ export default function AddressInput({
 
   const handleInputChange = () => {
     const autocomplete = autocompleteRef.current;
-
     if (!autocomplete?.value) {
       setFieldValue('address', '');
       setFieldValue('longitude', '');
       setFieldValue('latitude', '');
     } else {
       setFieldValue('address', autocomplete.value);
+      setFieldValue('longitude', '');
+      setFieldValue('latitude', '');
     }
   };
 

@@ -388,7 +388,7 @@ export default function CreateUpdateModel({
                   </div>
 
                   <div className="grid grid-cols-1">
-                    <FormikDatePicker label="Valid Date Range" name="validDateRange" range={true} />
+                    <FormikDatePicker isMinDate={true} label="Valid Date Range" name="validDateRange" range={true} />
                   </div>
 
                   <p className="flex flex-col text-end text-xs font-semibold">

@@ -1,6 +1,7 @@
 import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import { routes } from '@/config/routes';
+import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerForgotPasswordMutation } from '@/features/auth/authApi';
 import { setAccessToken } from '@/features/auth/authSlice';
 import { ErrorResponse, isFetchBaseQueryError } from '@/utils/check-base-query-error';
@@ -25,6 +26,7 @@ export default function ForgotEmailInput({
 }) {
   const t = useTranslations('ForgotPasswordPage');
   const tCommon = useTranslations('RetailerCommon');
+  const tLogin = useTranslations('LoginPage');
   const dispatch = useDispatch();
   const [submitting, setSubmitting] = useState(false);
 
@@ -36,16 +38,26 @@ export default function ForgotEmailInput({
   };
 
   const emailSchema = Yup.object().shape({
-    email: Yup.string().required(tCommon('required')).email(tCommon('validEmail')),
+    email: Yup.string()
+      .test('email', tLogin('invalidEmail'), (value: any) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(value);
+      })
+      .required(tCommon('required')),
   });
 
   // Handle Forget Password Response
   useEffect(() => {
     if (forgetError) {
       setSubmitting(false);
-      if (isFetchBaseQueryError(forgotPasswordError)) {
-        const errorMessage = (forgotPasswordError.data as ErrorResponse)?.message || 'Something went wrong! Try Again';
-        toast.error(errorMessage);
+      const myError = forgotPasswordError as SerializedError;
+      if (isFetchBaseQueryError(myError)) {
+        if (myError?.data?.data?.email) {
+          toast.error(myError?.data?.data?.email || 'Something went wrong!');
+        } else {
+          const errorMessage = (myError.data as ErrorResponse)?.message || 'Something went wrong! Try Again';
+          toast.error(errorMessage);
+        }
       } else {
         toast.error('Something went wrong! Try Again');
       }

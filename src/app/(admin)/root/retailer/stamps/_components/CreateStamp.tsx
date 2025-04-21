@@ -78,22 +78,6 @@ export default function Create({ locale }: { locale: string }) {
     };
   }
 
-  // const initialValues = {
-  //   branchId: '',
-  //   stampImageId: '',
-  //   categoryId: '',
-  //   title: '',
-  //   description: '',
-  //   rules: '',
-  //   noOfStampsToCollect: 0,
-  //   minPurchaseAmount: 0,
-  //   rewardType: 'promotion',
-  //   promotionReward: '',
-  //   discountReward: 0,
-  //   validDateRange: '',
-  //   hasValidity: true,
-  // };
-
   useEffect(() => {
     if (responseData) {
       setOptionsData(responseData.data);
@@ -146,6 +130,7 @@ export default function Create({ locale }: { locale: string }) {
     title: Yup.string().trim().required(tCommon('required')),
     rules: Yup.string().trim().required(tCommon('required')),
     hasValidity: Yup.boolean().required(tCommon('required')),
+    minPurchaseAmount: Yup.number().min(0, 'Minimum Purchase Amount must be at least 0').required(tCommon('required')),
     noOfStampsToCollect: Yup.number().min(1, 'Number of stamps to collect must be at least 1').required(tCommon('required')),
     rewardType: Yup.mixed().oneOf(['promotion', 'discount']).required(tCommon('required')),
     promotionReward: Yup.string().when('rewardType', {

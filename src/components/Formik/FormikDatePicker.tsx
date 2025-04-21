@@ -12,9 +12,17 @@ interface DateRangeProps {
   enableTime?: boolean;
   range?: boolean;
   required?: boolean;
+  isMinDate?: boolean;
 }
 
-const FormikDatePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name, enableTime = false, range = false, required = true }) => {
+const FormikDatePicker: React.FC<DateRangeProps> = ({
+  label = 'Date Range',
+  name,
+  enableTime = false,
+  range = false,
+  required = true,
+  isMinDate = false,
+}) => {
   const { values, setFieldValue }: any = useFormikContext();
 
   return (
@@ -61,6 +69,7 @@ const FormikDatePicker: React.FC<DateRangeProps> = ({ label = 'Date Range', name
             mode: range ? 'range' : 'single',
             dateFormat: enableTime ? 'Y-m-d H:i' : 'Y-m-d',
             enableTime,
+            minDate: isMinDate ? 'today' : '',
           }}
         />
       )}

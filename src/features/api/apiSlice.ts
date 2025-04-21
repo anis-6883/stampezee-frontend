@@ -6,6 +6,7 @@ export interface SerializedError {
   data: {
     status: boolean;
     message: string;
+    data?: any;
   };
 }
 
