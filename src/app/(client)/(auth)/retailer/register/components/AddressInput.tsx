@@ -1,7 +1,7 @@
 import { StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api';
 import { Field } from 'formik';
 import { useTranslations } from 'next-intl';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoAlertCircle } from 'react-icons/io5';
 import { Input, Loader } from 'rizzui';
 
@@ -67,13 +67,49 @@ export default function AddressInput({
     }
   };
 
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      console.log('Geolocation not supported');
+    }
+
+    async function success(position: any) {
+      if (!isLoaded) return; // Ensure the API is loaded
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      setSelectedLocation({ lat: latitude, lng: longitude });
+
+      try {
+        const geocoder = new google.maps.Geocoder(); // Initialize geocoder
+        const response = await geocoder.geocode({ location: { lat: latitude, lng: longitude } });
+
+        if (response.results && response.results.length > 0) {
+          const address = response.results[0].formatted_address;
+
+          setFieldValue('address', address);
+          setFieldValue('latitude', String(latitude));
+          setFieldValue('longitude', String(longitude));
+        } else {
+          console.log('No address found for this location.');
+        }
+      } catch (error) {
+        console.error('Geocoder failed:', error);
+      }
+    }
+
+    function error() {
+      console.log('Unable to retrieve your location');
+    }
+  }, [isLoaded, setFieldValue, setSelectedLocation]);
+
   return isLoaded ? (
-    <div>
+    <div className="w-full">
       <StandaloneSearchBox onLoad={onSearchBoxLoad} onPlacesChanged={onPlacesChanged}>
         <Field name="address">
           {({ field, meta }: { field: any; meta: any }) => (
             <Input
-              className="mb-3"
+              className={`${meta.touched && meta.error ? 'mb-[-8px]' : 'mb-3'}`}
               onChange={handleInputChange}
               label={
                 <span>
@@ -90,10 +126,10 @@ export default function AddressInput({
               value={address}
               helperText={
                 meta.touched && meta.error ? (
-                  <span className="flex items-center gap-x-1">
+                  <div className="flex items-center gap-x-1">
                     <IoAlertCircle className="text-lg" />
                     <span>{meta.error}</span>
-                  </span>
+                  </div>
                 ) : (
                   ''
                 )

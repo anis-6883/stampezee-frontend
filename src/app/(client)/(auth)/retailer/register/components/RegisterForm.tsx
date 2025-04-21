@@ -151,15 +151,34 @@ export default function RegisterForm({
       })
       .required(tCommon('required')),
     country: Yup.string().trim().required(tCommon('required')),
-    province: Yup.string().trim().required(tCommon('required')),
-    city: Yup.string().trim().required(tCommon('required')),
-    postalCode: Yup.string().trim().required(tCommon('required')),
-    address: Yup.string().trim().required(tCommon('required')),
+    province: Yup.string()
+      .trim()
+      .required(tCommon('required'))
+      .test('not-just-numbers', 'Invalid province', (value) => !!value && /[a-zA-Z]/.test(value)),
+    city: Yup.string()
+      .trim()
+      .required(tCommon('required'))
+      .test('not-just-numbers', 'Invalid city', (value) => !!value && /[a-zA-Z]/.test(value)),
+    postalCode: Yup.string()
+      .trim()
+      .required(tCommon('required'))
+      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your postalCode correctly?'),
+    address: Yup.string()
+      .trim()
+      .required(tCommon('required'))
+      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your address correctly?'),
     isAgree: Yup.string().required(tCommon('required')),
-    password: Yup.string().required(tCommon('required')).min(8, tCommon('atLeast8Characters')),
+    password: Yup.string()
+      .matches(/^\S.*\S$|^\S{1}$/, 'Password cannot start or end with a space')
+      .required(tCommon('required'))
+      .min(8, tCommon('atLeast8Characters')),
   });
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, { setFieldError }: any) => {
+    if (!values?.longitude && !values?.latitude) {
+      setFieldError('address', 'Enter Or Select a valid location from Map!');
+      return;
+    }
     setIsSubmitting(true);
     register(removeEmptyValues(values, ['isAgree']));
   };
