@@ -1,5 +1,6 @@
 'use client';
 
+import RadioInput from '@/components/ui/RadioInput';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RootState } from '@/features/store';
 import { removeCode, removeCoupon, setAddOns } from '@/features/subscription/subscriptionSlice';
@@ -12,6 +13,8 @@ import { useEffect, useState } from 'react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
+
+const checkedAddonSelect = (addOns: AddOn[], addOn: AddOn) => addOns?.find((item: any) => item._id === addOn._id)?.isAddOnsSelect;
 
 export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: boolean; locale?: string }) {
   const dispatch = useDispatch();
@@ -82,7 +85,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
             <div
               onClick={() => handleAddOnSelect(addOn)}
               className={`relative cursor-pointer rounded-lg border p-4 ${
-                addOnsData?.find((item: any) => item._id === addOn._id)?.isAddOnsSelect ? '!border-danger !ring-1 ring-danger' : 'border'
+                checkedAddonSelect(addOnsData, addOn) ? '!border-danger !ring-1 ring-danger' : 'border'
               } hover:border-red-600`}
             >
               {session?.user?.activeAddonSlugs?.includes(addOn?.slug) && (
@@ -93,6 +96,12 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
                     <MdStar />
                   </span>
                   <span className="text-sm font-medium">{t('active')}</span>
+                </div>
+              )}
+
+              {checkedAddonSelect(addOnsData, addOn) && (
+                <div className={`absolute z-0 ${isRtl ? 'left-2' : 'right-2'} bottom-2`}>
+                  <RadioInput checked={true} onChange={() => {}} />
                 </div>
               )}
               {isMemberShip ? (

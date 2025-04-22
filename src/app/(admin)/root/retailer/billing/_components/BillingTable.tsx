@@ -39,7 +39,13 @@ export default function BillingTable() {
         return row?.original?.enrollSubscriptions?.map((subscription: any) => {
           return (
             <div className="my-1" key={subscription?._id}>
-              {subscription?.deletedByRetailerAt ? (
+              {subscription?.type === 'subscription' ? (
+                subscription?.deletedByRetailerAt ? (
+                  <span className="line-through">{subscription?.title}</span>
+                ) : (
+                  <span>{subscription?.title}</span>
+                )
+              ) : subscription?.validAtAfterCancel && new Date(subscription?.validAtAfterCancel) < new Date() ? (
                 <span className="line-through">{subscription?.title}</span>
               ) : (
                 <span>{subscription?.title}</span>

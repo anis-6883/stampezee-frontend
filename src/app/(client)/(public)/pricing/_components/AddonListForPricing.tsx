@@ -8,9 +8,10 @@ import { translateData } from '@/utils/GoogleTranslate';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { IoCheckmarkDoneCircle } from 'react-icons/io5';
+import { IoCheckmarkDoneCircle, IoInformationCircleOutline } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+import { Tooltip } from 'rizzui';
 
 export default function AddOnListForPricing({ locale }: { locale?: string }) {
   const { data: session }: any = useSession();
@@ -57,7 +58,7 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
       {addOnList?.map((addOn: AddOn, index: number) => (
         <div key={index}>
           <div className={`relative rounded-lg border p-4`}>
-            {session?.user?.activeAddonSlugs?.includes(addOn?.slug) && (
+            {session?.user?.activeAddonSlugs?.includes(addOn?.slug) ? (
               <div
                 className={`absolute z-0 ${isRtl ? 'left-2' : 'right-2'} top-2 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
               >
@@ -66,6 +67,18 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
                 </span>
                 <span className="text-sm font-medium">{t('active')}</span>
               </div>
+            ) : (
+              <Tooltip
+                className="bg-danger text-white"
+                placement="top"
+                size="md"
+                arrowClassName="fill-danger"
+                content={'You can select addon after choosing a plan!'}
+              >
+                <div className={`absolute z-0 ${isRtl ? 'left-2' : 'right-2'} top-2 `}>
+                  <IoInformationCircleOutline className="text-2xl" />
+                </div>
+              </Tooltip>
             )}
             <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
             {!selectedCurrencyExchangeRate?.name ? (

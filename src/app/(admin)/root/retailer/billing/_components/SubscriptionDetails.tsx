@@ -251,10 +251,12 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
               <span className="text-danger">{convertDateByOffset(stripe?.renewCancelAt, offset)}</span>
             </div>
           )}
-          <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">{t('nextInvoice')}</span>
-            {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(validityTo, offset)}</span>}
-          </div>
+          {!stripe?.renewCancelAt && (
+            <div className="flex items-center justify-between font-medium">
+              <span className="font-semibold">{t('nextInvoice')}</span>
+              {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(validityTo, offset)}</span>}
+            </div>
+          )}
         </div>
 
         {/* Payment methods  */}
@@ -400,14 +402,26 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                         {++index}
                       </td>
                       <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                        {enrollSubscription?.deletedByRetailerAt ? (
+                        {enrollSubscription?.type === 'subscription' ? (
+                          enrollSubscription?.deletedByRetailerAt ? (
+                            <span className="line-through">{enrollSubscription?.title}</span>
+                          ) : (
+                            enrollSubscription?.title
+                          )
+                        ) : enrollSubscription?.validAtAfterCancel && new Date(enrollSubscription?.validAtAfterCancel) < new Date() ? (
                           <span className="line-through">{enrollSubscription?.title}</span>
                         ) : (
                           enrollSubscription?.title
                         )}
                       </td>
                       <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                        {enrollSubscription?.deletedByRetailerAt ? (
+                        {enrollSubscription?.type === 'subscription' ? (
+                          enrollSubscription?.deletedByRetailerAt ? (
+                            <span className="line-through">{enrollSubscription?.subscriptionItemId}</span>
+                          ) : (
+                            enrollSubscription?.subscriptionItemId
+                          )
+                        ) : enrollSubscription?.validAtAfterCancel && new Date(enrollSubscription?.validAtAfterCancel) < new Date() ? (
                           <span className="line-through">{enrollSubscription?.subscriptionItemId}</span>
                         ) : (
                           enrollSubscription?.subscriptionItemId
@@ -416,9 +430,16 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
 
                       <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
                         {enrollSubscription?.deletedByRetailerAt ? (
-                          <span className="font-semibold text-danger">
-                            {convertDateByOffset(enrollSubscription?.deletedByRetailerAt, offset)} (Canceled At)
-                          </span>
+                          <div className="flex flex-col gap-y-1">
+                            <span className="font-semibold text-danger">
+                              Canceled At : {convertDateByOffset(enrollSubscription?.deletedByRetailerAt, offset)}
+                            </span>
+                            {enrollSubscription?.validAtAfterCancel && (
+                              <span className="font-semibold text-black">
+                                Validate At : {convertDateByOffset(enrollSubscription?.validAtAfterCancel, offset)}
+                              </span>
+                            )}
+                          </div>
                         ) : (
                           <Button
                             disabled={!status}
