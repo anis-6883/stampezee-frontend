@@ -35,8 +35,18 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().trim().required('Required!'),
-    description: Yup.string().trim().required('Required!'),
+    title: Yup.string()
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your title correctly?')
+      .trim()
+      .required('Required!')
+      .min(2, 'At least 2 characters!')
+      .max(500, 'maximum 500 characters!'),
+    description: Yup.string()
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your description correctly?')
+      .trim()
+      .required('Required!')
+      .min(2, 'At least 2 characters!')
+      .max(2000, 'maximum 2000 characters!'),
   });
 
   const submitHandler = async (values: any) => {

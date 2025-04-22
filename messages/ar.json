@@ -289,6 +289,7 @@
     "subAdminEmail": "البريد الإلكتروني للمشرف الفرعي",
     "totalStamp": "إجمالي الطوابع",
     "totalCustomer": "إجمالي العملاء",
+    "totalSubAdmin": "إجمالي المشرفين الفرعيين",
     "totalOrder": "إجمالي الطلبات",
     "totalRevenue": "إجمالي الإيرادات"
   },

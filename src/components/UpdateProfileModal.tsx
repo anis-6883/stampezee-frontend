@@ -17,6 +17,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { ActionIcon, Modal, Title } from 'rizzui';
+import * as Yup from 'yup';
 import Button from './Formik/Button';
 
 export default function UpdateProfileModal({
@@ -41,6 +42,16 @@ export default function UpdateProfileModal({
     image: `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${superAdminProfile?.data?.image}` || null,
     email: superAdminProfile?.data?.email,
   };
+
+  const validationSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      .trim()
+      .required('Required!'),
+    lastName: Yup.string()
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your last name correctly?')
+      .trim(),
+  });
 
   const submitHandler = async (values: any) => {
     setIsSubmitting(true);
@@ -96,7 +107,7 @@ export default function UpdateProfileModal({
           </ActionIcon>
         </div>
         <div>
-          <Formik initialValues={initialValues} enableReinitialize onSubmit={submitHandler}>
+          <Formik initialValues={initialValues} validationSchema={validationSchema} enableReinitialize onSubmit={submitHandler}>
             {({ setFieldValue, values }) => (
               <Form className="mt-5">
                 <DragAndDropUpload

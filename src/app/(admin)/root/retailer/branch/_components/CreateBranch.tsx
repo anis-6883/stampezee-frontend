@@ -32,13 +32,16 @@ export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: s
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().trim().required(tCommon('required')),
-    address: Yup.string().trim().required(tCommon('required')),
+    address: Yup.string()
+      .trim()
+      .required(tCommon('required'))
+      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your address correctly?'),
   });
 
   // Submit Handler
-  const handleSubmit = async (values: Branch) => {
-    if (values.latitude === '' || values.longitude === '') {
-      toast.error(t('pleaseSelectALocationOnTheMap'));
+  const handleSubmit = async (values: Branch, { setFieldError }: any) => {
+    if (!values?.longitude && !values?.latitude) {
+      setFieldError('address', 'Enter Or Select a valid location from Map!');
       return;
     }
     setIsSubmitting(true);
@@ -62,13 +65,7 @@ export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: s
   }, [error, isSuccess, router]);
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={(values) => {
-        handleSubmit(values);
-      }}
-    >
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       {() => (
         <Form className="mt-5 grid gap-4">
           <InputField name="name" label={t('name')} placeholder="ex. Ring Road Branch" />

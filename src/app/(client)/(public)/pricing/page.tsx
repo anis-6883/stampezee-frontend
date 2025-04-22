@@ -29,7 +29,6 @@ export default async function Page() {
       <Explore />
       <div className=" ms-px-0 container  mx-auto mt-16 max-w-screen-xl px-5">
         <div className="mx-auto  text-start">
-          <h2 className="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">{t('subscriptions')}</h2>
           <p className="mb-4 text-xl font-medium tracking-tight text-gray-900 dark:text-white sm:text-4xl">{t('subtitle')}</p>
         </div>
 

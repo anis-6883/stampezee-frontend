@@ -20,7 +20,7 @@ export default function AddonListTable({ data, isLoading, isError }: SubAdminLis
       <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
         <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            {tableHeaders.map((header) => (
+            {tableHeaders?.map((header) => (
               <th key={header} scope="col" className="whitespace-nowrap px-6 py-3">
                 {header}
               </th>
@@ -29,7 +29,7 @@ export default function AddonListTable({ data, isLoading, isError }: SubAdminLis
         </thead>
         <tbody>
           <tr>
-            {tableHeaders.map((_, index) => (
+            {tableHeaders?.map((_, index) => (
               <td key={index} scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
                 <Skeleton className="h-6 w-32 rounded" />
               </td>
@@ -55,7 +55,7 @@ export default function AddonListTable({ data, isLoading, isError }: SubAdminLis
           </tr>
         </thead>
         <tbody>
-          {addonList.length === 0 ? (
+          {addonList?.length === 0 ? (
             <tr>
               <td colSpan={8} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
                 <div className="flex flex-col justify-center py-5">
@@ -65,7 +65,7 @@ export default function AddonListTable({ data, isLoading, isError }: SubAdminLis
               </td>
             </tr>
           ) : (
-            addonList.map((item, index) => (
+            addonList?.map((item, index) => (
               <tr
                 key={item._id}
                 className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
@@ -74,10 +74,10 @@ export default function AddonListTable({ data, isLoading, isError }: SubAdminLis
                   {index + 1}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  {item.title}
+                  {item?.title}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  {item.count}
+                  {item?.count}
                 </td>
               </tr>
             ))

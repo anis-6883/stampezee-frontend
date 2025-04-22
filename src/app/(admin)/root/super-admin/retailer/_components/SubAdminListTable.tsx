@@ -24,7 +24,7 @@ export default function SubAdminListTable({ data, isLoading, isError }: SubAdmin
       <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
         <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            {tableHeaders.map((header) => (
+            {tableHeaders?.map((header) => (
               <th key={header} scope="col" className="whitespace-nowrap px-6 py-3">
                 {header}
               </th>
@@ -33,7 +33,7 @@ export default function SubAdminListTable({ data, isLoading, isError }: SubAdmin
         </thead>
         <tbody>
           <tr>
-            {tableHeaders.map((_, index) => (
+            {tableHeaders?.map((_, index) => (
               <td key={index} scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
                 <Skeleton className="h-6 w-32 rounded" />
               </td>
@@ -44,14 +44,14 @@ export default function SubAdminListTable({ data, isLoading, isError }: SubAdmin
     );
   }
 
-  const subadminList = data || [];
+  const subAdminList = data || [];
 
   return (
     <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
         <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            {tableHeaders.map((header) => (
+            {tableHeaders?.map((header) => (
               <th key={header} scope="col" className="whitespace-nowrap px-6 py-3">
                 {header}
               </th>
@@ -59,7 +59,7 @@ export default function SubAdminListTable({ data, isLoading, isError }: SubAdmin
           </tr>
         </thead>
         <tbody>
-          {subadminList.length === 0 ? (
+          {subAdminList?.length === 0 ? (
             <tr>
               <td colSpan={8} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
                 <div className="flex flex-col justify-center py-5">
@@ -69,7 +69,7 @@ export default function SubAdminListTable({ data, isLoading, isError }: SubAdmin
               </td>
             </tr>
           ) : (
-            subadminList.map((item, index) => (
+            subAdminList?.map((item, index) => (
               <tr
                 key={item._id}
                 className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
@@ -78,19 +78,19 @@ export default function SubAdminListTable({ data, isLoading, isError }: SubAdmin
                   {index + 1}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  {item.firstName}
+                  {item?.firstName}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  {item.lastName}
+                  {item?.lastName}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  {item.email}
+                  {item?.email}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  {item.branchName ?? <span className="text-danger">No Assigned</span>}
+                  {item?.branchName ?? <span className="text-danger">No Assigned</span>}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  {item.branchAddress.length > 25 ? `${item.branchAddress.slice(0, 25)}...` : item.branchAddress}
+                  {item?.branchAddress?.length > 25 ? `${item?.branchAddress?.slice(0, 25)}...` : item?.branchAddress}
                 </td>
               </tr>
             ))

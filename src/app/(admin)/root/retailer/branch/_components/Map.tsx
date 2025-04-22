@@ -82,6 +82,8 @@ export default function MapComponent({
       setFieldValue('latitude', '');
     } else {
       setFieldValue('address', autocomplete.value);
+      setFieldValue('longitude', '');
+      setFieldValue('latitude', '');
     }
   };
 

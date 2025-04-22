@@ -26,8 +26,7 @@ export default function BranchStatsTable() {
     t('serialNo'),
     t('branchName'),
     t('branchAddress'),
-    t('subAdminName'),
-    t('subAdminEmail'),
+    t('totalSubAdmin'),
     t('totalCustomer'),
     t('totalOrder'),
     `${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`,
@@ -107,11 +106,11 @@ export default function BranchStatsTable() {
                   {item.address.length > 25 ? `${item.address.slice(0, 25)}...` : item.address}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.subAdminName ?? <span className="text-danger">No Assigned</span>}
+                  {item?.totalSubAdmin}
                 </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                {/* <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item.subAdminEmail ?? <span className="text-danger">No Assigned</span>}
-                </td>
+                </td> */}
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item.totalCustomer}
                 </td>

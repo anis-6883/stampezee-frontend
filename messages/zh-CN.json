@@ -289,6 +289,7 @@
     "subAdminEmail": "副管理员邮箱",
     "totalStamp": "总邮票数",
     "totalCustomer": "总客户数",
+    "totalSubAdmin": "子管理员总数",
     "totalOrder": "总订单数",
     "totalRevenue": "总收入"
   },

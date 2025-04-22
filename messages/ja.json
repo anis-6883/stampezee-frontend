@@ -288,6 +288,7 @@
     "subAdminEmail": "サブ管理者メール",
     "totalStamp": "総スタンプ数",
     "totalCustomer": "総顧客数",
+    "totalSubAdmin": "サブ管理者の合計",
     "totalOrder": "総注文数",
     "totalRevenue": "総収益"
   },

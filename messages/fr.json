@@ -289,6 +289,7 @@
     "subAdminEmail": "E-mail du Sous-Administrateur",
     "totalStamp": "Total des Timbres",
     "totalCustomer": "Total des Clients",
+    "totalSubAdmin": "Nombre total de sous-administrateurs",
     "totalOrder": "Total des Commandes",
     "totalRevenue": "Revenu Total"
   },
