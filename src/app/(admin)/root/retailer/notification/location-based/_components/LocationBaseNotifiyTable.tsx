@@ -154,6 +154,7 @@ export default function LocationBaseNotifyTable({ locale, googleMapsApiKey }: { 
           </h2>
         </div>
         <Button
+          disabled={!data?.data?.notificationLimit}
           className="!m-0"
           color="danger"
           onClick={() => setCreateState(true)}

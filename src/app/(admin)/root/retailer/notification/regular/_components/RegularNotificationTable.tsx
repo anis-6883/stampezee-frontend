@@ -121,6 +121,9 @@ export default function RegularNotificationTable({ locale }: { locale: string })
     },
   ];
 
+  const totalAllowRegularNotify = data?.data?.notificationLimit;
+  const totalCreatedRegularNotify = data?.data.totalDocs;
+
   return (
     <>
       <CreateUpdateModel
@@ -143,6 +146,7 @@ export default function RegularNotificationTable({ locale }: { locale: string })
           </h2>
         </div>
         <Button
+          disabled={!data?.data?.notificationLimit}
           className="!m-0"
           color="danger"
           onClick={() => setCreateState(true)}

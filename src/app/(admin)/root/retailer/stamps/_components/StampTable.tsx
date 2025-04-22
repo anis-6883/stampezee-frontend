@@ -274,12 +274,21 @@ export default function StampTable() {
     },
   ];
 
+  const totalAllowStamp = session?.user?.totalStamp;
+  const totalCreatedStamp = data?.data.totalDocs;
+
   return (
     <>
       <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
         <StatusIndicator />
         <Link href={routes.privateRoutes.retailer.stamp.create}>
-          <Button className="w-full" color="danger" text={tStamp('addNewStamp')} preIcon={<HiPlus className="text-base" />} />
+          <Button
+            disabled={totalCreatedStamp < totalAllowStamp ? false : true}
+            className="w-full"
+            color="danger"
+            text={tStamp('addNewStamp')}
+            preIcon={<HiPlus className="text-base" />}
+          />
         </Link>
       </div>
       <Table

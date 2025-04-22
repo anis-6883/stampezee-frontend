@@ -136,6 +136,9 @@ export default function StampsImageTable({ locale }: { locale: string }) {
     },
   ];
 
+  const totalAllowCustomStampImage = session?.user?.totalCustomStampImage;
+  const totalCreatedCustomStampImage = data?.data.totalDocs;
+
   return (
     <>
       <CreateUpdateModel
@@ -149,6 +152,7 @@ export default function StampsImageTable({ locale }: { locale: string }) {
         <StatusIndicator />
         <div>
           <Button
+            disabled={totalCreatedCustomStampImage < totalAllowCustomStampImage ? false : true}
             className="w-full"
             color="danger"
             onClick={() => setCreateState(true)}
