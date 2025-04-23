@@ -99,11 +99,10 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
                 </div>
               )}
 
-              {checkedAddonSelect(addOnsData, addOn) && (
-                <div className={`absolute z-0 ${isRtl ? 'left-2' : 'right-2'} bottom-2`}>
-                  <RadioInput checked={true} onChange={() => {}} />
-                </div>
-              )}
+              <div className={`absolute z-0 ${isRtl ? 'left-2' : 'right-2'} bottom-2`}>
+                <RadioInput checked={checkedAddonSelect(addOnsData, addOn) || false} onChange={() => {}} />
+              </div>
+
               {isMemberShip ? (
                 <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
               ) : (

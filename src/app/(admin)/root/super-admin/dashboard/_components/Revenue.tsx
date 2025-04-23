@@ -33,6 +33,7 @@ export default function Revenue({ className }: { className?: string }) {
     totalAddonRevenueInCAD = 0,
     subscriptionPercentage = 0,
     addonPercentage = 0,
+    totalRefundAmountInCAD = 0,
   } = dashboardRevenue?.data || {};
 
   const dateOptions = [
@@ -138,12 +139,12 @@ export default function Revenue({ className }: { className?: string }) {
                   <span className="font-semibold">Subscription Earning:</span> ${totalRevenueInCAD.toFixed(2)}
                 </span>
               </div>
-              {/* <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#f1416c' }} />
                 <span className="text-base">
-                  <span className="font-semibold">Add-On Earning:</span> ${totalAddonRevenueInCAD.toFixed(2)}
+                  <span className="font-semibold">Total Refund:</span> ${totalRefundAmountInCAD.toFixed(2)}
                 </span>
-              </div> */}
+              </div>
             </div>
           </div>
         </>
