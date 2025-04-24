@@ -247,7 +247,7 @@ export default function Create({ locale }: { locale: string }) {
                     onChange={(option: { label: string; value: boolean }) => setFieldValue('hasValidity', option.value)}
                   />
                 </div>
-                {values?.hasValidity && <FormikDatePicker label="Valid Date Range" name="validDateRange" range={true} />}
+                {values?.hasValidity && <FormikDatePicker isMinDate={true} label="Valid Date Range" name="validDateRange" range={true} />}
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

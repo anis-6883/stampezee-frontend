@@ -12,6 +12,7 @@ import {
   useSetDefaultPaymentMethodMutation,
   useSingleBillingQuery,
 } from '@/features/retailer/billing/billingApi';
+import { resetState } from '@/features/subscription/subscriptionSlice';
 import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import moment from 'moment';
@@ -27,6 +28,7 @@ import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { MdAddCard, MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { RiDeleteBackLine, RiDownloadCloud2Fill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
 import { Badge, Dropdown } from 'rizzui';
 import AddPaymentCardModal from './AddPaymentCardModal';
 import PackageCancelModal from './PackageCancelModal';
@@ -47,6 +49,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
   const t6 = useTranslations('RetailerBillingPaymentCard');
   const t7 = useTranslations('RetailerBillingTable');
   const { push } = useRouter();
+  const dispatch = useDispatch();
 
   const [
     setDefaultPaymentMethod,
@@ -104,8 +107,11 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
       toast.success(cancelSubscriptionData?.message || 'Subscription cancel successfully!');
       setModalState(false);
       setCancelSubscriptionId(null);
+      if (isPlan) {
+        dispatch(resetState());
+      }
     }
-  }, [cancelSubscriptionData?.message, cancelSubscriptionError, isCancelSubscriptionError, isSuccess]);
+  }, [cancelSubscriptionData?.message, cancelSubscriptionError, dispatch, isCancelSubscriptionError, isPlan, isSuccess]);
 
   // Handle default payment method Response
   useEffect(() => {

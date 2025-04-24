@@ -8,6 +8,7 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateNotificationMutation } from '@/features/retailer/notification/notificationApi';
+import { convertUtcToLocalTime } from '@/utils';
 import { translateText } from '@/utils/GoogleTranslate';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
@@ -43,7 +44,7 @@ export default function CreateUpdateModel({
     description: formData?.description || '',
     image: formData?.image || '',
     imageType: formData?.image ? 'image' : '',
-    scheduleAt: formData?.scheduleAt || '',
+    scheduleAt: convertUtcToLocalTime(formData?.scheduleAt, 0) || '',
   };
 
   const validationSchema = Yup.object({
@@ -160,7 +161,7 @@ export default function CreateUpdateModel({
                 )}
 
                 <div>
-                  <FormikDatePicker label="Schedule At" name="scheduleAt" required={false} enableTime={true} />
+                  <FormikDatePicker isMinDate={true} label="Schedule At" name="scheduleAt" required={false} enableTime={true} />
                 </div>
 
                 <p className="mt-2 flex flex-col text-end text-xs font-semibold">

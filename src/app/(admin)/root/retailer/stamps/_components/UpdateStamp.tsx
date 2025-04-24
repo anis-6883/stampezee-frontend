@@ -201,7 +201,9 @@ export default function Update({ Id, offset }: any) {
                     }}
                   />
                 </div>
-                {values?.hasValidity && <FormikDatePicker label={t('validDateRange')} name="validDateRange" range={true} />}
+                {values?.hasValidity && (
+                  <FormikDatePicker isMinDate={true} label={t('validDateRange')} name="validDateRange" range={true} />
+                )}
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

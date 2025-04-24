@@ -64,22 +64,69 @@ export default function CreateUpdateModel({
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string().trim().required('Required!'),
-    firstName: Yup.string().trim().required('Required!'),
-    lastName: Yup.string().trim(),
+    storeName: Yup.string()
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      .trim()
+      .required('Required!')
+      .min(2, 'At least 2 characters!')
+      .max(100, 'maximum 100 characters!'),
+    firstName: Yup.string()
+      .trim()
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      .required('Required!'),
+    lastName: Yup.string()
+      .trim()
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?'),
     email: Yup.string()
       .test('email', 'Provide valid email!', (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(value);
       })
       .required('Required!'),
-    phone: Yup.string().trim().required('Required!'),
+    phone: Yup.string()
+      .trim()
+      .test('bd-phone-length', 'Number must be 10 digits', function (value) {
+        const { dialCode } = this.parent;
+        const country = dialCode?.replace('+', '');
+
+        if (country === '880') {
+          // BD number should be 10 digits (excluding +880)
+          const phoneWithoutDialCode = value?.replace(country, '');
+          return phoneWithoutDialCode?.length === 10;
+        }
+
+        // Allow other countries for now (or add their validation here)
+        return true;
+      })
+      .required('Required!'),
     country: Yup.string().trim().required('Required!'),
-    province: Yup.string().trim().required('Required!'),
-    city: Yup.string().trim().required('Required!'),
-    postalCode: Yup.string().trim().required('Required!'),
-    address: Yup.string().trim().required('Required!'),
-    password: (formData?._id ? Yup.string() : Yup.string().required('Required!')).min(8, 'At least 8 characters long!'),
+    province: Yup.string()
+      .trim()
+      .required('Required!')
+      .test('not-just-numbers', 'Invalid province', (value) => !!value && /^[a-zA-Z]+$/.test(value)),
+    city: Yup.string()
+      .trim()
+      .required('Required!')
+      .test('not-just-numbers', 'Invalid city', (value) => !!value && /^[a-zA-Z]+$/.test(value)),
+    postalCode: Yup.string()
+      .trim()
+      .required('Required!')
+      .matches(/^[a-zA-Z0-9]+$/, 'Are you sure you entered your postalCode correctly?'),
+    address: Yup.string()
+      .trim()
+      .required('Required!')
+      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your address correctly?'),
+    password: (formData?._id
+      ? Yup.string()
+      : Yup.string()
+          .matches(/^\S.*\S$|^\S{1}$/, 'Password cannot start or end with a space')
+          .required('Required!')
+    )
+      .min(8, 'At least 8 characters long!')
+      .matches(/[0-9]/, 'Password must contain at least one number')
+      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+      .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+      .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
   });
 
   function createFormData(data: any): FormData {
@@ -90,7 +137,11 @@ export default function CreateUpdateModel({
     return formData;
   }
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, { setFieldError }: any) => {
+    if (!values?.longitude && !values?.latitude) {
+      setFieldError('address', 'Enter Or Select a valid location from Map!');
+      return;
+    }
     setIsSubmitting(true);
     const isFile = (obj: any): obj is File => obj instanceof File;
 

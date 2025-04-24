@@ -201,3 +201,30 @@ export function appendFormData(formData: FormData, key: string, value: any): voi
     formData.append(key, value);
   }
 }
+
+export function convertUtcToLocalTime(utcTimeStr: string, offsetHours: number): string | null {
+  // Validate offsetHours
+  if (typeof offsetHours !== 'number' || isNaN(offsetHours)) {
+    console.error('Invalid offsetHours: must be a number.');
+    return null;
+  }
+
+  // Validate date string
+  const utcDate = new Date(utcTimeStr);
+  if (isNaN(utcDate.getTime())) {
+    console.error('Invalid UTC date string.');
+    return null;
+  }
+
+  // Add offset in milliseconds
+  const localDate = new Date(utcDate.getTime() + offsetHours * 60 * 60 * 1000);
+
+  // Format as "YYYY-MM-DD HH:MM"
+  const year = localDate.getFullYear();
+  const month = String(localDate.getMonth() + 1).padStart(2, '0');
+  const day = String(localDate.getDate()).padStart(2, '0');
+  const hours = String(localDate.getHours()).padStart(2, '0');
+  const minutes = String(localDate.getMinutes()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
+}
