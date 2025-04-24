@@ -10,6 +10,9 @@ export const subAdminApi = apiSlice.injectEndpoints({
       },
       providesTags: ['subAdmin'],
     }),
+    getNextEmail: builder.query({
+      query: () => `/api/web/retailer/sub-admin/next-email`,
+    }),
     subAdminBranches: builder.query({
       query: () => `/api/web/retailer/sub-admin/branches`,
       providesTags: ['subAdminBranches', 'branches'],
@@ -54,6 +57,7 @@ export const subAdminApi = apiSlice.injectEndpoints({
 
 export const {
   useGetAllSubAdminsQuery,
+  useGetNextEmailQuery,
   useCreateSubAdminMutation,
   useUpdateSubAdminMutation,
   useDeleteSubAdminMutation,

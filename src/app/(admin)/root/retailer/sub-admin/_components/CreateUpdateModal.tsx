@@ -7,7 +7,12 @@ import InputPassword from '@/components/Formik/InputPassword';
 import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useCreateSubAdminMutation, useSubAdminBranchesQuery, useUpdateSubAdminMutation } from '@/features/retailer/sub-admin/subAdminApi';
+import {
+  useCreateSubAdminMutation,
+  useGetNextEmailQuery,
+  useSubAdminBranchesQuery,
+  useUpdateSubAdminMutation,
+} from '@/features/retailer/sub-admin/subAdminApi';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
@@ -33,6 +38,7 @@ export default function CreateUpdateModal({
   const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
   const [createSubAdmin, { isSuccess: createSuccess, error: createError }] = useCreateSubAdminMutation();
   const [updateSubAdmin, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubAdminMutation();
+  const { data: nextEmailData } = useGetNextEmailQuery({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: branches } = useSubAdminBranchesQuery(undefined);
   const t = useTranslations('RetailerSubAdmin');
@@ -84,7 +90,8 @@ export default function CreateUpdateModal({
     branchId: formData?.branch?._id || '',
     firstName: formData?.firstName || '',
     lastName: formData?.lastName || '',
-    email: formData?.email || '',
+    email: nextEmailData?.data || '',
+    contactEmail: formData?.contactEmail || '',
     password: formData?.password || '',
     image: formData?.image || null,
   };
@@ -108,6 +115,7 @@ export default function CreateUpdateModal({
     const isFile = (obj: any): obj is File => obj instanceof File;
 
     let objToFormData: FormData;
+    delete values?.email;
 
     if (formData?._id) {
       const ignoreList = ['password'];
@@ -157,14 +165,12 @@ export default function CreateUpdateModal({
                     brandText={<span>{t2('image')}</span>}
                   />
                 </div>
+
                 <div className="grid grid-cols-2 gap-x-5 gap-y-5">
                   <InputField name="firstName" label={t2('firstName')} placeholder="John" />
                   <InputField name="lastName" label={t2('lastName')} placeholder="Doe" required={false} />
-                  <InputField name="email" label={t2('email')} placeholder="john.doe@email.com" />
-                  {!formData?._id && <InputPassword name="password" label={t2('password')} placeholder="******" />}
-                </div>
 
-                <div className="my-4 space-y-5">
+                  <InputField name="contactEmail" label={'Contact Email'} placeholder="john.doe@email.com" />
                   <SelectField
                     name="branchId"
                     label={t2('branch')}
@@ -180,7 +186,11 @@ export default function CreateUpdateModal({
                       </Link>
                     </div>
                   )}
+
+                  <InputField disabled={true} name="email" label={t2('email')} placeholder="john.doe@email.com" />
+                  {!formData?._id && <InputPassword name="password" label={t2('password')} placeholder="******" />}
                 </div>
+
                 <p className="text-end text-xs font-semibold">
                   <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
                 </p>
