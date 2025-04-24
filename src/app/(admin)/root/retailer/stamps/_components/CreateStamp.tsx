@@ -169,7 +169,7 @@ export default function Create({ locale }: { locale: string }) {
                 filteredValues.expiredAt = values?.validDateRange?.split('to')[1];
               } else {
                 filteredValues.startedAt = values?.validDateRange;
-                filteredValues.expiredAt = values?.validDateRange?.split('to');
+                filteredValues.expiredAt = values?.validDateRange;
               }
             }
             if (submitAction === 'draft') {
