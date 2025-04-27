@@ -90,7 +90,7 @@ export default function CreateUpdateModal({
     branchId: formData?.branch?._id || '',
     firstName: formData?.firstName || '',
     lastName: formData?.lastName || '',
-    email: nextEmailData?.data || '',
+    email: formData?._id ? formData?.email : nextEmailData?.data,
     contactEmail: formData?.contactEmail || '',
     password: formData?.password || '',
     image: formData?.image || null,
