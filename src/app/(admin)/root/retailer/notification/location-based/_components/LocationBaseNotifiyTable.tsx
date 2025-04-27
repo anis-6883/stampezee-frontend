@@ -32,7 +32,7 @@ export default function LocationBaseNotifyTable({ locale, googleMapsApiKey }: { 
   });
 
   useEffect(() => {
-    if (session?.user?.totalLocationNotification === 0) {
+    if (session?.user?.totalLocationNotification === 0 || !session?.user?.plan) {
       redirect(routes?.privateRoutes?.retailer?.dashboard);
     }
   }, [session]);

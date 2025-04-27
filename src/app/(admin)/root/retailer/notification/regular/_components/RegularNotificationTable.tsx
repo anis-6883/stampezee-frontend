@@ -32,7 +32,7 @@ export default function RegularNotificationTable({ locale }: { locale: string })
   });
 
   useEffect(() => {
-    if (session?.user?.totalRegularNotification === 0) {
+    if (session?.user?.totalRegularNotification === 0 || !session?.user?.plan) {
       redirect(routes?.privateRoutes?.retailer?.dashboard);
     }
   }, [session]);

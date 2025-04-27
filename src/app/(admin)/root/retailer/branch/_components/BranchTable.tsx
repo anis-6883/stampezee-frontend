@@ -119,7 +119,7 @@ export default function BranchTable({ offset }: { offset: number }) {
   }, [convertToAddonBranchSuccess, convertToAddonBranchError, convertAddOnError]);
 
   useEffect(() => {
-    if (session?.user?.totalBranch === 0) {
+    if (session?.user?.totalBranch === 0 || !session?.user?.plan) {
       return redirect(routes.privateRoutes.retailer.dashboard);
     }
   }, [session]);

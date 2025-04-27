@@ -63,9 +63,11 @@ export default function StampsImageTable({ locale }: { locale: string }) {
     }
   }, [isSuccess, isError]);
 
-  if (session?.user?.totalCustomStamp === 0) {
-    return redirect(routes.privateRoutes.retailer.dashboard);
-  }
+  useEffect(() => {
+    if (!session?.user?.plan || session?.user?.totalCustomStampImage === 0) {
+      return redirect(routes.privateRoutes.retailer.dashboard);
+    }
+  }, [session]);
 
   const structure = [
     {

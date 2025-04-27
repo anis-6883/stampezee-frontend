@@ -95,10 +95,13 @@ export default function StampTable() {
   }, [publishStampSuccess, publishStampError]);
 
   useEffect(() => {
-    if (!session?.user?.plan) {
+    if (!session?.user?.plan || session?.user?.totalStamp === 0) {
       return redirect(routes.privateRoutes.retailer.dashboard);
     }
   }, [session]);
+
+  const totalAllowStamp = session?.user?.totalStamp;
+  const totalCreatedStamp = data?.data.totalDocs;
 
   const structure = [
     {
@@ -254,7 +257,12 @@ export default function StampTable() {
         return row?.original?.isPublished ? (
           <div className="flex gap-2">
             <Link href={routes.privateRoutes.retailer.stamp.clone(row.original._id)}>
-              <Button tooltip="Clone" color="primary" preIcon={<FiCopy className="text-base" />} />
+              <Button
+                disabled={totalCreatedStamp < totalAllowStamp ? false : true}
+                tooltip="Clone"
+                color="primary"
+                preIcon={<FiCopy className="text-base" />}
+              />
             </Link>
             <Button tooltip="Edit" disabled color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
             <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
@@ -262,7 +270,12 @@ export default function StampTable() {
         ) : (
           <div className="flex gap-2">
             <Link href={routes.privateRoutes.retailer.stamp.clone(row.original._id)}>
-              <Button tooltip="Clone" color="primary" preIcon={<FiCopy className="text-base" />} />
+              <Button
+                disabled={totalCreatedStamp < totalAllowStamp ? false : true}
+                tooltip="Clone"
+                color="primary"
+                preIcon={<FiCopy className="text-base" />}
+              />
             </Link>
             <Link href={routes.privateRoutes.retailer.stamp.edit(row.original._id)}>
               <Button tooltip="Edit" color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
@@ -273,9 +286,6 @@ export default function StampTable() {
       },
     },
   ];
-
-  const totalAllowStamp = session?.user?.totalStamp;
-  const totalCreatedStamp = data?.data.totalDocs;
 
   return (
     <>
