@@ -69,7 +69,11 @@ export default function CreateUpdateModel({
     type: Yup.string().required('Required!'),
     address: Yup.string().when('type', {
       is: 'location',
-      then: () => Yup.string().trim().required('Required!'),
+      then: () =>
+        Yup.string()
+          .trim()
+          .required('Required!')
+          .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your address correctly?'),
       otherwise: () => Yup.string(),
     }),
     radius: Yup.string().when('type', {
@@ -79,7 +83,11 @@ export default function CreateUpdateModel({
     }),
   });
 
-  const submitHandler = async (values: any) => {
+  const submitHandler = async (values: any, { setFieldError }: any) => {
+    if (!values?.longitude && !values?.latitude) {
+      setFieldError('address', 'Enter Or Select a valid location from Map!');
+      return;
+    }
     setIsSubmitting(true);
     const isFile = (obj: any): obj is File => obj instanceof File;
 
