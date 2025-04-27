@@ -68,15 +68,36 @@ export default function ChangePasswordModal({
   const validationSchema = Yup.object().shape({
     oldPassword:
       role === 'retailer'
-        ? Yup.string().required(tCommon('required')).min(8, t('passwordMustBeAtLeast8Characters'))
+        ? Yup.string()
+            .matches(/^\S.*\S$|^\S{1}$/, 'Password cannot start or end with a space')
+            .required(tCommon('required'))
+            .min(8, t('passwordMustBeAtLeast8Characters'))
+            .matches(/[0-9]/, 'Password must contain at least one number')
+            .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+            .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+            .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
         : Yup.string().required('Required!').min(6, 'Password must be at least 6 characters'),
     newPassword:
       role === 'retailer'
-        ? Yup.string().required(tCommon('required')).min(8, t('passwordMustBeAtLeast8Characters'))
+        ? Yup.string()
+            .matches(/^\S.*\S$|^\S{1}$/, 'Password cannot start or end with a space')
+            .required(tCommon('required'))
+            .min(8, t('passwordMustBeAtLeast8Characters'))
+            .matches(/[0-9]/, 'Password must contain at least one number')
+            .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+            .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+            .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
         : Yup.string().required('Required!').min(6, 'Password must be at least 6 characters'),
     confirmPassword:
       role === 'retailer'
-        ? Yup.string().required(tCommon('required')).min(8, t('passwordMustBeAtLeast8Characters'))
+        ? Yup.string()
+            .matches(/^\S.*\S$|^\S{1}$/, 'Password cannot start or end with a space')
+            .required(tCommon('required'))
+            .min(8, t('passwordMustBeAtLeast8Characters'))
+            .matches(/[0-9]/, 'Password must contain at least one number')
+            .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+            .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+            .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
         : Yup.string().required('Required!').min(6, 'Password must be at least 6 characters'),
   });
 
