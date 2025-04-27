@@ -58,6 +58,7 @@ export const subAdminApi = apiSlice.injectEndpoints({
 export const {
   useGetAllSubAdminsQuery,
   useGetNextEmailQuery,
+  useLazyGetNextEmailQuery,
   useCreateSubAdminMutation,
   useUpdateSubAdminMutation,
   useDeleteSubAdminMutation,

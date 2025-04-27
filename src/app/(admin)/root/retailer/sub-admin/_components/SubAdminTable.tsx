@@ -7,6 +7,7 @@ import { routes } from '@/config/routes';
 import {
   useDeleteSubAdminMutation,
   useGetAllSubAdminsQuery,
+  useLazyGetNextEmailQuery,
   useUpdateSubAdminStatusMutation,
 } from '@/features/retailer/sub-admin/subAdminApi';
 import { IQueryType } from '@/types';
@@ -28,6 +29,7 @@ export default function SubAdminTable() {
   const tCommon = useTranslations('RetailerCommon');
   const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
+  const [nextEmail, setNextEmail] = useState('');
   const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
   const [createState, setCreateState] = useState(false);
   const [updateStatus] = useUpdateSubAdminStatusMutation();
@@ -45,6 +47,7 @@ export default function SubAdminTable() {
     limit: query.pageSize,
     ...searchQuery,
   });
+  const [getNextEmail] = useLazyGetNextEmailQuery();
 
   // Handle Delete Response
   useEffect(() => {
@@ -68,6 +71,14 @@ export default function SubAdminTable() {
       return redirect(routes.privateRoutes.retailer.dashboard);
     }
   }, [session]);
+
+  const handleSubAdminCreate = async () => {
+    const res = await getNextEmail({});
+    if (res?.data?.data) {
+      setNextEmail(res?.data?.data);
+      setCreateState(true);
+    }
+  };
 
   const structure = [
     {
@@ -162,7 +173,7 @@ export default function SubAdminTable() {
             color="danger"
             text={t2('addNewSubAdmin')}
             preIcon={<HiPlus className="text-base" />}
-            onClick={() => setCreateState(true)}
+            onClick={handleSubAdminCreate}
           />
         </div>
       </div>
@@ -190,7 +201,13 @@ export default function SubAdminTable() {
         searchPlaceHolder={t('placeHolder')}
       />
 
-      <CreateUpdateModal setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
+      <CreateUpdateModal
+        setFormData={setFormData}
+        formData={formData}
+        modalState={createState}
+        setModalState={setCreateState}
+        nextEmail={nextEmail as string}
+      />
 
       <DeleteConfirmModal
         deleteId={deleteId}

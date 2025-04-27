@@ -7,12 +7,7 @@ import InputPassword from '@/components/Formik/InputPassword';
 import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
-import {
-  useCreateSubAdminMutation,
-  useGetNextEmailQuery,
-  useSubAdminBranchesQuery,
-  useUpdateSubAdminMutation,
-} from '@/features/retailer/sub-admin/subAdminApi';
+import { useCreateSubAdminMutation, useSubAdminBranchesQuery, useUpdateSubAdminMutation } from '@/features/retailer/sub-admin/subAdminApi';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
@@ -29,8 +24,10 @@ export default function CreateUpdateModal({
   formData,
   modalState,
   setModalState,
+  nextEmail,
 }: {
   formData: any;
+  nextEmail: string;
   modalState: boolean;
   setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
@@ -38,7 +35,7 @@ export default function CreateUpdateModal({
   const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
   const [createSubAdmin, { isSuccess: createSuccess, error: createError }] = useCreateSubAdminMutation();
   const [updateSubAdmin, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubAdminMutation();
-  const { data: nextEmailData } = useGetNextEmailQuery({});
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: branches } = useSubAdminBranchesQuery(undefined);
   const t = useTranslations('RetailerSubAdmin');
@@ -90,7 +87,7 @@ export default function CreateUpdateModal({
     branchId: formData?.branch?._id || '',
     firstName: formData?.firstName || '',
     lastName: formData?.lastName || '',
-    email: formData?._id ? formData?.email : nextEmailData?.data,
+    email: formData?._id ? formData?.email : nextEmail,
     contactEmail: formData?.contactEmail || '',
     password: formData?.password || '',
     image: formData?.image || null,
