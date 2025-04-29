@@ -30,7 +30,9 @@ export default function CreateUpdateModel({
 
   const initialValues = {
     name: formData?.name || '',
+    currency: formData?.currency || '',
     exchangeRate: formData?.exchangeRate || '',
+    currencyIcon: formData?.currencyIcon || '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -110,12 +112,24 @@ export default function CreateUpdateModel({
               return (
                 <Form className="grid gap-4">
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                    <InputField name="name" label="Name" placeholder="USD" />
+                    <InputField disabled name="name" label="Name" placeholder="Canadian dollar" />
+
+                    <InputField disabled name="currency" label="Currency" placeholder="USD" />
+                  </div>
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <InputField
                       type="number"
                       name="exchangeRate"
                       label="Exchange Rate"
                       placeholder="10"
+                      prefix={<LiaCoinsSolid className="text-xl" />}
+                    />
+
+                    <InputField
+                      disabled
+                      name="currencyIcon"
+                      label="Currency Icon"
+                      placeholder="$"
                       prefix={<LiaCoinsSolid className="text-xl" />}
                     />
                   </div>

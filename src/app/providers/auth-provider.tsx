@@ -41,12 +41,12 @@ export default function AuthProvider({
 
   // Stripe data and currency update into redux state
   useEffect(() => {
-    const defaultCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === 'CAD');
-    const currencyExchange: any = currencyExchanges?.find((item: any) => item?.name === currency);
-    const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === session?.user?.planPaymentCurrency);
+    const defaultCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.currency === 'CAD');
+    const currencyExchange: any = currencyExchanges?.find((item: any) => item?.currency === currency);
+    const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.currency === session?.user?.planPaymentCurrency);
     dispatch(setCurrencyExchangeRates(currencyExchanges as []));
-    dispatch(setDefaultCurrency({ name: defaultCurrencyExchange?.name, exchangeRate: defaultCurrencyExchange?.exchangeRate }));
-    dispatch(setCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
+    dispatch(setDefaultCurrency({ name: defaultCurrencyExchange?.currency, exchangeRate: defaultCurrencyExchange?.exchangeRate }));
+    dispatch(setCurrency({ name: currencyExchange?.currency, exchangeRate: currencyExchange?.exchangeRate }));
     dispatch(setPlanChangeCost(stripeInfo?.planChangeCost));
     dispatch(setTaxPercentage(stripeInfo?.taxCost));
     dispatch(setTaxStatus(stripeInfo?.taxStatus));

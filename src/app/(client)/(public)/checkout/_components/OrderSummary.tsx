@@ -32,7 +32,6 @@ import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
 import PlanAddOns from './PlanAddons';
 import { PrevAddonModal } from './PrevAddonModal';
-import UpgradeConfirmModal from './UpgradeConfirmModal';
 
 export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: any) {
   const { push, replace } = useRouter();
@@ -54,8 +53,6 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     refundableThreshold,
   } = useSelector((state: RootState) => state.subscriptionSlice);
   const [isExistingDisableModal, setIsExistingDisableModal] = useState(false);
-  const [upgradeModalState, setUpgradeModalState] = useState(false);
-  const [payableAmount, setPayableAmount] = useState(0);
 
   const [branchDisableModalState, setBranchDisableModalState] = useState(false);
   const [disableBranchOptions, setDisableBranchOptions] = useState([]);
@@ -113,33 +110,28 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         replace(routes.privateRoutes.retailer.dashboard);
         dispatch(resetState());
       } else {
-        if (checkOutResponse?.data?.addonExists) {
-          setUpgradeModalState(true);
-          setPayableAmount(checkOutResponse?.data?.payableAmount);
+        if (checkOutResponse?.data?.url) {
+          replace(checkOutResponse?.data?.url);
         } else {
-          if (checkOutResponse?.data?.url) {
-            replace(checkOutResponse?.data?.url);
+          if (locale === 'en') {
+            toast.success(checkOutResponse?.message || 'Downgrade Successfully!');
           } else {
-            if (locale === 'en') {
-              toast.success(checkOutResponse?.message || 'Downgrade Successfully!');
-            } else {
-              (async () => {
-                const translatedMessage = await translateText([checkOutResponse?.message], locale, 'en');
-                toast.success(translatedMessage[0] || t('downgradeSuccessfully'));
-              })();
-            }
-            update({ ...session?.user, ...profile?.data });
-            dispatch(
-              setValue({
-                target: 'user',
-                value: { ...user, ...profile?.data },
-              })
-            );
-            replace(routes?.privateRoutes?.retailer?.dashboard);
-            setSelectedBranches([]);
+            (async () => {
+              const translatedMessage = await translateText([checkOutResponse?.message], locale, 'en');
+              toast.success(translatedMessage[0] || t('downgradeSuccessfully'));
+            })();
           }
-          dispatch(resetState());
+          update({ ...session?.user, ...profile?.data });
+          dispatch(
+            setValue({
+              target: 'user',
+              value: { ...user, ...profile?.data },
+            })
+          );
+          replace(routes?.privateRoutes?.retailer?.dashboard);
+          setSelectedBranches([]);
         }
+        dispatch(resetState());
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -452,15 +444,6 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         disableStampOptions={disableStampOptions}
         modalState={branchDisableModalState}
         setModalState={setBranchDisableModalState}
-      />
-      <UpgradeConfirmModal
-        modalState={upgradeModalState}
-        setModalState={setUpgradeModalState}
-        payableAmount={payableAmount}
-        total={total}
-        selectedCurrency={selectedCurrency}
-        handleUpgradeConfirm={handleUpgradeConfirm}
-        planChangeType={planChangeType}
       />
     </>
   );

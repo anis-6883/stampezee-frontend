@@ -445,7 +445,7 @@
     "image": "Image",
     "firstName": "First Name",
     "lastName": "Last Name",
-    "email": "Email",
+    "email": "Login Email",
     "password": "Password",
     "branch": "Branch",
     "status": "Status",

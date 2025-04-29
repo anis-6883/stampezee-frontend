@@ -35,6 +35,10 @@ export default function CurrencyTable({ offset }: { offset: number }) {
     limit: query.pageSize,
     ...searchQuery,
   });
+  const { data: allCurrency } = useGetAllCurrencyQuery({
+    page: 1,
+    limit: 100,
+  });
 
   const [deleteCurrency, { isSuccess, isError }] = useDeleteCurrencyMutation();
   const [updateCurrencyStatus] = useUpdateCurrencyStatusMutation();
@@ -63,6 +67,13 @@ export default function CurrencyTable({ offset }: { offset: number }) {
     {
       header: 'Name',
       accessorKey: 'name',
+      Cell: ({ row }: any) => {
+        return <span className="font-normal">{`${row?.original?.name} - ${row?.original?.currencyIcon}`}</span>;
+      },
+    },
+    {
+      header: 'Currency',
+      accessorKey: 'currency',
     },
     {
       header: 'Exchange Rate',
@@ -120,7 +131,7 @@ export default function CurrencyTable({ offset }: { offset: number }) {
       <CurrencyModal
         modalState={currencyModalState}
         setModalState={setCurrencyModalState}
-        currencyData={data?.data?.docs?.map((item: any) => item?.name)}
+        currencyData={allCurrency?.data?.docs?.map((item: any) => item?.currency)}
       />
       <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
         <div className="flex flex-col gap-x-3 gap-y-3 md:flex-row md:gap-y-0">

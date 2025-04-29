@@ -59,8 +59,6 @@ export default function HeaderContent() {
   const t = useTranslations('AppLayout');
   const locale = useLocale();
 
-  console.log({ locale });
-
   // Handle Logout Response
   const handleLogout = async () => {
     dispatch(userLoggedOut(undefined));

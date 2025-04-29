@@ -18,16 +18,17 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { IoCloseOutline } from 'react-icons/io5';
 import { ActionIcon, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
+import InputFieldWithOnChange from './InputFieldWithOnChange';
 
 export default function CreateUpdateModal({
   setFormData,
   formData,
   modalState,
   setModalState,
-  nextEmail,
+  totalDocs = 0,
 }: {
   formData: any;
-  nextEmail: string;
+  totalDocs: number;
   modalState: boolean;
   setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
@@ -87,7 +88,7 @@ export default function CreateUpdateModal({
     branchId: formData?.branch?._id || '',
     firstName: formData?.firstName || '',
     lastName: formData?.lastName || '',
-    email: formData?._id ? formData?.email : nextEmail,
+    email: formData?.email ? formData?.email : '',
     contactEmail: formData?.contactEmail || '',
     password: formData?.password || '',
     image: formData?.image || null,
@@ -97,6 +98,12 @@ export default function CreateUpdateModal({
     branchId: Yup.string().required(tCommon('required')),
     firstName: Yup.string().trim().required(tCommon('required')),
     email: Yup.string()
+      .test('email', 'Provide email with john.s1@stampezee.com format!', (value: any) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@stampezee\.com$/;
+        return emailRegex.test(value);
+      })
+      .required(tCommon('required')),
+    contactEmail: Yup.string()
       .test('email', 'Provide valid email!', (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(value);
@@ -112,7 +119,6 @@ export default function CreateUpdateModal({
     const isFile = (obj: any): obj is File => obj instanceof File;
 
     let objToFormData: FormData;
-    delete values?.email;
 
     if (formData?._id) {
       const ignoreList = ['password'];
@@ -148,60 +154,80 @@ export default function CreateUpdateModal({
         </div>
         <div>
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
-            {({ setFieldValue, values }) => (
-              <Form className="mt-5">
-                <div className="mb-5">
-                  <DragAndDropUpload
-                    value={{ name: 'image', image: values.image }}
-                    onChange={(image: any) => setFieldValue('image', image)}
-                    className="mt-2"
-                    size={1024 * 1000}
-                    sizeText="1MB"
-                    isRounded={true}
-                    uploadText="Upload"
-                    brandText={<span>{t2('image')}</span>}
-                  />
-                </div>
+            {({ setFieldValue, values }) => {
+              return (
+                <Form className="mt-5">
+                  <div className="mb-5">
+                    <DragAndDropUpload
+                      value={{ name: 'image', image: values.image }}
+                      onChange={(image: any) => setFieldValue('image', image)}
+                      className="mt-2"
+                      size={1024 * 1000}
+                      sizeText="1MB"
+                      isRounded={true}
+                      uploadText="Upload"
+                      brandText={<span>{t2('image')}</span>}
+                    />
+                  </div>
 
-                <div className="grid grid-cols-2 gap-x-5 gap-y-5">
-                  <InputField name="firstName" label={t2('firstName')} placeholder="John" />
-                  <InputField name="lastName" label={t2('lastName')} placeholder="Doe" required={false} />
+                  <div className="grid grid-cols-2 gap-x-5 gap-y-5">
+                    <InputFieldWithOnChange
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setFieldValue('firstName', e.target.value);
+                        if (e.target.value) {
+                          setFieldValue('email', `${e.target.value}.s${totalDocs + 1}@stampezee.com`);
+                        } else {
+                          setFieldValue('email', '');
+                        }
+                      }}
+                      name="firstName"
+                      label={t2('firstName')}
+                      placeholder="John"
+                    />
+                    <InputField name="lastName" label={t2('lastName')} placeholder="Doe" required={false} />
+                  </div>
 
-                  <InputField name="contactEmail" label={'Contact Email'} placeholder="john.doe@email.com" />
-                  <SelectField
-                    name="branchId"
-                    label={t2('branch')}
-                    disabled={branches?.data?.length === 0 ? true : false}
-                    options={options}
-                    onChange={(option: { label: string; value: string }) => setFieldValue('branchId', option.value)}
-                    value={values.branchId}
-                  />
-                  {branches?.data?.length === 0 && (
-                    <div className="text-center">
-                      <Link href={routes.privateRoutes.retailer.branch.create} className="text-xs font-semibold text-danger">
-                        {t3('createBranch')}
-                      </Link>
+                  <div className="mt-3 grid grid-cols-2 gap-x-5 gap-y-5">
+                    <InputField name="contactEmail" label={'Contact Email'} placeholder="john.doe@email.com" />
+                    <div>
+                      <SelectField
+                        name="branchId"
+                        label={t2('branch')}
+                        disabled={branches?.data?.length === 0 ? true : false}
+                        options={options}
+                        onChange={(option: { label: string; value: string }) => setFieldValue('branchId', option.value)}
+                        value={values.branchId}
+                      />
+                      {branches?.data?.length === 0 && (
+                        <div className="my-2 text-center">
+                          <Link href={routes.privateRoutes.retailer.branch.create} className="text-xs font-semibold text-danger">
+                            {t3('createBranch')}
+                          </Link>
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
 
-                  <InputField disabled={true} name="email" label={t2('email')} placeholder="john.doe@email.com" />
-                  {!formData?._id && <InputPassword name="password" label={t2('password')} placeholder="******" />}
-                </div>
+                  <div className="mt-3 grid grid-cols-2 gap-x-5 gap-y-5">
+                    <InputField name="email" label={t2('email')} placeholder="john.s1@stampezee.com" />
+                    {!formData?._id && <InputPassword name="password" label={t2('password')} placeholder="******" />}
+                  </div>
 
-                <p className="text-end text-xs font-semibold">
-                  <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
-                </p>
-                <div className="mt-6 flex justify-end">
-                  <Button
-                    color="danger"
-                    type="submit"
-                    text={formData?._id ? t('update') : t('submit')}
-                    postIcon={<BsCheck2Circle className="text-base" />}
-                    isSubmitting={isSubmitting}
-                  />
-                </div>
-              </Form>
-            )}
+                  <p className="text-end text-xs font-semibold">
+                    <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
+                  </p>
+                  <div className="mt-6 flex justify-end">
+                    <Button
+                      color="danger"
+                      type="submit"
+                      text={formData?._id ? t('update') : t('submit')}
+                      postIcon={<BsCheck2Circle className="text-base" />}
+                      isSubmitting={isSubmitting}
+                    />
+                  </div>
+                </Form>
+              );
+            }}
           </Formik>
         </div>
       </div>

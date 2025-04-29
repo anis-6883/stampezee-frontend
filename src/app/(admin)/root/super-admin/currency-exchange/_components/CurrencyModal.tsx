@@ -27,13 +27,11 @@ export default function CurrencyModal({
 
   let currencies = data?.rates;
 
-  console.log({ currencies });
-
   if (searchText?.length > 0) {
-    currencies = currencies?.filter((item: any) => {
-      const label = item;
-      return label.match(searchText.toLowerCase()) || (label.toLowerCase().match(searchText.toLowerCase()) && label);
-    });
+    const lowerQuery = searchText.toLowerCase();
+    currencies = currencies.filter(
+      (item: any) => item.name.toLowerCase().includes(lowerQuery) || item.currency.toLowerCase().includes(lowerQuery)
+    );
   }
 
   // Create Response Handler
@@ -127,20 +125,30 @@ export default function CurrencyModal({
                         className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
                       >
                         <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                          {`${currency?.name}-${currency?.currencyIcon}`}
+                          {`${currency?.name} - ${currency?.currencyIcon}`}
                         </th>
                         <td className="px-6 py-4">{currency?.currency}</td>
                         <td className="px-6 py-4">{currency?.exchangeRate}</td>
                         <td className="flex justify-center px-6 py-4">
-                          {!currencyData?.includes(currency) ? (
+                          {!currencyData?.includes(currency?.currency) ? (
                             <Button
                               color="danger"
                               type="submit"
                               text={'Add'}
                               onClick={() => {
                                 setIsSubmitting(true);
-                                setSelectedCurrency({ name: currency, exchangeRate: data?.rates[currency] });
-                                createCurrency({ name: currency, exchangeRate: data?.rates[currency] });
+                                setSelectedCurrency({
+                                  name: currency?.name,
+                                  currency: currency?.currency,
+                                  exchangeRate: currency?.exchangeRate,
+                                  currencyIcon: currency?.currencyIcon,
+                                });
+                                createCurrency({
+                                  name: currency?.name,
+                                  currency: currency?.currency,
+                                  exchangeRate: currency?.exchangeRate,
+                                  currencyIcon: currency?.currencyIcon,
+                                });
                               }}
                               preIcon={<LuPlus className="text-base" />}
                               isSubmitting={isSubmitting && selectedCurrency?.name === currency}
@@ -153,8 +161,18 @@ export default function CurrencyModal({
                               text={'Update'}
                               onClick={() => {
                                 setIsSubmitting(true);
-                                setSelectedCurrency({ name: currency, exchangeRate: data?.rates[currency] });
-                                createCurrency({ name: currency, exchangeRate: data?.rates[currency] });
+                                setSelectedCurrency({
+                                  name: currency?.name,
+                                  currency: currency?.currency,
+                                  exchangeRate: currency?.exchangeRate,
+                                  currencyIcon: currency?.currencyIcon,
+                                });
+                                createCurrency({
+                                  name: currency?.name,
+                                  currency: currency?.currency,
+                                  exchangeRate: currency?.exchangeRate,
+                                  currencyIcon: currency?.currencyIcon,
+                                });
                               }}
                               preIcon={<HiOutlinePencil className="text-base" />}
                               isSubmitting={isSubmitting && selectedCurrency?.name === currency}

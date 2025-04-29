@@ -31,7 +31,7 @@ export const Plans = ({ locale }: { locale: string }) => {
 
   useEffect(() => {
     const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === session?.user?.plan);
-    const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === session?.user?.planPaymentCurrency);
+    const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.currency === session?.user?.planPaymentCurrency);
     let updateActiveSubscription = {};
 
     if (activePlan) {

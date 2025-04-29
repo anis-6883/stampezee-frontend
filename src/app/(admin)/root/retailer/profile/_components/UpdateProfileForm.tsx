@@ -42,7 +42,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
 
   const currencyExchangeOptions = currencyData?.reduce((acc: any, curr: any) => {
     currencyExchanges?.map((item: any) => {
-      if (item?.name === curr?.code) {
+      if (item?.currency === curr?.code) {
         acc?.push({
           value: curr?.code,
           label: curr?.code,

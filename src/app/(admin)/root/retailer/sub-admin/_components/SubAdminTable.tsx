@@ -29,7 +29,6 @@ export default function SubAdminTable() {
   const tCommon = useTranslations('RetailerCommon');
   const { data: session }: any = useSession();
   const [formData, setFormData] = useState({});
-  const [nextEmail, setNextEmail] = useState('');
   const [deleteSubAdmin, { isSuccess, isError }] = useDeleteSubAdminMutation();
   const [createState, setCreateState] = useState(false);
   const [updateStatus] = useUpdateSubAdminStatusMutation();
@@ -73,11 +72,7 @@ export default function SubAdminTable() {
   }, [session]);
 
   const handleSubAdminCreate = async () => {
-    const res = await getNextEmail({});
-    if (res?.data?.data) {
-      setNextEmail(res?.data?.data);
-      setCreateState(true);
-    }
+    setCreateState(true);
   };
 
   const structure = [
@@ -206,7 +201,7 @@ export default function SubAdminTable() {
         formData={formData}
         modalState={createState}
         setModalState={setCreateState}
-        nextEmail={nextEmail as string}
+        totalDocs={data?.data.totalDocs}
       />
 
       <DeleteConfirmModal

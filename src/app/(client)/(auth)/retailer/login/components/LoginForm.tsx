@@ -76,7 +76,9 @@ export default function LoginForm({ locale }: { locale: string }) {
       dispatch(userLoggedIn(loginResponse?.data));
 
       const activePlan: activeSubscription = data?.data?.find((item: Subscription) => item?.slug === loginResponse?.data?.plan);
-      const purchaseCurrencyExchange: any = currencyExchanges?.find((item: any) => item?.name === loginResponse?.data?.planPaymentCurrency);
+      const purchaseCurrencyExchange: any = currencyExchanges?.find(
+        (item: any) => item?.currency === loginResponse?.data?.planPaymentCurrency
+      );
 
       let updateActiveSubscription: any = {};
       if (activePlan) {

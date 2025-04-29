@@ -43,12 +43,14 @@ export default function LocalSwitcherSelector({
 
   const currencyExchangeOptions = currencyData?.reduce((acc: any, curr: any) => {
     currencyExchanges?.map((item: any) => {
-      if (item?.name === curr?.code) {
+      if (item?.currency === curr?.code) {
         acc?.push(curr);
       }
     });
     return acc;
   }, []);
+
+  console.log({ currencyExchanges });
 
   useEffect(() => {
     (async () => {
@@ -76,8 +78,8 @@ export default function LocalSwitcherSelector({
 
     startTransition(() => {
       setUserCurrency(currency);
-      const currencyExchange = currencyExchanges?.find((item: any) => item?.name === currency);
-      dispatch(setCurrency({ name: currencyExchange?.name, exchangeRate: currencyExchange?.exchangeRate }));
+      const currencyExchange = currencyExchanges?.find((item: any) => item?.currency === currency);
+      dispatch(setCurrency({ name: currencyExchange?.currency, exchangeRate: currencyExchange?.exchangeRate }));
     });
     setModalState(false);
   };
@@ -146,19 +148,19 @@ export default function LocalSwitcherSelector({
               <div className="my-5">
                 <h3 className="mb-5 text-center text-lg font-semibold">{t2('selectPreferableCurrency')}</h3>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {currencyExchangeOptions?.map((currency: any) => (
+                  {currencyExchanges?.map((currency: any) => (
                     <AdvancedRadio
-                      key={currency.id}
-                      onClick={() => handleCurrencyChange(currency?.code)}
+                      key={currency._id}
+                      onClick={() => handleCurrencyChange(currency?.currency)}
                       name="currency"
-                      value={currency?.code}
-                      contentClassName={`rounded-lg border hover:border-danger ${selectedCurrency === currency?.code ? '!border-danger ring-1 !ring-danger' : '!ring-0'}`}
+                      value={currency?.currency}
+                      contentClassName={`rounded-lg border hover:border-danger ${selectedCurrency === currency?.currency ? '!border-danger ring-1 !ring-danger' : '!ring-0'}`}
                       inputClassName="[&:checked~span_.icon]:block"
                     >
                       <span className="flex flex-col">
-                        <Text as="b">{currency?.localized_full_name}</Text>
+                        <Text as="b">{currency?.name}</Text>
                         <span>
-                          {currency?.code} - {currency?.unicode_symbol}
+                          {currency?.currency} - {currency?.currencyIcon}
                         </span>
                       </span>
                     </AdvancedRadio>
