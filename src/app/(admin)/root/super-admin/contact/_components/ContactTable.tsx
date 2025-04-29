@@ -1,15 +1,17 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import Button from '@/components/Formik/Button';
 import { useGetAllContactBySuperAdminQuery } from '@/features/super-admin/contact/contactApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useState } from 'react';
-import CreateUpdateModel from './CreateUpdateModel';
+import { IoEyeOutline } from 'react-icons/io5';
+import ContactDetailsModal from './ContactDetailsModal';
 
 export default function ContactTable({ offset }: { offset: number }) {
-  const [formData, setFormData] = useState({});
-  const [createState, setCreateState] = useState(false);
+  const [modalState, setModalState] = useState(false);
+  const [formData, setFormData] = useState<any>({});
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllContactBySuperAdminQuery({
@@ -37,6 +39,9 @@ export default function ContactTable({ offset }: { offset: number }) {
     {
       header: 'Message',
       accessorKey: 'message',
+      Cell: ({ row }: any) => {
+        return <div>{row.original.message?.length > 26 ? `${row?.original?.message?.slice(0, 26)}...` : row.original.message} </div>;
+      },
     },
     {
       header: 'Sent At',
@@ -53,12 +58,34 @@ export default function ContactTable({ offset }: { offset: number }) {
       },
       size: 230,
     },
+    {
+      header: 'Actions',
+      Cell: ({ row }: any) => (
+        <div className="flex items-center justify-center gap-2">
+          <Button
+            onClick={() => {
+              setFormData({
+                ...row.original,
+              });
+              setModalState(true);
+            }}
+            color="primary"
+            preIcon={<IoEyeOutline className="text-base" />}
+            tooltip="Details"
+          />
+        </div>
+      ),
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
   ];
 
   return (
     <>
-      <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-
       <Table
         enableRowNumbers
         isFetching={isFetching}
@@ -84,6 +111,7 @@ export default function ContactTable({ offset }: { offset: number }) {
         searchPlaceHolder="Search By Name, Store, Email"
         searchFieldWidth="270px"
       />
+      <ContactDetailsModal modalState={modalState} setModalState={setModalState} message={formData?.message || ''} />
     </>
   );
 }

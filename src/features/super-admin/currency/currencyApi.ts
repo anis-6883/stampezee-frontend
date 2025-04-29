@@ -10,6 +10,9 @@ export const currencyApi = apiSlice.injectEndpoints({
       },
       providesTags: ['currency'],
     }),
+    getAllCurrencyFromApi: builder.query({
+      query: () => '/api/secret-root/admin/super-admin/currency-exchange/currency-api',
+    }),
     createCurrency: builder.mutation({
       query: (data) => ({
         url: '/api/secret-root/admin/super-admin/currency-exchange',
@@ -46,6 +49,7 @@ export const currencyApi = apiSlice.injectEndpoints({
 
 export const {
   useGetAllCurrencyQuery,
+  useGetAllCurrencyFromApiQuery,
   useCreateCurrencyMutation,
   useUpdateCurrencyMutation,
   useDeleteCurrencyMutation,

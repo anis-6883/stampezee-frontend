@@ -164,7 +164,7 @@ export default function RegisterForm({
     postalCode: Yup.string()
       .trim()
       .required(tCommon('required'))
-      .matches(/^[a-zA-Z0-9]+$/, 'Are you sure you entered your postalCode correctly?'),
+      .matches(/^[a-zA-Z0-9]+$/, 'Are you sure you entered your Postal Code correctly?'),
     address: Yup.string()
       .trim()
       .required(tCommon('required'))

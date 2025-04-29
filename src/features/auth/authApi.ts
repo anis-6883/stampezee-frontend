@@ -6,7 +6,7 @@ export const authApi = apiSlice.injectEndpoints({
     superAdminLogin: builder.mutation({
       query: (data) => {
         return {
-          url: `/api/secret-root/admin/super-admin/login`,
+          url: `/api/secret-root/admin/super-admin/auth/login`,
           method: 'POST',
           body: data,
         };
@@ -23,14 +23,14 @@ export const authApi = apiSlice.injectEndpoints({
       invalidatesTags: ['superAdminProfile'],
     }),
     superAdminGetProfile: builder.query({
-      query: () => `/api/secret-root/admin/super-admin/profile`,
+      query: () => `/api/secret-root/admin/super-admin/auth/profile`,
       providesTags: ['superAdminProfile'],
       keepUnusedDataFor: 0,
     }),
     superAdminUpdateProfile: builder.mutation({
       query: (data) => {
         return {
-          url: `/api/secret-root/admin/super-admin/profile`,
+          url: `/api/secret-root/admin/super-admin/auth/profile`,
           method: 'PUT',
           body: data,
         };
@@ -40,7 +40,7 @@ export const authApi = apiSlice.injectEndpoints({
     superAdminChangePassword: builder.mutation({
       query: (data) => {
         return {
-          url: `/api/secret-root/admin/super-admin/change-password`,
+          url: `/api/secret-root/admin/super-admin/auth/change-password`,
           method: 'POST',
           body: data,
         };

@@ -135,11 +135,11 @@ export default function CurrencyTable({ offset }: { offset: number }) {
           </div>
         </div>
         <div className="flex flex-col md:flex-row">
-          <Button color="danger" onClick={() => setCreateState(true)} text="New Currency" preIcon={<HiPlus className="text-base" />} />
+          {/* <Button color="danger" onClick={() => setCreateState(true)} text="New Currency" preIcon={<HiPlus className="text-base" />} /> */}
           <Button
             color="danger"
             onClick={() => setCurrencyModalState(true)}
-            text="Currency From Api"
+            text="Add Or Update Currency"
             preIcon={<HiPlus className="text-base" />}
           />
         </div>

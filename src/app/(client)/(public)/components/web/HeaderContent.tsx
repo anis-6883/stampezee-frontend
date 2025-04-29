@@ -10,7 +10,7 @@ import { resetState } from '@/features/subscription/subscriptionSlice';
 import useCurrencyExchange from '@/hooks/use-currency-exchange';
 import { Menu, Transition } from '@headlessui/react';
 import { signOut, useSession } from 'next-auth/react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -57,6 +57,9 @@ export default function HeaderContent() {
   const [modalState, setModalState] = useState<boolean>(false);
 
   const t = useTranslations('AppLayout');
+  const locale = useLocale();
+
+  console.log({ locale });
 
   // Handle Logout Response
   const handleLogout = async () => {
@@ -109,7 +112,7 @@ export default function HeaderContent() {
     <div>
       <nav className={`fixed left-0 top-0 z-10 w-full ${isScrolled ? 'bg-gopacity-30 bg-white text-white' : 'bg-gopacity-60 bg-white'}`}>
         <div className={`container mx-auto flex max-w-screen-xl flex-wrap items-center justify-between px-5 py-4 sm:inset-0`}>
-          <div className="w-[12%]">
+          <div className=" w-[12%]">
             <Link href={routes.publicRoutes.home} className="flex items-center  rtl:space-x-reverse">
               <img src="/images/logo.png" className="h-10 w-10 sm:h-[74px] sm:w-[74px]" alt="logo" />
             </Link>
@@ -278,7 +281,7 @@ export default function HeaderContent() {
                 </Drawer>
 
                 <ul
-                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center  gap-x-10  rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
+                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center  ${locale === 'es' ? 'gap-x-5' : 'gap-x-10'}  rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                 >
                   <li className="w-max-content">
                     <Link

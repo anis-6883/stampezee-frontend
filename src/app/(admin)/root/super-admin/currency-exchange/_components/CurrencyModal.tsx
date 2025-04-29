@@ -2,8 +2,7 @@
 
 import Button from '@/components/Formik/Button';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useCreateCurrencyMutation } from '@/features/super-admin/currency/currencyApi';
-import useCurrency from '@/hooks/use-currency';
+import { useCreateCurrencyMutation, useGetAllCurrencyFromApiQuery } from '@/features/super-admin/currency/currencyApi';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi2';
@@ -21,12 +20,14 @@ export default function CurrencyModal({
   setModalState: (state: boolean) => void;
 }) {
   const [searchText, setSearchText] = useState<string>('');
-  const { data, loading, error } = useCurrency();
+  const { data } = useGetAllCurrencyFromApiQuery({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<any>({});
   const [createCurrency, { isSuccess: createSuccess, error: createError }] = useCreateCurrencyMutation();
 
-  let currencies = data?.rates && Object.keys(data?.rates as object);
+  let currencies = data?.rates;
+
+  console.log({ currencies });
 
   if (searchText?.length > 0) {
     currencies = currencies?.filter((item: any) => {
@@ -105,13 +106,13 @@ export default function CurrencyModal({
                 <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                   <tr className="sticky top-0 bg-gray-50">
                     <th scope="col" className="px-6 py-3">
-                      Currency name
+                      Name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Currency
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Exchange Rate
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Base Currency
                     </th>
                     <th scope="col" className="flex justify-center px-6 py-3">
                       Action
@@ -122,14 +123,14 @@ export default function CurrencyModal({
                   <tbody>
                     {currencies?.map((currency: any) => (
                       <tr
-                        key={currency}
+                        key={currency?.currency}
                         className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
                       >
                         <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                          {currency}
+                          {`${currency?.name}-${currency?.currencyIcon}`}
                         </th>
-                        <td className="px-6 py-4">{data?.rates[currency]}</td>
-                        <td className="px-6 py-4">{currency}</td>
+                        <td className="px-6 py-4">{currency?.currency}</td>
+                        <td className="px-6 py-4">{currency?.exchangeRate}</td>
                         <td className="flex justify-center px-6 py-4">
                           {!currencyData?.includes(currency) ? (
                             <Button
