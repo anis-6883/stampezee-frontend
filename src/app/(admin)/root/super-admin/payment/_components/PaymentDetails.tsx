@@ -566,7 +566,7 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
                             {payment?.invoiceNumber}
                           </td>
                           <td className="whitespace-nowrap px-6 py-4">
-                            {amount} {balanceInfo?.currency}
+                            {amount} {payment?.currency}
                           </td>
                           <td className="whitespace-nowrap px-6 py-4">{convertDateByOffset(payment?.createdAt, offset)}</td>
                           <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">

@@ -64,7 +64,7 @@ export default function Update({ Id, offset }: any) {
         }
       }
       if (submitAction === 'draft') {
-        changedData.isPublished = false;
+        changedData.isPublished = stampData?.data?.isPublished;
       } else {
         changedData.isPublished = true;
       }
@@ -156,6 +156,7 @@ export default function Update({ Id, offset }: any) {
             <Form className="mt-5 grid gap-4">
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <SelectField
+                  disabled={stampData?.data?.isPublished}
                   name="branchId"
                   label={t('branch')}
                   value={values?.branchId}
@@ -186,6 +187,7 @@ export default function Update({ Id, offset }: any) {
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div>
                   <SelectField
+                    disabled={stampData?.data?.isPublished}
                     name="hasValidity"
                     label={t('validityPeriod')}
                     value={values?.hasValidity}
@@ -202,13 +204,25 @@ export default function Update({ Id, offset }: any) {
                   />
                 </div>
                 {values?.hasValidity && (
-                  <FormikDatePicker isMinDate={true} label={t('validDateRange')} name="validDateRange" range={true} />
+                  <FormikDatePicker
+                    disabled={stampData?.data?.isPublished}
+                    isMinDate={true}
+                    label={t('validDateRange')}
+                    name="validDateRange"
+                    range={true}
+                  />
                 )}
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                <InputField name="noOfStampsToCollect" label={t('noOfStampsToCollect')} type="number" />
                 <InputField
+                  disabled={stampData?.data?.isPublished}
+                  name="noOfStampsToCollect"
+                  label={t('noOfStampsToCollect')}
+                  type="number"
+                />
+                <InputField
+                  disabled={stampData?.data?.isPublished}
                   name="minPurchaseAmount"
                   required={false}
                   label={t('minPurchaseAmount')}
@@ -221,6 +235,7 @@ export default function Update({ Id, offset }: any) {
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div>
                   <SelectField
+                    disabled={stampData?.data?.isPublished}
                     name="rewardType"
                     label={t('rewardType')}
                     value={values?.rewardType}
@@ -237,6 +252,7 @@ export default function Update({ Id, offset }: any) {
 
                 {values.rewardType === 'discount' && (
                   <InputField
+                    disabled={stampData?.data?.isPublished}
                     name="discountReward"
                     label={t('discount')}
                     placeholder="Ex. Get 1 Coke"
@@ -245,7 +261,12 @@ export default function Update({ Id, offset }: any) {
                   />
                 )}
                 {values.rewardType === 'promotion' && (
-                  <InputField name="promotionReward" label={t('promotionReward')} placeholder="Ex. Get 1 Coke" />
+                  <InputField
+                    disabled={stampData?.data?.isPublished}
+                    name="promotionReward"
+                    label={t('promotionReward')}
+                    placeholder="Ex. Get 1 Coke"
+                  />
                 )}
               </div>
 

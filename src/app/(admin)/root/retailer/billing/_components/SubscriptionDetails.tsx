@@ -72,8 +72,19 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
     { data: cancelSubscriptionData, error: cancelSubscriptionError, isSuccess, isError: isCancelSubscriptionError },
   ] = useCancelSubscriptionMutation();
   const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetBillingPortalMutation();
-  const { stripe, planExists, enrollStatus, validityTo, validityFrom, createdAt, status, balanceInfo, payments, enrollSubscriptions } =
-    data?.data || {};
+  const {
+    stripe,
+    planExists,
+    enrollStatus,
+    validityTo,
+    validityFrom,
+    createdAt,
+    status,
+    balanceInfo,
+    payments,
+    enrollSubscriptions,
+    currency,
+  } = data?.data || {};
   const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
   const [selectPaymentId, setSelectPaymentId] = useState('');
 
@@ -587,7 +598,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                             {payment?.invoiceNumber}
                           </td>
                           <td className="whitespace-nowrap px-6 py-4">
-                            {amount} {balanceInfo?.currency}
+                            {amount} {payment?.currency}
                           </td>
                           <td className="whitespace-nowrap px-6 py-4">{convertDateByOffset(payment?.createdAt, offset)}</td>
                           <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">

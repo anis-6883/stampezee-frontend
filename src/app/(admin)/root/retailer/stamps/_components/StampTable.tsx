@@ -254,7 +254,7 @@ export default function StampTable() {
     {
       header: t('actions'),
       Cell: ({ row }: any) => {
-        return row?.original?.isPublished ? (
+        return false ? (
           <div className="flex gap-2">
             <Link href={routes.privateRoutes.retailer.stamp.clone(row.original._id)}>
               <Button
