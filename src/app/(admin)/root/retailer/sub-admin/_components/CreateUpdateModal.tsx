@@ -25,10 +25,8 @@ export default function CreateUpdateModal({
   formData,
   modalState,
   setModalState,
-  totalDocs = 0,
 }: {
   formData: any;
-  totalDocs: number;
   modalState: boolean;
   setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
@@ -96,10 +94,13 @@ export default function CreateUpdateModal({
 
   const validationSchema = Yup.object().shape({
     branchId: Yup.string().required(tCommon('required')),
-    firstName: Yup.string().trim().required(tCommon('required')),
+    firstName: Yup.string()
+      .matches(/^\S.*\S$|^\S{1}$/, 'FirstName cannot start or end with a space')
+      .trim()
+      .required(tCommon('required')),
     email: Yup.string()
       .test('email', 'Provide email with john.s1@stampezee.com format!', (value: any) => {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@stampezee\.com$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+\.s1@stampezee\.com$/;
         return emailRegex.test(value);
       })
       .required(tCommon('required')),
@@ -121,7 +122,7 @@ export default function CreateUpdateModal({
     let objToFormData: FormData;
 
     if (formData?._id) {
-      const ignoreList = ['password'];
+      const ignoreList = ['password', 'email'];
       if (!isFile(values?.image)) ignoreList.push('image');
 
       objToFormData = objectToFormData(values, ignoreList);
@@ -174,10 +175,12 @@ export default function CreateUpdateModal({
                     <InputFieldWithOnChange
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setFieldValue('firstName', e.target.value);
-                        if (e.target.value) {
-                          setFieldValue('email', `${e.target.value}.s${totalDocs + 1}@stampezee.com`);
-                        } else {
-                          setFieldValue('email', '');
+                        if (!formData?._id) {
+                          if (e.target.value) {
+                            setFieldValue('email', `${e.target.value.trim()}.s1@stampezee.com`);
+                          } else {
+                            setFieldValue('email', '');
+                          }
                         }
                       }}
                       name="firstName"
@@ -209,11 +212,16 @@ export default function CreateUpdateModal({
                   </div>
 
                   <div className="mt-3 grid grid-cols-2 gap-x-5 gap-y-5">
-                    <InputField name="email" label={t2('email')} placeholder="john.s1@stampezee.com" />
+                    <InputField
+                      disabled={!values?.firstName || formData?._id}
+                      name="email"
+                      label={t2('email')}
+                      placeholder="username.s1@stampezee.com"
+                    />
                     {!formData?._id && <InputPassword name="password" label={t2('password')} placeholder="******" />}
                   </div>
 
-                  <p className="text-end text-xs font-semibold">
+                  <p className="mt-3 text-end text-xs font-semibold">
                     <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
                   </p>
                   <div className="mt-6 flex justify-end">

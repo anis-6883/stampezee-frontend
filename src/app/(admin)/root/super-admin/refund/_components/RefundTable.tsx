@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
 import { GiSandsOfTime } from 'react-icons/gi';
-import { IoCheckmarkCircle } from 'react-icons/io5';
+import { IoArrowDownCircle, IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
 import RefundConfirmModal from '../../../_components/RefundConfirmModal';
 
@@ -66,6 +66,15 @@ export default function RefundTable({ offset }: { offset: number }) {
         align: 'center',
       },
       size: 300,
+    },
+    {
+      header: 'Enroll Status',
+      accessorKey: 'reason',
+      Cell: ({ row }: any) => (
+        <Badge className="!bg-danger text-white">
+          <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.reason)}
+        </Badge>
+      ),
     },
     {
       header: 'Refund Amount',

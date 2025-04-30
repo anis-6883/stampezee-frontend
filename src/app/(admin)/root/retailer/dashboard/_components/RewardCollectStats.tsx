@@ -51,18 +51,18 @@ export default function RewardCollectStats({ className }: { className?: string }
           {t('stampCollect')}
         </Title>
       }
-      description={
-        <p className="flex gap-x-2">
-          <span className="font-lexend 2xl:text-2xl text-xl font-semibold text-gray-900">
-            {isFetching || isLoading || isError || !avgCollectStamp ? (
-              <Skeleton className="h-6 w-28 rounded" />
-            ) : (
-              <span>{totalStampsCollected}</span>
-            )}
-          </span>
-          {t('activeStampCollect')}
-        </p>
-      }
+      // description={
+      //   <p className="flex gap-x-2">
+      //     <span className="font-lexend 2xl:text-2xl text-xl font-semibold text-gray-900">
+      //       {isFetching || isLoading || isError || !avgCollectStamp ? (
+      //         <Skeleton className="h-6 w-28 rounded" />
+      //       ) : (
+      //         <span>{totalStampsCollected}</span>
+      //       )}
+      //     </span>
+      //     {t('activeStampCollect')}
+      //   </p>
+      // }
       titleClassName="font-normal text-gray-500 text-sm sm:text-sm 2xl:text-base"
       descriptionClassName="mt-2"
       headerClassName="col-span-full flex-col md:flex-row gap-y-3"

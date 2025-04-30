@@ -60,12 +60,15 @@ export default function BillingTable() {
       mantineTableBodyCellProps: {
         align: 'start',
       },
-      size: 220,
+      size: 200,
     },
     {
       header: t('subscriptionId'),
       accessorKey: 'stripe.subscriptionId',
-      size: 200,
+      Cell: ({ row }: any) => {
+        return row?.original?.enrollStatus !== 'trial' ? <span>{row?.original?.stripe.subscriptionId}</span> : 'N/A';
+      },
+      size: 140,
     },
     {
       header: t3('billingCycle'),
@@ -125,6 +128,10 @@ export default function BillingTable() {
               ) : row?.original?.enrollStatus === 'upgrade' ? (
                 <Badge className="!bg-success text-white">
                   <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : row?.original?.enrollStatus === 'trial' ? (
+                <Badge className="!bg-black text-white">
+                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
                 </Badge>
               ) : (
                 <Badge className="!bg-danger text-white">

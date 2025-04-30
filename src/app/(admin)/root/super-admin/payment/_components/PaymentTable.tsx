@@ -81,7 +81,10 @@ export default function PaymentTable({ offset }: { offset: number }) {
     {
       header: 'Subscription ID',
       accessorKey: 'stripe.subscriptionId',
-      size: 200,
+      Cell: ({ row }: any) => {
+        return row?.original?.enrollStatus !== 'trial' ? <span>{row?.original?.stripe.subscriptionId}</span> : 'N/A';
+      },
+      size: 140,
     },
     {
       header: 'Billing Cycle',
@@ -141,6 +144,10 @@ export default function PaymentTable({ offset }: { offset: number }) {
               ) : row?.original?.enrollStatus === 'upgrade' ? (
                 <Badge className="!bg-success text-white">
                   <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : row?.original?.enrollStatus === 'trial' ? (
+                <Badge className="!bg-black text-white">
+                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
                 </Badge>
               ) : (
                 <Badge className="!bg-danger text-white">

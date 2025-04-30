@@ -84,7 +84,7 @@ export default function CreateUpdateModel({
   });
 
   const submitHandler = async (values: any, { setFieldError }: any) => {
-    if (!values?.longitude && !values?.latitude) {
+    if (!values?.longitude && !values?.latitude && values?.type === 'location') {
       setFieldError('address', 'Enter Or Select a valid location from Map!');
       return;
     }

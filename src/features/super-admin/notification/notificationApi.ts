@@ -20,9 +20,17 @@ export const notificationApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['superAdminNotifications'],
     }),
+    deleteNotificationBySuperAdmin: builder.mutation({
+      query: (id) => ({
+        url: `/api/secret-root/admin/super-admin/notification/delete/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['superAdminNotifications'],
+    }),
   }),
 });
 
-export const { useSuperAdminNotificationsQuery, useCreateNotificationBySuperAdminMutation } = notificationApi;
+export const { useSuperAdminNotificationsQuery, useCreateNotificationBySuperAdminMutation, useDeleteNotificationBySuperAdminMutation } =
+  notificationApi;
 
 export default notificationApi;

@@ -196,13 +196,7 @@ export default function SubAdminTable() {
         searchPlaceHolder={t('placeHolder')}
       />
 
-      <CreateUpdateModal
-        setFormData={setFormData}
-        formData={formData}
-        modalState={createState}
-        setModalState={setCreateState}
-        totalDocs={data?.data.totalDocs}
-      />
+      <CreateUpdateModal setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
 
       <DeleteConfirmModal
         deleteId={deleteId}

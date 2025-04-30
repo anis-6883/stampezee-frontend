@@ -204,7 +204,9 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
           </div>
           <div className="flex flex-col justify-between font-medium md:flex-row">
             <span className="font-bold">Subscription ID</span>
-            <span>{isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : stripe?.subscriptionId}</span>
+            <span>
+              {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : stripe?.subscriptionId ? stripe?.subscriptionId : 'N/A'}
+            </span>
           </div>
           <div className="flex items-center justify-between font-medium">
             <span className="font-bold">Enroll Status</span>{' '}
@@ -224,16 +226,7 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
               </Badge>
             )}
           </div>
-          {/* <div className="flex items-center justify-between font-medium">
-            <span className="font-bold">Balance</span>{' '}
-            {isLoading || isError ? (
-              <Skeleton className="h-6 w-32 rounded" />
-            ) : (
-              <span>
-                {balanceInfo?.planCurrentPrice} {balanceInfo?.currency}
-              </span>
-            )}
-          </div> */}
+
           <div className="flex items-center justify-between font-medium">
             <span className="font-bold">Purchased At</span>{' '}
             {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(createdAt, offset)}</span>}
@@ -268,90 +261,96 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
           )}
           {!stripe?.renewCancelAt && (
             <div className="flex items-center justify-between font-medium">
-              <span className="font-bold">Next Invoice</span>{' '}
+              {enrollStatus === 'trial' ? (
+                <span className="font-semibold">{'Expired At'}</span>
+              ) : (
+                <span className="font-semibold">{'Next Invoice'}</span>
+              )}
               {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(validityTo, offset)}</span>}
             </div>
           )}
         </div>
 
         {/* Payment methods  */}
-        <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
-          <h2 className="border-b-[1px] pb-1 text-lg font-medium">Payment Methods</h2>
+        {enrollStatus !== 'trial' && (
+          <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
+            <h2 className="border-b-[1px] pb-1 text-lg font-medium">Payment Methods</h2>
 
-          {isAllPaymentMethod ? (
-            [1, 2, 3, 4]?.map((item) => <Skeleton key={item} className="h-10 w-60 rounded" />)
-          ) : allPaymentMethod?.data?.length === 0 ? (
-            <div className="text-center text-base font-semibold text-black">No Data Available</div>
-          ) : (
-            <>
-              {allPaymentMethod?.data?.map((item: any) => (
-                <div key={item?.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                  <img
-                    src={cardImageMap.hasOwnProperty(item?.card?.brand) ? cardImageMap[item?.card?.brand] : cardImageMap['default']}
-                    alt={'card'}
-                    style={{ width: '50px', marginRight: '10px' }}
-                  />
-                  <div className="flex items-center justify-center">
-                    <span className="text-base font-medium capitalize">{item?.card?.brand} </span>
-                    <span className="text-center text-base font-medium capitalize"> ....{item?.card?.last4}</span>
+            {isAllPaymentMethod ? (
+              [1, 2, 3, 4]?.map((item) => <Skeleton key={item} className="h-10 w-60 rounded" />)
+            ) : allPaymentMethod?.data?.length === 0 ? (
+              <div className="text-center text-base font-semibold text-black">No Data Available</div>
+            ) : (
+              <>
+                {allPaymentMethod?.data?.map((item: any) => (
+                  <div key={item?.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <img
+                      src={cardImageMap.hasOwnProperty(item?.card?.brand) ? cardImageMap[item?.card?.brand] : cardImageMap['default']}
+                      alt={'card'}
+                      style={{ width: '50px', marginRight: '10px' }}
+                    />
+                    <div className="flex items-center justify-center">
+                      <span className="text-base font-medium capitalize">{item?.card?.brand} </span>
+                      <span className="text-center text-base font-medium capitalize"> ....{item?.card?.last4}</span>
+                    </div>
+                    {allPaymentMethod?.data?.length > 1 ? (
+                      <>
+                        {item?.isDefault ? (
+                          <Badge className="ml-5 !bg-[#FF7C56] text-white">Default</Badge>
+                        ) : status === true && moment().isBefore(validityToUtc) ? (
+                          <Dropdown placement="bottom-start" className="ml-10">
+                            <Dropdown.Trigger>
+                              <BsThreeDotsVertical className=" text-base" />
+                            </Dropdown.Trigger>
+                            <Dropdown.Menu className="w-[170px]">
+                              <Dropdown.Item
+                                onClick={() => handleSetDefaultPaymentMethod({ paymentMethodId: item?.id, customerId: item?.customer })}
+                                className="hover:bg-gray-200"
+                              >
+                                <div className="flex cursor-pointer items-center justify-center text-base">
+                                  <MdAddCard className=" text-base" />
+                                  <span className="ml-3 text-[14px] font-normal text-black">Set as default</span>
+                                </div>
+                              </Dropdown.Item>
+                              <Dropdown.Item onClick={() => handleDetachPaymentMethod(item?.id)} className="hover:bg-gray-200">
+                                <div className="flex cursor-pointer items-center justify-center text-base">
+                                  <RiDeleteBackLine className=" text-base" />
+                                  <span className="ml-3 text-[14px] font-normal text-black">Delete</span>
+                                </div>
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        ) : null}
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </div>
-                  {allPaymentMethod?.data?.length > 1 ? (
-                    <>
-                      {item?.isDefault ? (
-                        <Badge className="ml-5 !bg-[#FF7C56] text-white">Default</Badge>
-                      ) : status === true && moment().isBefore(validityToUtc) ? (
-                        <Dropdown placement="bottom-start" className="ml-10">
-                          <Dropdown.Trigger>
-                            <BsThreeDotsVertical className=" text-base" />
-                          </Dropdown.Trigger>
-                          <Dropdown.Menu className="w-[170px]">
-                            <Dropdown.Item
-                              onClick={() => handleSetDefaultPaymentMethod({ paymentMethodId: item?.id, customerId: item?.customer })}
-                              className="hover:bg-gray-200"
-                            >
-                              <div className="flex cursor-pointer items-center justify-center text-base">
-                                <MdAddCard className=" text-base" />
-                                <span className="ml-3 text-[14px] font-normal text-black">Set as default</span>
-                              </div>
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleDetachPaymentMethod(item?.id)} className="hover:bg-gray-200">
-                              <div className="flex cursor-pointer items-center justify-center text-base">
-                                <RiDeleteBackLine className=" text-base" />
-                                <span className="ml-3 text-[14px] font-normal text-black">Delete</span>
-                              </div>
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      ) : null}
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              ))}
-            </>
-          )}
+                ))}
+              </>
+            )}
 
-          {status === true && moment().isBefore(validityToUtc) && (
-            <div className="flex items-center justify-end">
-              <Button
-                onClick={() => setAddPaymentCardModal(true)}
-                type="submit"
-                className="!m-0 !px-2.5 !py-2"
-                color="danger"
-                text="Add New Card"
-                preIcon={<HiPlus className="text-base" />}
-              />
-            </div>
-          )}
+            {status === true && moment().isBefore(validityToUtc) && (
+              <div className="flex items-center justify-end">
+                <Button
+                  onClick={() => setAddPaymentCardModal(true)}
+                  type="submit"
+                  className="!m-0 !px-2.5 !py-2"
+                  color="danger"
+                  text="Add New Card"
+                  preIcon={<HiPlus className="text-base" />}
+                />
+              </div>
+            )}
 
-          <AddPaymentCardModal
-            modalState={addPaymentCardModal}
-            setModalState={setAddPaymentCardModal}
-            customerId={stripe?.customerId}
-            stripePublishKey={stripePublishKey}
-          />
-        </div>
+            <AddPaymentCardModal
+              modalState={addPaymentCardModal}
+              setModalState={setAddPaymentCardModal}
+              customerId={stripe?.customerId}
+              stripePublishKey={stripePublishKey}
+            />
+          </div>
+        )}
       </div>
 
       <h2 className="my-5 text-lg font-medium">{'Enroll Subscriptions'}</h2>
@@ -428,19 +427,26 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
                           enrollSubscription?.title
                         )}
                       </td>
-                      <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                        {enrollSubscription?.type === 'subscription' ? (
-                          enrollSubscription?.deletedByRetailerAt ? (
+
+                      {enrollStatus === 'trial' ? (
+                        <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                          <span>N/A</span>
+                        </td>
+                      ) : (
+                        <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                          {enrollSubscription?.type === 'subscription' ? (
+                            enrollSubscription?.deletedByRetailerAt ? (
+                              <span className="line-through">{enrollSubscription?.subscriptionItemId}</span>
+                            ) : (
+                              enrollSubscription?.subscriptionItemId
+                            )
+                          ) : enrollSubscription?.validAtAfterCancel && new Date(enrollSubscription?.validAtAfterCancel) < new Date() ? (
                             <span className="line-through">{enrollSubscription?.subscriptionItemId}</span>
                           ) : (
                             enrollSubscription?.subscriptionItemId
-                          )
-                        ) : enrollSubscription?.validAtAfterCancel && new Date(enrollSubscription?.validAtAfterCancel) < new Date() ? (
-                          <span className="line-through">{enrollSubscription?.subscriptionItemId}</span>
-                        ) : (
-                          enrollSubscription?.subscriptionItemId
-                        )}
-                      </td>
+                          )}
+                        </td>
+                      )}
 
                       <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
                         {enrollSubscription?.deletedByRetailerAt ? (
@@ -450,13 +456,13 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
                             </span>
                             {enrollSubscription?.validAtAfterCancel && (
                               <span className="font-semibold text-black">
-                                Validate At : {convertDateByOffset(enrollSubscription?.validAtAfterCancel, offset)}
+                                Expires On : {convertDateByOffset(enrollSubscription?.validAtAfterCancel, offset)}
                               </span>
                             )}
                           </div>
                         ) : (
                           <Button
-                            disabled={!status}
+                            disabled={!status || enrollStatus === 'trial'}
                             className="!m-0 !px-2.5 !py-1.5"
                             color="danger"
                             onClick={() => {
@@ -481,111 +487,115 @@ export default function PaymentDetails({ id, offset, stripePublishKey }: { id: s
         </table>
       </div>
 
-      <h2 className="my-5 text-lg font-medium">Invoices:</h2>
-      <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Serial No.
-              </th>
-              <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Payment Intent ID
-              </th>
-              <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Invoice Number
-              </th>
-              <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Amount
-              </th>
-              <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Created At
-              </th>
-              <th scope="col" className="whitespace-nowrap px-6 py-3">
-                Action
-              </th>
-            </tr>
-          </thead>
-          {isLoading || isError ? (
-            <tbody>
-              <tr>
-                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                  <Skeleton className="h-6 w-32 rounded" />
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                  <Skeleton className="h-6 w-32 rounded" />
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                  <Skeleton className="h-6 w-32 rounded" />
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                  <Skeleton className="h-6 w-32 rounded" />
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                  <Skeleton className="h-6 w-32 rounded" />
-                </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                  <Skeleton className="h-6 w-32 rounded" />
-                </td>
-              </tr>
-            </tbody>
-          ) : (
-            <tbody>
-              {payments.length <= 0 ? (
+      {enrollStatus !== 'trial' && (
+        <>
+          <h2 className="my-5 text-lg font-medium">Invoices:</h2>
+          <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+              <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
-                    <div className="flex flex-col justify-center py-5">
-                      <img src="/images/no-transaction.svg" alt="image" className="m-auto h-40 w-40" />
-                      <span>No transaction happened yet!</span>
-                    </div>
-                  </td>
+                  <th scope="col" className="whitespace-nowrap px-6 py-3">
+                    Serial No.
+                  </th>
+                  <th scope="col" className="whitespace-nowrap px-6 py-3">
+                    Payment Intent ID
+                  </th>
+                  <th scope="col" className="whitespace-nowrap px-6 py-3">
+                    Invoice Number
+                  </th>
+                  <th scope="col" className="whitespace-nowrap px-6 py-3">
+                    Amount
+                  </th>
+                  <th scope="col" className="whitespace-nowrap px-6 py-3">
+                    Created At
+                  </th>
+                  <th scope="col" className="whitespace-nowrap px-6 py-3">
+                    Action
+                  </th>
                 </tr>
+              </thead>
+              {isLoading || isError ? (
+                <tbody>
+                  <tr>
+                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                      <Skeleton className="h-6 w-32 rounded" />
+                    </td>
+                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                      <Skeleton className="h-6 w-32 rounded" />
+                    </td>
+                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                      <Skeleton className="h-6 w-32 rounded" />
+                    </td>
+                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                      <Skeleton className="h-6 w-32 rounded" />
+                    </td>
+                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                      <Skeleton className="h-6 w-32 rounded" />
+                    </td>
+                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
+                      <Skeleton className="h-6 w-32 rounded" />
+                    </td>
+                  </tr>
+                </tbody>
               ) : (
-                payments.map((payment: any, index: number) => {
-                  const amount = Number(payment?.amountTotal).toFixed(2);
-                  return (
-                    <tr
-                      key={payment?._id}
-                      className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-                    >
-                      <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                        {++index}
-                      </td>
-                      <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                        {payment?.paymentIntentId}
-                      </td>
-                      <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                        {payment?.invoiceNumber}
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {amount} {balanceInfo?.currency}
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">{convertDateByOffset(payment?.createdAt, offset)}</td>
-                      <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                        {/* <Link href={payment?.invoicePdf} target="_blank"> */}
-                        <Button
-                          className="!m-0 !px-2 !py-1.5"
-                          color="danger"
-                          onClick={() => handlePdfDownload(payment?._id)}
-                          text="Download PDF"
-                          postIcon={
-                            isPdfBufferLoading ? (
-                              <ImSpinner9 className="animate-spin text-lg" />
-                            ) : (
-                              <RiDownloadCloud2Fill className="text-lg" />
-                            )
-                          }
-                        />
-                        {/* </Link> */}
+                <tbody>
+                  {payments.length <= 0 ? (
+                    <tr>
+                      <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
+                        <div className="flex flex-col justify-center py-5">
+                          <img src="/images/no-transaction.svg" alt="image" className="m-auto h-40 w-40" />
+                          <span>No transaction happened yet!</span>
+                        </div>
                       </td>
                     </tr>
-                  );
-                })
+                  ) : (
+                    payments.map((payment: any, index: number) => {
+                      const amount = Number(payment?.amountTotal).toFixed(2);
+                      return (
+                        <tr
+                          key={payment?._id}
+                          className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                        >
+                          <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            {++index}
+                          </td>
+                          <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            {payment?.paymentIntentId}
+                          </td>
+                          <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            {payment?.invoiceNumber}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4">
+                            {amount} {balanceInfo?.currency}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4">{convertDateByOffset(payment?.createdAt, offset)}</td>
+                          <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
+                            {/* <Link href={payment?.invoicePdf} target="_blank"> */}
+                            <Button
+                              className="!m-0 !px-2 !py-1.5"
+                              color="danger"
+                              onClick={() => handlePdfDownload(payment?._id)}
+                              text="Download PDF"
+                              postIcon={
+                                isPdfBufferLoading ? (
+                                  <ImSpinner9 className="animate-spin text-lg" />
+                                ) : (
+                                  <RiDownloadCloud2Fill className="text-lg" />
+                                )
+                              }
+                            />
+                            {/* </Link> */}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
               )}
-            </tbody>
-          )}
-        </table>
-      </div>
+            </table>
+          </div>
+        </>
+      )}
 
       <PackageCancelModal
         cancelSubscriptionId={cancelSubscriptionId}

@@ -109,16 +109,52 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
   };
 
   const validationSchema = Yup.object().shape({
-    storeName: Yup.string().trim().required(tRetailerCommon('required')),
-    firstName: Yup.string().trim().required(tRetailerCommon('required')),
-    lastName: Yup.string().trim(),
+    storeName: Yup.string()
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      .trim()
+      .required(tRetailerCommon('required'))
+      .min(2, 'At least 2 characters!')
+      .max(100, 'maximum 100 characters!'),
+    firstName: Yup.string()
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      .trim()
+      .required(tRetailerCommon('required')),
+    lastName: Yup.string()
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      .trim(),
     email: Yup.string().email('Invalid email').required(tRetailerCommon('required')),
-    phone: Yup.string().required(tRetailerCommon('required')),
+    phone: Yup.string()
+      .test('bd-phone-length', 'Number must be 10 digits', function (value) {
+        const { dialCode } = this.parent;
+        const country = dialCode?.replace('+', '');
+
+        if (country === '880') {
+          // BD number should be 10 digits (excluding +880)
+          const phoneWithoutDialCode = value?.replace(country, '');
+          return phoneWithoutDialCode?.length === 10;
+        }
+
+        // Allow other countries for now (or add their validation here)
+        return true;
+      })
+      .required(tRetailerCommon('required')),
     country: Yup.string().required(tRetailerCommon('required')),
-    province: Yup.string().trim().required(tRetailerCommon('required')),
-    city: Yup.string().trim().required(tRetailerCommon('required')),
-    postalCode: Yup.string().trim().required(tRetailerCommon('required')),
-    address: Yup.string().trim().required(tRetailerCommon('required')),
+    province: Yup.string()
+      .trim()
+      .required(tRetailerCommon('required'))
+      .test('not-just-numbers', 'Invalid province', (value) => !!value && /^[a-zA-Z]+$/.test(value)),
+    city: Yup.string()
+      .trim()
+      .required(tRetailerCommon('required'))
+      .test('not-just-numbers', 'Invalid city', (value) => !!value && /^[a-zA-Z]+$/.test(value)),
+    postalCode: Yup.string()
+      .trim()
+      .required(tRetailerCommon('required'))
+      .matches(/^[a-zA-Z0-9]+$/, 'Are you sure you entered your Postal Code correctly?'),
+    address: Yup.string()
+      .trim()
+      .required(tRetailerCommon('required'))
+      .matches(/[a-zA-Z0-9]/, 'Are you sure you entered your address correctly?'),
     businessCurrency: Yup.string().required(tRetailerCommon('required')),
   });
 
@@ -193,6 +229,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                     errorClassName="text-red-600 text-xs mt-1"
                     inputClassName={`${errors?.phone && touched?.phone ? '!border-red-500' : '!border-slate-300 !border'} !h-[43px]`}
                     labelClassName="!mb-1"
+                    helperClassName="text-danger"
                     value={`${values?.dialCode}${values?.phone}`}
                   />
                   <div className="flex flex-col gap-1">

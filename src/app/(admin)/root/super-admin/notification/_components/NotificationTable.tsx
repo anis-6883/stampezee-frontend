@@ -2,18 +2,27 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
-import { useSuperAdminNotificationsQuery } from '@/features/super-admin/notification/notificationApi';
+import {
+  useDeleteNotificationBySuperAdminMutation,
+  useSuperAdminNotificationsQuery,
+} from '@/features/super-admin/notification/notificationApi';
 import { IQueryType } from '@/types';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import _ from 'lodash';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa6';
+import { ImBin } from 'react-icons/im';
 import { LuClock4 } from 'react-icons/lu';
 import { Badge } from 'rizzui';
+import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import CreateUpdateModel from './CreateUpdateModal';
 
 export default function NotificationTable({ offset, googleMapsApiKey }: { offset: number; googleMapsApiKey: string }) {
   const [createState, setCreateState] = useState(false);
+  const [deleteState, setDeleteState] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [formData, setFormData] = useState({});
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
@@ -22,6 +31,27 @@ export default function NotificationTable({ offset, googleMapsApiKey }: { offset
     limit: query.pageSize,
     ...searchQuery,
   });
+  const [deleteNotificationBySuperAdmin, { isSuccess, isError }] = useDeleteNotificationBySuperAdminMutation();
+
+  const handleDelete = async (rowData: any) => {
+    setDeleteState(true);
+    setDeleteId(rowData._id);
+  };
+
+  useEffect(() => {
+    if (isError) {
+      setDeleteSubmitting(false);
+      toast.error('Something went wrong. Please try again!');
+      setDeleteState(false);
+      setDeleteId(null);
+    }
+    if (isSuccess) {
+      setDeleteSubmitting(false);
+      toast.success('Notification deleted successfully!');
+      setDeleteState(false);
+      setDeleteId(null);
+    }
+  }, [isSuccess, isError]);
 
   const structure = [
     {
@@ -107,8 +137,9 @@ export default function NotificationTable({ offset, googleMapsApiKey }: { offset
           <FaRegPaperPlane className="text-sm" /> Sent Time / <LuClock4 className="text-lg" /> Scheduled At
         </span>
       ),
+      accessorKey: 'scheduleAt',
       Cell: ({ row }: any) =>
-        row?.original?.scheduleAt ? (
+        row?.original?.scheduleAt && new Date(row?.original?.scheduleAt) > new Date() ? (
           <div className="text-md mx-auto flex items-center gap-x-2 text-start">
             {convertDateByOffset(row?.original?.scheduleAt, offset)} <LuClock4 className="text-lg" />
           </div>
@@ -122,6 +153,21 @@ export default function NotificationTable({ offset, googleMapsApiKey }: { offset
       },
       mantineTableBodyCellProps: {
         align: 'center',
+      },
+      size: 150,
+    },
+
+    {
+      header: 'Actions',
+
+      Cell: ({ row }: any) => (
+        <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+      ),
+      mantineTableHeadCellProps: {
+        align: 'start',
+      },
+      mantineTableBodyCellProps: {
+        align: 'start',
       },
       size: 150,
     },
@@ -172,6 +218,15 @@ export default function NotificationTable({ offset, googleMapsApiKey }: { offset
         formData={formData}
         modalState={createState}
         setModalState={setCreateState}
+      />
+
+      <DeleteConfirmModal
+        deleteId={deleteId}
+        deleteHandler={deleteNotificationBySuperAdmin}
+        modalState={deleteState}
+        setModalState={setDeleteState}
+        isSubmitting={deleteSubmitting}
+        setIsSubmitting={setDeleteSubmitting}
       />
     </>
   );

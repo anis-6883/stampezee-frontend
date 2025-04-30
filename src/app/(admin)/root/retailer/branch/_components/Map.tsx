@@ -25,7 +25,7 @@ export default function MapComponent({
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [searchBox, setSearchBox] = useState<google.maps.places.SearchBox | null>(null);
-  const [selectedLocation, setSelectedLocation] = useState<google.maps.LatLngLiteral>({ lat: 23.7582377, lng: 90.3632155 });
+  const [selectedLocation, setSelectedLocation] = useState<google.maps.LatLngLiteral>({ lat: 43.6532, lng: 79.3832 });
   const autocompleteRef = useRef<HTMLInputElement>(null);
 
   const onLoad = useCallback((map: google.maps.Map) => {
@@ -122,6 +122,42 @@ export default function MapComponent({
       }
     }
   }, [map, values]);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      console.log('Geolocation not supported');
+    }
+
+    async function success(position: any) {
+      if (!isLoaded) return; // Ensure the API is loaded
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      setSelectedLocation({ lat: latitude, lng: longitude });
+
+      try {
+        const geocoder = new google.maps.Geocoder(); // Initialize geocoder
+        const response = await geocoder.geocode({ location: { lat: latitude, lng: longitude } });
+
+        if (response.results && response.results.length > 0) {
+          const address = response.results[0].formatted_address;
+
+          setFieldValue('address', address);
+          setFieldValue('latitude', String(latitude));
+          setFieldValue('longitude', String(longitude));
+        } else {
+          console.log('No address found for this location.');
+        }
+      } catch (error) {
+        console.error('Geocoder failed:', error);
+      }
+    }
+
+    function error() {
+      console.log('Unable to retrieve your location');
+    }
+  }, [isLoaded, setFieldValue, setSelectedLocation]);
 
   const defaultOptions = {
     strokeOpacity: 0.5,
