@@ -125,7 +125,8 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
         dispatch(resetState());
       }
     }
-  }, [cancelSubscriptionData?.message, cancelSubscriptionError, dispatch, isCancelSubscriptionError, isPlan, isSuccess]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cancelSubscriptionError, dispatch, isCancelSubscriptionError, isSuccess]);
 
   // Handle default payment method Response
   useEffect(() => {
