@@ -5,6 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { SerializedError } from '@/features/api/apiSlice';
 import {
   useCancelSubscriptionMutation,
+  useCreateBillingPdfForTrialMutation,
   useCreateBillingPdfMutation,
   useDetachPaymentMethodMutation,
   useGetAllPaymentMethodQuery,
@@ -64,6 +65,8 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
   const { data, isLoading, isError } = useSingleBillingQuery(id);
 
   const [createBillingPdf, { data: pdfBuffer, isLoading: isPdfBufferLoading }] = useCreateBillingPdfMutation();
+  const [createBillingPdfForTrial, { data: pdfBufferForTrial, isLoading: isPdfBufferLoadingForTrial }] =
+    useCreateBillingPdfForTrialMutation();
   const [
     cancelSubscription,
     { data: cancelSubscriptionData, error: cancelSubscriptionError, isSuccess, isError: isCancelSubscriptionError },
@@ -167,10 +170,33 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
     }
   }, [pdfBuffer]);
 
+  // Handle Pdf download for Trial response
+  useEffect(() => {
+    if (pdfBufferForTrial) {
+      const downloadUrl = window.URL.createObjectURL(new Blob([pdfBufferForTrial], { type: 'application/pdf' }));
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.setAttribute('download', 'invoice.pdf');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(downloadUrl);
+    }
+  }, [pdfBufferForTrial]);
+
   const handlePdfDownload = async (id: any) => {
     setSelectPaymentId(id);
     try {
       await createBillingPdf(id);
+    } catch (err) {
+      toast.error('Error occur for invoice download!');
+      console.error('Error downloading invoice:', err);
+    }
+  };
+
+  const handlePdfDownloadForTrial = async () => {
+    try {
+      await createBillingPdfForTrial(id);
     } catch (err) {
       toast.error('Error occur for invoice download!');
       console.error('Error downloading invoice:', err);
@@ -623,7 +649,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                   </td>
 
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {'N/A'}
+                    {'INV-' + id.slice(-8).toUpperCase()}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
                     {'0.00'} {'CAD'}
@@ -634,10 +660,14 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                     <Button
                       className="!m-0 !px-2 !py-1.5"
                       color="danger"
-                      onClick={() => handlePdfDownload(1)}
+                      onClick={() => handlePdfDownloadForTrial()}
                       text={t3('downloadPdf')}
                       postIcon={
-                        isPdfBufferLoading ? <ImSpinner9 className="animate-spin text-lg" /> : <RiDownloadCloud2Fill className="text-lg" />
+                        isPdfBufferLoadingForTrial ? (
+                          <ImSpinner9 className="animate-spin text-lg" />
+                        ) : (
+                          <RiDownloadCloud2Fill className="text-lg" />
+                        )
                       }
                     />
                     {/* </Link> */}

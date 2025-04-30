@@ -24,6 +24,14 @@ export const billingApi = apiSlice.injectEndpoints({
         responseHandler: (response) => response.blob(),
       }),
     }),
+    createBillingPdfForTrial: builder.mutation({
+      query: (id) => ({
+        url: `/api/web/retailer/billing/download-pdf-trial/${id}`,
+        method: 'POST',
+        // body: data,
+        responseHandler: (response) => response.blob(),
+      }),
+    }),
     getBillingPortal: builder.mutation({
       query: (data) => ({
         url: `/api/web/retailer/billing/portal`,
@@ -91,6 +99,7 @@ export const {
   useSingleBillingQuery,
   useGetBillingPortalMutation,
   useCreateBillingPdfMutation,
+  useCreateBillingPdfForTrialMutation,
   useAttachPaymentMethodMutation,
   useSetupPaymentIntentMutation,
   useGetAllPaymentMethodQuery,
