@@ -2,6 +2,7 @@
 
 import { useSuperAdminScanDetailsQuery } from '@/features/super-admin/scan/scanApi';
 import { IQueryType } from '@/types';
+import { capitalizeEachWord } from '@/utils/capitalizeEachWord';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useState } from 'react';
 import { BsShop } from 'react-icons/bs';
@@ -54,7 +55,10 @@ export default function ScanTable({ offset }: { offset: number }) {
 
   const renderDetailPanel = ({ row }: any) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const customerEmail = row?.original?.customer?.email?.split(/[-\s]/)?.find((part: string) => emailRegex.test(part));
+    const customerEmail = row?.original?.customer?.contactEmail
+      ? row?.original?.customer?.contactEmail
+      : row?.original?.customer?.email?.split(/[-\s]/)?.find((part: string) => emailRegex.test(part));
+
     return (
       <div className="mx-20 flex justify-start">
         <div className="w-1/2">
@@ -80,7 +84,7 @@ export default function ScanTable({ offset }: { offset: number }) {
                         <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, offset)}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">{'Customer Payment'}</td>
+                        <td className="px-6 py-4">Order Amount</td>
                         <td className="px-6 py-4">{`${row?.original?.scan?.amount} ${row?.original?.scan?.amountCurrency}`}</td>
                       </tr>
                       <tr className="border-b bg-white">
@@ -92,7 +96,7 @@ export default function ScanTable({ offset }: { offset: number }) {
                         <td className="px-6 py-4">{row?.original?.offer?.category}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">No of Stamp to Collect</td>
+                        <td className="px-6 py-4">No. of Stamps to Collect</td>
                         <td className="px-6 py-4">{row?.original?.offer?.noOfStampsToCollect}</td>
                       </tr>
                       <tr className="border-b bg-white">
@@ -105,7 +109,7 @@ export default function ScanTable({ offset }: { offset: number }) {
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Reward Type</td>
-                        <td className="px-6 py-4">{row?.original?.offer?.rewardType}</td>
+                        <td className="px-6 py-4">{capitalizeEachWord(row?.original?.offer?.rewardType)}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Reward</td>
