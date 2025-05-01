@@ -57,7 +57,7 @@ export default function RewardCollectStats({ className }: { className?: string }
             className={`bg-danger text-white`}
             size="sm"
             placement="top"
-            content={'Hello..'}
+            content={'How many stamps are collected by customers?'}
             arrowClassName={`fill-danger`}
           >
             <span>
