@@ -5,14 +5,14 @@ import { getTranslations } from 'next-intl/server';
 import SubAdminTable from './_components/SubAdminTable';
 
 const pageHeader = {
-  title: 'Manage Sub-Admins',
+  title: 'Manage Loyalty-Exclusive',
   breadcrumb: [
     {
       href: routes.privateRoutes.retailer.dashboard,
       name: 'Dashboard',
     },
     {
-      name: 'Manage Sub-Admins',
+      name: 'Manage Loyalty-Exclusive',
     },
   ],
 };

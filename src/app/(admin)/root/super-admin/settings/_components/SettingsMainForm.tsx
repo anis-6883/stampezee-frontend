@@ -34,7 +34,12 @@ function updateGeneralSetting(generalSetting: IGeneralSetting) {
       city: generalSetting?.data?.general?.city || '',
       postalCode: generalSetting?.data?.general?.postalCode || '',
       address: generalSetting?.data?.general?.address || '',
-      timezone: generalSetting?.data?.general?.timezone || {},
+      timezone: generalSetting?.data?.general?.timezone
+        ? {
+            ...generalSetting?.data?.general?.timezone,
+            label: `${generalSetting?.data?.general?.timezone?.label} (${generalSetting?.data?.general?.timezone?.value})`,
+          }
+        : {},
       androidDownloadLink: generalSetting?.data?.general?.androidDownloadLink || '',
       iosDownloadLink: generalSetting?.data?.general?.iosDownloadLink || '',
       facebook: generalSetting?.data?.general?.facebook || '',
@@ -78,6 +83,12 @@ function updateGeneralSetting(generalSetting: IGeneralSetting) {
   };
 
   return updatedObject;
+}
+
+function cleanTimezoneLabel(obj: any) {
+  if (obj?.general?.timezone?.label) {
+    obj.general.timezone.label = obj.general.timezone.label.replace(/\s*\(.*\)$/, '');
+  }
 }
 
 export default function SettingsMainForm() {
@@ -201,6 +212,7 @@ export default function SettingsMainForm() {
   // Submit Handler
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
+    cleanTimezoneLabel(values);
     updateGeneralSettings(values);
   };
 

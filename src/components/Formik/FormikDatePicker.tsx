@@ -42,11 +42,11 @@ const FormikDatePicker: React.FC<DateRangeProps> = ({
                 type="text"
                 disabled
                 value={values[name]}
-                className="h-10 w-full cursor-not-allowed rounded-md border-[1px] border-gray-200 bg-gray-100 text-gray-400 placeholder:text-sm"
+                className="h-10 w-full cursor-not-allowed rounded-md border-[1px] border-gray-200 bg-white text-gray-400 placeholder:text-sm"
                 placeholder={range ? 'YYYY-MM-DD to YYYY-MM-DD' : enableTime ? 'YYYY-MM-DD HH:II' : 'YYYY-MM-DD'}
                 aria-label="Select date range"
               />
-              <div className="flex h-10 w-10 items-center justify-center rounded-r-lg border border-gray-200 bg-gray-100 text-gray-400">
+              <div className="flex h-10 w-10 items-center justify-center rounded-r-lg border border-gray-200 bg-white text-gray-400">
                 <MdOutlineClose className="text-xl" />
               </div>
             </div>

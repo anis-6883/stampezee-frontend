@@ -23,7 +23,7 @@ import { FiCopy } from 'react-icons/fi';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
-import { IoCheckmarkCircle } from 'react-icons/io5';
+import { IoCheckmarkCircle, IoEyeOutline } from 'react-icons/io5';
 import { LuPartyPopper } from 'react-icons/lu';
 import { Badge } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
@@ -254,20 +254,7 @@ export default function StampTable() {
     {
       header: t('actions'),
       Cell: ({ row }: any) => {
-        return false ? (
-          <div className="flex gap-2">
-            <Link href={routes.privateRoutes.retailer.stamp.clone(row.original._id)}>
-              <Button
-                disabled={totalCreatedStamp < totalAllowStamp ? false : true}
-                tooltip="Clone"
-                color="primary"
-                preIcon={<FiCopy className="text-base" />}
-              />
-            </Link>
-            <Button tooltip="Edit" disabled color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
-            <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
-          </div>
-        ) : (
+        return (
           <div className="flex gap-2">
             <Link href={routes.privateRoutes.retailer.stamp.clone(row.original._id)}>
               <Button
@@ -278,7 +265,11 @@ export default function StampTable() {
               />
             </Link>
             <Link href={routes.privateRoutes.retailer.stamp.edit(row.original._id)}>
-              <Button tooltip="Edit" color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+              <Button
+                tooltip="Edit"
+                color="warning"
+                preIcon={row?.original?.isPublished ? <IoEyeOutline className="text-base" /> : <HiOutlinePencil className="text-base" />}
+              />
             </Link>
             <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
           </div>

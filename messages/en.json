@@ -433,7 +433,7 @@
     "branchUpdated": "Branch updated successfully!"
   },
   "RetailerSubAdmin": {
-    "title": "Manage Sub-Admins",
+    "title": "Manage Loyalty-Exclusive",
     "subAdmins": "Sub-Admins",
     "dashboard": "Dashboard",
     "addNewSubAdmin": "Add New Loyalty-Executive",

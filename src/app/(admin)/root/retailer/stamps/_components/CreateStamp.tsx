@@ -151,6 +151,7 @@ export default function Create({ locale }: { locale: string }) {
       then: () => Yup.string().required(tCommon('required')),
       otherwise: () => Yup.string(),
     }),
+    description: Yup.string().required('Required!'),
   });
 
   return (
@@ -405,7 +406,7 @@ export default function Create({ locale }: { locale: string }) {
                 </div>
               )}
 
-              <InputTextarea name="description" required={false} label={t('offerDetails')} placeholder="Write here..." />
+              <InputTextarea name="description" required={true} label={t('offerDetails')} placeholder="Write here..." />
 
               <p className="mt-4 flex flex-col text-end text-xs font-semibold">
                 <span>

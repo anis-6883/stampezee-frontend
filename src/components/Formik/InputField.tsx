@@ -12,6 +12,7 @@ export default function InputField({
   prefix,
   suffix,
   className = '',
+  readOnly = false,
   autoComplete = 'new-password',
 }: {
   name: string;
@@ -23,6 +24,7 @@ export default function InputField({
   suffix?: React.ReactNode;
   disabled?: boolean;
   className?: string;
+  readOnly?: boolean;
   autoComplete?: 'off' | 'new-password';
 }) {
   return (
@@ -39,6 +41,7 @@ export default function InputField({
               ) : null
             }
             type={type}
+            readOnly={readOnly}
             placeholder={placeholder}
             disabled={disabled}
             autoComplete={autoComplete}

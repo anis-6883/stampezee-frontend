@@ -123,6 +123,7 @@ export default function Update({ Id, offset }: any) {
       then: () => Yup.string().required(tCommon('required')),
       otherwise: () => Yup.string(),
     }),
+    description: Yup.string().required('Required!'),
   });
 
   return (
@@ -172,6 +173,7 @@ export default function Update({ Id, offset }: any) {
 
                 <SelectField
                   name="categoryId"
+                  disabled={stampData?.data?.isPublished}
                   label={t('category')}
                   value={values?.categoryId}
                   options={optionsData?.categories?.map((item: any) => ({
@@ -183,8 +185,8 @@ export default function Update({ Id, offset }: any) {
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                <InputField name="title" label={t('title')} placeholder="Buy 10 Pizza Get 1 Coke" />
-                <InputField name="rules" label={t('basicRules')} placeholder="You need to buy..." />
+                <InputField readOnly={stampData?.data?.isPublished} name="title" label={t('title')} placeholder="Buy 10 Pizza Get 1 Coke" />
+                <InputField readOnly={stampData?.data?.isPublished} name="rules" label={t('basicRules')} placeholder="You need to buy..." />
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -219,13 +221,13 @@ export default function Update({ Id, offset }: any) {
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <InputField
-                  disabled={stampData?.data?.isPublished}
+                  readOnly={stampData?.data?.isPublished}
                   name="noOfStampsToCollect"
                   label={t('noOfStampsToCollect')}
                   type="number"
                 />
                 <InputField
-                  disabled={stampData?.data?.isPublished}
+                  readOnly={stampData?.data?.isPublished}
                   name="minPurchaseAmount"
                   required={false}
                   label={t('minPurchaseAmount')}
@@ -255,7 +257,7 @@ export default function Update({ Id, offset }: any) {
 
                 {values.rewardType === 'discount' && (
                   <InputField
-                    disabled={stampData?.data?.isPublished}
+                    readOnly={stampData?.data?.isPublished}
                     name="discountReward"
                     label={t('discount')}
                     placeholder="Ex. Get 1 Coke"
@@ -265,7 +267,7 @@ export default function Update({ Id, offset }: any) {
                 )}
                 {values.rewardType === 'promotion' && (
                   <InputField
-                    disabled={stampData?.data?.isPublished}
+                    readOnly={stampData?.data?.isPublished}
                     name="promotionReward"
                     label={t('promotionReward')}
                     placeholder="Ex. Get 1 Coke"
@@ -279,12 +281,12 @@ export default function Update({ Id, offset }: any) {
               {responseIsLoading ? (
                 <StampImgSkeleton />
               ) : (
-                <div className="mb-5 grid grid-cols-1 gap-4 md:grid-cols-8">
+                <div className="mb-5 grid  grid-cols-1 gap-4 md:grid-cols-8">
                   {optionsData?.defaultImages?.map((item: any) => (
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
                       key={item?._id}
-                      className={`cursor-pointer rounded-lg border p-4 ${errors?.stampImageId && touched?.stampImageId && 'ring-2 ring-danger'} ${
+                      className={`${stampData?.data?.isPublished ? 'cursor-not-allowed' : 'cursor-pointer'} rounded-lg border p-4 ${errors?.stampImageId && touched?.stampImageId && 'ring-2 ring-danger'} ${
                         values?.stampImageId === item._id ? 'scale-105 border-2 border-red-600 ring-1 ring-red-400' : 'border'
                       }`}
                     >
@@ -312,7 +314,7 @@ export default function Update({ Id, offset }: any) {
                     <div
                       onClick={() => setFieldValue('stampImageId', item._id)}
                       key={item?._id}
-                      className={`cursor-pointer rounded-lg border p-4 ${errors?.stampImageId && touched?.stampImageId && 'ring-2 ring-danger'} ${
+                      className={`${stampData?.data?.isPublished ? 'cursor-not-allowed' : 'cursor-pointer'} rounded-lg border p-4 ${errors?.stampImageId && touched?.stampImageId && 'ring-2 ring-danger'} ${
                         values?.stampImageId === item._id ? 'scale-105 border-2 border-red-600 ring-1 ring-red-400' : 'border'
                       }`}
                     >
@@ -328,7 +330,13 @@ export default function Update({ Id, offset }: any) {
               )}
               {errors?.stampImageId && <span className="text-red-600">Select a stamp image of custom or default stamp</span>}
 
-              <InputTextarea name="description" required={false} label={t('offerDetails')} placeholder="Write here..." />
+              <InputTextarea
+                readOnly={stampData?.data?.isPublished}
+                name="description"
+                required={true}
+                label={t('offerDetails')}
+                placeholder="Write here..."
+              />
 
               <p className="mt-4 flex flex-col text-end text-xs font-semibold">
                 <span>
@@ -337,26 +345,28 @@ export default function Update({ Id, offset }: any) {
                 <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
                 <span>{tCommon('needDoubleClickToSelectASingleDate')}</span>
               </p>
-              <div className="mt-2 flex justify-end">
-                <Button
-                  color="danger"
-                  type="submit"
-                  text={t('update')}
-                  postIcon={<BsPencil className="text-base" />}
-                  isSubmitting={submitting}
-                  onClick={() => setSubmitAction('draft')}
-                />
-                <Button
-                  color="outline"
-                  type="submit"
-                  text={t('publish')}
-                  postIcon={<BsCheck2Circle className="text-base" />}
-                  onClick={() => {
-                    setSubmitAction('publish');
-                    setPublishState(true);
-                  }}
-                />
-              </div>
+              {!stampData?.data?.isPublished && (
+                <div className="mt-2 flex justify-end">
+                  <Button
+                    color="danger"
+                    type="submit"
+                    text={t('update')}
+                    postIcon={<BsPencil className="text-base" />}
+                    isSubmitting={submitting}
+                    onClick={() => setSubmitAction('draft')}
+                  />
+                  <Button
+                    color="outline"
+                    type="submit"
+                    text={t('publish')}
+                    postIcon={<BsCheck2Circle className="text-base" />}
+                    onClick={() => {
+                      setSubmitAction('publish');
+                      setPublishState(true);
+                    }}
+                  />
+                </div>
+              )}
             </Form>
           );
         }}
