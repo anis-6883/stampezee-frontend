@@ -531,7 +531,7 @@
     "scanTime": "扫描时间",
     "stampTitle": "邮票标题",
     "stampCategory": "邮票类别",
-    "noOfStampToCollect": "要收集的邮票数量",
+    "noOfStampToCollect": "需收集的邮票数量",
     "basicRules": "基本规则",
     "status": "状态",
     "minPurchaseAmount": "最低购买金额",
@@ -545,7 +545,7 @@
     "email": "电子邮件",
     "phone": "电话",
     "country": "国家",
-    "customerPayment": "客户付款"
+    "orderAmount": "订单金额"
   },
   "RetailerStampScanTable": {
     "stampTitle": "邮票标题",

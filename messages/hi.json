@@ -531,7 +531,7 @@
     "scanTime": "स्कैन समय",
     "stampTitle": "स्टैम्प शीर्षक",
     "stampCategory": "स्टैम्प श्रेणी",
-    "noOfStampToCollect": "संग्रह के लिए स्टैम्प की संख्या",
+    "noOfStampToCollect": "एकत्र करने के लिए डाक टिकटों की संख्या",
     "basicRules": "मूल नियम",
     "status": "स्थिति",
     "minPurchaseAmount": "न्यूनतम खरीद राशि",
@@ -545,7 +545,7 @@
     "email": "ईमेल",
     "phone": "फोन",
     "country": "देश",
-    "customerPayment": "ग्राहक भुगतान"
+    "orderAmount": "ऑर्डर राशि"
   },
   "RetailerStampScanTable": {
     "stampTitle": "स्टैम्प शीर्षक",

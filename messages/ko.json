@@ -531,7 +531,7 @@
     "scanTime": "스캔 시간",
     "stampTitle": "스탬프 제목",
     "stampCategory": "스탬프 카테고리",
-    "noOfStampToCollect": "수집할 스탬프 수",
+    "noOfStampToCollect": "수집할 우표 수",
     "basicRules": "기본 규칙",
     "status": "상태",
     "minPurchaseAmount": "최소 구매 금액",
@@ -545,7 +545,7 @@
     "email": "이메일",
     "phone": "전화",
     "country": "국가",
-    "customerPayment": "고객 결제"
+    "orderAmount": "주문 금액"
   },
   "RetailerStampScanTable": {
     "stampTitle": "스탬프 제목",

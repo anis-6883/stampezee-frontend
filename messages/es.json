@@ -532,7 +532,7 @@
     "scanTime": "Hora del Escaneo",
     "stampTitle": "Título de Estampa",
     "stampCategory": "Categoría de Estampa",
-    "noOfStampToCollect": "Número de Estampas para Recolectar",
+    "noOfStampToCollect": "Nº de sellos a coleccionar",
     "basicRules": "Reglas Básicas",
     "status": "Estado",
     "minPurchaseAmount": "Monto Mínimo de Compra",
@@ -546,7 +546,7 @@
     "email": "Correo Electrónico",
     "phone": "Teléfono",
     "country": "País",
-    "customerPayment": "Pago del cliente"
+    "orderAmount": "Importe del pedido"
   },
   "RetailerStampScanTable": {
     "stampTitle": "Título de Estampa",
