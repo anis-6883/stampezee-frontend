@@ -1,5 +1,6 @@
 import { useGetAllCustomerScanBySuperAdminQuery } from '@/features/super-admin/customer/customerApi';
 import { IQueryType } from '@/types';
+import { capitalizeEachWord } from '@/utils/capitalizeEachWord';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useState } from 'react';
 import { BsShop } from 'react-icons/bs';
@@ -75,7 +76,7 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
                         <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, offset)}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">{'Customer Payment'}</td>
+                        <td className="px-6 py-4">Order Amount</td>
                         <td className="px-6 py-4">{`${row?.original?.scan?.amount} ${row?.original?.scan?.amountCurrency}`}</td>
                       </tr>
                       <tr className="border-b bg-white">
@@ -87,7 +88,7 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
                         <td className="px-6 py-4">{row?.original?.offer?.category}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">No of Stamp to Collect</td>
+                        <td className="px-6 py-4">No. of Stamps to Collect</td>
                         <td className="px-6 py-4">{row?.original?.offer?.noOfStampsToCollect}</td>
                       </tr>
                       <tr className="border-b bg-white">
@@ -100,7 +101,7 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Reward Type</td>
-                        <td className="px-6 py-4">{row?.original?.offer?.rewardType}</td>
+                        <td className="px-6 py-4">{capitalizeEachWord(row?.original?.offer?.rewardType)}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Reward</td>

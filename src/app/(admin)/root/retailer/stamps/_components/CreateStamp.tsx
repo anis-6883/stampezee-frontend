@@ -131,7 +131,10 @@ export default function Create({ locale }: { locale: string }) {
     rules: Yup.string().trim().required(tCommon('required')),
     hasValidity: Yup.boolean().required(tCommon('required')),
     minPurchaseAmount: Yup.number().min(0, 'Minimum Purchase Amount must be at least 0').required(tCommon('required')),
-    noOfStampsToCollect: Yup.number().min(1, 'Number of stamps to collect must be at least 1').required(tCommon('required')),
+    noOfStampsToCollect: Yup.number()
+      .min(1, 'No. of stamps to collect must be at least 1')
+      .max(20, 'No. of stamps to collect must be less than or equal to 20')
+      .required(tCommon('required')),
     rewardType: Yup.mixed().oneOf(['promotion', 'discount']).required(tCommon('required')),
     promotionReward: Yup.string().when('rewardType', {
       is: 'promotion',
