@@ -531,7 +531,7 @@
     "scanTime": "Время Сканирования",
     "stampTitle": "Название Штампа",
     "stampCategory": "Категория Штампа",
-    "noOfStampToCollect": "Количество Штампов для Сбора",
+    "noOfStampToCollect": "Количество марок для сбора",
     "basicRules": "Основные Правила",
     "status": "Статус",
     "minPurchaseAmount": "Минимальная Сумма Покупки",
@@ -545,7 +545,7 @@
     "email": "Электронная Почта",
     "phone": "Телефон",
     "country": "Страна",
-    "customerPayment": "Оплата клиента"
+    "orderAmount": "Сумма заказа"
   },
   "RetailerStampScanTable": {
     "stampTitle": "Название Штампа",

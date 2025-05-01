@@ -3,6 +3,7 @@
 import { routes } from '@/config/routes';
 import { useRetailerAllScanDetailsQuery } from '@/features/retailer/scan/scanApi';
 import { IQueryType } from '@/types';
+import { capitalizeEachWord } from '@/utils/capitalizeEachWord';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -71,7 +72,10 @@ export default function ScanTable() {
 
   const renderDetailPanel = ({ row }: any) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const customerEmail = row?.original?.customer?.email?.split(/[-\s]/)?.find((part: string) => emailRegex.test(part));
+    const customerEmail = row?.original?.customer?.contactEmail
+      ? row?.original?.customer?.contactEmail
+      : row?.original?.customer?.email?.split(/[-\s]/)?.find((part: string) => emailRegex.test(part));
+
     return (
       <div className="mx-20 flex justify-start">
         <div className="w-1/2">
@@ -97,7 +101,7 @@ export default function ScanTable() {
                         <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, session?.user?.timezone?.value || 0)}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">{tScanTab('customerPayment')}</td>
+                        <td className="px-6 py-4">{tScanTab('orderAmount')}</td>
                         <td className="px-6 py-4">{`${row?.original?.scan?.amount} ${row?.original?.scan?.amountCurrency}`}</td>
                       </tr>
                       <tr className="border-b bg-white">
@@ -121,11 +125,11 @@ export default function ScanTable() {
                         <td className="px-6 py-4">{row?.original?.offer?.minPurchaseAmount} CAD</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">{tScanTab('rewardType')}:</td>
-                        <td className="px-6 py-4">{row?.original?.offer?.rewardType}</td>
+                        <td className="px-6 py-4">{tScanTab('rewardType')}</td>
+                        <td className="px-6 py-4">{capitalizeEachWord(row?.original?.offer?.rewardType)}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">{tScanTab('reward')}:</td>
+                        <td className="px-6 py-4">{tScanTab('reward')}</td>
                         <td className="px-6 py-4">
                           {row?.original?.offer?.rewardType === 'discount'
                             ? `${row?.original?.offer?.discountReward}%`
@@ -168,7 +172,7 @@ export default function ScanTable() {
                         <td className="px-6 py-4">{tScanTab('name')}</td>
                         <td className="px-6 py-4">{row?.original?.customer?.fullName}</td>
                       </tr>
-                      <tr className="border-b bg-white">
+                      {/* <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('email')}</td>
                         <td className="px-6 py-4">{customerEmail}</td>
                       </tr>
@@ -179,7 +183,7 @@ export default function ScanTable() {
                             ? `${row?.original?.customer?.dialCode}${row?.original?.customer?.phone}`
                             : 'N/A'}
                         </td>
-                      </tr>
+                      </tr> */}
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('country')}</td>
                         <td className="px-6 py-4">{row?.original?.customer?.country ? row?.original?.customer?.country : 'N/A'}</td>

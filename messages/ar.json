@@ -532,7 +532,7 @@
     "scanTime": "وقت المسح",
     "stampTitle": "عنوان الطابع",
     "stampCategory": "فئة الطابع",
-    "noOfStampToCollect": "عدد الطوابع لجمعها",
+    "noOfStampToCollect": "عدد الطوابع التي يجب جمعها",
     "basicRules": "القواعد الأساسية",
     "status": "الحالة",
     "minPurchaseAmount": "الحد الأدنى للمبلغ المشتري",
@@ -546,7 +546,7 @@
     "email": "البريد الإلكتروني",
     "phone": "الهاتف",
     "country": "الدولة",
-    "customerPayment": "دفع العميل"
+    "orderAmount": "مبلغ الطلب"
   },
   "RetailerStampScanTable": {
     "stampTitle": "عنوان الطابع",

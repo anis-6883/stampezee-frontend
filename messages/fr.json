@@ -531,7 +531,7 @@
     "scanTime": "Heure du Scan",
     "stampTitle": "Titre du Timbre",
     "stampCategory": "Catégorie du Timbre",
-    "noOfStampToCollect": "Nombre de Timbres à Collecter",
+    "noOfStampToCollect": "Nbre de timbres à collectionner",
     "basicRules": "Règles de Base",
     "status": "Statut",
     "minPurchaseAmount": "Montant d'Achat Minimum",
@@ -545,7 +545,7 @@
     "email": "Email",
     "phone": "Téléphone",
     "country": "Pays",
-    "customerPayment": "Paiement client"
+    "orderAmount": "Montant de la commande"
   },
   "RetailerStampScanTable": {
     "stampTitle": "Titre du Timbre",

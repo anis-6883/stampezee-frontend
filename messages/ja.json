@@ -530,7 +530,7 @@
     "scanTime": "スキャン時間",
     "stampTitle": "スタンプタイトル",
     "stampCategory": "スタンプカテゴリ",
-    "noOfStampToCollect": "収集するスタンプの数",
+    "noOfStampToCollect": "集めるスタンプの数",
     "basicRules": "基本ルール",
     "status": "ステータス",
     "minPurchaseAmount": "最低購入金額",
@@ -544,7 +544,7 @@
     "email": "メール",
     "phone": "電話",
     "country": "国",
-    "customerPayment": "顧客の支払い"
+    "orderAmount": "注文金額"
   },
   "RetailerStampScanTable": {
     "stampTitle": "スタンプタイトル",
