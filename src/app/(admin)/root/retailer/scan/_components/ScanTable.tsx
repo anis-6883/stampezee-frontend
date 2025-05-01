@@ -172,7 +172,7 @@ export default function ScanTable() {
                         <td className="px-6 py-4">{tScanTab('name')}</td>
                         <td className="px-6 py-4">{row?.original?.customer?.fullName}</td>
                       </tr>
-                      <tr className="border-b bg-white">
+                      {/* <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('email')}</td>
                         <td className="px-6 py-4">{customerEmail}</td>
                       </tr>
@@ -183,7 +183,7 @@ export default function ScanTable() {
                             ? `${row?.original?.customer?.dialCode}${row?.original?.customer?.phone}`
                             : 'N/A'}
                         </td>
-                      </tr>
+                      </tr> */}
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('country')}</td>
                         <td className="px-6 py-4">{row?.original?.customer?.country ? row?.original?.customer?.country : 'N/A'}</td>
