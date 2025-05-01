@@ -109,7 +109,7 @@ export default function CreateUpdateModal({
       .required(tCommon('required')),
     email: Yup.string()
       .test('email', 'Provide email with username.s3@stampezee.com format!', (value: any) => {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+\.s[0-9]@stampezee\.com$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+\.s[0-9]+@stampezee\.com$/;
         return emailRegex.test(value);
       })
       .required(tCommon('required')),

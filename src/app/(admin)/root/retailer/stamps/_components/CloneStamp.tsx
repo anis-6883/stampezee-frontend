@@ -127,6 +127,7 @@ export default function CloneStamp({ Id, offset, locale }: any) {
       then: () => Yup.string().required(tCommon('required')),
       otherwise: () => Yup.string(),
     }),
+    description: Yup.string().required('Required!'),
   });
 
   return (
@@ -332,7 +333,7 @@ export default function CloneStamp({ Id, offset, locale }: any) {
                 </div>
               )}
 
-              <InputTextarea name="description" required={false} label={t('offerDetails')} placeholder="Write here..." />
+              <InputTextarea name="description" required={true} label={t('offerDetails')} placeholder="Write here..." />
 
               <p className="mt-4 flex flex-col text-end text-xs font-semibold">
                 <span>
@@ -356,8 +357,10 @@ export default function CloneStamp({ Id, offset, locale }: any) {
                   text={t('publish')}
                   postIcon={<BsCheck2Circle className="text-base" />}
                   onClick={() => {
-                    setSubmitAction('publish');
-                    setPublishState(true);
+                    if (Object.keys(errors)?.length === 0) {
+                      setSubmitAction('publish');
+                      setPublishState(true);
+                    }
                   }}
                 />
               </div>
