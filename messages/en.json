@@ -18,7 +18,7 @@
     "linkedin": "LINKEDIN",
     "newsletterButtonText": "SUBMIT",
     "newsletterPlaceholderText": "Email Address",
-    "goToHome": "Go To Home",
+    "goToHome": "Home",
     "copyright": "© Copyright 2024 StampEzee | All Rights Reserved.",
     "searchWidgetPlaceholder": "Search your page",
     "newsletterSuccessMessage": "Thank you for subscribing!",
@@ -705,7 +705,7 @@
     "totalCollectStamp": "Total Collect Stamp",
     "totalScan": "Total Scan",
     "totalRewardCollect": "Total Reward Collect",
-    "totalPurchased": "Total Purchased"
+    "totalPurchased": "Total Revenue Amount"
   },
   "RetailerCustomerDetailsScanTable": {
     "title": "Scan Statistics",
@@ -740,7 +740,7 @@
     "ownerName": "Owner Name",
     "branchName": "Branch Name",
     "branchAddress": "Branch Address",
-    "subAdminName": "Sub Admin Name",
-    "subAdminEmail": "Sub Admin Email"
+    "subAdminName": "Loyalty-Executive Name",
+    "subAdminEmail": "Loyalty-Executive Email"
   }
 }

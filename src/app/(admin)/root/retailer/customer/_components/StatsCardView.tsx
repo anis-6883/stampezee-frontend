@@ -76,7 +76,7 @@ export default function StatsCardView({
             icon={<LuCircleDollarSign className="text-2xl" />}
             key={1}
             title={`${t('totalPurchased')} (CAD)`}
-            metric={totalPurchased}
+            metric={totalPurchased?.toFixed(2)}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
