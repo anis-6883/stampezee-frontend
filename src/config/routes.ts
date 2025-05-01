@@ -28,7 +28,7 @@ export const routes = {
       stamp: {
         home: `/root/retailer/stamps`,
         create: `/root/retailer/stamps/create`,
-        edit: (id: number | string) => `/root/retailer/stamps/${id}/update`,
+        edit: (id: number | string, isPublished: boolean) => `/root/retailer/stamps/${id}/update?publish=${isPublished ? 'yes' : 'no'}`,
         clone: (id: number | string) => `/root/retailer/stamps/${id}/clone`,
       },
       stampImage: {

@@ -21,15 +21,16 @@ const pageHeader = {
   ],
 };
 
-export default async function Page({ params }: any) {
+export default async function Page({ params, searchParams }: any) {
   const { id } = params;
+  const { publish } = searchParams;
   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
   const t = await getTranslations('RetailerCreateAndUpdateStamp');
   const tStamp = await getTranslations('RetailerStamp');
   pageHeader.breadcrumb[0].name = tStamp('dashboard');
   pageHeader.breadcrumb[1].name = tStamp('stamps');
-  pageHeader.breadcrumb[2].name = t('updateStamp');
-  pageHeader.title = t('updateStamp');
+  pageHeader.breadcrumb[2].name = publish === 'yes' ? 'View Stamp' : t('updateStamp');
+  pageHeader.title = publish === 'yes' ? 'View A Stamp' : t('updateStamp');
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />

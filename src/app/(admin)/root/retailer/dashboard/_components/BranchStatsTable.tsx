@@ -3,24 +3,14 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
-import { RootState } from '@/features/store';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 export default function BranchStatsTable() {
-  const [selectedCurrency, setSelectedCurrency] = useState<any>();
-  const { currencyExchangeRates } = useSelector((state: RootState) => state.currencyExchangeSlice);
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
   const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
   const t = useTranslations('RetailerDashboardTable');
   const t2 = useTranslations('RetailerDashboard');
   const t3 = useTranslations('retailerDashboardStampAndCustomerStats');
-
-  useEffect(() => {
-    const selectedCurrency: any = currencyExchangeRates?.find((item: any) => item?.name === retailerProfile?.data?.businessCurrency);
-    setSelectedCurrency(selectedCurrency);
-  }, [currencyExchangeRates, retailerProfile?.data?.businessCurrency]);
 
   const tableHeaders = [
     t('serialNo'),
@@ -118,7 +108,7 @@ export default function BranchStatsTable() {
                   {item.totalOrder}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.totalRevenue * selectedCurrency?.exchangeRate || 0}
+                  {item.totalRevenue}
                 </td>
               </tr>
             ))

@@ -122,10 +122,6 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
                         <td className="px-6 py-4">{row?.original?.retailer?.storeName}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">{t2('ownerName')}</td>
-                        <td className="px-6 py-4">{row?.original?.retailer?.fullName}</td>
-                      </tr>
-                      <tr className="border-b bg-white">
                         <td className="px-6 py-4">{t2('branchName')}</td>
                         <td className="px-6 py-4">{row?.original?.branch?.name}</td>
                       </tr>

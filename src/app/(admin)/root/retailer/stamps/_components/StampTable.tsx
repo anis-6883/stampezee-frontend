@@ -264,7 +264,7 @@ export default function StampTable() {
                 preIcon={<FiCopy className="text-base" />}
               />
             </Link>
-            <Link href={routes.privateRoutes.retailer.stamp.edit(row.original._id)}>
+            <Link href={routes.privateRoutes.retailer.stamp.edit(row.original._id, row?.original?.isPublished)}>
               <Button
                 tooltip="Edit"
                 color="warning"
