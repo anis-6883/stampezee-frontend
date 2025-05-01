@@ -16,11 +16,11 @@ import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { IoAlertCircle, IoCloseOutline } from 'react-icons/io5';
+import { IoAlertCircle, IoCloseOutline, IoInformationCircleOutline } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine } from 'react-icons/ri';
 import ReactSelect from 'react-select';
-import { ActionIcon, Modal, Switch, Title } from 'rizzui';
+import { ActionIcon, Modal, Switch, Title, Tooltip } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function CreateUpdateModel({
@@ -362,6 +362,18 @@ export default function CreateUpdateModel({
                             onChange={() => setTotalUserLimitChecked((prev) => !prev)}
                           />
                           <span>Total User Limit</span>
+                          <Tooltip
+                            color="danger"
+                            className={`bg-danger text-white`}
+                            size="sm"
+                            placement="top"
+                            content={'Up to [X] users are allowed to use this coupon!'}
+                            arrowClassName={`fill-danger`}
+                          >
+                            <span>
+                              <IoInformationCircleOutline className="text-xl text-danger " />
+                            </span>
+                          </Tooltip>
                         </div>
                       }
                     />
@@ -382,6 +394,18 @@ export default function CreateUpdateModel({
                             onChange={() => setPerUserLimitChecked((prev) => !prev)}
                           />
                           <span>Per User Limit</span>
+                          <Tooltip
+                            color="danger"
+                            className={`bg-danger text-white`}
+                            size="sm"
+                            placement="top"
+                            content={'Each user can use this coupon up to [X] times'}
+                            arrowClassName={`fill-danger`}
+                          >
+                            <span>
+                              <IoInformationCircleOutline className="text-xl text-danger " />
+                            </span>
+                          </Tooltip>
                         </div>
                       }
                     />

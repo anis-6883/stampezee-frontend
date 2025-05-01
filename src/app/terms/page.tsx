@@ -21,7 +21,7 @@ export default async function Page() {
         <Link href={routes.publicRoutes.home}>
           <img src="/images/logo.png" className="mx-auto w-28" alt="logo" />
         </Link>
-        <h1 className="mt-3 text-center text-2xl font-bold lg:text-3xl">Terms & Condition</h1>
+        <h1 className="mt-3 text-center text-2xl font-bold lg:text-3xl">Terms & Conditions</h1>
         <hr className="my-7" />
         <div className="ql-editor !h-auto">
           <div dangerouslySetInnerHTML={{ __html: data?.data?.page?.terms ?? '' }} />

@@ -8,12 +8,14 @@ export default function InputTextarea({
   rows = 5,
   required = true,
   placeholder = 'Write you message...',
+  readOnly = false,
 }: {
   name: string;
   label: string;
   placeholder?: string;
   ref?: any;
   required?: boolean;
+  readOnly?: boolean;
   type?: string;
   rows?: number;
 }) {
@@ -31,6 +33,7 @@ export default function InputTextarea({
               </span>
             }
             placeholder={placeholder}
+            readOnly={readOnly}
             textareaClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
             helperText={
               meta.touched && meta.error ? (
