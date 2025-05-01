@@ -7,7 +7,12 @@ import InputPassword from '@/components/Formik/InputPassword';
 import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { SerializedError } from '@/features/api/apiSlice';
-import { useCreateSubAdminMutation, useSubAdminBranchesQuery, useUpdateSubAdminMutation } from '@/features/retailer/sub-admin/subAdminApi';
+import {
+  useCreateSubAdminMutation,
+  useGetAllSubAdminsQuery,
+  useSubAdminBranchesQuery,
+  useUpdateSubAdminMutation,
+} from '@/features/retailer/sub-admin/subAdminApi';
 import objectToFormData from '@/utils/objectToFormData';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
@@ -34,6 +39,10 @@ export default function CreateUpdateModal({
   const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
   const [createSubAdmin, { isSuccess: createSuccess, error: createError }] = useCreateSubAdminMutation();
   const [updateSubAdmin, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubAdminMutation();
+  const { data, isLoading, isFetching } = useGetAllSubAdminsQuery({
+    page: 1,
+    limit: 300,
+  });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: branches } = useSubAdminBranchesQuery(undefined);
@@ -99,8 +108,8 @@ export default function CreateUpdateModal({
       .trim()
       .required(tCommon('required')),
     email: Yup.string()
-      .test('email', 'Provide email with john.s1@stampezee.com format!', (value: any) => {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+\.s1@stampezee\.com$/;
+      .test('email', 'Provide email with username.s3@stampezee.com format!', (value: any) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+\.s[0-9]@stampezee\.com$/;
         return emailRegex.test(value);
       })
       .required(tCommon('required')),
@@ -177,7 +186,7 @@ export default function CreateUpdateModal({
                         setFieldValue('firstName', e.target.value);
                         if (!formData?._id) {
                           if (e.target.value) {
-                            setFieldValue('email', `${e.target.value.trim()}.s1@stampezee.com`);
+                            setFieldValue('email', `${e.target.value.trim()}.s${data?.data.totalDocs + 1}@stampezee.com`);
                           } else {
                             setFieldValue('email', '');
                           }

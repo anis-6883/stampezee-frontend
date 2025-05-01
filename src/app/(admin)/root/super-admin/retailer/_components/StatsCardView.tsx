@@ -86,7 +86,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<LuUsers className="text-2xl" />}
             key={1}
-            title={'Total Sub Admin'}
+            title={'Total Loyalty Executive'}
             metric={totalSubAdmin}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"

@@ -5,7 +5,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useGetDashboardRevenueQuery } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useEffect, useState } from 'react';
-import { Select, Text, Title } from 'rizzui';
+import { IoInformationCircleOutline } from 'react-icons/io5';
+import { Select, Text, Title, Tooltip } from 'rizzui';
 import CircleProgressbar from './CircleProgressbar';
 import WidgetCard from './WidgetCard';
 
@@ -26,15 +27,7 @@ export default function Revenue({ className }: { className?: string }) {
     refetch();
   }, [refetch, dateRange]);
 
-  const {
-    activeSubscription = 0,
-    totalRevenueInCAD = 0,
-    totalSubscriptionRevenueInCAD = 0,
-    totalAddonRevenueInCAD = 0,
-    subscriptionPercentage = 0,
-    addonPercentage = 0,
-    totalRefundAmountInCAD = 0,
-  } = dashboardRevenue?.data || {};
+  const { activeSubscription = 0, totalRevenueInCAD = 0, totalRefundAmountInCAD = 0 } = dashboardRevenue?.data || {};
 
   const dateOptions = [
     { label: 'No Date', value: 'no-date' },
@@ -65,9 +58,24 @@ export default function Revenue({ className }: { className?: string }) {
   return (
     <WidgetCard
       title={
-        <Title as="h3" className="col-span-full text-base font-semibold text-black sm:text-lg">
-          Total Revenue (CAD)
-        </Title>
+        <div className="flex items-center gap-x-1">
+          <Title as="h3" className="col-span-full text-base font-semibold text-black sm:text-lg">
+            Total Revenue (CAD)
+          </Title>
+
+          <Tooltip
+            color="danger"
+            className={`bg-danger text-white`}
+            size="sm"
+            placement="top"
+            content={'Hello..'}
+            arrowClassName={`fill-danger`}
+          >
+            <span>
+              <IoInformationCircleOutline className="text-xl text-danger " />
+            </span>
+          </Tooltip>
+        </div>
       }
       description={
         <p className="flex gap-x-2">

@@ -108,7 +108,7 @@ export default function RetailerDetails({ id }: { id: string }) {
           <AddonListTable data={addonSubscriptions} isLoading={isLoading} isError={isError} />
         </div>
         <div className="col-span-1 md:col-span-4">
-          <h2 className="my-5 text-lg font-bold">Sub-admin List:</h2>
+          <h2 className="my-5 text-lg font-bold">Loyalty-Executive List:</h2>
           <SubAdminListTable data={sub_admins} isLoading={isLoading} isError={isError} />
         </div>
       </div>

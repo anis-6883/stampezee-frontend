@@ -6,7 +6,8 @@ import { useAvgCollectedStampQuery } from '@/features/retailer/dashboard/dashboa
 import cn from '@/hooks/class-names';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { Select, Text, Title } from 'rizzui';
+import { IoInformationCircleOutline } from 'react-icons/io5';
+import { Select, Text, Title, Tooltip } from 'rizzui';
 import CircleProgressbar from './CircleProgressbar';
 import WidgetCard from './WidgetCard';
 
@@ -47,9 +48,23 @@ export default function RewardCollectStats({ className }: { className?: string }
   return (
     <WidgetCard
       title={
-        <Title as="h3" className="col-span-full text-base font-semibold text-black sm:text-lg">
-          {t('stampCollect')}
-        </Title>
+        <div className="flex items-center gap-x-1">
+          <Title as="h3" className="col-span-full text-base font-semibold text-black sm:text-lg">
+            {t('stampCollect')}
+          </Title>
+          <Tooltip
+            color="danger"
+            className={`bg-danger text-white`}
+            size="sm"
+            placement="top"
+            content={'Hello..'}
+            arrowClassName={`fill-danger`}
+          >
+            <span>
+              <IoInformationCircleOutline className="text-xl text-danger " />
+            </span>
+          </Tooltip>
+        </div>
       }
       // description={
       //   <p className="flex gap-x-2">

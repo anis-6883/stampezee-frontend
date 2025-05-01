@@ -3,8 +3,9 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetDashboardCalcQuery } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
+import { IoInformationCircleOutline } from 'react-icons/io5';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
-import { Text, Title } from 'rizzui';
+import { Text, Title, Tooltip } from 'rizzui';
 
 export default function SignUpStatus({ className }: { className?: string }) {
   const { data: dashBoardData, isLoading, isError } = useGetDashboardCalcQuery(null);
@@ -30,9 +31,23 @@ export default function SignUpStatus({ className }: { className?: string }) {
   return (
     <div className={cn('flex flex-col gap-5 border-0 p-0 lg:p-0', className)}>
       <div className="grid h-full items-start rounded-lg border border-gray-300 p-5 @xl:grid-cols-2 lg:p-7">
-        <Title as="h3" className="col-span-full mb-8 text-base font-semibold sm:text-lg">
-          Total Signup Ratio
-        </Title>
+        <div className="flex items-center gap-x-1">
+          <Title as="h3" className="col-span-full text-base font-semibold sm:text-lg">
+            Total Signup Ratio
+          </Title>
+          <Tooltip
+            color="danger"
+            className={`bg-danger text-white`}
+            size="sm"
+            placement="top"
+            content={'Hello..'}
+            arrowClassName={`fill-danger`}
+          >
+            <span>
+              <IoInformationCircleOutline className="text-xl text-danger " />
+            </span>
+          </Tooltip>
+        </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">
           <div className="mx-auto h-44 w-44">
             {isLoading || isError || dashBoardData === undefined ? (

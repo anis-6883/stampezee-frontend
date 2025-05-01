@@ -132,11 +132,11 @@ export default function ScanTable({ offset }: { offset: number }) {
                         <td className="px-6 py-4">{row?.original?.branch?.address}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Sub-Admin Name</td>
+                        <td className="px-6 py-4">Loyalty-Executive Name</td>
                         <td className="px-6 py-4">{row?.original?.subAdmin?.fullName}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Sub-Admin Email</td>
+                        <td className="px-6 py-4">Loyalty-Executive Email</td>
                         <td className="px-6 py-4">{row?.original?.subAdmin?.email}</td>
                       </tr>
                     </tbody>
