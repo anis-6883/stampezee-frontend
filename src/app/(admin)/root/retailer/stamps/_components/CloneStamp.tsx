@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
+import FormikDatePicker from '@/components/Formik/FormikDatePicker';
 import InputField from '@/components/Formik/InputField';
 import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
@@ -10,22 +11,20 @@ import getFormattedDate from '@/utils/get-formatted-date';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle, BsPencil } from 'react-icons/bs';
+import { IoAlertCircle } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine } from 'react-icons/ri';
 import * as Yup from 'yup';
+import CreateStampModal from './CreateStampModal';
 import StampImgSkeleton from './StampImgSkeleton';
 import StampPublishedModal from './StampPublishedModal';
-
-import FormikDatePicker from '@/components/Formik/FormikDatePicker';
-import { useSession } from 'next-auth/react';
-import { IoAlertCircle } from 'react-icons/io5';
-import CreateStampModal from './CreateStampModal';
 
 export default function CloneStamp({ Id, offset, locale }: any) {
   const { data: session }: any = useSession();
@@ -33,16 +32,11 @@ export default function CloneStamp({ Id, offset, locale }: any) {
   const t2 = useTranslations('RetailerStampImageCreateUpdate');
   const tCommon = useTranslations('RetailerCommon');
   const [submitting, setSubmitting] = useState(false);
-
   const [submitAction, setSubmitAction] = useState<string | null>(null);
-
   const [publishState, setPublishState] = useState(false);
-
   const [publishSubmitting, setPublishSubmitting] = useState(false);
   const [createState, setCreateState] = useState(false);
-
   const [values, setValues] = useState({});
-
   const [createStamp] = useCreateStampMutation();
   const [optionsData, setOptionsData] = useState<any>();
   const { data: responseData, isLoading: responseIsLoading } = useBranchCategoryImageListQuery(undefined);
@@ -113,7 +107,10 @@ export default function CloneStamp({ Id, offset, locale }: any) {
     categoryId: Yup.string().required(tCommon('required')),
     title: Yup.string().required(tCommon('required')),
     rules: Yup.string().required(tCommon('required')),
-    noOfStampsToCollect: Yup.number().min(1, 'Number of stamps to collect must be at least 1').required(tCommon('required')),
+    noOfStampsToCollect: Yup.number()
+      .min(1, 'No. of stamps to collect must be at least 1')
+      .max(20, 'No. of stamps to collect must be less than or equal to 20!')
+      .required(tCommon('required')),
     rewardType: Yup.mixed().oneOf(['promotion', 'discount']).required(tCommon('required')),
     promotionReward: Yup.string().when('rewardType', {
       is: 'promotion',

@@ -103,7 +103,10 @@ export default function Update({ Id, offset }: any) {
     categoryId: Yup.string().required('Required!'),
     title: Yup.string().required('Required!'),
     rules: Yup.string().required('Required!'),
-    noOfStampsToCollect: Yup.number().min(1, 'Number of stamps to collect must be at least 1').required('This field is required'),
+    noOfStampsToCollect: Yup.number()
+      .min(1, 'No. of stamps to collect must be at least 1!')
+      .max(20, 'No. of stamps to collect must be less than or equal to 20!')
+      .required('Required!'),
     rewardType: Yup.mixed().oneOf(['promotion', 'discount']).required('Reward type is required'),
     promotionReward: Yup.string().when('rewardType', {
       is: 'promotion',
