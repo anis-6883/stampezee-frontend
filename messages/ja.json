@@ -312,7 +312,7 @@
     "switchPlan": "プランを変更",
     "selectPlan": "プランを選択",
     "selectAddOns": "アドオンを選択",
-    "buttonText": "確認"
+    "buttonText": "レジに進む"
   },
   "RetailerBilling": {
     "Billing": "請求",

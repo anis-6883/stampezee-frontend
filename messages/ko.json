@@ -313,7 +313,7 @@
     "switchPlan": "플랜 변경",
     "selectPlan": "플랜 선택",
     "selectAddOns": "추가 기능 선택",
-    "buttonText": "확인"
+    "buttonText": "결제하기"
   },
   "RetailerBilling": {
     "Billing": "청구",

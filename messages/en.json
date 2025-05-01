@@ -313,7 +313,7 @@
     "switchPlan": "Switch a Plan",
     "selectPlan": "Select a Plan",
     "selectAddOns": "Select Add-Ons",
-    "buttonText": "Selection Confirm"
+    "buttonText": "Proceed to Checkout"
   },
   "RetailerBilling": {
     "Billing": "Billing",
