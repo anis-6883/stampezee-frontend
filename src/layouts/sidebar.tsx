@@ -161,7 +161,7 @@ export default function Sidebar({ className }: { className?: string }) {
         </div>
       )}
 
-      {session?.user?.plan && <BalanceCard />}
+      {session?.user?.plan && <BalanceCard showUpButton={true} />}
 
       <SimpleBar>
         <div className="mt-4  pb-3 3xl:mt-6">
