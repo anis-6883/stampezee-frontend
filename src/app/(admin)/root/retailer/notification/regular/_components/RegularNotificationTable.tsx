@@ -75,7 +75,7 @@ export default function RegularNotificationTable({ locale }: { locale: string })
         </span>
       ),
       Cell: ({ row }: any) =>
-        row?.original?.scheduleAt ? (
+        row?.original?.scheduleAt && new Date(row?.original?.scheduleAt) > new Date() ? (
           <div className="text-md mx-auto flex items-center gap-x-2 text-start">
             {convertDateByOffset(row?.original?.scheduleAt, session?.user?.timezone?.value || 0)} <LuClock4 className="text-lg" />
           </div>
