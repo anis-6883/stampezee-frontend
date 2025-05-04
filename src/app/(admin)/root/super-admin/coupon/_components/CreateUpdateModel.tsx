@@ -69,7 +69,7 @@ export default function CreateUpdateModel({
     discountType: formData?.discountType || 'percentage',
     discount: formData?.discount || '',
     // limit: formData?.limit || '',
-    validDateRange: formData?.validDateRange || '',
+    validDateRange: formData?.validDateRange || 'today',
     allowFor: formData?.allowFor || 'all',
     allowedRetailers: formData?.allowedRetailers || [],
     applicablePackages: formData?.applicablePackages || [],
@@ -412,7 +412,13 @@ export default function CreateUpdateModel({
                   </div>
 
                   <div className="grid grid-cols-1">
-                    <FormikDatePicker isMinDate={true} label="Valid Date Range" name="validDateRange" range={true} />
+                    <FormikDatePicker
+                      isMinDate={true}
+                      minDate={initialValues.validDateRange.split(' to ')[0]}
+                      label="Valid Date Range"
+                      name="validDateRange"
+                      range={true}
+                    />
                   </div>
 
                   <p className="flex flex-col text-end text-xs font-semibold">

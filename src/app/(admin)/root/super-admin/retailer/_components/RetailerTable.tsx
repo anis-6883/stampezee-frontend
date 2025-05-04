@@ -10,7 +10,7 @@ import {
   useUpdateRetailerStatusMutation,
 } from '@/features/super-admin/retailer/retailerApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { convertDateByOffset, getFormatDateByTimezone } from '@/utils/getFormatDate';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -22,7 +22,7 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
-export default function RetailerTable({ offset, googleMapsApiKey }: { offset: number; googleMapsApiKey: string }) {
+export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone: string; googleMapsApiKey: string }) {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -94,7 +94,7 @@ export default function RetailerTable({ offset, googleMapsApiKey }: { offset: nu
             <span className="font-bold">Email:</span> {row?.original?.email}
           </p>
           <p>
-            <span className="font-bold">Join Date:</span> {convertDateByOffset(row?.original?.createdAt, offset)}
+            <span className="font-bold">Join Date:</span> {getFormatDateByTimezone(row?.original?.createdAt, timezone)}
           </p>
         </div>
       ),

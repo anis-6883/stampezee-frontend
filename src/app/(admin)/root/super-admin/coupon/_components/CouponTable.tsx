@@ -6,7 +6,7 @@ import StatusIndicator from '@/components/StatusIndicator';
 import { useDeleteCouponMutation, useGetAllCouponQuery, useUpdateCouponStatusMutation } from '@/features/super-admin/coupon/couponApi';
 import { IQueryType } from '@/types';
 import getFormattedDate from '@/utils/get-formatted-date';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
@@ -15,8 +15,9 @@ import { ImBin } from 'react-icons/im';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
+import getFormattedDateByTimezone from '@/utils/get-formatted-date-By-Timezone';
 
-export default function CouponTable({ offset }: { offset: number }) {
+export default function CouponTable({ timezone }: { timezone: string }) {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -111,10 +112,10 @@ export default function CouponTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Started At:</span> {convertDateByOffset(row?.original?.startedAt, offset)}
+            <span className="font-bold">Started At:</span> {getFormatDateByTimezone(row?.original?.startedAt, timezone)}
           </p>
           <p>
-            <span className="font-bold">Expired At:</span> {convertDateByOffset(row?.original?.expiredAt, offset)}
+            <span className="font-bold">Expired At:</span> {getFormatDateByTimezone(row?.original?.expiredAt, timezone)}
           </p>
         </div>
       ),
@@ -150,7 +151,7 @@ export default function CouponTable({ offset }: { offset: number }) {
             onClick={() => {
               setFormData({
                 ...row.original,
-                validDateRange: `${getFormattedDate(row?.original?.startedAt, offset)} to ${getFormattedDate(row?.original?.expiredAt, offset)}`,
+                validDateRange: `${getFormattedDateByTimezone(row?.original?.startedAt, timezone)} to ${getFormattedDateByTimezone(row?.original?.expiredAt, timezone)}`,
               });
               setCreateState(true);
             }}

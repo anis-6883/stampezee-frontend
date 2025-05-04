@@ -25,7 +25,7 @@ export default async function Page() {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <CouponTable offset={data?.data?.general?.timezone?.value} />
+      <CouponTable timezone={data?.data?.general?.timezone?.label} />
     </div>
   );
 }

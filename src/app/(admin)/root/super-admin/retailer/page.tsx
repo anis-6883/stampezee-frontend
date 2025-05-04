@@ -24,7 +24,7 @@ export default async function Page() {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <RetailerTable offset={data?.data?.general?.timezone?.value} googleMapsApiKey={data?.data?.googleMap?.googleMapsApiKey} />
+      <RetailerTable timezone={data?.data?.general?.timezone?.label} googleMapsApiKey={data?.data?.googleMap?.googleMapsApiKey} />
     </div>
   );
 }
