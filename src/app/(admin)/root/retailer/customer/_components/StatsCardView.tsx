@@ -1,5 +1,6 @@
 'use client';
 
+import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 import { useTranslations } from 'next-intl';
@@ -27,6 +28,7 @@ export default function StatsCardView({
   isError: boolean;
 }) {
   const t = useTranslations('RetailerCustomerDetailsStats');
+  const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
 
   return (
@@ -75,7 +77,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<LuCircleDollarSign className="text-2xl" />}
             key={1}
-            title={`${t('totalPurchased')} (CAD)`}
+            title={`${t('totalPurchased')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`}
             metric={totalPurchased?.toFixed(2)}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
