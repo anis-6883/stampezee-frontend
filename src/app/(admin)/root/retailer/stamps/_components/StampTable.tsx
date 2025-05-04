@@ -38,7 +38,6 @@ export default function StampTable() {
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
-
   const [publishState, setPublishState] = useState(false);
   const [publishId, setPublishId] = useState(null);
   const [publishSubmitting, setPublishSubmitting] = useState(false);
@@ -266,7 +265,7 @@ export default function StampTable() {
             </Link>
             <Link href={routes.privateRoutes.retailer.stamp.edit(row.original._id, row?.original?.isPublished)}>
               <Button
-                tooltip="Edit"
+                tooltip={row?.original?.isPublished ? 'View' : 'Edit'}
                 color="warning"
                 preIcon={row?.original?.isPublished ? <IoEyeOutline className="text-base" /> : <HiOutlinePencil className="text-base" />}
               />

@@ -46,11 +46,11 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <Tooltip
       color="danger"
-      className={`${tooltip === 'Details' || tooltip === 'Clone' ? 'bg-primary' : tooltip === 'Edit' ? 'bg-warning' : 'bg-danger'} text-white ${tooltip ? '' : 'hidden'}`}
+      className={`${tooltip === 'Details' || tooltip === 'Clone' ? 'bg-primary' : tooltip === 'Edit' || tooltip === 'View' ? 'bg-warning' : 'bg-danger'} text-white ${tooltip ? '' : 'hidden'}`}
       size="sm"
       placement="top"
       content={tooltip}
-      arrowClassName={`${tooltip === 'Details' || tooltip === 'Clone' ? 'fill-primary' : tooltip === 'Edit' ? 'fill-warning' : 'fill-danger'}`}
+      arrowClassName={`${tooltip === 'Details' || tooltip === 'Clone' ? 'fill-primary' : tooltip === 'Edit' || tooltip === 'View' ? 'fill-warning' : 'fill-danger'}`}
     >
       <button
         onClick={onClick}
