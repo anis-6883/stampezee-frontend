@@ -5,9 +5,9 @@ import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { useGetSubscriptionPaymentsQuery } from '@/features/super-admin/payment/paymentApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
@@ -17,7 +17,7 @@ import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { Badge } from 'rizzui';
 
-export default function PaymentTable({ offset }: { offset: number }) {
+export default function PaymentTable({ timezone }: { timezone: string }) {
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetSubscriptionPaymentsQuery({
@@ -90,7 +90,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
       header: 'Billing Cycle',
       accessorKey: 'status',
       Cell: ({ row }: any) => {
-        const validityTo = moment.utc(row?.original?.validityTo).utcOffset(Number(offset));
+        const validityTo = moment.utc(row?.original?.validityTo).tz(timezone);
 
         return (
           <div className="flex items-center justify-center gap-2">
@@ -119,7 +119,7 @@ export default function PaymentTable({ offset }: { offset: number }) {
       header: 'Enroll Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>{convertDateByOffset(row?.original?.createdAt, offset)}</p>
+          <p>{getFormatDateByTimezone(row?.original?.createdAt, timezone)}</p>
         </div>
       ),
       mantineTableHeadCellProps: {
