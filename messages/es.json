@@ -726,6 +726,7 @@
     "offerAndScan": "Oferta y Escaneo",
     "store": "Tienda",
     "scanTime": "Hora de Escaneo",
+    "orderAmount": "Importe del pedido",
     "stampTitle": "Título del Sello",
     "stampCategory": "Categoría del Sello",
     "noOfStampToCollect": "Núm. de Sellos a Recolectar",

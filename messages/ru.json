@@ -725,6 +725,7 @@
     "offerAndScan": "Предложение и Сканирование",
     "store": "Магазин",
     "scanTime": "Время сканирования",
+    "orderAmount": "Сумма заказа",
     "stampTitle": "Название штампа",
     "stampCategory": "Категория штампа",
     "noOfStampToCollect": "Количество штампов для сбора",

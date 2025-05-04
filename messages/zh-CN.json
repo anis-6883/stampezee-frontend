@@ -725,6 +725,7 @@
     "offerAndScan": "优惠与扫描",
     "store": "商店",
     "scanTime": "扫描时间",
+    "orderAmount": "订单金额",
     "stampTitle": "印章标题",
     "stampCategory": "印章类别",
     "noOfStampToCollect": "收集的印章数量",

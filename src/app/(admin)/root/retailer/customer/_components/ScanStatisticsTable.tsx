@@ -82,6 +82,10 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
                         <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, offset)}</td>
                       </tr>
                       <tr className="border-b bg-white">
+                        <td className="px-6 py-4">{t2('orderAmount')}</td>
+                        <td className="px-6 py-4">{`${row?.original?.scan?.amount} ${row?.original?.scan?.amountCurrency}`}</td>
+                      </tr>
+                      <tr className="border-b bg-white">
                         <td className="px-6 py-4">{t2('stampTitle')}</td>
                         <td className="px-6 py-4">{row?.original?.offer?.title}</td>
                       </tr>

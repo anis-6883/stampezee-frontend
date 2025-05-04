@@ -725,6 +725,7 @@
     "offerAndScan": "Offre et Scanner",
     "store": "Magasin",
     "scanTime": "Heure de Scan",
+    "orderAmount": "Montant de la commande",
     "stampTitle": "Titre du Timbre",
     "stampCategory": "Catégorie de Timbre",
     "noOfStampToCollect": "Nombre de Timbres à Collecter",
