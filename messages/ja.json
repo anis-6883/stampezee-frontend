@@ -544,7 +544,8 @@
     "email": "メール",
     "phone": "電話",
     "country": "国",
-    "orderAmount": "注文金額"
+    "orderAmount": "注文金額",
+    "paymentReceipt": "支払い領収書"
   },
   "RetailerStampScanTable": {
     "stampTitle": "スタンプタイトル",
@@ -735,6 +736,7 @@
     "branchName": "支店名",
     "branchAddress": "支店住所",
     "subAdminName": "サブ管理者名",
-    "subAdminEmail": "サブ管理者のメール"
+    "subAdminEmail": "サブ管理者のメール",
+    "paymentReceipt": "支払い領収書"
   }
 }

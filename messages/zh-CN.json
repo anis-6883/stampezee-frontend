@@ -545,7 +545,8 @@
     "email": "电子邮件",
     "phone": "电话",
     "country": "国家",
-    "orderAmount": "订单金额"
+    "orderAmount": "订单金额",
+    "paymentReceipt": "付款收据"
   },
   "RetailerStampScanTable": {
     "stampTitle": "邮票标题",
@@ -736,6 +737,7 @@
     "branchName": "分店名称",
     "branchAddress": "分店地址",
     "subAdminName": "子管理员姓名",
-    "subAdminEmail": "子管理员邮箱"
+    "subAdminEmail": "子管理员邮箱",
+    "paymentReceipt": "付款收据"
   }
 }

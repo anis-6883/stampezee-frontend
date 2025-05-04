@@ -545,7 +545,8 @@
     "email": "이메일",
     "phone": "전화",
     "country": "국가",
-    "orderAmount": "주문 금액"
+    "orderAmount": "주문 금액",
+    "paymentReceipt": "결제 영수증"
   },
   "RetailerStampScanTable": {
     "stampTitle": "스탬프 제목",
@@ -736,6 +737,7 @@
     "branchName": "지점 이름",
     "branchAddress": "지점 주소",
     "subAdminName": "부 관리자 이름",
-    "subAdminEmail": "부 관리자 이메일"
+    "subAdminEmail": "부 관리자 이메일",
+    "paymentReceipt": "결제 영수증"
   }
 }

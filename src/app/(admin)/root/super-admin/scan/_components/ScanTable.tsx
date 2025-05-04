@@ -6,6 +6,7 @@ import { capitalizeEachWord } from '@/utils/capitalizeEachWord';
 import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useState } from 'react';
 import { BsShop } from 'react-icons/bs';
+import { CiReceipt } from 'react-icons/ci';
 import { LuUser } from 'react-icons/lu';
 import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { Tab } from 'rizzui';
@@ -73,6 +74,9 @@ export default function ScanTable({ offset }: { offset: number }) {
               <Tab.ListItem>
                 <LuUser className="text-xl" /> <span className="font-semibold">Customer</span>
               </Tab.ListItem>
+              <Tab.ListItem>
+                <CiReceipt className="text-xl" /> <span className="font-semibold">Payment Receipt</span>
+              </Tab.ListItem>
             </Tab.List>
             <Tab.Panels>
               <Tab.Panel>
@@ -80,35 +84,35 @@ export default function ScanTable({ offset }: { offset: number }) {
                   <table className="w-full text-left text-sm text-gray-500">
                     <tbody>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Scan Time</td>
+                        <td className="px-6 py-4">Scan time</td>
                         <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, offset)}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Order Amount</td>
+                        <td className="px-6 py-4">Order amount</td>
                         <td className="px-6 py-4">{`${row?.original?.scan?.amount} ${row?.original?.scan?.amountCurrency}`}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Stamp Title</td>
+                        <td className="px-6 py-4">Stamp title</td>
                         <td className="px-6 py-4">{row?.original?.offer?.title}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Stamp Category</td>
+                        <td className="px-6 py-4">Stamp category</td>
                         <td className="px-6 py-4">{row?.original?.offer?.category}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">No. of Stamps to Collect</td>
+                        <td className="px-6 py-4">No. of stamps to collect</td>
                         <td className="px-6 py-4">{row?.original?.offer?.noOfStampsToCollect}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Basic Rules</td>
+                        <td className="px-6 py-4">Basic rules</td>
                         <td className="px-6 py-4">{row?.original?.offer?.rules}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Min. Purchase Amount</td>
+                        <td className="px-6 py-4">Min. purchase amount</td>
                         <td className="px-6 py-4">{row?.original?.offer?.minPurchaseAmount} CAD</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Reward Type</td>
+                        <td className="px-6 py-4">Reward type</td>
                         <td className="px-6 py-4">{capitalizeEachWord(row?.original?.offer?.rewardType)}</td>
                       </tr>
                       <tr className="border-b bg-white">
@@ -128,19 +132,19 @@ export default function ScanTable({ offset }: { offset: number }) {
                   <table className="w-full text-left text-sm text-gray-500">
                     <tbody>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Branch Name</td>
+                        <td className="px-6 py-4">Branch name</td>
                         <td className="px-6 py-4">{row?.original?.branch?.name}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Branch Address</td>
+                        <td className="px-6 py-4">Branch address</td>
                         <td className="px-6 py-4">{row?.original?.branch?.address}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Loyalty-Executive Name</td>
+                        <td className="px-6 py-4">Loyalty-Executive name</td>
                         <td className="px-6 py-4">{row?.original?.subAdmin?.fullName}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Loyalty-Executive Email</td>
+                        <td className="px-6 py-4">Loyalty-Executive email</td>
                         <td className="px-6 py-4">{row?.original?.subAdmin?.email}</td>
                       </tr>
                     </tbody>
@@ -174,6 +178,22 @@ export default function ScanTable({ offset }: { offset: number }) {
                     </tbody>
                   </table>
                 </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                {row?.original?.scan?.invoice ? (
+                  <div className="flex items-center justify-center">
+                    <img
+                      width={400}
+                      height={500}
+                      src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row?.original?.scan?.invoice}`}
+                      alt="invoice"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-20 items-center justify-center">
+                    <span>No payment receipt upload yet!</span>
+                  </div>
+                )}
               </Tab.Panel>
             </Tab.Panels>
           </Tab>

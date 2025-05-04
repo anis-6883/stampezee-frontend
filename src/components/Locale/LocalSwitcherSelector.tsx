@@ -50,8 +50,6 @@ export default function LocalSwitcherSelector({
     return acc;
   }, []);
 
-  console.log({ currencyExchanges });
-
   useEffect(() => {
     (async () => {
       const locale = await getUserLocale();

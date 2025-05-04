@@ -545,7 +545,8 @@
     "email": "Электронная Почта",
     "phone": "Телефон",
     "country": "Страна",
-    "orderAmount": "Сумма заказа"
+    "orderAmount": "Сумма заказа",
+    "paymentReceipt": "Квитанция об оплате"
   },
   "RetailerStampScanTable": {
     "stampTitle": "Название Штампа",
@@ -736,6 +737,7 @@
     "branchName": "Название филиала",
     "branchAddress": "Адрес филиала",
     "subAdminName": "Имя субадминистратора",
-    "subAdminEmail": "Эл. почта субадминистратора"
+    "subAdminEmail": "Эл. почта субадминистратора",
+    "paymentReceipt": "Квитанция об оплате"
   }
 }

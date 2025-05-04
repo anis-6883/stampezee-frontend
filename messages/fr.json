@@ -545,7 +545,8 @@
     "email": "Email",
     "phone": "Téléphone",
     "country": "Pays",
-    "orderAmount": "Montant de la commande"
+    "orderAmount": "Montant de la commande",
+    "paymentReceipt": "Reçu de paiement"
   },
   "RetailerStampScanTable": {
     "stampTitle": "Titre du Timbre",
@@ -736,6 +737,7 @@
     "branchName": "Nom de la Succursale",
     "branchAddress": "Adresse de la Succursale",
     "subAdminName": "Nom du Sous-Administrateur",
-    "subAdminEmail": "Email du Sous-Administrateur"
+    "subAdminEmail": "Email du Sous-Administrateur",
+    "paymentReceipt": "Reçu de paiement"
   }
 }

@@ -546,7 +546,8 @@
     "email": "البريد الإلكتروني",
     "phone": "الهاتف",
     "country": "الدولة",
-    "orderAmount": "مبلغ الطلب"
+    "orderAmount": "مبلغ الطلب",
+    "paymentReceipt": "إيصال الدفع"
   },
   "RetailerStampScanTable": {
     "stampTitle": "عنوان الطابع",
@@ -737,6 +738,7 @@
     "branchName": "اسم الفرع",
     "branchAddress": "عنوان الفرع",
     "subAdminName": "اسم المشرف الفرعي",
-    "subAdminEmail": "البريد الإلكتروني للمشرف الفرعي"
+    "subAdminEmail": "البريد الإلكتروني للمشرف الفرعي",
+    "paymentReceipt": "إيصال الدفع"
   }
 }

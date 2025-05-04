@@ -4,6 +4,7 @@ import { convertDateByOffset } from '@/utils/getFormatDate';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { BsShop } from 'react-icons/bs';
+import { CiReceipt } from 'react-icons/ci';
 import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { Tab } from 'rizzui';
 import Table from '../../../_components/Table';
@@ -66,6 +67,9 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
               </Tab.ListItem>
               <Tab.ListItem>
                 <BsShop className="text-xl" /> <span className="font-semibold">{t2('store')}</span>
+              </Tab.ListItem>
+              <Tab.ListItem>
+                <CiReceipt className="text-xl" /> <span className="font-semibold">{t2('paymentReceipt')}</span>
               </Tab.ListItem>
             </Tab.List>
             <Tab.Panels>
@@ -140,6 +144,22 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
                     </tbody>
                   </table>
                 </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                {row?.original?.scan?.invoice ? (
+                  <div className="flex items-center justify-center">
+                    <img
+                      width={400}
+                      height={500}
+                      src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row?.original?.scan?.invoice}`}
+                      alt="invoice"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-20 items-center justify-center">
+                    <span>No payment receipt upload yet!</span>
+                  </div>
+                )}
               </Tab.Panel>
             </Tab.Panels>
           </Tab>

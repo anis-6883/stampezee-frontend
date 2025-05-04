@@ -545,7 +545,8 @@
     "email": "ईमेल",
     "phone": "फोन",
     "country": "देश",
-    "orderAmount": "ऑर्डर राशि"
+    "orderAmount": "ऑर्डर राशि",
+    "paymentReceipt": "भुगतान रसीद"
   },
   "RetailerStampScanTable": {
     "stampTitle": "स्टैम्प शीर्षक",
@@ -736,6 +737,7 @@
     "branchName": "शाखा का नाम",
     "branchAddress": "शाखा का पता",
     "subAdminName": "उप प्रशासक का नाम",
-    "subAdminEmail": "उप प्रशासक का ईमेल"
+    "subAdminEmail": "उप प्रशासक का ईमेल",
+    "paymentReceipt": "भुगतान रसीद"
   }
 }

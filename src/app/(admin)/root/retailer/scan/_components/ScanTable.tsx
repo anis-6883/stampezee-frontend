@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { BsShop } from 'react-icons/bs';
+import { CiReceipt } from 'react-icons/ci';
 import { LuUser } from 'react-icons/lu';
 import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { Tab } from 'rizzui';
@@ -89,6 +90,9 @@ export default function ScanTable() {
               </Tab.ListItem>
               <Tab.ListItem>
                 <LuUser className="text-xl" /> <span className="font-semibold">{tScanTab('customer')}</span>
+              </Tab.ListItem>
+              <Tab.ListItem>
+                <CiReceipt className="text-xl" /> <span className="font-semibold">{tScanTab('paymentReceipt')}</span>
               </Tab.ListItem>
             </Tab.List>
             <Tab.Panels>
@@ -191,6 +195,22 @@ export default function ScanTable() {
                     </tbody>
                   </table>
                 </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                {row?.original?.scan?.invoice ? (
+                  <div className="flex items-center justify-center">
+                    <img
+                      width={400}
+                      height={500}
+                      src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row?.original?.scan?.invoice}`}
+                      alt="invoice"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-20 items-center justify-center">
+                    <span>No payment receipt upload yet!</span>
+                  </div>
+                )}
               </Tab.Panel>
             </Tab.Panels>
           </Tab>
