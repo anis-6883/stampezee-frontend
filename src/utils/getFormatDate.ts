@@ -1,5 +1,4 @@
-import moment from 'moment';
-
+import moment from 'moment-timezone';
 const monthMap: any = {
   '01': 'Jan',
   '02': 'Feb',
@@ -15,6 +14,11 @@ const monthMap: any = {
   '12': 'Dec',
 };
 
+export const getFormatDateByTimezone = (date: string | undefined, timezone: string | undefined): string => {
+  if (!date || !timezone) return 'N/A';
+  const formattedDate = moment(date).tz(timezone).format('DD MMMM YYYY, hh:mm A');
+  return formattedDate === 'Invalid Date' ? 'N/A' : formattedDate;
+};
 export const getFormatDate = (date: string | undefined, showTime: boolean = true): string => {
   if (!date) return 'N/A';
   const formattedDate = showTime ? moment(date).format('DD MMMM YYYY, hh:mm A') : moment(date).format('DD MMMM YYYY');

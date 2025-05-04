@@ -10,7 +10,6 @@ import {
   useGetAllCustomerBySuperAdminQuery,
 } from '@/features/super-admin/customer/customerApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset } from '@/utils/getFormatDate';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -21,8 +20,9 @@ import { ImBin } from 'react-icons/im';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 
-export default function CustomerTable({ offset }: { offset: number }) {
+export default function CustomerTable({ timezone }: { timezone: string }) {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -89,7 +89,7 @@ export default function CustomerTable({ offset }: { offset: number }) {
       header: 'Joined Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p> {convertDateByOffset(row?.original?.createdAt, offset)}</p>
+          <p> {getFormatDateByTimezone(row?.original?.createdAt, timezone)}</p>
         </div>
       ),
       size: 200,
