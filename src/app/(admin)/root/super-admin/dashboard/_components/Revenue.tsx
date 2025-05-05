@@ -27,7 +27,7 @@ export default function Revenue({ className }: { className?: string }) {
     refetch();
   }, [refetch, dateRange]);
 
-  const { activeSubscription = 0, totalRevenueInCAD = 0, totalRefundAmountInCAD = 0 } = dashboardRevenue?.data || {};
+  const { activeSubscription = 0, totalRevenueInCAD = 0, totalRefundAmountInCAD = 0, totalEarningInCAD = 0 } = dashboardRevenue?.data || {};
 
   const dateOptions = [
     { label: 'No Date', value: 'no-date' },
@@ -144,7 +144,7 @@ export default function Revenue({ className }: { className?: string }) {
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#10b981' }} />
                 <span className="text-base">
-                  <span className="font-semibold">Subscription Earning:</span> ${totalRevenueInCAD.toFixed(2)}
+                  <span className="font-semibold">Subscription Earning:</span> ${totalEarningInCAD.toFixed(2)}
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
