@@ -99,6 +99,7 @@ export default function CreateUpdateModal({
     contactEmail: formData?.contactEmail || '',
     password: formData?.password || '',
     image: formData?.image || null,
+    deleteImageOnUpdate: false,
   };
 
   const validationSchema = Yup.object().shape({
@@ -138,9 +139,9 @@ export default function CreateUpdateModal({
       updateSubAdmin({ id: formData._id, data: objToFormData });
     } else {
       if (!isFile(values?.image)) {
-        objToFormData = objectToFormData(values, ['image']);
+        objToFormData = objectToFormData(values, ['image', 'deleteImageOnUpdate']);
       } else {
-        objToFormData = objectToFormData(values);
+        objToFormData = objectToFormData(values, ['deleteImageOnUpdate']);
       }
       createSubAdmin(objToFormData);
     }
@@ -177,6 +178,7 @@ export default function CreateUpdateModal({
                       isRounded={true}
                       uploadText="Upload"
                       brandText={<span>{t2('image')}</span>}
+                      trackDeleteBtn={true}
                     />
                   </div>
 

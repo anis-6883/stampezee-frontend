@@ -15,6 +15,7 @@ export default function DragAndDropUpload({
   uploadText = 'Upload Image',
   brandText = '',
   dimension = '250X250',
+  trackDeleteBtn = false,
 }: {
   className: string;
   value: any;
@@ -25,16 +26,18 @@ export default function DragAndDropUpload({
   uploadText?: string;
   brandText?: string | React.ReactNode;
   dimension?: string;
+  trackDeleteBtn?: boolean;
 }) {
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string>('');
-  const { errors } = useFormikContext<any>();
+  const { errors, setFieldValue } = useFormikContext<any>();
 
   useEffect(() => {
     if (typeof value?.image === 'string' && value.image != null) {
       setPreview(value.image as any);
+      setFieldValue('deleteImageOnUpdate', false);
     }
-  }, [value?.image]);
+  }, [setFieldValue, value.image]);
 
   const onDrop = useCallback(
     (acceptedFiles: any) => {
@@ -52,6 +55,7 @@ export default function DragAndDropUpload({
                 preview: URL.createObjectURL(file),
               });
               setPreview(fileWithPreview.preview);
+              setFieldValue('deleteImageOnUpdate', false);
               onChange(fileWithPreview);
               setError('');
             } else {
@@ -69,7 +73,7 @@ export default function DragAndDropUpload({
         setError('Invalid file type. Please choose a valid image file!');
       }
     },
-    [onChange, size, dimension]
+    [size, dimension, setFieldValue, onChange]
   );
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -93,6 +97,10 @@ export default function DragAndDropUpload({
     setPreview(null);
     onChange(null);
     setError('');
+
+    if (trackDeleteBtn) {
+      setFieldValue('deleteImageOnUpdate', true);
+    }
   };
 
   return (
