@@ -27,7 +27,7 @@ export default function Revenue({ className }: { className?: string }) {
     refetch();
   }, [refetch, dateRange]);
 
-  const { activeSubscription = 0, totalRevenueInCAD = 0, totalRefundAmountInCAD = 0 } = dashboardRevenue?.data || {};
+  const { activeSubscription = 0, totalRevenueInCAD = 0, totalRefundAmountInCAD = 0, totalEarningInCAD = 0 } = dashboardRevenue?.data || {};
 
   const dateOptions = [
     { label: 'No Date', value: 'no-date' },
@@ -36,7 +36,7 @@ export default function Revenue({ className }: { className?: string }) {
 
   const data = [
     {
-      name: 'Total Earning',
+      name: 'Total Revenue',
       value: `$${totalRevenueInCAD.toFixed(2)}`,
       percentage: 100,
       color: '#3872FA',
@@ -60,7 +60,7 @@ export default function Revenue({ className }: { className?: string }) {
       title={
         <div className="flex items-center gap-x-1">
           <Title as="h3" className="col-span-full text-base font-semibold text-black sm:text-lg">
-            Total Revenue (CAD)
+            Subscription Revenue (CAD)
           </Title>
 
           <Tooltip
@@ -68,7 +68,7 @@ export default function Revenue({ className }: { className?: string }) {
             className={`bg-danger text-white`}
             size="sm"
             placement="top"
-            content={'Hello..'}
+            content={'Revenue = Total Earning - Total Refund'}
             arrowClassName={`fill-danger`}
           >
             <span>
@@ -144,7 +144,7 @@ export default function Revenue({ className }: { className?: string }) {
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#10b981' }} />
                 <span className="text-base">
-                  <span className="font-semibold">Subscription Earning:</span> ${totalRevenueInCAD.toFixed(2)}
+                  <span className="font-semibold">Total Earning:</span> ${totalEarningInCAD.toFixed(2)}
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
