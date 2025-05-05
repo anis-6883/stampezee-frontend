@@ -83,11 +83,33 @@ export const Plans = ({ locale }: { locale: string }) => {
   return (
     <div className="mb-6">
       <div className="rounded-md p-8 shadow-md">
-        {session?.user?.plan && session?.user?.plan !== 'trial' ? (
-          <h2 className="mb-4 text-xl font-semibold">{t('switchPlan')}</h2>
-        ) : (
-          <h2 className="mb-4 text-xl font-semibold">{t('selectPlan')}</h2>
-        )}
+        <div className="flex items-center justify-between">
+          {session?.user?.plan && session?.user?.plan !== 'trial' ? (
+            <h2 className="mb-4 text-xl font-semibold">{t('switchPlan')}</h2>
+          ) : (
+            <h2 className="mb-4 text-xl font-semibold">{t('selectPlan')}</h2>
+          )}
+
+          <Link href={routes.privateRoutes.checkout}>
+            <Button
+              disabled={isCheckoutButtonDisabled({
+                plan: subscription,
+                activePlan: activeSubscription,
+                addOns,
+                isLoggedIn,
+                hasPurchasePlan: session?.user?.plan ? true : false,
+                planChangeType,
+                total,
+                refundableThreshold,
+                // isSelectionBtn: false,
+              })}
+              className="text-white"
+              color="danger"
+              text={t('buttonText')}
+              postIcon={<BsCheck2Circle className="text-base" />}
+            />
+          </Link>
+        </div>
         <SubscriptionList isMemberShip={true} locale={locale} />
 
         <hr className="my-6" />

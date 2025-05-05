@@ -25,10 +25,10 @@ export const billingApi = apiSlice.injectEndpoints({
       }),
     }),
     createBillingPdfForTrial: builder.mutation({
-      query: (id) => ({
+      query: ({ id, data }) => ({
         url: `/api/web/retailer/billing/download-pdf-trial/${id}`,
         method: 'POST',
-        // body: data,
+        body: data,
         responseHandler: (response) => response.blob(),
       }),
     }),

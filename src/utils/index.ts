@@ -110,7 +110,6 @@ export const isCheckCouponDisabled = ({
     subscription?.slug === 'trial' ||
     coupon ||
     planChangeType === 'downgrade' ||
-    planChangeType === 'upgrade' ||
     (!addOns?.length && !subscription?.slug)
   ) {
     return true;
@@ -227,4 +226,16 @@ export function convertUtcToLocalTime(utcTimeStr: string, offsetHours: number): 
   const minutes = String(localDate.getMinutes()).padStart(2, '0');
 
   return `${year}-${month}-${day} ${hours}:${minutes}`;
+}
+
+export function getFormattedDateForInvoice(dateInput?: Date | string | number): string {
+  const date = dateInput ? new Date(dateInput) : new Date();
+
+  if (isNaN(date.getTime())) {
+    throw new Error('Invalid date provided.');
+  }
+
+  const month = date.toLocaleString('default', { month: 'long' }).toLowerCase();
+  const year = date.getFullYear();
+  return `${month}-${year}`;
 }
