@@ -49,7 +49,7 @@ export default function Create({ locale }: { locale: string }) {
     title: '',
     description: '',
     rules: '',
-    noOfStampsToCollect: 0,
+    noOfStampsToCollect: 1,
     minPurchaseAmount: 0,
     rewardType: 'promotion',
     promotionReward: '',
@@ -68,7 +68,7 @@ export default function Create({ locale }: { locale: string }) {
       title: valueFromLocalStorage?.title || '',
       description: valueFromLocalStorage?.description || '',
       rules: valueFromLocalStorage?.rules || '',
-      noOfStampsToCollect: valueFromLocalStorage?.noOfStampsToCollect || 0,
+      noOfStampsToCollect: valueFromLocalStorage?.noOfStampsToCollect || 1,
       minPurchaseAmount: valueFromLocalStorage?.minPurchaseAmount || 0,
       rewardType: valueFromLocalStorage?.rewardType || 'promotion',
       promotionReward: valueFromLocalStorage?.promotionReward || '',
@@ -132,6 +132,7 @@ export default function Create({ locale }: { locale: string }) {
     hasValidity: Yup.boolean().required(tCommon('required')),
     minPurchaseAmount: Yup.number().min(0, 'Minimum Purchase Amount must be at least 0').required(tCommon('required')),
     noOfStampsToCollect: Yup.number()
+      .integer('No. of stamps must be a whole number')
       .min(1, 'No. of stamps to collect must be at least 1')
       .max(20, 'No. of stamps to collect must be less than or equal to 20')
       .required(tCommon('required')),
