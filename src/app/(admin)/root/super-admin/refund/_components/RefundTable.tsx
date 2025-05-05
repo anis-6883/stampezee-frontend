@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { IoArrowDownCircle, IoCheckmarkCircle } from 'react-icons/io5';
+import { MdCancel } from 'react-icons/md';
 import { Badge } from 'rizzui';
 import RefundConfirmModal from '../../../_components/RefundConfirmModal';
 
@@ -43,20 +44,37 @@ export default function RefundTable({ timezone }: { timezone: string }) {
   }, [isSuccess, isError]);
   const structure = [
     {
-      header: 'Plan',
-      accessorKey: 'plan',
-      Cell: ({ row }: any) => <div className="text-md mx-auto text-start capitalize">{row?.original?.plan}</div>,
+      header: 'Retailer',
+      accessorKey: 'enrollment.retailer',
+      // Cell: ({ row }: any) => <div className="text-md mx-auto text-start capitalize">{row?.original?.plan}</div>,
+      Cell: ({ row }: any) => (
+        <div className="flex items-center gap-2">
+          <div>
+            {row.original.image ? (
+              <div>
+                <img
+                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row?.original?.enrollment?.retailer?.image}`}
+                  alt="image"
+                  className="h-8 w-8 rounded"
+                />
+              </div>
+            ) : (
+              <img src={'/images/stamp-logo.png'} alt="image" className="h-8 w-8 rounded" />
+            )}
+          </div>
+          <div>
+            <div className="text-md">
+              <p className="text-center font-semibold">{row?.original?.enrollment?.retailer?.storeName}</p>
+            </div>
+          </div>
+        </div>
+      ),
     },
     {
-      header: 'Validity Date',
+      header: 'Issue Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>
-            <span className="font-bold">Started At:</span> {getFormatDateByTimezone(row?.original?.enrollment?.validityFrom, timezone)}
-          </p>
-          <p>
-            <span className="font-bold">Expired At:</span> {getFormatDateByTimezone(row?.original?.enrollment?.validityTo, timezone)}
-          </p>
+          <p>{getFormatDateByTimezone(row?.original?.createdAt, timezone)}</p>
         </div>
       ),
       mantineTableHeadCellProps: {
@@ -68,11 +86,19 @@ export default function RefundTable({ timezone }: { timezone: string }) {
       size: 300,
     },
     {
-      header: 'Enroll Status',
+      header: 'Refund Reason',
       accessorKey: 'reason',
       Cell: ({ row }: any) => (
         <Badge className="!bg-danger text-white">
-          <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.reason)}
+          {row?.original?.reason === 'cancelled' ? (
+            <>
+              <MdCancel className="mr-1 text-xl" /> {_.capitalize(row?.original?.reason)}
+            </>
+          ) : (
+            <>
+              <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.reason)}
+            </>
+          )}
         </Badge>
       ),
     },
