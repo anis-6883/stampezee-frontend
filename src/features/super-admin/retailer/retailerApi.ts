@@ -15,7 +15,16 @@ export const superAdminRetailerApi = apiSlice.injectEndpoints({
       query: (id) => {
         return `/api/secret-root/admin/super-admin/manage-retailer/${id}`; // Ensure it returns a base URL if no queries are present
       },
-      providesTags: ['superAdminRetailer'],
+      // providesTags: ['superAdminRetailer'],
+    }),
+    getPaymentsByRetailerId: builder.query({
+      query: ({ id, queries }) => {
+        const values = Object.values(queries);
+        if (values.length)
+          return `/api/secret-root/admin/super-admin/manage-retailer/payments/${id}?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/manage-retailer/payments/${id}`; // Ensure it returns a base URL if no queries are present
+      },
+      // providesTags: ['superAdminRetailer'],
     }),
     createSuperAdminRetailer: builder.mutation({
       query: (newRetailer) => ({
@@ -58,6 +67,7 @@ export const {
   useUpdateSuperAdminRetailerMutation,
   useDeleteSuperAdminRetailerMutation,
   useUpdateRetailerStatusMutation,
+  useGetPaymentsByRetailerIdQuery,
 } = superAdminRetailerApi;
 
 export default superAdminRetailerApi;

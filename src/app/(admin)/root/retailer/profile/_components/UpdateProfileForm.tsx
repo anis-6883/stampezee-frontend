@@ -13,9 +13,9 @@ import { ICountrySelect } from '@/types';
 import { appendFormData } from '@/utils';
 import countryData from '@/utils/get-country-list';
 import currencyData from '@/utils/get-currency-list';
+import timeZoneData from '@/utils/get-timezone-list';
 import { translateText } from '@/utils/GoogleTranslate';
 import removeEmptyValues from '@/utils/removeEmptyValues';
-import { timeZoneList } from '@/utils/timezone-list';
 import { Form, Formik } from 'formik';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -81,8 +81,6 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     label: country.country,
     flag: country.flag,
   }));
-
-  const timezoneOptions = timeZoneList?.map((timezone) => ({ value: timezone?.label, label: timezone?.label }));
 
   const initialValues = {
     storeName: retailerProfile?.data?.storeName || '',
@@ -311,15 +309,14 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                       key={values.timezone.label}
                       placeholder="Select your timezone"
                       menuPlacement="top"
-                      options={timezoneOptions}
+                      options={timeZoneData}
                       isDisabled={false}
                       isClearable={false}
                       isSearchable={true}
                       name="timezone"
-                      defaultValue={timezoneOptions?.filter((item) => String(item?.label) === values?.timezone.label)}
+                      defaultValue={timeZoneData?.filter((item) => String(item?.label) === values?.timezone.label)}
                       onChange={(selectedOption: OnChangeValue<any, false>) => {
-                        const selectedTimezone = timeZoneList.find((item) => item.label === selectedOption?.label);
-                        setFieldValue('timezone', selectedTimezone);
+                        setFieldValue('timezone', { label: selectedOption?.label });
                       }}
                       onBlur={() => setFieldTouched('timezone', true)}
                     />

@@ -82,7 +82,7 @@ export default function GeneralSettingsForm({ generalSettingLoading }: { general
                   placeholder="Select an option"
                   options={timeZoneData}
                   onChange={(timezoneOption) => {
-                    setFieldValue('general.timezone', timezoneOption);
+                    setFieldValue('general.timezone', { label: timezoneOption?.label });
                   }}
                   styles={{
                     control: (base) => ({

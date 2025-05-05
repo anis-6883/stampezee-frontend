@@ -5,11 +5,13 @@ import { useGetSingleRetailerQuery } from '@/features/super-admin/retailer/retai
 import AddonListTable from './AddonListTable';
 import BranchStatisticsTable from './BranchStatisticsTable';
 import { InfoRow } from './InfoRow';
+import RetailerPaymentTable from './RetailerPaymentTable';
 import StatsCardView from './StatsCardView';
 import SubAdminListTable from './SubAdminListTable';
 
-export default function RetailerDetails({ id }: { id: string }) {
+export default function RetailerDetails({ id, timezone }: { id: string; timezone: string }) {
   const { data, isLoading, isError } = useGetSingleRetailerQuery(id);
+
   let {
     storeName,
     fullName,
@@ -115,6 +117,9 @@ export default function RetailerDetails({ id }: { id: string }) {
 
       <h2 className="my-5 text-lg font-bold">Branch Statistics: ({totalActiveBranch})</h2>
       <BranchStatisticsTable data={branches} isLoading={isLoading} isError={isError} />
+
+      <h2 className="my-5 text-lg font-bold">Subscriptions:</h2>
+      <RetailerPaymentTable timezone={timezone} id={id} />
     </div>
   );
 }

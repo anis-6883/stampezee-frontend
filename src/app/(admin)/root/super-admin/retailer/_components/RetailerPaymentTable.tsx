@@ -1,0 +1,186 @@
+'use client';
+
+import Table from '@/app/(admin)/root/_components/Table';
+import Button from '@/components/Formik/Button';
+import { routes } from '@/config/routes';
+import { useGetPaymentsByRetailerIdQuery } from '@/features/super-admin/retailer/retailerApi';
+import { IQueryType } from '@/types';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
+import _ from 'lodash';
+import moment from 'moment-timezone';
+import Link from 'next/link';
+import { useState } from 'react';
+import { FaInfoCircle } from 'react-icons/fa';
+import { GiSandsOfTime } from 'react-icons/gi';
+import { HiShoppingCart } from 'react-icons/hi2';
+import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
+import { PiFlagCheckeredFill } from 'react-icons/pi';
+import { Badge } from 'rizzui';
+
+export default function RetailerPaymentTable({ timezone, id }: { timezone: string; id: string }) {
+  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
+  const searchQuery = query.search ? { search: query.search } : {};
+  const { data, isLoading, isFetching } = useGetPaymentsByRetailerIdQuery({
+    id,
+    queries: { page: query.pageIndex + 1, limit: query.pageSize, ...searchQuery },
+  });
+
+  const structure = [
+    {
+      header: 'Plan/Add-on',
+      accessorKey: 'planSnapshot.title',
+      Cell: ({ row }: any) => {
+        return row?.original?.enrollSubscriptions?.map((subscription: any) => {
+          return (
+            <div className="my-1" key={subscription?._id}>
+              {subscription?.type === 'subscription' ? (
+                subscription?.deletedByRetailerAt ? (
+                  <span className="line-through">{subscription?.title}</span>
+                ) : (
+                  <span>{subscription?.title}</span>
+                )
+              ) : subscription?.validAtAfterCancel && new Date(subscription?.validAtAfterCancel) < new Date() ? (
+                <span className="line-through">{subscription?.title}</span>
+              ) : (
+                <span>{subscription?.title}</span>
+              )}
+            </div>
+          );
+        });
+      },
+      size: 220,
+    },
+    {
+      header: 'Subscription ID',
+      accessorKey: 'stripe.subscriptionId',
+      Cell: ({ row }: any) => {
+        return row?.original?.enrollStatus !== 'trial' ? <span>{row?.original?.stripe.subscriptionId}</span> : 'N/A';
+      },
+      size: 140,
+    },
+    {
+      header: 'Billing Cycle',
+      accessorKey: 'status',
+      Cell: ({ row }: any) => {
+        const validityTo = moment.utc(row?.original?.validityTo).tz(timezone);
+
+        return (
+          <div className="flex items-center justify-center gap-2">
+            <div className="text-white">
+              {row?.original?.status === true && moment().isBefore(validityTo) ? (
+                <Badge className="!bg-success">
+                  <GiSandsOfTime className="mr-1 text-xl" /> Running
+                </Badge>
+              ) : (
+                <Badge className="!bg-danger">
+                  <PiFlagCheckeredFill className="mr-1 text-xl" /> Cancelled
+                </Badge>
+              )}
+            </div>
+          </div>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
+    {
+      header: 'Enroll Date',
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">
+          <p>{getFormatDateByTimezone(row?.original?.createdAt, timezone)}</p>
+        </div>
+      ),
+      mantineTableHeadCellProps: {
+        align: 'start',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+      size: 200,
+    },
+
+    {
+      header: 'Enroll Status',
+      Cell: ({ row }: any) => {
+        return (
+          <div className="flex items-center justify-center gap-2">
+            <div className="text-white">
+              {row?.original?.enrollStatus === 'purchase' ? (
+                <Badge className="bg-primary text-white">
+                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : row?.original?.enrollStatus === 'upgrade' ? (
+                <Badge className="!bg-success text-white">
+                  <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : row?.original?.enrollStatus === 'trial' ? (
+                <Badge className="!bg-black text-white">
+                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              ) : (
+                <Badge className="!bg-danger text-white">
+                  <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                </Badge>
+              )}
+            </div>
+          </div>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+      size: 120,
+    },
+    {
+      header: 'Actions',
+      Cell: ({ row }: any) => {
+        return (
+          <Link href={routes.privateRoutes.superAdmin.payment?.details(row?.original?._id)}>
+            <Button className="!m-0 !px-2 !py-1.5" text="Payment Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
+          </Link>
+        );
+      },
+      mantineTableHeadCellProps: {
+        align: 'center',
+      },
+      mantineTableBodyCellProps: {
+        align: 'center',
+      },
+    },
+  ];
+
+  return (
+    <Table
+      isFetching={isFetching}
+      isLoading={isLoading}
+      response={
+        isLoading
+          ? {
+              data: [],
+              pagination: {
+                totalDocuments: 0,
+              },
+            }
+          : {
+              data: data?.data.docs || [],
+              pagination: {
+                totalDocuments: data?.data.totalDocs || 0,
+              },
+            }
+      }
+      structure={structure}
+      setQuery={setQuery}
+      query={query}
+      searchPlaceHolder="Search By Subscription ID"
+      searchFieldWidth="290px"
+      enableRowNumbers={true}
+    />
+  );
+}

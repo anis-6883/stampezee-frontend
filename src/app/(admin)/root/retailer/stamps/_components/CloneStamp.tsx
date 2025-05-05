@@ -7,6 +7,7 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { useBranchCategoryImageListQuery, useCreateStampMutation, useGetSingleStampsQuery } from '@/features/retailer/stamp/stampApi';
+import getFormattedDateByTimezone from '@/utils/get-formatted-date-By-Timezone';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
@@ -24,9 +25,8 @@ import * as Yup from 'yup';
 import CreateStampModal from './CreateStampModal';
 import StampImgSkeleton from './StampImgSkeleton';
 import StampPublishedModal from './StampPublishedModal';
-import getFormattedDateByTimezone from '@/utils/get-formatted-date-By-Timezone';
 
-export default function CloneStamp({ Id, timezone, locale }: any) {
+export default function CloneStamp({ Id, locale }: any) {
   const { data: session }: any = useSession();
   const t = useTranslations('RetailerCreateAndUpdateStamp');
   const t2 = useTranslations('RetailerStampImageCreateUpdate');
@@ -97,7 +97,7 @@ export default function CloneStamp({ Id, timezone, locale }: any) {
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
     hasValidity: stampData?.data?.hasValidity,
     validDateRange: stampData?.data?.hasValidity
-      ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, timezone)} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, timezone)}`
+      ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, session?.user?.timezone?.label || '')} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, session?.user?.timezone?.label || '')}`
       : '',
   };
 

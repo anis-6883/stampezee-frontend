@@ -7,10 +7,11 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { useBranchCategoryImageListQuery, useGetSingleStampsQuery, useUpdateStampMutation } from '@/features/retailer/stamp/stampApi';
-import getFormattedDate from '@/utils/get-formatted-date';
+import getFormattedDateByTimezone from '@/utils/get-formatted-date-By-Timezone';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
 import _ from 'lodash';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -21,9 +22,9 @@ import { RiDiscountPercentLine } from 'react-icons/ri';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 import StampPublishedModal from './StampPublishedModal';
-import getFormattedDateByTimezone from '@/utils/get-formatted-date-By-Timezone';
 
-export default function Update({ Id, timezone }: any) {
+export default function Update({ Id }: any) {
+  const { data: session }: any = useSession();
   const t = useTranslations('RetailerCreateAndUpdateStamp');
   const tCommon = useTranslations('RetailerCommon');
   const [submitting, setSubmitting] = useState(false);
@@ -94,7 +95,7 @@ export default function Update({ Id, timezone }: any) {
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
     hasValidity: stampData?.data?.hasValidity,
     validDateRange: stampData?.data?.hasValidity
-      ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, timezone)} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, timezone)}`
+      ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, session?.user?.timezone?.label || '')} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, session?.user?.timezone?.label || '')}`
       : '',
   };
 

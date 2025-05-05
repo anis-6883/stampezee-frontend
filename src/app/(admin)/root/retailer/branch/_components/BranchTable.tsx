@@ -34,7 +34,7 @@ import ConvertToAddOnModal from '../../../_components/ConvertToAddOnModal';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 
-export default function BranchTable({ timezone }: { timezone: string }) {
+export default function BranchTable() {
   const { data: session }: any = useSession();
   const t = useTranslations('RetailerBranchTable');
   const t2 = useTranslations('RetailerBranches');

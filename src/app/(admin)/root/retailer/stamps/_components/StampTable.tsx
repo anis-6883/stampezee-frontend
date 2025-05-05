@@ -189,11 +189,11 @@ export default function StampTable() {
           <div className="text-md mx-auto text-start">
             <p>
               <span className="font-bold">{t('startedAt')}:</span>{' '}
-              {getFormatDateByTimezone(row?.original?.startedAt, session?.user?.timezone?.label || 0)}
+              {getFormatDateByTimezone(row?.original?.startedAt, session?.user?.timezone?.label || '')}
             </p>
             <p>
               <span className="font-bold">{t('expiredAt')}:</span>{' '}
-              {getFormatDateByTimezone(row?.original?.expiredAt, session?.user?.timezone?.label || 0)}
+              {getFormatDateByTimezone(row?.original?.expiredAt, session?.user?.timezone?.label || '')}
             </p>
           </div>
         ) : (

@@ -37,7 +37,7 @@ function updateGeneralSetting(generalSetting: IGeneralSetting) {
       timezone: generalSetting?.data?.general?.timezone
         ? {
             ...generalSetting?.data?.general?.timezone,
-            label: `${generalSetting?.data?.general?.timezone?.label} (${generalSetting?.data?.general?.timezone?.value})`,
+            label: `${generalSetting?.data?.general?.timezone?.label}`,
           }
         : {},
       androidDownloadLink: generalSetting?.data?.general?.androidDownloadLink || '',
@@ -212,7 +212,7 @@ export default function SettingsMainForm() {
   // Submit Handler
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
-    cleanTimezoneLabel(values);
+    // cleanTimezoneLabel(values);
     updateGeneralSettings(values);
   };
 

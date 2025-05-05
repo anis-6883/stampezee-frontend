@@ -1,20 +1,26 @@
-const timeZoneData = [
-  {
-    value: -5,
-    label: 'America/Toronto (-5)',
-  },
-  {
-    value: -4,
-    label: 'America/Toronto (-4)',
-  },
-  {
-    value: 6,
-    label: 'Asia/Dhaka (+6)',
-  },
-];
+import moment from 'moment-timezone';
+
+const timeZoneData = moment.tz.names()?.map((tz: string) => ({
+  value: tz,
+  label: tz,
+}));
 
 export default timeZoneData;
 
+// [
+//   {
+//     value: -5,
+//     label: 'America/Toronto (-5)',
+//   },
+//   {
+//     value: -4,
+//     label: 'America/Toronto (-4)',
+//   },
+//   {
+//     value: 6,
+//     label: 'Asia/Dhaka (+6)',
+//   },
+// ]
 // const timeZoneData = [
 //   {
 //     value: -12,

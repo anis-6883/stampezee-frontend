@@ -1,6 +1,5 @@
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
-import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import { getTranslations } from 'next-intl/server';
 import UpdateStamp from '../../_components/UpdateStamp';
 
@@ -24,7 +23,7 @@ const pageHeader = {
 export default async function Page({ params, searchParams }: any) {
   const { id } = params;
   const { publish } = searchParams;
-  const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
+
   const t = await getTranslations('RetailerCreateAndUpdateStamp');
   const tStamp = await getTranslations('RetailerStamp');
   pageHeader.breadcrumb[0].name = tStamp('dashboard');
@@ -34,7 +33,7 @@ export default async function Page({ params, searchParams }: any) {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <UpdateStamp Id={id} timezone={data?.data?.general?.timezone?.label} />
+      <UpdateStamp Id={id} />
     </div>
   );
 }

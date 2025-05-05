@@ -18,6 +18,7 @@ import { getFormattedDateForInvoice } from '@/utils';
 import { currentPeriodByTimezone, getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import moment from 'moment';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -42,15 +43,7 @@ const cardImageMap: any = {
   default: '/images/default-card.svg',
 };
 
-export default function SubscriptionDetails({
-  id,
-  timezone,
-  stripePublishKey,
-}: {
-  id: string;
-  timezone: string;
-  stripePublishKey: string;
-}) {
+export default function SubscriptionDetails({ id, stripePublishKey }: { id: string; stripePublishKey: string }) {
   const t = useTranslations('RetailerBillingDetailsCard');
   const t2 = useTranslations('RetailerBillingDetails');
   const t3 = useTranslations('RetailerBillingInvoiceTable');
@@ -60,6 +53,7 @@ export default function SubscriptionDetails({
   const t7 = useTranslations('RetailerBillingTable');
   const { push } = useRouter();
   const dispatch = useDispatch();
+  const { data: session }: any = useSession();
 
   const [
     setDefaultPaymentMethod,
@@ -94,7 +88,7 @@ export default function SubscriptionDetails({
     enrollSubscriptions,
     currency,
   } = data?.data || {};
-  const validityToUtc = moment.tz(validityTo, timezone).utc();
+  const validityToUtc = moment.tz(validityTo, session?.user?.timezone?.label || '').utc();
   const [selectPaymentId, setSelectPaymentId] = useState<any>({});
 
   const [modalState, setModalState] = useState(false);
@@ -273,14 +267,18 @@ export default function SubscriptionDetails({
 
           <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">{t('purchasedAt')}</span>{' '}
-            {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{getFormatDateByTimezone(createdAt, timezone)}</span>}
+            {isLoading || isError ? (
+              <Skeleton className="h-6 w-32 rounded" />
+            ) : (
+              <span>{getFormatDateByTimezone(createdAt, session?.user?.timezone?.label || '')}</span>
+            )}
           </div>
           <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">{t('currentPeriod')}</span>{' '}
             {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : (
-              <span>{currentPeriodByTimezone(validityFrom, validityTo, timezone)}</span>
+              <span>{currentPeriodByTimezone(validityFrom, validityTo, session?.user?.timezone?.label || '')}</span>
             )}
           </div>
           <div className="flex items-center justify-between font-medium">
@@ -300,7 +298,7 @@ export default function SubscriptionDetails({
           {!isLoading && stripe?.renewCancelAt !== null && (
             <div className="flex items-center justify-between font-medium">
               <span className="font-semibold">{t('subscriptionCancelAt')}</span>{' '}
-              <span className="text-danger">{getFormatDateByTimezone(stripe?.renewCancelAt, timezone)}</span>
+              <span className="text-danger">{getFormatDateByTimezone(stripe?.renewCancelAt, session?.user?.timezone?.label || '')}</span>
             </div>
           )}
           {!stripe?.renewCancelAt && (
@@ -313,7 +311,7 @@ export default function SubscriptionDetails({
               {isLoading || isError ? (
                 <Skeleton className="h-6 w-32 rounded" />
               ) : (
-                <span>{getFormatDateByTimezone(validityTo, timezone)}</span>
+                <span>{getFormatDateByTimezone(validityTo, session?.user?.timezone?.label || '')}</span>
               )}
             </div>
           )}
@@ -501,11 +499,13 @@ export default function SubscriptionDetails({
                         {enrollSubscription?.deletedByRetailerAt ? (
                           <div className="flex flex-col gap-y-1">
                             <span className="font-semibold text-danger">
-                              Canceled At : {getFormatDateByTimezone(enrollSubscription?.deletedByRetailerAt, timezone)}
+                              Canceled At :{' '}
+                              {getFormatDateByTimezone(enrollSubscription?.deletedByRetailerAt, session?.user?.timezone?.label || '')}
                             </span>
                             {enrollSubscription?.validAtAfterCancel && (
                               <span className="font-semibold text-black">
-                                Expires On : {getFormatDateByTimezone(enrollSubscription?.validAtAfterCancel, timezone)}
+                                Expires On :{' '}
+                                {getFormatDateByTimezone(enrollSubscription?.validAtAfterCancel, session?.user?.timezone?.label || '')}
                               </span>
                             )}
                           </div>
@@ -616,7 +616,9 @@ export default function SubscriptionDetails({
                           <td className="whitespace-nowrap px-6 py-4">
                             {amount} {payment?.currency}
                           </td>
-                          <td className="whitespace-nowrap px-6 py-4">{getFormatDateByTimezone(payment?.createdAt, timezone)}</td>
+                          <td className="whitespace-nowrap px-6 py-4">
+                            {getFormatDateByTimezone(payment?.createdAt, session?.user?.timezone?.label || '')}
+                          </td>
                           <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
                             {/* <Link href={payment?.invoicePdf} target="_blank"> */}
                             <Button
@@ -681,7 +683,9 @@ export default function SubscriptionDetails({
                   <td className="whitespace-nowrap px-6 py-4">
                     {'0.00'} {'CAD'}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">{getFormatDateByTimezone(createdAt, timezone)}</td>
+                  <td className="whitespace-nowrap px-6 py-4">
+                    {getFormatDateByTimezone(createdAt, session?.user?.timezone?.label || '')}
+                  </td>
                   <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
                     {/* <Link href={payment?.invoicePdf} target="_blank"> */}
                     <Button

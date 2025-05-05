@@ -1,12 +1,14 @@
 'use client';
 
 import { useGetSingleCustomerByRetailerQuery } from '@/features/retailer/customer/customerApi';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { InfoRow } from '../../../super-admin/retailer/_components/InfoRow';
 import ScanStatisticsTable from './ScanStatisticsTable';
 import StatsCardView from './StatsCardView';
 
-export default function CustomerDetails({ id, timezone }: { id: string; timezone: string }) {
+export default function CustomerDetails({ id }: { id: string }) {
+  const { data: session }: any = useSession();
   const t = useTranslations('RetailerCustomerDetailsCard');
   const t2 = useTranslations('RetailerCustomerDetailsScanTable');
   const { data, isLoading, isError } = useGetSingleCustomerByRetailerQuery(id);
@@ -36,7 +38,7 @@ export default function CustomerDetails({ id, timezone }: { id: string; timezone
       />
 
       <h2 className="my-5 text-lg font-medium">{t2('title')} :</h2>
-      <ScanStatisticsTable id={id} timezone={timezone} />
+      <ScanStatisticsTable id={id} timezone={session?.user?.timezone?.label || ''} />
     </div>
   );
 }

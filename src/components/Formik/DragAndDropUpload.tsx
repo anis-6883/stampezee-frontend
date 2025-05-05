@@ -35,9 +35,11 @@ export default function DragAndDropUpload({
   useEffect(() => {
     if (typeof value?.image === 'string' && value.image != null) {
       setPreview(value.image as any);
-      setFieldValue('deleteImageOnUpdate', false);
+      if (trackDeleteBtn) {
+        setFieldValue('deleteImageOnUpdate', false);
+      }
     }
-  }, [setFieldValue, value.image]);
+  }, [setFieldValue, trackDeleteBtn, value.image]);
 
   const onDrop = useCallback(
     (acceptedFiles: any) => {
@@ -55,7 +57,10 @@ export default function DragAndDropUpload({
                 preview: URL.createObjectURL(file),
               });
               setPreview(fileWithPreview.preview);
-              setFieldValue('deleteImageOnUpdate', false);
+              if (trackDeleteBtn) {
+                setFieldValue('deleteImageOnUpdate', false);
+              }
+
               onChange(fileWithPreview);
               setError('');
             } else {
@@ -73,7 +78,7 @@ export default function DragAndDropUpload({
         setError('Invalid file type. Please choose a valid image file!');
       }
     },
-    [size, dimension, setFieldValue, onChange]
+    [size, dimension, trackDeleteBtn, onChange, setFieldValue]
   );
 
   const { getRootProps, getInputProps } = useDropzone({

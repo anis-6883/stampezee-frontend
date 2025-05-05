@@ -103,7 +103,7 @@ export default function BillingTable() {
       header: t('paymentDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>{getFormatDateByTimezone(row?.original?.createdAt, session?.user?.timezone?.label || 0)}</p>
+          <p>{getFormatDateByTimezone(row?.original?.createdAt, session?.user?.timezone?.label || '')}</p>
         </div>
       ),
       mantineTableHeadCellProps: {
