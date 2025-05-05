@@ -1,6 +1,6 @@
 import { useGetAllCustomerScanByRetailerQuery } from '@/features/retailer/customer/customerApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { BsShop } from 'react-icons/bs';
@@ -9,7 +9,7 @@ import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { Tab } from 'rizzui';
 import Table from '../../../_components/Table';
 
-const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => {
+const ScanStatisticsTable = ({ id, timezone }: { id: string; timezone: string }) => {
   const t = useTranslations('RetailerCustomerDetailsScanTable');
   const t2 = useTranslations('RetailerCustomerDetailsScanTableTabs');
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
@@ -42,7 +42,9 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
     },
     {
       header: t('scanDate'),
-      Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original.scan.time, offset)}</div>,
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">{getFormatDateByTimezone(row?.original.scan.time, timezone)}</div>
+      ),
     },
     {
       header: t('status'),
@@ -79,7 +81,7 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
                     <tbody>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{t2('scanTime')}</td>
-                        <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, offset)}</td>
+                        <td className="px-6 py-4">{getFormatDateByTimezone(row?.original?.scan?.time, timezone)}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{t2('orderAmount')}</td>

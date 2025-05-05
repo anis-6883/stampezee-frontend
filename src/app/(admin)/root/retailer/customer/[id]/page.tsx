@@ -35,7 +35,7 @@ export default async function Page({ params }: any) {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <CustomerDetails id={id} offset={data?.data?.general?.timezone?.value} />
+      <CustomerDetails id={id} timezone={data?.data?.general?.timezone?.label} />
     </div>
   );
 }

@@ -25,7 +25,7 @@ export default async function Page() {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <CurrencyTable offset={data?.data?.general?.timezone?.value} />
+      <CurrencyTable timezone={data?.data?.general?.timezone?.label} />
     </div>
   );
 }

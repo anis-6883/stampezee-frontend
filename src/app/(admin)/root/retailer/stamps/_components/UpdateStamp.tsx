@@ -21,8 +21,9 @@ import { RiDiscountPercentLine } from 'react-icons/ri';
 import * as Yup from 'yup';
 import StampImgSkeleton from './StampImgSkeleton';
 import StampPublishedModal from './StampPublishedModal';
+import getFormattedDateByTimezone from '@/utils/get-formatted-date-By-Timezone';
 
-export default function Update({ Id, offset }: any) {
+export default function Update({ Id, timezone }: any) {
   const t = useTranslations('RetailerCreateAndUpdateStamp');
   const tCommon = useTranslations('RetailerCommon');
   const [submitting, setSubmitting] = useState(false);
@@ -93,7 +94,7 @@ export default function Update({ Id, offset }: any) {
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
     hasValidity: stampData?.data?.hasValidity,
     validDateRange: stampData?.data?.hasValidity
-      ? `${getFormattedDate(stampData?.data?.startedAt, offset)} to ${getFormattedDate(stampData?.data?.expiredAt, offset)}`
+      ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, timezone)} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, timezone)}`
       : '',
   };
 

@@ -4,7 +4,7 @@ import { routes } from '@/config/routes';
 import { useRetailerAllScanDetailsQuery } from '@/features/retailer/scan/scanApi';
 import { IQueryType } from '@/types';
 import { capitalizeEachWord } from '@/utils/capitalizeEachWord';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { redirect } from 'next/navigation';
@@ -43,7 +43,7 @@ export default function ScanTable() {
       header: t('scanDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          {convertDateByOffset(row?.original.scan.time, session?.user?.timezone?.value || 0)}
+          {getFormatDateByTimezone(row?.original.scan.time, session?.user?.timezone?.label || 0)}
         </div>
       ),
     },
@@ -102,7 +102,9 @@ export default function ScanTable() {
                     <tbody>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('scanTime')}</td>
-                        <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, session?.user?.timezone?.value || 0)}</td>
+                        <td className="px-6 py-4">
+                          {getFormatDateByTimezone(row?.original?.scan?.time, session?.user?.timezone?.label || 0)}
+                        </td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('orderAmount')}</td>

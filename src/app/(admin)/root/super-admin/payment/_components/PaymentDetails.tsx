@@ -12,7 +12,7 @@ import {
   useSetDefaultPaymentMethodByAdminMutation,
   useSingleSubscriptionPaymentQuery,
 } from '@/features/super-admin/payment/paymentApi';
-import { currentPeriodByTimezone, getFormatDate, getFormatDateByTimezone } from '@/utils/getFormatDate';
+import { currentPeriodByTimezone, getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { useRouter } from 'next/navigation';

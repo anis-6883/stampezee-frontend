@@ -31,7 +31,7 @@ export default async function Page() {
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
 
-      <BranchTable offset={data?.data?.general?.timezone?.value} />
+      <BranchTable timezone={data?.data?.general?.timezone?.label} />
     </>
   );
 }

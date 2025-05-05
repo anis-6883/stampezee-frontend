@@ -5,7 +5,7 @@ import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { useGetAllNotificationQuery } from '@/features/retailer/notification/notificationApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import { Skeleton } from '@mantine/core';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -77,11 +77,11 @@ export default function RegularNotificationTable({ locale }: { locale: string })
       Cell: ({ row }: any) =>
         row?.original?.scheduleAt && new Date(row?.original?.scheduleAt) > new Date() ? (
           <div className="text-md mx-auto flex items-center gap-x-2 text-start">
-            {convertDateByOffset(row?.original?.scheduleAt, session?.user?.timezone?.value || 0)} <LuClock4 className="text-lg" />
+            {getFormatDateByTimezone(row?.original?.scheduleAt, session?.user?.timezone?.label || 0)} <LuClock4 className="text-lg" />
           </div>
         ) : (
           <div className="text-md mx-auto flex items-center gap-x-2 text-start">
-            {convertDateByOffset(row?.original?.createdAt, session?.user?.timezone?.value || 0)} <FaRegPaperPlane className="text-sm" />
+            {getFormatDateByTimezone(row?.original?.createdAt, session?.user?.timezone?.label || 0)} <FaRegPaperPlane className="text-sm" />
           </div>
         ),
       mantineTableHeadCellProps: {

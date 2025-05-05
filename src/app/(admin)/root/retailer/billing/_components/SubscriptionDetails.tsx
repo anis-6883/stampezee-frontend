@@ -15,7 +15,7 @@ import {
 } from '@/features/retailer/billing/billingApi';
 import { resetState } from '@/features/subscription/subscriptionSlice';
 import { getFormattedDateForInvoice } from '@/utils';
-import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
+import { currentPeriodByTimezone, getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import moment from 'moment';
 import { useTranslations } from 'next-intl';
@@ -42,7 +42,15 @@ const cardImageMap: any = {
   default: '/images/default-card.svg',
 };
 
-export default function SubscriptionDetails({ id, offset, stripePublishKey }: { id: string; offset: number; stripePublishKey: string }) {
+export default function SubscriptionDetails({
+  id,
+  timezone,
+  stripePublishKey,
+}: {
+  id: string;
+  timezone: string;
+  stripePublishKey: string;
+}) {
   const t = useTranslations('RetailerBillingDetailsCard');
   const t2 = useTranslations('RetailerBillingDetails');
   const t3 = useTranslations('RetailerBillingInvoiceTable');
@@ -86,7 +94,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
     enrollSubscriptions,
     currency,
   } = data?.data || {};
-  const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
+  const validityToUtc = moment.tz(validityTo, timezone).utc();
   const [selectPaymentId, setSelectPaymentId] = useState<any>({});
 
   const [modalState, setModalState] = useState(false);
@@ -265,14 +273,14 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
 
           <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">{t('purchasedAt')}</span>{' '}
-            {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(createdAt, offset)}</span>}
+            {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{getFormatDateByTimezone(createdAt, timezone)}</span>}
           </div>
           <div className="flex items-center justify-between font-medium">
             <span className="font-semibold">{t('currentPeriod')}</span>{' '}
             {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : (
-              <span>{currentPeriod(validityFrom, validityTo, offset)}</span>
+              <span>{currentPeriodByTimezone(validityFrom, validityTo, timezone)}</span>
             )}
           </div>
           <div className="flex items-center justify-between font-medium">
@@ -292,7 +300,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
           {!isLoading && stripe?.renewCancelAt !== null && (
             <div className="flex items-center justify-between font-medium">
               <span className="font-semibold">{t('subscriptionCancelAt')}</span>{' '}
-              <span className="text-danger">{convertDateByOffset(stripe?.renewCancelAt, offset)}</span>
+              <span className="text-danger">{getFormatDateByTimezone(stripe?.renewCancelAt, timezone)}</span>
             </div>
           )}
           {!stripe?.renewCancelAt && (
@@ -302,7 +310,11 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
               ) : (
                 <span className="font-semibold">{t('nextInvoice')}</span>
               )}
-              {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : <span>{convertDateByOffset(validityTo, offset)}</span>}
+              {isLoading || isError ? (
+                <Skeleton className="h-6 w-32 rounded" />
+              ) : (
+                <span>{getFormatDateByTimezone(validityTo, timezone)}</span>
+              )}
             </div>
           )}
         </div>
@@ -489,11 +501,11 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                         {enrollSubscription?.deletedByRetailerAt ? (
                           <div className="flex flex-col gap-y-1">
                             <span className="font-semibold text-danger">
-                              Canceled At : {convertDateByOffset(enrollSubscription?.deletedByRetailerAt, offset)}
+                              Canceled At : {getFormatDateByTimezone(enrollSubscription?.deletedByRetailerAt, timezone)}
                             </span>
                             {enrollSubscription?.validAtAfterCancel && (
                               <span className="font-semibold text-black">
-                                Expires On : {convertDateByOffset(enrollSubscription?.validAtAfterCancel, offset)}
+                                Expires On : {getFormatDateByTimezone(enrollSubscription?.validAtAfterCancel, timezone)}
                               </span>
                             )}
                           </div>
@@ -604,7 +616,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                           <td className="whitespace-nowrap px-6 py-4">
                             {amount} {payment?.currency}
                           </td>
-                          <td className="whitespace-nowrap px-6 py-4">{convertDateByOffset(payment?.createdAt, offset)}</td>
+                          <td className="whitespace-nowrap px-6 py-4">{getFormatDateByTimezone(payment?.createdAt, timezone)}</td>
                           <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
                             {/* <Link href={payment?.invoicePdf} target="_blank"> */}
                             <Button
@@ -669,7 +681,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                   <td className="whitespace-nowrap px-6 py-4">
                     {'0.00'} {'CAD'}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">{convertDateByOffset(createdAt, offset)}</td>
+                  <td className="whitespace-nowrap px-6 py-4">{getFormatDateByTimezone(createdAt, timezone)}</td>
                   <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
                     {/* <Link href={payment?.invoicePdf} target="_blank"> */}
                     <Button

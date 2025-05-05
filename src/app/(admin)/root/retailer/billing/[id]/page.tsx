@@ -36,7 +36,11 @@ export default async function Page({ params }: any) {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <SubscriptionDetails id={id} offset={data?.data?.general?.timezone?.value} stripePublishKey={data?.data?.stripe?.stripePublishKey} />
+      <SubscriptionDetails
+        id={id}
+        timezone={data?.data?.general?.timezone?.label}
+        stripePublishKey={data?.data?.stripe?.stripePublishKey}
+      />
     </div>
   );
 }

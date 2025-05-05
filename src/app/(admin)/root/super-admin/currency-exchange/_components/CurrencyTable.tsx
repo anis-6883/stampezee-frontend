@@ -9,7 +9,6 @@ import {
   useUpdateCurrencyStatusMutation,
 } from '@/features/super-admin/currency/currencyApi';
 import { IQueryType } from '@/types';
-import getFormattedDate from '@/utils/get-formatted-date';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
@@ -20,8 +19,9 @@ import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 import CurrencyModal from './CurrencyModal';
+import getFormattedDateByTimezone from '@/utils/get-formatted-date-By-Timezone';
 
-export default function CurrencyTable({ offset }: { offset: number }) {
+export default function CurrencyTable({ timezone }: { timezone: string }) {
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [currencyModalState, setCurrencyModalState] = useState(false);
@@ -107,7 +107,7 @@ export default function CurrencyTable({ offset }: { offset: number }) {
               setFormData({
                 ...row.original,
                 image: row.original.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original.image}` : null,
-                validDateRange: `${getFormattedDate(row?.original?.startedAt, offset)} to ${getFormattedDate(row?.original?.expiredAt, offset)}`,
+                validDateRange: `${getFormattedDateByTimezone(row?.original?.startedAt, timezone)} to ${getFormattedDateByTimezone(row?.original?.expiredAt, timezone)}`,
               });
               setCreateState(true);
             }}

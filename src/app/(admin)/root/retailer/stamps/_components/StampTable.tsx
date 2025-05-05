@@ -11,7 +11,7 @@ import {
   useUpdateStampStatusMutation,
 } from '@/features/retailer/stamp/stampApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -189,11 +189,11 @@ export default function StampTable() {
           <div className="text-md mx-auto text-start">
             <p>
               <span className="font-bold">{t('startedAt')}:</span>{' '}
-              {convertDateByOffset(row?.original?.startedAt, session?.user?.timezone?.value || 0)}
+              {getFormatDateByTimezone(row?.original?.startedAt, session?.user?.timezone?.label || 0)}
             </p>
             <p>
               <span className="font-bold">{t('expiredAt')}:</span>{' '}
-              {convertDateByOffset(row?.original?.expiredAt, session?.user?.timezone?.value || 0)}
+              {getFormatDateByTimezone(row?.original?.expiredAt, session?.user?.timezone?.label || 0)}
             </p>
           </div>
         ) : (

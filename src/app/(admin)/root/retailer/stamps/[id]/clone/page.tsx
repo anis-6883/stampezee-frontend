@@ -34,7 +34,7 @@ export default async function Page({ params }: any) {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <CloneStamp Id={id} offset={data?.data?.general?.timezone?.value} locale={locale} />
+      <CloneStamp Id={id} timezone={data?.data?.general?.timezone?.label} locale={locale} />
     </div>
   );
 }

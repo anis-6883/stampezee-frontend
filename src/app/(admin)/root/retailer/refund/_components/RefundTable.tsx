@@ -3,7 +3,7 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import { useAllRefundQuery } from '@/features/retailer/refund/refundApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -35,11 +35,11 @@ export default function RefundTable() {
         <div className="text-md mx-auto text-start">
           <p>
             <span className="font-bold">{t('startedAt')}:</span>{' '}
-            {convertDateByOffset(row?.original?.enrollment?.validityFrom, session?.user?.timezone?.value || 0)}
+            {getFormatDateByTimezone(row?.original?.enrollment?.validityFrom, session?.user?.timezone?.label || 0)}
           </p>
           <p>
             <span className="font-bold">{t('expiredAt')}:</span>{' '}
-            {convertDateByOffset(row?.original?.enrollment?.validityTo, session?.user?.timezone?.value || 0)}
+            {getFormatDateByTimezone(row?.original?.enrollment?.validityTo, session?.user?.timezone?.label || 0)}
           </p>
         </div>
       ),
@@ -108,7 +108,7 @@ export default function RefundTable() {
       header: t('refundDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>{convertDateByOffset(row?.original?.refundedAt, session?.user?.timezone?.value || 0)}</p>
+          <p>{getFormatDateByTimezone(row?.original?.refundedAt, session?.user?.timezone?.timezone || 0)}</p>
         </div>
       ),
       mantineTableHeadCellProps: {

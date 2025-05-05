@@ -14,7 +14,7 @@ import { IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
 import ResolveConfirmModal from './ResolveConfirmModal';
 
-export default function CriticalPaymentTable({ offset }: { offset: number }) {
+export default function CriticalPaymentTable({ timezone }: { timezone: string }) {
   const [resolveState, setResolveState] = useState(false);
   const [resolveId, setResolveId] = useState(null);
   const [resolveSubmitting, setResolveSubmitting] = useState(false);

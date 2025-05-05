@@ -34,7 +34,7 @@ export default async function Page({ params, searchParams }: any) {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <UpdateStamp Id={id} offset={data?.data?.general?.timezone?.value} />
+      <UpdateStamp Id={id} timezone={data?.data?.general?.timezone?.label} />
     </div>
   );
 }

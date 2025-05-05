@@ -6,7 +6,7 @@ import { InfoRow } from '../../../super-admin/retailer/_components/InfoRow';
 import ScanStatisticsTable from './ScanStatisticsTable';
 import StatsCardView from './StatsCardView';
 
-export default function CustomerDetails({ id, offset }: { id: string; offset: number }) {
+export default function CustomerDetails({ id, timezone }: { id: string; timezone: string }) {
   const t = useTranslations('RetailerCustomerDetailsCard');
   const t2 = useTranslations('RetailerCustomerDetailsScanTable');
   const { data, isLoading, isError } = useGetSingleCustomerByRetailerQuery(id);
@@ -36,7 +36,7 @@ export default function CustomerDetails({ id, offset }: { id: string; offset: nu
       />
 
       <h2 className="my-5 text-lg font-medium">{t2('title')} :</h2>
-      <ScanStatisticsTable id={id} offset={offset} />
+      <ScanStatisticsTable id={id} timezone={timezone} />
     </div>
   );
 }
