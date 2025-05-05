@@ -3,10 +3,10 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import { useGetAllNewsletterBySuperAdminQuery } from '@/features/super-admin/newsletter/newsletterApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import { useState } from 'react';
 
-export default function NewsletterTable({ offset }: { offset: number }) {
+export default function NewsletterTable({ timezone }: { timezone: string }) {
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllNewsletterBySuperAdminQuery({
@@ -25,7 +25,7 @@ export default function NewsletterTable({ offset }: { offset: number }) {
       header: 'Sent At',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>{convertDateByOffset(row?.original?.createdAt, offset)}</p>
+          <p>{getFormatDateByTimezone(row?.original?.createdAt, timezone)}</p>
         </div>
       ),
       mantineTableHeadCellProps: {

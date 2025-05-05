@@ -4,7 +4,7 @@ import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import { useAllRefundBySuperAdminQuery, useConfirmRefundBySuperAdminMutation } from '@/features/super-admin/refund/refundApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -14,7 +14,7 @@ import { IoArrowDownCircle, IoCheckmarkCircle } from 'react-icons/io5';
 import { Badge } from 'rizzui';
 import RefundConfirmModal from '../../../_components/RefundConfirmModal';
 
-export default function RefundTable({ offset }: { offset: number }) {
+export default function RefundTable({ timezone }: { timezone: string }) {
   const [refundState, setRefundState] = useState(false);
   const [refundId, setRefundId] = useState(null);
   const [refundSubmitting, setRefundSubmitting] = useState(false);
@@ -52,10 +52,10 @@ export default function RefundTable({ offset }: { offset: number }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Started At:</span> {convertDateByOffset(row?.original?.enrollment?.validityFrom, offset)}
+            <span className="font-bold">Started At:</span> {getFormatDateByTimezone(row?.original?.enrollment?.validityFrom, timezone)}
           </p>
           <p>
-            <span className="font-bold">Expired At:</span> {convertDateByOffset(row?.original?.enrollment?.validityTo, offset)}
+            <span className="font-bold">Expired At:</span> {getFormatDateByTimezone(row?.original?.enrollment?.validityTo, timezone)}
           </p>
         </div>
       ),

@@ -1,7 +1,7 @@
 import { useGetAllCustomerScanBySuperAdminQuery } from '@/features/super-admin/customer/customerApi';
 import { IQueryType } from '@/types';
 import { capitalizeEachWord } from '@/utils/capitalizeEachWord';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import { useState } from 'react';
 import { BsShop } from 'react-icons/bs';
 import { CiReceipt } from 'react-icons/ci';
@@ -9,7 +9,7 @@ import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { Tab } from 'rizzui';
 import Table from '../../../_components/Table';
 
-const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => {
+const ScanStatisticsTable = ({ id, timezone }: { id: string; timezone: string }) => {
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllCustomerScanBySuperAdminQuery({
@@ -40,7 +40,9 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
     },
     {
       header: 'Scan Date',
-      Cell: ({ row }: any) => <div className="text-md mx-auto text-start">{convertDateByOffset(row?.original.scan.time, offset)}</div>,
+      Cell: ({ row }: any) => (
+        <div className="text-md mx-auto text-start">{getFormatDateByTimezone(row?.original.scan.time, timezone)}</div>
+      ),
     },
     {
       header: 'Status',
@@ -77,7 +79,7 @@ const ScanStatisticsTable = ({ id, offset }: { id: string; offset: number }) => 
                     <tbody>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Scan time</td>
-                        <td className="px-6 py-4">{convertDateByOffset(row?.original?.scan?.time, offset)}</td>
+                        <td className="px-6 py-4">{getFormatDateByTimezone(row?.original?.scan?.time, timezone)}</td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">Order amount</td>

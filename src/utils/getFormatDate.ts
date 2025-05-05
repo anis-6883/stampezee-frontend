@@ -37,6 +37,15 @@ export const currentPeriod = (date1: string, date2: string, offset: number): str
   return `${start} - ${end}`;
 };
 
+export const currentPeriodByTimezone = (date1: string, date2: string, timezone: string): string => {
+  if (!date1 || !date2 || !timezone) return 'N/A';
+
+  const start = moment.tz(date1, timezone).format('MMM DD');
+  const end = moment.tz(date2, timezone).format('MMM DD');
+
+  return `${start} - ${end}`;
+};
+
 export const manualDateFormat = (date: string, withoutTime: boolean = false): string => {
   if (!date) return 'N/A';
 

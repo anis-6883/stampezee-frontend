@@ -25,7 +25,7 @@ export default async function Page() {
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <RefundTable offset={data?.data?.general?.timezone?.value} />
+      <RefundTable timezone={data?.data?.general?.timezone?.label} />
     </div>
   );
 }

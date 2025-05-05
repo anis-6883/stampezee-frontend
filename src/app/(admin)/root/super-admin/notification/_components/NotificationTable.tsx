@@ -7,7 +7,7 @@ import {
   useSuperAdminNotificationsQuery,
 } from '@/features/super-admin/notification/notificationApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -18,7 +18,7 @@ import { Badge } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import CreateUpdateModel from './CreateUpdateModal';
 
-export default function NotificationTable({ offset, googleMapsApiKey }: { offset: number; googleMapsApiKey: string }) {
+export default function NotificationTable({ timezone, googleMapsApiKey }: { timezone: string; googleMapsApiKey: string }) {
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -141,11 +141,11 @@ export default function NotificationTable({ offset, googleMapsApiKey }: { offset
       Cell: ({ row }: any) =>
         row?.original?.scheduleAt && new Date(row?.original?.scheduleAt) > new Date() ? (
           <div className="text-md mx-auto flex items-center gap-x-2 text-start">
-            {convertDateByOffset(row?.original?.scheduleAt, offset)} <LuClock4 className="text-lg" />
+            {getFormatDateByTimezone(row?.original?.scheduleAt, timezone)} <LuClock4 className="text-lg" />
           </div>
         ) : (
           <div className="text-md mx-auto flex items-center gap-x-2 text-start">
-            {convertDateByOffset(row?.original?.createdAt, offset)} <FaRegPaperPlane className="text-sm" />
+            {getFormatDateByTimezone(row?.original?.createdAt, timezone)} <FaRegPaperPlane className="text-sm" />
           </div>
         ),
       mantineTableHeadCellProps: {

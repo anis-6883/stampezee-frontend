@@ -10,7 +10,7 @@ import {
   useUpdateRetailerStatusMutation,
 } from '@/features/super-admin/retailer/retailerApi';
 import { IQueryType } from '@/types';
-import { convertDateByOffset, getFormatDateByTimezone } from '@/utils/getFormatDate';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
