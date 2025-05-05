@@ -10,9 +10,9 @@ import { setAccessToken } from '@/features/auth/authSlice';
 import { ICountrySelect } from '@/types';
 import { getCountryByTimezone, getPhoneCodeByTimezone } from '@/utils/get-country-by-timezone';
 import countryData from '@/utils/get-country-list';
+import timeZoneData from '@/utils/get-timezone-list';
 import { translateText } from '@/utils/GoogleTranslate';
 import removeEmptyValues from '@/utils/removeEmptyValues';
-import { timeZoneList } from '@/utils/timezone-list';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -51,8 +51,7 @@ export default function RegisterForm({
   const [privacyPolicyModalState, setPrivacyPolicyModalState] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<google.maps.LatLngLiteral>({ lat: 23.7582377, lng: 90.3632155 });
   const [timezone, setTimezone] = useState({
-    value: String(-4),
-    label: 'America/Toronto (-4)',
+    label: 'America/Toronto',
   });
 
   const [register, { data: registerResponse, isSuccess, error }] = useRetailerRegisterMutation();
@@ -61,9 +60,9 @@ export default function RegisterForm({
   const [countryInfo, setCountryInfo] = useState({ country: '', dialCode: '' });
 
   useEffect(() => {
-    const timezones = timeZoneList?.filter((item) => item?.label?.includes(Intl.DateTimeFormat().resolvedOptions().timeZone));
+    const timezones = timeZoneData?.filter((item) => item?.label?.includes(Intl.DateTimeFormat().resolvedOptions().timeZone));
     setCountryInfo({ country: getCountryByTimezone(), dialCode: getPhoneCodeByTimezone() });
-    setTimezone({ ...timezones[0], value: String(timezones[0]?.value) });
+    setTimezone({ label: timezones[0]?.label });
   }, []);
 
   useEffect(() => {
