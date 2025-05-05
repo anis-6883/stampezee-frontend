@@ -124,7 +124,8 @@ export default function StampTable() {
           <div>
             <div className="text-md mx-auto text-start">
               <p>
-                <span className="font-bold">{t('title')}:</span> {row?.original.title}
+                <span className="font-bold">{t('title')}:</span>{' '}
+                {row?.original.title?.length >= 21 ? `${row?.original.title.slice(0, 22)}..` : row?.original.title}
               </p>
               <p>
                 <span className="font-bold">{t('category')}:</span> {_.startCase(_.toLower(row?.original?.category?.name))}

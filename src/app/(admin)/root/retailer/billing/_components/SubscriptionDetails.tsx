@@ -14,6 +14,7 @@ import {
   useSingleBillingQuery,
 } from '@/features/retailer/billing/billingApi';
 import { resetState } from '@/features/subscription/subscriptionSlice';
+import { getFormattedDateForInvoice } from '@/utils';
 import { convertDateByOffset, currentPeriod } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import moment from 'moment';
@@ -86,7 +87,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
     currency,
   } = data?.data || {};
   const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
-  const [selectPaymentId, setSelectPaymentId] = useState('');
+  const [selectPaymentId, setSelectPaymentId] = useState<any>({});
 
   const [modalState, setModalState] = useState(false);
   const [cancelSubscriptionId, setCancelSubscriptionId] = useState(null);
@@ -174,12 +175,13 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
       const downloadUrl = window.URL.createObjectURL(new Blob([pdfBuffer], { type: 'application/pdf' }));
       const link = document.createElement('a');
       link.href = downloadUrl;
-      link.setAttribute('download', 'invoice.pdf');
+      link.setAttribute('download', `${getFormattedDateForInvoice(selectPaymentId?.createdAt)}.pdf`);
       document.body.appendChild(link);
       link.click();
       link.remove();
       window.URL.revokeObjectURL(downloadUrl);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pdfBuffer]);
 
   // Handle Pdf download for Trial response
@@ -188,18 +190,19 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
       const downloadUrl = window.URL.createObjectURL(new Blob([pdfBufferForTrial], { type: 'application/pdf' }));
       const link = document.createElement('a');
       link.href = downloadUrl;
-      link.setAttribute('download', 'invoice.pdf');
+      link.setAttribute('download', `${getFormattedDateForInvoice(createdAt)}.pdf`);
       document.body.appendChild(link);
       link.click();
       link.remove();
       window.URL.revokeObjectURL(downloadUrl);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pdfBufferForTrial]);
 
-  const handlePdfDownload = async (id: any) => {
-    setSelectPaymentId(id);
+  const handlePdfDownload = async (payment: any) => {
+    setSelectPaymentId(payment);
     try {
-      await createBillingPdf(id);
+      await createBillingPdf(payment?._id);
     } catch (err) {
       toast.error('Error occur for invoice download!');
       console.error('Error downloading invoice:', err);
@@ -208,7 +211,7 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
 
   const handlePdfDownloadForTrial = async () => {
     try {
-      await createBillingPdfForTrial(id);
+      await createBillingPdfForTrial({ id, data: { createdAt } });
     } catch (err) {
       toast.error('Error occur for invoice download!');
       console.error('Error downloading invoice:', err);
@@ -607,10 +610,10 @@ export default function SubscriptionDetails({ id, offset, stripePublishKey }: { 
                             <Button
                               className="!m-0 !px-2 !py-1.5"
                               color="danger"
-                              onClick={() => handlePdfDownload(payment?._id)}
+                              onClick={() => handlePdfDownload(payment)}
                               text={t3('downloadPdf')}
                               postIcon={
-                                isPdfBufferLoading && selectPaymentId === payment?._id ? (
+                                isPdfBufferLoading && selectPaymentId?._id === payment?._id ? (
                                   <ImSpinner9 className="animate-spin text-lg" />
                                 ) : (
                                   <RiDownloadCloud2Fill className="text-lg" />
