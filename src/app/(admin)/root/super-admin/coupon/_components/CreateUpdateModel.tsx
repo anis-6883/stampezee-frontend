@@ -69,7 +69,7 @@ export default function CreateUpdateModel({
     discountType: formData?.discountType || 'percentage',
     discount: formData?.discount || '',
     // limit: formData?.limit || '',
-    validDateRange: formData?.validDateRange || 'today',
+    validDateRange: formData?.validDateRange || '',
     allowFor: formData?.allowFor || 'all',
     allowedRetailers: formData?.allowedRetailers || [],
     applicablePackages: formData?.applicablePackages || [],
