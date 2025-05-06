@@ -4,6 +4,7 @@ import CustomButton from '@/components/Formik/Button';
 import LocalSwitcherSelector from '@/components/Locale/LocalSwitcherSelector';
 import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
+import { apiSlice } from '@/features/api/apiSlice';
 import { userLoggedOut } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import { resetState } from '@/features/subscription/subscriptionSlice';
@@ -68,6 +69,7 @@ export default function HeaderContent() {
       callbackUrl: '/',
     });
     dispatch(resetState());
+    dispatch(apiSlice.util.resetApiState());
   };
 
   useEffect(() => {

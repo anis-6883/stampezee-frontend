@@ -14,6 +14,7 @@ import { IoArrowDownCircle, IoCheckmarkCircle } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
 import { Badge } from 'rizzui';
 import RefundConfirmModal from '../../../_components/RefundConfirmModal';
+import RefundCalculateTable from './RefundCalculateTable';
 
 export default function RefundTable({ timezone }: { timezone: string }) {
   const [refundState, setRefundState] = useState(false);
@@ -182,45 +183,49 @@ export default function RefundTable({ timezone }: { timezone: string }) {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const retailerEmail = row?.original?.enrollment?.retailer?.email?.split(/[-\s]/)?.find((part: string) => emailRegex.test(part));
     return (
-      <div className="flex ">
-        <div className="flex w-28 flex-col justify-center gap-2 border-r-2">
-          <div className="mx-auto">
-            {row.original?.enrollment?.retailer?.image ? (
-              <div>
-                <img
-                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original?.enrollment?.retailer?.image}`}
-                  alt="image"
-                  className="h-full w-12 rounded"
-                />
+      <div className="">
+        <div className="flex ">
+          <div className="flex w-28 flex-col justify-center gap-2 border-r-2">
+            <div className="mx-auto">
+              {row.original?.enrollment?.retailer?.image ? (
+                <div>
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${row.original?.enrollment?.retailer?.image}`}
+                    alt="image"
+                    className="h-full w-12 rounded"
+                  />
+                </div>
+              ) : (
+                <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-12 rounded" />
+              )}
+            </div>
+            <div>
+              <div className="text-md">
+                <p className="text-center font-semibold">{row?.original?.enrollment?.retailer?.storeName}</p>
               </div>
-            ) : (
-              <img src={'/images/stamp-logo.png'} alt="image" className="h-full w-12 rounded" />
-            )}
-          </div>
-          <div>
-            <div className="text-md">
-              <p className="text-center font-semibold">{row?.original?.enrollment?.retailer?.storeName}</p>
             </div>
           </div>
+          <div className="text-md ml-3 text-start">
+            <p>
+              <span className="font-bold">Full name:</span> {row?.original?.enrollment?.retailer?.fullName}
+            </p>
+            <p>
+              <span className="font-bold">Email:</span> {retailerEmail}
+            </p>
+            <p>
+              <span className="font-bold">Phone:</span>{' '}
+              {row?.original?.enrollment?.retailer?.phone && row?.original?.enrollment?.retailer?.dialCode
+                ? `${row?.original?.enrollment?.retailer?.dialCode}${row?.original?.enrollment?.retailer?.phone}`
+                : 'N/A'}
+            </p>
+            <p>
+              <span className="font-bold">Country:</span>{' '}
+              {row?.original?.enrollment?.retailer?.country ? row?.original?.enrollment?.retailer?.country : 'N/A'}
+            </p>
+          </div>
         </div>
-        <div className="text-md ml-3 text-start">
-          <p>
-            <span className="font-bold">FullName:</span> {row?.original?.enrollment?.retailer?.fullName}
-          </p>
-          <p>
-            <span className="font-bold">Email:</span> {retailerEmail}
-          </p>
-          <p>
-            <span className="font-bold">Phone:</span>{' '}
-            {row?.original?.enrollment?.retailer?.phone && row?.original?.enrollment?.retailer?.dialCode
-              ? `${row?.original?.enrollment?.retailer?.dialCode}${row?.original?.enrollment?.retailer?.phone}`
-              : 'N/A'}
-          </p>
-          <p>
-            <span className="font-bold">Country:</span>{' '}
-            {row?.original?.enrollment?.retailer?.country ? row?.original?.enrollment?.retailer?.country : 'N/A'}
-          </p>
-        </div>
+
+        <RefundCalculateTable data={row?.original} timezone={timezone} />
       </div>
     );
   };
