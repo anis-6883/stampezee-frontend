@@ -46,14 +46,6 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
             </span>
           </div>
 
-          {session?.user?.plan !== PACKAGES.ADVANCED && showUpButton && (
-            <div className="mt-2 flex justify-center">
-              <Link href={routes.privateRoutes.retailer.membershipPlan}>
-                <Button text="Upgrade" color="danger" postIcon={<FaArrowTrendUp className="text-lg" />} />
-              </Link>
-            </div>
-          )}
-
           {/* <div className="flex">
             <LuCircleDollarSign className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('usage')} : </p>
             <span className="pl-3 font-medium text-danger">
@@ -61,6 +53,14 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
             </span>
           </div> */}
         </>
+      )}
+
+      {session?.user?.plan !== PACKAGES.ADVANCED && showUpButton && (
+        <div className="mt-2 flex justify-center">
+          <Link href={routes.privateRoutes.retailer.membershipPlan}>
+            <Button text="Upgrade" color="danger" postIcon={<FaArrowTrendUp className="text-lg" />} />
+          </Link>
+        </div>
       )}
     </div>
   );

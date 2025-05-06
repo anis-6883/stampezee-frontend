@@ -83,7 +83,7 @@ export const Plans = ({ locale }: { locale: string }) => {
   return (
     <div className="mb-6">
       <div className="rounded-md p-8 shadow-md">
-        <div className="flex items-center justify-between">
+        <div className="mb-3 flex items-center justify-between">
           {session?.user?.plan && session?.user?.plan !== 'trial' ? (
             <h2 className="mb-4 text-xl font-semibold">{t('switchPlan')}</h2>
           ) : (
