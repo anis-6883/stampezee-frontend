@@ -210,7 +210,13 @@ export default function CloneStamp({ Id, locale }: any) {
                   />
                 </div>
                 {values?.hasValidity && (
-                  <FormikDatePicker isMinDate={true} label={t('validDateRange')} name="validDateRange" range={true} />
+                  <FormikDatePicker
+                    isMinDate={true}
+                    label={t('validDateRange')}
+                    minDate={initialValues?.validDateRange.split('to')[0]}
+                    name="validDateRange"
+                    range={true}
+                  />
                 )}
               </div>
 
