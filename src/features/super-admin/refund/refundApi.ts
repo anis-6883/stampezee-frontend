@@ -17,7 +17,10 @@ export const refundApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['superAdminRefund'],
     }),
+    singleRefundBySuperAdmin: builder.query({
+      query: (id) => `/api/secret-root/admin/super-admin/refund/find/${id}`,
+    }),
   }),
 });
 
-export const { useAllRefundBySuperAdminQuery, useConfirmRefundBySuperAdminMutation } = refundApi;
+export const { useAllRefundBySuperAdminQuery, useConfirmRefundBySuperAdminMutation, useSingleRefundBySuperAdminQuery } = refundApi;

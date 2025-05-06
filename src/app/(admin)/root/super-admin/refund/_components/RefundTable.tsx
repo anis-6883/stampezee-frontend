@@ -1,6 +1,7 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import CustomDrawer from '@/components/CustomDrawer';
 import Button from '@/components/Formik/Button';
 import { useAllRefundBySuperAdminQuery, useConfirmRefundBySuperAdminMutation } from '@/features/super-admin/refund/refundApi';
 import { IQueryType } from '@/types';
@@ -8,15 +9,18 @@ import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { FaRegPaperPlane } from 'react-icons/fa';
+import { FaInfoCircle, FaRegPaperPlane } from 'react-icons/fa';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { IoArrowDownCircle, IoCheckmarkCircle } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
 import { Badge } from 'rizzui';
 import RefundConfirmModal from '../../../_components/RefundConfirmModal';
 import RefundCalculateTable from './RefundCalculateTable';
+import { RefundDetails } from './RefundDetails';
 
 export default function RefundTable({ timezone }: { timezone: string }) {
+  const [drawerState, setDrawerState] = useState<boolean>(false);
+  const [selectedRefundId, setSelectedRefundId] = useState(null);
   const [refundState, setRefundState] = useState(false);
   const [refundId, setRefundId] = useState(null);
   const [refundSubmitting, setRefundSubmitting] = useState(false);
@@ -152,6 +156,16 @@ export default function RefundTable({ timezone }: { timezone: string }) {
       header: 'Actions',
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
+          <Button
+            onClick={() => {
+              setSelectedRefundId(row.original?._id);
+              setDrawerState(true);
+            }}
+            className="!mb-2 !text-xs"
+            color="primary"
+            preIcon={<FaInfoCircle className="text-base" />}
+            tooltip="Details"
+          />
           {row?.original?.refundStatus === 'completed' ? (
             <span className="font-semibold text-danger">Refunded!</span>
           ) : (
@@ -255,7 +269,7 @@ export default function RefundTable({ timezone }: { timezone: string }) {
         query={query}
         searchPlaceHolder="Search By Payment ID"
         searchFieldWidth="250px"
-        renderDetailPanel={RenderDetailPanel}
+        // renderDetailPanel={RenderDetailPanel}
       />
 
       <RefundConfirmModal
@@ -266,6 +280,20 @@ export default function RefundTable({ timezone }: { timezone: string }) {
         isSubmitting={refundSubmitting}
         setIsSubmitting={setRefundSubmitting}
       />
+
+      {/* Custom drawer  */}
+      <CustomDrawer
+        className=" bg-[#F2F2F2] px-3"
+        drawerState={drawerState}
+        handleCloseDrawer={() => {
+          setSelectedRefundId(null);
+          setDrawerState(false);
+        }}
+        title={'Refund Details'}
+        customSize={700}
+      >
+        <RefundDetails id={selectedRefundId} timezone={timezone} />
+      </CustomDrawer>
     </>
   );
 }
