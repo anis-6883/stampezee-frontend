@@ -28,8 +28,6 @@ export default function StampCategoryTable() {
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
   const { data, isLoading, isFetching } = useGetAllSuperAdminStampImagesCategoryQuery({
-    page: query.pageIndex + 1,
-    limit: query.pageSize,
     ...searchQuery,
   });
 
@@ -141,19 +139,14 @@ export default function StampCategoryTable() {
       <Table
         isFetching={isFetching}
         isLoading={isLoading}
+        enablePagination={false}
         response={
           isLoading
             ? {
                 data: [],
-                pagination: {
-                  totalDocuments: 0,
-                },
               }
             : {
-                data: data?.data.docs || [],
-                pagination: {
-                  totalDocuments: data?.data.totalDocs || 0,
-                },
+                data: data?.data || [],
               }
         }
         structure={structure}
