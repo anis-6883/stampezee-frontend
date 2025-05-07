@@ -55,29 +55,34 @@ export default function CreateUpdateModel({
     price: Yup.mixed().required('Required!'),
     slug: Yup.string().trim().required('Required!'),
     type: Yup.mixed().oneOf(['subscription', 'addon']).required('Required!'),
+    duration: Yup.string().when('slug', {
+      is: 'trial',
+      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      otherwise: () => Yup.number().nullable(),
+    }),
     allowTotalBranch: Yup.string().when('type', {
       is: 'subscription',
-      then: () => Yup.string().required('Required!'),
+      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalTeamMember: Yup.string().when('type', {
       is: 'subscription',
-      then: () => Yup.number().required('Required!'),
+      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalStamp: Yup.string().when('type', {
       is: 'subscription',
-      then: () => Yup.number().required('Required!'),
+      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalUser: Yup.string().when('isUserUnlimited', {
       is: false,
-      then: () => Yup.number().required('Required!'),
+      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalScan: Yup.string().when('isScanUnlimited', {
       is: false,
-      then: () => Yup.number().required('Required!'),
+      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     limit: Yup.string().when('type', {

@@ -50,7 +50,7 @@ const PlanAddOns = ({ stripeInfo, selectedCurrency }: { stripeInfo: any; selecte
         <span>
           {subscription?.title}
           {coupon?.appliedSlugs?.includes(subscription?.slug) && (
-            <span>{` (${coupon?.discountType === 'percentage' ? `${coupon?.discount}%` : coupon?.discount} off)`}</span>
+            <span>{` (${coupon?.discountType === 'percentage' ? `${coupon?.discount}%` : `${couponDiscount?.toFixed(2)} ${selectedCurrency}`} off)`}</span>
           )}
         </span>
         <span className="text-red-500">

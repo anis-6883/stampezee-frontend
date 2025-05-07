@@ -101,9 +101,9 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
       : '/images/stamp-logo.png',
     businessCurrency: retailerProfile?.data?.businessCurrency || 'CAD',
     timezone: retailerProfile?.data?.timezone || {
-      value: -4,
-      label: 'America/Toronto (-4)',
+      label: 'America/Toronto',
     },
+    deleteImageOnUpdate: false,
   };
 
   const validationSchema = Yup.object().shape({
@@ -202,6 +202,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                   sizeText="1MB"
                   isRounded={true}
                   brandText="Brand Logo"
+                  trackDeleteBtn={true}
                 />
                 <InputField name="storeName" label={t('storeName')} placeholder="Burger King" />
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -282,6 +283,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                       <ReactSelect
                         placeholder="Select your business currency"
                         menuPlacement="top"
+                        isDisabled={true}
                         options={currencyExchangeOptions}
                         getOptionLabel={getOptionLabelForCurrency}
                         getOptionValue={(option) => option.label}

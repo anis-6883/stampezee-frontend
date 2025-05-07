@@ -60,7 +60,7 @@ export default function StateCardView({ className }: { className: string }) {
             icon={<FaMoneyBillAlt className="text-2xl" />}
             key={1}
             title={`${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`}
-            metric={totalRevenue}
+            metric={totalRevenue.toFixed(2)}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError || isRetailerProfileLoading}

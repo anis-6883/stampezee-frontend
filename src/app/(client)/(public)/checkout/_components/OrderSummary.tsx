@@ -243,7 +243,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
                     <span className="col-span-6">
                       {addOn.title}{' '}
                       {coupon?.appliedSlugs?.includes(addOn?.slug) && (
-                        <span>{` (${coupon?.discountType === 'percentage' ? `${coupon?.discount}%` : coupon?.discount} off)`}</span>
+                        <span>{` (${coupon?.discountType === 'percentage' ? `${coupon?.discount}%` : `${couponDiscount?.toFixed(2)} ${selectedCurrency}`} off)`}</span>
                       )}
                     </span>
                     <button onClick={() => handleRemoveAddOn(addOn._id)} className="col-span-2 text-red-500">

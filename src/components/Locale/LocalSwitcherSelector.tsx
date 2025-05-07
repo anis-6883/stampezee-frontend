@@ -1,9 +1,9 @@
 import { Currency, Locale } from '@/config';
+import { useRetailerUpdateProfileMutation } from '@/features/auth/authApi';
 import { setCurrentCurrency } from '@/features/currency-exchange/currencyExchangeSlice';
 import { resetState, setCurrency } from '@/features/subscription/subscriptionSlice';
 import { getUserCurrency, setUserCurrency } from '@/services/currency';
 import { getUserLocale, setUserLocale } from '@/services/locale';
-import currencyData from '@/utils/get-currency-list';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState, useTransition } from 'react';
 import { BsTranslate } from 'react-icons/bs';
@@ -41,14 +41,7 @@ export default function LocalSwitcherSelector({
   const [isPending, startTransition] = useTransition();
   const [currentTab, setCurrentTab] = useState(0);
 
-  const currencyExchangeOptions = currencyData?.reduce((acc: any, curr: any) => {
-    currencyExchanges?.map((item: any) => {
-      if (item?.currency === curr?.code) {
-        acc?.push(curr);
-      }
-    });
-    return acc;
-  }, []);
+  const [retailerUpdateProfile, { data: updateRetailerProfile, isSuccess, error }] = useRetailerUpdateProfileMutation();
 
   useEffect(() => {
     (async () => {
@@ -71,7 +64,7 @@ export default function LocalSwitcherSelector({
     });
   };
   // handle currency
-  const handleCurrencyChange = (currency: Currency) => {
+  const handleCurrencyChange = async (currency: Currency) => {
     setSelectedCurrency(currency);
 
     startTransition(() => {
@@ -80,6 +73,7 @@ export default function LocalSwitcherSelector({
       dispatch(setCurrency({ name: currencyExchange?.currency, exchangeRate: currencyExchange?.exchangeRate }));
     });
     setModalState(false);
+    await retailerUpdateProfile({ businessCurrency: currency });
   };
 
   const handleTabChange = (index: number) => {

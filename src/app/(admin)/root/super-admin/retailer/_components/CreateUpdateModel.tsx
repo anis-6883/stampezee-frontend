@@ -9,6 +9,7 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useCreateSuperAdminRetailerMutation, useUpdateSuperAdminRetailerMutation } from '@/features/super-admin/retailer/retailerApi';
 import { appendFormData } from '@/utils';
 import countryData from '@/utils/get-country-list';
+import timeZoneData from '@/utils/get-timezone-list';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { timeZoneList } from '@/utils/timezone-list';
 import { Form, Formik } from 'formik';
@@ -56,8 +57,7 @@ export default function CreateUpdateModel({
     about: formData?.about || '',
     website: formData?.website || '',
     timezone: formData?.timezone || {
-      value: -4,
-      label: 'America/Toronto (-4)',
+      label: 'America/Toronto',
     },
     longitude: formData?.longitude || '',
     latitude: formData?.latitude || '',
@@ -295,15 +295,15 @@ export default function CreateUpdateModel({
                         key={values.timezone.label}
                         placeholder="Select your timezone"
                         menuPlacement="top"
-                        options={timezoneOptions}
+                        options={timeZoneData}
                         isDisabled={false}
                         isClearable={false}
                         isSearchable={true}
                         name="timezone"
-                        defaultValue={timezoneOptions?.filter((item) => String(item?.label) === values?.timezone.label)}
+                        defaultValue={timeZoneData?.filter((item) => String(item?.label) === values?.timezone.label)}
                         onChange={(selectedOption: OnChangeValue<any, false>) => {
                           const selectedTimezone = timeZoneList.find((item) => item.label === selectedOption?.label);
-                          setFieldValue('timezone', selectedTimezone);
+                          setFieldValue('timezone', { label: selectedOption?.label });
                         }}
                         onBlur={() => setFieldTouched('timezone', true)}
                       />
