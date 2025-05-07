@@ -451,9 +451,9 @@
     "status": "Status",
     "actions": "Actions",
     "placeHolder": "Search By Name",
-    "subAdminCreatedSuccessfully": "Sub Admin created successfully!",
-    "subAdminUpdatedSuccessfully": "Sub Admin updated successfully!",
-    "subAdminDeletedSuccessfully": "Sub Admin deleted successfully!"
+    "subAdminCreatedSuccessfully": "Loyalty Exclusive created successfully!",
+    "subAdminUpdatedSuccessfully": "Loyalty Exclusive updated successfully!",
+    "subAdminDeletedSuccessfully": "Loyalty Exclusive deleted successfully!"
   },
   "RetailerStamp": {
     "title": "Manage Stamps",
