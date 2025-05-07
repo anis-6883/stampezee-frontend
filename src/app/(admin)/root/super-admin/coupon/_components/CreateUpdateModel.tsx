@@ -13,6 +13,7 @@ import {
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Skeleton } from '@mantine/core';
 import { Form, Formik } from 'formik';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -184,7 +185,8 @@ export default function CreateUpdateModel({
           </div>
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
             {({ setFieldValue, values, errors, touched, setFieldTouched }) => {
-              console.log(values);
+              const today = new Date();
+              const currentDate = new Date(today.toISOString().split('T')[0]); // strip time
 
               return (
                 <Form className="grid gap-4">
@@ -414,7 +416,13 @@ export default function CreateUpdateModel({
                   <div className="grid grid-cols-1">
                     <FormikDatePicker
                       isMinDate={true}
-                      minDate={initialValues.validDateRange.split(' to ')[0]}
+                      minDate={
+                        formData?.validDateRange
+                          ? moment(initialValues.validDateRange.split(' to ')[0]).isBefore(currentDate)
+                            ? initialValues.validDateRange.split(' to ')[0]
+                            : 'today'
+                          : 'today'
+                      }
                       label="Valid Date Range"
                       name="validDateRange"
                       range={true}
