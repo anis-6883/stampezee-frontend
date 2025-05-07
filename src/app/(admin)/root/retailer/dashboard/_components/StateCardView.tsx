@@ -1,10 +1,12 @@
 'use client';
 
+import FreeTrialExpireModal from '@/app/(client)/(public)/checkout/_components/FreeTrialExpireModal';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 import { BsPatchCheck } from 'react-icons/bs';
 import { FaMoneyBillAlt } from 'react-icons/fa';
 import { LuUsers } from 'react-icons/lu';
@@ -14,11 +16,22 @@ import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
 export default function StateCardView({ className }: { className: string }) {
+  const [modalState, setModalState] = useState(false);
   const t = useTranslations('RetailerDashboard');
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
-  const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
+  const { data: retailerProfile, isLoading: isRetailerProfileLoading, refetch } = useRetailerGetProfileQuery(null);
   const { totalOrder = 0, totalActiveStamp = 0, totalRevenue = 0, totalCustomer = 0 } = data?.data || {};
+
+  useEffect(() => {
+    if (retailerProfile?.data?.isLimitExceeded) {
+      setModalState(true);
+    }
+  }, [retailerProfile?.data?.isLimitExceeded]);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>
@@ -83,6 +96,13 @@ export default function StateCardView({ className }: { className: string }) {
       >
         <PiCaretRightBold className="h-5 w-5" />
       </Button>
+
+      <FreeTrialExpireModal
+        modalState={modalState}
+        setModalState={setModalState}
+        allowTotalUser={retailerProfile?.data?.allowTotalUser}
+        allowTotalScan={retailerProfile?.data?.allowTotalScan}
+      />
     </div>
   );
 }

@@ -14,6 +14,7 @@ export default function InputField({
   className = '',
   readOnly = false,
   autoComplete = 'new-password',
+  hasLabelRequired = true,
 }: {
   name: string;
   label: string | React.ReactNode;
@@ -25,6 +26,7 @@ export default function InputField({
   disabled?: boolean;
   className?: string;
   readOnly?: boolean;
+  hasLabelRequired?: boolean;
   autoComplete?: 'off' | 'new-password';
 }) {
   return (
@@ -36,7 +38,7 @@ export default function InputField({
             label={
               label ? (
                 <div className="flex items-center">
-                  {label} {required && <span className="text-red-600">*</span>}
+                  {label} {required && hasLabelRequired && <span className="text-red-600">*</span>}
                 </div>
               ) : null
             }

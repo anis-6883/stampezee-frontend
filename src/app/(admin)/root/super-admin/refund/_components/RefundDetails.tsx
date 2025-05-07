@@ -1,6 +1,7 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { useSingleRefundBySuperAdminQuery } from '@/features/super-admin/refund/refundApi';
-import RefundCalculateTable from './RefundCalculateTable';
+import RefundForCancelled from './RefundForCancelled';
+import RefundForDowngrade from './RefundForDowngrade';
 
 export function RefundDetails({ id, timezone }: { id: string | null; timezone: string }) {
   const { isLoading, data: singleRefund } = useSingleRefundBySuperAdminQuery(id, { skip: !id });
@@ -16,7 +17,7 @@ export function RefundDetails({ id, timezone }: { id: string | null; timezone: s
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const retailerEmail = singleRefund?.data?.enrollment?.retailer?.email?.split(/[-\s]/)?.find((part: string) => emailRegex.test(part));
   return (
-    <div className="space-y-4 pt-6">
+    <div className="h-[90dvh] space-y-4 overflow-auto pt-6">
       <div className="m-4 flex justify-center rounded-lg border-2 p-6">
         <div className="flex w-28 flex-col justify-center gap-2 border-r-2">
           <div className="mx-auto">
@@ -58,7 +59,11 @@ export function RefundDetails({ id, timezone }: { id: string | null; timezone: s
         </div>
       </div>
 
-      <RefundCalculateTable data={singleRefund?.data} timezone={timezone} />
+      {singleRefund?.data?.reason === 'downgrade' ? (
+        <RefundForDowngrade data={singleRefund?.data} timezone={timezone} />
+      ) : (
+        <RefundForCancelled data={singleRefund?.data} timezone={timezone} />
+      )}
     </div>
   );
 }

@@ -11,9 +11,10 @@ import { FieldArray, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle, BsPatchCheck } from 'react-icons/bs';
+import { FiUser } from 'react-icons/fi';
 import { IoCloseOutline, IoStorefrontOutline } from 'react-icons/io5';
-import { LuCalendarDays, LuCircleDollarSign } from 'react-icons/lu';
-import { ActionIcon, Modal, Title } from 'rizzui';
+import { LuCalendarDays, LuCircleDollarSign, LuScanLine } from 'react-icons/lu';
+import { ActionIcon, Checkbox, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function CreateUpdateModel({
@@ -28,6 +29,7 @@ export default function CreateUpdateModel({
   setModalState: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [updateSubscription, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubscriptionMutation();
 
   const initialValues = {
@@ -42,6 +44,10 @@ export default function CreateUpdateModel({
     type: formData?.type || 'subscription',
     slug: formData?.slug || '',
     duration: formData?.duration || 0,
+    allowTotalUser: formData?.allowTotalUser || 0,
+    allowTotalScan: formData?.allowTotalScan || 0,
+    isUserUnlimited: formData?.allowTotalUser !== null ? false : true,
+    isScanUnlimited: formData?.allowTotalScan !== null ? false : true,
   };
 
   const validationSchema = Yup.object({
@@ -61,6 +67,16 @@ export default function CreateUpdateModel({
     }),
     allowTotalStamp: Yup.string().when('type', {
       is: 'subscription',
+      then: () => Yup.number().required('Required!'),
+      otherwise: () => Yup.number().nullable(),
+    }),
+    allowTotalUser: Yup.string().when('isUserUnlimited', {
+      is: false,
+      then: () => Yup.number().required('Required!'),
+      otherwise: () => Yup.number().nullable(),
+    }),
+    allowTotalScan: Yup.string().when('isScanUnlimited', {
+      is: false,
       then: () => Yup.number().required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
@@ -92,10 +108,22 @@ export default function CreateUpdateModel({
       const ignoreList = [];
       if (values?.type === 'subscription') {
         ignoreList.push('limit');
+        if (values?.slug !== 'trial') {
+          ignoreList.push('allowTotalScan', 'allowTotalUser');
+        }
       } else {
         ignoreList.push('allowTotalBranch', 'allowTotalTeamMember', 'allowTotalStamp');
       }
       if (!isFile(values?.image)) ignoreList.push('image');
+
+      if (values?.isScanUnlimited) {
+        values.allowTotalScan = null;
+      }
+      if (values?.isUserUnlimited) {
+        values.allowTotalUser = null;
+      }
+
+      ignoreList.push('isUserUnlimited', 'isScanUnlimited');
 
       objToFormData = objectToFormData(values, ignoreList);
 
@@ -219,6 +247,62 @@ export default function CreateUpdateModel({
                       />
                     )}
                   </div>
+
+                  {formData?.slug === 'trial' && (
+                    <div className="my-3 flex gap-3">
+                      <InputField
+                        name="allowTotalScan"
+                        hasLabelRequired={false}
+                        label={
+                          <div className="flex w-full justify-between">
+                            <div className="flex items-center">
+                              <span>Total Scan</span>
+                              <span className="text-red-600">*</span>
+                            </div>
+                            <Checkbox
+                              // inputClassName="bg-red-500"
+                              className="m-2"
+                              label={<span className="text-sm font-normal text-black">Unlimited</span>}
+                              size="sm"
+                              onChange={() => {
+                                setFieldValue('isScanUnlimited', !values?.isScanUnlimited);
+                              }}
+                              checked={values?.isScanUnlimited}
+                            />
+                          </div>
+                        }
+                        type="number"
+                        placeholder="0"
+                        prefix={<LuScanLine className="text-xl" />}
+                        disabled={values?.isScanUnlimited}
+                      />
+                      <InputField
+                        name="allowTotalUser"
+                        hasLabelRequired={false}
+                        label={
+                          <div className="flex w-full justify-between">
+                            <div className="flex items-center">
+                              <span>Total User</span>
+                              <span className="text-red-600">*</span>
+                            </div>
+                            <Checkbox
+                              onChange={() => {
+                                setFieldValue('isUserUnlimited', !values?.isUserUnlimited);
+                              }}
+                              checked={values?.isUserUnlimited}
+                              className="m-2"
+                              label={<span className="text-sm font-normal text-black">Unlimited</span>}
+                              size="sm"
+                            />
+                          </div>
+                        }
+                        type="number"
+                        placeholder="0"
+                        prefix={<FiUser className="text-xl" />}
+                        disabled={values?.isUserUnlimited}
+                      />
+                    </div>
+                  )}
 
                   <div className="relative mt-4 grid grid-cols-1 gap-4">
                     <FieldArray

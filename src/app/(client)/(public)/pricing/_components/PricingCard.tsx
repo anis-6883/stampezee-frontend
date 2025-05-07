@@ -69,8 +69,8 @@ export default function PricingCard({ item }: { item: any }) {
         ) : (
           <div className="my-2 flex items-baseline">
             <span className="mr-2 text-xl font-bold xl:text-3xl xl:font-extrabold">
-              <sup className="font-medium capitalize">{currency?.name}</sup>
               {item?.price ? item?.price?.toFixed(2) : 0}
+              <span className="ml-1 font-medium capitalize">{currency?.name}</span>
             </span>
             <span className="text-gray-500 dark:text-gray-400">
               /{item.duration === 30 ? 1 : item.duration} {item.duration === 30 ? 'Month' : 'Days'}

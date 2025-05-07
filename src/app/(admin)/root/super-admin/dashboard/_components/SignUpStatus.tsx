@@ -3,8 +3,9 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetDashboardCalcQuery } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
+import { IoInformationCircleOutline } from 'react-icons/io5';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
-import { Text, Title } from 'rizzui';
+import { Text, Title, Tooltip } from 'rizzui';
 
 export default function SignUpStatus({ className }: { className?: string }) {
   const { data: dashBoardData, isLoading, isError } = useGetDashboardCalcQuery(null);
@@ -34,18 +35,18 @@ export default function SignUpStatus({ className }: { className?: string }) {
           <Title as="h3" className="col-span-full text-base font-semibold sm:text-lg">
             Total Signup Ratio
           </Title>
-          {/* <Tooltip
+          <Tooltip
             color="danger"
             className={`bg-danger text-white`}
             size="sm"
             placement="top"
-            content={'Hello..'}
+            content={'Total Retailer vs. Total Customer Signup Ratio'}
             arrowClassName={`fill-danger`}
           >
             <span>
               <IoInformationCircleOutline className="text-xl text-danger " />
             </span>
-          </Tooltip> */}
+          </Tooltip>
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">
           <div className="mx-auto h-44 w-44">
