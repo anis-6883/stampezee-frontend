@@ -92,6 +92,8 @@ const updateBalance = (state: SubscriptionState) => {
 const calculateTax = (state: SubscriptionState) => {
   if (state.taxStatus === 'on') {
     state.tax = calculateTaxAmount(Math.abs(state.subTotal), state.taxPercentage);
+  } else {
+    state.tax = 0;
   }
 };
 

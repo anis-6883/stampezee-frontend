@@ -4,6 +4,7 @@ import { setCurrentCurrency } from '@/features/currency-exchange/currencyExchang
 import { resetState, setCurrency } from '@/features/subscription/subscriptionSlice';
 import { getUserCurrency, setUserCurrency } from '@/services/currency';
 import { getUserLocale, setUserLocale } from '@/services/locale';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState, useTransition } from 'react';
 import { BsTranslate } from 'react-icons/bs';
@@ -34,6 +35,7 @@ export default function LocalSwitcherSelector({
   currencyExchanges: any;
 }) {
   const dispatch = useDispatch();
+  const { data: session, update } = useSession();
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
   const t1 = useTranslations('LocaleSwitcher');
@@ -73,7 +75,9 @@ export default function LocalSwitcherSelector({
       dispatch(setCurrency({ name: currencyExchange?.currency, exchangeRate: currencyExchange?.exchangeRate }));
     });
     setModalState(false);
-    await retailerUpdateProfile({ businessCurrency: currency });
+    if (session?.user?.accessToken) {
+      await retailerUpdateProfile({ businessCurrency: currency });
+    }
   };
 
   const handleTabChange = (index: number) => {
