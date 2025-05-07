@@ -103,8 +103,8 @@ export default function CreateUpdateModel({
         Yup.array().of(Yup.string().required('Array must contain a string')).min(1, 'Select at least one retailer!').required('Required!'),
       otherwise: () => Yup.array().nullable(),
     }),
-    // totalUserLimit: Yup.number().required('Required!'),
-    // perUserLimit: Yup.number().required('Required!'),
+    totalUserLimit: Yup.number().max(1000000, 'Value must be less then or equal to 1000000!'),
+    perUserLimit: Yup.number().max(1000000, 'Value must be less then or equal to 1000000!'),
   });
 
   // Submit Handler
