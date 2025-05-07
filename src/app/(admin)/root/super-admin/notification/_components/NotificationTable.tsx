@@ -53,6 +53,11 @@ export default function NotificationTable({ timezone, googleMapsApiKey }: { time
     }
   }, [isSuccess, isError]);
 
+  useEffect(() => {
+    const element = document.querySelector('.mantine-hnifc4');
+    if (element) element.textContent = 'SI No.';
+  }, []);
+
   const structure = [
     {
       header: 'Store / Admin',

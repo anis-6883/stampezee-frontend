@@ -108,8 +108,8 @@ export default function ContactTable({ timezone }: { timezone: string }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Name, Store, Email"
-        searchFieldWidth="270px"
+        searchPlaceHolder="Search By Name, Store Or Email"
+        searchFieldWidth="280px"
       />
       <ContactDetailsModal modalState={modalState} setModalState={setModalState} message={formData?.message || ''} />
     </>

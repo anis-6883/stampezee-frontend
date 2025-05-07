@@ -4,7 +4,7 @@ import Table from '@/app/(admin)/root/_components/Table';
 import { useGetAllNewsletterBySuperAdminQuery } from '@/features/super-admin/newsletter/newsletterApi';
 import { IQueryType } from '@/types';
 import { getFormatDateByTimezone } from '@/utils/getFormatDate';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function NewsletterTable({ timezone }: { timezone: string }) {
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
@@ -38,6 +38,11 @@ export default function NewsletterTable({ timezone }: { timezone: string }) {
     },
   ];
 
+  useEffect(() => {
+    const element = document.querySelector('.mantine-hnifc4');
+    if (element) element.textContent = 'SI No.';
+  }, []);
+
   return (
     <>
       <Table
@@ -62,7 +67,7 @@ export default function NewsletterTable({ timezone }: { timezone: string }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Date 2024-09-30 or Email"
+        searchPlaceHolder="Search By Email"
         searchFieldWidth="270px"
       />
     </>
