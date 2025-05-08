@@ -77,7 +77,6 @@ export default function LocalSwitcherSelector({
     setModalState(false);
     if (session?.user?.accessToken) {
       await retailerUpdateProfile({ businessCurrency: currency });
-      // window.location.reload();
     }
   };
 
