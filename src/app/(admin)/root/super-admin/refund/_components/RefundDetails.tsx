@@ -18,8 +18,8 @@ export function RefundDetails({ id, timezone }: { id: string | null; timezone: s
   const retailerEmail = singleRefund?.data?.enrollment?.retailer?.email?.split(/[-\s]/)?.find((part: string) => emailRegex.test(part));
   return (
     <div className="h-[90dvh] space-y-4 overflow-auto pt-6">
-      <div className="m-4 flex justify-center rounded-lg border-2 p-6">
-        <div className="flex w-28 flex-col justify-center gap-2 border-r-2">
+      <div className="m-4 flex  justify-center rounded-lg border-2 p-6">
+        <div className="flex w-[30%] flex-col justify-center gap-2 border-r-2">
           <div className="mx-auto">
             {singleRefund?.data?.enrollment?.retailer?.image ? (
               <div>
@@ -35,13 +35,14 @@ export function RefundDetails({ id, timezone }: { id: string | null; timezone: s
           </div>
           <div>
             <div className="text-md">
-              <p className="text-center font-semibold">{singleRefund?.data?.enrollment?.retailer?.storeName}</p>
+              <p className=" mr-1 text-center font-semibold">{singleRefund?.data?.enrollment?.retailer?.storeName}</p>
             </div>
           </div>
         </div>
-        <div className="text-md ml-3 text-start">
+        <div className="text-md ml-3 w-[70%] text-start">
           <p>
-            <span className="font-bold">Full name:</span> {singleRefund?.data?.enrollment?.retailer?.fullName}
+            <span className="break-all font-bold">Full name:</span>{' '}
+            {`${singleRefund?.data?.enrollment?.retailer?.firstName} ${singleRefund?.data?.enrollment?.retailer?.lastName}`}
           </p>
           <p>
             <span className="font-bold">Email:</span> {retailerEmail}

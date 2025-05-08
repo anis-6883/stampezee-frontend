@@ -18,8 +18,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { GrMoney } from 'react-icons/gr';
 import { IoAlertCircle } from 'react-icons/io5';
-import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine, RiDraftLine, RiDrinks2Fill } from 'react-icons/ri';
 import * as Yup from 'yup';
 import CreateStampModal from './CreateStampModal';
@@ -262,7 +262,8 @@ export default function Create({ locale }: { locale: string }) {
                   required={false}
                   label={t('minPurchaseAmount')}
                   type="number"
-                  prefix={<LuCircleDollarSign className="text-xl" />}
+                  prefix={<GrMoney className="text-lg" />}
+                  suffix={<span>{session?.user?.businessCurrency}</span>}
                   placeholder="0"
                 />
               </div>

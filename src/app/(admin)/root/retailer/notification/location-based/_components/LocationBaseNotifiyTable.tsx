@@ -112,6 +112,7 @@ export default function LocationBaseNotifyTable({ locale, googleMapsApiKey }: { 
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Button
+            disabled={!data?.data?.notificationLimit}
             onClick={() => {
               setFormData({
                 ...row.original,

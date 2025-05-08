@@ -112,14 +112,16 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
       .trim()
       .required(tRetailerCommon('required'))
       .min(2, 'At least 2 characters!')
-      .max(100, 'maximum 100 characters!'),
+      .max(50, 'maximum 50 characters!'),
     firstName: Yup.string()
       .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
-      .required(tRetailerCommon('required')),
+      .required(tRetailerCommon('required'))
+      .max(50, 'maximum 50 characters!'),
     lastName: Yup.string()
       .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
-      .trim(),
+      .trim()
+      .max(50, 'maximum 50 characters!'),
     email: Yup.string().email('Invalid email').required(tRetailerCommon('required')),
     phone: Yup.string()
       .test('bd-phone-length', 'Number must be 10 digits', function (value) {

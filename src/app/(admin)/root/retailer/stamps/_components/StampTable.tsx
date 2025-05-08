@@ -155,11 +155,12 @@ export default function StampTable() {
             {row?.original?.rewardType === 'discount' ? `${row?.original?.discountReward}%` : row?.original?.promotionReward}
           </p>
           <p>
-            <span className="font-bold">{t('minPurchaseAmount')}:</span> {row?.original?.minPurchaseAmount} CAD
+            <span className="font-bold">{t('minPurchaseAmount')}:</span> {row?.original?.minPurchaseAmount}{' '}
+            {session?.user?.businessCurrency}
           </p>
         </div>
       ),
-      size: 230,
+      size: 250,
     },
     {
       header: t2('source'),

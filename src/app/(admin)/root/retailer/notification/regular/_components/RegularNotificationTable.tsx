@@ -97,6 +97,7 @@ export default function RegularNotificationTable({ locale }: { locale: string })
       Cell: ({ row }: any) => (
         <div className="flex items-center justify-center gap-2">
           <Button
+            disabled={!data?.data?.notificationLimit}
             className="!m-0 !px-3 !py-2 !text-xs"
             text={t2('resend')}
             color="danger"
