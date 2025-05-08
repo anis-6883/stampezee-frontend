@@ -87,7 +87,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
           <InfoRow label="Address" value={address ? address : 'N/A'} isLoading={isLoading} />
           <InfoRow
             label="Current Plan"
-            value={<span className={`${!currentPlan && 'text-danger'}`}>{currentPlan}</span>}
+            value={<span className={`${currentPlan === 'No Enrollment Yet' && 'text-danger'}`}>{currentPlan}</span>}
             isLoading={isLoading}
           />
         </div>
