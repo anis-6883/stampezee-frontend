@@ -5,6 +5,7 @@ export const dashboardApi = apiSlice.injectEndpoints({
     getRetailerDashboardCalc: builder.query({
       query: () => `/api/web/retailer/dashboard/calc`,
       keepUnusedDataFor: 5,
+      providesTags: ['retailerProfile'],
     }),
     rewardCollectPercentage: builder.query({
       query: () => `/api/web/retailer/dashboard/reward-collect-percentage`,

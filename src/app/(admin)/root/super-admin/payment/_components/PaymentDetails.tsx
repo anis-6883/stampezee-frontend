@@ -12,6 +12,7 @@ import {
   useSetDefaultPaymentMethodByAdminMutation,
   useSingleSubscriptionPaymentQuery,
 } from '@/features/super-admin/payment/paymentApi';
+import { getFormattedDateForInvoice } from '@/utils';
 import { currentPeriodByTimezone, getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import moment from 'moment-timezone';
@@ -22,12 +23,13 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { HiPlus, HiShoppingCart } from 'react-icons/hi2';
 import { ImBin, ImSpinner9 } from 'react-icons/im';
-import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
+import { IoArrowDownCircle, IoArrowUpCircle, IoEyeOutline } from 'react-icons/io5';
 import { MdAddCard, MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { RiDeleteBackLine, RiDownloadCloud2Fill } from 'react-icons/ri';
 import { Badge, Dropdown } from 'rizzui';
 import PackageCancelModal from '../../../retailer/billing/_components/PackageCancelModal';
+import PdfPreviewModal from '../../../retailer/billing/_components/PdfPreviewModal';
 import AddPaymentCardModal from './AddPaymentCardModal';
 
 const cardImageMap: any = {
@@ -73,9 +75,13 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
 
   const validityToUtc = moment.tz(validityTo, timezone).utc();
   // const validityToUtc = moment.utc(validityTo).utcOffset(Number(offset));
+  const [selectPaymentId, setSelectPaymentId] = useState<any>({});
 
   // cancel subscription state
   const [modalState, setModalState] = useState(false);
+  const [pdfModalState, setPdfModalState] = useState(false);
+  const [selectPdfBtn, setSelectPdfBtn] = useState('');
+  const [pdfUrl, setPdfUrl] = useState('');
   const [cancelSubscriptionId, setCancelSubscriptionId] = useState(null);
   const [cancelSubmitting, setCancelSubmitting] = useState(false);
   const [isPlan, setIsPlan] = useState(false);
@@ -154,22 +160,41 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
   useEffect(() => {
     if (pdfBuffer) {
       const downloadUrl = window.URL.createObjectURL(new Blob([pdfBuffer], { type: 'application/pdf' }));
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.setAttribute('download', 'invoice.pdf'); // Set the filename
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(downloadUrl); // Clean up the URL object
+      if (selectPdfBtn === 'download') {
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.setAttribute('download', `${getFormattedDateForInvoice(selectPaymentId?.createdAt)}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+        setSelectPaymentId({});
+      } else {
+        setPdfUrl(downloadUrl);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pdfBuffer]);
 
-  const handlePdfDownload = async (id: any) => {
+  const handlePdfDownload = async (payment: any) => {
+    setSelectPaymentId(payment);
+    setSelectPdfBtn('download');
     try {
-      await createBillingPdfBySuperAdmin(id);
+      await createBillingPdfBySuperAdmin(payment?._id);
     } catch (err) {
       toast.error('Error occur for invoice download!');
       console.error('Error downloading invoice:', err);
+    }
+  };
+
+  const handlePdfPreview = async (payment: any) => {
+    setSelectPdfBtn('preview');
+    setPdfModalState(true);
+    try {
+      await createBillingPdfBySuperAdmin(payment?._id);
+    } catch (err) {
+      toast.error('Error occur for invoice preview!');
+      console.error('Error Preview invoice:', err);
     }
   };
 
@@ -576,21 +601,26 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
                           </td>
                           <td className="whitespace-nowrap px-6 py-4">{getFormatDateByTimezone(payment?.createdAt, timezone)}</td>
                           <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                            {/* <Link href={payment?.invoicePdf} target="_blank"> */}
+                            <Button
+                              onClick={() => handlePdfPreview(payment)}
+                              tooltip={'View'}
+                              color="warning"
+                              preIcon={<IoEyeOutline className="text-base" />}
+                            />
                             <Button
                               className="!m-0 !px-2 !py-1.5"
                               color="danger"
-                              onClick={() => handlePdfDownload(payment?._id)}
-                              text="Download PDF"
+                              onClick={() => handlePdfDownload(payment)}
+                              // text="Download PDF"
+                              tooltip="Download PDF"
                               postIcon={
-                                isPdfBufferLoading ? (
+                                isPdfBufferLoading && selectPaymentId?._id === payment?._id ? (
                                   <ImSpinner9 className="animate-spin text-lg" />
                                 ) : (
                                   <RiDownloadCloud2Fill className="text-lg" />
                                 )
                               }
                             />
-                            {/* </Link> */}
                           </td>
                         </tr>
                       );
@@ -612,6 +642,8 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
         setIsSubmitting={setCancelSubmitting}
         isPlan={isPlan}
       />
+
+      <PdfPreviewModal pdfUrl={pdfUrl} modalState={pdfModalState} setModalState={setPdfModalState} loading={isPdfBufferLoading} />
     </div>
   );
 }

@@ -27,7 +27,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { HiPlus, HiShoppingCart } from 'react-icons/hi2';
 import { ImBin, ImSpinner9 } from 'react-icons/im';
-import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
+import { IoArrowDownCircle, IoArrowUpCircle, IoEyeOutline } from 'react-icons/io5';
 import { MdAddCard, MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { RiDeleteBackLine, RiDownloadCloud2Fill } from 'react-icons/ri';
@@ -35,6 +35,7 @@ import { useDispatch } from 'react-redux';
 import { Badge, Dropdown } from 'rizzui';
 import AddPaymentCardModal from './AddPaymentCardModal';
 import PackageCancelModal from './PackageCancelModal';
+import PdfPreviewModal from './PdfPreviewModal';
 
 const cardImageMap: any = {
   visa: '/images/visa.svg',
@@ -92,6 +93,9 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
   const [selectPaymentId, setSelectPaymentId] = useState<any>({});
 
   const [modalState, setModalState] = useState(false);
+  const [pdfModalState, setPdfModalState] = useState(false);
+  const [selectPdfBtn, setSelectPdfBtn] = useState('');
+  const [pdfUrl, setPdfUrl] = useState('');
   const [cancelSubscriptionId, setCancelSubscriptionId] = useState(null);
   const [cancelSubmitting, setCancelSubmitting] = useState(false);
   const [isPlan, setIsPlan] = useState(false);
@@ -175,13 +179,18 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
   useEffect(() => {
     if (pdfBuffer) {
       const downloadUrl = window.URL.createObjectURL(new Blob([pdfBuffer], { type: 'application/pdf' }));
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.setAttribute('download', `${getFormattedDateForInvoice(selectPaymentId?.createdAt)}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(downloadUrl);
+      if (selectPdfBtn === 'download') {
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.setAttribute('download', `${getFormattedDateForInvoice(selectPaymentId?.createdAt)}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+        setSelectPaymentId({});
+      } else {
+        setPdfUrl(downloadUrl);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pdfBuffer]);
@@ -190,19 +199,24 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
   useEffect(() => {
     if (pdfBufferForTrial) {
       const downloadUrl = window.URL.createObjectURL(new Blob([pdfBufferForTrial], { type: 'application/pdf' }));
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.setAttribute('download', `${getFormattedDateForInvoice(createdAt)}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(downloadUrl);
+      if (selectPdfBtn === 'download') {
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.setAttribute('download', `${getFormattedDateForInvoice(createdAt)}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+      } else {
+        setPdfUrl(downloadUrl);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pdfBufferForTrial]);
 
   const handlePdfDownload = async (payment: any) => {
     setSelectPaymentId(payment);
+    setSelectPdfBtn('download');
     try {
       await createBillingPdf(payment?._id);
     } catch (err) {
@@ -211,7 +225,29 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
     }
   };
 
+  const handlePdfPreview = async (payment: any) => {
+    setSelectPdfBtn('preview');
+    setPdfModalState(true);
+    try {
+      await createBillingPdf(payment?._id);
+    } catch (err) {
+      toast.error('Error occur for invoice preview!');
+      console.error('Error Preview invoice:', err);
+    }
+  };
+
   const handlePdfDownloadForTrial = async () => {
+    setSelectPdfBtn('download');
+    try {
+      await createBillingPdfForTrial({ id, data: { createdAt } });
+    } catch (err) {
+      toast.error('Error occur for invoice download!');
+      console.error('Error downloading invoice:', err);
+    }
+  };
+  const handlePdfPreviewForTrial = async () => {
+    setSelectPdfBtn('preview');
+    setPdfModalState(true);
     try {
       await createBillingPdfForTrial({ id, data: { createdAt } });
     } catch (err) {
@@ -620,12 +656,18 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
                             {getFormatDateByTimezone(payment?.createdAt, session?.user?.timezone?.label || '')}
                           </td>
                           <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                            {/* <Link href={payment?.invoicePdf} target="_blank"> */}
+                            <Button
+                              onClick={() => handlePdfPreview(payment)}
+                              tooltip={'View'}
+                              color="warning"
+                              preIcon={<IoEyeOutline className="text-base" />}
+                            />
                             <Button
                               className="!m-0 !px-2 !py-1.5"
                               color="danger"
                               onClick={() => handlePdfDownload(payment)}
-                              text={t3('downloadPdf')}
+                              // text={t3('downloadPdf')}
+                              tooltip={t3('downloadPdf')}
                               postIcon={
                                 isPdfBufferLoading && selectPaymentId?._id === payment?._id ? (
                                   <ImSpinner9 className="animate-spin text-lg" />
@@ -634,7 +676,6 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
                                 )
                               }
                             />
-                            {/* </Link> */}
                           </td>
                         </tr>
                       );
@@ -687,21 +728,26 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
                     {getFormatDateByTimezone(createdAt, session?.user?.timezone?.label || '')}
                   </td>
                   <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                    {/* <Link href={payment?.invoicePdf} target="_blank"> */}
+                    <Button
+                      onClick={() => handlePdfPreviewForTrial()}
+                      tooltip={'View'}
+                      color="warning"
+                      preIcon={<IoEyeOutline className="text-base" />}
+                    />
                     <Button
                       className="!m-0 !px-2 !py-1.5"
                       color="danger"
                       onClick={() => handlePdfDownloadForTrial()}
-                      text={t3('downloadPdf')}
+                      // text={t3('downloadPdf')}
+                      tooltip={t3('downloadPdf')}
                       postIcon={
-                        isPdfBufferLoadingForTrial ? (
+                        isPdfBufferLoadingForTrial && selectPdfBtn === 'download' ? (
                           <ImSpinner9 className="animate-spin text-lg" />
                         ) : (
                           <RiDownloadCloud2Fill className="text-lg" />
                         )
                       }
                     />
-                    {/* </Link> */}
                   </td>
                 </tr>
               </tbody>
@@ -718,6 +764,13 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
         isSubmitting={cancelSubmitting}
         setIsSubmitting={setCancelSubmitting}
         isPlan={isPlan}
+      />
+
+      <PdfPreviewModal
+        pdfUrl={pdfUrl}
+        modalState={pdfModalState}
+        setModalState={setPdfModalState}
+        loading={isPdfBufferLoading || isPdfBufferLoadingForTrial}
       />
     </div>
   );
