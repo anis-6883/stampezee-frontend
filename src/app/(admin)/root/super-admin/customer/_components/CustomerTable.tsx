@@ -10,6 +10,7 @@ import {
   useGetAllCustomerBySuperAdminQuery,
 } from '@/features/super-admin/customer/customerApi';
 import { IQueryType } from '@/types';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -17,10 +18,11 @@ import { FaInfoCircle } from 'react-icons/fa';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
+import { IoInformationCircleOutline } from 'react-icons/io5';
+import { Tooltip } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
-import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 
 export default function CustomerTable({ timezone }: { timezone: string }) {
   const [formData, setFormData] = useState({});
@@ -99,8 +101,20 @@ export default function CustomerTable({ timezone }: { timezone: string }) {
       accessorKey: 'totalCollectStamp',
       Cell: ({ row }: any) => (
         <div className="">
-          <p>
-            <span className="font-bold">Total Stamps Collected:</span> {row?.original?.totalCollectStamp}
+          <p className="flex items-center gap-1">
+            <span className="font-bold">Total Stamps Collected:</span> {row?.original?.totalStampsCollected}
+            <Tooltip
+              color="danger"
+              className={`bg-danger text-white`}
+              size="sm"
+              placement="top"
+              content={`Active: ${row?.original?.totalActiveStampsCollected}, Deleted: ${row?.original?.totalStampsCollected - row?.original?.totalActiveStampsCollected}`}
+              arrowClassName={`fill-danger`}
+            >
+              <span>
+                <IoInformationCircleOutline className="text-lg text-danger " />
+              </span>
+            </Tooltip>
           </p>
           <p>
             <span className="font-bold">Total Scan:</span> {row?.original?.totalScan}

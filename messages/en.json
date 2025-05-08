@@ -683,7 +683,7 @@
     "email": "Email",
     "phone": "Phone",
     "country": "Country",
-    "totalCollectStamp": "Total Collect Stamp",
+    "totalCollectStamp": "Total Stamps Collected",
     "totalScan": "Total Scan",
     "totalRewardCollect": "Total Reward Collect"
   },

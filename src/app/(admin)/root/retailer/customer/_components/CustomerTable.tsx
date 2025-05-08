@@ -12,6 +12,8 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
+import { IoInformationCircleOutline } from 'react-icons/io5';
+import { Tooltip } from 'rizzui';
 
 export default function CustomerTable() {
   const t = useTranslations('RetailerCustomerTable');
@@ -72,8 +74,20 @@ export default function CustomerTable() {
       accessorKey: 'totalCollectStamp',
       Cell: ({ row }: any) => (
         <div className="">
-          <p>
-            <span className="font-bold">{t('totalCollectStamp')}:</span> {row?.original?.totalCollectStamp}
+          <p className="flex items-center gap-1">
+            <span className="font-bold">{t('totalCollectStamp')}:</span> {row?.original?.totalStampsCollected}
+            <Tooltip
+              color="danger"
+              className={`bg-danger text-white`}
+              size="sm"
+              placement="top"
+              content={`Active: ${row?.original?.totalActiveStampsCollected}, Deleted: ${row?.original?.totalStampsCollected - row?.original?.totalActiveStampsCollected}`}
+              arrowClassName={`fill-danger`}
+            >
+              <span>
+                <IoInformationCircleOutline className="text-lg text-danger " />
+              </span>
+            </Tooltip>
           </p>
           <p>
             <span className="font-bold">{t('totalScan')}:</span> {row?.original?.totalScan}

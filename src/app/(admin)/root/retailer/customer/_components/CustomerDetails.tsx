@@ -12,8 +12,19 @@ export default function CustomerDetails({ id }: { id: string }) {
   const t = useTranslations('RetailerCustomerDetailsCard');
   const t2 = useTranslations('RetailerCustomerDetailsScanTable');
   const { data, isLoading, isError } = useGetSingleCustomerByRetailerQuery(id);
-  const { fullName, email, address, dialCode, phone, country, totalCollectStamp, totalPurchased, totalRewardCollect, totalScan } =
-    data?.data || {};
+  const {
+    fullName,
+    email,
+    address,
+    dialCode,
+    phone,
+    country,
+    totalStampsCollected,
+    totalActiveStampsCollected,
+    totalPurchased,
+    totalRewardCollect,
+    totalScan,
+  } = data?.data || {};
 
   return (
     <div className="w-full">
@@ -28,7 +39,8 @@ export default function CustomerDetails({ id }: { id: string }) {
       </div>
 
       <StatsCardView
-        totalCollectStamp={totalCollectStamp}
+        totalStampsCollected={totalStampsCollected}
+        totalActiveStampsCollected={totalActiveStampsCollected}
         totalScan={totalScan}
         totalRewardCollect={totalRewardCollect}
         totalPurchased={totalPurchased}

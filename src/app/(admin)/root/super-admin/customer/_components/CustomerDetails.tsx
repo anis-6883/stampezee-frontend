@@ -15,7 +15,8 @@ export default function CustomerDetails({ id, timezone }: { id: string; timezone
     dialCode,
     phone,
     country,
-    totalCollectStamp,
+    totalStampsCollected,
+    totalActiveStampsCollected,
     totalPurchased,
     totalRewardCollect,
     totalScan,
@@ -34,7 +35,8 @@ export default function CustomerDetails({ id, timezone }: { id: string; timezone
       </div>
 
       <StatsCardView
-        totalCollectStamp={totalCollectStamp}
+        totalStampsCollected={totalStampsCollected}
+        totalActiveStampsCollected={totalActiveStampsCollected}
         totalScan={totalScan}
         totalRewardCollect={totalRewardCollect}
         totalPurchased={totalPurchased}

@@ -12,7 +12,8 @@ import MetricCard from '../../dashboard/_components/MetricCard';
 
 export default function StatsCardView({
   className,
-  totalCollectStamp,
+  totalStampsCollected,
+  totalActiveStampsCollected,
   totalScan,
   totalRewardCollect,
   totalPurchased,
@@ -21,7 +22,8 @@ export default function StatsCardView({
 }: {
   className: string;
   totalScan: number;
-  totalCollectStamp: number;
+  totalStampsCollected: number;
+  totalActiveStampsCollected: number;
   totalRewardCollect: number;
   totalPurchased: number;
   isLoading: boolean;
@@ -48,10 +50,12 @@ export default function StatsCardView({
             icon={<BsShop className="text-2xl" />}
             key={1}
             title={t('totalCollectStamp')}
-            metric={totalCollectStamp}
+            metric={totalStampsCollected}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}
+            showInfo={true}
+            showInfoText={`Active: ${totalActiveStampsCollected}, Deleted: ${totalStampsCollected - totalActiveStampsCollected}`}
           />
 
           <MetricCard
