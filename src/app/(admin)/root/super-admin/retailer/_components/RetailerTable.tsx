@@ -76,7 +76,9 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
           </div>
           <div>
             <div className="text-md">
-              <p className="text-center font-semibold">{row?.original?.storeName}</p>
+              <p className="text-center font-semibold">
+                {row?.original?.storeName?.length > 26 ? `${row?.original?.storeName?.slice(0, 26)}...` : row?.original?.storeName}
+              </p>
             </div>
           </div>
         </div>
@@ -88,7 +90,9 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Name:</span> {row?.original?.firstName} {row?.original?.lastName}
+            <span className="font-bold">Name:</span>{' '}
+            {row?.original?.firstName?.length > 26 ? `${row?.original?.firstName?.slice(0, 26)}...` : row?.original?.firstName}{' '}
+            {row?.original?.lastName?.length > 26 ? `${row?.original?.lastName?.slice(0, 26)}...` : row?.original?.lastName}
           </p>
           <p>
             <span className="font-bold">Email:</span> {row?.original?.email}

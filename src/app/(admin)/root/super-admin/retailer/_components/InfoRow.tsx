@@ -13,7 +13,7 @@ export const InfoRow: React.FC<InfoRowProps> = ({ label, value, isLoading = fals
     {isLoading ? (
       <Skeleton className="h-6 w-32 rounded" />
     ) : (
-      <span className="w-[70%] text-end">{value !== undefined ? value : 'N/A'}</span>
+      <span className="w-[70%] break-all text-end">{value !== undefined ? value : 'N/A'}</span>
     )}
   </div>
 );

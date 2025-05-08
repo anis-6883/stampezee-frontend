@@ -125,10 +125,12 @@ export default function RegisterForm({
     firstName: Yup.string()
       .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
-      .required(tCommon('required')),
+      .required(tCommon('required'))
+      .max(100, 'maximum 100 characters!'),
     lastName: Yup.string()
       .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
-      .trim(),
+      .trim()
+      .max(100, 'maximum 100 characters!'),
     email: Yup.string()
       .test('email', tLogin('invalidEmail'), (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

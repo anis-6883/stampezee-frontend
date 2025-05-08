@@ -73,10 +73,12 @@ export default function CreateUpdateModel({
     firstName: Yup.string()
       .trim()
       .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
-      .required('Required!'),
+      .required('Required!')
+      .max(100, 'maximum 100 characters!'),
     lastName: Yup.string()
       .trim()
-      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?'),
+      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      .max(100, 'maximum 100 characters!'),
     email: Yup.string()
       .test('email', 'Provide valid email!', (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
