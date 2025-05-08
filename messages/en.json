@@ -706,7 +706,7 @@
     "totalCollectStamp": "Total Collect Stamp",
     "totalScan": "Total Scan",
     "totalRewardCollect": "Total Reward Collect",
-    "totalPurchased": "Total Purchased Amount"
+    "totalPurchased": "Total Revenue Amount"
   },
   "RetailerCustomerDetailsScanTable": {
     "title": "Scan Statistics",

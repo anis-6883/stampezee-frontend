@@ -73,7 +73,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<LuCircleDollarSign className="text-2xl" />}
             key={1}
-            title={'Total Purchased (CAD)'}
+            title={'Total Revenue Amount (CAD)'}
             metric={totalPurchased}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"

@@ -45,7 +45,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
               className={`bg-danger text-white`}
               size="sm"
               placement="top"
-              content={'How many rewards are collected by customers?'}
+              content={'Shows the percentage of rewards collected out of all eligible rewards.'}
               arrowClassName={`fill-danger`}
             >
               <span>
