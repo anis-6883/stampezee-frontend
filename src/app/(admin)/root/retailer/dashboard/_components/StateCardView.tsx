@@ -1,10 +1,13 @@
 'use client';
 
+import FreeTrialCountdownModal from '@/app/(client)/(public)/checkout/_components/FreeTrialCountdownModal';
 import FreeTrialExpireModal from '@/app/(client)/(public)/checkout/_components/FreeTrialExpireModal';
 import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
+import { countDaysLeft } from '@/utils';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { BsPatchCheck } from 'react-icons/bs';
@@ -16,7 +19,9 @@ import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
 export default function StateCardView({ className }: { className: string }) {
+  const { data: session }: any = useSession();
   const [modalState, setModalState] = useState(false);
+  const [trialCountDownModalState, setTrialCountDownModalState] = useState(false);
   const t = useTranslations('RetailerDashboard');
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
@@ -32,6 +37,12 @@ export default function StateCardView({ className }: { className: string }) {
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  useEffect(() => {
+    if (countDaysLeft(session?.user?.planValidAt) < 5) {
+      setTrialCountDownModalState(true);
+    }
+  }, [session?.user?.planValidAt]);
 
   return (
     <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>
@@ -102,6 +113,11 @@ export default function StateCardView({ className }: { className: string }) {
         setModalState={setModalState}
         allowTotalUser={retailerProfile?.data?.allowTotalUser}
         allowTotalScan={retailerProfile?.data?.allowTotalScan}
+      />
+      <FreeTrialCountdownModal
+        modalState={trialCountDownModalState}
+        setModalState={setTrialCountDownModalState}
+        countDownDays={countDaysLeft(session?.user?.planValidAt)}
       />
     </div>
   );
