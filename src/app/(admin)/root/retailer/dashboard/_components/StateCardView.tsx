@@ -39,10 +39,10 @@ export default function StateCardView({ className }: { className: string }) {
   }, [refetch]);
 
   useEffect(() => {
-    if (countDaysLeft(session?.user?.planValidAt) < 5) {
+    if (countDaysLeft(session?.user?.planValidAt) < 5 && session?.user?.plan === 'trial') {
       setTrialCountDownModalState(true);
     }
-  }, [session?.user?.planValidAt]);
+  }, [session?.user]);
 
   return (
     <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>
