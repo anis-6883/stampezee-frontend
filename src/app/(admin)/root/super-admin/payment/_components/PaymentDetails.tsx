@@ -480,11 +480,14 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
                       )}
 
                       <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                        {enrollSubscription?.deletedByRetailerAt ? (
+                        {enrollSubscription?.deletedByRetailerAt || enrollSubscription?.validAtAfterCancel ? (
                           <div className="flex flex-col gap-y-1">
-                            <span className="font-semibold text-danger">
-                              Canceled At : {getFormatDateByTimezone(enrollSubscription?.deletedByRetailerAt, timezone)}
-                            </span>
+                            {enrollSubscription?.deletedByRetailerAt && (
+                              <span className="font-semibold text-danger">
+                                Canceled At : {getFormatDateByTimezone(enrollSubscription?.deletedByRetailerAt, timezone)}
+                              </span>
+                            )}
+
                             {enrollSubscription?.validAtAfterCancel && (
                               <span className="font-semibold text-black">
                                 Expires On : {getFormatDateByTimezone(enrollSubscription?.validAtAfterCancel, timezone)}
