@@ -58,6 +58,8 @@ export default function HeaderContent() {
   const [modalState, setModalState] = useState<boolean>(false);
 
   const t = useTranslations('AppLayout');
+
+  console.log(t('home'));
   const locale = useLocale();
 
   // Handle Logout Response
@@ -321,7 +323,7 @@ export default function HeaderContent() {
                         <CustomButton color="danger" text={t('dashboard')} className="!m-0" />
                       </Link>
                     ) : (
-                      <div className="flex items-center justify-center gap-x-10 space-x-8">
+                      <div className="2xl:space-x-8 flex items-center justify-center gap-x-10">
                         <Link
                           style={{ letterSpacing: '4px' }}
                           href={routes.publicRoutes.retailerLogin}

@@ -102,7 +102,7 @@ export default function CustomerTable({ timezone }: { timezone: string }) {
       Cell: ({ row }: any) => (
         <div className="">
           <p className="flex items-center gap-1">
-            <span className="font-bold">Total Stamps Collected:</span> {row?.original?.totalStampsCollected}
+            <span className="font-bold">Total Stamp Cards Collected:</span> {row?.original?.totalStampsCollected}
             <Tooltip
               color="danger"
               className={`bg-danger text-white`}
@@ -117,10 +117,10 @@ export default function CustomerTable({ timezone }: { timezone: string }) {
             </Tooltip>
           </p>
           <p>
-            <span className="font-bold">Total Scan:</span> {row?.original?.totalScan}
+            <span className="font-bold">Total Stamps:</span> {row?.original?.totalScan}
           </p>
           <p>
-            <span className="font-bold">Total Reward Collect:</span> {row?.original?.totalRewardCollect}
+            <span className="font-bold">Total Rewards Collected:</span> {row?.original?.totalRewardCollect}
           </p>
         </div>
       ),

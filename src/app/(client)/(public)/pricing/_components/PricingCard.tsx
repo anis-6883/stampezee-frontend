@@ -50,7 +50,7 @@ export default function PricingCard({ item }: { item: any }) {
   }
 
   return (
-    <div className="relative mx-auto flex h-full w-full max-w-lg flex-col justify-between rounded-lg border-gray-100 bg-white p-3 text-gray-900 opacity-80 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8">
+    <div className="relative mx-auto flex h-full w-full max-w-lg flex-col justify-between rounded-lg border-gray-100 bg-white p-3 text-gray-500 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8">
       {session?.user?.plan === item?.slug && (
         <div
           className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
@@ -72,9 +72,7 @@ export default function PricingCard({ item }: { item: any }) {
               {item?.price ? item?.price?.toFixed(2) : 0}
               <span className="ml-1 font-medium capitalize">{currency?.name}</span>
             </span>
-            <span className="text-gray-500 dark:text-gray-400">
-              /{item.duration === 30 ? 1 : item.duration} {item.duration === 30 ? 'Month' : 'Days'}
-            </span>
+            <span className="text-gray-500 dark:text-gray-400">/ {item.duration === 30 ? 'Month' : 'Days'}</span>
           </div>
         )}
         <img
@@ -86,7 +84,7 @@ export default function PricingCard({ item }: { item: any }) {
         <ul role="list" className="mb-[75px] space-y-4 text-left ">
           {item.descriptions.map((info: any) => (
             <li className="flex items-center space-x-3" key={info}>
-              <IoCheckmarkDoneCircle className="text-2xl text-danger" />
+              <IoCheckmarkDoneCircle className="flex-shrink-0 text-2xl text-[#e02826]" />
               <span className="text-base">{info}</span>
             </li>
           ))}

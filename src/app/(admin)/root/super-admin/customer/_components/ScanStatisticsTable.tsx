@@ -23,7 +23,7 @@ const ScanStatisticsTable = ({ id, timezone }: { id: string; timezone: string })
 
   const structure = [
     {
-      header: 'Stamp Title',
+      header: 'Stamp Card Title',
       accessorKey: 'offer.title',
     },
     {
@@ -35,11 +35,11 @@ const ScanStatisticsTable = ({ id, timezone }: { id: string; timezone: string })
       accessorKey: 'branch.name',
     },
     {
-      header: 'Scanned By',
+      header: 'Stamped By',
       accessorKey: 'subAdmin.fullName',
     },
     {
-      header: 'Scan Date',
+      header: 'Stamped Date',
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">{getFormatDateByTimezone(row?.original.scan.time, timezone)}</div>
       ),
@@ -78,7 +78,7 @@ const ScanStatisticsTable = ({ id, timezone }: { id: string; timezone: string })
                   <table className="w-full text-left text-sm text-gray-500">
                     <tbody>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Scan time</td>
+                        <td className="px-6 py-4">Stamp Time</td>
                         <td className="px-6 py-4">{getFormatDateByTimezone(row?.original?.scan?.time, timezone)}</td>
                       </tr>
                       <tr className="border-b bg-white">
@@ -86,11 +86,11 @@ const ScanStatisticsTable = ({ id, timezone }: { id: string; timezone: string })
                         <td className="px-6 py-4">{`${row?.original?.scan?.amount} ${row?.original?.scan?.amountCurrency}`}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Stamp title</td>
+                        <td className="px-6 py-4">Stamp Card Title</td>
                         <td className="px-6 py-4">{row?.original?.offer?.title}</td>
                       </tr>
                       <tr className="border-b bg-white">
-                        <td className="px-6 py-4">Stamp category</td>
+                        <td className="px-6 py-4">Stamp Card Category</td>
                         <td className="px-6 py-4">{row?.original?.offer?.category}</td>
                       </tr>
                       <tr className="border-b bg-white">

@@ -45,7 +45,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<BsShop className="text-2xl" />}
             key={1}
-            title={'Total Stamps Collected'}
+            title={'Total Stamp Cards Collected'}
             metric={totalStampsCollected}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -57,7 +57,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<BsPatchCheck className="text-2xl" />}
             key={1}
-            title={'Total Scan'}
+            title={'Total Stamps'}
             metric={totalScan}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -67,7 +67,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<LuUsers className="text-2xl" />}
             key={1}
-            title={'Total Reward Collect'}
+            title={'Total Rewards Collected'}
             metric={totalRewardCollect}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -79,6 +79,7 @@ export default function StatsCardView({
             key={1}
             title={'Total Revenue Amount (CAD)'}
             metric={totalPurchased}
+            hasDecimalTwoDigits={true}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}

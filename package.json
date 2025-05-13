@@ -4,7 +4,7 @@
   "description": "StampEzee is a comprehensive stamp collection system designed to streamline the process of purchasing stamps by order.",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

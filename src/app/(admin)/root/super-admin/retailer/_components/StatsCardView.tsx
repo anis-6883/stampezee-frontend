@@ -47,7 +47,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<MdShoppingCartCheckout className="text-2xl" />}
             key={1}
-            title={'Total Order'}
+            title={'Total Stamps'}
             metric={totalOrder}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -77,7 +77,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<BsPatchCheck className="text-2xl" />}
             key={1}
-            title={'Total Active Stamp'}
+            title={'Total Active Stamp Cards'}
             metric={totalActiveStamp}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
