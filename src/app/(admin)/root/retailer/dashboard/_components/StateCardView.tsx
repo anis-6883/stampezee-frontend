@@ -21,12 +21,28 @@ import MetricCard from './MetricCard';
 export default function StateCardView({ className }: { className: string }) {
   const { data: session }: any = useSession();
   const [modalState, setModalState] = useState(false);
-  const [trialCountDownModalState, setTrialCountDownModalState] = useState(false);
+  const [trialCountDownModalState, setTrialCountDownModalState] =
+    useState(false);
   const t = useTranslations('RetailerDashboard');
-  const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
+  const {
+    sliderEl,
+    sliderPrevBtn,
+    sliderNextBtn,
+    scrollToTheRight,
+    scrollToTheLeft,
+  } = useScrollableSlider();
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
-  const { data: retailerProfile, isLoading: isRetailerProfileLoading, refetch } = useRetailerGetProfileQuery(null);
-  const { totalOrder = 0, totalActiveStamp = 0, totalRevenue = 0, totalCustomer = 0 } = data?.data || {};
+  const {
+    data: retailerProfile,
+    isLoading: isRetailerProfileLoading,
+    refetch,
+  } = useRetailerGetProfileQuery(null);
+  const {
+    totalOrder = 0,
+    totalActiveStamp = 0,
+    totalRevenue = 0,
+    totalCustomer = 0,
+  } = data?.data || {};
 
   useEffect(() => {
     if (retailerProfile?.data?.isLimitExceeded) {
@@ -39,13 +55,21 @@ export default function StateCardView({ className }: { className: string }) {
   }, [refetch]);
 
   useEffect(() => {
-    if (countDaysLeft(session?.user?.planValidAt) < 5 && session?.user?.plan === 'trial') {
+    if (
+      countDaysLeft(session?.user?.planValidAt) < 5 &&
+      session?.user?.plan === 'trial'
+    ) {
       setTrialCountDownModalState(true);
     }
   }, [session?.user]);
 
   return (
-    <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>
+    <div
+      className={cn(
+        'relative flex w-auto items-center overflow-hidden',
+        className
+      )}
+    >
       <Button
         title="Prev"
         variant="text"
@@ -56,7 +80,10 @@ export default function StateCardView({ className }: { className: string }) {
         <PiCaretLeftBold className="h-5 w-5" />
       </Button>
       <div className="w-full overflow-hidden">
-        <div ref={sliderEl} className="custom-scrollbar-x 2xl:gap-6 grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 3xl:gap-8">
+        <div
+          ref={sliderEl}
+          className="custom-scrollbar-x 2xl:gap-6 grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 3xl:gap-8"
+        >
           <MetricCard
             icon={<MdShoppingCartCheckout className="text-2xl" />}
             key={1}

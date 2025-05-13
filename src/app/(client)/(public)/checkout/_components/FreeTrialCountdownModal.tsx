@@ -29,15 +29,20 @@ export default function FreeTrialCountdownModal({
             alt="StampEzee Logo"
             className="mx-auto mb-4 w-16"
           />
-          <h1 className="text-2xl font-semibold">Free Trial Expire Alert!</h1>
+          <h1 className="text-2xl font-semibold"> Stamp Start Milestone Achieved! 🎉</h1>
         </div>
 
         {/* Body */}
         <div className="bg-white p-6">
-          <h2 className="mb-4 text-lg font-semibold text-red-600">{`You've Reached Your Trial Limit!`}</h2>
+          <h2 className="mb-4 text-lg font-semibold ">
+            {`🎉 Woohoo! You’ve maxed out on your Stamp Start plan  `}
+            <span className="text-red-600">{countDownDays} </span>
+            {'that’s a loyalty milestone! 🚦'}
+          </h2>
           <p className="mb-4 text-gray-700">
-            You{"'"}re currently on the free trial, which lefts <strong>{countDownDays} Days</strong>. To continue using all features
-            without interruption, please upgrade to a paid plan.
+            {/* You{"'"}re currently on the free trial, which lefts <strong>{countDownDays} Days</strong>. To continue using all features
+            without interruption, please upgrade to a paid plan. */}
+            To keep the rewards flowing and customers coming back, upgrade now and unlock even more features.
           </p>
 
           <div className="mt-10 flex justify-center gap-2">
