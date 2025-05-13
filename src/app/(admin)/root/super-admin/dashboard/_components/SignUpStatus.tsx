@@ -11,8 +11,8 @@ export default function SignUpStatus({ className }: { className?: string }) {
   const { data: dashBoardData, isLoading, isError } = useGetDashboardCalcQuery(null);
 
   const data = [
-    { name: 'Retailer Signup:', value: Number(dashBoardData?.data?.signup?.retailer), color: '#3872FA' },
-    { name: 'Customer Signup:', value: Number(dashBoardData?.data?.signup?.customer), color: '#eab308' },
+    { name: 'Retailer Signup:', value: Number(dashBoardData?.data?.signupRatio?.retailer), color: '#3872FA' },
+    { name: 'Customer Signup:', value: Number(dashBoardData?.data?.signupRatio?.customer), color: '#eab308' },
   ];
 
   const RADIAN = Math.PI / 180;
@@ -52,7 +52,7 @@ export default function SignUpStatus({ className }: { className?: string }) {
           <div className="mx-auto h-44 w-44">
             {isLoading || isError || dashBoardData === undefined ? (
               <Skeleton className="m-auto h-36 w-36 rounded-full" />
-            ) : dashBoardData?.data?.signup?.retailer == 0 && dashBoardData?.data?.signup?.customer == 0 ? (
+            ) : dashBoardData?.data?.signupRatio?.retailer == 0 && dashBoardData?.data?.signupRatio?.customer == 0 ? (
               <div className="flex h-full items-center justify-center">
                 <span className="font-medium text-danger">No Stats Available!</span>
               </div>
