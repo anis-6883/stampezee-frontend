@@ -59,6 +59,7 @@ export default function StatsCardView({
             key={1}
             title={'Total Revenue (CAD)'}
             metric={totalRevenue}
+            hasDecimalTwoDigits={true}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
             isLoading={isLoading || isError}

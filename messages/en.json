@@ -264,8 +264,8 @@
     "Refunds": "Refunds",
     "Branches": "Branches",
     "Loyalty-Executive": "Loyalty Executive",
-    "Stamps": "Stamps",
-    "Scans": "Scans",
+    "Stamps": "Stamp Cards",
+    "Scans": "Stamps",
     "Customers": "Customers",
     "Custom Stamp Images": "Custom Stamp Images",
     "Push Notifications": "Push Notifications",
@@ -275,10 +275,10 @@
   },
   "RetailerDashboard": {
     "title": "Retailer Dashboard",
-    "totalOrders": "Total Orders",
+    "totalOrders": "Total Stamps",
     "totalRevenue": "Total Revenue",
     "totalCustomer": "Total Customer",
-    "totalActiveStamp": "Total Active Stamp",
+    "totalActiveStamp": "Total Active Stamp Cards",
     "branchStatistics": "Branch Statistics"
   },
   "RetailerDashboardTable": {
@@ -294,15 +294,15 @@
     "totalRevenue": "Total Revenue"
   },
   "retailerDashboardStampAndCustomerStats": {
-    "stampCollect": "Stamp Collect",
+    "stampCollect": "Average Stamp Collection Overview",
     "activeStampCollect": "Active Stamp Collect",
     "noDate": "No Date",
     "withDate": "With Date",
-    "stampCollectStatus": "Average Collected Stamp per Customer",
-    "totalCollectedStamp": "Total Collected Stamp",
-    "totalUniqueCustomer": "Total Unique Customer",
+    "stampCollectStatus": "Avg. Stamps Collected per Customer",
+    "totalCollectedStamp": "Total Stamps Collected",
+    "totalUniqueCustomer": "Unique Customers",
     "rewardCollectStatus": "Reward Collect Ratio",
-    "rewardEligible": "Reward Eligible",
+    "rewardEligible": "Users Eligible for Reward",
     "rewardEfficacy": "Collected vs. Not Collected",
     "collected": "Collected",
     "notCollected": "Not Collected",
@@ -457,7 +457,7 @@
   },
   "RetailerStamp": {
     "title": "Manage Stamps",
-    "stamps": "Stamps",
+    "stamps": "Stamp Cards",
     "dashboard": "Dashboard",
     "addNewStamp": "Add New Stamp",
     "updateStamp": "Update A Stamp"
@@ -469,7 +469,7 @@
     "publish": "Publish",
     "status": "Status",
     "actions": "Actions",
-    "placeHolder": "Search By Stamp Title",
+    "placeHolder": "Search By Stamp Card Title",
     "title": "Title",
     "category": "Category",
     "branch": "Branch",
@@ -532,9 +532,9 @@
     "branch": "Branch",
     "customer": "Customer",
     "orderAmount": "Order amount",
-    "scanTime": "Scan time",
-    "stampTitle": "Stamp title",
-    "stampCategory": "Stamp category",
+    "scanTime": "Stamp Time",
+    "stampTitle": "Stamp Card Title",
+    "stampCategory": "Stamp Card Category",
     "noOfStampToCollect": "No. of stamps to collect",
     "basicRules": "Basic rules",
     "status": "Status",
@@ -552,11 +552,11 @@
     "paymentReceipt": "Payment Receipt"
   },
   "RetailerStampScanTable": {
-    "stampTitle": "Stamp Title",
+    "stampTitle": "",
     "scanDate": "Scan Date",
     "branch": "Branch",
     "customer": "Customer",
-    "scannedBy": "Scanned By",
+    "scannedBy": "Stamped By",
     "status": "Status",
     "placeHolder": "Search By Customer Name & Email"
   },
@@ -685,7 +685,7 @@
     "country": "Country",
     "totalCollectStamp": "Total Stamps Collected",
     "totalScan": "Total Scan",
-    "totalRewardCollect": "Total Reward Collect"
+    "totalRewardCollect": "Total Reward Collected"
   },
 
   "RetailerCustomerDetails": {
@@ -705,16 +705,16 @@
   "RetailerCustomerDetailsStats": {
     "totalCollectStamp": "Total Collect Stamp",
     "totalScan": "Total Scan",
-    "totalRewardCollect": "Total Reward Collect",
+    "totalRewardCollect": "Total Reward Collected",
     "totalPurchased": "Total Revenue Amount"
   },
   "RetailerCustomerDetailsScanTable": {
     "title": "Scan Statistics",
     "scanDate": "Scan Date",
-    "stampTitle": "Stamp Title",
+    "stampTitle": "",
     "store": "Store",
     "branch": "Branch",
-    "scannedBy": "Scanned By",
+    "scannedBy": "Stamped By",
     "status": "Status",
     "branchName": "Branch Name",
     "branchAddress": "Branch Address",
@@ -729,10 +729,10 @@
   "RetailerCustomerDetailsScanTableTabs": {
     "offerAndScan": "Offer & Scan",
     "store": "Store",
-    "scanTime": "Scan time",
+    "scanTime": "Stamp Time",
     "orderAmount": "Order amount",
-    "stampTitle": "Stamp title",
-    "stampCategory": "Stamp category",
+    "stampTitle": "Stamp Card Title",
+    "stampCategory": "Stamp Card Category",
     "noOfStampToCollect": "No. of stamp to collect",
     "basicRules": "Basic rules",
     "minPurchaseAmount": "Min. purchase amount",
