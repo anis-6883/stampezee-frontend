@@ -17,6 +17,7 @@ export default function Page() {
     <>
       <PageHeader title={pageHeader.title} />
       <StateCardView className="2xl:mb-8 mb-5" />
+
       <div className="mb-5 grid grid-cols-12 gap-5">
         <div className="col-span-12 md:col-span-6">
           <Revenue />
