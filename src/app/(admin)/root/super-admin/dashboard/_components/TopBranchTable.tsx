@@ -84,13 +84,13 @@ export default function TopBranchTable() {
                     {retailerEmail}
                   </td>
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {item.branch.name}
+                    {item?.branch.name}
                   </td>
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {item.branch.address}
+                    {item?.branch.address}
                   </td>
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {item.totalAmountInCAD.toFixed(2)}
+                    {item?.totalRevenue && item?.totalRevenue.toFixed(2)} {item?.amountCurrency}
                   </td>
                 </tr>
               );
