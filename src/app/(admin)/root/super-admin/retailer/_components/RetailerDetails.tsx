@@ -101,15 +101,15 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
         totalSubAdmin={totalSubAdmin}
         isLoading={isLoading}
         isError={isError}
-        className="2xl:mb-8 my-5"
+        className="my-5 xxl:mb-8"
       />
 
-      <div className="grid grid-cols-1 gap-x-10 md:grid-cols-6">
-        <div className="col-span-1 md:col-span-2">
+      <div className="grid grid-cols-1 gap-x-5 md:grid-cols-6 xxl:gap-x-10">
+        <div className="col-span-1 md:col-span-2 xl:col-span-3 xxl:col-span-2">
           <h2 className="my-5 text-lg font-bold">Active Add-Ons List:</h2>
           <AddonListTable data={addonSubscriptions} isLoading={isLoading} isError={isError} />
         </div>
-        <div className="col-span-1 md:col-span-4">
+        <div className="col-span-1 md:col-span-4 xl:col-span-3 xxl:col-span-4">
           <h2 className="my-5 text-lg font-bold">Loyalty-Executive List:</h2>
           <SubAdminListTable data={sub_admins} isLoading={isLoading} isError={isError} />
         </div>

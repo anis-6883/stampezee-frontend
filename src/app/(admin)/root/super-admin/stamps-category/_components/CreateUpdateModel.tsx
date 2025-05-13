@@ -74,7 +74,7 @@ export default function CreateUpdateModel({
       setIsSubmitting(false);
     }
     if (createSuccess) {
-      toast.success('Stamp Category created successfully!');
+      toast.success('Stamp Card Category created successfully!');
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
@@ -89,7 +89,7 @@ export default function CreateUpdateModel({
       setIsSubmitting(false);
     }
     if (updateSuccess) {
-      toast.success('Stamp Category updated successfully!');
+      toast.success('Stamp Card Category updated successfully!');
       setFormData({});
       setIsSubmitting(false);
       setModalState(false);
@@ -100,7 +100,7 @@ export default function CreateUpdateModel({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Update A Stamp Category</Title> : <Title as="h4">Add New Stamp Category</Title>}
+          {formData?._id ? <Title as="h4">Update A Stamp Card Category</Title> : <Title as="h4">Add New Stamp Card Category</Title>}
 
           <ActionIcon
             size="sm"

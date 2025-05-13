@@ -90,10 +90,10 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
               </p>
             )}
 
-            <ul className="text-gray-600">
+            <ul className="">
               {addOn.descriptions.map((info, idx) => (
                 <li className="flex items-center space-x-3" key={idx}>
-                  <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
+                  <IoCheckmarkDoneCircle className="text-2xl text-[#e02826]" /> <span className="mx-1 my-1 text-gray-600">{info}</span>
                 </li>
               ))}
             </ul>

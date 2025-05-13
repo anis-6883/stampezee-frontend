@@ -8,7 +8,7 @@ import Link from 'next/link';
 export default function TopBranchTable() {
   const { data, isLoading, isError } = useGetTopOutletsQuery(null);
 
-  const tableHeaders = ['Serial No', 'Retailer Name', 'Retailer Email', 'Branch Name', 'Branch Address', 'Num of Sales (CAD)'];
+  const tableHeaders = ['Serial No', 'Retailer Name', 'Retailer Email', 'Branch Name', 'Branch Address', 'Total Revenue'];
 
   if (isLoading || isError) {
     return (

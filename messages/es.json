@@ -2,10 +2,10 @@
   "AppLayout": {
     "login": "Iniciar sesión",
     "signUp": "Regístrate",
-    "home": "Cómo funciona",
+    "home": "Funciona",
     "pricing": "Precios",
-    "faq": "Preguntas Frecuentes",
-    "contact_us": "Contáctanos",
+    "faq": "Faq",
+    "contact_us": "Contacto",
     "dashboard": "Panel",
     "socials": "Redes Sociales",
     "contact": "Contacto",

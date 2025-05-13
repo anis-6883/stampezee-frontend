@@ -3,7 +3,7 @@ import { routes } from '@/config/routes';
 import StampCategoryTable from './_components/StampCategoryTable';
 
 const pageHeader = {
-  title: 'Manage Stamp Category',
+  title: 'Manage Stamp Card Category',
   breadcrumb: [
     {
       href: routes.privateRoutes.retailer.dashboard,

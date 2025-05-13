@@ -131,7 +131,7 @@ export default function StampCategoryTable() {
             className="w-full"
             color="danger"
             onClick={() => setCreateState(true)}
-            text="Add New Stamp Category"
+            text="Add New Stamp Card Category"
             preIcon={<HiPlus className="text-base" />}
           />
         </div>
