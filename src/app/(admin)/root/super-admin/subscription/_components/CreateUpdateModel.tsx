@@ -261,7 +261,7 @@ export default function CreateUpdateModel({
                         label={
                           <div className="flex w-full justify-between">
                             <div className="flex items-center">
-                              <span>Total Scan</span>
+                              <span>Total Stamps</span>
                               <span className="text-red-600">*</span>
                             </div>
                             <Checkbox

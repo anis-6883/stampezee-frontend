@@ -1,3 +1,5 @@
+'use client';
+
 import Button from '@/components/Formik/Button';
 import { PACKAGES } from '@/config/constants';
 import { routes } from '@/config/routes';
@@ -14,6 +16,8 @@ import { LuCircleDollarSign } from 'react-icons/lu';
 
 const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
   const { data: session }: any = useSession();
+
+  console.log(session);
   const t = useTranslations('RetailerBalanceCard');
   const t2 = useTranslations('RetailerBranchTable');
 
@@ -25,6 +29,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
 
   const usageAmount = roundToTwoDecimals(Math.abs(remainingAmount - session?.user?.planPayment));
 
+  console.log(session?.user?.plan);
   return (
     <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
       <div className="flex">
