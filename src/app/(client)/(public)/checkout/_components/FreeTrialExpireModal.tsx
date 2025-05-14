@@ -31,19 +31,20 @@ export default function FreeTrialExpireModal({
             alt="StampEzee Logo"
             className="mx-auto mb-4 w-16"
           />
-          <h1 className="text-2xl font-semibold">Free Trial Expire Alert!</h1>
+          <h1 className="text-2xl font-semibold">Stamp Start Milestone Achieved! 🎉</h1>
         </div>
 
         {/* Body */}
         <div className="bg-white p-6">
-          <h2 className="mb-4 text-lg font-semibold text-red-600">{`You've Reached Your Trial Limit!`}</h2>
+          <h2 className="mb-4 text-lg font-medium text-red-600">
+            {`🎉 Woohoo! You’ve maxed out on your Stamp Start plan which includes up to  `}
+            <span className="font-semibold">
+              {allowTotalScan ? allowTotalScan : 'unlimited'} scans and {allowTotalUser ? allowTotalUser : 'unlimited'}
+            </span>{' '}
+            users. that’s a loyalty milestone! 🚦
+          </h2>
           <p className="mb-4 text-gray-700">
-            You{"'"}re currently on the free trial, which includes{' '}
-            <strong>
-              {' '}
-              up to {allowTotalScan ? allowTotalScan : 'unlimited'} scans and {allowTotalUser ? allowTotalUser : 'unlimited'} users
-            </strong>
-            . To continue using all features without interruption, please upgrade to a paid plan.
+            To keep the rewards flowing and customers coming back, upgrade now and unlock even more features.
           </p>
 
           <div className="mt-10 flex justify-center gap-2">

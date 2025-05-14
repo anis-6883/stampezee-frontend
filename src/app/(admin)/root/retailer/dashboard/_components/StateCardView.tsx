@@ -21,11 +21,13 @@ import MetricCard from './MetricCard';
 export default function StateCardView({ className }: { className: string }) {
   const { data: session }: any = useSession();
   const [modalState, setModalState] = useState(false);
-  const [trialCountDownModalState, setTrialCountDownModalState] = useState(false);
+  const [trialCountDownModalState, setTrialCountDownModalState] = useState(true);
   const t = useTranslations('RetailerDashboard');
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
   const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
   const { data: retailerProfile, isLoading: isRetailerProfileLoading, refetch } = useRetailerGetProfileQuery(null);
+
+  console.log(retailerProfile);
   const { totalOrder = 0, totalActiveStamp = 0, totalRevenue = 0, totalCustomer = 0 } = data?.data || {};
 
   useEffect(() => {
@@ -39,11 +41,14 @@ export default function StateCardView({ className }: { className: string }) {
   }, [refetch]);
 
   useEffect(() => {
-    if (countDaysLeft(session?.user?.planValidAt) < 5 && session?.user?.plan === 'trial') {
+    if (countDaysLeft(session?.user?.planValidAt) < 5 && session?.user?.plan === 'trial' && !retailerProfile?.data?.isLimitExceeded) {
       setTrialCountDownModalState(true);
+    } else {
+      setTrialCountDownModalState(false);
     }
-  }, [session?.user]);
+  }, [retailerProfile?.data?.isLimitExceeded, session?.user]);
 
+  // console.log(session);
   return (
     <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>
       <Button
@@ -113,6 +118,7 @@ export default function StateCardView({ className }: { className: string }) {
         setModalState={setModalState}
         allowTotalUser={retailerProfile?.data?.allowTotalUser}
         allowTotalScan={retailerProfile?.data?.allowTotalScan}
+        // countDownDays={countDaysLeft(session?.user?.planValidAt)}
       />
       <FreeTrialCountdownModal
         modalState={trialCountDownModalState}
