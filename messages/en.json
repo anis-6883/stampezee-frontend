@@ -290,7 +290,7 @@
     "totalStamp": "Total Stamp",
     "totalCustomer": "Total Customer",
     "totalSubAdmin": "Total Loyalty Executive",
-    "totalOrder": "Total Order",
+    "totalOrder": "Total Stamps",
     "totalRevenue": "Total Revenue"
   },
   "retailerDashboardStampAndCustomerStats": {
@@ -299,7 +299,7 @@
     "noDate": "No Date",
     "withDate": "With Date",
     "stampCollectStatus": "Avg. Stamps Collected per Customer",
-    "totalCollectedStamp": "Total Stamps Collected",
+    "totalCollectedStamp": "Total Stamp Cards Collected",
     "totalUniqueCustomer": "Unique Customers",
     "rewardCollectStatus": "Reward Collect Ratio",
     "rewardEligible": "Users Eligible for Reward",
@@ -459,7 +459,7 @@
     "title": "Manage Stamp Cards",
     "stamps": "Stamp Cards",
     "dashboard": "Dashboard",
-    "addNewStamp": "Add New Stamp",
+    "addNewStamp": "Add New Stamp Card",
     "updateStamp": "Update A Stamp"
   },
   "RetailerStampTable": {
@@ -528,7 +528,7 @@
     "dashboard": "Dashboard"
   },
   "RetailerScanTab": {
-    "offerAndScan": "Offer & Scan",
+    "offerAndScan": "Offer & Stamp",
     "branch": "Branch",
     "customer": "Customer",
     "orderAmount": "Order amount",
@@ -553,7 +553,7 @@
   },
   "RetailerStampScanTable": {
     "stampTitle": "",
-    "scanDate": "Scan Date",
+    "scanDate": "Stamp Date",
     "branch": "Branch",
     "customer": "Customer",
     "scannedBy": "Stamped By",
@@ -683,8 +683,8 @@
     "email": "Email",
     "phone": "Phone",
     "country": "Country",
-    "totalCollectStamp": "Total Stamps Collected",
-    "totalScan": "Total Scan",
+    "totalCollectStamp": "Total Stamp Cards Collected",
+    "totalScan": "Total Stamps",
     "totalRewardCollect": "Total Reward Collected"
   },
 
@@ -703,14 +703,14 @@
   },
 
   "RetailerCustomerDetailsStats": {
-    "totalCollectStamp": "Total Collect Stamp",
-    "totalScan": "Total Scan",
+    "totalCollectStamp": "Total Stamp Cards Collected",
+    "totalScan": "Total Stamps",
     "totalRewardCollect": "Total Reward Collected",
     "totalPurchased": "Total Revenue Amount"
   },
   "RetailerCustomerDetailsScanTable": {
-    "title": "Scan Statistics",
-    "scanDate": "Scan Date",
+    "title": "Stamp Statistics",
+    "scanDate": "Stamp Date",
     "stampTitle": "",
     "store": "Store",
     "branch": "Branch",
@@ -727,7 +727,7 @@
     "placeHolder": "Search By Store Name"
   },
   "RetailerCustomerDetailsScanTableTabs": {
-    "offerAndScan": "Offer & Scan",
+    "offerAndScan": "Offer & Stamp",
     "store": "Store",
     "scanTime": "Stamp Time",
     "orderAmount": "Order amount",

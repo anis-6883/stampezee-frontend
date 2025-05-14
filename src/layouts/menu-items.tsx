@@ -49,7 +49,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuUsers />,
     },
     {
-      name: 'Scans',
+      name: 'Stamps',
       href: routes.privateRoutes.superAdmin.scan,
       icon: <MdOutlineQrCodeScanner />,
     },
@@ -131,12 +131,12 @@ export const menuItems: { [key: string]: any } = {
       icon: <TbUserShield />,
     },
     {
-      name: 'Stamps',
+      name: 'Stamp Cards',
       href: routes.privateRoutes.retailer.stamp.home,
       icon: <PiStamp />,
     },
     {
-      name: 'Scans',
+      name: 'Stamps',
       href: routes.privateRoutes.retailer.scan,
       icon: <MdOutlineQrCodeScanner />,
     },
