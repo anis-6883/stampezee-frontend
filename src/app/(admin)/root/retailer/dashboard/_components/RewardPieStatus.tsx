@@ -56,7 +56,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
             </Tooltip>
           </div>
 
-          <p className="flex gap-x-2">
+          <p className="flex items-center gap-x-2">
             <span className="font-lexend 2xl:text-2xl text-xl font-semibold text-gray-900">
               {isFetching || isLoading || isError || !rewardCollect ? (
                 <Skeleton className="h-6 w-28 rounded" />

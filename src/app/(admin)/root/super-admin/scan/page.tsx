@@ -5,7 +5,7 @@ import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import ScanTable from './_components/ScanTable';
 
 const pageHeader = {
-  title: 'Manage Stamp Scan',
+  title: 'Manage Stamps',
   breadcrumb: [
     {
       href: routes.privateRoutes.retailer.dashboard,

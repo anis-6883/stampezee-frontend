@@ -456,7 +456,7 @@
     "subAdminDeletedSuccessfully": "Loyalty Exclusive deleted successfully!"
   },
   "RetailerStamp": {
-    "title": "Manage Stamps",
+    "title": "Manage Stamp Cards",
     "stamps": "Stamp Cards",
     "dashboard": "Dashboard",
     "addNewStamp": "Add New Stamp",
@@ -523,7 +523,7 @@
     "stampClonedSuccessfully": "Stamp cloned successfully!"
   },
   "RetailerScan": {
-    "title": "Manage Stamp Scan",
+    "title": "Manage Stamps",
     "stampScan": "Stamp Scan",
     "dashboard": "Dashboard"
   },

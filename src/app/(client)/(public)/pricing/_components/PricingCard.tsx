@@ -72,7 +72,7 @@ export default function PricingCard({ item }: { item: any }) {
               {item?.price ? item?.price?.toFixed(2) : 0}
               <span className="ml-1 font-medium capitalize">{currency?.name}</span>
             </span>
-            <span className="text-gray-500 dark:text-gray-400">/ {item.duration === 30 ? 'Month' : 'Days'}</span>
+            <span className="text-gray-500 dark:text-gray-400">/ {item.duration === 30 ? 'month' : 'days'}</span>
           </div>
         )}
         <img
