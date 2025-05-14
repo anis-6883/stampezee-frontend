@@ -5,7 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import StampTable from './_components/StampTable';
 
 const pageHeader = {
-  title: 'Manage Stamps',
+  title: 'Manage Stamp Cards',
   breadcrumb: [
     {
       href: routes.privateRoutes.retailer.dashboard,

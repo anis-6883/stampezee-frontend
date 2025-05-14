@@ -5,7 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import ScanTable from './_components/ScanTable';
 
 const pageHeader = {
-  title: 'Manage Stamp Scan',
+  title: 'Manage Stamps',
   breadcrumb: [
     {
       href: routes.privateRoutes.retailer.dashboard,
