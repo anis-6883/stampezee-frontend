@@ -3,6 +3,7 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import StatusIndicator from '@/components/StatusIndicator';
+import { RootState } from '@/features/store';
 import {
   useDeleteSuperAdminStampImageCategoryMutation,
   useGetAllSuperAdminStampImagesCategoryQuery,
@@ -15,11 +16,13 @@ import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
+import { useSelector } from 'react-redux';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function StampCategoryTable() {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -27,9 +30,12 @@ export default function StampCategoryTable() {
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllSuperAdminStampImagesCategoryQuery({
-    ...searchQuery,
-  });
+  const { data, isLoading, isFetching } = useGetAllSuperAdminStampImagesCategoryQuery(
+    {
+      ...searchQuery,
+    },
+    { skip: !accessToken }
+  );
 
   const [deleteSuperAdminStampCategory, { isSuccess, isError }] = useDeleteSuperAdminStampImageCategoryMutation();
   const [updateStatus] = useUpdateSuperAdminCategoryStatusMutation();

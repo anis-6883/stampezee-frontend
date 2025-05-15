@@ -5,6 +5,7 @@ import FormikDatePicker from '@/components/Formik/FormikDatePicker';
 import InputField from '@/components/Formik/InputField';
 import SelectField from '@/components/Formik/SelectField';
 import { SerializedError } from '@/features/api/apiSlice';
+import { RootState } from '@/features/store';
 import {
   useCreateCouponAdminMutation,
   useGetAllCouponRetailersQuery,
@@ -20,6 +21,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { IoAlertCircle, IoCloseOutline, IoInformationCircleOutline } from 'react-icons/io5';
 import { LuCircleDollarSign } from 'react-icons/lu';
 import { RiDiscountPercentLine } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
 import ReactSelect from 'react-select';
 import { ActionIcon, Modal, Switch, Title, Tooltip } from 'rizzui';
 import * as Yup from 'yup';
@@ -35,6 +37,7 @@ export default function CreateUpdateModel({
   setFormData: (data: any) => void;
   setModalState: (state: boolean) => void;
 }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [totalUserLimitChecked, setTotalUserLimitChecked] = useState<boolean>(false);
   const [perUserLimitChecked, setPerUserLimitChecked] = useState<boolean>(false);
@@ -44,7 +47,7 @@ export default function CreateUpdateModel({
   const { data, isLoading, isError } = useGetAllCouponRetailersQuery(
     {},
     {
-      skip: !showRetailers || !modalState,
+      skip: !showRetailers || !modalState || !accessToken,
     }
   );
 

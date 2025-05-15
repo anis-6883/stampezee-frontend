@@ -2,11 +2,14 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { routes } from '@/config/routes';
+import { RootState } from '@/features/store';
 import { useGetTopOutletsQuery } from '@/features/super-admin/dashboard/dashboardApi';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 export default function TopBranchTable() {
-  const { data, isLoading, isError } = useGetTopOutletsQuery(null);
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { data, isLoading, isError } = useGetTopOutletsQuery(null, { skip: !accessToken });
 
   const tableHeaders = ['Serial No', 'Retailer Name', 'Retailer Email', 'Branch Name', 'Branch Address', 'Total Revenue'];
 

@@ -1,18 +1,21 @@
 'use client';
 
 import { routes } from '@/config/routes';
+import { RootState } from '@/features/store';
 import { useGetDashboardCalcQuery } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 import { BsShop } from 'react-icons/bs';
 import { LuUsers } from 'react-icons/lu';
 import { PiCalendarPlusDuotone, PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
+import { useSelector } from 'react-redux';
 import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
 export default function StateCardView({ className }: { className: string }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
-  const { data, isLoading, isError } = useGetDashboardCalcQuery(null);
+  const { data, isLoading, isError } = useGetDashboardCalcQuery(null, { skip: !accessToken });
 
   const totalVerifiedRetailer = data?.data?.totalVerifiedRetailer ?? 0;
   const totalVerifiedCustomer = data?.data?.totalVerifiedCustomer ?? 0;

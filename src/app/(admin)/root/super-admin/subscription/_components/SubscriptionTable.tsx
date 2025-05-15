@@ -2,23 +2,29 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import { RootState } from '@/features/store';
 import { useGetAllSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { IQueryType } from '@/types';
 import { useState } from 'react';
 import { HiOutlinePencil } from 'react-icons/hi';
+import { useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function StampsImageTable() {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllSubscriptionQuery({
-    page: query.pageIndex + 1,
-    limit: query.pageSize,
-    ...searchQuery,
-  });
+  const { data, isLoading, isFetching } = useGetAllSubscriptionQuery(
+    {
+      page: query.pageIndex + 1,
+      limit: query.pageSize,
+      ...searchQuery,
+    },
+    { skip: !accessToken }
+  );
 
   const structure = [
     {

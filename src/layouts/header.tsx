@@ -19,8 +19,8 @@ export default function Header() {
   const isMounted = useIsMounted();
   const windowScroll = useWindowScroll();
   const { data: session }: any = useSession();
-  const { role } = useSelector((state: RootState) => state.authSlice);
-  const { data, isLoading } = useGetGeneralSettingsQuery(null, { skip: role !== ROLE.SUPER_ADMIN });
+  const { role, accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { data, isLoading } = useGetGeneralSettingsQuery(null, { skip: !accessToken || role !== ROLE.SUPER_ADMIN });
 
   return (
     <header

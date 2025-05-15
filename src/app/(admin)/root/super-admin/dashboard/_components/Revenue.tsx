@@ -2,15 +2,18 @@
 
 import DatePicker from '@/components/Formik/DatePicker';
 import { Skeleton } from '@/components/ui/skeleton';
+import { RootState } from '@/features/store';
 import { useGetDashboardRevenueQuery } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useEffect, useState } from 'react';
 import { IoInformationCircleOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import { Select, Text, Title, Tooltip } from 'rizzui';
 import CircleProgressbar from './CircleProgressbar';
 import WidgetCard from './WidgetCard';
 
 export default function Revenue({ className }: { className?: string }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [dateRange, setDateRange] = useState('');
   const {
     data: dashboardRevenue,
@@ -18,9 +21,12 @@ export default function Revenue({ className }: { className?: string }) {
     isFetching,
     isError,
     refetch,
-  } = useGetDashboardRevenueQuery({
-    dateRange,
-  });
+  } = useGetDashboardRevenueQuery(
+    {
+      dateRange,
+    },
+    { skip: !accessToken }
+  );
   const [showDate, setShowDate] = useState({ label: 'No Date', value: 'no-date' });
 
   useEffect(() => {

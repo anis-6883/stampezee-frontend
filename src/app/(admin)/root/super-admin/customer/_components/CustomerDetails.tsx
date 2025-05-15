@@ -1,12 +1,15 @@
 'use client';
 
+import { RootState } from '@/features/store';
 import { useGetSingleCustomerBySuperAdminQuery } from '@/features/super-admin/customer/customerApi';
+import { useSelector } from 'react-redux';
 import { InfoRow } from '../../retailer/_components/InfoRow';
 import ScanStatisticsTable from './ScanStatisticsTable';
 import StatsCardView from './StatsCardView';
 
 export default function CustomerDetails({ id, timezone }: { id: string; timezone: string }) {
-  const { data, isLoading, isError } = useGetSingleCustomerBySuperAdminQuery(id);
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { data, isLoading, isError } = useGetSingleCustomerBySuperAdminQuery(id, { skip: !accessToken });
   const {
     fullName,
     email,

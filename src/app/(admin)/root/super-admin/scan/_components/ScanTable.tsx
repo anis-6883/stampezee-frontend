@@ -1,5 +1,6 @@
 'use client';
 
+import { RootState } from '@/features/store';
 import { useSuperAdminScanDetailsQuery } from '@/features/super-admin/scan/scanApi';
 import { IQueryType } from '@/types';
 import { capitalizeEachWord } from '@/utils/capitalizeEachWord';
@@ -9,17 +10,22 @@ import { BsShop } from 'react-icons/bs';
 import { CiReceipt } from 'react-icons/ci';
 import { LuUser } from 'react-icons/lu';
 import { MdOutlineQrCodeScanner } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { Tab } from 'rizzui';
 import Table from '../../../_components/Table';
 
 export default function ScanTable({ timezone }: { timezone: string }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useSuperAdminScanDetailsQuery({
-    page: query.pageIndex + 1,
-    limit: query.pageSize,
-    ...searchQuery,
-  });
+  const { data, isLoading, isFetching } = useSuperAdminScanDetailsQuery(
+    {
+      page: query.pageIndex + 1,
+      limit: query.pageSize,
+      ...searchQuery,
+    },
+    { skip: !accessToken }
+  );
 
   const structure = [
     {

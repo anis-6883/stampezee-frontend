@@ -2,12 +2,14 @@
 
 import Button from '@/components/Formik/Button';
 import { SerializedError } from '@/features/api/apiSlice';
+import { RootState } from '@/features/store';
 import { useCreateCurrencyMutation, useGetAllCurrencyFromApiQuery } from '@/features/super-admin/currency/currencyApi';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi2';
 import { IoCloseOutline } from 'react-icons/io5';
 import { LuPlus } from 'react-icons/lu';
+import { useSelector } from 'react-redux';
 import { ActionIcon, Modal, Title } from 'rizzui';
 
 export default function CurrencyModal({
@@ -19,8 +21,9 @@ export default function CurrencyModal({
   modalState: boolean;
   setModalState: (state: boolean) => void;
 }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [searchText, setSearchText] = useState<string>('');
-  const { data } = useGetAllCurrencyFromApiQuery({});
+  const { data } = useGetAllCurrencyFromApiQuery({}, { skip: !accessToken });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<any>({});
   const [createCurrency, { isSuccess: createSuccess, error: createError }] = useCreateCurrencyMutation();

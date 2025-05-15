@@ -1,19 +1,25 @@
 'use client';
 
 import Table from '@/app/(admin)/root/_components/Table';
+import { RootState } from '@/features/store';
 import { useGetAllNewsletterBySuperAdminQuery } from '@/features/super-admin/newsletter/newsletterApi';
 import { IQueryType } from '@/types';
 import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function NewsletterTable({ timezone }: { timezone: string }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllNewsletterBySuperAdminQuery({
-    page: query.pageIndex + 1,
-    limit: query.pageSize,
-    ...searchQuery,
-  });
+  const { data, isLoading, isFetching } = useGetAllNewsletterBySuperAdminQuery(
+    {
+      page: query.pageIndex + 1,
+      limit: query.pageSize,
+      ...searchQuery,
+    },
+    { skip: !accessToken }
+  );
 
   const structure = [
     {
