@@ -7,7 +7,6 @@ import { routes } from '@/config/routes';
 import {
   useDeleteSubAdminMutation,
   useGetAllSubAdminsQuery,
-  useLazyGetNextEmailQuery,
   useUpdateSubAdminStatusMutation,
 } from '@/features/retailer/sub-admin/subAdminApi';
 import { IQueryType } from '@/types';
@@ -46,7 +45,6 @@ export default function SubAdminTable() {
     limit: query.pageSize,
     ...searchQuery,
   });
-  const [getNextEmail] = useLazyGetNextEmailQuery();
 
   // Handle Delete Response
   useEffect(() => {

@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { IoCloseOutline } from 'react-icons/io5';
-import { ActionIcon, Modal, Title } from 'rizzui';
+import { ActionIcon, Input, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 import InputFieldWithOnChange from './InputFieldWithOnChange';
 
@@ -165,7 +165,8 @@ export default function CreateUpdateModal({
         </div>
         <div>
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
-            {({ setFieldValue, values }) => {
+            {({ setFieldValue, values, errors }) => {
+              console.log('errors', errors);
               return (
                 <Form className="mt-5">
                   <div className="mb-5">
@@ -188,7 +189,7 @@ export default function CreateUpdateModal({
                         setFieldValue('firstName', e.target.value);
                         if (!formData?._id) {
                           if (e.target.value) {
-                            setFieldValue('email', `${e.target.value.trim()}.s${data?.data.totalDocs + 1}@stampezee.com`);
+                            setFieldValue('email', `${e.target.value.trim()?.split(' ')[0]}.s${data?.data.totalDocs + 1}@stampezee.com`);
                           } else {
                             setFieldValue('email', '');
                           }
@@ -222,13 +223,44 @@ export default function CreateUpdateModal({
                     </div>
                   </div>
 
-                  <div className="mt-3 grid grid-cols-2 gap-x-5 gap-y-5">
-                    <InputField
+                  <div className={`mt-3 grid ${formData?._id ? 'grid-cols-1' : 'grid-cols-2'} gap-x-5 gap-y-5`}>
+                    {/* <InputField
                       disabled={!values?.firstName || formData?._id}
                       name="email"
                       label={t2('email')}
                       placeholder="username.s1@stampezee.com"
-                    />
+                    /> */}
+
+                    <div>
+                      <div className="mb-[5px] flex items-center font-semibold">
+                        {t2('email')} <span className="text-red-600">*</span>
+                      </div>
+                      <div className="flex h-[42px] items-center rounded-md border">
+                        {formData?._id ? (
+                          <span className="mx-3 text-gray-600">{values?.email}</span>
+                        ) : (
+                          <>
+                            <Input
+                              inputClassName={`!border-none border-gray-200 !ring-0 w-full`}
+                              className=""
+                              disabled={!values?.firstName || formData?._id}
+                              name="email"
+                              value={values?.email?.split('.')[0]?.trim()}
+                              type="text"
+                              required={true}
+                              placeholder="Username"
+                              onChange={(e) =>
+                                setFieldValue('email', `${e.target.value.trim()}.s${data?.data.totalDocs + 1}@stampezee.com`)
+                              }
+                            />
+                            <span className="mr-1 text-gray-600">
+                              {formData?._id ? `.${values?.email?.split('.')[1]}` : `.s${data?.data.totalDocs + 1}@stampezee.com`}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
                     {!formData?._id && <InputPassword name="password" label={t2('password')} placeholder="******" />}
                   </div>
 
