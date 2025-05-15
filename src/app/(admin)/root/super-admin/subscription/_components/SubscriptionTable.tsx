@@ -60,7 +60,7 @@ export default function StampsImageTable() {
                   {row.original.allowTotalTeamMember ?? 'N/A'}
                 </h2> */}
                 <h2>
-                  <span className="font-semibold">Allowed Stamp: </span>
+                  <span className="font-semibold">Allowed Stamp Cards: </span>
                   {row.original.allowTotalStamp ?? 'N/A'}
                 </h2>
               </>

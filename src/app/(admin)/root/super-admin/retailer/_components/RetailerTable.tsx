@@ -148,7 +148,7 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
               <span className="font-bold">Total Active Branch:</span> {row?.original.totalActiveBranch}
             </p>
             <p>
-              <span className="font-bold">Total Active Stamp:</span> {row?.original.totalActiveStamp}
+              <span className="font-bold">Total Active Stamp Cards:</span> {row?.original.totalActiveStamp}
             </p>
           </div>
         );

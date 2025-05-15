@@ -99,7 +99,7 @@ export default function CreateUpdateModel({
     <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="600px">
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-7 flex items-center justify-between">
-          {formData?._id ? <Title as="h4">Update A Stamp Image</Title> : <Title as="h4">Add New Stamp Image</Title>}
+          {formData?._id ? <Title as="h4">Update A Stamp Card Image</Title> : <Title as="h4">Add New Stamp Card Image</Title>}
 
           <ActionIcon
             size="sm"

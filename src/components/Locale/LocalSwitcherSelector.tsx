@@ -2,7 +2,7 @@ import { Currency, Locale } from '@/config';
 import { useRetailerUpdateProfileMutation } from '@/features/auth/authApi';
 import { setCurrentCurrency } from '@/features/currency-exchange/currencyExchangeSlice';
 import { resetState, setCurrency } from '@/features/subscription/subscriptionSlice';
-import { getUserCurrency, setUserCurrency } from '@/services/currency';
+import { setUserCurrency } from '@/services/currency';
 import { getUserLocale, setUserLocale } from '@/services/locale';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -35,7 +35,7 @@ export default function LocalSwitcherSelector({
   currencyExchanges: any;
 }) {
   const dispatch = useDispatch();
-  const { data: session, update } = useSession();
+  const { data: session, update }: any = useSession();
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [selectedCurrency, setSelectedCurrency] = useState<string>('');
   const t1 = useTranslations('LocaleSwitcher');
@@ -48,12 +48,17 @@ export default function LocalSwitcherSelector({
   useEffect(() => {
     (async () => {
       const locale = await getUserLocale();
-      const currency = await getUserCurrency();
+      // const currency = await getUserCurrency();
       setSelectedOption(locale);
-      setSelectedCurrency(currency);
-      setCurrentCurrency(currency);
+      // setSelectedCurrency(currency);
+      // setCurrentCurrency(currency);
     })();
-  }, [currencyExchanges, dispatch]);
+  }, []);
+
+  useEffect(() => {
+    setSelectedCurrency(session?.user?.businessCurrency);
+    setCurrentCurrency(session?.user?.businessCurrency);
+  }, [session?.user?.businessCurrency]);
 
   // handle language
   const handleLanguageChange = (locale: Locale) => {

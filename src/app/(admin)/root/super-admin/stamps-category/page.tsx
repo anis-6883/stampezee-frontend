@@ -10,7 +10,7 @@ const pageHeader = {
       name: 'Dashboard',
     },
     {
-      name: 'Stamp-Category',
+      name: 'Stamp-Card-Category',
     },
   ],
 };

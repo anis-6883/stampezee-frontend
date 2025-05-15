@@ -12,7 +12,7 @@ const pageHeader = {
       name: 'Dashboard',
     },
     {
-      name: 'Manage Custom Stamp',
+      name: 'Manage Custom Stamp Card',
     },
   ],
 };
