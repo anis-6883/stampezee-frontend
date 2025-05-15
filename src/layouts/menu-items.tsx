@@ -74,7 +74,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuListChecks />,
     },
     {
-      name: 'Default Stamp Images',
+      name: 'Default Stamp Card Images',
       href: routes.privateRoutes.superAdmin.stampImage.home,
       icon: <BsPatchCheck />,
     },

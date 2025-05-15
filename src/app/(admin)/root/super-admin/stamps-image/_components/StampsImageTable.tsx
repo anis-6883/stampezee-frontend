@@ -123,7 +123,7 @@ export default function StampsImageTable() {
             className="w-full"
             color="danger"
             onClick={() => setCreateState(true)}
-            text="Add New Stamp Image"
+            text="Add New Stamp Card Image"
             preIcon={<HiPlus className="text-base" />}
           />
         </div>

@@ -231,7 +231,7 @@ export default function CreateUpdateModel({
                     {formData?.type === 'subscription' && (
                       <InputField
                         name="allowTotalStamp"
-                        label="Total Stamp"
+                        label="Total Stamp Cards"
                         type="number"
                         placeholder="0"
                         prefix={<BsPatchCheck className="text-xl" />}
