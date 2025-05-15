@@ -106,6 +106,7 @@ export default function CreateUpdateModal({
     branchId: Yup.string().required(tCommon('required')),
     firstName: Yup.string()
       .matches(/^\S.*\S$|^\S{1}$/, 'FirstName cannot start or end with a space')
+      .matches(/^[A-Za-z]+$/, 'FirstName can only contain letters')
       .trim()
       .required(tCommon('required')),
     email: Yup.string()

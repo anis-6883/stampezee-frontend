@@ -7,12 +7,21 @@ import { useTranslations } from 'next-intl';
 import { IoInformationCircleOutline } from 'react-icons/io5';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { Text, Title, Tooltip } from 'rizzui';
+import CircleProgressbar from './CircleProgressbar';
+const statsData = [
+  {
+    name: '',
+    value: 0,
+    percentage: 100,
+    color: '#eab308',
+  },
+];
 
 export default function RewardPieStatus({ className }: { className?: string }) {
   const t = useTranslations('retailerDashboardStampAndCustomerStats');
   const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery(null);
 
-  const { rewardCollectedTruePercentage = 0, rewardCollectedFalsePercentage = 100, totalEligibleForReward = 0 } = rewardCollect?.data || {};
+  const { rewardCollectedTruePercentage = 0, rewardCollectedFalsePercentage = 0, totalEligibleForReward = 0 } = rewardCollect?.data || {};
 
   const data = [
     { name: `${t('collected')}:`, value: Number(rewardCollectedTruePercentage), color: '#3872FA' },
@@ -72,8 +81,29 @@ export default function RewardPieStatus({ className }: { className?: string }) {
             {isLoading || isError || rewardCollect === undefined ? (
               <Skeleton className="m-auto h-36 w-36 rounded-full" />
             ) : rewardCollectedTruePercentage === 0 && rewardCollectedFalsePercentage === 0 ? (
-              <div className="flex h-full items-center justify-center">
-                <span className="font-medium text-danger">{t('noStatsAvailable')}</span>
+              // <div className="flex h-full items-center justify-center">
+              //   <span className="font-medium text-danger">{t('noStatsAvailable')}</span>
+              // </div>
+              <div className="col-span-full mt-10 flex items-center justify-center">
+                {statsData.map((item: any) => (
+                  <div key={item.name} className={cn('w-52 text-center')}>
+                    <CircleProgressbar
+                      percentage={item.percentage}
+                      size={120}
+                      stroke="#eab308"
+                      strokeWidth={5}
+                      progressColor={item.color}
+                      useParentResponsive={true}
+                      label={
+                        <Text className="font-lexend 2xl:text-base text-sm font-bold text-gray-900 dark:text-gray-700">{item.value}</Text>
+                      }
+                      strokeClassName="dark:stroke-gray-200"
+                    />
+                    <Text className="mt-3 text-sm font-semibold text-gray-900 @md:text-sm @7xl:text-base dark:text-gray-700">
+                      {item.name}
+                    </Text>
+                  </div>
+                ))}
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
