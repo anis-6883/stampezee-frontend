@@ -267,7 +267,7 @@
     "Stamp Cards": "Stamp Cards",
     "Stamps": "Stamps",
     "Customers": "Customers",
-    "Custom Stamp Images": "Custom Stamp Images",
+    "Custom Stamp Card Images": "Custom Stamp Card Images",
     "Push Notifications": "Push Notifications",
     "Regular": "Regular",
     "Location Based": "Location Based",
@@ -473,7 +473,7 @@
     "title": "Title",
     "category": "Category",
     "branch": "Branch",
-    "noOfStampsToCollect": "No. of stamps to collect",
+    "noOfStampsToCollect": "No. of stamp cards to collect",
     "rewardType": "Reward type",
     "minPurchaseAmount": "Min. purchase amount",
     "noExpiration": "No Expiration",
@@ -498,7 +498,7 @@
     "update": "Update",
     "category": "Category",
     "branch": "Branch",
-    "noOfStampsToCollect": "No. of stamps to collect",
+    "noOfStampsToCollect": "No. of stamp cards to collect",
     "rewardType": "Reward type",
     "minPurchaseAmount": "Min. purchase amount",
     "noExpiration": "No Expiration",
@@ -524,7 +524,7 @@
   },
   "RetailerScan": {
     "title": "Manage Stamps",
-    "stampScan": "Stamp Scan",
+    "stampScan": "Stamps",
     "dashboard": "Dashboard"
   },
   "RetailerScanTab": {
@@ -553,7 +553,7 @@
   },
   "RetailerStampScanTable": {
     "stampTitle": "",
-    "scanDate": "Stamp Date",
+    "scanDate": "Stamped Date",
     "branch": "Branch",
     "customer": "Customer",
     "scannedBy": "Stamped By",
@@ -710,7 +710,7 @@
   },
   "RetailerCustomerDetailsScanTable": {
     "title": "Stamp Statistics",
-    "scanDate": "Stamp Date",
+    "scanDate": "Stamped Date",
     "stampTitle": "",
     "store": "Store",
     "branch": "Branch",

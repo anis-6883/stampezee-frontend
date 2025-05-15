@@ -189,6 +189,8 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     (currency: any) => currency.label === retailerProfile?.data?.businessCurrency
   );
 
+  const [selectedCurrency, setSelectedCurrency] = useState(defaultCurrencyValues ? defaultCurrencyValues[0] : null);
+
   return (
     <div>
       <div className="mt-8">
@@ -285,14 +287,15 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
                       <ReactSelect
                         placeholder="Select your business currency"
                         menuPlacement="top"
-                        isDisabled={true}
+                        // isDisabled={true}
                         options={currencyExchangeOptions}
                         getOptionLabel={getOptionLabelForCurrency}
                         getOptionValue={(option) => option.label}
-                        defaultValue={defaultCurrencyValues}
-                        onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) =>
-                          setFieldValue('businessCurrency', selectedOption?.label)
-                        }
+                        value={selectedCurrency || defaultCurrencyValues[0] || null}
+                        onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => {
+                          setSelectedCurrency(selectedOption);
+                          setFieldValue('businessCurrency', selectedOption?.label);
+                        }}
                         onBlur={() => setFieldTouched('businessCurrency', true)}
                       />
                     )}

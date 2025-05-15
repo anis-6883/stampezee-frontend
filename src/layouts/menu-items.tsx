@@ -146,7 +146,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuUsers />,
     },
     {
-      name: 'Custom Stamp Images',
+      name: 'Custom Stamp Card Images',
       href: routes.privateRoutes.retailer.stampImage.home,
       icon: <BsPatchCheck />,
     },

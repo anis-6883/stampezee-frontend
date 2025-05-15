@@ -4,7 +4,7 @@ import { metaObject } from '@/config/site.config';
 import StampsImageTable from './_components/StampsImageTable';
 
 const pageHeader = {
-  title: 'Manage Stamp Cards Image',
+  title: 'Manage Stamp Card Images',
   breadcrumb: [
     {
       href: routes.privateRoutes.retailer.dashboard,

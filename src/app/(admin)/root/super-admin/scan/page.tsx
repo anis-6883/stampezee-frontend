@@ -12,7 +12,7 @@ const pageHeader = {
       name: 'Dashboard',
     },
     {
-      name: 'Stamp Scan',
+      name: 'Stamps',
     },
   ],
 };
