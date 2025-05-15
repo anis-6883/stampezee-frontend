@@ -12,7 +12,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
   const t = useTranslations('retailerDashboardStampAndCustomerStats');
   const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery(null);
 
-  const { rewardCollectedTruePercentage = 0, rewardCollectedFalsePercentage = 0, totalEligibleForReward = 0 } = rewardCollect?.data || {};
+  const { rewardCollectedTruePercentage = 0, rewardCollectedFalsePercentage = 100, totalEligibleForReward = 0 } = rewardCollect?.data || {};
 
   const data = [
     { name: `${t('collected')}:`, value: Number(rewardCollectedTruePercentage), color: '#3872FA' },

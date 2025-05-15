@@ -5,7 +5,6 @@ import { PACKAGES } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { roundToTwoDecimals } from '@/features/subscription/subscriptionSlice';
 import { calculateBalancePrice, countDaysLeft } from '@/utils';
-import _ from 'lodash';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -34,7 +33,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
     <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
       <div className="flex">
         <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('plan')} :</p>
-        <span className="pl-3 font-medium">{_.capitalize(session?.user?.plan)}</span>
+        <span className="pl-3 font-medium capitalize">{session?.user?.planTitle}</span>
       </div>
       <div className="flex">
         <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('expire')} : </p>

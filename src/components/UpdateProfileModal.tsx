@@ -30,9 +30,9 @@ export default function UpdateProfileModal({
   const dispatch = useDispatch();
   const { data: session, update } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { user, role } = useSelector((state: RootState) => state.authSlice);
+  const { user, role, accessToken } = useSelector((state: RootState) => state.authSlice);
 
-  const { data: superAdminProfile } = useSuperAdminGetProfileQuery(null, { skip: role !== ROLE.SUPER_ADMIN });
+  const { data: superAdminProfile } = useSuperAdminGetProfileQuery(null, { skip: !accessToken || role !== ROLE.SUPER_ADMIN });
   const [superAdminUpdateProfile, { data: updateProfileData, isSuccess: updateProfileSuccess, error: updateProfileError }] =
     useSuperAdminUpdateProfileMutation();
 
