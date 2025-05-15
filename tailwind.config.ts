@@ -15,6 +15,7 @@ export default {
       lg: '1024px',
       xl: '1280px',
       xxl: '1450px',
+      sxl: '1732px',
       '3xl': '1920px',
       '4xl': '2560px', // only need to control product grid mode in ultra 4k device
     },

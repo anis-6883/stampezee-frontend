@@ -182,6 +182,7 @@ export default function StampTable() {
       mantineTableBodyCellProps: {
         align: 'center',
       },
+      size: 100,
     },
     {
       header: t('validityDate'),
@@ -237,7 +238,7 @@ export default function StampTable() {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 200,
+      size: 100,
     },
     {
       header: t('status'),
@@ -251,6 +252,7 @@ export default function StampTable() {
       mantineTableBodyCellProps: {
         align: 'start',
       },
+      size: 100,
     },
     {
       header: t('actions'),
