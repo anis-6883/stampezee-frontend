@@ -43,8 +43,8 @@ export default function HydrogenLayout({ children }: { children: React.ReactNode
   }, [dispatch, retailerProfile?.data, retailerProfileSuccess, superAdminProfile?.data, superAdminProfileSuccess, role]);
   return (
     <main className="flex min-h-screen flex-grow">
-      <Sidebar className="fixed hidden dark:bg-gray-50 xl:block" />
-      <div className="2xl:ms-72 2xl:w-[calc(100%-288px)] flex w-full flex-col xl:ms-[270px] xl:w-[calc(100%-270px)]">
+      <Sidebar className="fixed hidden dark:bg-gray-50 sxl:block" />
+      <div className="2xl:ms-72 2xl:w-[calc(100%-288px)] flex w-full flex-col sxl:ms-[270px] sxl:w-[calc(100%-270px)]">
         <Header />
         <div className=" ml-4 flex flex-grow flex-col px-4 pb-6 pt-2 md:px-5 lg:px-6 lg:pb-8 3xl:px-8 3xl:pt-4 4xl:px-10 4xl:pb-9">
           {children}
