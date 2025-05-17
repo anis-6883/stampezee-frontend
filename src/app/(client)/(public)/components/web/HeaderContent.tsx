@@ -120,7 +120,7 @@ export default function HeaderContent() {
           </div>
           <div className="flex w-[88%] items-center justify-end md:order-2 md:space-x-0">
             <span
-              className="cursor-pointer  text-lg font-bold md:hidden lg:hidden"
+              className="cursor-pointer  text-lg font-bold lg:hidden"
               onClick={() =>
                 setDrawerState((prevState) => ({
                   ...prevState,
@@ -131,7 +131,7 @@ export default function HeaderContent() {
             >
               <RxHamburgerMenu className=" text-3xl" />
             </span>
-            <div className="mr-3">
+            <div className="mr-3 hidden lg:block">
               <div
                 onClick={() => setSideBar(sideBar == true && !sideBar)}
                 className={`${sideBar ? 'fixed -top-2 left-0 h-[100vh] w-full overflow-hidden bg-[#14131385] bg-red-600 transition-all duration-300 ease-in-out' : 'hidden'} z-10 items-center justify-between md:order-1 md:flex md:w-auto `}
@@ -282,7 +282,7 @@ export default function HeaderContent() {
                 </Drawer>
 
                 <ul
-                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center  ${locale === 'es' ? 'gap-x-5' : 'gap-x-10'}  rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
+                  className={`${sideBar ? 'h-full' : ''} mt-4 flex flex-col items-center  ${locale === 'es' ? 'gap-x-5' : 'gap-x-10'} rounded-lg border border-gray-100 bg-gray-50 bg-transparent p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8  md:border-0 md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse`}
                 >
                   <li className="w-max-content">
                     <Link
