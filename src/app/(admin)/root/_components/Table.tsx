@@ -15,7 +15,7 @@ export default function Table({
   enableRowActions = false,
   enableDnD = false,
   sort,
-  hasSerialNo = true,
+  // hasSerialNo = true,
   sortContext,
   enableRowNumbers = false,
   searchPlaceHolder = 'Search',
@@ -45,7 +45,7 @@ export default function Table({
     const baseColumns = structure;
 
     // Show Serial No by default, unless hasSerialNo is explicitly false
-    const shouldShowSerialNo = hasSerialNo !== false;
+    const shouldShowSerialNo = enableRowNumbers !== true;
 
     if (shouldShowSerialNo) {
       return [
@@ -60,7 +60,7 @@ export default function Table({
     }
 
     return baseColumns;
-  }, [structure, hasSerialNo]);
+  }, [structure, enableRowNumbers]);
 
   const table = useMantineReactTable({
     columns,
@@ -109,8 +109,6 @@ export default function Table({
     enableColumnActions: false,
     onGlobalFilterChange: handleFilter,
     enableSorting: enableDnD,
-    enableRowNumbers: false,
-
     ...(enableDnD && {
       enableRowDragging: true,
       enableRowOrdering: true,

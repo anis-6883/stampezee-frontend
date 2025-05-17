@@ -559,7 +559,7 @@
     "customer": "Customer",
     "scannedBy": "Stamped By",
     "status": "Status",
-    "placeHolder": "Search By Customer Name & Email"
+    "placeHolder": "Search By Customer Name Or Email"
   },
   "RetailerProfile": {
     "title": "Manage Profile",
@@ -712,7 +712,7 @@
   "RetailerCustomerDetailsScanTable": {
     "title": "Stamp Statistics",
     "scanDate": "Stamped Date",
-    "stampTitle": "",
+    "stampTitle": "Stamp Card Title",
     "store": "Store",
     "branch": "Branch",
     "scannedBy": "Stamped By",
