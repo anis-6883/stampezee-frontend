@@ -242,7 +242,7 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Store, Owner Name & Email"
+        searchPlaceHolder="Search By Store, Owner Name Or Email"
         searchFieldWidth="320px"
       />
 
