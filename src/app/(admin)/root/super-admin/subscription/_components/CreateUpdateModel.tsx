@@ -44,10 +44,12 @@ export default function CreateUpdateModel({
     type: formData?.type || 'subscription',
     slug: formData?.slug || '',
     duration: formData?.duration || 0,
+    durationTitle: '',
     allowTotalUser: formData?.allowTotalUser || 0,
     allowTotalScan: formData?.allowTotalScan || 0,
     isUserUnlimited: formData?.allowTotalUser !== null ? false : true,
     isScanUnlimited: formData?.allowTotalScan !== null ? false : true,
+    isDurationUnlimited: false,
   };
 
   const validationSchema = Yup.object({
@@ -197,16 +199,70 @@ export default function CreateUpdateModel({
                       placeholder="9.99"
                       prefix={<LuCircleDollarSign className="text-xl" />}
                     />
-                    {formData?.slug === 'trial' && (
-                      <InputField
+                  </div>
+                  {formData?.slug === 'trial' && (
+                    <div className="my-1">
+                      <div className="flex w-full justify-between">
+                        <div className="flex items-center">
+                          <span>Duration (Days)</span>
+                          <span className="text-red-600">*</span>
+                        </div>
+                        <Checkbox
+                          // inputClassName="bg-red-500"
+                          className="m-2"
+                          label={<span className="text-sm font-normal text-black">Unlimited</span>}
+                          size="sm"
+                          onChange={() => {
+                            setFieldValue('isDurationUnlimited', !values?.isDurationUnlimited);
+                          }}
+                          checked={values?.isDurationUnlimited}
+                        />
+                      </div>
+
+                      {values?.isDurationUnlimited ? (
+                        <InputField
+                          name="durationTitle"
+                          label=""
+                          type="text"
+                          placeholder="Unlimited"
+                          // prefix={<LuCalendarDays className="text-xl" />}
+                        />
+                      ) : (
+                        <InputField
+                          name="duration"
+                          label=""
+                          type="number"
+                          placeholder="7"
+                          prefix={<LuCalendarDays className="text-xl" />}
+                        />
+                      )}
+                      {/* <InputField
                         name="duration"
-                        label="Duration (Days)"
+                        hasLabelRequired={false}
+                        label={
+                          <div className="flex w-full justify-between">
+                            <div className="flex items-center">
+                              <span>Duration (Days)</span>
+                              <span className="text-red-600">*</span>
+                            </div>
+                            <Checkbox
+                              // inputClassName="bg-red-500"
+                              className="m-2"
+                              label={<span className="text-sm font-normal text-black">Unlimited</span>}
+                              size="sm"
+                              onChange={() => {
+                                setFieldValue('isDurationUnlimited', !values?.isDurationUnlimited);
+                              }}
+                              checked={values?.isDurationUnlimited}
+                            />
+                          </div>
+                        }
                         type="number"
                         placeholder="7"
                         prefix={<LuCalendarDays className="text-xl" />}
-                      />
-                    )}
-                  </div>
+                      /> */}
+                    </div>
+                  )}
                   <div className="my-3 flex gap-3">
                     {formData?.type === 'subscription' && (
                       <InputField
@@ -217,17 +273,6 @@ export default function CreateUpdateModel({
                         prefix={<IoStorefrontOutline className="text-xl" />}
                       />
                     )}
-
-                    {/* {formData?.type === 'subscription' && (
-                      <InputField
-                        name="allowTotalTeamMember"
-                        label="Total Team Member"
-                        type="number"
-                        placeholder="0"
-                        prefix={<RiTeamLine className="text-xl" />}
-                      />
-                    )} */}
-
                     {formData?.type === 'subscription' && (
                       <InputField
                         name="allowTotalStamp"

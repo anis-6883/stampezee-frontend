@@ -69,7 +69,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <MdOutlineCurrencyExchange />,
     },
     {
-      name: 'Stamp Categories',
+      name: 'Stamp Card Categories',
       href: routes.privateRoutes.superAdmin.stampCategory.home,
       icon: <LuListChecks />,
     },

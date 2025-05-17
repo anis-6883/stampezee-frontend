@@ -161,11 +161,6 @@ export default function UpdateSubscription({ id }: { id: any }) {
   return (
     <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitHandler}>
       {({ values, setFieldValue, touched, errors }: { values: any; setFieldValue: any; touched: any; errors: any }) => {
-        // countryOptions = countryOptions?.reduce((acc: any, country: any) => {
-        //   values?.prices?.filter;
-
-        //   return acc;
-        // }, []);
         return (
           <Form>
             {formData?._id && formData?.type === 'subscription' && (
