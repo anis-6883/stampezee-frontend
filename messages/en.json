@@ -553,7 +553,7 @@
     "paymentReceipt": "Payment Receipt"
   },
   "RetailerStampScanTable": {
-    "stampTitle": "",
+    "stampTitle": "Stamp Card Title",
     "scanDate": "Stamped Date",
     "branch": "Branch",
     "customer": "Customer",

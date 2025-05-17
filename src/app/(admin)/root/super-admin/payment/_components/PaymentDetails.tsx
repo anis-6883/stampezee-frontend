@@ -3,6 +3,7 @@
 import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SerializedError } from '@/features/api/apiSlice';
+import { RootState } from '@/features/store';
 import {
   useCancelSubscriptionByAdminMutation,
   useCreateBillingPdfBySuperAdminMutation,
@@ -27,6 +28,7 @@ import { IoArrowDownCircle, IoArrowUpCircle, IoEyeOutline } from 'react-icons/io
 import { MdAddCard, MdAutorenew } from 'react-icons/md';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { RiDeleteBackLine, RiDownloadCloud2Fill } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
 import { Badge, Dropdown } from 'rizzui';
 import PackageCancelModal from '../../../retailer/billing/_components/PackageCancelModal';
 import PdfPreviewModal from '../../../retailer/billing/_components/PdfPreviewModal';
@@ -41,6 +43,7 @@ const cardImageMap: any = {
 
 export default function PaymentDetails({ id, timezone, stripePublishKey }: { id: string; timezone: string; stripePublishKey: string }) {
   const { push } = useRouter();
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
 
   const [
     setDefaultPaymentMethod,
@@ -57,7 +60,7 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
     { data: cancelSubscriptionData, error: cancelSubscriptionError, isSuccess, isError: isCancelSubscriptionError },
   ] = useCancelSubscriptionByAdminMutation();
   const [createBillingPdfBySuperAdmin, { data: pdfBuffer, isLoading: isPdfBufferLoading }] = useCreateBillingPdfBySuperAdminMutation();
-  const { data, isLoading, isError } = useSingleSubscriptionPaymentQuery(id);
+  const { data, isLoading, isError } = useSingleSubscriptionPaymentQuery(id, { skip: !accessToken });
   const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetRetailerBillingPortalMutation();
   const {
     stripe,
@@ -97,7 +100,7 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
       customerId: stripe?.customerId,
       limit: 10,
     },
-    { skip: !stripe?.customerId }
+    { skip: !stripe?.customerId || !accessToken }
   );
 
   // Handle cancel subscription Response

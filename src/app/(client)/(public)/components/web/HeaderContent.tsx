@@ -59,7 +59,6 @@ export default function HeaderContent() {
 
   const t = useTranslations('AppLayout');
 
-  console.log(t('home'));
   const locale = useLocale();
 
   // Handle Logout Response

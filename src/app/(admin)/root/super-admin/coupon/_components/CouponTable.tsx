@@ -3,21 +3,23 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import StatusIndicator from '@/components/StatusIndicator';
+import { RootState } from '@/features/store';
 import { useDeleteCouponMutation, useGetAllCouponQuery, useUpdateCouponStatusMutation } from '@/features/super-admin/coupon/couponApi';
 import { IQueryType } from '@/types';
-import getFormattedDate from '@/utils/get-formatted-date';
+import getFormattedDateByTimezone from '@/utils/get-formatted-date-By-Timezone';
 import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
+import { useSelector } from 'react-redux';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
-import getFormattedDateByTimezone from '@/utils/get-formatted-date-By-Timezone';
 
 export default function CouponTable({ timezone }: { timezone: string }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -25,11 +27,14 @@ export default function CouponTable({ timezone }: { timezone: string }) {
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllCouponQuery({
-    page: query.pageIndex + 1,
-    limit: query.pageSize,
-    ...searchQuery,
-  });
+  const { data, isLoading, isFetching } = useGetAllCouponQuery(
+    {
+      page: query.pageIndex + 1,
+      limit: query.pageSize,
+      ...searchQuery,
+    },
+    { skip: !accessToken }
+  );
 
   const [deleteCoupon, { isSuccess, isError }] = useDeleteCouponMutation();
   const [updateStatus] = useUpdateCouponStatusMutation();

@@ -1,14 +1,17 @@
 'use client';
 
 import { Skeleton } from '@/components/ui/skeleton';
+import { RootState } from '@/features/store';
 import { useGetDashboardCalcQuery } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { IoInformationCircleOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { Text, Title, Tooltip } from 'rizzui';
 
 export default function SignUpStatus({ className }: { className?: string }) {
-  const { data: dashBoardData, isLoading, isError } = useGetDashboardCalcQuery(null);
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { data: dashBoardData, isLoading, isError } = useGetDashboardCalcQuery(null, { skip: !accessToken });
 
   const data = [
     { name: 'Retailer Signup:', value: Number(dashBoardData?.data?.signupRatio?.retailer), color: '#3872FA' },

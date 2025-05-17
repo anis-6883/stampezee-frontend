@@ -48,7 +48,6 @@ export default function StateCardView({ className }: { className: string }) {
     }
   }, [retailerProfile?.data?.isLimitExceeded, session?.user]);
 
-  // console.log(session);
   return (
     <div className={cn('relative flex w-auto items-center overflow-hidden', className)}>
       <Button

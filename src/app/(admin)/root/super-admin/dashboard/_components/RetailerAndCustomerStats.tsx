@@ -1,16 +1,25 @@
 'use client';
 
 import Spinner from '@/components/ui/spinner';
+import { RootState } from '@/features/store';
 import {
   useGetCustomerStatsWithCountryWiseQuery,
   useGetRetailerStatsWithCountryWiseQuery,
 } from '@/features/super-admin/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
+import { useSelector } from 'react-redux';
 import ActiveUsers from './ActiveUser';
 
 export default function RetailerAndCustomerStats({ className }: { className?: string }) {
-  const { data: retailerWiseData, isLoading: isRetailerWiseDataLoading } = useGetRetailerStatsWithCountryWiseQuery({});
-  const { data: customerWiseData, isLoading: isCustomerWiseDataLoading } = useGetCustomerStatsWithCountryWiseQuery({});
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { data: retailerWiseData, isLoading: isRetailerWiseDataLoading } = useGetRetailerStatsWithCountryWiseQuery(
+    {},
+    { skip: !accessToken }
+  );
+  const { data: customerWiseData, isLoading: isCustomerWiseDataLoading } = useGetCustomerStatsWithCountryWiseQuery(
+    {},
+    { skip: !accessToken }
+  );
 
   if (isRetailerWiseDataLoading || isCustomerWiseDataLoading) {
     return (

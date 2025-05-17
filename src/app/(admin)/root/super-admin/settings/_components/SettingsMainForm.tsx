@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '@/components/Formik/Button';
+import { RootState } from '@/features/store';
 import { useGetGeneralSettingsQuery, useUpdateGeneralSettingsMutation } from '@/features/super-admin/general-settings/generalSettingsApi';
 import { IGeneralSetting, IGeneralSettingData } from '@/types';
 import { Form, Formik } from 'formik';
@@ -12,6 +13,7 @@ import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { PiBellRinging, PiNoteDuotone, PiWarningBold } from 'react-icons/pi';
 import { TbMail } from 'react-icons/tb';
+import { useSelector } from 'react-redux';
 import EmailSettingsForm from './EmailSettingsForm';
 import GeneralSettingsForm from './GeneralSettingsForm';
 import GoogleMapForm from './GoogleMapForm';
@@ -92,7 +94,8 @@ function cleanTimezoneLabel(obj: any) {
 }
 
 export default function SettingsMainForm() {
-  const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined);
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined, { skip: !accessToken });
   const [updateGeneralSettings, { data: updatedData, isSuccess, isError: updatingError }] = useUpdateGeneralSettingsMutation();
   const [currentTab, setCurrentTab] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);

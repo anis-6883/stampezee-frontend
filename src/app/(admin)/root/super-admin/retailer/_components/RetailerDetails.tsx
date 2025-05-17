@@ -1,7 +1,9 @@
 'use client';
 
 import { Skeleton } from '@/components/ui/skeleton';
+import { RootState } from '@/features/store';
 import { useGetSingleRetailerQuery } from '@/features/super-admin/retailer/retailerApi';
+import { useSelector } from 'react-redux';
 import AddonListTable from './AddonListTable';
 import BranchStatisticsTable from './BranchStatisticsTable';
 import { InfoRow } from './InfoRow';
@@ -10,9 +12,8 @@ import StatsCardView from './StatsCardView';
 import SubAdminListTable from './SubAdminListTable';
 
 export default function RetailerDetails({ id, timezone }: { id: string; timezone: string }) {
-  const { data, isLoading, isError } = useGetSingleRetailerQuery(id);
-
-  // console.log(data);
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { data, isLoading, isError } = useGetSingleRetailerQuery(id, { skip: !accessToken });
 
   let {
     storeName,

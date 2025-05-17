@@ -3,6 +3,7 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
+import { RootState } from '@/features/store';
 import { useGetPaymentsByRetailerIdQuery } from '@/features/super-admin/retailer/retailerApi';
 import { IQueryType } from '@/types';
 import { getFormatDateByTimezone } from '@/utils/getFormatDate';
@@ -15,15 +16,20 @@ import { GiSandsOfTime } from 'react-icons/gi';
 import { HiShoppingCart } from 'react-icons/hi2';
 import { IoArrowDownCircle, IoArrowUpCircle } from 'react-icons/io5';
 import { PiFlagCheckeredFill } from 'react-icons/pi';
+import { useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 
 export default function RetailerPaymentTable({ timezone, id }: { timezone: string; id: string }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetPaymentsByRetailerIdQuery({
-    id,
-    queries: { page: query.pageIndex + 1, limit: query.pageSize, ...searchQuery },
-  });
+  const { data, isLoading, isFetching } = useGetPaymentsByRetailerIdQuery(
+    {
+      id,
+      queries: { page: query.pageIndex + 1, limit: query.pageSize, ...searchQuery },
+    },
+    { skip: !accessToken }
+  );
 
   const structure = [
     {

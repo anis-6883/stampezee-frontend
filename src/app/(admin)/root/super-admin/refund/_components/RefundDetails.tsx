@@ -1,10 +1,13 @@
 import { Skeleton } from '@/components/ui/skeleton';
+import { RootState } from '@/features/store';
 import { useSingleRefundBySuperAdminQuery } from '@/features/super-admin/refund/refundApi';
+import { useSelector } from 'react-redux';
 import RefundForCancelled from './RefundForCancelled';
 import RefundForDowngrade from './RefundForDowngrade';
 
 export function RefundDetails({ id, timezone }: { id: string | null; timezone: string }) {
-  const { isLoading, data: singleRefund } = useSingleRefundBySuperAdminQuery(id, { skip: !id });
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { isLoading, data: singleRefund } = useSingleRefundBySuperAdminQuery(id, { skip: !id || !accessToken });
 
   if (isLoading) {
     return (

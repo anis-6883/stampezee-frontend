@@ -3,6 +3,7 @@
 import Table from '@/app/(admin)/root/_components/Table';
 import CustomDrawer from '@/components/CustomDrawer';
 import Button from '@/components/Formik/Button';
+import { RootState } from '@/features/store';
 import { useAllRefundBySuperAdminQuery, useConfirmRefundBySuperAdminMutation } from '@/features/super-admin/refund/refundApi';
 import { IQueryType } from '@/types';
 import { getFormatDateByTimezone } from '@/utils/getFormatDate';
@@ -13,11 +14,13 @@ import { FaInfoCircle, FaRegPaperPlane } from 'react-icons/fa';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { IoArrowDownCircle, IoCheckmarkCircle } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import RefundConfirmModal from '../../../_components/RefundConfirmModal';
 import { RefundDetails } from './RefundDetails';
 
 export default function RefundTable({ timezone }: { timezone: string }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [drawerState, setDrawerState] = useState<boolean>(false);
   const [selectedRefundId, setSelectedRefundId] = useState(null);
   const [refundState, setRefundState] = useState(false);
@@ -25,11 +28,14 @@ export default function RefundTable({ timezone }: { timezone: string }) {
   const [refundSubmitting, setRefundSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useAllRefundBySuperAdminQuery({
-    page: query.pageIndex + 1,
-    limit: query.pageSize,
-    ...searchQuery,
-  });
+  const { data, isLoading, isFetching } = useAllRefundBySuperAdminQuery(
+    {
+      page: query.pageIndex + 1,
+      limit: query.pageSize,
+      ...searchQuery,
+    },
+    { skip: !accessToken }
+  );
   const [confirmRefundBySuperAdmin, { isSuccess, isError }] = useConfirmRefundBySuperAdminMutation();
 
   useEffect(() => {

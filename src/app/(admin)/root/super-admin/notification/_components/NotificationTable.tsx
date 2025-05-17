@@ -2,6 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import { RootState } from '@/features/store';
 import {
   useDeleteNotificationBySuperAdminMutation,
   useSuperAdminNotificationsQuery,
@@ -14,11 +15,13 @@ import toast from 'react-hot-toast';
 import { FaRegPaperPlane } from 'react-icons/fa6';
 import { ImBin } from 'react-icons/im';
 import { LuClock4 } from 'react-icons/lu';
+import { useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import CreateUpdateModel from './CreateUpdateModal';
 
 export default function NotificationTable({ timezone, googleMapsApiKey }: { timezone: string; googleMapsApiKey: string }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -26,11 +29,14 @@ export default function NotificationTable({ timezone, googleMapsApiKey }: { time
   const [formData, setFormData] = useState({});
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useSuperAdminNotificationsQuery({
-    page: query.pageIndex + 1,
-    limit: query.pageSize,
-    ...searchQuery,
-  });
+  const { data, isLoading, isFetching } = useSuperAdminNotificationsQuery(
+    {
+      page: query.pageIndex + 1,
+      limit: query.pageSize,
+      ...searchQuery,
+    },
+    { skip: !accessToken }
+  );
   const [deleteNotificationBySuperAdmin, { isSuccess, isError }] = useDeleteNotificationBySuperAdminMutation();
 
   const handleDelete = async (rowData: any) => {

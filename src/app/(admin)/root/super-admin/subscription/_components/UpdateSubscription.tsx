@@ -5,6 +5,7 @@ import DragAndDropUpload from '@/components/Formik/DragAndDropUpload';
 import InputField from '@/components/Formik/InputField';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SerializedError } from '@/features/api/apiSlice';
+import { RootState } from '@/features/store';
 import { useGetGeneralSettingsQuery } from '@/features/super-admin/general-settings/generalSettingsApi';
 import { useGetSingleSubscriptionQuery, useUpdateSubscriptionMutation } from '@/features/super-admin/subscription/subscriptionApi';
 import countryData from '@/utils/get-country-list';
@@ -20,15 +21,17 @@ import { LiaCoinsSolid } from 'react-icons/lia';
 import { RiTeamLine } from 'react-icons/ri';
 import { RxLapTimer } from 'react-icons/rx';
 import { TbFileDescription } from 'react-icons/tb';
+import { useSelector } from 'react-redux';
 import ReactSelect from 'react-select';
 import { Badge, FieldError } from 'rizzui';
 import * as Yup from 'yup';
 
 export default function UpdateSubscription({ id }: { id: any }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined);
+  const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined, { skip: !accessToken });
   const [updateSubscription, { isSuccess: updateSuccess, error: updateError }] = useUpdateSubscriptionMutation();
-  const { data, isLoading } = useGetSingleSubscriptionQuery(id);
+  const { data, isLoading } = useGetSingleSubscriptionQuery(id, { skip: !accessToken });
 
   const formData: any = data?.data;
 

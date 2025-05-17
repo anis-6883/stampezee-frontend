@@ -2,23 +2,29 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import { RootState } from '@/features/store';
 import { useGetAllContactBySuperAdminQuery } from '@/features/super-admin/contact/contactApi';
 import { IQueryType } from '@/types';
 import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import { useState } from 'react';
 import { IoEyeOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import ContactDetailsModal from './ContactDetailsModal';
 
 export default function ContactTable({ timezone }: { timezone: string }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [modalState, setModalState] = useState(false);
   const [formData, setFormData] = useState<any>({});
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllContactBySuperAdminQuery({
-    page: query.pageIndex + 1,
-    limit: query.pageSize,
-    ...searchQuery,
-  });
+  const { data, isLoading, isFetching } = useGetAllContactBySuperAdminQuery(
+    {
+      page: query.pageIndex + 1,
+      limit: query.pageSize,
+      ...searchQuery,
+    },
+    { skip: !accessToken }
+  );
 
   const structure = [
     {

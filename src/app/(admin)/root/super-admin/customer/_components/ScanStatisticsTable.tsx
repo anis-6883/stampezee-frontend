@@ -1,3 +1,4 @@
+import { RootState } from '@/features/store';
 import { useGetAllCustomerScanBySuperAdminQuery } from '@/features/super-admin/customer/customerApi';
 import { IQueryType } from '@/types';
 import { capitalizeEachWord } from '@/utils/capitalizeEachWord';
@@ -6,20 +7,25 @@ import { useState } from 'react';
 import { BsShop } from 'react-icons/bs';
 import { CiReceipt } from 'react-icons/ci';
 import { MdOutlineQrCodeScanner } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { Tab } from 'rizzui';
 import Table from '../../../_components/Table';
 
 const ScanStatisticsTable = ({ id, timezone }: { id: string; timezone: string }) => {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllCustomerScanBySuperAdminQuery({
-    id,
-    queries: {
-      page: query.pageIndex + 1,
-      limit: query.pageSize,
-      ...searchQuery,
+  const { data, isLoading, isFetching } = useGetAllCustomerScanBySuperAdminQuery(
+    {
+      id,
+      queries: {
+        page: query.pageIndex + 1,
+        limit: query.pageSize,
+        ...searchQuery,
+      },
     },
-  });
+    { skip: !accessToken }
+  );
 
   const structure = [
     {

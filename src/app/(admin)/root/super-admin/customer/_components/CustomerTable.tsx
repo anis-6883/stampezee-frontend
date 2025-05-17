@@ -4,6 +4,7 @@ import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
 import StatusIndicator from '@/components/StatusIndicator';
 import { routes } from '@/config/routes';
+import { RootState } from '@/features/store';
 import {
   useCustomerStatusUpdateBySuperAdminMutation,
   useDeleteCustomerBySuperAdminMutation,
@@ -19,12 +20,14 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
 import { IoInformationCircleOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import { Tooltip } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function CustomerTable({ timezone }: { timezone: string }) {
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -32,11 +35,14 @@ export default function CustomerTable({ timezone }: { timezone: string }) {
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllCustomerBySuperAdminQuery({
-    page: query.pageIndex + 1,
-    limit: query.pageSize,
-    ...searchQuery,
-  });
+  const { data, isLoading, isFetching } = useGetAllCustomerBySuperAdminQuery(
+    {
+      page: query.pageIndex + 1,
+      limit: query.pageSize,
+      ...searchQuery,
+    },
+    { skip: !accessToken }
+  );
 
   const [deleteCustomerBySuperAdmin, { isSuccess, isError }] = useDeleteCustomerBySuperAdminMutation();
   const [customerStatusUpdateBySuperAdmin] = useCustomerStatusUpdateBySuperAdminMutation();
