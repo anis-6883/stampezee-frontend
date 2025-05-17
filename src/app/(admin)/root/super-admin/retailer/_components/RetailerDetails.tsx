@@ -3,6 +3,7 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { RootState } from '@/features/store';
 import { useGetSingleRetailerQuery } from '@/features/super-admin/retailer/retailerApi';
+import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { useSelector } from 'react-redux';
 import AddonListTable from './AddonListTable';
 import BranchStatisticsTable from './BranchStatisticsTable';
@@ -14,6 +15,7 @@ import SubAdminListTable from './SubAdminListTable';
 export default function RetailerDetails({ id, timezone }: { id: string; timezone: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { data, isLoading, isError } = useGetSingleRetailerQuery(id, { skip: !accessToken });
+  const { data: subscriptions } = useGetSubscriptionQuery(undefined);
 
   let {
     storeName,
@@ -41,22 +43,10 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
     website,
   } = data?.data || {};
 
-  switch (currentPlan) {
-    case 'trial':
-      currentPlan = 'Free Trial';
-      break;
-    case 'basic':
-      currentPlan = 'Basic Plan';
-      break;
-    case 'pro':
-      currentPlan = 'Pro Plan';
-      break;
-    case 'advanced':
-      currentPlan = 'Advanced Plan';
-      break;
-    default:
-      currentPlan = 'No Enrollment Yet';
-      break;
+  if (currentPlan) {
+    currentPlan = subscriptions?.data?.find((item: any) => item?.type === 'subscription' && item?.slug === currentPlan)?.title;
+  } else {
+    currentPlan = 'No Enrollment Yet';
   }
 
   return (
