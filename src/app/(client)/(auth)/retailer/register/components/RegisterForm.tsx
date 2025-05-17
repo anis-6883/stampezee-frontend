@@ -60,6 +60,23 @@ export default function RegisterForm({
 
   const [countryInfo, setCountryInfo] = useState({ country: '', dialCode: '' });
 
+  // currency:
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
+  const currencyExchangeOptions: any = currencyData?.reduce((acc: any, curr: any) => {
+    currencyExchanges?.map((item: any) => {
+      if (item?.currency === curr?.code) {
+        acc?.push({
+          value: curr?.code,
+          label: curr?.code,
+          symbol: curr?.unicode_symbol,
+        });
+      }
+    });
+    return acc;
+  }, []);
+  const cadCurr = currencyExchangeOptions?.find((item: any) => item.label == 'CAD');
+
+  // console.log(cadCurr?.value);
   useEffect(() => {
     const timezones = timeZoneData?.filter((item) => item?.label?.includes(Intl.DateTimeFormat().resolvedOptions().timeZone));
     setCountryInfo({ country: getCountryByTimezone(), dialCode: getPhoneCodeByTimezone() });
@@ -113,7 +130,7 @@ export default function RegisterForm({
     latitude: '',
     password: '',
     isAgree: '',
-    businessCurrency: '',
+    businessCurrency: cadCurr?.value,
     timezone,
   };
 
@@ -192,24 +209,9 @@ export default function RegisterForm({
     setIsSubmitting(true);
     register(removeEmptyValues(values, ['isAgree']));
 
-    // console.log("values",values);
+    // console.log('values', values);
   };
 
-  // currency:
-
-  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
-  const currencyExchangeOptions = currencyData?.reduce((acc: any, curr: any) => {
-    currencyExchanges?.map((item: any) => {
-      if (item?.currency === curr?.code) {
-        acc?.push({
-          value: curr?.code,
-          label: curr?.code,
-          symbol: curr?.unicode_symbol,
-        });
-      }
-    });
-    return acc;
-  }, []);
   const getOptionLabelForCurrency = (option: any): any => (
     <div className="flex ">
       <span className="ml-2">{`${option.label} - ${option.symbol}`}</span>
@@ -237,15 +239,20 @@ export default function RegisterForm({
                       menuPlacement="top"
                       options={currencyExchangeOptions}
                       getOptionLabel={getOptionLabelForCurrency}
-                      getOptionValue={(option) => option.label}
-                      onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => {
-                        setFieldValue('businessCurrency', selectedOption?.label);
+                      defaultValue={cadCurr} // This sets the visual selection
+                      value={currencyExchangeOptions?.find((option: any) => option.value === values.businessCurrency) || cadCurr} // This ensures the value stays selected
+                      getOptionValue={(option) => option.value} // Changed to option.value for consistency
+                      className={`react-select-container ${
+                        touched.businessCurrency && errors.businessCurrency ? 'rounded-md border border-red-500' : ''
+                      }`}
+                      onChange={(selectedOption) => {
+                        setFieldValue('businessCurrency', selectedOption?.value);
                       }}
                       onBlur={() => setFieldTouched('businessCurrency', true)}
                     />
 
-                    {touched.businessCurrency && errors.businessCurrency && (
-                      <FieldError error={errors.country} className="text-xs text-red-600" />
+                    {touched?.businessCurrency && typeof errors?.businessCurrency === 'string' && (
+                      <FieldError error={errors?.businessCurrency} className="mt-1 text-xs text-red-600" />
                     )}
                   </div>
                 </div>
