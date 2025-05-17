@@ -118,7 +118,7 @@ export default function Sidebar({ className }: { className?: string }) {
   return (
     <aside
       className={cn(
-        '2xl:w-72 fixed bottom-0 start-0 z-50 h-full w-[290px] overflow-auto border-e-2 border-gray-100 bg-white dark:bg-gray-100/50',
+        '2xl:w-72 fixed bottom-0 start-0 z-[60] h-full w-[290px] overflow-auto border-e-2 border-gray-100 bg-white dark:bg-gray-100/50',
         className
       )}
     >
