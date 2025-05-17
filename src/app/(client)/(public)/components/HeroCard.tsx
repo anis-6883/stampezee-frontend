@@ -4,7 +4,7 @@ import Featured from './Featured';
 export const HeroCard = () => {
   const t = useTranslations('HomePage');
   return (
-    <div className="p-3 md:p-0">
+    <div className="px-5 md:px-8 lg:px-10">
       <Featured image="/default/why-stamp.png" title={t('heroTitleOne')} description={t('heroDescriptionOne')} bgHeight="py-20" />
       <Featured
         imagePosition="right"

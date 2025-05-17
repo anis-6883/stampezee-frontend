@@ -210,7 +210,8 @@
     "and": "및",
     "privacyPolicy": "개인정보 처리방침",
     "next": "다음",
-    "otpSentMessage": "OTP가 이메일로 전송되었습니다!"
+    "otpSentMessage": "OTP가 이메일로 전송되었습니다!",
+    "businessCurrency": "비즈니스 통화"
   },
   "ForgotPasswordPage": {
     "title": "비밀번호를 잊으셨나요",

@@ -210,7 +210,8 @@
     "and": "および",
     "privacyPolicy": "プライバシーポリシー",
     "next": "次",
-    "otpSentMessage": "OTP があなたのメールに送信されました！"
+    "otpSentMessage": "OTP があなたのメールに送信されました！",
+    "businessCurrency": "ビジネス通貨"
   },
   "ForgotPasswordPage": {
     "title": "パスワードを忘れた",

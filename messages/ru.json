@@ -211,7 +211,8 @@
     "and": "и",
     "privacyPolicy": "Политикой конфиденциальности",
     "next": "следующий",
-    "otpSentMessage": "OTP отправлен на вашу электронную почту!"
+    "otpSentMessage": "OTP отправлен на вашу электронную почту!",
+    "businessCurrency": "Валюта бизнеса"
   },
   "ForgotPasswordPage": {
     "title": "Забыли пароль",

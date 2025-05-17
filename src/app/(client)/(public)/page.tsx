@@ -24,27 +24,29 @@ export default async function Page() {
   return (
     <div className="relative overflow-hidden">
       {/* rgba(22, 28, 36, 0.8),  */}
-      <div className={`${isRtl ? 'hero-curve-rtr' : 'hero-curve'} relative mx-auto mt-[4.4rem] w-full sm:mt-10`}>
-        <div className="h-screen w-full  bg-[#FF3131] sm:h-[82vh]"></div>
+      <div className={`${isRtl ? 'hero-curve-rtr' : 'hero-curve'} relative mx-auto mt-[4.4rem] w-full sm:mt-10 md:mt-16`}>
+        <div className="h-screen w-full  bg-[#FF3131] md:h-[80vh] lg:h-[82vh]  "></div>
         <div className="absolute inset-0"></div>
         <div
-          className={`container absolute top-[60px] ${isRtl ? '' : 'mx-auto'} flex max-w-screen-xl items-center px-0 sm:inset-0 sm:px-10`}
+          className={`container absolute top-[60px] ${isRtl ? '' : 'mx-auto'} flex max-w-screen-xl items-center px-0 sm:inset-0 md:px-8 lg:px-10`}
         >
-          <div className="flex w-full flex-col-reverse items-center justify-between sm:flex-row">
-            <div className="mt-2 block h-[40%] w-[40%] sm:hidden md:h-[60%] md:w-[60%] xl:h-[50%] xxl:w-[50%]">
-              <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
+          <div className="flex w-full  flex-col-reverse items-center justify-between sm:flex-row-reverse lg:flex-row">
+            <div className="mt-2 block h-[40%] w-[40%] md:h-[50%]  md:w-[60%] lg:hidden  ">
+              <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full object-contain" />
             </div>
             <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
-              <div className="flex flex-col gap-y-1 sm:gap-y-6">
-                <h1 className="text-3xl font-semibold text-white sm:text-7xl">{t('revolutionize')}</h1>
-                <h1 className="text-3xl font-semibold text-white sm:text-7xl"> {t('yourCustomer')}</h1>
-                <h1 className="text-3xl font-semibold text-white sm:text-7xl">{t('experience')}</h1>
+              <div className="flex flex-col gap-y-1 md:gap-y-3 lg:gap-y-4 xl:gap-y-5 sxl:gap-y-6">
+                <h1 className="text-3xl font-semibold text-white md:text-4xl lg:text-5xl xl:text-6xl sxl:text-7xl">{t('revolutionize')}</h1>
+                <h1 className="text-3xl font-semibold text-white md:text-4xl lg:text-5xl xl:text-6xl sxl:text-7xl"> {t('yourCustomer')}</h1>
+                <h1 className="text-3xl font-semibold text-white md:text-4xl lg:text-5xl xl:text-6xl sxl:text-7xl">{t('experience')}</h1>
               </div>
-              <p className="mt-1 text-balance py-7 text-base font-medium text-white sm:mt-4 sm:text-xl">{t('bannerDetails')}</p>
-              <div className="mt-2 sm:mt-8">
+              <p className="mt-1 text-balance py-2 text-base font-medium text-white sm:text-xl md:mt-2 md:py-3.5 lg:mt-3 lg:py-5 xl:py-6 xxl:mt-4 sxl:py-7">
+                {t('bannerDetails')}
+              </p>
+              <div className="mt-2 md:mt-6 lg:mt-8">
                 <Link
                   href={routes.publicRoutes.pricing}
-                  className="dark:bg-primary-red rounded-full bg-white px-8 py-4 text-lg font-semibold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:text-3xl"
+                  className="dark:bg-primary-red rounded-full bg-white px-7 py-2.5 text-lg font-semibold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] md:py-3 md:text-xl xl:px-8 xl:text-2xl xxl:py-4 sxl:text-3xl"
                 >
                   {t('bannerButtonText')}
                 </Link>
@@ -59,6 +61,7 @@ export default async function Page() {
         </div>
       </div>
 
+      {/* why choose section */}
       <HeroCard />
 
       {/* How It Works start */}
@@ -150,7 +153,7 @@ export default async function Page() {
       <div
         className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40 md:left-36 md:top-20 lg:left-36 lg:top-40' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36 md:right-44 md:top-20 lg:right-0 lg:top-32'}  mt-10 items-center justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
       >
-        <div className="hidden h-[40%] w-[40%] sm:block md:h-[60%] md:w-[60%] xl:h-[50%] xxl:w-[50%]">
+        <div className="hidden h-[40%] w-[40%] md:h-[60%] md:w-[60%] lg:block xl:h-[50%] xxl:w-[50%]">
           <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
         </div>
       </div>

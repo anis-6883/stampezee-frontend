@@ -29,7 +29,8 @@ import MapModal from './MapModal';
 import OtpModal from './OtpModal';
 import PolicyModal from './PolicyModal';
 import TermsModal from './TermsModal';
-
+import currencyData from '@/utils/get-currency-list';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 export default function RegisterForm({
   terms,
   policy,
@@ -112,6 +113,7 @@ export default function RegisterForm({
     latitude: '',
     password: '',
     isAgree: '',
+    businessCurrency: '',
     timezone,
   };
 
@@ -154,6 +156,7 @@ export default function RegisterForm({
       })
       .required(tCommon('required')),
     country: Yup.string().trim().required(tCommon('required')),
+    businessCurrency: Yup.string().trim().required(tCommon('required')),
     province: Yup.string()
       .trim()
       .required(tCommon('required'))
@@ -188,7 +191,30 @@ export default function RegisterForm({
     }
     setIsSubmitting(true);
     register(removeEmptyValues(values, ['isAgree']));
+
+    // console.log("values",values);
   };
+
+  // currency:
+
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
+  const currencyExchangeOptions = currencyData?.reduce((acc: any, curr: any) => {
+    currencyExchanges?.map((item: any) => {
+      if (item?.currency === curr?.code) {
+        acc?.push({
+          value: curr?.code,
+          label: curr?.code,
+          symbol: curr?.unicode_symbol,
+        });
+      }
+    });
+    return acc;
+  }, []);
+  const getOptionLabelForCurrency = (option: any): any => (
+    <div className="flex ">
+      <span className="ml-2">{`${option.label} - ${option.symbol}`}</span>
+    </div>
+  );
 
   return (
     <div>
@@ -197,7 +223,32 @@ export default function RegisterForm({
           {({ errors, setFieldValue, touched, setFieldTouched, values }) => {
             return (
               <Form autoComplete="off" className="grid gap-4">
-                <InputField name="storeName" label={t('storeName')} placeholder="Burger King" />
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  <InputField name="storeName" label={t('storeName')} placeholder="Burger King" />
+                  <div className="flex flex-col gap-1">
+                    <div>
+                      <p className="font-medium">
+                        {t('businessCurrency')}
+                        <span className="text-red-500"> *</span>
+                      </p>
+                    </div>
+                    <ReactSelect
+                      placeholder="Select your business currency"
+                      menuPlacement="top"
+                      options={currencyExchangeOptions}
+                      getOptionLabel={getOptionLabelForCurrency}
+                      getOptionValue={(option) => option.label}
+                      onChange={(selectedOption: OnChangeValue<ICountrySelect, false>) => {
+                        setFieldValue('businessCurrency', selectedOption?.label);
+                      }}
+                      onBlur={() => setFieldTouched('businessCurrency', true)}
+                    />
+
+                    {touched.businessCurrency && errors.businessCurrency && (
+                      <FieldError error={errors.country} className="text-xs text-red-600" />
+                    )}
+                  </div>
+                </div>
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <InputField name="firstName" label={`${t('firstName')} (${t('owner')})`} placeholder="John" />
                   <InputField name="lastName" label={`${t('lastName')} (${t('owner')})`} placeholder="Doe" required={false} />

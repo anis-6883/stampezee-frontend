@@ -30,12 +30,12 @@ export default function Featured({
     });
   }, []);
   return (
-    <div className={`container relative mx-auto ${bgHeight}`}>
+    <div className={`container relative mx-auto ${bgHeight} flex items-center  justify-between`}>
       {/* Background Image */}
       {/* image path  required for = your image path */}
       {bg && (
         <div
-          className="absolute inset-0 z-0 bg-cover bg-center"
+          className="absolute inset-0 z-0   bg-cover bg-center "
           style={{
             backgroundImage: `url(${bgImage})`,
             // You can adjust other background properties here like backgroundSize, backgroundPosition, etc.
@@ -48,14 +48,14 @@ export default function Featured({
       )}
       {/* Content */}
       <div
-        className={`${bg && 'absolute'} inset-0 z-20 mx-auto block  max-w-screen-xl items-center justify-between text-black md:flex ${imagePosition == 'left' ? '' : 'flex-row-reverse'}`}
+        className={`${bg && 'absolute'} inset-0 z-0 mx-auto block  max-w-screen-xl items-center justify-between gap-5 text-black md:flex ${imagePosition == 'left' ? '' : 'flex-row-reverse'}`}
       >
-        <div data-aos="fade-right" className="mb-20 flex w-full items-center justify-center overflow-hidden md:mb-0">
+        <div data-aos="fade-right" className="mb-20 flex w-full items-center justify-center overflow-hidden md:mb-0 md:w-1/2">
           <Image src={image} alt="image" />
         </div>
-        <div data-aos="fade-left" className=" overflow-hidden text-center md:text-left">
-          <h1 className="mb-7 text-3xl font-bold text-black sm:text-7xl">{title}</h1>
-          <p className="text-balance text-base text-black sm:text-xl">{description}</p>
+        <div data-aos="fade-left" className=" overflow-hidden text-center md:w-1/2 md:text-left">
+          <h1 className="mb-7 text-3xl font-bold text-black  sxl:text-7xl">{title}</h1>
+          <p className="text-balance text-base text-black  sxl:text-xl">{description}</p>
         </div>
       </div>
     </div>

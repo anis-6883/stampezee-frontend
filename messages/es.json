@@ -211,7 +211,8 @@
     "and": "y",
     "privacyPolicy": "Política de privacidad",
     "next": "próxima",
-    "otpSentMessage": "OTP enviado a tu correo electrónico!"
+    "otpSentMessage": "OTP enviado a tu correo electrónico!",
+    "businessCurrency": "Moneda comercial"
   },
   "ForgotPasswordPage": {
     "title": "Olvidé mi contraseña",

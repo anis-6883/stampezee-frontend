@@ -211,7 +211,8 @@
     "and": "और",
     "privacyPolicy": "गोपनीयता नीति",
     "next": "अगला",
-    "otpSentMessage": "OTP आपके ईमेल पर भेजा गया!"
+    "otpSentMessage": "OTP आपके ईमेल पर भेजा गया!",
+    "businessCurrency": "व्यापार मुद्रा"
   },
   "ForgotPasswordPage": {
     "title": "पासवर्ड भूल गए",

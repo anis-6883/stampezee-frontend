@@ -211,7 +211,8 @@
     "and": "et",
     "privacyPolicy": "Politique de confidentialité",
     "next": "suivante",
-    "otpSentMessage": "OTP envoyé à votre e-mail!"
+    "otpSentMessage": "OTP envoyé à votre e-mail!",
+    "businessCurrency": "Devise commerciale"
   },
   "ForgotPasswordPage": {
     "title": "Mot de passe oublié",
