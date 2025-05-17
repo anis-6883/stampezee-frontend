@@ -20,8 +20,9 @@ export default function GlobalDrawer() {
       onClose={closeDrawer}
       placement={placement}
       customSize={customSize}
+      className="sxl:hidden"
       overlayClassName="dark:bg-opacity-40 dark:backdrop-blur-md"
-      containerClassName="dark:bg-gray-100"
+      containerClassName="dark:bg-gray-100 min-w-32 max-w-[300px]"
     >
       {view}
     </Drawer>
