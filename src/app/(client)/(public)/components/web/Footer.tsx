@@ -50,7 +50,7 @@ export default function Footer({ general }: any) {
       <div className="container mx-auto max-w-[1300px] px-3 sm:px-5">
         <footer className="container mx-auto">
           {/* <hr className="mb-8 mt-10" /> */}
-          <div className="flex flex-col items-center justify-center gap-x-10 sm:flex-row">
+          <div className="flex flex-col items-center justify-center sm:flex-row md:gap-x-8 lg:gap-x-10">
             <div className="mt-3 flex flex-col items-center sm:mt-12 md:items-start ">
               <Link className="w-[110px]" href={routes.publicRoutes.home}>
                 <img alt="logo" width={110} height={110} src="/images/logo.png" style={{ color: 'transparent' }} />

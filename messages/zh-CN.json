@@ -211,7 +211,8 @@
     "and": "和",
     "privacyPolicy": "隐私政策",
     "next": "下一個",
-    "otpSentMessage": "OTP 已发送到您的邮箱！"
+    "otpSentMessage": "OTP 已发送到您的邮箱！",
+    "businessCurrency": "商业货币"
   },
   "ForgotPasswordPage": {
     "title": "忘记密码",

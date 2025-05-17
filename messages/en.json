@@ -211,7 +211,8 @@
     "and": "and",
     "privacyPolicy": "Privacy Policy",
     "next": "Next",
-    "otpSentMessage": "OTP sent on your email!"
+    "otpSentMessage": "OTP sent on your email!",
+    "businessCurrency": "Business Currency"
   },
   "ForgotPasswordPage": {
     "title": "Forgot Password",

@@ -211,7 +211,8 @@
     "and": "و",
     "privacyPolicy": "سياسة الخصوصية",
     "next": "التالي",
-    "otpSentMessage": "تم إرسال OTP إلى بريدك الإلكتروني!"
+    "otpSentMessage": "تم إرسال OTP إلى بريدك الإلكتروني!",
+    "businessCurrency": "عملة الأعمال"
   },
   "ForgotPasswordPage": {
     "title": "نسيت كلمة المرور",

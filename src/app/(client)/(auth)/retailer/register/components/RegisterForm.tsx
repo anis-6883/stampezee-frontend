@@ -29,7 +29,8 @@ import MapModal from './MapModal';
 import OtpModal from './OtpModal';
 import PolicyModal from './PolicyModal';
 import TermsModal from './TermsModal';
-
+import currencyData from '@/utils/get-currency-list';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
 export default function RegisterForm({
   terms,
   policy,
@@ -59,6 +60,23 @@ export default function RegisterForm({
 
   const [countryInfo, setCountryInfo] = useState({ country: '', dialCode: '' });
 
+  // currency:
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
+  const currencyExchangeOptions: any = currencyData?.reduce((acc: any, curr: any) => {
+    currencyExchanges?.map((item: any) => {
+      if (item?.currency === curr?.code) {
+        acc?.push({
+          value: curr?.code,
+          label: curr?.code,
+          symbol: curr?.unicode_symbol,
+        });
+      }
+    });
+    return acc;
+  }, []);
+  const cadCurr = currencyExchangeOptions?.find((item: any) => item.label == 'CAD');
+
+  // console.log(cadCurr?.value);
   useEffect(() => {
     const timezones = timeZoneData?.filter((item) => item?.label?.includes(Intl.DateTimeFormat().resolvedOptions().timeZone));
     setCountryInfo({ country: getCountryByTimezone(), dialCode: getPhoneCodeByTimezone() });
@@ -112,6 +130,7 @@ export default function RegisterForm({
     latitude: '',
     password: '',
     isAgree: '',
+    businessCurrency: cadCurr?.value,
     timezone,
   };
 
@@ -154,6 +173,7 @@ export default function RegisterForm({
       })
       .required(tCommon('required')),
     country: Yup.string().trim().required(tCommon('required')),
+    businessCurrency: Yup.string().trim().required(tCommon('required')),
     province: Yup.string()
       .trim()
       .required(tCommon('required'))
@@ -188,7 +208,15 @@ export default function RegisterForm({
     }
     setIsSubmitting(true);
     register(removeEmptyValues(values, ['isAgree']));
+
+    // console.log('values', values);
   };
+
+  const getOptionLabelForCurrency = (option: any): any => (
+    <div className="flex ">
+      <span className="ml-2">{`${option.label} - ${option.symbol}`}</span>
+    </div>
+  );
 
   return (
     <div>
@@ -197,7 +225,37 @@ export default function RegisterForm({
           {({ errors, setFieldValue, touched, setFieldTouched, values }) => {
             return (
               <Form autoComplete="off" className="grid gap-4">
-                <InputField name="storeName" label={t('storeName')} placeholder="Burger King" />
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  <InputField name="storeName" label={t('storeName')} placeholder="Burger King" />
+                  <div className="flex flex-col gap-1">
+                    <div>
+                      <p className="font-medium">
+                        {t('businessCurrency')}
+                        <span className="text-red-500"> *</span>
+                      </p>
+                    </div>
+                    <ReactSelect
+                      placeholder="Select your business currency"
+                      menuPlacement="top"
+                      options={currencyExchangeOptions}
+                      getOptionLabel={getOptionLabelForCurrency}
+                      defaultValue={cadCurr} // This sets the visual selection
+                      value={currencyExchangeOptions?.find((option: any) => option.value === values.businessCurrency) || cadCurr} // This ensures the value stays selected
+                      getOptionValue={(option) => option.value} // Changed to option.value for consistency
+                      className={`react-select-container ${
+                        touched.businessCurrency && errors.businessCurrency ? 'rounded-md border border-red-500' : ''
+                      }`}
+                      onChange={(selectedOption) => {
+                        setFieldValue('businessCurrency', selectedOption?.value);
+                      }}
+                      onBlur={() => setFieldTouched('businessCurrency', true)}
+                    />
+
+                    {touched?.businessCurrency && typeof errors?.businessCurrency === 'string' && (
+                      <FieldError error={errors?.businessCurrency} className="mt-1 text-xs text-red-600" />
+                    )}
+                  </div>
+                </div>
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <InputField name="firstName" label={`${t('firstName')} (${t('owner')})`} placeholder="John" />
                   <InputField name="lastName" label={`${t('lastName')} (${t('owner')})`} placeholder="Doe" required={false} />

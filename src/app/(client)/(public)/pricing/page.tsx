@@ -25,9 +25,9 @@ export default async function Page() {
   const locale = await getLocale();
 
   return (
-    <div>
+    <div className="">
       <Explore />
-      <div className=" ms-px-0 container  mx-auto mt-16 max-w-screen-xl px-5">
+      <div className=" ms-px-0 container  mx-auto mt-16 max-w-screen-xl px-5 md:px-8 lg:px-10 sxl:px-0">
         <div className="mx-auto  text-start">
           <p className="mb-4 text-xl font-medium tracking-tight text-gray-900 dark:text-white sm:text-4xl">{t('subtitle')}</p>
         </div>
@@ -35,7 +35,7 @@ export default async function Page() {
         <SubscriptionList locale={locale} />
       </div>
       {/* Addon List  */}
-      <div className=" ms-px-0 container  mx-auto mt-16 max-w-screen-xl px-5">
+      <div className=" ms-px-0 container  mx-auto mt-16 max-w-screen-xl px-5 md:px-8 lg:px-10 sxl:px-0">
         <div className="mx-auto  text-start">
           <p className="mb-4 text-xl font-medium tracking-tight text-gray-900 dark:text-white sm:text-4xl">{t('ourAddons')}</p>
         </div>
