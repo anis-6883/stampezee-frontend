@@ -19,6 +19,8 @@ import { Collapse, Title } from 'rizzui';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { menuItems } from './menu-items';
+import { IoCloseSharp } from 'react-icons/io5';
+import { useDrawer } from '@/components/drawer-views/use-drawer';
 
 // user has no current plan sidebar locked url list
 const blockedMenuUrls = [
@@ -99,6 +101,7 @@ const checkedLocked = (role: string, url: string, menuName: string, user: any) =
 
 export default function Sidebar({ className }: { className?: string }) {
   const t = useTranslations('RetailerSidebar');
+  const { closeDrawer } = useDrawer();
   const isMounted = useIsMounted();
   const windowScroll = useWindowScroll();
   const pathname = usePathname();
@@ -119,6 +122,10 @@ export default function Sidebar({ className }: { className?: string }) {
         className
       )}
     >
+      {/* cross button */}
+      <button onClick={() => closeDrawer()} type="button" className="absolute right-6 top-5 z-[999] text-xl sxl:hidden ">
+        <IoCloseSharp />
+      </button>
       <div
         className={cn(
           '2xl:py-5 sticky top-0 z-50 flex items-center justify-center bg-gray-0/80 px-4 py-4 backdrop-blur-xl dark:bg-gray-50/50 md:px-5 lg:px-6 3xl:px-8 4xl:px-10',
