@@ -19,7 +19,7 @@ export default function Explore() {
       <img src="default/pricing-hero.jpg" alt="hero image" className="h-[36vh] w-full object-cover sm:h-[63vh]" />
       <div className="pricing-hero absolute inset-0"></div>
       <div className="absolute inset-0  mx-auto  max-w-screen-xl items-center">
-        <div className="flex h-full items-center justify-center sm:ml-3 sm:block">
+        <div className="flex h-full items-center justify-center px-5 sm:block md:px-8 lg:px-10 sxl:px-0">
           <div className="bottom-[28%]  sm:absolute">
             <div data-aos="flip-left" className="text-center text-2xl font-bold leading-10 text-[#DF2828] sm:mb-3 sm:text-left sm:text-6xl">
               <span style={{ opacity: 1, transform: 'none' }}>{t('explore')}</span>

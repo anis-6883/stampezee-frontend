@@ -50,12 +50,15 @@ export default function Featured({
       <div
         className={`${bg && 'absolute'} inset-0 z-0 mx-auto block  max-w-screen-xl items-center justify-between gap-5 text-black md:flex ${imagePosition == 'left' ? '' : 'flex-row-reverse'}`}
       >
-        <div data-aos="fade-right" className="mb-20 flex w-full items-center justify-center overflow-hidden md:mb-0 md:w-1/2">
+        <div
+          data-aos="fade-right"
+          className="mb-8 flex w-full items-center justify-center overflow-hidden md:mb-0 md:w-1/2 lg:mb-16 sxl:mb-20"
+        >
           <Image src={image} alt="image" />
         </div>
         <div data-aos="fade-left" className=" overflow-hidden text-center md:w-1/2 md:text-left">
-          <h1 className="mb-7 text-3xl font-bold text-black  sxl:text-7xl">{title}</h1>
-          <p className="text-balance text-base text-black  sxl:text-xl">{description}</p>
+          <h1 className="mb-7 text-3xl font-bold text-black md:text-5xl lg:text-6xl  sxl:text-7xl">{title}</h1>
+          <p className="text-balance text-base text-black md:text-lg sxl:text-xl">{description}</p>
         </div>
       </div>
     </div>
