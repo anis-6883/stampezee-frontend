@@ -122,7 +122,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
               <ul className="text-gray-600">
                 {addOn.descriptions.map((info, idx) => (
                   <li className="flex items-center space-x-3" key={idx}>
-                    <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
+                    <IoCheckmarkDoneCircle className="text-2xl text-danger flex-shrink-0" /> <span className="mx-1 my-1">{info}</span>
                   </li>
                 ))}
               </ul>
@@ -157,7 +157,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
               <ul className="text-gray-600">
                 {addOn.descriptions.map((info, idx) => (
                   <li className="flex items-center space-x-3" key={idx}>
-                    <IoCheckmarkDoneCircle className="text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
+                    <IoCheckmarkDoneCircle className="text-2xl text-danger flex-shrink-0" /> <span className="mx-1 my-1">{info}</span>
                   </li>
                 ))}
               </ul>
