@@ -73,12 +73,7 @@ export default function PricingCard({ item }: { item: any }) {
               <span className="ml-1 font-medium capitalize">{currency?.name}</span>
             </span>
             <span className="text-gray-500 dark:text-gray-400">
-              /{' '}
-              {item.duration === 30
-                ? 'month'
-                : session?.user?.unlimitedFieldName && session?.user?.plan === 'trial'
-                  ? session?.user?.unlimitedFieldName
-                  : `${item?.duration} days`}
+              / {item.duration === 30 ? 'month' : item?.isUnlimited ? item?.unlimitedFieldName : `${item?.duration} days`}
             </span>
           </div>
         )}
