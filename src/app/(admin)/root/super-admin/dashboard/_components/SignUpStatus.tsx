@@ -6,8 +6,22 @@ import { useGetDashboardCalcQuery } from '@/features/super-admin/dashboard/dashb
 import cn from '@/hooks/class-names';
 import { IoInformationCircleOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
-import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip as ReTooltip } from 'recharts';
 import { Text, Title, Tooltip } from 'rizzui';
+
+// Custom tooltip component
+const CustomTooltip = ({ active, payload, totalCustomer = 0, totalRetailer = 0 }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div className="min-w-52 rounded-md bg-danger p-2 text-white shadow">
+        <p className="font-semibold">{`Total Verified Retailer : ${totalRetailer}`}</p>
+        <p className="font-semibold">{`Total Verified Customer : ${totalCustomer}`}</p>
+      </div>
+    );
+  }
+  return null;
+};
 
 export default function SignUpStatus({ className }: { className?: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
@@ -47,7 +61,7 @@ export default function SignUpStatus({ className }: { className?: string }) {
             arrowClassName={`fill-danger`}
           >
             <span>
-              <IoInformationCircleOutline className="text-xl text-danger " />
+              <IoInformationCircleOutline className="cursor-pointer text-xl text-danger" />
             </span>
           </Tooltip>
         </div>
@@ -61,7 +75,7 @@ export default function SignUpStatus({ className }: { className?: string }) {
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart className="[&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-white">
+                <PieChart className=" [&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-white">
                   <Pie
                     data={data}
                     cx="50%"
@@ -72,11 +86,23 @@ export default function SignUpStatus({ className }: { className?: string }) {
                     fill="#8884d8"
                     strokeWidth={2}
                     dataKey="value"
+                    cursor={'pointer'}
                   >
                     {data.map((item, index) => (
                       <Cell key={index} fill={item.color} stroke={item.color} />
                     ))}
                   </Pie>
+                  <ReTooltip
+                    contentStyle={{ backgroundColor: '#333', border: 'none', borderRadius: '10px' }}
+                    itemStyle={{ color: '#fff' }}
+                    cursor={{ fill: 'rgba(0,0,0,0.1)' }}
+                    content={
+                      <CustomTooltip
+                        totalRetailer={dashBoardData?.data?.totalVerifiedRetailer}
+                        totalCustomer={dashBoardData?.data?.totalVerifiedCustomer}
+                      />
+                    }
+                  />
                 </PieChart>
               </ResponsiveContainer>
             )}

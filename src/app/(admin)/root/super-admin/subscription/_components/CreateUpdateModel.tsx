@@ -59,7 +59,12 @@ export default function CreateUpdateModel({
     type: Yup.mixed().oneOf(['subscription', 'addon']).required('Required!'),
     duration: Yup.string().when('slug', {
       is: 'trial',
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .min(1, 'Duration must be greater than or equal 1!')
+          .typeError('Must be a number!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     unlimitedFieldName: Yup.string().when('isUnlimited', {

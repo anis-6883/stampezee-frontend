@@ -61,7 +61,7 @@ export default function RewardCollectStats({ className }: { className?: string }
             arrowClassName={`fill-danger`}
           >
             <span>
-              <IoInformationCircleOutline className="text-xl text-danger " />
+              <IoInformationCircleOutline className="cursor-pointer text-xl text-danger" />
             </span>
           </Tooltip>
         </div>
