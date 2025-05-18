@@ -11,12 +11,9 @@ import Link from 'next/link';
 import { FaArrowTrendUp } from 'react-icons/fa6';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { IoDiamondOutline } from 'react-icons/io5';
-import { LuCircleDollarSign } from 'react-icons/lu';
 
 const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
   const { data: session }: any = useSession();
-
-  // console.log(session);
   const t = useTranslations('RetailerBalanceCard');
   const t2 = useTranslations('RetailerBranchTable');
 
@@ -28,7 +25,6 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
 
   const usageAmount = roundToTwoDecimals(Math.abs(remainingAmount - session?.user?.planPayment));
 
-  // console.log(session?.user?.plan);
   return (
     <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
       <div className="flex">
@@ -41,7 +37,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
           {countDaysLeft(session?.user?.planValidAt)} {t2('daysLeft')}
         </span>
       </div>
-      {session?.user?.plan !== 'trial' && (
+      {/* {session?.user?.plan !== 'trial' && (
         <>
           <div className="flex">
             <LuCircleDollarSign className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('current')} : </p>
@@ -50,14 +46,14 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
             </span>
           </div>
 
-          {/* <div className="flex">
+          <div className="flex">
             <LuCircleDollarSign className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('usage')} : </p>
             <span className="pl-3 font-medium text-danger">
               {usageAmount?.toFixed(2)} {session?.user?.planPaymentCurrency}
             </span>
-          </div> */}
+          </div>
         </>
-      )}
+      )} */}
 
       {session?.user?.plan !== PACKAGES.ADVANCED && showUpButton && (
         <div className="mt-2 flex justify-center">

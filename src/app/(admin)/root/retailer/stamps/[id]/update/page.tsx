@@ -28,8 +28,8 @@ export default async function Page({ params, searchParams }: any) {
   const tStamp = await getTranslations('RetailerStamp');
   pageHeader.breadcrumb[0].name = tStamp('dashboard');
   pageHeader.breadcrumb[1].name = tStamp('stamps');
-  pageHeader.breadcrumb[2].name = publish === 'yes' ? 'View Stamp' : t('updateStamp');
-  pageHeader.title = publish === 'yes' ? 'View A Stamp' : t('updateStamp');
+  pageHeader.breadcrumb[2].name = publish === 'yes' ? 'View Stamp Card' : t('updateStamp');
+  pageHeader.title = publish === 'yes' ? 'View A Stamp Card' : t('updateStamp');
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />

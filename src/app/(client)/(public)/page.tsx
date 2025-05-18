@@ -36,9 +36,9 @@ export default async function Page() {
             </div>
             <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
               <div className="flex flex-col gap-y-1 md:gap-y-3 lg:gap-y-4 xl:gap-y-5 sxl:gap-y-6">
-                <h1 className="text-3xl font-semibold text-white md:text-4xl lg:text-5xl xl:text-6xl sxl:text-7xl">{t('revolutionize')}</h1>
-                <h1 className="text-3xl font-semibold text-white md:text-4xl lg:text-5xl xl:text-6xl sxl:text-7xl"> {t('yourCustomer')}</h1>
-                <h1 className="text-3xl font-semibold text-white md:text-4xl lg:text-5xl xl:text-6xl sxl:text-7xl">{t('experience')}</h1>
+                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl">{t('revolutionize')}</h1>
+                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl"> {t('yourCustomer')}</h1>
+                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl">{t('experience')}</h1>
               </div>
               <p className="mt-1 text-balance py-2 text-base font-medium text-white sm:text-xl md:mt-2 md:py-3.5 lg:mt-3 lg:py-5 xl:py-6 xxl:mt-4 sxl:py-7">
                 {t('bannerDetails')}
@@ -65,9 +65,9 @@ export default async function Page() {
       <HeroCard />
 
       {/* How It Works start */}
-      <section id="how_we_work" className={`${isRtl ? 'works-curve-rtr' : 'works-curve'} bg-[#FCE8E8] py-10`}>
+      <section id="how_we_work" className={`${isRtl ? 'works-curve-rtr' : 'works-curve'} bg-[#FCE8E8] px-5 py-10 md:px-8 lg:px-10`}>
         <div className="container mx-auto block  max-w-screen-xl gap-3 sm:gap-10">
-          <div className="my-7 text-center text-3xl font-bold text-black sm:text-7xl">{t('workMainTitle')}</div>
+          <div className="my-7 text-center text-3xl font-bold text-black md:text-5xl lg:text-6xl sxl:text-7xl">{t('workMainTitle')}</div>
           <div className=" items-center justify-between md:flex">
             <WorksCard
               image="/default/flex.svg"
@@ -99,12 +99,16 @@ export default async function Page() {
 
       <div>
         <div className=" mt-5 text-center">
-          <p className="mb-7 text-lg font-[600] leading-8 text-black sm:text-3xl">{t('testimonials')}</p>
-          <div className="mb-7 text-center text-3xl font-bold text-black sm:text-7xl">{t('testimonialMainTitle')}</div>
-          <div className="mb-7 text-center text-3xl font-bold text-black sm:text-7xl">{t('testimonialMainSubtitle')}</div>
+          <p className="mb-3 text-lg font-semibold leading-8 text-black sm:text-3xl md:mb-5 lg:mb-6 sxl:mb-7">{t('testimonials')}</p>
+          <div className="mb-3 text-center text-3xl font-bold text-black md:mb-5 md:text-5xl lg:mb-6 lg:text-6xl sxl:mb-7 sxl:text-7xl">
+            {t('testimonialMainTitle')}
+          </div>
+          <div className="mb-3 text-center text-3xl font-bold text-black md:mb-5 md:text-5xl lg:mb-6 lg:text-6xl sxl:mb-7 sxl:text-7xl">
+            {t('testimonialMainSubtitle')}
+          </div>
         </div>
 
-        <div className="container mx-auto mb-8 mt-[30px] grid max-w-screen-xl grid-cols-1 gap-10 px-10 py-8  sm:mb-20 sm:mt-[76px] sm:gap-10 md:grid-cols-2 md:p-0 lg:grid-cols-3">
+        <div className="container mx-auto mb-8 mt-[30px] grid max-w-screen-xl grid-cols-1 gap-10   py-8 sm:mb-20 sm:gap-10 md:mt-16 md:grid-cols-2 md:p-0 md:px-8 lg:grid-cols-3 lg:px-10 xl:mt-[76px]">
           <Testimonial
             image={'/default/olivia.png'}
             name={t('testimonialTitleOne')}
@@ -129,16 +133,16 @@ export default async function Page() {
       {/* TESTIMONIALS end */}
 
       {/* Revolution Card Start  */}
-      <div className="m-7 sm:m-0">
+      <div className="m-7 px-5 sm:m-0 md:px-8 lg:px-10">
         <div className="container mx-auto max-w-screen-xl rounded-3xl bg-gradient-to-r from-[#BA0000] to-[#FB7C7C] px-10 py-8">
           <div className="flex flex-col items-center gap-y-6">
             <span className="text-base font-semibold uppercase tracking-widest text-[#000000] sm:text-xl">{t('revolutionTitle')}</span>
-            <span className="text-3xl font-bold tracking-widest text-[#ffffff] sm:text-5xl">{t('revolutionBodyTitle')}</span>
-            <span className="text-3xl font-bold tracking-widest text-[#ffffff] sm:text-5xl">{t('revolutionBodySubtitle')}</span>
-            <div className="mb-3 mt-8">
+            <span className="text-3xl font-bold tracking-widest text-[#ffffff] md:text-4xl lg:text-5xl">{t('revolutionBodyTitle')}</span>
+            <span className="text-3xl font-bold tracking-widest text-[#ffffff] md:text-4xl lg:text-5xl">{t('revolutionBodySubtitle')}</span>
+            <div className="mb-3 mt-4 md:mt-6 lg:mt-8">
               <Link
                 href={routes.publicRoutes.pricing}
-                className="dark:bg-primary-red  rounded-full bg-white px-3 py-4 text-base font-semibold uppercase tracking-widest text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:px-8 sm:text-2xl"
+                className="dark:bg-primary-red  rounded-full bg-white px-3 py-4 text-base font-semibold uppercase tracking-widest text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:px-8 md:text-xl lg:text-2xl"
               >
                 {t('revolutionButtonText')}
               </Link>

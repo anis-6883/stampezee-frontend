@@ -19,6 +19,7 @@ export interface ITableProps {
   renderDetailPanel?: any;
   showGlobalFilter?: boolean;
   mantinePaperProps?: any;
+  hasSerialNo?: boolean;
 }
 
 export interface ICountrySelect {

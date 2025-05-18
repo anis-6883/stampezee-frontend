@@ -296,6 +296,7 @@ export default function StampTable() {
         </Link>
       </div>
       <Table
+        // hasSerialNo={false}
         isFetching={isFetching}
         isLoading={isLoading}
         response={

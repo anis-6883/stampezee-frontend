@@ -15,6 +15,7 @@ export default function Table({
   enableRowActions = false,
   enableDnD = false,
   sort,
+  // hasSerialNo = true,
   sortContext,
   enableRowNumbers = false,
   searchPlaceHolder = 'Search',
@@ -40,7 +41,26 @@ export default function Table({
     }
   };
 
-  const columns = useMemo<MRT_ColumnDef[]>(() => structure, [structure]);
+  const columns = useMemo<MRT_ColumnDef[]>(() => {
+    const baseColumns = structure;
+
+    // Show Serial No by default, unless hasSerialNo is explicitly false
+    const shouldShowSerialNo = enableRowNumbers !== true;
+
+    if (shouldShowSerialNo) {
+      return [
+        {
+          id: 'serial',
+          header: 'Serial No',
+          accessorFn: (_row: any, index: number) => index + 1,
+          size: 60,
+        },
+        ...baseColumns,
+      ];
+    }
+
+    return baseColumns;
+  }, [structure, enableRowNumbers]);
 
   const table = useMantineReactTable({
     columns,
@@ -89,8 +109,6 @@ export default function Table({
     enableColumnActions: false,
     onGlobalFilterChange: handleFilter,
     enableSorting: enableDnD,
-    enableRowNumbers: enableRowNumbers,
-
     ...(enableDnD && {
       enableRowDragging: true,
       enableRowOrdering: true,

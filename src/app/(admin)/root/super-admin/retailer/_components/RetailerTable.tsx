@@ -10,6 +10,7 @@ import {
   useGetAllRetailersQuery,
   useUpdateRetailerStatusMutation,
 } from '@/features/super-admin/retailer/retailerApi';
+import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { IQueryType } from '@/types';
 import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import Link from 'next/link';
@@ -41,6 +42,8 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
     },
     { skip: !accessToken }
   );
+
+  const { data: subscriptions } = useGetSubscriptionQuery(undefined);
 
   const [deleteRetailer, { isSuccess, isError }] = useDeleteSuperAdminRetailerMutation();
   const [updateStatus] = useUpdateRetailerStatusMutation();
@@ -120,22 +123,12 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
       header: 'Plan Statistics',
       Cell: ({ row }: any) => {
         let currentPlan = '';
-        switch (row?.original.currentPlan) {
-          case 'trial':
-            currentPlan = 'Free Trial';
-            break;
-          case 'basic':
-            currentPlan = 'Basic Plan';
-            break;
-          case 'pro':
-            currentPlan = 'Pro Plan';
-            break;
-          case 'advanced':
-            currentPlan = 'Advanced Plan';
-            break;
-          default:
-            currentPlan = 'No Enrollment Yet';
-            break;
+        if (row?.original.currentPlan) {
+          currentPlan = subscriptions?.data?.find(
+            (item: any) => item?.type === 'subscription' && item?.slug === row?.original.currentPlan
+          )?.title;
+        } else {
+          currentPlan = 'No Enrollment Yet';
         }
 
         return (
@@ -249,7 +242,7 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Store, Owner Name & Email"
+        searchPlaceHolder="Search By Store, Owner Name Or Email"
         searchFieldWidth="320px"
       />
 

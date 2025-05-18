@@ -416,7 +416,7 @@
     "branchName": "Branch Name",
     "address": "Address",
     "source": "Source",
-    "expiryDay": "Expiry Day",
+    "expiryDay": "Subscription Period",
     "billingCycle": "Billing Cycle",
     "status": "Status",
     "actions": "Actions",
@@ -486,9 +486,9 @@
     "stampPublishedSuccessfully": "Stamp published successfully!"
   },
   "RetailerCreateAndUpdateStamp": {
-    "createStamp": "Create A Stamp",
-    "updateStamp": "Update A Stamp",
-    "cloneStamp": "Clone A Stamp",
+    "createStamp": "Create A Stamp Card",
+    "updateStamp": "Update A Stamp Card",
+    "cloneStamp": "Clone A Stamp Card",
     "create": "Create",
     "clone": "Clone",
     "title": "Title",
@@ -559,7 +559,7 @@
     "customer": "Customer",
     "scannedBy": "Stamped By",
     "status": "Status",
-    "placeHolder": "Search By Customer Name & Email"
+    "placeHolder": "Search By Customer Name Or Email"
   },
   "RetailerProfile": {
     "title": "Manage Profile",
@@ -585,7 +585,7 @@
   },
   "RetailerBalanceCard": {
     "plan": "Plan",
-    "expire": "Expire",
+    "expire": "Next Renewal",
     "current": "Current",
     "usage": "Usage"
   },
@@ -712,7 +712,7 @@
   "RetailerCustomerDetailsScanTable": {
     "title": "Stamp Statistics",
     "scanDate": "Stamped Date",
-    "stampTitle": "",
+    "stampTitle": "Stamp Card Title",
     "store": "Store",
     "branch": "Branch",
     "scannedBy": "Stamped By",
