@@ -54,7 +54,7 @@ function DropdownMenu({
   }
 
   return (
-    <div className="w-64 text-left rtl:text-right">
+    <div className="w-[264px] text-left rtl:text-right">
       {user?.role === ROLE.RETAILER && (
         <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
           <img
