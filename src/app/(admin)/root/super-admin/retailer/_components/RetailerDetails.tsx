@@ -15,6 +15,8 @@ import SubAdminListTable from './SubAdminListTable';
 export default function RetailerDetails({ id, timezone }: { id: string; timezone: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { data, isLoading, isError } = useGetSingleRetailerQuery(id, { skip: !accessToken });
+
+  console.log(data);
   const { data: subscriptions } = useGetSubscriptionQuery(undefined);
 
   let {
@@ -40,7 +42,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
     sub_admins,
     addonSubscriptions,
     about,
-    website,
+    website,businessCurrency
   } = data?.data || {};
 
   if (currentPlan) {
@@ -82,6 +84,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
           <InfoRow label="Address" value={address ? address : 'N/A'} isLoading={isLoading} />
           <InfoRow label="About" value={about ? about : 'N/A'} isLoading={isLoading} />
           <InfoRow label="Website" value={website ? website : 'N/A'} isLoading={isLoading} />
+          <InfoRow label="Business Currency" value={businessCurrency ? businessCurrency : 'N/A'} isLoading={isLoading} />
           <InfoRow
             label="Current Plan"
             value={<span className={`${currentPlan === 'No Enrollment Yet' && 'text-danger'}`}>{currentPlan}</span>}

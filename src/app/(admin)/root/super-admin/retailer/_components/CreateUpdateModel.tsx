@@ -21,6 +21,8 @@ import ReactSelect, { OnChangeValue } from 'react-select';
 import { ActionIcon, FieldError, Modal, Title } from 'rizzui';
 import * as Yup from 'yup';
 import AddressMap from './AddressMap';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
+import currencyData from '@/utils/get-currency-list';
 
 export default function CreateUpdateModel({
   setFormData,
@@ -31,13 +33,30 @@ export default function CreateUpdateModel({
 }: {
   formData: any;
   modalState: boolean;
-  setFormData: (data: any) => void;
-  setModalState: (state: boolean) => void;
+  setFormData: any;
+  setModalState: any;
   googleMapsApiKey: string;
 }) {
+ 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [register, { isSuccess: createSuccess, error: createError }] = useCreateSuperAdminRetailerMutation();
   const [updateRtailar, { isSuccess: updateSuccess, error: updateError }] = useUpdateSuperAdminRetailerMutation();
+
+  // curr:
+  const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
+  const currencyExchangeOptions: any = currencyData?.reduce((acc: any, curr: any) => {
+    currencyExchanges?.map((item: any) => {
+      if (item?.currency === curr?.code) {
+        acc?.push({
+          value: curr?.code,
+          label: curr?.code,
+          symbol: curr?.unicode_symbol,
+        });
+      }
+    });
+    return acc;
+  }, []);
+  const cadCurr = currencyExchangeOptions?.find((item: any) => item.label == 'CAD');
 
   const initialValues = {
     storeName: formData?.storeName || '',
@@ -56,6 +75,7 @@ export default function CreateUpdateModel({
     image: formData?.image || '',
     about: formData?.about || '',
     website: formData?.website || '',
+    businessCurrency: formData?.businessCurrency || cadCurr?.value,
     timezone: formData?.timezone || {
       label: 'America/Toronto',
     },
@@ -102,6 +122,7 @@ export default function CreateUpdateModel({
       })
       .required('Required!'),
     country: Yup.string().trim().required('Required!'),
+    businessCurrency: Yup.string().trim().required('required'),
     province: Yup.string()
       .trim()
       .required('Required!')
@@ -208,6 +229,12 @@ export default function CreateUpdateModel({
   }));
   const timezoneOptions = timeZoneList?.map((timezone) => ({ value: timezone?.label, label: timezone?.label }));
 
+  const getOptionLabelForCurrency = (option: any): any => (
+    <div className="flex ">
+      <span className="ml-2">{`${option.label} - ${option.symbol}`}</span>
+    </div>
+  );
+
   return (
     <div>
       <Modal isOpen={modalState} onClose={() => setModalState(true)} customSize="700px">
@@ -246,7 +273,7 @@ export default function CreateUpdateModel({
                     <InputField name="lastName" label="Last Name" placeholder="Doe" required={false} />
                   </div>
 
-                  <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <PhoneNumber
                       enableSearch={true}
                       name="phone"
@@ -284,7 +311,20 @@ export default function CreateUpdateModel({
                         onBlur={() => setFieldTouched('country', true)}
                       />
                     </div>
+                  </div>
 
+                  <div className="grid grid-cols-1">
+                    {/* <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" /> */}
+                    <AddressMap googleMapsApiKey={googleMapsApiKey} />
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                    <InputField name="province" label="Province" placeholder="Ontario" />
+                    <InputField name="city" label="City" placeholder="Toronto" />
+                    <InputField name="postalCode" label="Postal Code" placeholder="M3C" />
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <div className="flex flex-col gap-1">
                       <div>
                         <p className="font-medium">
@@ -314,17 +354,35 @@ export default function CreateUpdateModel({
                         <FieldError error={errors?.timezone as string} className="text-xs text-red-600" />
                       )}
                     </div>
-                  </div>
+                    <div className="flex flex-col gap-1">
+                      <div>
+                        <p className="font-medium">
+                          {/* {t('businessCurrency')} */}
+                          Business Currency
+                          <span className="text-red-500"> *</span>
+                        </p>
+                      </div>
+                      <ReactSelect
+                        placeholder="Select your business currency"
+                        menuPlacement="top"
+                        options={currencyExchangeOptions}
+                        getOptionLabel={getOptionLabelForCurrency}
+                        defaultValue={cadCurr} // This sets the visual selection
+                        value={currencyExchangeOptions?.find((option: any) => option.value === values.businessCurrency) || cadCurr} // This ensures the value stays selected
+                        getOptionValue={(option) => option.value} // Changed to option.value for consistency
+                        className={`react-select-container ${
+                          touched.businessCurrency && errors.businessCurrency ? 'rounded-md border border-red-500' : ''
+                        }`}
+                        onChange={(selectedOption) => {
+                          setFieldValue('businessCurrency', selectedOption?.value);
+                        }}
+                        onBlur={() => setFieldTouched('businessCurrency', true)}
+                      />
 
-                  <div className="grid grid-cols-1">
-                    {/* <InputField name="address" label="Address" placeholder="120 Bremner Blvd, Suite 800" /> */}
-                    <AddressMap googleMapsApiKey={googleMapsApiKey} />
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                    <InputField name="province" label="Province" placeholder="Ontario" />
-                    <InputField name="city" label="City" placeholder="Toronto" />
-                    <InputField name="postalCode" label="Postal Code" placeholder="M3C" />
+                      {touched?.businessCurrency && typeof errors?.businessCurrency === 'string' && (
+                        <FieldError error={errors?.businessCurrency} className="mt-1 text-xs text-red-600" />
+                      )}
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
