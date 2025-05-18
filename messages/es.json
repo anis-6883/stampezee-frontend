@@ -122,7 +122,8 @@
     "email": "Correo Electrónico",
     "phone": "Número de Teléfono",
     "message": "Mensaje",
-    "buttonText": "Enviar"
+    "buttonText": "Enviar",
+    "warningText":"¡Los campos marcados con * son obligatorios!"
   },
   "pricingPage": {
     "explore": "Explorar",
@@ -132,7 +133,8 @@
     "ourAddons": "Nuestras extensiones",
     "pricingButtonText": "Empezar",
     "applied": "Aplicado",
-    "active": "Activo"
+    "active": "Activo",
+        "tooltipText": "¡Puedes seleccionar un complemento después de elegir un plan!"
   },
   "CheckoutPage": {
     "plans": "Planes",

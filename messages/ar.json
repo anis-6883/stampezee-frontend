@@ -81,7 +81,8 @@
     "email": "بريد إلكتروني",
     "phone": "رقم التليفون",
     "message": "رسالة",
-    "buttonText": "يرسل"
+    "buttonText": "يرسل",
+    "warningText":"الحقول المميزة بـ * إلزامية!"
   },
   "pricingPage": {
     "explore": "يستكشف",
@@ -91,7 +92,8 @@
     "ourAddons": "إضافاتنا",
     "pricingButtonText": "البدء",
     "applied": "تم تطبيق",
-    "active": "نشط"
+    "active": "نشط",
+    "tooltipText": "يمكنك اختيار الإضافة بعد اختيار خطة!"
   },
   "CheckoutPage": {
     "plans": "الخطط",
@@ -293,7 +295,7 @@
     "totalSubAdmin": "إجمالي المشرفين الفرعيين",
     "totalOrder": "إجمالي الطلبات",
     "totalRevenue": "إجمالي الإيرادات",
-        "totalRewardsCollected":"إجمالي المكافآت التي تم جمعها"
+    "totalRewardsCollected": "إجمالي المكافآت التي تم جمعها"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "جمع الطوابع",

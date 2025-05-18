@@ -108,7 +108,7 @@ const ContactForm = ({ token, locale }: { token: string; locale: string }) => {
 
             <p className="flex flex-col text-end text-sm font-semibold sm:text-base">
               <span>
-                Fields marked with <span className="text-red-600">*</span> are mandatory!
+                {t('warningText').split("*")[0]} <span className="text-red-600">*</span> {t('warningText').split("*")[1]}
               </span>
             </p>
 

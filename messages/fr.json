@@ -122,7 +122,8 @@
     "email": "E-mail",
     "phone": "Numéro de Téléphone",
     "message": "Message",
-    "buttonText": "Envoyer"
+    "buttonText": "Envoyer",
+    "warningText":"Les champs marqués d'un * sont obligatoires !"
   },
   "pricingPage": {
     "explore": "Explorer",
@@ -132,7 +133,8 @@
     "ourAddons": "Nos accessoires",
     "pricingButtonText": "Commencer",
     "applied": "Appliqué",
-    "active": "Actif"
+    "active": "Actif",
+    "tooltipText": "Vous pouvez sélectionner un module après avoir choisi un forfait !"
   },
   "CheckoutPage": {
     "plans": "Plans",
