@@ -44,12 +44,12 @@ export default function CreateUpdateModel({
     type: formData?.type || 'subscription',
     slug: formData?.slug || '',
     duration: formData?.duration || 0,
-    durationTitle: '',
+    unlimitedFieldName: formData?.unlimitedFieldName || 'Unlimited',
     allowTotalUser: formData?.allowTotalUser || 0,
     allowTotalScan: formData?.allowTotalScan || 0,
     isUserUnlimited: formData?.allowTotalUser !== null ? false : true,
     isScanUnlimited: formData?.allowTotalScan !== null ? false : true,
-    isDurationUnlimited: false,
+    isUnlimited: formData?.isUnlimited || false,
   };
 
   const validationSchema = Yup.object({
@@ -61,6 +61,11 @@ export default function CreateUpdateModel({
       is: 'trial',
       then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
       otherwise: () => Yup.number().nullable(),
+    }),
+    unlimitedFieldName: Yup.string().when('isUnlimited', {
+      is: true,
+      then: () => Yup.string().required('Required!'),
+      otherwise: () => Yup.string().nullable(),
     }),
     allowTotalBranch: Yup.string().when('type', {
       is: 'subscription',
@@ -128,6 +133,9 @@ export default function CreateUpdateModel({
       }
       if (values?.isUserUnlimited) {
         values.allowTotalUser = null;
+      }
+      if (!values?.isUnlimited) {
+        ignoreList.push('unlimitedFieldName');
       }
 
       ignoreList.push('isUserUnlimited', 'isScanUnlimited');
@@ -213,15 +221,15 @@ export default function CreateUpdateModel({
                           label={<span className="text-sm font-normal text-black">Unlimited</span>}
                           size="sm"
                           onChange={() => {
-                            setFieldValue('isDurationUnlimited', !values?.isDurationUnlimited);
+                            setFieldValue('isUnlimited', !values?.isUnlimited);
                           }}
-                          checked={values?.isDurationUnlimited}
+                          checked={values?.isUnlimited}
                         />
                       </div>
 
-                      {values?.isDurationUnlimited ? (
+                      {values?.isUnlimited ? (
                         <InputField
-                          name="durationTitle"
+                          name="unlimitedFieldName"
                           label=""
                           type="text"
                           placeholder="Unlimited"

@@ -96,7 +96,7 @@ export default function UpdateBranch({ branchId, googleMapsApiKey }: any) {
       {() => (
         <Form className="mt-5 grid gap-4">
           <InputField name="name" label={t('name')} placeholder="ex. Ring Road Branch" />
-          <MapComponent googleMapsApiKey={googleMapsApiKey} />
+          <MapComponent googleMapsApiKey={googleMapsApiKey} isUpdate={true} />
           <div className="mt-2 flex justify-end">
             <Button
               color="danger"
