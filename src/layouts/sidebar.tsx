@@ -1,6 +1,7 @@
 'use client';
 
 import BalanceCard from '@/app/(client)/(public)/components/BalanceCard';
+import { useDrawer } from '@/components/drawer-views/use-drawer';
 import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
@@ -12,6 +13,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
+import { IoCloseSharp } from 'react-icons/io5';
 import { PiCaretDownBold } from 'react-icons/pi';
 import { SlLock } from 'react-icons/sl';
 import { useSelector } from 'react-redux';
@@ -19,8 +21,6 @@ import { Collapse, Title } from 'rizzui';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { menuItems } from './menu-items';
-import { IoCloseSharp } from 'react-icons/io5';
-import { useDrawer } from '@/components/drawer-views/use-drawer';
 
 // user has no current plan sidebar locked url list
 const blockedMenuUrls = [
@@ -48,6 +48,8 @@ const checkedLocked = (role: string, url: string, menuName: string, user: any) =
   if (user?.plan) {
     // free trail checked lock
     if (user?.plan === 'trial') {
+      // if total stamps or total user limit cross then sidebar menu locked
+      if (user?.isLimitExceeded) return role === 'retailer' && blockedMenuUrls.includes(url);
       return role === 'retailer' && addonsBlockedMenuUrls.includes(url);
     }
     // if sidebar menu name contain lockedMenuNames
