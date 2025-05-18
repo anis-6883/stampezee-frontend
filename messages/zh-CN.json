@@ -292,7 +292,8 @@
     "totalCustomer": "总客户数",
     "totalSubAdmin": "子管理员总数",
     "totalOrder": "总订单数",
-    "totalRevenue": "总收入"
+    "totalRevenue": "总收入",
+      "totalRewardsCollected": "累计获得的奖励"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "邮票收集",

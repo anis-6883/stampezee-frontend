@@ -292,7 +292,8 @@
     "totalCustomer": "총 고객 수",
     "totalSubAdmin": "총 하위 관리자",
     "totalOrder": "총 주문 수",
-    "totalRevenue": "총 수익"
+    "totalRevenue": "총 수익",
+    "totalRewardsCollected": "수집된 총 보상"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "스탬프 수집",

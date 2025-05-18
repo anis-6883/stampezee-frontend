@@ -292,7 +292,8 @@
     "totalCustomer": "إجمالي العملاء",
     "totalSubAdmin": "إجمالي المشرفين الفرعيين",
     "totalOrder": "إجمالي الطلبات",
-    "totalRevenue": "إجمالي الإيرادات"
+    "totalRevenue": "إجمالي الإيرادات",
+        "totalRewardsCollected":"إجمالي المكافآت التي تم جمعها"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "جمع الطوابع",

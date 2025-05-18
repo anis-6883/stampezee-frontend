@@ -291,7 +291,8 @@
     "totalCustomer": "総顧客数",
     "totalSubAdmin": "サブ管理者の合計",
     "totalOrder": "総注文数",
-    "totalRevenue": "総収益"
+    "totalRevenue": "総収益",
+    "totalRewardsCollected": "獲得した報酬の合計"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "スタンプ収集",

@@ -292,7 +292,8 @@
     "totalCustomer": "Общее Количество Клиентов",
     "totalSubAdmin": "Всего субадминистраторов",
     "totalOrder": "Общее Количество Заказов",
-    "totalRevenue": "Общий Доход"
+    "totalRevenue": "Общий Доход",
+      "totalRewardsCollected": "Всего получено наград"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "Сбор марок",

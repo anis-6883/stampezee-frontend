@@ -292,7 +292,8 @@
     "totalCustomer": "Total de Clientes",
     "totalSubAdmin": "Total de Subadministradores",
     "totalOrder": "Total de Pedidos",
-    "totalRevenue": "Ingresos Totales"
+    "totalRevenue": "Ingresos Totales",
+    "totalRewardsCollected": "Recompensas totales recolectadas"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "Colección de Sello",

@@ -292,7 +292,8 @@
     "totalCustomer": "कुल ग्राहक",
     "totalSubAdmin": "कुल उप-प्रशासक",
     "totalOrder": "कुल ऑर्डर",
-    "totalRevenue": "कुल राजस्व"
+    "totalRevenue": "कुल राजस्व",
+    "totalRewardsCollected": "कुल एकत्रित पुरस्कार"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "स्टांप संग्रह",

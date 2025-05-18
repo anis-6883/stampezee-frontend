@@ -288,11 +288,12 @@
     "branchAddress": "Branch Address",
     "subAdminName": "Sub Admin Name",
     "subAdminEmail": "Sub Admin Email",
-    "totalStamp": "Total Stamp",
+    "totalStamp": "Total Stamp Cards",
     "totalCustomer": "Total Customer",
     "totalSubAdmin": "Total Loyalty Executive",
     "totalOrder": "Total Stamps",
-    "totalRevenue": "Total Revenue"
+    "totalRevenue": "Total Revenue",
+    "totalRewardsCollected":"Total Rewards Collected"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "Average Stamp Collection Overview",
