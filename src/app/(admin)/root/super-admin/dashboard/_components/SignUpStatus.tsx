@@ -14,9 +14,9 @@ const CustomTooltip = ({ active, payload, totalCustomer = 0, totalRetailer = 0 }
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="min-w-52 rounded-md bg-danger p-2 text-white shadow">
-        <p className="font-semibold">{`Total Verified Retailer : ${totalRetailer}`}</p>
-        <p className="font-semibold">{`Total Verified Customer : ${totalCustomer}`}</p>
+      <div className="max-w-52 rounded-lg bg-danger px-3 py-2 text-white shadow">
+        <p className="font-semibold">{`Retailer : ${totalRetailer}`}</p>
+        <p className="font-semibold">{`Customer : ${totalCustomer}`}</p>
       </div>
     );
   }

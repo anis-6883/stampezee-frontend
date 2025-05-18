@@ -166,6 +166,8 @@ export default function BranchTable() {
 
         return row?.original?.disabledBySystem ? (
           <span className="font-semibold text-danger">{t('expired')}</span>
+        ) : session?.user?.plan === 'trial' && row?.original?.enrollSubscription?.unlimitedFieldName ? (
+          <span className="font-semibold text-danger">{session?.user?.unlimitedFieldName}</span>
         ) : (
           <span className="font-semibold text-danger">{countDays < 0 ? t('expired') : `${countDays} ${t('daysLeft')}`}</span>
         );
