@@ -17,6 +17,7 @@ export function SubscriptionBasicInfo({ isLoading, isError, data }: { isLoading:
   const t5 = useTranslations('RetailerBranchTable');
   const t7 = useTranslations('RetailerBillingTable');
   const { data: session }: any = useSession();
+  const validityToUtc = moment.tz(data?.validityTo, session?.user?.timezone?.label).utc();
 
   return (
     <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
@@ -79,7 +80,7 @@ export function SubscriptionBasicInfo({ isLoading, isError, data }: { isLoading:
         <span className="font-semibold">{t5('billingCycle')}</span>
         {isLoading || isError ? (
           <Skeleton className="h-6 w-32 rounded" />
-        ) : data?.status === true && moment().isBefore(data?.validityToUtc) ? (
+        ) : data?.status === true && moment().isBefore(validityToUtc) ? (
           <Badge className="!bg-success text-white">
             <GiSandsOfTime className="mr-1 text-xl" /> {t('running')}
           </Badge>
