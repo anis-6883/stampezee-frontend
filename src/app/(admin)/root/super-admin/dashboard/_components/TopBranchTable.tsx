@@ -11,7 +11,17 @@ export default function TopBranchTable() {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { data, isLoading, isError } = useGetTopOutletsQuery(null, { skip: !accessToken });
 
-  const tableHeaders = ['Serial No', 'Retailer Name', 'Retailer Email', 'Branch Name', 'Branch Address', 'Total Revenue'];
+  const tableHeaders = [
+    'Serial No',
+    'Retailer Name',
+    'Retailer Email',
+    'Branch Name',
+    'Branch Address',
+    'Total Customer',
+    'Total Stamps',
+    'Total Stamp Cards',
+    'Total Revenue',
+  ];
 
   if (isLoading || isError) {
     return (
@@ -91,6 +101,20 @@ export default function TopBranchTable() {
                   </td>
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     {item?.branch.address}
+                  </td>
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    {/* {item?.totalRevenue && item?.totalRevenue.toFixed(2)} {item?.amountCurrency} */}
+                    {/* total customer */}
+                    12
+                  </td>
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    {/* {item?.totalRevenue && item?.totalRevenue.toFixed(2)} {item?.amountCurrency} */}
+                    {/* total stamps */}
+                    10
+                  </td>
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    {/* {item?.totalRevenue && item?.totalRevenue.toFixed(2)} {item?.amountCurrency} */}
+                    {/* total stamp cards */}5
                   </td>
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     {item?.totalRevenue && item?.totalRevenue.toFixed(2)} {item?.amountCurrency}

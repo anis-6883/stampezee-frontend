@@ -68,13 +68,7 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
                 <span className="text-sm font-medium">{t('active')}</span>
               </div>
             ) : (
-              <Tooltip
-                className="bg-danger text-white"
-                placement="top"
-                size="md"
-                arrowClassName="fill-danger"
-                content={'You can select add-on after choosing a plan!'}
-              >
+              <Tooltip className="bg-danger text-white" placement="top" size="md" arrowClassName="fill-danger" content={t('tooltipText')}>
                 <div className={`absolute z-0 ${isRtl ? 'left-2' : 'right-2'} top-2 `}>
                   <IoInformationCircleOutline className="text-2xl" />
                 </div>

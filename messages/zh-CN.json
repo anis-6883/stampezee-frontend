@@ -122,7 +122,8 @@
     "email": "电子邮件",
     "phone": "电话号码",
     "message": "留言",
-    "buttonText": "发送"
+    "buttonText": "发送",
+    "warningText": "标有 * 的字段为必填项！"
   },
   "pricingPage": {
     "explore": "探索",
@@ -132,7 +133,8 @@
     "ourAddons": "我们的附加组件",
     "pricingButtonText": "开始使用",
     "applied": "已应用",
-    "active": "活动"
+    "active": "活动",
+    "tooltipText": "选择一个计划后，您可以选择附加功能！"
   },
   "CheckoutPage": {
     "plans": "计划",
@@ -292,7 +294,8 @@
     "totalCustomer": "总客户数",
     "totalSubAdmin": "子管理员总数",
     "totalOrder": "总订单数",
-    "totalRevenue": "总收入"
+    "totalRevenue": "总收入",
+    "totalRewardsCollected": "累计获得的奖励"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "邮票收集",

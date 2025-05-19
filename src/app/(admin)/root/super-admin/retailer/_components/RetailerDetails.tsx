@@ -15,8 +15,6 @@ import SubAdminListTable from './SubAdminListTable';
 export default function RetailerDetails({ id, timezone }: { id: string; timezone: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { data, isLoading, isError } = useGetSingleRetailerQuery(id, { skip: !accessToken });
-
-  console.log(data);
   const { data: subscriptions } = useGetSubscriptionQuery(undefined);
 
   let {

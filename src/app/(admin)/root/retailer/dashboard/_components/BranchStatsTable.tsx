@@ -19,6 +19,7 @@ export default function BranchStatsTable() {
     t('totalSubAdmin'),
     t('totalCustomer'),
     t('totalOrder'),
+    t('totalRewardsCollected'),
     `${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`,
   ];
 
@@ -106,6 +107,10 @@ export default function BranchStatsTable() {
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item.totalOrder}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                  {/* total rewards collectedf */}
+                  {/* {Number(item.totalRevenue).toFixed(2)} */}2
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {Number(item.totalRevenue).toFixed(2)}
