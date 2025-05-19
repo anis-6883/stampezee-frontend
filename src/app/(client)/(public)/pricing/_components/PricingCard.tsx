@@ -16,7 +16,6 @@ import { MdStar } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function PricingCard({ item }: { item: any }) {
-
   const t = useTranslations('pricingPage');
   const locale = useLocale();
   const isRtl = locale === 'ar';

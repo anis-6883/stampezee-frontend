@@ -1,6 +1,6 @@
 import 'flatpickr/dist/flatpickr.css';
 import 'flatpickr/dist/themes/dark.css';
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import Flatpickr from 'react-flatpickr';
 
 interface DateRangeProps {
@@ -8,7 +8,7 @@ interface DateRangeProps {
   enableTime?: boolean;
   range?: boolean;
   required?: boolean;
-  changeHandler: (value: string) => void;
+  changeHandler: any;
 }
 
 const DatePicker: React.FC<DateRangeProps> = ({ label, enableTime = false, range = false, required = true, changeHandler }) => {
@@ -27,7 +27,7 @@ const DatePicker: React.FC<DateRangeProps> = ({ label, enableTime = false, range
           <div className="flex items-center">
             <input
               type="text"
-              className={`h-10 w-full rounded-md border-[1px] border-slate-300 placeholder:text-sm`}
+              className={`h-10 w-full rounded-md border-[1px] border-slate-300 text-sm placeholder:text-sm md:text-base`}
               ref={ref}
               placeholder={range ? 'YYYY-MM-DD to YYYY-MM-DD' : enableTime ? 'YYYY-MM-DD HH:II' : 'YYYY-MM-DD'}
               aria-label="Select date range"

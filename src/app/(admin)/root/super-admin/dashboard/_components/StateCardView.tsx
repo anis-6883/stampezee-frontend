@@ -57,10 +57,12 @@ export default function StateCardView({ className }: { className: string }) {
             isDetailsView
             detailsLink={routes.privateRoutes.superAdmin.customer.home}
           />
+
+          {/* ======updated card====== */}
           <MetricCard
             icon={<PiCalendarPlusDuotone className="text-2xl" />}
             key={1}
-            title={'New Retailer This Month'}
+            title={'Total Active Stamp Card'}
             metric={newRetailerThisMonth}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
@@ -68,10 +70,12 @@ export default function StateCardView({ className }: { className: string }) {
             isDetailsView
             detailsLink={routes.privateRoutes.superAdmin.retailer.home}
           />
+
+          {/* ======updated card====== */}
           <MetricCard
             icon={<PiCalendarPlusDuotone className="text-2xl" />}
             key={1}
-            title={'New Customer This Month'}
+            title={'Total Active Subscribers'}
             metric={newCustomerThisMonth}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"

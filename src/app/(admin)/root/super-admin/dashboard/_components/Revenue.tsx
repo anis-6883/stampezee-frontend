@@ -12,9 +12,14 @@ import { Select, Text, Title, Tooltip } from 'rizzui';
 import CircleProgressbar from './CircleProgressbar';
 import WidgetCard from './WidgetCard';
 
-export default function Revenue({ className }: { className?: string }) {
+interface Props {
+  className?: string;
+  dateRange?: Date[] | null;
+  setDateRange?: React.Dispatch<React.SetStateAction<Date[] | null>>;
+}
+export default function Revenue({ className, dateRange }: Props) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const [dateRange, setDateRange] = useState('');
+  // const [dateRange, setDateRange] = useState('');
   const {
     data: dashboardRevenue,
     isLoading,
@@ -99,23 +104,23 @@ export default function Revenue({ className }: { className?: string }) {
       descriptionClassName="mt-2"
       headerClassName="col-span-full"
       className={cn('relative grid h-full grid-cols-2 pb-0 @2xl:gap-8 @3xl:gap-5 lg:pb-0', className)}
-      action={
-        <div className="flex items-center justify-between gap-5">
-          {showDate.value === 'with-date' && <DatePicker range={true} changeHandler={setDateRange} />}
+      // action={
+      //   <div className="flex items-center justify-between gap-5  ">
+      //     {showDate.value === 'with-date' && <DatePicker range={true} changeHandler={setDateRange} />}
 
-          <Select
-            size="md"
-            className="w-32"
-            selectClassName="!ring-0"
-            options={dateOptions}
-            value={showDate}
-            onChange={(value: any) => {
-              if (value.value === 'no-date') setDateRange('');
-              setShowDate(value);
-            }}
-          />
-        </div>
-      }
+      //     <Select
+      //       size="md"
+      //       className="w-32"
+      //       selectClassName="!ring-0"
+      //       options={dateOptions}
+      //       value={showDate}
+      //       onChange={(value: any) => {
+      //         if (value.value === 'no-date') setDateRange('');
+      //         setShowDate(value);
+      //       }}
+      //     />
+      //   </div>
+      // }
     >
       {isFetching || isLoading || isError || !dashboardRevenue ? (
         <>
