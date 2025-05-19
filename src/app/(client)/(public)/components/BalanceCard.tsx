@@ -31,8 +31,8 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
         <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('plan')} :</p>
         <span className="pl-3 font-medium capitalize">{session?.user?.planTitle}</span>
       </div>
-      <div className="flex">
-        <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('expire')} : </p>
+      <div className="flex text-no">
+        <GiSandsOfTime className="text-xl flex-shirnk-0" /> <p className="pl-3 text-center font-semibold">{t('expire')} : </p>
         {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
           <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
         ) : (
