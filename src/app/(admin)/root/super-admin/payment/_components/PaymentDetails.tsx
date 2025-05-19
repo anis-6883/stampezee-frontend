@@ -250,6 +250,10 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
               <Badge className="!bg-success text-white">
                 <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(enrollStatus)}
               </Badge>
+            ) : enrollStatus === 'trial' ? (
+              <Badge className="!bg-black text-white">
+                <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(enrollStatus)}
+              </Badge>
             ) : (
               <Badge className="!bg-danger text-white">
                 <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(enrollStatus)}
@@ -266,7 +270,11 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
             {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : (
-              <span>{currentPeriodByTimezone(validityFrom, validityTo, timezone)}</span>
+              <span>
+                {enrollStatus === 'trial' && enrollSubscriptions[0]?.unlimitedFieldName
+                  ? enrollSubscriptions[0]?.unlimitedFieldName
+                  : currentPeriodByTimezone(validityFrom, validityTo, timezone)}
+              </span>
             )}
           </div>
           <div className="flex items-center justify-between font-medium">
@@ -299,7 +307,11 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
               {isLoading || isError ? (
                 <Skeleton className="h-6 w-32 rounded" />
               ) : (
-                <span>{getFormatDateByTimezone(validityTo, timezone)}</span>
+                <span>
+                  {enrollStatus === 'trial' && enrollSubscriptions[0]?.unlimitedFieldName
+                    ? enrollSubscriptions[0]?.unlimitedFieldName
+                    : getFormatDateByTimezone(validityTo, timezone)}
+                </span>
               )}
             </div>
           )}

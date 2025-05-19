@@ -314,7 +314,11 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
             {isLoading || isError ? (
               <Skeleton className="h-6 w-32 rounded" />
             ) : (
-              <span>{currentPeriodByTimezone(validityFrom, validityTo, session?.user?.timezone?.label || '')}</span>
+              <span>
+                {enrollStatus === 'trial' && session?.user?.unlimitedFieldName
+                  ? session?.user?.unlimitedFieldName
+                  : currentPeriodByTimezone(validityFrom, validityTo, session?.user?.timezone?.label || '')}
+              </span>
             )}
           </div>
           <div className="flex items-center justify-between font-medium">
@@ -347,7 +351,11 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
               {isLoading || isError ? (
                 <Skeleton className="h-6 w-32 rounded" />
               ) : (
-                <span>{getFormatDateByTimezone(validityTo, session?.user?.timezone?.label || '')}</span>
+                <span>
+                  {enrollStatus === 'trial' && session?.user?.unlimitedFieldName
+                    ? session?.user?.unlimitedFieldName
+                    : getFormatDateByTimezone(validityTo, session?.user?.timezone?.label || '')}
+                </span>
               )}
             </div>
           )}

@@ -33,9 +33,13 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
       </div>
       <div className="flex">
         <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('expire')} : </p>
-        <span className="pl-3 font-medium text-danger">
-          {countDaysLeft(session?.user?.planValidAt)} {t2('daysLeft')}
-        </span>
+        {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
+          <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
+        ) : (
+          <span className="pl-3 font-medium text-danger">
+            {countDaysLeft(session?.user?.planValidAt)} {t2('daysLeft')}
+          </span>
+        )}
       </div>
       {/* {session?.user?.plan !== 'trial' && (
         <>

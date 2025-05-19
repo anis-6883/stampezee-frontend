@@ -135,23 +135,16 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
                     <span className="text-sm font-medium">{t('active')}</span>
                   </div>
                 )}
-                {/* {session?.user?.takeFreeTrial && item?.slug === 'trial' && (
-                  <div
-                    className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
-                  >
-                    <span className="font-medium">
-                      <IoCheckmarkDoneOutline className="text-lg" />
-                    </span>
-                    <span className="text-sm font-medium">{t('applied')}</span>
-                  </div>
-                )} */}
+
                 <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
                 {!selectedCurrencyExchangeRate?.name ? (
                   <Skeleton className="w-50 h-8 rounded" />
                 ) : (
                   <p className="mb-2 text-xl font-bold">
                     {item?.price ? item?.price?.toFixed(2) : Number(0).toFixed(2)}
-                    {` ${selectedCurrencyExchangeRate?.name}/${item.duration === 30 ? 'month' : `${item.duration} days`}`}
+                    {` ${selectedCurrencyExchangeRate?.name}/${
+                      item.duration === 30 ? 'month' : item?.isUnlimited ? item?.unlimitedFieldName : `${item.duration} days`
+                    }`}
                   </p>
                 )}
                 <ul className="text-gray-600">
@@ -176,7 +169,9 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
                 ) : (
                   <p className="mb-2 text-xl font-bold">
                     {item?.price ? item?.price?.toFixed(2) : Number(0).toFixed(2)}
-                    {` ${selectedCurrencyExchangeRate?.name}/${item.duration === 30 ? 'month' : `${item.duration} days`}`}
+                    {` ${selectedCurrencyExchangeRate?.name}/${
+                      item.duration === 30 ? 'month' : item?.isUnlimited ? item?.unlimitedFieldName : `${item.duration} days`
+                    }`}
                   </p>
                 )}
                 <ul className="text-gray-600">
