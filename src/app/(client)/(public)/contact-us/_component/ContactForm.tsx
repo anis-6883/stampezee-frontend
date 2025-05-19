@@ -108,7 +108,14 @@ const ContactForm = ({ token, locale }: { token: string; locale: string }) => {
 
             <p className="flex flex-col text-end text-sm font-semibold sm:text-base">
               <span>
-                {t('warningText').split("*")[0]} <span className="text-red-600">*</span> {t('warningText').split("*")[1]}
+                {(() => {
+                  const [before, after] = t('warningText').split('*');
+                  return (
+                    <>
+                      {before} <span className="text-red-600">*</span> {after}
+                    </>
+                  );
+                })()}
               </span>
             </p>
 
