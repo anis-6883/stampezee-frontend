@@ -42,7 +42,8 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
     sub_admins,
     addonSubscriptions,
     about,
-    website,businessCurrency
+    website,
+    businessCurrency,
   } = data?.data || {};
 
   if (currentPlan) {

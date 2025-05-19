@@ -37,7 +37,6 @@ export default function CreateUpdateModel({
   setModalState: any;
   googleMapsApiKey: string;
 }) {
- 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [register, { isSuccess: createSuccess, error: createError }] = useCreateSuperAdminRetailerMutation();
   const [updateRtailar, { isSuccess: updateSuccess, error: updateError }] = useUpdateSuperAdminRetailerMutation();

@@ -13,11 +13,13 @@ export default function AddPaymentCardModal({
   setModalState,
   customerId,
   stripePublishKey,
+  subscriptionId,
 }: {
   customerId: string;
   stripePublishKey: string;
   modalState: boolean;
   setModalState: (state: boolean) => void;
+  subscriptionId: string;
 }) {
   const [clientSecret, setClientSecret] = useState('');
   const appearance: { theme: 'flat' | 'stripe' | 'night' } = {
@@ -57,7 +59,12 @@ export default function AddPaymentCardModal({
         <div>
           {clientSecret && (
             <Elements options={{ clientSecret, appearance, loader }} stripe={stripePromise}>
-              <AddPaymentCardForm setModalState={setModalState} setClientSecret={setClientSecret} customerId={customerId} />
+              <AddPaymentCardForm
+                subscriptionId={subscriptionId}
+                setModalState={setModalState}
+                setClientSecret={setClientSecret}
+                customerId={customerId}
+              />
             </Elements>
           )}
         </div>

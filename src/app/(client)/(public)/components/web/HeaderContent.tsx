@@ -362,8 +362,8 @@ export default function HeaderContent() {
                           leaveFrom="transform opacity-100 scale-100"
                           leaveTo="transform opacity-0 scale-95"
                         >
-                          <Menu.Items className="absolute right-0 z-10 mt-2 w-72 origin-top-right rounded-md bg-white p-2 px-4 text-black shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            <div className="py-1">
+                          <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-2 px-4 text-black shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className=" py-1">
                               <div className="mb-5 flex flex-col items-center justify-center gap-y-4 border-b border-gray-300 p-6">
                                 <img
                                   src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
@@ -385,7 +385,7 @@ export default function HeaderContent() {
                                   </Title>
                                 )}
                               </div>
-                              {session?.user?.plan && <BalanceCard />}
+                              <div className="min-w-[284px]">{session?.user?.plan && <BalanceCard />}</div>
 
                               <Button
                                 onClick={() => handleLogout()}
