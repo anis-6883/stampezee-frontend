@@ -151,6 +151,21 @@ html {
   scroll-behavior: smooth;
 }
 
+ 
+/* For Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* For Chrome, Safari, Edge, Opera */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* mozilla input: */
+
 /* ................................................... */
 /* Maintain React Table Search Input */
 /* ................................................... */
@@ -386,7 +401,7 @@ td.rc-table-cell-fix-right {
 .react-quill .ql-toolbar.ql-snow {
   @apply flex flex-wrap items-center gap-1.5 rounded-t-md border-gray-300;
 }
-/* 
+/*
 .react-quill .ql-container {
   @apply font-poppins;
 } */
