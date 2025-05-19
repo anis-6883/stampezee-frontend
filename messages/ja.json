@@ -122,7 +122,7 @@
     "phone": "電話番号",
     "message": "メッセージ",
     "buttonText": "送信",
-    "warningText":"＊が付いている項目は必須です！"
+    "warningText": "＊が付いている項目は必須です！"
   },
   "pricingPage": {
     "explore": "探る",
@@ -133,7 +133,7 @@
     "pricingButtonText": "始める",
     "applied": "適用済み",
     "active": "アクティブ",
-       "tooltipText": "プランを選択した後にアドオンを選択できます！"
+    "tooltipText": "プランを選択した後にアドオンを選択できます！"
   },
   "CheckoutPage": {
     "plans": "プラン",

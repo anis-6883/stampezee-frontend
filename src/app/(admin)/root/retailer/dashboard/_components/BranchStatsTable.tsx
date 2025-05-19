@@ -110,8 +110,7 @@ export default function BranchStatsTable() {
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {/* total rewards collectedf */}
-                  {/* {Number(item.totalRevenue).toFixed(2)} */}
-                  2
+                  {/* {Number(item.totalRevenue).toFixed(2)} */}2
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {Number(item.totalRevenue).toFixed(2)}

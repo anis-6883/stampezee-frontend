@@ -122,7 +122,7 @@
     "phone": "전화번호",
     "message": "메시지",
     "buttonText": "전송",
-    "warningText":"* 표시된 항목은 필수입니다!"
+    "warningText": "* 표시된 항목은 필수입니다!"
   },
   "pricingPage": {
     "explore": "탐색",
@@ -133,7 +133,7 @@
     "pricingButtonText": "시작하기",
     "applied": "적용됨",
     "active": "활성",
-       "tooltipText": "플랜을 선택한 후 애드온을 선택할 수 있습니다!"
+    "tooltipText": "플랜을 선택한 후 애드온을 선택할 수 있습니다!"
   },
   "CheckoutPage": {
     "plans": "계획",

@@ -123,7 +123,7 @@
     "phone": "फोन नंबर",
     "message": "संदेश",
     "buttonText": "भेजें",
-    "warningText":"के साथ चिह्नित फ़ील्ड अनिवार्य हैं!"
+    "warningText": "के साथ चिह्नित फ़ील्ड अनिवार्य हैं!"
   },
   "pricingPage": {
     "explore": "अन्वेषण करें",
@@ -134,7 +134,7 @@
     "pricingButtonText": "शुरू करें",
     "applied": "लागू",
     "active": "सक्रिय",
-       "tooltipText": "आप योजना चुनने के बाद ऐड-ऑन चुन सकते हैं!"
+    "tooltipText": "आप योजना चुनने के बाद ऐड-ऑन चुन सकते हैं!"
   },
   "CheckoutPage": {
     "plans": "योजनाएँ",
