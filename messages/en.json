@@ -122,7 +122,8 @@
     "email": "Email",
     "phone": "Phone Number",
     "message": "Message",
-    "buttonText": "Send"
+    "buttonText": "Send",
+    "warningText":"Fields marked with * are mandatory!"
   },
   "pricingPage": {
     "explore": "Explore",
@@ -132,7 +133,8 @@
     "ourAddons": "Our Add-ons",
     "pricingButtonText": "Get started",
     "applied": "Applied",
-    "active": "Active"
+    "active": "Active",
+    "tooltipText":"You can select add-on after choosing a plan!"
   },
   "CheckoutPage": {
     "plans": "Plans",
@@ -288,11 +290,12 @@
     "branchAddress": "Branch Address",
     "subAdminName": "Sub Admin Name",
     "subAdminEmail": "Sub Admin Email",
-    "totalStamp": "Total Stamp",
+    "totalStamp": "Total Stamp Cards",
     "totalCustomer": "Total Customer",
     "totalSubAdmin": "Total Loyalty Executive",
     "totalOrder": "Total Stamps",
-    "totalRevenue": "Total Revenue"
+    "totalRevenue": "Total Revenue",
+    "totalRewardsCollected":"Total Rewards Collected"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "Average Stamp Collection Overview",

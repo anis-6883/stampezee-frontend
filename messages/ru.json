@@ -122,7 +122,8 @@
     "email": "Электронная почта",
     "phone": "Номер телефона",
     "message": "Сообщение",
-    "buttonText": "Отправить"
+    "buttonText": "Отправить",
+    "warningText":"Поля, отмеченные *, являются обязательными!"
   },
   "pricingPage": {
     "explore": "Изучить",
@@ -132,7 +133,8 @@
     "ourAddons": "(Русский): Наши дополнения",
     "pricingButtonText": "Начать",
     "applied": "Применен",
-    "active": "Активный"
+    "active": "Активный",
+       "tooltipText": "Вы можете выбрать дополнение после выбора плана!"
   },
   "CheckoutPage": {
     "plans": "Тарифы",
@@ -292,7 +294,8 @@
     "totalCustomer": "Общее Количество Клиентов",
     "totalSubAdmin": "Всего субадминистраторов",
     "totalOrder": "Общее Количество Заказов",
-    "totalRevenue": "Общий Доход"
+    "totalRevenue": "Общий Доход",
+      "totalRewardsCollected": "Всего получено наград"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "Сбор марок",

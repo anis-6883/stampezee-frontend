@@ -73,7 +73,7 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
                 placement="top"
                 size="md"
                 arrowClassName="fill-danger"
-                content={'You can select add-on after choosing a plan!'}
+                content={t('tooltipText')}
               >
                 <div className={`absolute z-0 ${isRtl ? 'left-2' : 'right-2'} top-2 `}>
                   <IoInformationCircleOutline className="text-2xl" />

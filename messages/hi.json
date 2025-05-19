@@ -122,7 +122,8 @@
     "email": "ईमेल",
     "phone": "फोन नंबर",
     "message": "संदेश",
-    "buttonText": "भेजें"
+    "buttonText": "भेजें",
+    "warningText":"के साथ चिह्नित फ़ील्ड अनिवार्य हैं!"
   },
   "pricingPage": {
     "explore": "अन्वेषण करें",
@@ -132,7 +133,8 @@
     "ourAddons": "हमारे ऐड-ऑन",
     "pricingButtonText": "शुरू करें",
     "applied": "लागू",
-    "active": "सक्रिय"
+    "active": "सक्रिय",
+       "tooltipText": "आप योजना चुनने के बाद ऐड-ऑन चुन सकते हैं!"
   },
   "CheckoutPage": {
     "plans": "योजनाएँ",
@@ -292,7 +294,8 @@
     "totalCustomer": "कुल ग्राहक",
     "totalSubAdmin": "कुल उप-प्रशासक",
     "totalOrder": "कुल ऑर्डर",
-    "totalRevenue": "कुल राजस्व"
+    "totalRevenue": "कुल राजस्व",
+    "totalRewardsCollected": "कुल एकत्रित पुरस्कार"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "स्टांप संग्रह",
