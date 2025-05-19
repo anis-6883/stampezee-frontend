@@ -26,7 +26,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
   const usageAmount = roundToTwoDecimals(Math.abs(remainingAmount - session?.user?.planPayment));
 
   return (
-    <div className="  flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
+    <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
       <div className="flex">
         <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('plan')} :</p>
         <span className="pl-3 font-medium capitalize">{session?.user?.planTitle}</span>
