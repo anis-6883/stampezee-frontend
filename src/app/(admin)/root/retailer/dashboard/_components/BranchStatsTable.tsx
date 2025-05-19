@@ -15,9 +15,9 @@ export default function BranchStatsTable() {
   const tableHeaders = [
     t('serialNo'),
     t('branchName'),
-    t('branchAddress'),
     t('totalSubAdmin'),
     t('totalCustomer'),
+    'Total Stamp Card',
     t('totalOrder'),
     t('totalRewardsCollected'),
     `${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`,
@@ -93,9 +93,10 @@ export default function BranchStatsTable() {
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item.name}
                 </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                {/* <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item.address.length > 25 ? `${item.address.slice(0, 25)}...` : item.address}
-                </td>
+                </td> */}
+
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item?.totalSubAdmin}
                 </td>
@@ -106,11 +107,13 @@ export default function BranchStatsTable() {
                   {item.totalCustomer}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.totalOrder}
+                  {item?.totalStampsCard}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {/* total rewards collectedf */}
-                  {/* {Number(item.totalRevenue).toFixed(2)} */}2
+                  {item.totalStamps}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                  {Number(item.totalRewardCollected)}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {Number(item.totalRevenue).toFixed(2)}

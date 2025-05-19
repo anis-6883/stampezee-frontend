@@ -137,20 +137,25 @@ export function ChangePaymentMethodModal({
           )}
 
           <div className="flex items-center justify-center gap-x-4">
+            {allPaymentMethod?.length > 0 && (
+              <Button
+                onClick={handleChangePaymentMethod}
+                disabled={!selectPaymentMethod?.id}
+                type="submit"
+                className="!m-0 !px-2.5 !py-2"
+                color="danger"
+                text={'Confirm'}
+                preIcon={<BsCheck2Circle className="text-base" />}
+                isSubmitting={changePaymentMethodSubmitting}
+              />
+            )}
             <Button
-              onClick={handleChangePaymentMethod}
-              disabled={!selectPaymentMethod?.id}
-              type="submit"
-              className="!m-0 !px-2.5 !py-2"
-              color="danger"
-              text={'Confirm'}
-              preIcon={<BsCheck2Circle className="text-base" />}
-              isSubmitting={changePaymentMethodSubmitting}
-            />
-            <Button
               color="danger"
               className="!m-0 !px-2.5 !py-2"
-              onClick={() => setModalState(false)}
+              onClick={() => {
+                setModalState(false);
+                setSelectPaymentMethod({});
+              }}
               text={'Not Now'}
               postIcon={<MdDoNotDisturb className="text-base" />}
             />
