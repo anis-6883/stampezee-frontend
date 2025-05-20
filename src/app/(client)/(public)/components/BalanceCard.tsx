@@ -18,6 +18,8 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
   const t = useTranslations('RetailerBalanceCard');
   const t2 = useTranslations('RetailerBranchTable');
 
+  console.log(session);
+
   const remainingAmount = calculateBalancePrice(
     session?.user?.planStartAt as Date,
     session?.user?.planValidAt as Date,
@@ -46,7 +48,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
         )}
       </div>
 
-      {showUpButton && (
+      {(showUpButton &&session?.user?.plan=='trial') && (
         <>
           {/* user limit */}
           <div className="flex  ">
