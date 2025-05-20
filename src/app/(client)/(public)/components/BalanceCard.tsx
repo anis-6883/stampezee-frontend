@@ -33,7 +33,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
         <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('plan')} :</p>
         <span className="pl-3 font-medium capitalize">{session?.user?.planTitle}</span>
       </div>
-      
+
       {/* next renewal */}
       <div className="flex ">
         <GiSandsOfTime className="flex-shrink-0 text-xl" /> <p className="pl-3   font-semibold">{t('expire')} : </p>
@@ -46,28 +46,32 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
         )}
       </div>
 
-      {/* user limit */}
-      <div className="flex  ">
-        <FaRegCircleUser className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('userLimit')} : </p>
-        {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
-          <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
-        ) : (
-          <span className="pl-3 font-medium capitalize text-danger">
-            {session?.user?.allowTotalUser ? session?.user?.allowTotalUser : t('unlimited')}
-          </span>
-        )}
-      </div>
-      {/* stamp limit */}
-      <div className="flex  ">
-        <PiStampFill className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('stampLimit')} : </p>
-        {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
-          <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
-        ) : (
-          <span className="pl-3 font-medium capitalize text-danger">
-            {session?.user?.allowTotalScan ? session?.user?.allowTotalScan : t('unlimited')}
-          </span>
-        )}
-      </div>
+      {showUpButton && (
+        <>
+          {/* user limit */}
+          <div className="flex  ">
+            <FaRegCircleUser className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('userLimit')} : </p>
+            {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
+              <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
+            ) : (
+              <span className="pl-3 font-medium capitalize text-danger">
+                {session?.user?.allowTotalUser ? session?.user?.allowTotalUser : t('unlimited')}
+              </span>
+            )}
+          </div>
+          {/* stamp limit */}
+          <div className="flex  ">
+            <PiStampFill className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('stampLimit')} : </p>
+            {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
+              <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
+            ) : (
+              <span className="pl-3 font-medium capitalize text-danger">
+                {session?.user?.allowTotalScan ? session?.user?.allowTotalScan : t('unlimited')}
+              </span>
+            )}
+          </div>
+        </>
+      )}
 
       {/* {session?.user?.plan !== 'trial' && (
         <>

@@ -270,7 +270,7 @@
     "Stamp Cards": "Timbres",
     "Stamps": "Scans",
     "Customers": "Clients",
-    "Custom Stamp Card Images": "Images de Timbres Personnalisés",
+    "Custom Stamp Image": "Images de Timbres Personnalisés",
     "Push Notifications": "Notifications Push",
     "Regular": "Régulier",
     "Location Based": "Basé sur la Localisation",
@@ -584,16 +584,15 @@
     "businessCurrency": "Monnaie commerciale",
     "retailerProfileUpdated": "Le profil du détaillant a été mis à jour avec succès!"
   },
- "RetailerBalanceCard": {
-  "plan": "Plan",
-  "expire": "Renouv.",
-  "userLimit": "Utilis.",
-  "stampLimit": "Timbres",
-  "current": "Actuel",
-  "usage": "Util.",
-  "unlimited": "Illimité"
-}
-,
+  "RetailerBalanceCard": {
+    "plan": "Plan",
+    "expire": "Renouv.",
+    "userLimit": "Utilis.",
+    "stampLimit": "Timbres",
+    "current": "Actuel",
+    "usage": "Util.",
+    "unlimited": "Illimité"
+  },
   "RetailerNotification": {
     "title": "Gérer la Notification Régulière",
     "regularNotification": "Notification Régulière",
