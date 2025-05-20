@@ -136,20 +136,44 @@ export default function RegisterForm({
 
   const validationSchema = Yup.object().shape({
     storeName: Yup.string()
-      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      // .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
       .required(tCommon('required'))
-      .min(2, 'At least 2 characters!')
-      .max(50, 'maximum 50 characters!'),
+      .min(5, 'At least 5 characters!')
+      .max(50, 'maximum 50 characters!')
+      .test('no-numbers', 'Numbers are not allowed !', (value) => {
+        if (!value) return true;
+        return !/\d/.test(value);
+      })
+      .test('no-special-char', 'Special Characters are not allowed !', (value) => {
+        if (!value) return true;
+        return /^[a-zA-Z\s]*$/.test(value);
+      }),
     firstName: Yup.string()
-      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      // .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
       .required(tCommon('required'))
-      .max(50, 'maximum 50 characters!'),
+      .max(50, 'maximum 50 characters!')
+      .test('no-numbers', 'Numbers are not allowed !', (value) => {
+        if (!value) return true;
+        return !/\d/.test(value);
+      })
+      .test('no-special-char', 'Special Characters are not allowed !', (value) => {
+        if (!value) return true;
+        return /^[a-zA-Z\s]*$/.test(value);
+      }),
     lastName: Yup.string()
-      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      // .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
-      .max(50, 'maximum 50 characters!'),
+      .max(50, 'maximum 50 characters!')
+      .test('no-numbers', 'Numbers are not allowed !', (value) => {
+        if (!value) return true;
+        return !/\d/.test(value);
+      })
+      .test('no-special-char', 'Special Characters are not allowed !', (value) => {
+        if (!value) return true;
+        return /^[a-zA-Z\s]*$/.test(value);
+      }),
     email: Yup.string()
       .test('email', tLogin('invalidEmail'), (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

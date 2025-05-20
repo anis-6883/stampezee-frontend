@@ -266,7 +266,7 @@
     "Billing": "الفواتير",
     "Refunds": "استرداد الأموال",
     "Branches": "الفروع",
-    "Loyalty-Executive": "المشرفون الفرعيون",
+    "Loyalty-Executive": "تنفيذي الولاء",
     "Stamp Cards": "طوابع",
     "Stamps": "المسح الضوئي",
     "Customers": "عملاء",
@@ -288,8 +288,8 @@
     "serialNo": "رقم التسلسل",
     "branchName": "اسم الفرع",
     "branchAddress": "عنوان الفرع",
-    "subAdminName": "اسم المشرف الفرعي",
-    "subAdminEmail": "البريد الإلكتروني للمشرف الفرعي",
+    "subAdminName": "اسم تنفيذي الولاء",
+    "subAdminEmail": "البريد الإلكتروني لتنفيذي الولاء",
     "totalStamp": "إجمالي الطوابع",
     "totalCustomer": "إجمالي العملاء",
     "totalSubAdmin": "إجمالي المشرفين الفرعيين",
@@ -436,11 +436,11 @@
     "branchUpdated": "تم تحديث الفرع بنجاح!"
   },
   "RetailerSubAdmin": {
-    "title": "إدارة المشرفين الفرعيين",
-    "subAdmins": "المشرفين الفرعيين",
+    "title": "إدارة التنفيذيين الحصريين للولاء",
+    "subAdmins": "تنفيذي الولاء الحصري",
     "dashboard": "لوحة التحكم",
-    "addNewSubAdmin": "إضافة مشرف فرعي جديد",
-    "updateASubAdmin": "تحديث مشرف فرعي",
+    "addNewSubAdmin": "إضافة تنفيذي ولاء جديد",
+    "updateASubAdmin": "تحديث تنفيذي الولاء",
     "submit": "إرسال",
     "update": "تحديث"
   },
@@ -545,8 +545,8 @@
     "reward": "المكافأة",
     "branchName": "اسم الفرع",
     "branchAddress": "عنوان الفرع",
-    "subAdminName": "اسم المسؤول الفرعي",
-    "subAdminEmail": "البريد الإلكتروني للمسؤول الفرعي",
+    "subAdminName": "اسم تنفيذي الولاء",
+    "subAdminEmail": "البريد الإلكتروني لتنفيذي الولاء",
     "name": "الاسم",
     "email": "البريد الإلكتروني",
     "phone": "الهاتف",
@@ -587,9 +587,12 @@
   },
   "RetailerBalanceCard": {
     "plan": "الخطة",
-    "expire": "تنتهي",
+    "expire": "التجديد التالي",
+    "userLimit": "حد المستخدمين",
+    "stampLimit": "حد الطوابع",
     "current": "الحالي",
-    "usage": "الاستخدام"
+    "usage": "الاستخدام",
+    "unlimited": "غير محدود"
   },
   "RetailerNotification": {
     "title": "إدارة الإشعارات العادية",
@@ -719,8 +722,8 @@
     "status": "الحالة",
     "branchName": "اسم الفرع",
     "branchAddress": "عنوان الفرع",
-    "subAdminName": "اسم المشرف الفرعي",
-    "subAdminEmail": "البريد الإلكتروني للمشرف الفرعي",
+    "subAdminName": "اسم تنفيذي الولاء",
+    "subAdminEmail": "البريد الإلكتروني لتنفيذي الولاء",
     "name": "الاسم",
     "email": "البريد الإلكتروني",
     "phone": "الهاتف",
@@ -743,8 +746,8 @@
     "ownerName": "اسم المالك",
     "branchName": "اسم الفرع",
     "branchAddress": "عنوان الفرع",
-    "subAdminName": "اسم المشرف الفرعي",
-    "subAdminEmail": "البريد الإلكتروني للمشرف الفرعي",
+    "subAdminName": "اسم تنفيذي الولاء",
+    "subAdminEmail": "البريد الإلكتروني لتنفيذي الولاء",
     "paymentReceipt": "إيصال الدفع"
   }
 }

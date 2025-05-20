@@ -56,7 +56,7 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
   ) : (
     <div className={`grid gap-4 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]`}>
       {addOnList?.map((addOn: AddOn, index: number) => (
-        <div key={index}>
+        <div key={index} className="grid h-full">
           <div className={`relative rounded-lg border p-4`}>
             {session?.user?.activeAddonSlugs?.includes(addOn?.slug) ? (
               <div
@@ -74,7 +74,7 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
                 </div>
               </Tooltip>
             )}
-            <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
+            <h3 className="mb-2 pr-10 text-base font-semibold sxl:pr-16">{addOn.title}</h3>
             {!selectedCurrencyExchangeRate?.name ? (
               <Skeleton className="w-50 h-8 rounded" />
             ) : (
