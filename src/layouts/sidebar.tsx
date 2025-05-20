@@ -41,7 +41,7 @@ const addonsBlockedMenuUrls = [
   routes.privateRoutes.retailer.locationBasedNotification.home,
 ];
 
-const lockedMenuNames = ['Branches', 'Custom Stamp Images', 'Regular', 'Location Based', 'Push Notifications'];
+const lockedMenuNames = ['Branches', 'Custom Stamp Card Images', 'Regular', 'Location Based', 'Push Notifications'];
 
 const checkedLocked = (role: string, url: string, menuName: string, user: any) => {
   // if user has current plan
@@ -59,7 +59,7 @@ const checkedLocked = (role: string, url: string, menuName: string, user: any) =
         return role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalBranch === 0;
       }
       // if sidebar menu name is Custom Stamp Images
-      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Custom Stamp Images') {
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Custom Stamp Card Images') {
         return (
           role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalCustomStampImage === 0
         );

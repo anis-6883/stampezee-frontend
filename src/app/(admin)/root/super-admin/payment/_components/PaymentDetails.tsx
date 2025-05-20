@@ -170,7 +170,7 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
               <Skeleton className="h-6 w-32 rounded" />
             ) : enrollStatus === 'purchase' ? (
               <Badge className="bg-primary text-white">
-                <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(enrollStatus)}
+                <HiShoppingCart className="mr-1 text-xl" /> {'Paid Subscription'}
               </Badge>
             ) : enrollStatus === 'upgrade' ? (
               <Badge className="!bg-success text-white">
@@ -178,7 +178,8 @@ export default function PaymentDetails({ id, timezone, stripePublishKey }: { id:
               </Badge>
             ) : enrollStatus === 'trial' ? (
               <Badge className="!bg-black text-white">
-                <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(enrollStatus)}
+                <HiShoppingCart className="mr-1 text-xl" />
+                {'Free Subscription'}
               </Badge>
             ) : (
               <Badge className="!bg-danger text-white">

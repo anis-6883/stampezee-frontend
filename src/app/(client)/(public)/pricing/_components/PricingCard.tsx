@@ -53,7 +53,7 @@ export default function PricingCard({ item }: { item: any }) {
     <div className="relative mx-auto flex h-full w-full max-w-lg flex-col justify-between rounded-lg border-gray-100 bg-white p-3 text-gray-500 shadow-lg dark:bg-gray-800 dark:text-white xl:p-8">
       {session?.user?.plan === item?.slug && (
         <div
-          className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
+          className={`absolute z-0 ${isRtl ? 'left-2' : 'right-2'} top-2 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
         >
           <span className="font-medium">
             <MdStar />
@@ -72,9 +72,13 @@ export default function PricingCard({ item }: { item: any }) {
               {item?.price ? item?.price?.toFixed(2) : 0}
               <span className="ml-1 font-medium capitalize">{currency?.name}</span>
             </span>
-            <span className="text-gray-500 dark:text-gray-400">
-              / {item.duration === 30 ? 'month' : item?.isUnlimited ? item?.unlimitedFieldName : `${item?.duration} days`}
-            </span>
+            {item?.slug === 'trial' ? (
+              <span className="text-gray-500 dark:text-gray-400">
+                / {item?.isUnlimited ? item?.unlimitedFieldName : item.duration === 30 ? 'month' : `${item?.duration} days`}
+              </span>
+            ) : (
+              <span className="text-gray-500 dark:text-gray-400">/ {item.duration === 30 ? 'month' : `${item?.duration} days`}</span>
+            )}
           </div>
         )}
         <img

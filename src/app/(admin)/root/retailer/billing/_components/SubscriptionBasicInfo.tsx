@@ -39,7 +39,7 @@ export function SubscriptionBasicInfo({ isLoading, isError, data }: { isLoading:
           <Skeleton className="h-6 w-32 rounded" />
         ) : data?.enrollStatus === 'purchase' ? (
           <Badge className="bg-primary text-white">
-            <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(data?.enrollStatus)}
+            <HiShoppingCart className="mr-1 text-xl" /> {'Paid Subscription'}
           </Badge>
         ) : data?.enrollStatus === 'upgrade' ? (
           <Badge className="!bg-success text-white">
@@ -47,7 +47,7 @@ export function SubscriptionBasicInfo({ isLoading, isError, data }: { isLoading:
           </Badge>
         ) : data?.enrollStatus === 'trial' ? (
           <Badge className="!bg-black text-white">
-            <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(data?.enrollStatus)}
+            <HiShoppingCart className="mr-1 text-xl" /> {'Free Subscription'}
           </Badge>
         ) : (
           <Badge className="!bg-danger text-white">

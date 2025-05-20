@@ -51,6 +51,8 @@ const AddPaymentCardForm = ({
       if (error) {
         // Handle error and show error message to the user
         setMessage(error.message || 'An error occurred while saving your payment method.');
+        console.log('error', error);
+        toast.error(error?.message || 'Something went wrong!');
       } else if (setupIntent) {
         // Optionally call your API to attach the payment method if needed
         await attachPaymentMethod({ paymentMethodId: setupIntent.payment_method, customerId });
