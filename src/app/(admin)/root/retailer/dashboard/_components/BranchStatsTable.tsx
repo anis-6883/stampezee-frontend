@@ -17,7 +17,7 @@ export default function BranchStatsTable() {
     t('branchName'),
     t('totalSubAdmin'),
     t('totalCustomer'),
-    'Total Stamp Card',
+    t('totalStampCard'),
     t('totalOrder'),
     t('totalRewardsCollected'),
     `${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`,

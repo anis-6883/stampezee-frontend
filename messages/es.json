@@ -270,7 +270,7 @@
     "Stamp Cards": "Sellos",
     "Stamps": "Escaneos",
     "Customers": "Clientes",
-    "Custom Stamp Images": "Imágenes de Sellos Personalizados",
+    "Custom Stamp Card Images": "Imágenes de Sellos Personalizados",
     "Push Notifications": "Notificaciones Push",
     "Regular": "Regular",
     "Location Based": "Basadas en Ubicación",
@@ -294,6 +294,7 @@
     "totalCustomer": "Total de Clientes",
     "totalSubAdmin": "Total de Subadministradores",
     "totalOrder": "Total de Pedidos",
+    "totalStampCard": "Tarjeta de Sellos Total",
     "totalRevenue": "Ingresos Totales",
     "totalRewardsCollected": "Recompensas totales recolectadas"
   },

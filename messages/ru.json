@@ -270,7 +270,7 @@
     "Stamp Cards": "Штампы",
     "Stamps": "Сканирования",
     "Customers": "Клиенты",
-    "Custom Stamp Images": "Пользовательские изображения штампов",
+    "Custom Stamp Card Images": "Пользовательские изображения штампов",
     "Push Notifications": "Push-уведомления",
     "Regular": "Обычные",
     "Location Based": "На основе местоположения",
@@ -294,6 +294,7 @@
     "totalCustomer": "Общее Количество Клиентов",
     "totalSubAdmin": "Всего субадминистраторов",
     "totalOrder": "Общее Количество Заказов",
+    "totalStampCard": "Карта Общих Штампов",
     "totalRevenue": "Общий Доход",
     "totalRewardsCollected": "Всего получено наград"
   },

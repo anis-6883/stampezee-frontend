@@ -270,7 +270,7 @@
     "Stamp Cards": "طوابع",
     "Stamps": "المسح الضوئي",
     "Customers": "عملاء",
-    "Custom Stamp Images": "صور الطوابع المخصصة",
+    "Custom Stamp Card Images": "صور الطوابع المخصصة",
     "Push Notifications": "إشعارات الدفع",
     "Regular": "عادي",
     "Location Based": "يعتمد على الموقع",
@@ -294,6 +294,7 @@
     "totalCustomer": "إجمالي العملاء",
     "totalSubAdmin": "إجمالي المشرفين الفرعيين",
     "totalOrder": "إجمالي الطلبات",
+    "totalStampCard": "بطاقة الطوابع الإجمالية",
     "totalRevenue": "إجمالي الإيرادات",
     "totalRewardsCollected": "إجمالي المكافآت التي تم جمعها"
   },
