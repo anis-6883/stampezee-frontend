@@ -41,7 +41,7 @@ const addonsBlockedMenuUrls = [
   routes.privateRoutes.retailer.locationBasedNotification.home,
 ];
 
-const lockedMenuNames = ['Branches', 'Custom Stamp Card Images', 'Regular', 'Location Based', 'Push Notifications'];
+const lockedMenuNames = ['Branches', 'Custom Stamp Image', 'Regular', 'Location Based', 'Push Notifications'];
 
 const checkedLocked = (role: string, url: string, menuName: string, user: any) => {
   // if user has current plan
@@ -59,7 +59,7 @@ const checkedLocked = (role: string, url: string, menuName: string, user: any) =
         return role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalBranch === 0;
       }
       // if sidebar menu name is Custom Stamp Images
-      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Custom Stamp Card Images') {
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Custom Stamp Image') {
         return (
           role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalCustomStampImage === 0
         );
@@ -292,7 +292,7 @@ export default function Sidebar({ className }: { className?: string }) {
                           <span className="truncate">
                             {role === ROLE.RETAILER ? t(item.name) : item.name}{' '}
                             {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
-                            {item.name === 'Custom Stamp Card Images' && `(${session?.user?.totalCustomStampImage || 0})`}
+                            {item.name === 'Custom Stamp Image' && `(${session?.user?.totalCustomStampImage || 0})`}
                             {item.name === 'Stamp Cards' && `(${session?.user?.totalStamp || 0})`}
                           </span>
                         </div>
