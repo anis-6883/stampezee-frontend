@@ -74,7 +74,7 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
                 </div>
               </Tooltip>
             )}
-            <h3 className="mb-2 pr-10 text-base font-semibold sxl:pr-16">{addOn.title}</h3>
+            <h3 className="mb-2 pr-10 text-base font-semibold capitalize sxl:pr-16">{addOn.title}</h3>
             {!selectedCurrencyExchangeRate?.name ? (
               <Skeleton className="w-50 h-8 rounded" />
             ) : (

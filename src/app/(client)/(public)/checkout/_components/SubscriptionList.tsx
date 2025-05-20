@@ -136,7 +136,7 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
                   </div>
                 )}
 
-                <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
+                <h3 className="mb-2 text-base font-semibold capitalize">{item.title}</h3>
                 {!selectedCurrencyExchangeRate?.name ? (
                   <Skeleton className="w-50 h-8 rounded" />
                 ) : (
@@ -171,7 +171,7 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
                   subscription?._id === item._id ? 'scale-105 border-2 border-red-600 ring-1 ring-red-400' : 'border'
                 } hover:border-red-600`}
               >
-                <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
+                <h3 className="mb-2 text-base font-semibold capitalize">{item.title}</h3>
                 {!selectedCurrencyExchangeRate?.name ? (
                   <Skeleton className="w-50 h-8 rounded" />
                 ) : (

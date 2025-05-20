@@ -104,10 +104,10 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
               </div>
 
               {isMemberShip ? (
-                <h3 className="mb-2 pr-10 text-base font-semibold">{addOn.title}</h3>
+                <h3 className="mb-2 pr-10 text-base font-semibold capitalize">{addOn.title}</h3>
               ) : (
                 <div className="w-[180px]">
-                  <h3 className="mb-2 pr-10 text-base font-semibold">{addOn.title}</h3>
+                  <h3 className="mb-2 pr-10 text-base font-semibold capitalize">{addOn.title}</h3>
                 </div>
               )}
               {!selectedCurrencyExchangeRate?.name ? (
@@ -140,10 +140,10 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
                 </div>
               )}
               {isMemberShip ? (
-                <h3 className="mb-2 pr-10 text-base font-semibold">{addOn.title}</h3>
+                <h3 className="mb-2 pr-10 text-base font-semibold capitalize">{addOn.title}</h3>
               ) : (
                 <div className="w-[180px]">
-                  <h3 className="mb-2 pr-10 text-base font-semibold">{addOn.title}</h3>
+                  <h3 className="mb-2 pr-10 text-base font-semibold capitalize">{addOn.title}</h3>
                 </div>
               )}
               {!selectedCurrencyExchangeRate?.name ? (

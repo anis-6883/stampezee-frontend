@@ -63,7 +63,7 @@ export default function PricingCard({ item }: { item: any }) {
       )}
 
       <div>
-        <h3 className="mb-4 text-xl font-semibold">{item.title}</h3>
+        <h3 className="mb-4 text-xl font-semibold capitalize">{item.title}</h3>
         {!currency?.name ? (
           <Skeleton className="w-50 mb-2 h-8 rounded" />
         ) : (
