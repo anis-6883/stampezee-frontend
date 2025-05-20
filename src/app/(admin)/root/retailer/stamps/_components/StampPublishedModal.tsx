@@ -2,7 +2,7 @@ import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { BsCheck2Circle, BsExclamationTriangle } from 'react-icons/bs';
+import { BsCheck2Circle } from 'react-icons/bs';
 import { IoCloseOutline } from 'react-icons/io5';
 import { MdDoNotDisturb } from 'react-icons/md';
 import { ActionIcon, Modal } from 'rizzui';
@@ -56,16 +56,14 @@ export default function StampPublishedModal({
     <Modal isOpen={modalState} onClose={() => setModalState(false)}>
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-5 flex items-center justify-between">
-          <h3 className="flex items-center gap-2 text-lg font-semibold text-danger">
-            <BsExclamationTriangle className="text-xl" /> Stamp Card Publish Confirmation!
-          </h3>
+          <h3 className="flex items-center gap-2 text-lg font-semibold text-danger">Stamp Card Publish Confirmation!</h3>
 
           <ActionIcon size="sm" variant="text" onClick={() => setModalState(false)}>
             <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
         <p className="text-base font-medium">
-          Are you sure you want to publish this stamp card? Once published, it{' '}
+          Are you sure you want to publish this stamp card? <br /> Once published, it{' '}
           <span className="text-danger">can no longer be edited or deleted!</span>
         </p>
         <div className="mt-10 flex justify-end gap-2">
