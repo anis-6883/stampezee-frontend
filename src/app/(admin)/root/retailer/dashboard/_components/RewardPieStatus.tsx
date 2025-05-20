@@ -21,11 +21,18 @@ export default function RewardPieStatus({ className }: { className?: string }) {
   const t = useTranslations('retailerDashboardStampAndCustomerStats');
   const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery(null);
 
-  const { rewardCollectedTruePercentage = 0, rewardCollectedFalsePercentage = 0, totalEligibleForReward = 0 } = rewardCollect?.data || {};
+  const {
+    rewardCollectedTruePercentage = 0,
+    rewardCollectedFalsePercentage = 0,
+    totalEligibleForReward = 0,
+    totalRewardCollectedTrue = 0,
+    totalRewardCollectedFalse = 0,
+    totalReward = 0,
+  } = rewardCollect?.data || {};
 
   const data = [
-    { name: `${t('collected')}:`, value: Number(rewardCollectedTruePercentage), color: '#3872FA' },
-    { name: `${t('notCollected')}:`, value: Number(rewardCollectedFalsePercentage), color: '#eab308' },
+    { name: `${t('collected')}: (${totalRewardCollectedTrue})`, value: Number(rewardCollectedTruePercentage), color: '#3872FA' },
+    { name: `${t('notCollected')}: (${totalRewardCollectedFalse})`, value: Number(rewardCollectedFalsePercentage), color: '#eab308' },
   ];
 
   const RADIAN = Math.PI / 180;
@@ -73,7 +80,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
                 <span>{totalEligibleForReward}</span>
               )}
             </span>
-            {t('rewardEligible')}
+            {t('rewardEligible')} ({totalReward})
           </p>
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">

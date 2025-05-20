@@ -93,6 +93,8 @@ export default function SubscriptionList({ locale }: { locale: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile?.data, profileSuccess, data?.data, currencyExchanges, currency]);
 
+  console.log('subscription', subscription);
+
   return (
     <div>
       {isLoading || translateLoading ? (

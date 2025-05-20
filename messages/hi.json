@@ -270,7 +270,7 @@
     "Stamp Cards": "स्टैम्प्स",
     "Stamps": "स्कैन",
     "Customers": "ग्राहक",
-    "Custom Stamp Image": "कस्टम स्टाम्प छवियां",
+    "Custom Stamp Card Images": "कस्टम स्टाम्प छवियां",
     "Push Notifications": "पुश सूचनाएं",
     "Regular": "नियमित",
     "Location Based": "स्थान आधारित",
@@ -294,6 +294,7 @@
     "totalCustomer": "कुल ग्राहक",
     "totalSubAdmin": "कुल उप-प्रशासक",
     "totalOrder": "कुल ऑर्डर",
+    "totalStampCard": "कुल स्टैम्प कार्ड",
     "totalRevenue": "कुल राजस्व",
     "totalRewardsCollected": "कुल एकत्रित पुरस्कार"
   },

@@ -41,9 +41,9 @@ export default function FreeTrialExpireModal({
             <span className="font-semibold">
               {allowTotalScan ? allowTotalScan : 'unlimited'} scans and {allowTotalUser ? allowTotalUser : 'unlimited'}
             </span>{' '}
-            users. that’s a loyalty milestone! 🚦
+            users - that’s a loyalty milestone! 🚦
           </h2>
-          <p className="mb-4 text-gray-700">
+          <p className="mb-4 text-lg text-gray-700">
             To keep the rewards flowing and customers coming back, upgrade now and unlock even more features.
           </p>
 
