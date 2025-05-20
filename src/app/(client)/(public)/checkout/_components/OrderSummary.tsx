@@ -30,6 +30,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
+import CurrencyConvertModal from './CurrencyConvertModal';
 import PlanAddOns from './PlanAddons';
 import { PrevAddonModal } from './PrevAddonModal';
 
@@ -53,6 +54,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     refundableThreshold,
   } = useSelector((state: RootState) => state.subscriptionSlice);
   const [isExistingDisableModal, setIsExistingDisableModal] = useState(false);
+  const [currencyConvertModal, setCurrencyConvertModal] = useState(false);
 
   const [branchDisableModalState, setBranchDisableModalState] = useState(false);
   const [disableBranchOptions, setDisableBranchOptions] = useState([]);
@@ -141,6 +143,13 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     if (!isLoggedIn) {
       push(routes.publicRoutes.retailerLogin + '?callback=checkout');
       // setModalState(true);
+      return;
+    }
+
+    // when select a currency which is not their business currency
+
+    if (profile?.data?.businessCurrency !== profile?.data?.planPaymentCurrency) {
+      setCurrencyConvertModal(true);
       return;
     }
 
@@ -444,6 +453,12 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         disableStampOptions={disableStampOptions}
         modalState={branchDisableModalState}
         setModalState={setBranchDisableModalState}
+      />
+      <CurrencyConvertModal
+        modalState={currencyConvertModal}
+        setModalState={setCurrencyConvertModal}
+        paymentCurrency={profile?.data?.planPaymentCurrency}
+        selectedCurrency={selectedCurrency}
       />
     </>
   );

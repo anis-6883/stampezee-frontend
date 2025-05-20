@@ -52,16 +52,19 @@ export default function CreateUpdateModel({
     isUnlimited: formData?.isUnlimited || false,
   };
 
-  // .min(1, 'Duration must be greater than or equal 1!')
-
   const validationSchema = Yup.object({
     title: Yup.string().trim().required('Required!'),
     price: Yup.mixed().required('Required!'),
     slug: Yup.string().trim().required('Required!'),
     type: Yup.mixed().oneOf(['subscription', 'addon']).required('Required!'),
-    duration: Yup.string().when('slug', {
-      is: 'trial',
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+    duration: Yup.string().when('isUnlimited', {
+      is: false,
+      then: () =>
+        Yup.number()
+          .min(1, 'Duration must be greater than or equal 1!')
+          .typeError('Must be a number!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     unlimitedFieldName: Yup.string().when('isUnlimited', {

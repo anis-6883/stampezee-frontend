@@ -48,28 +48,24 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
         )}
       </div>
 
-      {(showUpButton &&session?.user?.plan=='trial') && (
+      {showUpButton && session?.user?.plan == 'trial' && (
         <>
           {/* user limit */}
           <div className="flex  ">
             <FaRegCircleUser className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('userLimit')} : </p>
-            {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
-              <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
+            {session?.user?.allowTotalUser ? (
+              <span className="pl-3 font-medium text-danger">{session?.user?.allowTotalUser}</span>
             ) : (
-              <span className="pl-3 font-medium capitalize text-danger">
-                {session?.user?.allowTotalUser ? session?.user?.allowTotalUser : t('unlimited')}
-              </span>
+              <span className="pl-3 font-medium capitalize text-danger">{t('unlimited')}</span>
             )}
           </div>
           {/* stamp limit */}
           <div className="flex  ">
             <PiStampFill className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('stampLimit')} : </p>
-            {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
-              <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
+            {session?.user?.allowTotalScan ? (
+              <span className="pl-3 font-medium text-danger">{session?.user?.allowTotalScan}</span>
             ) : (
-              <span className="pl-3 font-medium capitalize text-danger">
-                {session?.user?.allowTotalScan ? session?.user?.allowTotalScan : t('unlimited')}
-              </span>
+              <span className="pl-3 font-medium capitalize text-danger">{t('unlimited')}</span>
             )}
           </div>
         </>

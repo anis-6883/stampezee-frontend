@@ -80,7 +80,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
                 <span>{totalEligibleForReward}</span>
               )}
             </span>
-            {t('rewardEligible')} ({totalReward})
+            {t('rewardEligible')}
           </p>
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">
