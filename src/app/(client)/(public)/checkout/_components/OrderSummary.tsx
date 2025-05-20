@@ -96,7 +96,11 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   useEffect(() => {
     if (checkoutError) {
       const myError = checkoutError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong!');
+      if (!myError?.data?.data?.changeCurrency) {
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      }
+
+      setCurrencyConvertModal(myError?.data?.data?.changeCurrency);
     }
 
     if (checkOutResponse) {
@@ -148,10 +152,10 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
 
     // when select a currency which is not their business currency
 
-    if (profile?.data?.businessCurrency !== profile?.data?.planPaymentCurrency) {
-      setCurrencyConvertModal(true);
-      return;
-    }
+    // if (profile?.data?.businessCurrency !== profile?.data?.planPaymentCurrency) {
+    //   setCurrencyConvertModal(true);
+    //   return;
+    // }
 
     // when buy just addons
     if (activeSubscription?.slug === subscription?.slug && addOns?.length > 0) {
