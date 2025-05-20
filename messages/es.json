@@ -435,7 +435,7 @@
     "branchCreated": "Sucursal creada con éxito!",
     "branchUpdated": "Sucursal actualizada con éxito!"
   },
- "RetailerSubAdmin": {
+  "RetailerSubAdmin": {
     "title": "Gestionar Ejecutivos Exclusivos de Fidelización",
     "subAdmins": "Ejecutivo de Fidelización Exclusivo",
     "dashboard": "Panel de control",
@@ -585,16 +585,15 @@
     "businessCurrency": "Moneda de negocios",
     "retailerProfileUpdated": "¡El perfil del minorista se ha actualizado con éxito!"
   },
- "RetailerBalanceCard": {
-  "plan": "Plan",
-  "expire": "Renov.",
-  "userLimit": "Usuarios",
-  "stampLimit": "Sellos",
-  "current": "Actual",
-  "usage": "Uso",
-  "unlimited": "Ilimitado"
-}
-,
+  "RetailerBalanceCard": {
+    "plan": "Plan",
+    "expire": "Renov.",
+    "userLimit": "Usuarios",
+    "stampLimit": "Sellos",
+    "current": "Actual",
+    "usage": "Uso",
+    "unlimited": "Ilimitado"
+  },
   "RetailerNotification": {
     "title": "Gestionar Notificación Regular",
     "regularNotification": "Notificación Regular",
