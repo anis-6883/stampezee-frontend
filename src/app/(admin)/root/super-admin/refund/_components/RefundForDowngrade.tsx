@@ -41,7 +41,9 @@ const RefundForDowngrade = ({ data, timezone }: { data: any; timezone: string })
           <tbody>
             <tr>
               <td className=" w-[50%] border px-4 py-2">Plan</td>
-              <td className="w-[50%] border px-4 py-2 text-end capitalize">{data?.prevEnrollment?.planExists}</td>
+              <td className="w-[50%] border px-4 py-2 text-end capitalize">
+                {data?.prevEnrollment?.enrollSubscription?.planSnapshot?.title}
+              </td>
             </tr>
             <tr>
               <td className=" w-[50%] border px-4 py-2">Plan Price</td>
@@ -85,7 +87,7 @@ const RefundForDowngrade = ({ data, timezone }: { data: any; timezone: string })
           <tbody>
             <tr>
               <td className=" w-[50%] border px-4 py-2">Plan</td>
-              <td className="w-[50%] border px-4 py-2 text-end capitalize">{currentEnrollSubscription?.planSnapshot?.slug}</td>
+              <td className="w-[50%] border px-4 py-2 text-end capitalize">{currentEnrollSubscription?.planSnapshot?.title}</td>
             </tr>
             <tr>
               <td className=" w-[50%] border px-4 py-2">Plan Price</td>

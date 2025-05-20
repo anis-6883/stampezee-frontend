@@ -37,7 +37,7 @@ const RefundForCancelled = ({ data, timezone }: { data: any; timezone: string })
           <tbody>
             <tr>
               <td className=" w-[50%] border px-4 py-2">Plan</td>
-              <td className="w-[50%] border px-4 py-2 text-end capitalize">{cancelledEnrollSubscription?.planSnapshot?.slug}</td>
+              <td className="w-[50%] border px-4 py-2 text-end capitalize">{cancelledEnrollSubscription?.planSnapshot?.title}</td>
             </tr>
             <tr>
               <td className=" w-[50%] border px-4 py-2">Plan Price</td>

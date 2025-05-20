@@ -1,13 +1,12 @@
 'use client';
 
-import DatePicker from '@/components/Formik/DatePicker';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAvgCollectedStampQuery } from '@/features/retailer/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { IoInformationCircleOutline } from 'react-icons/io5';
-import { Select, Text, Title, Tooltip } from 'rizzui';
+import { Text, Title, Tooltip } from 'rizzui';
 import CircleProgressbar from './CircleProgressbar';
 import WidgetCard from './WidgetCard';
 
@@ -82,23 +81,23 @@ export default function RewardCollectStats({ className }: { className?: string }
       descriptionClassName="mt-2"
       headerClassName="col-span-full flex-col md:flex-row gap-y-3"
       className={cn('relative grid h-full grid-cols-1 pb-0 @2xl:gap-8 @3xl:gap-5 md:grid-cols-2 lg:pb-0', className)}
-      action={
-        <div className="flex items-center justify-between gap-5">
-          {showDate.value === 'with-date' && <DatePicker range={true} changeHandler={setDateRange} />}
+      // action={
+      //   <div className="flex items-center justify-between gap-5">
+      //     {showDate.value === 'with-date' && <DatePicker range={true} changeHandler={setDateRange} />}
 
-          <Select
-            size="md"
-            className="w-full md:w-32"
-            selectClassName="!ring-0"
-            options={dateOptions}
-            value={showDate}
-            onChange={(value: any) => {
-              if (value.value === 'no-date') setDateRange('');
-              setShowDate(value);
-            }}
-          />
-        </div>
-      }
+      //     <Select
+      //       size="md"
+      //       className="w-full md:w-32"
+      //       selectClassName="!ring-0"
+      //       options={dateOptions}
+      //       value={showDate}
+      //       onChange={(value: any) => {
+      //         if (value.value === 'no-date') setDateRange('');
+      //         setShowDate(value);
+      //       }}
+      //     />
+      //   </div>
+      // }
       actionClassName="w-full md:w-auto"
     >
       {isFetching || isLoading || isError || !avgCollectStamp ? (

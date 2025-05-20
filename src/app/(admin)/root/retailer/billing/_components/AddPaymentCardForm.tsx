@@ -1,5 +1,5 @@
 import Button from '@/components/Formik/Button';
-import { useAttachPaymentMethodMutation } from '@/features/retailer/billing/billingApi';
+import { useAttachPaymentMethodMutation, useChangePaymentMethodMutation } from '@/features/retailer/billing/billingApi';
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -10,14 +10,20 @@ const AddPaymentCardForm = ({
   setModalState,
   setClientSecret,
   customerId,
+  subscriptionId,
 }: {
   setModalState: any;
   setClientSecret: any;
   customerId: string;
+  subscriptionId: string;
 }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [attachPaymentMethod] = useAttachPaymentMethodMutation();
+  const [
+    changePaymentMethod,
+    { error: changePaymentMethodError, isSuccess: changePaymentMethodSuccess, isError: isChangePaymentMethodError },
+  ] = useChangePaymentMethodMutation();
   const [message, setMessage] = useState<string | null>(null); // state for message, which can be a string or null
   const [isLoading, setIsLoading] = useState<boolean>(false); // state for loading, which is a boolean
 
@@ -48,6 +54,7 @@ const AddPaymentCardForm = ({
       } else if (setupIntent) {
         // Optionally call your API to attach the payment method if needed
         await attachPaymentMethod({ paymentMethodId: setupIntent.payment_method, customerId });
+        await changePaymentMethod({ paymentMethodId: setupIntent.payment_method, subscriptionId: subscriptionId });
         setMessage('Payment method added successfully!');
         toast.success('Payment method added successfully!');
         setModalState(false);
