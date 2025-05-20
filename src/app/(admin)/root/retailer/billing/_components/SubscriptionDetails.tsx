@@ -3,116 +3,42 @@
 import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SerializedError } from '@/features/api/apiSlice';
-import {
-  useCancelSubscriptionMutation,
-  useCreateBillingPdfForTrialMutation,
-  useCreateBillingPdfMutation,
-  useDetachPaymentMethodMutation,
-  useGetAllPaymentMethodQuery,
-  useGetBillingPortalMutation,
-  useSetDefaultPaymentMethodMutation,
-  useSingleBillingQuery,
-} from '@/features/retailer/billing/billingApi';
+import { useCancelSubscriptionMutation, useSingleBillingQuery } from '@/features/retailer/billing/billingApi';
 import { resetState } from '@/features/subscription/subscriptionSlice';
-import { getFormattedDateForInvoice } from '@/utils';
-import { currentPeriodByTimezone, getFormatDateByTimezone } from '@/utils/getFormatDate';
-import _ from 'lodash';
-import moment from 'moment';
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { BsThreeDotsVertical } from 'react-icons/bs';
-import { GiSandsOfTime } from 'react-icons/gi';
-import { HiPlus, HiShoppingCart } from 'react-icons/hi2';
-import { ImBin, ImSpinner9 } from 'react-icons/im';
-import { IoArrowDownCircle, IoArrowUpCircle, IoEyeOutline } from 'react-icons/io5';
-import { MdAddCard, MdAutorenew } from 'react-icons/md';
-import { PiFlagCheckeredFill } from 'react-icons/pi';
-import { RiDeleteBackLine, RiDownloadCloud2Fill } from 'react-icons/ri';
+import { ImBin } from 'react-icons/im';
+import { MdAutorenew } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
-import { Badge, Dropdown } from 'rizzui';
-import AddPaymentCardModal from './AddPaymentCardModal';
+import { InvoiceTable } from './InvoiceTable';
 import PackageCancelModal from './PackageCancelModal';
-import PdfPreviewModal from './PdfPreviewModal';
-
-const cardImageMap: any = {
-  visa: '/images/visa.svg',
-  mastercard: '/images/mastercard.svg',
-  amex: '/images/amex.svg',
-  default: '/images/default-card.svg',
-};
+import { PaymentMethod } from './PaymentMethod';
+import { SubscriptionBasicInfo } from './SubscriptionBasicInfo';
 
 export default function SubscriptionDetails({ id, stripePublishKey }: { id: string; stripePublishKey: string }) {
-  const t = useTranslations('RetailerBillingDetailsCard');
-  const t2 = useTranslations('RetailerBillingDetails');
   const t3 = useTranslations('RetailerBillingInvoiceTable');
   const t4 = useTranslations('RetailerBillingPackagesTable');
-  const t5 = useTranslations('RetailerBranchTable');
-  const t6 = useTranslations('RetailerBillingPaymentCard');
-  const t7 = useTranslations('RetailerBillingTable');
-  const { push } = useRouter();
+
   const dispatch = useDispatch();
   const { data: session }: any = useSession();
 
-  const [
-    setDefaultPaymentMethod,
-    { error: defaultPaymentMethodError, isSuccess: defaultPaymentMethodSuccess, isError: isDefaultPaymentMethodError },
-  ] = useSetDefaultPaymentMethodMutation();
-
-  const [
-    detachPaymentMethod,
-    { error: detachPaymentMethodError, isSuccess: detachPaymentMethodSuccess, isError: isDetachPaymentMethodError },
-  ] = useDetachPaymentMethodMutation();
-
   const { data, isLoading, isError } = useSingleBillingQuery(id);
 
-  const [createBillingPdf, { data: pdfBuffer, isLoading: isPdfBufferLoading }] = useCreateBillingPdfMutation();
-  const [createBillingPdfForTrial, { data: pdfBufferForTrial, isLoading: isPdfBufferLoadingForTrial }] =
-    useCreateBillingPdfForTrialMutation();
   const [
     cancelSubscription,
     { data: cancelSubscriptionData, error: cancelSubscriptionError, isSuccess, isError: isCancelSubscriptionError },
   ] = useCancelSubscriptionMutation();
-  const [getPortal, { data: portalData, isLoading: portalLoading, error: portalError }] = useGetBillingPortalMutation();
-  const {
-    stripe,
-    planExists,
-    enrollStatus,
-    validityTo,
-    validityFrom,
-    createdAt,
-    status,
-    balanceInfo,
-    payments,
-    enrollSubscriptions,
-    currency,
-  } = data?.data || {};
-  const validityToUtc = moment.tz(validityTo, session?.user?.timezone?.label || '').utc();
-  const [selectPaymentId, setSelectPaymentId] = useState<any>({});
+
+  const { stripe, enrollStatus, status, enrollSubscriptions } = data?.data || {};
 
   const [modalState, setModalState] = useState(false);
-  const [pdfModalState, setPdfModalState] = useState(false);
-  const [selectPdfBtn, setSelectPdfBtn] = useState('');
-  const [pdfUrl, setPdfUrl] = useState('');
+
   const [cancelSubscriptionId, setCancelSubscriptionId] = useState(null);
   const [cancelSubmitting, setCancelSubmitting] = useState(false);
   const [isPlan, setIsPlan] = useState(false);
-  const [selectedItem, setSelectedItem] = useState({ name: '', type: '' });
-
-  const [addPaymentCardModal, setAddPaymentCardModal] = useState(false);
-
-  const [defaultPaymentSubmitting, setDefaultPaymentSubmitting] = useState(false);
-  const [defaultPaymentId, setDefaultPaymentId] = useState<string | null>(null);
-
-  const { data: allPaymentMethod, isLoading: isAllPaymentMethod } = useGetAllPaymentMethodQuery(
-    {
-      customerId: stripe?.customerId,
-      limit: 10,
-    },
-    { skip: !stripe?.customerId }
-  );
 
   // Handle cancel subscription Response
   useEffect(() => {
@@ -135,312 +61,15 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cancelSubscriptionError, dispatch, isCancelSubscriptionError, isSuccess]);
 
-  // Handle default payment method Response
-  useEffect(() => {
-    if (isDefaultPaymentMethodError) {
-      setDefaultPaymentSubmitting(false);
-      const myError = defaultPaymentMethodError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong!');
-      setDefaultPaymentId(null);
-    }
-    if (defaultPaymentMethodSuccess) {
-      setDefaultPaymentSubmitting(false);
-      toast.success('Add default card successfully!');
-      setDefaultPaymentId(null);
-    }
-  }, [defaultPaymentMethodError, isDefaultPaymentMethodError, defaultPaymentMethodSuccess]);
-
-  // Handle detach payment method Response
-  useEffect(() => {
-    if (isDetachPaymentMethodError) {
-      const myError = detachPaymentMethodError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong!');
-    }
-    if (detachPaymentMethodSuccess) {
-      toast.success('Delete card successfully!');
-    }
-  }, [detachPaymentMethodError, detachPaymentMethodSuccess, isDetachPaymentMethodError]);
-
-  useEffect(() => {
-    if (portalError) {
-      const myError = portalError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong!');
-    }
-
-    if (!portalLoading && !portalError) {
-      if (portalData?.data?.url) {
-        push(portalData?.data?.url);
-      }
-    }
-  }, [portalData, portalError, portalLoading, push]);
-
-  // Handle Pdf download response
-
-  useEffect(() => {
-    if (pdfBuffer) {
-      const downloadUrl = window.URL.createObjectURL(new Blob([pdfBuffer], { type: 'application/pdf' }));
-      if (selectPdfBtn === 'download') {
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.setAttribute('download', `${getFormattedDateForInvoice(selectPaymentId?.createdAt)}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.URL.revokeObjectURL(downloadUrl);
-        setSelectPaymentId({});
-      } else {
-        setPdfUrl(downloadUrl);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pdfBuffer]);
-
-  // Handle Pdf download for Trial response
-  useEffect(() => {
-    if (pdfBufferForTrial) {
-      const downloadUrl = window.URL.createObjectURL(new Blob([pdfBufferForTrial], { type: 'application/pdf' }));
-      if (selectPdfBtn === 'download') {
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.setAttribute('download', `${getFormattedDateForInvoice(createdAt)}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.URL.revokeObjectURL(downloadUrl);
-      } else {
-        setPdfUrl(downloadUrl);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pdfBufferForTrial]);
-
-  const handlePdfDownload = async (payment: any) => {
-    setSelectPaymentId(payment);
-    setSelectPdfBtn('download');
-    try {
-      await createBillingPdf(payment?._id);
-    } catch (err) {
-      toast.error('Error occur for invoice download!');
-      console.error('Error downloading invoice:', err);
-    }
-  };
-
-  const handlePdfPreview = async (payment: any) => {
-    setSelectPdfBtn('preview');
-    setPdfModalState(true);
-    try {
-      await createBillingPdf(payment?._id);
-    } catch (err) {
-      toast.error('Error occur for invoice preview!');
-      console.error('Error Preview invoice:', err);
-    }
-  };
-
-  const handlePdfDownloadForTrial = async () => {
-    setSelectPdfBtn('download');
-    try {
-      await createBillingPdfForTrial({ id, data: { createdAt } });
-    } catch (err) {
-      toast.error('Error occur for invoice download!');
-      console.error('Error downloading invoice:', err);
-    }
-  };
-  const handlePdfPreviewForTrial = async () => {
-    setSelectPdfBtn('preview');
-    setPdfModalState(true);
-    try {
-      await createBillingPdfForTrial({ id, data: { createdAt } });
-    } catch (err) {
-      toast.error('Error occur for invoice download!');
-      console.error('Error downloading invoice:', err);
-    }
-  };
-
-  const handleSetDefaultPaymentMethod = async ({ paymentMethodId, customerId }: { paymentMethodId: string; customerId: string }) => {
-    setDefaultPaymentSubmitting(true);
-    setDefaultPaymentId(paymentMethodId);
-    await setDefaultPaymentMethod({ paymentMethodId, customerId });
-  };
-
-  const handleDetachPaymentMethod = async (paymentMethodId: string) => {
-    await detachPaymentMethod({ paymentMethodId });
-  };
-
   return (
     <div className="w-full">
       {/* subscriptions details  */}
 
       <div className="grid grid-cols-1 gap-x-4 md:grid-cols-2">
-        <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
-          <div className="flex flex-col justify-between font-medium md:flex-row">
-            <span className="font-semibold">{t('subscriptionID')}</span>
-            <span>
-              {isLoading || isError ? <Skeleton className="h-6 w-32 rounded" /> : stripe?.subscriptionId ? stripe?.subscriptionId : 'N/A'}
-            </span>
-          </div>
-          <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">{t('enrollStatus')}</span>
-            {isLoading || isError ? (
-              <Skeleton className="h-6 w-32 rounded" />
-            ) : enrollStatus === 'purchase' ? (
-              <Badge className="bg-primary text-white">
-                <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(enrollStatus)}
-              </Badge>
-            ) : enrollStatus === 'upgrade' ? (
-              <Badge className="!bg-success text-white">
-                <IoArrowUpCircle className="mr-1 text-xl" /> {_.capitalize(enrollStatus)}
-              </Badge>
-            ) : enrollStatus === 'trial' ? (
-              <Badge className="!bg-black text-white">
-                <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(enrollStatus)}
-              </Badge>
-            ) : (
-              <Badge className="!bg-danger text-white">
-                <IoArrowDownCircle className="mr-1 text-xl" /> {_.capitalize(enrollStatus)}
-              </Badge>
-            )}
-          </div>
-
-          <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">{t('purchasedAt')}</span>{' '}
-            {isLoading || isError ? (
-              <Skeleton className="h-6 w-32 rounded" />
-            ) : (
-              <span>{getFormatDateByTimezone(createdAt, session?.user?.timezone?.label || '')}</span>
-            )}
-          </div>
-          <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">{t('currentPeriod')}</span>{' '}
-            {isLoading || isError ? (
-              <Skeleton className="h-6 w-32 rounded" />
-            ) : (
-              <span>
-                {enrollStatus === 'trial' && session?.user?.unlimitedFieldName
-                  ? session?.user?.unlimitedFieldName
-                  : currentPeriodByTimezone(validityFrom, validityTo, session?.user?.timezone?.label || '')}
-              </span>
-            )}
-          </div>
-          <div className="flex items-center justify-between font-medium">
-            <span className="font-semibold">{t5('billingCycle')}</span>
-            {isLoading || isError ? (
-              <Skeleton className="h-6 w-32 rounded" />
-            ) : status === true && moment().isBefore(validityToUtc) ? (
-              <Badge className="!bg-success text-white">
-                <GiSandsOfTime className="mr-1 text-xl" /> {t('running')}
-              </Badge>
-            ) : (
-              <Badge className="!bg-danger text-white">
-                <PiFlagCheckeredFill className="mr-1 text-xl" /> {t7('cancelled')}
-              </Badge>
-            )}
-          </div>
-          {!isLoading && stripe?.renewCancelAt !== null && (
-            <div className="flex items-center justify-between font-medium">
-              <span className="font-semibold">{t('subscriptionCancelAt')}</span>{' '}
-              <span className="text-danger">{getFormatDateByTimezone(stripe?.renewCancelAt, session?.user?.timezone?.label || '')}</span>
-            </div>
-          )}
-          {!stripe?.renewCancelAt && (
-            <div className="flex items-center justify-between font-medium">
-              {enrollStatus === 'trial' ? (
-                <span className="font-semibold">{'Expired At'}</span>
-              ) : (
-                <span className="font-semibold">{t('nextInvoice')}</span>
-              )}
-              {isLoading || isError ? (
-                <Skeleton className="h-6 w-32 rounded" />
-              ) : (
-                <span>
-                  {enrollStatus === 'trial' && session?.user?.unlimitedFieldName
-                    ? session?.user?.unlimitedFieldName
-                    : getFormatDateByTimezone(validityTo, session?.user?.timezone?.label || '')}
-                </span>
-              )}
-            </div>
-          )}
-        </div>
+        <SubscriptionBasicInfo isLoading={isLoading} isError={isError} data={data?.data} />
 
         {/* Payment methods  */}
-        {enrollStatus !== 'trial' && (
-          <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
-            <h2 className="border-b-[1px] pb-1 text-lg font-medium">{t6('paymentMethod')}</h2>
-
-            {isAllPaymentMethod ? (
-              [1, 2, 3, 4]?.map((item) => <Skeleton key={item} className="h-10 w-60 rounded" />)
-            ) : allPaymentMethod?.data?.length === 0 ? (
-              <div className="text-center text-base font-semibold text-black">{t6('noDataAvailable')}</div>
-            ) : (
-              <>
-                {allPaymentMethod?.data?.map((item: any) => (
-                  <div key={item?.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                    <img
-                      src={cardImageMap.hasOwnProperty(item?.card?.brand) ? cardImageMap[item?.card?.brand] : cardImageMap['default']}
-                      alt={'card'}
-                      style={{ width: '50px', marginRight: '10px' }}
-                    />
-                    <div className="flex items-center justify-center">
-                      <span className="text-base font-medium capitalize">{item?.card?.brand} </span>
-                      <span className="text-center text-base font-medium capitalize"> ....{item?.card?.last4}</span>
-                    </div>
-                    {allPaymentMethod?.data?.length > 1 ? (
-                      <>
-                        {item?.isDefault ? (
-                          <Badge className="ml-5 !bg-[#FF7C56] text-white">{t6('default')}</Badge>
-                        ) : status === true && moment().isBefore(validityToUtc) ? (
-                          <Dropdown placement="bottom-start" className="ml-10">
-                            <Dropdown.Trigger>
-                              <BsThreeDotsVertical className=" text-base" />
-                            </Dropdown.Trigger>
-                            <Dropdown.Menu className="w-[170px]">
-                              <Dropdown.Item
-                                onClick={() => handleSetDefaultPaymentMethod({ paymentMethodId: item?.id, customerId: item?.customer })}
-                                className="hover:bg-gray-200"
-                              >
-                                <div className="flex cursor-pointer items-center justify-center text-base">
-                                  <MdAddCard className=" text-base" />
-                                  <span className="ml-3 text-[14px] font-normal text-black">{t6('setAsDefault')}</span>
-                                </div>
-                              </Dropdown.Item>
-                              <Dropdown.Item onClick={() => handleDetachPaymentMethod(item?.id)} className="hover:bg-gray-200">
-                                <div className="flex cursor-pointer items-center justify-center text-base">
-                                  <RiDeleteBackLine className=" text-base" />
-                                  <span className="ml-3 text-[14px] font-normal text-black">Delete</span>
-                                </div>
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        ) : null}
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                ))}
-              </>
-            )}
-
-            {status === true && moment().isBefore(validityToUtc) && (
-              <div className="flex items-center justify-end">
-                <Button
-                  onClick={() => setAddPaymentCardModal(true)}
-                  type="submit"
-                  className="!m-0 !px-2.5 !py-2"
-                  color="danger"
-                  text={t6('addNewCard')}
-                  preIcon={<HiPlus className="text-base" />}
-                />
-              </div>
-            )}
-
-            <AddPaymentCardModal
-              modalState={addPaymentCardModal}
-              setModalState={setAddPaymentCardModal}
-              customerId={stripe?.customerId}
-              stripePublishKey={stripePublishKey}
-            />
-          </div>
-        )}
+        {enrollStatus !== 'trial' && <PaymentMethod data={data?.data} stripePublishKey={stripePublishKey} />}
       </div>
 
       {/* Packages  */}
@@ -585,187 +214,7 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
 
       {/* invoices  */}
 
-      {enrollStatus !== 'trial' ? (
-        <>
-          <h2 className="my-5 text-lg font-medium">{t2('invoices')}</h2>
-          <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
-              <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('serialNo')}
-                  </th>
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('paymentIntentID')}
-                  </th>
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('invoiceNumber')}
-                  </th>
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('amount')}
-                  </th>
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('createdAt')}
-                  </th>
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('action')}
-                  </th>
-                </tr>
-              </thead>
-              {isLoading || isError ? (
-                <tbody>
-                  <tr>
-                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                      <Skeleton className="h-6 w-32 rounded" />
-                    </td>
-                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                      <Skeleton className="h-6 w-32 rounded" />
-                    </td>
-                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                      <Skeleton className="h-6 w-32 rounded" />
-                    </td>
-                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                      <Skeleton className="h-6 w-32 rounded" />
-                    </td>
-                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                      <Skeleton className="h-6 w-32 rounded" />
-                    </td>
-                    <td scope="row" className="whitespace-nowrap px-6 py-6 font-medium text-gray-900 dark:text-white">
-                      <Skeleton className="h-6 w-32 rounded" />
-                    </td>
-                  </tr>
-                </tbody>
-              ) : (
-                <tbody>
-                  {payments.length <= 0 ? (
-                    <tr>
-                      <td colSpan={6} className="px-6 py-4 text-center text-sm font-medium text-gray-500 dark:text-neutral-500">
-                        {t3('noTransaction')}
-                      </td>
-                    </tr>
-                  ) : (
-                    payments.map((payment: any, index: number) => {
-                      const amount = Number(payment?.amountTotal).toFixed(2);
-                      return (
-                        <tr
-                          key={payment?._id}
-                          className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-                        >
-                          <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                            {++index}
-                          </td>
-                          <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                            {payment?.paymentIntentId}
-                          </td>
-                          <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                            {payment?.invoiceNumber}
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4">
-                            {amount} {payment?.currency}
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4">
-                            {getFormatDateByTimezone(payment?.createdAt, session?.user?.timezone?.label || '')}
-                          </td>
-                          <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                            <Button
-                              onClick={() => handlePdfPreview(payment)}
-                              tooltip={'View'}
-                              color="warning"
-                              preIcon={<IoEyeOutline className="text-base" />}
-                            />
-                            <Button
-                              className="!m-0 !px-2 !py-1.5"
-                              color="danger"
-                              onClick={() => handlePdfDownload(payment)}
-                              // text={t3('downloadPdf')}
-                              tooltip={t3('downloadPdf')}
-                              postIcon={
-                                isPdfBufferLoading && selectPaymentId?._id === payment?._id ? (
-                                  <ImSpinner9 className="animate-spin text-lg" />
-                                ) : (
-                                  <RiDownloadCloud2Fill className="text-lg" />
-                                )
-                              }
-                            />
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              )}
-            </table>
-          </div>
-        </>
-      ) : (
-        <>
-          <h2 className="my-5 text-lg font-medium">{t2('invoices')}</h2>
-          <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
-              <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('serialNo')}
-                  </th>
-
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('invoiceNumber')}
-                  </th>
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('amount')}
-                  </th>
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('createdAt')}
-                  </th>
-                  <th scope="col" className="whitespace-nowrap px-6 py-3">
-                    {t3('action')}
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
-                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {'01'}
-                  </td>
-
-                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {'INV-' + id.slice(-8).toUpperCase()}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4">
-                    {'0.00'} {'CAD'}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4">
-                    {getFormatDateByTimezone(createdAt, session?.user?.timezone?.label || '')}
-                  </td>
-                  <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
-                    <Button
-                      onClick={() => handlePdfPreviewForTrial()}
-                      tooltip={'View'}
-                      color="warning"
-                      preIcon={<IoEyeOutline className="text-base" />}
-                    />
-                    <Button
-                      className="!m-0 !px-2 !py-1.5"
-                      color="danger"
-                      onClick={() => handlePdfDownloadForTrial()}
-                      // text={t3('downloadPdf')}
-                      tooltip={t3('downloadPdf')}
-                      postIcon={
-                        isPdfBufferLoadingForTrial && selectPdfBtn === 'download' ? (
-                          <ImSpinner9 className="animate-spin text-lg" />
-                        ) : (
-                          <RiDownloadCloud2Fill className="text-lg" />
-                        )
-                      }
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
+      <InvoiceTable isLoading={isLoading} isError={isError} data={data?.data} />
 
       <PackageCancelModal
         cancelSubscriptionId={cancelSubscriptionId}
@@ -775,13 +224,6 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
         isSubmitting={cancelSubmitting}
         setIsSubmitting={setCancelSubmitting}
         isPlan={isPlan}
-      />
-
-      <PdfPreviewModal
-        pdfUrl={pdfUrl}
-        modalState={pdfModalState}
-        setModalState={setPdfModalState}
-        loading={isPdfBufferLoading || isPdfBufferLoadingForTrial}
       />
     </div>
   );

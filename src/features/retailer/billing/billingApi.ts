@@ -11,9 +11,13 @@ export const billingApi = apiSlice.injectEndpoints({
       providesTags: ['billings'],
       keepUnusedDataFor: 10,
     }),
+    getSinglePaymentMethodById: builder.query({
+      query: (paymentMethodId) => `/api/web/retailer/billing/find-payment-method/${paymentMethodId}`,
+      providesTags: ['change-payment-card'],
+    }),
     singleBilling: builder.query({
       query: (_id) => `/api/web/retailer/billing/find/${_id}`,
-      providesTags: ['billings'],
+      providesTags: ['billings', 'change-payment-card'],
       keepUnusedDataFor: 10,
     }),
     createBillingPdf: builder.mutation({
@@ -91,6 +95,14 @@ export const billingApi = apiSlice.injectEndpoints({
         // body: data,
       }),
     }),
+    changePaymentMethod: builder.mutation({
+      query: (data) => ({
+        url: `/api/web/retailer/billing/change-payment-method`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['change-payment-card'],
+    }),
   }),
 });
 
@@ -107,4 +119,6 @@ export const {
   useDetachPaymentMethodMutation,
   useSetDefaultPaymentMethodMutation,
   useGetAllExistingBillingQuery,
+  useGetSinglePaymentMethodByIdQuery,
+  useChangePaymentMethodMutation,
 } = billingApi;

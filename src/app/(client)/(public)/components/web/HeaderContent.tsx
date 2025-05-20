@@ -385,7 +385,7 @@ export default function HeaderContent() {
                                   </Title>
                                 )}
                               </div>
-                              {session?.user?.plan && <BalanceCard />}
+                              <div className="min-w-[284px]">{session?.user?.plan && <BalanceCard />}</div>
 
                               <Button
                                 onClick={() => handleLogout()}

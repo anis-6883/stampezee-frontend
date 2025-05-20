@@ -143,7 +143,15 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
                   <p className="mb-2 text-xl font-bold">
                     {item?.price ? item?.price?.toFixed(2) : Number(0).toFixed(2)}
                     {` ${selectedCurrencyExchangeRate?.name}/${
-                      item.duration === 30 ? 'month' : item?.isUnlimited ? item?.unlimitedFieldName : `${item.duration} days`
+                      item?.slug === 'trial'
+                        ? item?.isUnlimited
+                          ? item?.unlimitedFieldName
+                          : item.duration === 30
+                            ? 'month'
+                            : `${item?.duration} days`
+                        : item.duration === 30
+                          ? 'month'
+                          : `${item?.duration} days`
                     }`}
                   </p>
                 )}
@@ -170,7 +178,15 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
                   <p className="mb-2 text-xl font-bold">
                     {item?.price ? item?.price?.toFixed(2) : Number(0).toFixed(2)}
                     {` ${selectedCurrencyExchangeRate?.name}/${
-                      item.duration === 30 ? 'month' : item?.isUnlimited ? item?.unlimitedFieldName : `${item.duration} days`
+                      item?.slug === 'trial'
+                        ? item?.isUnlimited
+                          ? item?.unlimitedFieldName
+                          : item.duration === 30
+                            ? 'month'
+                            : `${item?.duration} days`
+                        : item.duration === 30
+                          ? 'month'
+                          : `${item?.duration} days`
                     }`}
                   </p>
                 )}

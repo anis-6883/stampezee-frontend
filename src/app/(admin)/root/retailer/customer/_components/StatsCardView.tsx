@@ -4,8 +4,10 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 import { useTranslations } from 'next-intl';
-import { BsPatchCheck, BsShop } from 'react-icons/bs';
-import { LuCircleDollarSign, LuUsers } from 'react-icons/lu';
+import { BsPatchCheck } from 'react-icons/bs';
+import { LiaTrophySolid } from 'react-icons/lia';
+import { LuCircleDollarSign } from 'react-icons/lu';
+import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
 import { Button } from 'rizzui';
 import MetricCard from '../../dashboard/_components/MetricCard';
@@ -47,7 +49,7 @@ export default function StatsCardView({
       <div className="w-full overflow-hidden">
         <div ref={sliderEl} className="custom-scrollbar-x 2xl:gap-6 grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 3xl:gap-8">
           <MetricCard
-            icon={<BsShop className="text-2xl" />}
+            icon={<BsPatchCheck className="text-2xl" />}
             key={1}
             title={t('totalCollectStamp')}
             metric={totalStampsCollected}
@@ -59,7 +61,7 @@ export default function StatsCardView({
           />
 
           <MetricCard
-            icon={<BsPatchCheck className="text-2xl" />}
+            icon={<MdOutlineQrCodeScanner className="text-2xl" />}
             key={1}
             title={t('totalScan')}
             metric={totalScan}
@@ -69,7 +71,7 @@ export default function StatsCardView({
           />
 
           <MetricCard
-            icon={<LuUsers className="text-2xl" />}
+            icon={<LiaTrophySolid className="text-2xl" />}
             key={1}
             title={t('totalRewardCollect')}
             metric={totalRewardCollect}

@@ -270,7 +270,7 @@
     "Stamp Cards": "Timbres",
     "Stamps": "Scans",
     "Customers": "Clients",
-    "Custom Stamp Image": "Images de Timbres Personnalisés",
+    "Custom Stamp Card Images": "Images de Timbres Personnalisés",
     "Push Notifications": "Notifications Push",
     "Regular": "Régulier",
     "Location Based": "Basé sur la Localisation",
@@ -294,6 +294,7 @@
     "totalCustomer": "Total des Clients",
     "totalSubAdmin": "Nombre total de sous-administrateurs",
     "totalOrder": "Total des Commandes",
+    "totalStampCard": "Carte de Tampons Totale",
     "totalRevenue": "Revenu Total",
     "totalRewardsCollected": "Récompenses totales collectées"
   },

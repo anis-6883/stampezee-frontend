@@ -270,7 +270,7 @@
     "Stamp Cards": "印章",
     "Stamps": "扫描",
     "Customers": "客户",
-    "Custom Stamp Image": "自定义印章图片",
+    "Custom Stamp Card Images": "自定义印章图片",
     "Push Notifications": "推送通知",
     "Regular": "常规",
     "Location Based": "基于位置",
@@ -294,6 +294,7 @@
     "totalCustomer": "总客户数",
     "totalSubAdmin": "子管理员总数",
     "totalOrder": "总订单数",
+    "totalStampCard": "总印花卡",
     "totalRevenue": "总收入",
     "totalRewardsCollected": "累计获得的奖励"
   },

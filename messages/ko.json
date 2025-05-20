@@ -270,7 +270,7 @@
     "Stamp Cards": "스탬프",
     "Stamps": "스캔",
     "Customers": "고객",
-    "Custom Stamp Image": "맞춤형 스탬프 이미지",
+    "Custom Stamp Card Images": "맞춤형 스탬프 이미지",
     "Push Notifications": "푸시 알림",
     "Regular": "일반",
     "Location Based": "위치 기반",
@@ -294,6 +294,7 @@
     "totalCustomer": "총 고객 수",
     "totalSubAdmin": "총 하위 관리자",
     "totalOrder": "총 주문 수",
+    "totalStampCard": "전체 스탬프 카드",
     "totalRevenue": "총 수익",
     "totalRewardsCollected": "수집된 총 보상"
   },

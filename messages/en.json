@@ -280,7 +280,7 @@
     "title": "Retailer Dashboard",
     "totalOrders": "Total Stamps",
     "totalRevenue": "Total Revenue",
-    "totalCustomer": "Total Customer",
+    "totalCustomer": "Total Customers",
     "totalActiveStamp": "Total Active Stamp Cards",
     "branchStatistics": "Branch Statistics"
   },
@@ -294,6 +294,7 @@
     "totalCustomer": "Total Customer",
     "totalSubAdmin": "Total Loyalty Executive",
     "totalOrder": "Total Stamps",
+    "totalStampCard": "Total Stamp Card",
     "totalRevenue": "Total Revenue",
     "totalRewardsCollected": "Total Rewards Collected"
   },
@@ -304,7 +305,7 @@
     "withDate": "With Date",
     "stampCollectStatus": "Avg. Stamps Collected per Customer",
     "totalCollectedStamp": "Total Stamps Collected",
-    "totalUniqueCustomer": "Unique Customers",
+    "totalUniqueCustomer": "Unique Stamp Scanners",
     "rewardCollectStatus": "Reward Collect Ratio",
     "rewardEligible": "Users Eligible for Reward",
     "rewardEfficacy": "Collected vs. Not Collected",

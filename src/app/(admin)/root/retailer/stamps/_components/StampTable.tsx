@@ -26,8 +26,8 @@ import { ImBin } from 'react-icons/im';
 import { IoCheckmarkCircle, IoEyeOutline } from 'react-icons/io5';
 import { LuPartyPopper } from 'react-icons/lu';
 import { Badge } from 'rizzui';
-import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
+import DeleteStampModal from './DeleteStampModal';
 import StampPublishedModal from './StampPublishedModal';
 
 export default function StampTable() {
@@ -329,7 +329,7 @@ export default function StampTable() {
         setIsSubmitting={setPublishSubmitting}
       />
 
-      <DeleteConfirmModal
+      <DeleteStampModal
         deleteId={deleteId}
         deleteHandler={deleteStamp}
         modalState={deleteState}
