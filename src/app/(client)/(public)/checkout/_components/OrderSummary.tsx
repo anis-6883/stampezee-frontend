@@ -98,9 +98,9 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       const myError = checkoutError as SerializedError;
       if (!myError?.data?.data?.changeCurrency) {
         toast.error(myError?.data?.message || 'Something went wrong!');
+      } else {
+        setCurrencyConvertModal(myError?.data?.data?.changeCurrency);
       }
-
-      setCurrencyConvertModal(myError?.data?.data?.changeCurrency);
     }
 
     if (checkOutResponse) {
