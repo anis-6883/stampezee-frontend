@@ -266,7 +266,7 @@
     "Billing": "Facturation",
     "Refunds": "Remboursements",
     "Branches": "Succursales",
-    "Loyalty-Executive": "Sous-administrateurs",
+    "Loyalty-Executive": "Responsable Fidélisation",
     "Stamp Cards": "Timbres",
     "Stamps": "Scans",
     "Customers": "Clients",
@@ -288,8 +288,8 @@
     "serialNo": "N° de Série",
     "branchName": "Nom de la Succursale",
     "branchAddress": "Adresse de la Succursale",
-    "subAdminName": "Nom du Sous-Administrateur",
-    "subAdminEmail": "E-mail du Sous-Administrateur",
+    "subAdminName": "Nom du responsable fidélisation",
+    "subAdminEmail": "E-mail du responsable fidélisation",
     "totalStamp": "Total des Timbres",
     "totalCustomer": "Total des Clients",
     "totalSubAdmin": "Nombre total de sous-administrateurs",
@@ -434,13 +434,13 @@
     "branchUpdated": "Agence mise à jour avec succès !"
   },
   "RetailerSubAdmin": {
-    "title": "Gérer les Sous-Admins",
-    "subAdmins": "Sous-Admins",
+    "title": "Gérer les responsables fidélisation exclusifs",
+    "subAdmins": "Responsable fidélisation exclusif",
     "dashboard": "Tableau de bord",
-    "addNewSubAdmin": "Ajouter un Nouveau Sous-Admin",
-    "updateASubAdmin": "Mettre à Jour un Sous-Admin",
+    "addNewSubAdmin": "Ajouter un nouveau responsable fidélisation",
+    "updateASubAdmin": "Mettre à jour un responsable fidélisation",
     "submit": "Soumettre",
-    "update": "Mettre à Jour"
+    "update": "Mettre à jour"
   },
   "RetailerSubAdminTable": {
     "image": "Image",
@@ -543,8 +543,8 @@
     "reward": "Récompense",
     "branchName": "Nom de l'Agence",
     "branchAddress": "Adresse de l'Agence",
-    "subAdminName": "Nom du Sous-Administrateur",
-    "subAdminEmail": "Email du Sous-Administrateur",
+    "subAdminName": "Nom du responsable fidélisation",
+    "subAdminEmail": "E-mail du responsable fidélisation",
     "name": "Nom",
     "email": "Email",
     "phone": "Téléphone",
@@ -583,15 +583,16 @@
     "businessCurrency": "Monnaie commerciale",
     "retailerProfileUpdated": "Le profil du détaillant a été mis à jour avec succès!"
   },
-  "RetailerBalanceCard": {
-    "plan": "Forfait",
-    "expire": "Prochain Renouvellement",
-    "userLimit": "Limite d'Utilisateurs",
-    "stampLimit": "Limite de Timbres",
-    "current": "Actuel",
-    "usage": "Utilisation",
-    "unlimited": "Illimité"
-  },
+ "RetailerBalanceCard": {
+  "plan": "Plan",
+  "expire": "Renouv.",
+  "userLimit": "Utilis.",
+  "stampLimit": "Timbres",
+  "current": "Actuel",
+  "usage": "Util.",
+  "unlimited": "Illimité"
+}
+,
   "RetailerNotification": {
     "title": "Gérer la Notification Régulière",
     "regularNotification": "Notification Régulière",
@@ -720,8 +721,8 @@
     "status": "Statut",
     "branchName": "Nom de la succursale",
     "branchAddress": "Adresse de la succursale",
-    "subAdminName": "Nom du sous-admin",
-    "subAdminEmail": "Email du sous-admin",
+    "subAdminName": "Nom du responsable fidélisation",
+    "subAdminEmail": "E-mail du responsable fidélisation",
     "name": "Nom",
     "email": "Email",
     "phone": "Téléphone",
@@ -744,8 +745,8 @@
     "ownerName": "Nom du Propriétaire",
     "branchName": "Nom de la Succursale",
     "branchAddress": "Adresse de la Succursale",
-    "subAdminName": "Nom du Sous-Administrateur",
-    "subAdminEmail": "Email du Sous-Administrateur",
+    "subAdminName": "Nom du responsable fidélisation",
+    "subAdminEmail": "E-mail du responsable fidélisation",
     "paymentReceipt": "Reçu de paiement"
   }
 }

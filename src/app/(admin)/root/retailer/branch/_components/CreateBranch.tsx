@@ -31,7 +31,19 @@ export default function CreateBranch({ googleMapsApiKey }: { googleMapsApiKey: s
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().trim().required(tCommon('required')),
+    name: Yup.string()
+      .trim()
+      .required(tCommon('required'))
+      .min(5, 'At least 5 characters!')
+      .max(50, 'maximum 50 characters!')
+      .test('no-numbers', 'Numbers are not allowed !', (value) => {
+        if (!value) return true;
+        return !/\d/.test(value);
+      })
+      .test('no-special-char', 'Special Characters are not allowed !', (value) => {
+        if (!value) return true;
+        return /^[a-zA-Z\s]*$/.test(value);
+      }),
     address: Yup.string()
       .trim()
       .required(tCommon('required'))

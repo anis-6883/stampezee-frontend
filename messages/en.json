@@ -288,8 +288,8 @@
     "serialNo": "Serial No.",
     "branchName": "Branch Name",
     "branchAddress": "Branch Address",
-    "subAdminName": "Sub Admin Name",
-    "subAdminEmail": "Sub Admin Email",
+    "subAdminName": "Loyalty-Exclusive Name",
+    "subAdminEmail": "Loyalty-Exclusive Email",
     "totalStamp": "Total Stamp Cards",
     "totalCustomer": "Total Customer",
     "totalSubAdmin": "Total Loyalty Executive",
@@ -438,7 +438,7 @@
   },
   "RetailerSubAdmin": {
     "title": "Manage Loyalty-Exclusive",
-    "subAdmins": "Sub-Admins",
+    "subAdmins": "Loyalty-Exclusive",
     "dashboard": "Dashboard",
     "addNewSubAdmin": "Add New Loyalty-Executive",
     "updateASubAdmin": "Update A Loyalty-Executive",
@@ -562,7 +562,7 @@
     "customer": "Customer",
     "scannedBy": "Stamped By",
     "status": "Status",
-    "placeHolder": "Search By Customer Name Or Email"
+    "placeHolder": "Search By Customer Name"
   },
   "RetailerProfile": {
     "title": "Manage Profile",
@@ -685,7 +685,7 @@
     "joinedDate": "Joined Date",
     "statistics": "Statistics",
     "actions": "Actions",
-    "placeHolder": "Search By Customer Name or Email",
+    "placeHolder": "Search By Customer Name",
     "name": "Name",
     "email": "Email",
     "phone": "Phone",
@@ -725,8 +725,8 @@
     "status": "Status",
     "branchName": "Branch Name",
     "branchAddress": "Branch Address",
-    "subAdminName": "Sub Admin Name",
-    "subAdminEmail": "Sub Admin Email",
+    "subAdminName": "Loyalty-Exclusive Name",
+    "subAdminEmail": "Loyalty-Exclusive Email",
     "name": "Name",
     "email": "Email",
     "phone": "Phone",

@@ -266,7 +266,7 @@
     "Billing": "청구",
     "Refunds": "환불",
     "Branches": "지점",
-    "Loyalty-Executive": "서브 관리자",
+    "Loyalty-Executive": "로열티 담당자",
     "Stamp Cards": "스탬프",
     "Stamps": "스캔",
     "Customers": "고객",
@@ -288,8 +288,8 @@
     "serialNo": "일련번호",
     "branchName": "지점명",
     "branchAddress": "지점 주소",
-    "subAdminName": "부 관리자 이름",
-    "subAdminEmail": "부 관리자 이메일",
+    "subAdminName": "로열티 담당자 이름",
+    "subAdminEmail": "로열티 담당자 이메일",
     "totalStamp": "총 스탬프 수",
     "totalCustomer": "총 고객 수",
     "totalSubAdmin": "총 하위 관리자",
@@ -434,11 +434,11 @@
     "branchUpdated": "지점이 성공적으로 업데이트되었습니다!"
   },
   "RetailerSubAdmin": {
-    "title": "서브 관리자 관리",
-    "subAdmins": "서브 관리자",
+    "title": "로열티 전담자 관리",
+    "subAdmins": "로열티 전담자",
     "dashboard": "대시보드",
-    "addNewSubAdmin": "새 서브 관리자 추가",
-    "updateASubAdmin": "서브 관리자 업데이트",
+    "addNewSubAdmin": "새 로열티 담당자 추가",
+    "updateASubAdmin": "로열티 담당자 업데이트",
     "submit": "제출",
     "update": "업데이트"
   },
@@ -543,8 +543,8 @@
     "reward": "보상",
     "branchName": "지점 이름",
     "branchAddress": "지점 주소",
-    "subAdminName": "서브 관리자 이름",
-    "subAdminEmail": "서브 관리자 이메일",
+    "subAdminName": "로열티 담당자 이름",
+    "subAdminEmail": "로열티 담당자 이메일",
     "name": "이름",
     "email": "이메일",
     "phone": "전화",
@@ -584,12 +584,12 @@
     "retailerProfileUpdated": "소매업자 프로필이 성공적으로 업데이트되었습니다!"
   },
   "RetailerBalanceCard": {
-    "plan": "플랜",
-    "expire": "다음 갱신일",
-    "userLimit": "사용자 제한",
-    "stampLimit": "스탬프 제한",
+    "plan": "요금제",
+    "expire": "갱신",
+    "userLimit": "인원",
+    "stampLimit": "도장",
     "current": "현재",
-    "usage": "사용량",
+    "usage": "사용",
     "unlimited": "무제한"
   },
   "RetailerNotification": {
@@ -720,8 +720,8 @@
     "status": "상태",
     "branchName": "지점명",
     "branchAddress": "지점 주소",
-    "subAdminName": "서브 관리자 이름",
-    "subAdminEmail": "서브 관리자 이메일",
+    "subAdminName": "로열티 담당자 이름",
+    "subAdminEmail": "로열티 담당자 이메일",
     "name": "이름",
     "email": "이메일",
     "phone": "전화번호",
@@ -744,8 +744,8 @@
     "ownerName": "소유자 이름",
     "branchName": "지점 이름",
     "branchAddress": "지점 주소",
-    "subAdminName": "부 관리자 이름",
-    "subAdminEmail": "부 관리자 이메일",
+    "subAdminName": "로열티 담당자 이름",
+    "subAdminEmail": "로열티 담당자 이메일",
     "paymentReceipt": "결제 영수증"
   }
 }

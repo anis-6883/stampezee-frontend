@@ -213,7 +213,7 @@ export default function CustomerTable({ timezone }: { timezone: string }) {
         structure={structure}
         setQuery={setQuery}
         query={query}
-        searchPlaceHolder="Search By Customer Name or Email"
+        searchPlaceHolder="Search By Customer Name"
         searchFieldWidth="300px"
       />
 

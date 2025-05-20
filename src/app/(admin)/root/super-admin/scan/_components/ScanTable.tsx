@@ -232,7 +232,7 @@ export default function ScanTable({ timezone }: { timezone: string }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Customer Name Or Email"
+      searchPlaceHolder="Search By Customer Name"
       searchFieldWidth="300px"
       renderDetailPanel={renderDetailPanel}
     />

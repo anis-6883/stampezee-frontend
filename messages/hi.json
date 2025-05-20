@@ -266,7 +266,7 @@
     "Billing": "बिलिंग",
     "Refunds": "रिफंड",
     "Branches": "शाखाएं",
-    "Loyalty-Executive": "उप-प्रशासक",
+    "Loyalty-Executive": "निष्ठा कार्यकारी",
     "Stamp Cards": "स्टैम्प्स",
     "Stamps": "स्कैन",
     "Customers": "ग्राहक",
@@ -288,8 +288,8 @@
     "serialNo": "क्रम संख्या",
     "branchName": "शाखा नाम",
     "branchAddress": "शाखा का पता",
-    "subAdminName": "उप प्रशासक का नाम",
-    "subAdminEmail": "उप प्रशासक ईमेल",
+    "subAdminName": "निष्ठा कार्यकारी का नाम",
+    "subAdminEmail": "निष्ठा कार्यकारी की ईमेल",
     "totalStamp": "कुल स्टैम्प",
     "totalCustomer": "कुल ग्राहक",
     "totalSubAdmin": "कुल उप-प्रशासक",
@@ -434,12 +434,12 @@
     "branchUpdated": "शाखा सफलतापूर्वक अपडेट हुई!"
   },
   "RetailerSubAdmin": {
-    "title": "उप-प्रशासकों का प्रबंधन करें",
-    "subAdmins": "उप-प्रशासक",
+    "title": "वफादारी-विशेष कार्यकारी प्रबंधन करें",
+    "subAdmins": "वफादारी-विशेष कार्यकारी",
     "dashboard": "डैशबोर्ड",
-    "addNewSubAdmin": "नया उप-प्रशासक जोड़ें",
-    "updateASubAdmin": "एक उप-प्रशासक को अपडेट करें",
-    "submit": "प्रस्तुत करें",
+    "addNewSubAdmin": "नया निष्ठा कार्यकारी जोड़ें",
+    "updateASubAdmin": "निष्ठा कार्यकारी अपडेट करें",
+    "submit": "जमा करें",
     "update": "अपडेट करें"
   },
   "RetailerSubAdminTable": {
@@ -543,8 +543,8 @@
     "reward": "पुरस्कार",
     "branchName": "शाखा का नाम",
     "branchAddress": "शाखा का पता",
-    "subAdminName": "उप-प्रशासक का नाम",
-    "subAdminEmail": "उप-प्रशासक का ईमेल",
+    "subAdminName": "निष्ठा कार्यकारी का नाम",
+    "subAdminEmail": "निष्ठा कार्यकारी की ईमेल",
     "name": "नाम",
     "email": "ईमेल",
     "phone": "फोन",
@@ -585,11 +585,11 @@
   },
   "RetailerBalanceCard": {
     "plan": "योजना",
-    "expire": "अगला नवीनीकरण",
-    "userLimit": "उपयोगकर्ता सीमा",
-    "stampLimit": "स्टैम्प सीमा",
+    "expire": "नवीनी",
+    "userLimit": "यूज़र",
+    "stampLimit": "स्टैम्प",
     "current": "वर्तमान",
-    "usage": "उपयोग",
+    "usage": "प्रयोग",
     "unlimited": "असीमित"
   },
   "RetailerNotification": {
@@ -720,8 +720,8 @@
     "status": "स्थिति",
     "branchName": "शाखा का नाम",
     "branchAddress": "शाखा का पता",
-    "subAdminName": "उप व्यवस्थापक का नाम",
-    "subAdminEmail": "उप व्यवस्थापक का ईमेल",
+    "subAdminName": "निष्ठा कार्यकारी का नाम",
+    "subAdminEmail": "निष्ठा कार्यकारी की ईमेल",
     "name": "नाम",
     "email": "ईमेल",
     "phone": "फ़ोन",
@@ -744,8 +744,8 @@
     "ownerName": "मालिक का नाम",
     "branchName": "शाखा का नाम",
     "branchAddress": "शाखा का पता",
-    "subAdminName": "उप प्रशासक का नाम",
-    "subAdminEmail": "उप प्रशासक का ईमेल",
+    "subAdminName": "निष्ठा कार्यकारी का नाम",
+    "subAdminEmail": "निष्ठा कार्यकारी की ईमेल",
     "paymentReceipt": "भुगतान रसीद"
   }
 }

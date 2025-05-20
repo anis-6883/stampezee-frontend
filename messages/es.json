@@ -266,7 +266,7 @@
     "Billing": "Facturación",
     "Refunds": "Reembolsos",
     "Branches": "Sucursales",
-    "Loyalty-Executive": "Subadministradores",
+    "Loyalty-Executive": "Ejecutivo de Fidelización",
     "Stamp Cards": "Sellos",
     "Stamps": "Escaneos",
     "Customers": "Clientes",
@@ -288,8 +288,8 @@
     "serialNo": "No. de Serie",
     "branchName": "Nombre de la Sucursal",
     "branchAddress": "Dirección de la Sucursal",
-    "subAdminName": "Nombre del Subadministrador",
-    "subAdminEmail": "Correo Electrónico del Subadministrador",
+    "subAdminName": "Nombre del ejecutivo de fidelización",
+    "subAdminEmail": "Correo del ejecutivo de fidelización",
     "totalStamp": "Total de Sellos",
     "totalCustomer": "Total de Clientes",
     "totalSubAdmin": "Total de Subadministradores",
@@ -434,12 +434,12 @@
     "branchCreated": "Sucursal creada con éxito!",
     "branchUpdated": "Sucursal actualizada con éxito!"
   },
-  "RetailerSubAdmin": {
-    "title": "Gestionar Sub-Administradores",
-    "subAdmins": "Sub-Administradores",
+ "RetailerSubAdmin": {
+    "title": "Gestionar Ejecutivos Exclusivos de Fidelización",
+    "subAdmins": "Ejecutivo de Fidelización Exclusivo",
     "dashboard": "Panel de control",
-    "addNewSubAdmin": "Agregar Nuevo Sub-Administrador",
-    "updateASubAdmin": "Actualizar un Sub-Administrador",
+    "addNewSubAdmin": "Agregar nuevo ejecutivo de fidelización",
+    "updateASubAdmin": "Actualizar ejecutivo de fidelización",
     "submit": "Enviar",
     "update": "Actualizar"
   },
@@ -544,8 +544,8 @@
     "reward": "Recompensa",
     "branchName": "Nombre de la Sucursal",
     "branchAddress": "Dirección de la Sucursal",
-    "subAdminName": "Nombre del Subadministrador",
-    "subAdminEmail": "Correo del Subadministrador",
+    "subAdminName": "Nombre del ejecutivo de fidelización",
+    "subAdminEmail": "Correo del ejecutivo de fidelización",
     "name": "Nombre",
     "email": "Correo Electrónico",
     "phone": "Teléfono",
@@ -584,15 +584,16 @@
     "businessCurrency": "Moneda de negocios",
     "retailerProfileUpdated": "¡El perfil del minorista se ha actualizado con éxito!"
   },
-  "RetailerBalanceCard": {
-    "plan": "Plan",
-    "expire": "Próxima Renovación",
-    "userLimit": "Límite de Usuarios",
-    "stampLimit": "Límite de Sellos",
-    "current": "Actual",
-    "usage": "Uso",
-    "unlimited": "Ilimitado"
-  },
+ "RetailerBalanceCard": {
+  "plan": "Plan",
+  "expire": "Renov.",
+  "userLimit": "Usuarios",
+  "stampLimit": "Sellos",
+  "current": "Actual",
+  "usage": "Uso",
+  "unlimited": "Ilimitado"
+}
+,
   "RetailerNotification": {
     "title": "Gestionar Notificación Regular",
     "regularNotification": "Notificación Regular",
@@ -721,8 +722,8 @@
     "status": "Estado",
     "branchName": "Nombre de la Sucursal",
     "branchAddress": "Dirección de la Sucursal",
-    "subAdminName": "Nombre del Subadministrador",
-    "subAdminEmail": "Correo Electrónico del Subadministrador",
+    "subAdminName": "Nombre del ejecutivo de fidelización",
+    "subAdminEmail": "Correo del ejecutivo de fidelización",
     "name": "Nombre",
     "email": "Correo Electrónico",
     "phone": "Teléfono",
@@ -745,8 +746,8 @@
     "ownerName": "Nombre del Propietario",
     "branchName": "Nombre de la Sucursal",
     "branchAddress": "Dirección de la Sucursal",
-    "subAdminName": "Nombre del Subadministrador",
-    "subAdminEmail": "Correo Electrónico del Subadministrador",
+    "subAdminName": "Nombre del ejecutivo de fidelización",
+    "subAdminEmail": "Correo del ejecutivo de fidelización",
     "paymentReceipt": "Recibo de pago"
   }
 }

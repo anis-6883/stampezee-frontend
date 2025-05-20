@@ -35,8 +35,8 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
       </div>
 
       {/* next renewal */}
-      <div className="flex text-nowrap">
-        <GiSandsOfTime className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('expire')} : </p>
+      <div className="flex ">
+        <GiSandsOfTime className="flex-shrink-0 text-xl" /> <p className="pl-3   font-semibold">{t('expire')} : </p>
         {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
           <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
         ) : (
@@ -47,7 +47,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
       </div>
 
       {/* user limit */}
-      <div className="flex text-nowrap">
+      <div className="flex  ">
         <FaRegCircleUser className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('userLimit')} : </p>
         {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
           <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
@@ -58,7 +58,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
         )}
       </div>
       {/* stamp limit */}
-      <div className="flex text-nowrap">
+      <div className="flex  ">
         <PiStampFill className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('stampLimit')} : </p>
         {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
           <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
