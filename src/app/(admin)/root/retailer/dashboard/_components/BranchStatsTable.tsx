@@ -98,16 +98,16 @@ export default function BranchStatsTable() {
                 </td> */}
 
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item?.totalSubAdmin}
+                  {item?.totalSubAdmins}
                 </td>
                 {/* <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item.subAdminEmail ?? <span className="text-danger">No Assigned</span>}
                 </td> */}
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.totalCustomer}
+                  {item.totalCustomers}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item?.totalStampsCard}
+                  {item?.totalStampsCards}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item.totalStamps}
