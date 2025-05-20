@@ -3,6 +3,8 @@
 import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetAllPaymentMethodQuery, useGetSinglePaymentMethodByIdQuery } from '@/features/retailer/billing/billingApi';
+import moment from 'moment';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { GiCardExchange } from 'react-icons/gi';
@@ -18,6 +20,7 @@ const cardImageMap: any = {
 
 export function PaymentMethod({ data, stripePublishKey }: { data: any; stripePublishKey: string }) {
   const t6 = useTranslations('RetailerBillingPaymentCard');
+  const { data: session }: any = useSession();
   const [addPaymentCardModal, setAddPaymentCardModal] = useState(false);
   const [changePaymentMethodModal, setChangePaymentMethodModal] = useState(false);
   const { data: allPaymentMethod, isLoading: isAllPaymentMethod } = useGetAllPaymentMethodQuery(
@@ -33,6 +36,8 @@ export function PaymentMethod({ data, stripePublishKey }: { data: any; stripePub
   });
 
   const filteredPaymentMethods = allPaymentMethod?.data?.filter((item: any) => item?.id !== paymentMethod?.data?.id);
+
+  const validityToUtc = moment.tz(data?.validityTo, session?.user?.timezone?.label).utc();
 
   return (
     <div className="h-48 space-y-6 rounded-xl border border-gray-200 px-5 py-6">
@@ -68,6 +73,7 @@ export function PaymentMethod({ data, stripePublishKey }: { data: any; stripePub
           color="danger"
           text={'Change Card'}
           preIcon={<GiCardExchange className="text-base" />}
+          disabled={!(data?.status === true && moment().isBefore(validityToUtc))}
         />
       </div>
 

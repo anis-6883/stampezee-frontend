@@ -145,7 +145,7 @@ export default function PaymentTable({ timezone }: { timezone: string }) {
             <div className="text-white">
               {row?.original?.enrollStatus === 'purchase' ? (
                 <Badge className="bg-primary text-white">
-                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                  <HiShoppingCart className="mr-1 text-xl" /> {'Paid Subscription'}
                 </Badge>
               ) : row?.original?.enrollStatus === 'upgrade' ? (
                 <Badge className="!bg-success text-white">
@@ -153,7 +153,7 @@ export default function PaymentTable({ timezone }: { timezone: string }) {
                 </Badge>
               ) : row?.original?.enrollStatus === 'trial' ? (
                 <Badge className="!bg-black text-white">
-                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                  <HiShoppingCart className="mr-1 text-xl" /> {'Free Subscription'}
                 </Badge>
               ) : (
                 <Badge className="!bg-danger text-white">
@@ -170,7 +170,7 @@ export default function PaymentTable({ timezone }: { timezone: string }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 120,
+      size: 170,
     },
     {
       header: 'Actions',

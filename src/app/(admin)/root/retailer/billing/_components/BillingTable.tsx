@@ -123,7 +123,7 @@ export default function BillingTable() {
             <div className="text-white">
               {row?.original?.enrollStatus === 'purchase' ? (
                 <Badge className="bg-primary text-white">
-                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                  <HiShoppingCart className="mr-1 text-xl" /> {'Paid Subscription'}
                 </Badge>
               ) : row?.original?.enrollStatus === 'upgrade' ? (
                 <Badge className="!bg-success text-white">
@@ -131,7 +131,7 @@ export default function BillingTable() {
                 </Badge>
               ) : row?.original?.enrollStatus === 'trial' ? (
                 <Badge className="!bg-black text-white">
-                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                  <HiShoppingCart className="mr-1 text-xl" /> {'Free Subscription'}
                 </Badge>
               ) : (
                 <Badge className="!bg-danger text-white">

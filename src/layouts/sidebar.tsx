@@ -292,7 +292,7 @@ export default function Sidebar({ className }: { className?: string }) {
                           <span className="truncate">
                             {role === ROLE.RETAILER ? t(item.name) : item.name}{' '}
                             {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
-                            {item.name === 'Custom Stamp Images' && `(${session?.user?.totalCustomStampImage || 0})`}
+                            {item.name === 'Custom Stamp Card Images' && `(${session?.user?.totalCustomStampImage || 0})`}
                             {item.name === 'Stamp Cards' && `(${session?.user?.totalStamp || 0})`}
                           </span>
                         </div>
