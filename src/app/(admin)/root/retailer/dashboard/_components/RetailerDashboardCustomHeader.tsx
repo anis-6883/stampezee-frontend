@@ -14,7 +14,6 @@ const RetailerDashboardCustomHeader = ({ title }: { title: string }) => {
   const { data: session }: any = useSession();
   const { data } = useGetAllStampsQuery({ page: 1, limit: 10 });
 
-  console.log(data);
   return (
     <header className={cn('mb-3 pt-2 @container xs:-mt-2 lg:mb-7')}>
       <div className="flex flex-col @lg:flex-row @lg:items-center @lg:justify-between">

@@ -583,16 +583,15 @@
     "businessCurrency": "Monnaie commerciale",
     "retailerProfileUpdated": "Le profil du détaillant a été mis à jour avec succès!"
   },
- "RetailerBalanceCard": {
-  "plan": "Plan",
-  "expire": "Renouv.",
-  "userLimit": "Utilis.",
-  "stampLimit": "Timbres",
-  "current": "Actuel",
-  "usage": "Util.",
-  "unlimited": "Illimité"
-}
-,
+  "RetailerBalanceCard": {
+    "plan": "Plan",
+    "expire": "Renouv.",
+    "userLimit": "Utilis.",
+    "stampLimit": "Timbres",
+    "current": "Actuel",
+    "usage": "Util.",
+    "unlimited": "Illimité"
+  },
   "RetailerNotification": {
     "title": "Gérer la Notification Régulière",
     "regularNotification": "Notification Régulière",

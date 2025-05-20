@@ -30,7 +30,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
     province,
     postalCode,
     currentPlan,
-    totalActiveBranch,
+    totalActiveBranches,
     totalActiveStamp,
     totalCustomer,
     totalRevenue,
@@ -114,8 +114,8 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
         </div>
       </div>
 
-      {/* <h2 className="my-5 text-lg font-bold">Branch Statistics: ({totalActiveBranch})</h2> */}
-      <h2 className="my-5 text-lg font-bold">Branch Statistics: </h2>
+      <h2 className="my-5 text-lg font-bold">Branch Statistics: ({totalActiveBranches})</h2>
+
       <BranchStatisticsTable data={branches} isLoading={isLoading} isError={isError} />
 
       <h2 className="my-5 text-lg font-bold">Subscriptions:</h2>
