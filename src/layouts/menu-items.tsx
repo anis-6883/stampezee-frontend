@@ -106,6 +106,11 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuLayoutDashboard />,
     },
     {
+      name: 'Manage Profile',
+      href: routes.privateRoutes.retailer.profile,
+      icon: <LuUserCog />,
+    },
+    {
       name: 'Plans & Add-on',
       href: routes.privateRoutes.retailer.membershipPlan,
       icon: <IoDiamondOutline />,
@@ -146,7 +151,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuUsers />,
     },
     {
-      name: 'Custom Stamp Card Images',
+      name: 'Custom Stamp Image',
       href: routes.privateRoutes.retailer.stampImage.home,
       icon: <BsPatchCheck />,
     },
@@ -166,11 +171,6 @@ export const menuItems: { [key: string]: any } = {
           icon: <PiBellRinging />,
         },
       ],
-    },
-    {
-      name: 'Manage Profile',
-      href: routes.privateRoutes.retailer.profile,
-      icon: <LuUserCog />,
     },
   ],
 };

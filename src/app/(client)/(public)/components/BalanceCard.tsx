@@ -8,9 +8,10 @@ import { calculateBalancePrice, countDaysLeft } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { FaArrowTrendUp } from 'react-icons/fa6';
+import { FaArrowTrendUp, FaRegCircleUser } from 'react-icons/fa6';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { IoDiamondOutline } from 'react-icons/io5';
+import { PiStampFill } from 'react-icons/pi';
 
 const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
   const { data: session }: any = useSession();
@@ -27,12 +28,15 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
 
   return (
     <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
+      {/* plan */}
       <div className="flex">
         <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('plan')} :</p>
         <span className="pl-3 font-medium capitalize">{session?.user?.planTitle}</span>
       </div>
-      <div className="flex text-no">
-        <GiSandsOfTime className="text-xl flex-shirnk-0" /> <p className="pl-3 text-center font-semibold">{t('expire')} : </p>
+
+      {/* next renewal */}
+      <div className="flex text-nowrap">
+        <GiSandsOfTime className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('expire')} : </p>
         {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
           <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
         ) : (
@@ -41,6 +45,30 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
           </span>
         )}
       </div>
+
+      {/* user limit */}
+      <div className="flex text-nowrap">
+        <FaRegCircleUser className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('userLimit')} : </p>
+        {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
+          <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
+        ) : (
+          <span className="pl-3 font-medium capitalize text-danger">
+            {session?.user?.allowTotalUser ? session?.user?.allowTotalUser : t('unlimited')}
+          </span>
+        )}
+      </div>
+      {/* stamp limit */}
+      <div className="flex text-nowrap">
+        <PiStampFill className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('stampLimit')} : </p>
+        {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
+          <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
+        ) : (
+          <span className="pl-3 font-medium capitalize text-danger">
+            {session?.user?.allowTotalScan ? session?.user?.allowTotalScan : t('unlimited')}
+          </span>
+        )}
+      </div>
+
       {/* {session?.user?.plan !== 'trial' && (
         <>
           <div className="flex">

@@ -123,7 +123,7 @@
     "phone": "Номер телефона",
     "message": "Сообщение",
     "buttonText": "Отправить",
-    "warningText":"Поля, отмеченные *, являются обязательными!"
+    "warningText": "Поля, отмеченные *, являются обязательными!"
   },
   "pricingPage": {
     "explore": "Изучить",
@@ -134,7 +134,7 @@
     "pricingButtonText": "Начать",
     "applied": "Применен",
     "active": "Активный",
-       "tooltipText": "Вы можете выбрать дополнение после выбора плана!"
+    "tooltipText": "Вы можете выбрать дополнение после выбора плана!"
   },
   "CheckoutPage": {
     "plans": "Тарифы",
@@ -270,7 +270,7 @@
     "Stamp Cards": "Штампы",
     "Stamps": "Сканирования",
     "Customers": "Клиенты",
-    "Custom Stamp Images": "Пользовательские изображения штампов",
+    "Custom Stamp Image": "Пользовательские изображения штампов",
     "Push Notifications": "Push-уведомления",
     "Regular": "Обычные",
     "Location Based": "На основе местоположения",
@@ -295,7 +295,7 @@
     "totalSubAdmin": "Всего субадминистраторов",
     "totalOrder": "Общее Количество Заказов",
     "totalRevenue": "Общий Доход",
-      "totalRewardsCollected": "Всего получено наград"
+    "totalRewardsCollected": "Всего получено наград"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "Сбор марок",
@@ -585,9 +585,12 @@
   },
   "RetailerBalanceCard": {
     "plan": "План",
-    "expire": "Истекает",
+    "expire": "Следующее обновление",
+    "userLimit": "Лимит пользователей",
+    "stampLimit": "Лимит штампов",
     "current": "Текущий",
-    "usage": "Использование"
+    "usage": "Использование",
+    "unlimited": "Без ограничений"
   },
   "RetailerNotification": {
     "title": "Управление Регулярными Уведомлениями",

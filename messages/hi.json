@@ -123,7 +123,7 @@
     "phone": "फोन नंबर",
     "message": "संदेश",
     "buttonText": "भेजें",
-    "warningText":"के साथ चिह्नित फ़ील्ड अनिवार्य हैं!"
+    "warningText": "के साथ चिह्नित फ़ील्ड अनिवार्य हैं!"
   },
   "pricingPage": {
     "explore": "अन्वेषण करें",
@@ -134,7 +134,7 @@
     "pricingButtonText": "शुरू करें",
     "applied": "लागू",
     "active": "सक्रिय",
-       "tooltipText": "आप योजना चुनने के बाद ऐड-ऑन चुन सकते हैं!"
+    "tooltipText": "आप योजना चुनने के बाद ऐड-ऑन चुन सकते हैं!"
   },
   "CheckoutPage": {
     "plans": "योजनाएँ",
@@ -270,7 +270,7 @@
     "Stamp Cards": "स्टैम्प्स",
     "Stamps": "स्कैन",
     "Customers": "ग्राहक",
-    "Custom Stamp Images": "कस्टम स्टाम्प छवियां",
+    "Custom Stamp Image": "कस्टम स्टाम्प छवियां",
     "Push Notifications": "पुश सूचनाएं",
     "Regular": "नियमित",
     "Location Based": "स्थान आधारित",
@@ -585,9 +585,12 @@
   },
   "RetailerBalanceCard": {
     "plan": "योजना",
-    "expire": "समाप्त",
+    "expire": "अगला नवीनीकरण",
+    "userLimit": "उपयोगकर्ता सीमा",
+    "stampLimit": "स्टैम्प सीमा",
     "current": "वर्तमान",
-    "usage": "उपयोग"
+    "usage": "उपयोग",
+    "unlimited": "असीमित"
   },
   "RetailerNotification": {
     "title": "नियमित सूचना प्रबंधित करें",

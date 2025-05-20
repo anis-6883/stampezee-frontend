@@ -5,6 +5,7 @@ import BranchStatsTable from './_components/BranchStatsTable';
 import RewardCollectStats from './_components/RewardCollectStats';
 import RewardPieStatus from './_components/RewardPieStatus';
 import StateCardView from './_components/StateCardView';
+import RetailerDashboardCustomHeader from './_components/RetailerDashboardCustomHeader';
 
 const pageHeader = {
   title: 'Retailer Dashboard',
@@ -17,7 +18,8 @@ export default async function Page() {
 
   return (
     <>
-      <PageHeader title={t('title')} />
+      {/* <PageHeader title={t('title')} /> */}
+      <RetailerDashboardCustomHeader title={t('title')} />
       <StateCardView className="2xl:mb-8 mb-5" />
       <div className="mb-5 grid grid-cols-12 gap-5">
         <div className="col-span-12 md:col-span-6">

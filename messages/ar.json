@@ -82,7 +82,7 @@
     "phone": "رقم التليفون",
     "message": "رسالة",
     "buttonText": "يرسل",
-    "warningText":"الحقول المميزة بـ * إلزامية!"
+    "warningText": "الحقول المميزة بـ * إلزامية!"
   },
   "pricingPage": {
     "explore": "يستكشف",
@@ -270,7 +270,7 @@
     "Stamp Cards": "طوابع",
     "Stamps": "المسح الضوئي",
     "Customers": "عملاء",
-    "Custom Stamp Images": "صور الطوابع المخصصة",
+    "Custom Stamp Image": "صور الطوابع المخصصة",
     "Push Notifications": "إشعارات الدفع",
     "Regular": "عادي",
     "Location Based": "يعتمد على الموقع",
@@ -586,9 +586,12 @@
   },
   "RetailerBalanceCard": {
     "plan": "الخطة",
-    "expire": "تنتهي",
+    "expire": "التجديد التالي",
+    "userLimit": "حد المستخدمين",
+    "stampLimit": "حد الطوابع",
     "current": "الحالي",
-    "usage": "الاستخدام"
+    "usage": "الاستخدام",
+    "unlimited": "غير محدود"
   },
   "RetailerNotification": {
     "title": "إدارة الإشعارات العادية",

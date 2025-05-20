@@ -122,7 +122,7 @@
     "phone": "電話番号",
     "message": "メッセージ",
     "buttonText": "送信",
-    "warningText":"＊が付いている項目は必須です！"
+    "warningText": "＊が付いている項目は必須です！"
   },
   "pricingPage": {
     "explore": "探る",
@@ -133,7 +133,7 @@
     "pricingButtonText": "始める",
     "applied": "適用済み",
     "active": "アクティブ",
-       "tooltipText": "プランを選択した後にアドオンを選択できます！"
+    "tooltipText": "プランを選択した後にアドオンを選択できます！"
   },
   "CheckoutPage": {
     "plans": "プラン",
@@ -269,7 +269,7 @@
     "Stamp Cards": "スタンプ",
     "Stamps": "スキャン",
     "Customers": "顧客",
-    "Custom Stamp Images": "カスタムスタンプ画像",
+    "Custom Stamp Image": "カスタムスタンプ画像",
     "Push Notifications": "プッシュ通知",
     "Regular": "通常",
     "Location Based": "位置に基づく",
@@ -584,9 +584,12 @@
   },
   "RetailerBalanceCard": {
     "plan": "プラン",
-    "expire": "有効期限",
+    "expire": "次回の更新",
+    "userLimit": "ユーザー上限",
+    "stampLimit": "スタンプ上限",
     "current": "現在",
-    "usage": "使用量"
+    "usage": "使用状況",
+    "unlimited": "無制限"
   },
   "RetailerNotification": {
     "title": "定期通知を管理",

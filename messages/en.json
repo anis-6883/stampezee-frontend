@@ -123,7 +123,7 @@
     "phone": "Phone Number",
     "message": "Message",
     "buttonText": "Send",
-    "warningText":"Fields marked with * are mandatory!"
+    "warningText": "Fields marked with * are mandatory!"
   },
   "pricingPage": {
     "explore": "Explore",
@@ -134,7 +134,7 @@
     "pricingButtonText": "Get started",
     "applied": "Applied",
     "active": "Active",
-    "tooltipText":"You can select add-on after choosing a plan!"
+    "tooltipText": "You can select add-on after choosing a plan!"
   },
   "CheckoutPage": {
     "plans": "Plans",
@@ -270,7 +270,7 @@
     "Stamp Cards": "Stamp Cards",
     "Stamps": "Stamps",
     "Customers": "Customers",
-    "Custom Stamp Card Images": "Custom Stamp Card Images",
+    "Custom Stamp Image": "Custom Stamp Image",
     "Push Notifications": "Push Notifications",
     "Regular": "Regular",
     "Location Based": "Location Based",
@@ -295,7 +295,7 @@
     "totalSubAdmin": "Total Loyalty Executive",
     "totalOrder": "Total Stamps",
     "totalRevenue": "Total Revenue",
-    "totalRewardsCollected":"Total Rewards Collected"
+    "totalRewardsCollected": "Total Rewards Collected"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "Average Stamp Collection Overview",
@@ -589,8 +589,11 @@
   "RetailerBalanceCard": {
     "plan": "Plan",
     "expire": "Next Renewal",
+    "userLimit": "User Limit",
+    "stampLimit": "Stamp Limit",
     "current": "Current",
-    "usage": "Usage"
+    "usage": "Usage",
+    "unlimited": "Unlimited"
   },
   "RetailerNotification": {
     "title": "Manage Regular Notification",
@@ -651,7 +654,7 @@
   },
   "RetailerStampImage": {
     "title": "Manage Custom Stamp Image",
-    "customStampImage": "Manage Custom Stamp",
+    "customStampImage": "Manage Custom Stamp Image",
     "dashboard": "Dashboard"
   },
   "RetailerStampImageTable": {
