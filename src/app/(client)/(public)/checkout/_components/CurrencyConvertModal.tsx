@@ -15,11 +15,13 @@ export default function CurrencyConvertModal({
   setModalState,
   paymentCurrency,
   selectedCurrency,
+  setIsCurrencyModalOpen,
 }: {
   modalState?: boolean;
   setModalState: (state: boolean) => void;
   paymentCurrency: Currency;
   selectedCurrency: string;
+  setIsCurrencyModalOpen: (state: boolean) => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [retailerUpdateProfile, { data: updateRetailerProfile, isSuccess, error, isError }] = useRetailerUpdateProfileMutation();
@@ -39,16 +41,30 @@ export default function CurrencyConvertModal({
       toast.success('Successfully change currency!');
       setUserCurrency(paymentCurrency);
       setModalState(false);
+      setIsCurrencyModalOpen(false);
     }
   }, [isError, isSuccess, paymentCurrency, setModalState]);
 
   return (
-    <Modal isOpen={modalState} onClose={() => setModalState(false)}>
+    <Modal
+      isOpen={modalState}
+      onClose={() => {
+        setModalState(false);
+        setIsCurrencyModalOpen(false);
+      }}
+    >
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-5 flex items-center justify-between">
           <h3 className="flex items-center gap-2 text-lg font-semibold text-danger">{'Currency Change Alert!'}</h3>
 
-          <ActionIcon size="sm" variant="text" onClick={() => setModalState(false)}>
+          <ActionIcon
+            size="sm"
+            variant="text"
+            onClick={() => {
+              setModalState(false);
+              setIsCurrencyModalOpen(false);
+            }}
+          >
             <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>

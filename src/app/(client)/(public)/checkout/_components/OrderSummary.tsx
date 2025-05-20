@@ -55,6 +55,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   } = useSelector((state: RootState) => state.subscriptionSlice);
   const [isExistingDisableModal, setIsExistingDisableModal] = useState(false);
   const [currencyConvertModal, setCurrencyConvertModal] = useState(false);
+  const [isCurrencyModalOpen, setIsCurrencyModalOpen] = useState(true);
 
   const [branchDisableModalState, setBranchDisableModalState] = useState(false);
   const [disableBranchOptions, setDisableBranchOptions] = useState([]);
@@ -98,10 +99,11 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       const myError = checkoutError as SerializedError;
       if (!myError?.data?.data?.changeCurrency) {
         toast.error(myError?.data?.message || 'Something went wrong!');
-      } else {
+      } 
+      if(isCurrencyModalOpen && myError?.data?.data?.changeCurrency){
         setCurrencyConvertModal(myError?.data?.data?.changeCurrency);
-      }
     }
+  }
 
     if (checkOutResponse) {
       if (subscription?.slug === 'trial') {
@@ -150,12 +152,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       return;
     }
 
-    // when select a currency which is not their business currency
-
-    // if (profile?.data?.businessCurrency !== profile?.data?.planPaymentCurrency) {
-    //   setCurrencyConvertModal(true);
-    //   return;
-    // }
+    setIsCurrencyModalOpen(true);
 
     // when buy just addons
     if (activeSubscription?.slug === subscription?.slug && addOns?.length > 0) {
@@ -463,6 +460,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         setModalState={setCurrencyConvertModal}
         paymentCurrency={profile?.data?.planPaymentCurrency}
         selectedCurrency={selectedCurrency}
+        setIsCurrencyModalOpen={setIsCurrencyModalOpen}
       />
     </>
   );
