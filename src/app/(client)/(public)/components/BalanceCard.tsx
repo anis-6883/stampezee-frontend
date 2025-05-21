@@ -18,8 +18,6 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
   const t = useTranslations('RetailerBalanceCard');
   const t2 = useTranslations('RetailerBranchTable');
 
-  console.log(session);
-
   const remainingAmount = calculateBalancePrice(
     session?.user?.planStartAt as Date,
     session?.user?.planValidAt as Date,
@@ -53,7 +51,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
           {/* user limit */}
           <div className="flex  ">
             <FaRegCircleUser className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('userLimit')} : </p>
-            {session?.user?.allowTotalUser ? (
+            {session?.user?.allowTotalUser === 0 || session?.user?.allowTotalUser ? (
               <span className="pl-3 font-medium text-danger">{session?.user?.allowTotalUser}</span>
             ) : (
               <span className="pl-3 font-medium capitalize text-danger">{t('unlimited')}</span>
@@ -62,7 +60,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
           {/* stamp limit */}
           <div className="flex  ">
             <PiStampFill className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('stampLimit')} : </p>
-            {session?.user?.allowTotalScan ? (
+            {session?.user?.allowTotalScan === 0 || session?.user?.allowTotalScan ? (
               <span className="pl-3 font-medium text-danger">{session?.user?.allowTotalScan}</span>
             ) : (
               <span className="pl-3 font-medium capitalize text-danger">{t('unlimited')}</span>

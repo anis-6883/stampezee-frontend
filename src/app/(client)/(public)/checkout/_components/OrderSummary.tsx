@@ -99,11 +99,11 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       const myError = checkoutError as SerializedError;
       if (!myError?.data?.data?.changeCurrency) {
         toast.error(myError?.data?.message || 'Something went wrong!');
-      } 
-      if(isCurrencyModalOpen && myError?.data?.data?.changeCurrency){
+      }
+      if (isCurrencyModalOpen && myError?.data?.data?.changeCurrency) {
         setCurrencyConvertModal(myError?.data?.data?.changeCurrency);
+      }
     }
-  }
 
     if (checkOutResponse) {
       if (subscription?.slug === 'trial') {
@@ -458,7 +458,7 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       <CurrencyConvertModal
         modalState={currencyConvertModal}
         setModalState={setCurrencyConvertModal}
-        paymentCurrency={profile?.data?.planPaymentCurrency}
+        paymentCurrency={profile?.data?.stripePaymentCurrency}
         selectedCurrency={selectedCurrency}
         setIsCurrencyModalOpen={setIsCurrencyModalOpen}
       />

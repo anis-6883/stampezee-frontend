@@ -108,7 +108,7 @@ export default function RefundTable() {
       header: t('refundDate'),
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
-          <p>{getFormatDateByTimezone(row?.original?.refundedAt, session?.user?.timezone?.timezone || 0)}</p>
+          <p>{getFormatDateByTimezone(row?.original?.refundedAt, session?.user?.timezone?.label || 0)}</p>
         </div>
       ),
       mantineTableHeadCellProps: {

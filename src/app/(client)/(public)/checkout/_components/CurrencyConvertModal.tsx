@@ -4,6 +4,7 @@ import Button from '@/components/Formik/Button';
 import { Currency } from '@/config';
 import { useRetailerUpdateProfileMutation } from '@/features/auth/authApi';
 import { setUserCurrency } from '@/services/currency';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -23,6 +24,7 @@ export default function CurrencyConvertModal({
   selectedCurrency: string;
   setIsCurrencyModalOpen: (state: boolean) => void;
 }) {
+  const { data: session, update } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [retailerUpdateProfile, { data: updateRetailerProfile, isSuccess, error, isError }] = useRetailerUpdateProfileMutation();
 
@@ -39,11 +41,13 @@ export default function CurrencyConvertModal({
     if (isSuccess) {
       setIsSubmitting(false);
       toast.success('Successfully change currency!');
+      update({ ...session?.user, ...updateRetailerProfile?.data });
       setUserCurrency(paymentCurrency);
       setModalState(false);
       setIsCurrencyModalOpen(false);
     }
-  }, [isError, isSuccess, paymentCurrency, setModalState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isError, isSuccess]);
 
   return (
     <Modal
