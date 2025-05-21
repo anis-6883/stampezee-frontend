@@ -3,41 +3,40 @@ import { apiSlice } from '@/features/api/apiSlice';
 export const dashboardApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getRetailerDashboardCalc: builder.query({
-       query: (queries?: { dateRange?: string }) => {
-    const dateRange = queries?.dateRange;
+      query: (queries?: { dateRange?: string }) => {
+        const dateRange = queries?.dateRange;
 
-    if (dateRange) {
-      if (dateRange.includes('to')) {
-        const dates = dateRange.replaceAll(' ', '').split('to');
-        const [start, end] = dates;
-        return `/api/web/retailer/dashboard/calc?start=${start}&end=${end}`;
-      }
-      return `/api/web/retailer/dashboard/calc?start=${dateRange}&end=${dateRange}`;
-    }
+        if (dateRange) {
+          if (dateRange.includes('to')) {
+            const dates = dateRange.replaceAll(' ', '').split('to');
+            const [start, end] = dates;
+            return `/api/web/retailer/dashboard/calc?start=${start}&end=${end}`;
+          }
+          return `/api/web/retailer/dashboard/calc?start=${dateRange}&end=${dateRange}`;
+        }
 
-    // fallback if dateRange is not passed
-    return `/api/web/retailer/dashboard/calc`;
-  },
+        // fallback if dateRange is not passed
+        return `/api/web/retailer/dashboard/calc`;
+      },
       keepUnusedDataFor: 5,
       providesTags: ['retailerProfile'],
     }),
     rewardCollectPercentage: builder.query({
-         query: (queries?: { dateRange?: string }) => {
-    const dateRange = queries?.dateRange;
+      query: (queries?: { dateRange?: string }) => {
+        const dateRange = queries?.dateRange;
 
-    if (dateRange) {
-      if (dateRange.includes('to')) {
-        const dates = dateRange.replaceAll(' ', '').split('to');
-        const [start, end] = dates;
-        return `/api/web/retailer/dashboard/reward-collect-percentage?start=${start}&end=${end}`;
-      }
-      return `/api/web/retailer/dashboard/reward-collect-percentage?start=${dateRange}&end=${dateRange}`;
-    }
+        if (dateRange) {
+          if (dateRange.includes('to')) {
+            const dates = dateRange.replaceAll(' ', '').split('to');
+            const [start, end] = dates;
+            return `/api/web/retailer/dashboard/reward-collect-percentage?start=${start}&end=${end}`;
+          }
+          return `/api/web/retailer/dashboard/reward-collect-percentage?start=${dateRange}&end=${dateRange}`;
+        }
 
-    // fallback if dateRange is not passed
-    return `/api/web/retailer/dashboard/reward-collect-percentage`;
-  }
-       ,
+        // fallback if dateRange is not passed
+        return `/api/web/retailer/dashboard/reward-collect-percentage`;
+      },
       keepUnusedDataFor: 5,
     }),
     avgCollectedStamp: builder.query({

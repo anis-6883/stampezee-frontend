@@ -16,7 +16,7 @@ export default async function Page() {
   return (
     <>
       {/* <PageHeader title={t('title')} /> */}
-      <RetailerDashboardTopSection title={t('title')}  />
+      <RetailerDashboardTopSection title={t('title')} />
       <BranchStatsTable />
     </>
   );
