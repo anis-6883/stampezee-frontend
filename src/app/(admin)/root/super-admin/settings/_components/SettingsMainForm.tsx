@@ -273,6 +273,7 @@ export default function SettingsMainForm() {
           .integer('Version must be an integer')
           .min(0, 'Version cannot be negative')
           .required('Version is required'),
+        description: Yup.string().min(5, 'At least 5 characters!').max(300, 'maximum 300 characters!'),
       }),
       android: Yup.object({
         version: Yup.number()
@@ -280,6 +281,7 @@ export default function SettingsMainForm() {
           .integer('Version must be an integer')
           .min(0, 'Version cannot be negative')
           .required('Version is required'),
+        description: Yup.string().min(5, 'At least 5 characters!').max(300, 'maximum 300 characters!'),
       }),
     }),
   });
