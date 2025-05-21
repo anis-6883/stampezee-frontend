@@ -1,7 +1,10 @@
+import Button from '@/components/Formik/Button';
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { getTranslations } from 'next-intl/server';
+import Link from 'next/link';
+import { FaRegPaperPlane } from 'react-icons/fa6';
 import BillingTable from './_components/BillingTable';
 
 const pageHeader = {
@@ -27,7 +30,14 @@ export default async function Page() {
 
   return (
     <div>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
+      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
+        <div className="flex items-center justify-end">
+          <Link href={routes.privateRoutes.retailer.refund}>
+            <Button className="" color="danger" text={'Refunds'} postIcon={<FaRegPaperPlane className="text-base" />} />
+          </Link>
+        </div>
+      </PageHeader>
+
       <BillingTable />
     </div>
   );
