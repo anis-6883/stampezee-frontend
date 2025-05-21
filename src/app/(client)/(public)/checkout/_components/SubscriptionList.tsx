@@ -2,6 +2,7 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { SUBSCRIPTIONS } from '@/config/constants';
+import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import {
   downgradePlan,
@@ -17,6 +18,7 @@ import { calculateCurrencyExchangeRate } from '@/utils';
 import { translateData } from '@/utils/GoogleTranslate';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
@@ -108,6 +110,12 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
     }
     // dispatch(resetAddOns());
   };
+
+  useEffect(() => {
+    if (!session?.user?.accessToken) {
+      return redirect(routes.publicRoutes?.retailerLogin);
+    }
+  }, [session]);
 
   return (
     <div>

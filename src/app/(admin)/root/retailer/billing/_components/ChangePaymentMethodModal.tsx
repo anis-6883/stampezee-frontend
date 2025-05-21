@@ -109,7 +109,7 @@ export function ChangePaymentMethodModal({
           {isLoading ? (
             [1, 2, 3, 4]?.map((item) => <Skeleton key={item} className="h-10 w-60 rounded" />)
           ) : allPaymentMethod?.length === 0 ? (
-            <div className="text-center text-base font-semibold text-black">{t6('noDataAvailable')}</div>
+            <div className="text-center text-base font-semibold text-black">{'No Card Available!'}</div>
           ) : (
             <div>
               <h2 className="mb-3 text-lg font-semibold text-black">Select a Card</h2>
@@ -136,8 +136,8 @@ export function ChangePaymentMethodModal({
             </div>
           )}
 
-          <div className="flex items-center justify-center gap-x-4">
-            {allPaymentMethod?.length > 0 && (
+          {allPaymentMethod?.length > 0 && (
+            <div className="flex items-center justify-center gap-x-4">
               <Button
                 onClick={handleChangePaymentMethod}
                 disabled={!selectPaymentMethod?.id}
@@ -148,18 +148,19 @@ export function ChangePaymentMethodModal({
                 preIcon={<BsCheck2Circle className="text-base" />}
                 isSubmitting={changePaymentMethodSubmitting}
               />
-            )}
-            <Button
-              color="danger"
-              className="!m-0 !px-2.5 !py-2"
-              onClick={() => {
-                setModalState(false);
-                setSelectPaymentMethod({});
-              }}
-              text={'Not Now'}
-              postIcon={<MdDoNotDisturb className="text-base" />}
-            />
-          </div>
+
+              <Button
+                color="danger"
+                className="!m-0 !px-2.5 !py-2"
+                onClick={() => {
+                  setModalState(false);
+                  setSelectPaymentMethod({});
+                }}
+                text={'Not Now'}
+                postIcon={<MdDoNotDisturb className="text-base" />}
+              />
+            </div>
+          )}
         </div>
       </div>
     </Modal>

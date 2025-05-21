@@ -6,7 +6,6 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
-import { countDaysLeft } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -39,7 +38,7 @@ export default function StateCardView({ className }: { className: string }) {
   }, [refetch]);
 
   useEffect(() => {
-    if (countDaysLeft(session?.user?.planValidAt) < 5 && session?.user?.plan === 'trial' && !retailerProfile?.data?.isLimitExceeded) {
+    if (session?.user?.planDaysLeft < 5 && session?.user?.plan === 'trial' && !retailerProfile?.data?.isLimitExceeded) {
       setTrialCountDownModalState(true);
     } else {
       setTrialCountDownModalState(false);
@@ -120,7 +119,7 @@ export default function StateCardView({ className }: { className: string }) {
       <FreeTrialCountdownModal
         modalState={trialCountDownModalState}
         setModalState={setTrialCountDownModalState}
-        countDownDays={countDaysLeft(session?.user?.planValidAt)}
+        countDownDays={session?.user?.planDaysLeft}
       />
     </div>
   );

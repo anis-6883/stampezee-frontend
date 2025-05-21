@@ -29,11 +29,8 @@ const middleware = withAuth(
   function middleware(request) {
     const token = request.nextauth?.token;
     const pathname = request.nextUrl.pathname;
-
     const isSuperAdminProtected = superAdminProtectedRoutes.includes(pathname);
     const isRetailerProtected = retailerProtectedRoutes.includes(pathname);
-
-    console.log({ pathname, isRetailerProtected });
 
     if (!token && (isSuperAdminProtected || isRetailerProtected)) {
       return NextResponse.redirect(new URL(routes.publicRoutes.retailerLogin, request.nextUrl));

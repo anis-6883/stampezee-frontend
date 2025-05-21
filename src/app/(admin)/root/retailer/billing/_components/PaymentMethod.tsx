@@ -46,7 +46,7 @@ export function PaymentMethod({ data, stripePublishKey }: { data: any; stripePub
       {isLoading ? (
         [1]?.map((item) => <Skeleton key={item} className="h-10 w-60 rounded" />)
       ) : !paymentMethod?.data?.id ? (
-        <div className="text-center text-base font-semibold text-black">{t6('noDataAvailable')}</div>
+        <div className="text-center text-base font-semibold text-black">{'No Card Available!'}</div>
       ) : (
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
           <img

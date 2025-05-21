@@ -4,7 +4,7 @@ import Button from '@/components/Formik/Button';
 import { PACKAGES } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { roundToTwoDecimals } from '@/features/subscription/subscriptionSlice';
-import { calculateBalancePrice, countDaysLeft } from '@/utils';
+import { calculateBalancePrice } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -41,7 +41,7 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
           <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
         ) : (
           <span className="pl-3 font-medium text-danger">
-            {countDaysLeft(session?.user?.planValidAt)} {t2('daysLeft')}
+            {session?.user?.planDaysLeft} {t2('daysLeft')}
           </span>
         )}
       </div>
