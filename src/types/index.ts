@@ -469,8 +469,31 @@ interface IPage {
   terms?: string;
 }
 
+interface IIos {
+  name?: string;
+  version: number;
+  forceUpdate: boolean;
+  appUrl: string;
+  buttonText: string;
+  description: string;
+}
+
+interface IAndroid {
+  name: string;
+  version: number;
+  forceUpdate: boolean;
+  appUrl: string;
+  buttonText: string;
+  description: string;
+}
+interface IAppVersion {
+  ios?: IIos;
+  android?: IAndroid;
+}
+
 export interface IGeneralSettingData {
   general?: IGeneral;
+  appVersion?: IAppVersion;
   mail?: IMail;
   notification?: INotification;
   s3Bucket?: IS3Bucket;

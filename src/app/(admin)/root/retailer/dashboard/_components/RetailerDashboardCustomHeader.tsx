@@ -12,6 +12,8 @@ import { useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
 const RetailerDashboardCustomHeader = ({ title }: { title: string }) => {
   const tStamp = useTranslations('RetailerStamp');
   const { data: session }: any = useSession();
+
+  console.log(session);
   const { data } = useGetAllStampsQuery({ page: 1, limit: 10 });
 
   return (
@@ -23,7 +25,7 @@ const RetailerDashboardCustomHeader = ({ title }: { title: string }) => {
 
         <Link href={routes.privateRoutes.retailer.stamp.create}>
           <Button
-            disabled={data?.data.totalDocs < session?.user?.totalStamp ? false : true}
+            disabled={!session?.user?.plan && data?.data.totalDocs < session?.user?.totalStamp ? false : true}
             className="w-full"
             color="danger"
             text={tStamp('addNewStamp')}
