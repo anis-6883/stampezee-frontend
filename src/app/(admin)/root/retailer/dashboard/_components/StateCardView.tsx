@@ -18,12 +18,14 @@ import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
 export default function StateCardView({ className, dateRange }: { className: string; dateRange: string }) {
+
+  console.log(dateRange);
   const t = useTranslations('RetailerDashboard');
   const { data: session }: any = useSession();
   const [modalState, setModalState] = useState(false);
   const [trialCountDownModalState, setTrialCountDownModalState] = useState(true);
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
-  const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(dateRange);
+  const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery({dateRange});
   const { data: retailerProfile, isLoading: isRetailerProfileLoading, refetch } = useRetailerGetProfileQuery(null);
   const { totalStamps = 0, totalStampCards = 0, totalRevenue = 0, totalCustomers = 0 } = data?.data || {};
 
