@@ -17,9 +17,9 @@ const statsData = [
   },
 ];
 
-export default function RewardPieStatus({ className }: { className?: string }) {
+export default function RewardPieStatus({ className, dateRange }: { className?: string; dateRange: string | undefined }) {
   const t = useTranslations('retailerDashboardStampAndCustomerStats');
-  const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery(null);
+  const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery({dateRange});
 
   const {
     rewardCollectedTruePercentage = 0,
@@ -29,6 +29,8 @@ export default function RewardPieStatus({ className }: { className?: string }) {
     totalRewardCollectedFalse = 0,
     totalReward = 0,
   } = rewardCollect?.data || {};
+
+  // console.log(rewardCollect?.data );
 
   const data = [
     { name: `${t('collected')}: (${totalRewardCollectedTrue})`, value: Number(rewardCollectedTruePercentage), color: '#3872FA' },
@@ -80,7 +82,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
                 <span>{totalEligibleForReward}</span>
               )}
             </span>
-            {t('rewardEligible')}
+            {totalEligibleForReward <= 0 ? t('rewardEligible') : t('rewardEligibles')}
           </p>
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">

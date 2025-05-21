@@ -238,7 +238,7 @@ export default function StampTable() {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 100,
+      size: 170,
     },
     {
       header: t('status'),

@@ -43,10 +43,18 @@ const DatePicker: React.FC<DateRangeProps> = ({ label, enableTime = false, range
       )}
       //   value={values[name]}
       options={{
-        onChange: function (_, selectedDates) {
-          //   setFieldValue(name, selectedDates);
-          // console.log({ selectedDates });
-          changeHandler(selectedDates);
+        onChange: function (selectedDates: Date[]) {
+          if (range) {
+            // Only call changeHandler when both start and end dates are selected
+            if (selectedDates.length === 2) {
+              const formattedRange = selectedDates.map((date) => date.toISOString().split('T')[0]).join(' to ');
+              changeHandler(formattedRange);
+            }
+          } else {
+            // For single date mode
+            const formattedDate = selectedDates[0]?.toISOString().split('T')[0];
+            if (formattedDate) changeHandler(formattedDate);
+          }
         },
         disableMobile: true,
         allowInput: false,
