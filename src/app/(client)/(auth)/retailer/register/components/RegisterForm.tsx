@@ -4,12 +4,16 @@ import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
+import { Currency } from '@/config';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerRegisterMutation } from '@/features/auth/authApi';
 import { setAccessToken } from '@/features/auth/authSlice';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
+import { setUserCurrency } from '@/services/currency';
 import { ICountrySelect } from '@/types';
 import { getCountryByTimezone, getPhoneCodeByTimezone } from '@/utils/get-country-by-timezone';
 import countryData from '@/utils/get-country-list';
+import currencyData from '@/utils/get-currency-list';
 import timeZoneData from '@/utils/get-timezone-list';
 import { translateText } from '@/utils/GoogleTranslate';
 import removeEmptyValues from '@/utils/removeEmptyValues';
@@ -29,8 +33,6 @@ import MapModal from './MapModal';
 import OtpModal from './OtpModal';
 import PolicyModal from './PolicyModal';
 import TermsModal from './TermsModal';
-import currencyData from '@/utils/get-currency-list';
-import useCurrencyExchange from '@/hooks/use-currency-exchange';
 export default function RegisterForm({
   terms,
   policy,
@@ -54,6 +56,7 @@ export default function RegisterForm({
   const [timezone, setTimezone] = useState({
     label: 'America/Toronto',
   });
+  const [businessCurrency, setBusinessCurrency] = useState('CAD');
 
   const [register, { data: registerResponse, isSuccess, error }] = useRetailerRegisterMutation();
   const dispatch = useDispatch();
@@ -100,10 +103,10 @@ export default function RegisterForm({
 
     if (isSuccess) {
       dispatch(setAccessToken(registerResponse.data.temp));
-
       setIsSubmitting(false);
       setModalState(true);
       toast.success(t('otpSentMessage'));
+      setUserCurrency(businessCurrency as Currency);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, error, isSuccess, registerResponse]);
@@ -271,6 +274,7 @@ export default function RegisterForm({
                       }`}
                       onChange={(selectedOption) => {
                         setFieldValue('businessCurrency', selectedOption?.value);
+                        setBusinessCurrency(selectedOption?.value);
                       }}
                       onBlur={() => setFieldTouched('businessCurrency', true)}
                     />

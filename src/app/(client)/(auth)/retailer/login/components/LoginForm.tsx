@@ -12,6 +12,7 @@ import { RootState } from '@/features/store';
 import { activeSubscription, setActiveSubscription, setRemainingBalance, setSubscription } from '@/features/subscription/subscriptionSlice';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import useCurrencyExchange from '@/hooks/use-currency-exchange';
+import { setUserCurrency } from '@/services/currency';
 import { Subscription } from '@/types';
 import { calculateCurrencyExchangeRate } from '@/utils';
 import { translateText } from '@/utils/GoogleTranslate';
@@ -121,6 +122,7 @@ export default function LoginForm({ locale }: { locale: string }) {
         }
         if (callback?.ok && !callback?.error) {
           toast.success(t('loginSuccessMessage'));
+          setUserCurrency(loginResponse?.data?.businessCurrency);
           if (loginResponse?.data?.role === ROLE.RETAILER) {
             if (searchQuery === 'checkout') {
               replace(routes.privateRoutes.checkout);
