@@ -25,6 +25,7 @@ import StripeSettingsForm from './StripeSettingsForm';
 import TabButtonItem from './TabButtonItem';
 import TermsAndConditionForm from './TermsAndConditionForm';
 import VersionControlForm from './VersionControlForm';
+import * as Yup from 'yup';
 
 function updateGeneralSetting(generalSetting: IGeneralSetting) {
   const updatedObject = {
@@ -54,7 +55,7 @@ function updateGeneralSetting(generalSetting: IGeneralSetting) {
     appVersion: {
       ios: {
         name: generalSetting?.data?.appVersion?.ios?.name || '',
-        version: generalSetting?.data?.appVersion?.ios?.version || 1,
+        version: generalSetting?.data?.appVersion?.ios?.version || 0,
         forceUpdate: generalSetting?.data?.appVersion?.ios?.forceUpdate || true,
         appUrl: generalSetting?.data?.appVersion?.ios?.appUrl || '',
         buttonText: generalSetting?.data?.appVersion?.ios?.buttonText || '',
@@ -62,7 +63,7 @@ function updateGeneralSetting(generalSetting: IGeneralSetting) {
       },
       android: {
         name: generalSetting?.data?.appVersion?.android?.name || '',
-        version: generalSetting?.data?.appVersion?.android?.version || 1,
+        version: generalSetting?.data?.appVersion?.android?.version || 0,
         forceUpdate: generalSetting?.data?.appVersion?.android?.forceUpdate || false,
         appUrl: generalSetting?.data?.appVersion?.android?.appUrl || '',
         buttonText: generalSetting?.data?.appVersion?.android?.buttonText || '',
@@ -117,7 +118,7 @@ export default function SettingsMainForm() {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined, { skip: !accessToken });
 
-  // console.log(generalSetting);
+  console.log(generalSetting);
   const [updateGeneralSettings, { data: updatedData, isSuccess, isError: updatingError }] = useUpdateGeneralSettingsMutation();
   const [currentTab, setCurrentTab] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -144,7 +145,7 @@ export default function SettingsMainForm() {
     appVersion: {
       ios: {
         name: '',
-        version: 1,
+        version: 0,
         forceUpdate: false,
         appUrl: '',
         buttonText: '',
@@ -152,7 +153,7 @@ export default function SettingsMainForm() {
       },
       android: {
         name: '',
-        version: 1,
+        version: 0,
         forceUpdate: false,
         appUrl: '',
         buttonText: '',
@@ -258,14 +259,32 @@ export default function SettingsMainForm() {
 
   // Submit Handler
   const handleSubmit = async (values: any) => {
-    console.log(values);
+    // console.log(values);
     setIsSubmitting(true);
     // cleanTimezoneLabel(values);
     updateGeneralSettings(values);
   };
 
+  const validationSchema = Yup.object({
+    appVersion: Yup.object({
+      ios: Yup.object({
+        version: Yup.number()
+          .typeError('Version must be a number')
+          .integer('Version must be an integer')
+          .min(0, 'Version cannot be negative')
+          .required('Version is required'),
+      }),
+      android: Yup.object({
+        version: Yup.number()
+          .typeError('Version must be a number')
+          .integer('Version must be an integer')
+          .min(0, 'Version cannot be negative')
+          .required('Version is required'),
+      }),
+    }),
+  });
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
+    <Formik validationSchema={validationSchema} initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
       {({ values, setFieldValue }) => {
         return (
           <Form>
