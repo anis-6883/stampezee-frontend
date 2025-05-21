@@ -8,25 +8,23 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { HiPlus } from 'react-icons/hi2';
 import { Title } from 'rizzui';
+import DatePicker from '@/components/Formik/DatePicker';
 
-
-
-const RetailerDashboardCustomHeader = ({ title }: { title: string }) => {
+const RetailerDashboardCustomHeader = ({ title, setDateRange }: { title: string; setDateRange: any }) => {
   const tStamp = useTranslations('RetailerStamp');
   const { data: session }: any = useSession();
 
   const { data } = useGetAllStampsQuery({ page: 1, limit: 100 });
-  console.log(session, data);
+  // console.log(session, data);
 
   const checkedDisableStampBtn = () => {
-    if(!session?.user?.plan){
+    if (!session?.user?.plan) {
       return true;
-    }else if(data?.data.totalDocs >= session?.user?.totalStamp){
+    } else if (data?.data.totalDocs >= session?.user?.totalStamp) {
       return true;
     }
     return false;
-
-}
+  };
 
   return (
     <header className={cn('mb-3 pt-2 @container xs:-mt-2 lg:mb-7')}>
@@ -35,15 +33,18 @@ const RetailerDashboardCustomHeader = ({ title }: { title: string }) => {
           {title}
         </Title>
 
-        <Link href={routes.privateRoutes.retailer.stamp.create}>
-          <Button
-            disabled={checkedDisableStampBtn()}
-            className="w-full"
-            color="danger"
-            text={tStamp('addNewStamp')}
-            preIcon={<HiPlus className="text-base" />}
-          />
-        </Link>
+        <div className="flex items-center gap-4">
+          <DatePicker range={true} changeHandler={setDateRange} />
+          <Link className="inline-block" href={routes.privateRoutes.retailer.stamp.create}>
+            <Button
+              disabled={checkedDisableStampBtn()}
+              className="w-full !mb-0"
+              color="danger"
+              text={tStamp('addNewStamp')}
+              preIcon={<HiPlus className="text-base" />}
+            />
+          </Link>
+        </div>
       </div>
     </header>
   );

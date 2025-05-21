@@ -1,11 +1,12 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Drawer } from 'rizzui';
 import { useDrawer } from './use-drawer';
 
 export default function GlobalDrawer() {
+  const [show, setShow] = useState(false);
   const { isOpen, view, placement, customSize, closeDrawer } = useDrawer();
   const pathname = usePathname();
 
