@@ -1,20 +1,32 @@
 'use client';
-import cn from '@/hooks/class-names';
-import Link from 'next/link';
-import { Title } from 'rizzui';
 import Button from '@/components/Formik/Button';
 import { routes } from '@/config/routes';
-import { useTranslations } from 'next-intl';
-import { HiPlus } from 'react-icons/hi2';
-import { useSession } from 'next-auth/react';
 import { useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
+import cn from '@/hooks/class-names';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { HiPlus } from 'react-icons/hi2';
+import { Title } from 'rizzui';
+
+
 
 const RetailerDashboardCustomHeader = ({ title }: { title: string }) => {
   const tStamp = useTranslations('RetailerStamp');
   const { data: session }: any = useSession();
 
-  console.log(session);
-  const { data } = useGetAllStampsQuery({ page: 1, limit: 10 });
+  const { data } = useGetAllStampsQuery({ page: 1, limit: 100 });
+  console.log(session, data);
+
+  const checkedDisableStampBtn = () => {
+    if(!session?.user?.plan){
+      return true;
+    }else if(data?.data.totalDocs >= session?.user?.totalStamp){
+      return true;
+    }
+    return false;
+
+}
 
   return (
     <header className={cn('mb-3 pt-2 @container xs:-mt-2 lg:mb-7')}>
@@ -25,7 +37,7 @@ const RetailerDashboardCustomHeader = ({ title }: { title: string }) => {
 
         <Link href={routes.privateRoutes.retailer.stamp.create}>
           <Button
-            disabled={!session?.user?.plan && data?.data.totalDocs < session?.user?.totalStamp ? false : true}
+            disabled={checkedDisableStampBtn()}
             className="w-full"
             color="danger"
             text={tStamp('addNewStamp')}
