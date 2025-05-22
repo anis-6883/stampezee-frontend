@@ -9,7 +9,7 @@ import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerRegisterMutation } from '@/features/auth/authApi';
 import { setAccessToken } from '@/features/auth/authSlice';
 import useCurrencyExchange from '@/hooks/use-currency-exchange';
-import { setUserCurrency } from '@/services/currency';
+import { getUserCurrency, setUserCurrency } from '@/services/currency';
 import { ICountrySelect } from '@/types';
 import { getCountryByTimezone, getPhoneCodeByTimezone } from '@/utils/get-country-by-timezone';
 import countryData from '@/utils/get-country-list';
@@ -57,6 +57,7 @@ export default function RegisterForm({
     label: 'America/Toronto',
   });
   const [businessCurrency, setBusinessCurrency] = useState('CAD');
+  const [currencyOption, setCurrencyOption] = useState('CAD');
 
   const [register, { data: registerResponse, isSuccess, error }] = useRetailerRegisterMutation();
   const dispatch = useDispatch();
@@ -77,14 +78,20 @@ export default function RegisterForm({
     });
     return acc;
   }, []);
-  const cadCurr = currencyExchangeOptions?.find((item: any) => item.label == 'CAD');
 
-  // console.log(cadCurr?.value);
   useEffect(() => {
     const timezones = timeZoneData?.filter((item) => item?.label?.includes(Intl.DateTimeFormat().resolvedOptions().timeZone));
     setCountryInfo({ country: getCountryByTimezone(), dialCode: getPhoneCodeByTimezone() });
     setTimezone({ label: timezones[0]?.label });
+
+    (async () => {
+      const localCurrency = await getUserCurrency();
+      setCurrencyOption(localCurrency);
+      setBusinessCurrency(localCurrency);
+    })();
   }, []);
+
+  const cadCurr = currencyExchangeOptions?.find((item: any) => item.label == currencyOption);
 
   useEffect(() => {
     if (error) {

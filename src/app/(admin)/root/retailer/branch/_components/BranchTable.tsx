@@ -14,7 +14,6 @@ import {
 } from '@/features/retailer/branch/branchApi';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { IQueryType, Subscription } from '@/types';
-import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -162,7 +161,7 @@ export default function BranchTable() {
     {
       header: t('expiryDay'),
       Cell: ({ row }: any) => {
-        const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
+        const countDays = row?.original?.enrollSubscription?.planDaysLeft;
 
         return row?.original?.disabledBySystem ? (
           <span className="font-semibold text-danger">{t('expired')}</span>
@@ -183,7 +182,7 @@ export default function BranchTable() {
       header: t3('status'),
       accessorKey: 'status',
       Cell: ({ row }: any) => {
-        const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
+        const countDays = row?.original?.enrollSubscription?.planDaysLeft;
 
         return row?.original?.disabledBySystem || countDays < 0 ? (
           <Switch
