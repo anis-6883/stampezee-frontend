@@ -38,7 +38,7 @@ const RetailerDashboardCustomHeader = ({ title, setDateRange }: { title: string;
           <Link className="inline-block" href={routes.privateRoutes.retailer.stamp.create}>
             <Button
               disabled={checkedDisableStampBtn()}
-              className="w-full !mb-0"
+              className="!mb-0 w-full"
               color="danger"
               text={tStamp('addNewStamp')}
               preIcon={<HiPlus className="text-base" />}

@@ -44,24 +44,23 @@ const DatePicker: React.FC<DateRangeProps> = ({ label, enableTime = false, range
       //   value={values[name]}
       options={{
         onChange: function (selectedDates: Date[]) {
-  const formatDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
+          const formatDate = (date: Date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+          };
 
-  if (range) {
-    if (selectedDates.length === 2) {
-      const formattedRange = selectedDates.map(formatDate).join(' to ');
-      changeHandler(formattedRange);
-    }
-  } else {
-    const formattedDate = selectedDates[0] ? formatDate(selectedDates[0]) : null;
-    if (formattedDate) changeHandler(formattedDate);
-  }
-}
-,
+          if (range) {
+            if (selectedDates.length === 2) {
+              const formattedRange = selectedDates.map(formatDate).join(' to ');
+              changeHandler(formattedRange);
+            }
+          } else {
+            const formattedDate = selectedDates[0] ? formatDate(selectedDates[0]) : null;
+            if (formattedDate) changeHandler(formattedDate);
+          }
+        },
         disableMobile: true,
         allowInput: false,
         mode: range ? 'range' : 'single',
