@@ -306,7 +306,7 @@
     "totalCollectedStamp": "総収集スタンプ数",
     "totalUniqueCustomer": "総ユニーク顧客数",
     "rewardCollectStatus": "報酬収集状況",
-     "rewardEligible": "ユーザーは報酬の対象です",
+    "rewardEligible": "ユーザーは報酬の対象です",
     "rewardEligibles": "複数のユーザーが報酬の対象です",
     "rewardEfficacy": "報酬の効果",
     "collected": "収集済み",

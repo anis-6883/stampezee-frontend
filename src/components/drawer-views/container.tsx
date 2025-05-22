@@ -15,6 +15,21 @@ export default function GlobalDrawer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (target.closest('.rizzui-drawer-overlay')) {
+        closeDrawer();
+      }
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [closeDrawer]);
+
   return (
     <Drawer
       isOpen={isOpen}
