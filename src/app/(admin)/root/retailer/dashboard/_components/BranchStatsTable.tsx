@@ -5,8 +5,8 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import { useTranslations } from 'next-intl';
 
-export default function BranchStatsTable() {
-  const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery({});
+export default function BranchStatsTable({ dateRange }: { dateRange: string }) {
+  const { data, isLoading, isError, isFetching } = useGetRetailerDashboardCalcQuery({ dateRange });
   const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
   const t = useTranslations('RetailerDashboardTable');
   const t2 = useTranslations('RetailerDashboard');
@@ -23,10 +23,10 @@ export default function BranchStatsTable() {
     `${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`,
   ];
 
-  if (isLoading || isError) {
+  if (isLoading || isError || isFetching) {
     return (
       <>
-        <h2 className="mb-5 text-lg font-medium">{t2('branchStatistics')}:</h2>
+        <h2 className="mb-5 mt-5 text-lg font-medium">{t2('branchStatistics')}:</h2>
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>

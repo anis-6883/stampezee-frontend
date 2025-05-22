@@ -87,8 +87,8 @@ export default function RewardPieStatus({ className, dateRange }: { className?: 
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">
           <div className="mx-auto h-44 w-44">
-            {isLoading || isError || rewardCollect === undefined ? (
-              <Skeleton className="m-auto h-36 w-36 rounded-full" />
+            {isLoading || isError || isFetching || rewardCollect === undefined ? (
+              <Skeleton className="m-auto rounded-full md:size-36 sxl:size-48" />
             ) : rewardCollectedTruePercentage === 0 && rewardCollectedFalsePercentage === 0 ? (
               // <div className="flex h-full items-center justify-center">
               //   <span className="font-medium text-danger">{t('noStatsAvailable')}</span>
@@ -139,7 +139,7 @@ export default function RewardPieStatus({ className, dateRange }: { className?: 
           <p className="mt-4 text-center font-semibold text-gray-800">{t('rewardEfficacy')}</p>
         </div>
         <div className="">
-          {isLoading || isError || rewardCollect === undefined ? (
+          {isLoading || isError || isFetching || rewardCollect === undefined ? (
             <>
               <Skeleton className="m-auto h-6 w-full rounded-md" />
               <hr className="my-3" />

@@ -18,7 +18,6 @@ import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
 export default function StateCardView({ className, dateRange }: { className: string; dateRange: string }) {
-  console.log(dateRange);
   const t = useTranslations('RetailerDashboard');
   const { data: session }: any = useSession();
   const [modalState, setModalState] = useState(false);
@@ -71,7 +70,7 @@ export default function StateCardView({ className, dateRange }: { className: str
 
           <MetricCard
             icon={<FaMoneyBillAlt className="text-2xl" />}
-            key={1}
+            key={2}
             title={`${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`}
             metric={totalRevenue.toFixed(2)}
             metricClassName="3xl:text-[22px]"
@@ -81,7 +80,7 @@ export default function StateCardView({ className, dateRange }: { className: str
 
           <MetricCard
             icon={<LuUsers className="text-2xl" />}
-            key={1}
+            key={3}
             title={t('totalCustomer')}
             metric={totalCustomers}
             metricClassName="3xl:text-[22px]"
@@ -91,7 +90,7 @@ export default function StateCardView({ className, dateRange }: { className: str
 
           <MetricCard
             icon={<BsPatchCheck className="text-2xl" />}
-            key={1}
+            key={4}
             title={t('totalActiveStamp')}
             metric={totalStampCards}
             metricClassName="3xl:text-[22px]"

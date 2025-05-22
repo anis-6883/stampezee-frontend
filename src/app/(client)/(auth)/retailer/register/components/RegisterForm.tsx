@@ -142,7 +142,7 @@ export default function RegisterForm({
       // .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
       .required(tCommon('required'))
-      .min(5, 'At least 5 characters!')
+      .min(3, 'At least 3 characters!')
       .max(50, 'maximum 50 characters!')
       .test('no-numbers', 'Numbers are not allowed !', (value) => {
         if (!value) return true;

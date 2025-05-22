@@ -18,7 +18,7 @@ export const dashboardApi = apiSlice.injectEndpoints({
         // fallback if dateRange is not passed
         return `/api/web/retailer/dashboard/calc`;
       },
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: 0,
       providesTags: ['retailerProfile'],
     }),
     rewardCollectPercentage: builder.query({
@@ -37,7 +37,7 @@ export const dashboardApi = apiSlice.injectEndpoints({
         // fallback if dateRange is not passed
         return `/api/web/retailer/dashboard/reward-collect-percentage`;
       },
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: 0,
     }),
     avgCollectedStamp: builder.query({
       query: (queries) => {
@@ -54,7 +54,7 @@ export const dashboardApi = apiSlice.injectEndpoints({
 
         return `/api/web/retailer/dashboard/avg-collected-stamp`;
       },
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: 0,
     }),
   }),
 });

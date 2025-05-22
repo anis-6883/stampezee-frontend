@@ -25,8 +25,8 @@ export default function CreateUpdateModel({
 }: {
   formData: any;
   modalState: boolean;
-  setFormData: (data: any) => void;
-  setModalState: (state: boolean) => void;
+  setFormData: any;
+  setModalState: any;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -54,7 +54,11 @@ export default function CreateUpdateModel({
 
   const validationSchema = Yup.object({
     title: Yup.string().trim().required('Required!'),
-    price: Yup.mixed().required('Required!'),
+    price: Yup.number()
+      .typeError('Price must be a number')
+      .required('Required!')
+      .integer('Price must be an integer')
+      .min(0, 'Price cannot be negative'),
     slug: Yup.string().trim().required('Required!'),
     type: Yup.mixed().oneOf(['subscription', 'addon']).required('Required!'),
     duration: Yup.string().when('isUnlimited', {
@@ -74,27 +78,52 @@ export default function CreateUpdateModel({
     }),
     allowTotalBranch: Yup.string().when('type', {
       is: 'subscription',
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .typeError('Must be a number!')
+          .min(1, 'Duration must be greater than or equal 1!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalTeamMember: Yup.string().when('type', {
       is: 'subscription',
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .typeError('Must be a number!')
+          .integer('Must be an integer!')
+          .min(1, 'Duration must be greater than or equal 1!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalStamp: Yup.string().when('type', {
       is: 'subscription',
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .typeError('Must be a number!')
+          .min(1, 'Duration must be greater than or equal 1!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalUser: Yup.string().when('isUserUnlimited', {
       is: false,
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .typeError('Must be a number!')
+          .min(1, 'Duration must be greater than or equal 1!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalScan: Yup.string().when('isScanUnlimited', {
       is: false,
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .typeError('Must be a number!')
+          .min(1, 'Duration must be greater than or equal 1!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     limit: Yup.string().when('type', {
