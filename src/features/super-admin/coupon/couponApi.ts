@@ -9,6 +9,7 @@ export const couponApi = apiSlice.injectEndpoints({
         return `/api/secret-root/admin/super-admin/coupon/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['coupons'],
+      keepUnusedDataFor: 0,
     }),
     createCouponAdmin: builder.mutation({
       query: (data) => ({

@@ -82,7 +82,7 @@ export default function RewardPieStatus({ className, dateRange }: { className?: 
                 <span>{totalEligibleForReward}</span>
               )}
             </span>
-            {totalEligibleForReward <= 0 ? t('rewardEligible') : t('rewardEligibles')}
+            {totalEligibleForReward <= 1 ? t('rewardEligible') : t('rewardEligibles')}
           </p>
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">

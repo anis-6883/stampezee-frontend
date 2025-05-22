@@ -9,7 +9,7 @@ export const paymentApi = apiSlice.injectEndpoints({
         return `/api/secret-root/admin/super-admin/payment/subscription`;
       },
       providesTags: ['payments'],
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: 0,
     }),
     singleSubscriptionPayment: builder.query({
       query: (_id) => `/api/secret-root/admin/super-admin/payment/subscription/find/${_id}`,
