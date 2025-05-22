@@ -272,7 +272,8 @@ export default function BranchTable() {
   ];
 
   const totalAllowBranch = session?.user?.totalBranch;
-  const totalCreatedBranch = data?.data.totalDocs;
+  const totalDisabledBySystem = data?.data?.docs?.filter((item: any) => item?.disabledBySystem && item?.source === 'subscription')?.length;
+  const totalCreatedBranch = data?.data.totalDocs - totalDisabledBySystem;
 
   return (
     <>
