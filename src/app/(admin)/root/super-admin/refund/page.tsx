@@ -1,8 +1,7 @@
-import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
-import RefundTable from './_components/RefundTable';
+import SuperAdminRefundTopSection from './_components/SuperAdminRefundTopSection';
 
 const pageHeader = {
   title: 'Manage Refunds',
@@ -24,8 +23,7 @@ export default async function Page() {
 
   return (
     <div>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <RefundTable timezone={data?.data?.general?.timezone?.label} />
+      <SuperAdminRefundTopSection pageHeader={pageHeader} timezone={data?.data?.general?.timezone?.label} />
     </div>
   );
 }
