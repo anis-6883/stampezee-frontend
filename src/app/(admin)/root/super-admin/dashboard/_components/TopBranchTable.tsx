@@ -12,14 +12,13 @@ export default function TopBranchTable() {
   const { data, isLoading, isError } = useGetTopOutletsQuery(null, { skip: !accessToken });
 
   const tableHeaders = [
-    'Serial No',
-    'Retailer Name',
-    'Retailer Email',
+    'Serial No.',
+    'Retailer Store Name',
+    'Retailer Store Email',
     'Branch Name',
-    'Branch Address',
     'Total Customer',
-    'Total Stamps',
     'Total Stamp Cards',
+    'Total Stamps',
     'Total Revenue',
   ];
 
@@ -90,32 +89,31 @@ export default function TopBranchTable() {
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     {index + 1}
                   </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     <Link href={routes.privateRoutes.superAdmin.retailer.details(item.retailer._id)}>{item.retailer.storeName}</Link>
                   </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     {retailerEmail}
                   </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     {item?.branch.name}
                   </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {item?.branch.address}
+                    {item?.branch?.totalCustomers}
                   </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {/* {item?.totalRevenue && item?.totalRevenue.toFixed(2)} {item?.amountCurrency} */}
-                    {/* total customer */}
-                    12
+                    {item?.branch?.totalStampsCards}
                   </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {/* {item?.totalRevenue && item?.totalRevenue.toFixed(2)} {item?.amountCurrency} */}
-                    {/* total stamps */}
-                    10
+                    {item?.branch?.totalStamps}
                   </td>
-                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {/* {item?.totalRevenue && item?.totalRevenue.toFixed(2)} {item?.amountCurrency} */}
-                    {/* total stamp cards */}5
-                  </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     {item?.totalRevenue && item?.totalRevenue.toFixed(2)} {item?.amountCurrency}
                   </td>
