@@ -19,18 +19,44 @@ import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 
-export default function PaymentTable({ timezone }: { timezone: string }) {
+export default function PaymentTable({
+  timezone,
+  start,
+  end,
+  dateRange,
+  setDateRange,
+}: {
+  timezone: string;
+  dateRange: string;
+  setDateRange: any;
+  start: string;
+  end: string;
+}) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetSubscriptionPaymentsQuery(
-    {
-      page: query.pageIndex + 1,
-      limit: query.pageSize,
-      ...searchQuery,
-    },
-    { skip: !accessToken }
-  );
+
+  const queryObject: any = {
+    page: query.pageIndex + 1,
+    limit: query.pageSize,
+    ...searchQuery,
+  };
+  if (start) {
+    queryObject.start = start;
+  }
+  if (end) {
+    queryObject.end = end;
+  }
+
+  // const { data, isLoading, isFetching } = useGetSubscriptionPaymentsQuery(
+  //   {
+  //     page: query.pageIndex + 1,
+  //     limit: query.pageSize,
+  //     ...searchQuery,
+  //   },
+  //   { skip: !accessToken }
+  // );
+  const { data, isLoading, isFetching } = useGetSubscriptionPaymentsQuery(queryObject, { skip: !accessToken });
 
   const structure = [
     {

@@ -12,10 +12,10 @@ import { useSelector } from 'react-redux';
 import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
-export default function StateCardView({ className }: { className: string }) {
+export default function StateCardView({ className, dateRange }: { className: string; dateRange: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
-  const { data, isLoading, isError } = useGetDashboardCalcQuery(null, { skip: !accessToken });
+  const { data, isLoading, isError, isFetching } = useGetDashboardCalcQuery({ dateRange }, { skip: !accessToken });
 
   const totalVerifiedRetailer = data?.data?.totalVerifiedRetailer ?? 0;
   const totalVerifiedCustomer = data?.data?.totalVerifiedCustomer ?? 0;
@@ -42,7 +42,7 @@ export default function StateCardView({ className }: { className: string }) {
             metric={totalVerifiedRetailer}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isFetching}
             isDetailsView
             detailsLink={routes.privateRoutes.superAdmin.retailer.home}
           />
@@ -53,7 +53,7 @@ export default function StateCardView({ className }: { className: string }) {
             metric={totalVerifiedCustomer}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isFetching}
             isDetailsView
             detailsLink={routes.privateRoutes.superAdmin.customer.home}
           />
@@ -64,7 +64,7 @@ export default function StateCardView({ className }: { className: string }) {
             metric={newRetailerThisMonth}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isFetching}
             isDetailsView
             detailsLink={routes.privateRoutes.superAdmin.retailer.home}
           />
@@ -75,7 +75,7 @@ export default function StateCardView({ className }: { className: string }) {
             metric={newCustomerThisMonth}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isFetching}
             isDetailsView
             detailsLink={routes.privateRoutes.superAdmin.customer.home}
           />

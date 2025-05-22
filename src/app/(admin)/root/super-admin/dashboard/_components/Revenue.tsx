@@ -12,9 +12,9 @@ import { Select, Text, Title, Tooltip } from 'rizzui';
 import CircleProgressbar from './CircleProgressbar';
 import WidgetCard from './WidgetCard';
 
-export default function Revenue({ className }: { className?: string }) {
+export default function Revenue({ className, dateRange }: { className?: string; dateRange: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const [dateRange, setDateRange] = useState('');
+
   const {
     data: dashboardRevenue,
     isLoading,
@@ -99,30 +99,13 @@ export default function Revenue({ className }: { className?: string }) {
       descriptionClassName="mt-2"
       headerClassName="col-span-full"
       className={cn('relative grid h-full grid-cols-2 pb-0 @2xl:gap-8 @3xl:gap-5 lg:pb-0', className)}
-      action={
-        <div className="flex items-center justify-between gap-5">
-          {showDate.value === 'with-date' && <DatePicker range={true} changeHandler={setDateRange} />}
-
-          <Select
-            size="md"
-            className="w-32"
-            selectClassName="!ring-0"
-            options={dateOptions}
-            value={showDate}
-            onChange={(value: any) => {
-              if (value.value === 'no-date') setDateRange('');
-              setShowDate(value);
-            }}
-          />
-        </div>
-      }
     >
       {isFetching || isLoading || isError || !dashboardRevenue ? (
         <>
           <div className="col-span-full my-6 flex">
-            <Skeleton className="m-auto h-52 w-52 rounded-full" />
-            <Skeleton className="m-auto h-52 w-52 rounded-full" />
-            <Skeleton className="m-auto h-52 w-52 rounded-full" />
+            <Skeleton className="m-auto h-56 w-56 rounded-full" />
+            {/* <Skeleton className="m-auto h-52 w-52 rounded-full" />
+            <Skeleton className="m-auto h-52 w-52 rounded-full" /> */}
           </div>
           <Skeleton className="col-span-full m-auto my-5 h-28" />
         </>

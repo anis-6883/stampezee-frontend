@@ -23,9 +23,9 @@ const CustomTooltip = ({ active, payload, totalCustomer = 0, totalRetailer = 0 }
   return null;
 };
 
-export default function SignUpStatus({ className }: { className?: string }) {
+export default function SignUpStatus({ className, dateRange }: { className?: string; dateRange: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { data: dashBoardData, isLoading, isError } = useGetDashboardCalcQuery(null, { skip: !accessToken });
+  const { data: dashBoardData, isLoading, isError, isFetching } = useGetDashboardCalcQuery({ dateRange }, { skip: !accessToken });
 
   const data = [
     { name: 'Retailer Signup:', value: Number(dashBoardData?.data?.signupRatio?.retailer), color: '#3872FA' },
@@ -67,8 +67,8 @@ export default function SignUpStatus({ className }: { className?: string }) {
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">
           <div className="mx-auto h-44 w-44">
-            {isLoading || isError || dashBoardData === undefined ? (
-              <Skeleton className="m-auto h-36 w-36 rounded-full" />
+            {isLoading || isError || isFetching || dashBoardData === undefined ? (
+              <Skeleton className="m-auto rounded-full md:size-36 sxl:size-44" />
             ) : dashBoardData?.data?.signupRatio?.retailer == 0 && dashBoardData?.data?.signupRatio?.customer == 0 ? (
               <div className="flex h-full items-center justify-center">
                 <span className="font-medium text-danger">No Stats Available!</span>
