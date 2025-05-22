@@ -9,8 +9,9 @@ import Link from 'next/link';
 import { HiPlus } from 'react-icons/hi2';
 import { Title } from 'rizzui';
 import DatePicker from '@/components/Formik/DatePicker';
+import { IoCloseCircleSharp } from 'react-icons/io5';
 
-const RetailerDashboardCustomHeader = ({ title, setDateRange }: { title: string; setDateRange: any }) => {
+const RetailerDashboardCustomHeader = ({ title, setDateRange, dateRange }: { title: string; setDateRange: any; dateRange: string }) => {
   const tStamp = useTranslations('RetailerStamp');
   const { data: session }: any = useSession();
 
@@ -34,7 +35,19 @@ const RetailerDashboardCustomHeader = ({ title, setDateRange }: { title: string;
         </Title>
 
         <div className="flex items-center gap-4">
-          <DatePicker range={true} changeHandler={setDateRange} />
+          <div className="flex items-center gap-2">
+            <h5 className="text-base font-medium">Filter by Date :</h5>
+            {/* date picker */}
+            <div className="relative">
+              {/* close button */}
+              {dateRange.length > 0 && (
+                <div className="absolute -right-1 -top-2 text-lg font-semibold">
+                  <IoCloseCircleSharp onClick={() => setDateRange('')} className="cursor-pointer text-2xl text-[#dc2626]" />
+                </div>
+              )}
+              <DatePicker value={dateRange} range={true} changeHandler={setDateRange} />
+            </div>
+          </div>
           <Link className="inline-block" href={routes.privateRoutes.retailer.stamp.create}>
             <Button
               disabled={checkedDisableStampBtn()}

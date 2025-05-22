@@ -17,7 +17,6 @@ export default async function Page() {
     <>
       {/* <PageHeader title={t('title')} /> */}
       <RetailerDashboardTopSection title={t('title')} />
-      <BranchStatsTable />
     </>
   );
 }
