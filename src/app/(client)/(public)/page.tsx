@@ -34,29 +34,24 @@ export default async function Page() {
             <div className="mt-2 block h-[40%] w-[40%] md:h-[50%]  md:w-[60%] lg:hidden  ">
               <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full object-contain" />
             </div>
-            <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
+            <div className="w-full p-3 text-center sm:w-full md:w-[80%] md:text-left">
               <div className="flex flex-col gap-y-1 md:gap-y-3 lg:gap-y-4 xl:gap-y-5 sxl:gap-y-6">
-                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl">{t('revolutionize')}</h1>
-                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl"> {t('yourCustomer')}</h1>
-                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl">{t('experience')}</h1>
+                <h1 className="text-3xl font-semibold text-white md:text-4xl xl:text-5xl sxl:text-5xl">{t('bannerTitle')}</h1>
+                {/* <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl"> {t('yourCustomer')}</h1>
+                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl">{t('experience')}</h1> */}
               </div>
-              <p className="mt-1 text-balance py-2 text-base font-medium text-white sm:text-xl md:mt-2 md:py-3.5 lg:mt-3 lg:py-5 xl:py-6 xxl:mt-4 sxl:py-7">
+              <p className="mt-1 text-balance py-2 text-base font-medium text-white sm:text-xl md:mt-2 md:py-3.5 lg:mt-3 lg:py-4 xl:py-4 xxl:mt-4 sxl:py-3">
                 {t('bannerDetails')}
               </p>
               <div className="mt-2 md:mt-6 lg:mt-8">
                 <Link
                   href={routes.publicRoutes.pricing}
-                  className="dark:bg-primary-red md:text-md rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] md:py-3 xl:px-8 xl:text-lg xxl:py-4 sxl:text-xl"
+                  className="dark:bg-primary-red md:text-md rounded-full bg-white px-4 py-2.5 text-lg font-semibold text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] md:py-3 xl:px-8 xl:text-xl xxl:py-4 sxl:text-2xl"
                 >
                   {t('bannerButtonText')}
                 </Link>
               </div>
             </div>
-            {/* <div className=" mt-10 justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex">
-              <div className=" h-[55%] w-[55%] xl:h-[70%] xxl:w-[70%]">
-                <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
