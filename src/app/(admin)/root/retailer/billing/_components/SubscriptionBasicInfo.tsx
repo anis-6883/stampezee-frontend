@@ -70,8 +70,8 @@ export function SubscriptionBasicInfo({ isLoading, isError, data }: { isLoading:
           <Skeleton className="h-6 w-32 rounded" />
         ) : (
           <span>
-            {data?.enrollStatus === 'trial' && session?.user?.unlimitedFieldName
-              ? session?.user?.unlimitedFieldName
+            {data?.enrollStatus === 'trial' && data?.enrollSubscriptions[0]?.unlimitedFieldName
+              ? data?.enrollSubscriptions[0]?.unlimitedFieldName
               : currentPeriodByTimezone(data?.validityFrom, data?.validityTo, session?.user?.timezone?.label || '')}
           </span>
         )}
@@ -107,8 +107,8 @@ export function SubscriptionBasicInfo({ isLoading, isError, data }: { isLoading:
             <Skeleton className="h-6 w-32 rounded" />
           ) : (
             <span>
-              {data?.enrollStatus === 'trial' && session?.user?.unlimitedFieldName
-                ? session?.user?.unlimitedFieldName
+              {data?.enrollStatus === 'trial' && data?.enrollSubscriptions[0]?.unlimitedFieldName
+                ? data?.enrollSubscriptions[0]?.unlimitedFieldName
                 : getFormatDateByTimezone(data?.validityTo, session?.user?.timezone?.label || '')}
             </span>
           )}
