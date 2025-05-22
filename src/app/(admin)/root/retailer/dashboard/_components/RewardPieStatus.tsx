@@ -19,7 +19,7 @@ const statsData = [
 
 export default function RewardPieStatus({ className, dateRange }: { className?: string; dateRange: string | undefined }) {
   const t = useTranslations('retailerDashboardStampAndCustomerStats');
-  const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery({dateRange});
+  const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery({ dateRange });
 
   const {
     rewardCollectedTruePercentage = 0,

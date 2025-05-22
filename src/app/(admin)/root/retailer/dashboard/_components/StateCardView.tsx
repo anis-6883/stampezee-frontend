@@ -18,14 +18,13 @@ import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
 export default function StateCardView({ className, dateRange }: { className: string; dateRange: string }) {
-
   console.log(dateRange);
   const t = useTranslations('RetailerDashboard');
   const { data: session }: any = useSession();
   const [modalState, setModalState] = useState(false);
   const [trialCountDownModalState, setTrialCountDownModalState] = useState(true);
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
-  const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery({dateRange});
+  const { data, isLoading, isError, isFetching } = useGetRetailerDashboardCalcQuery({ dateRange });
   const { data: retailerProfile, isLoading: isRetailerProfileLoading, refetch } = useRetailerGetProfileQuery(null);
   const { totalStamps = 0, totalStampCards = 0, totalRevenue = 0, totalCustomers = 0 } = data?.data || {};
 
@@ -67,7 +66,7 @@ export default function StateCardView({ className, dateRange }: { className: str
             metric={totalStamps}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isFetching}
           />
 
           <MetricCard
@@ -77,7 +76,7 @@ export default function StateCardView({ className, dateRange }: { className: str
             metric={totalRevenue.toFixed(2)}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError || isRetailerProfileLoading}
+            isLoading={isLoading || isError || isRetailerProfileLoading || isFetching}
           />
 
           <MetricCard
@@ -87,7 +86,7 @@ export default function StateCardView({ className, dateRange }: { className: str
             metric={totalCustomers}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isFetching}
           />
 
           <MetricCard
@@ -97,7 +96,7 @@ export default function StateCardView({ className, dateRange }: { className: str
             metric={totalStampCards}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isFetching}
           />
         </div>
       </div>

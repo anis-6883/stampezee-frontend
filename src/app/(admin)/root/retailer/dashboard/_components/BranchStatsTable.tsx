@@ -6,7 +6,7 @@ import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/
 import { useTranslations } from 'next-intl';
 
 export default function BranchStatsTable() {
-  const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
+  const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery({});
   const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
   const t = useTranslations('RetailerDashboardTable');
   const t2 = useTranslations('RetailerDashboard');
