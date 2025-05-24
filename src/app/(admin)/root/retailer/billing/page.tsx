@@ -33,7 +33,7 @@ export default async function Page() {
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
         <div className="flex items-center justify-end">
           <Link href={routes.privateRoutes.retailer.refund}>
-            <Button className="" color="danger" text={'Refunds'} postIcon={<FaRegPaperPlane className="text-base" />} />
+            <Button className="!mb-0 w-44" color="danger" text={'Refunds'} postIcon={<FaRegPaperPlane className="text-base" />} />
           </Link>
         </div>
       </PageHeader>

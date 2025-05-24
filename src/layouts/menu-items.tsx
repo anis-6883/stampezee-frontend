@@ -120,11 +120,11 @@ export const menuItems: { [key: string]: any } = {
       href: routes.privateRoutes.retailer.billing.home,
       icon: <FaMoneyBillTransfer />,
     },
-    {
-      name: 'Refunds',
-      href: routes.privateRoutes.retailer.refund,
-      icon: <RiRefund2Line />,
-    },
+    // {
+    //   name: 'Refunds',
+    //   href: routes.privateRoutes.retailer.refund,
+    //   icon: <RiRefund2Line />,
+    // },
     {
       name: 'Branches',
       href: routes.privateRoutes.retailer.branch.home,
