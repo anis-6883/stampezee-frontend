@@ -58,13 +58,15 @@ function DropdownMenu({
       {user?.role === ROLE.RETAILER && (
         <div className="m-4 flex flex-col items-center gap-4 rounded-lg bg-[#F4F6F8] p-3">
           <img
-            src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+            src={session?.user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${session?.user?.image}` : '/images/stamp-logo.png'}
             color="danger"
             className="h-14 w-14 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
             alt="brand"
           />
           <Title as="h6" className="break-all text-center font-bold">
-            {user?.storeName && user?.storeName.length > 20 ? user?.storeName.slice(0, 20) + '...' : user?.storeName}
+            {session?.user?.storeName && session?.user?.storeName.length > 20
+              ? session?.user?.storeName.slice(0, 20) + '...'
+              : session?.user?.storeName}
           </Title>
         </div>
       )}
@@ -132,6 +134,7 @@ export default function ProfileMenu() {
   const [changePasswordModalState, setChangePasswordModalState] = useState(false);
   const [updateProfileModalState, setUpdateProfileModalState] = useState(false);
   const { user } = useSelector((state: RootState) => state.authSlice);
+  const { data: session }: any = useSession();
 
   return (
     <>
@@ -139,7 +142,7 @@ export default function ProfileMenu() {
         <Popover.Trigger>
           <div className="m-auto cursor-pointer">
             <img
-              src={user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${user?.image}` : '/images/stamp-logo.png'}
+              src={session?.user?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${session?.user?.image}` : '/images/stamp-logo.png'}
               color="danger"
               className="h-12 w-12 rounded-full p-1 ring-2 ring-danger ring-offset-2 ring-offset-background"
               alt="brand"

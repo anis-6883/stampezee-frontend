@@ -16,7 +16,8 @@ const monthMap: any = {
 
 export const getFormatDateByTimezone = (date: string | undefined, timezone: string | undefined): string => {
   if (!date || !timezone) return 'N/A';
-  const formattedDate = moment(date).tz(timezone).format('DD MMMM YYYY, hh:mm A');
+  // const formattedDate = moment(date).tz(timezone).format('DD MMMM YYYY, hh:mm A');
+  const formattedDate = moment.utc(date).tz(timezone).format('YYYY-MM-DD hh:mm A');
   return formattedDate === 'Invalid Date' ? 'N/A' : formattedDate;
 };
 export const getFormatDate = (date: string | undefined, showTime: boolean = true): string => {

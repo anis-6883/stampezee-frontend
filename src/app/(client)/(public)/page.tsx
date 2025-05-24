@@ -34,11 +34,12 @@ export default async function Page() {
             <div className="mt-2 block h-[40%] w-[40%] md:h-[50%]  md:w-[60%] lg:hidden  ">
               <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full object-contain" />
             </div>
-            <div className="w-full p-3 text-center sm:w-full md:w-[80%] md:text-left">
+            <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
               <div className="flex flex-col gap-y-1 md:gap-y-3 lg:gap-y-4 xl:gap-y-5 sxl:gap-y-6">
-                <h1 className="text-3xl font-semibold text-white md:text-4xl xl:text-5xl sxl:text-5xl">{t('bannerTitle')}</h1>
-                {/* <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl"> {t('yourCustomer')}</h1>
-                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl">{t('experience')}</h1> */}
+                {/* <h1 className="text-3xl font-semibold text-white md:text-4xl xl:text-5xl sxl:text-5xl">{t('bannerTitle')}</h1> */}
+                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl"> {t('revolutionize')}</h1>
+                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl"> {t('yourCustomer')}</h1>
+                <h1 className="text-3xl font-semibold text-white md:text-5xl xl:text-6xl sxl:text-7xl">{t('experience')}</h1>
               </div>
               <p className="mt-1 text-balance py-2 text-base font-medium text-white sm:text-xl md:mt-2 md:py-3.5 lg:mt-3 lg:py-4 xl:py-4 xxl:mt-4 sxl:py-3">
                 {t('bannerDetails')}

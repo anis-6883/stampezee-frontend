@@ -95,7 +95,7 @@ export default function CloneStamp({ Id, locale }: any) {
     rewardType: stampData?.data?.rewardType ? stampData?.data?.rewardType : '',
     promotionReward: stampData?.data?.promotionReward ? stampData?.data?.promotionReward : '',
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
-    // hasValidity: stampData?.data?.hasValidity,
+    hasValidity: true,
     validDateRange:
       stampData?.data?.startedAt && stampData?.data?.expiredAt
         ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, session?.user?.timezone?.label || '')} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, session?.user?.timezone?.label || '')}`

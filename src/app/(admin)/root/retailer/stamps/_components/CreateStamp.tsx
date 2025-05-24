@@ -147,11 +147,6 @@ export default function Create({ locale }: { locale: string }) {
       then: () => Yup.number().required(tCommon('required')).min(1, 'Discount must be greater than zero!'),
       otherwise: () => Yup.number(),
     }),
-    // validDateRange: Yup.string().when('hasValidity', {
-    //   is: true,
-    //   then: () => Yup.string().required(tCommon('required')),
-    //   otherwise: () => Yup.string(),
-    // }),
     validDateRange: Yup.string().required(tCommon('required')),
     description: Yup.string().required('Required!'),
   });
@@ -238,21 +233,6 @@ export default function Create({ locale }: { locale: string }) {
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-1">
-                {/* <div>
-                  <SelectField
-                    name="hasValidity"
-                    label={t('validityPeriod')}
-                    value={values?.hasValidity}
-                    options={[
-                      { id: 1, name: 'no expiration', value: false },
-                      { id: 2, name: 'expiration', value: true },
-                    ].map((item: any) => ({
-                      label: _.startCase(_.toLower(item.name)),
-                      value: item.value,
-                    }))}
-                    onChange={(option: { label: string; value: boolean }) => setFieldValue('hasValidity', option.value)}
-                  />
-                </div> */}
                 <FormikDatePicker isMinDate={true} label="Valid Date Range" name="validDateRange" range={true} />
               </div>
 
