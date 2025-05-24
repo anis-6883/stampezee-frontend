@@ -38,8 +38,9 @@
     "warning": "Warning!",
     "info": "Info",
     "associatedSubAdminAndStampsWillBeDeleted": "Associated sub-admin and stamps will also deleted!",
-    "notNow": "Not Now",
-    "confirm": "Yes, Confirm"
+    "notNow": "Keep It",
+    "confirmPlan": "Yes, Cancel Plan",
+    "confirmAddon": "Yes, Cancel Add-on"
   },
   "ActivateConfirmModal": {
     "title": "Activate Confirmation",
