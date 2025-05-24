@@ -40,7 +40,7 @@ const SuperAdminPaymentTopSection = ({ timezone, pageHeader }: { timezone: strin
         title={pageHeader.title}
         breadcrumb={pageHeader.breadcrumb}
       />
-      <PaymentTable dateRange={dateRange} start={start} end={end} setDateRange={setDateRange} timezone={timezone} />
+      <PaymentTable start={start} end={end} timezone={timezone} />
     </>
   );
 };

@@ -9,6 +9,7 @@ export const scanApi = apiSlice.injectEndpoints({
         return `/api/secret-root/admin/super-admin/scans/details`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['superAdminScanDetails'],
+      keepUnusedDataFor: 0,
     }),
   }),
 });

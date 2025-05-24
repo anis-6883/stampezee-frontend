@@ -19,19 +19,7 @@ import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 
-export default function PaymentTable({
-  timezone,
-  start,
-  end,
-  dateRange,
-  setDateRange,
-}: {
-  timezone: string;
-  dateRange: string;
-  setDateRange: any;
-  start: string;
-  end: string;
-}) {
+export default function PaymentTable({ timezone, start, end }: { timezone: string; start: string; end: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};

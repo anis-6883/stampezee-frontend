@@ -9,6 +9,7 @@ export const refundApi = apiSlice.injectEndpoints({
         return `/api/secret-root/admin/super-admin/refund/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['superAdminRefund'],
+      keepUnusedDataFor: 0,
     }),
     confirmRefundBySuperAdmin: builder.mutation({
       query: (id) => ({
