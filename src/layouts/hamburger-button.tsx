@@ -17,13 +17,15 @@ export default function HamburgerButton({ view, placement = 'left', customSize =
     <ActionIcon
       aria-label="Open Sidebar Menu"
       variant="text"
-      onMouseEnter={() =>
+      onMouseEnter={() => {
         openDrawer({
           view,
           placement,
           customSize,
-        })
-      }
+        });
+
+        console.log('Hovers');
+      }}
       //       onMouseLeave={()=>{
       // closeDrawer()
       //       }}

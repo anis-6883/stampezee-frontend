@@ -54,11 +54,7 @@ export default function CreateUpdateModel({
 
   const validationSchema = Yup.object({
     title: Yup.string().trim().required('Required!'),
-    price: Yup.number()
-      .typeError('Price must be a number')
-      .required('Required!')
-      .integer('Price must be an integer')
-      .min(0, 'Price cannot be negative'),
+    price: Yup.number().typeError('Price must be a number').required('Required!').min(0, 'Price cannot be negative'),
     slug: Yup.string().trim().required('Required!'),
     type: Yup.mixed().oneOf(['subscription', 'addon']).required('Required!'),
     duration: Yup.string().when('isUnlimited', {
@@ -81,7 +77,7 @@ export default function CreateUpdateModel({
       then: () =>
         Yup.number()
           .typeError('Must be a number!')
-          .min(1, 'Duration must be greater than or equal 1!')
+          .min(1, 'Total branch must be greater than or equal 1!')
           .integer('Must be an integer!')
           .required('Required!'),
       otherwise: () => Yup.number().nullable(),
@@ -92,7 +88,7 @@ export default function CreateUpdateModel({
         Yup.number()
           .typeError('Must be a number!')
           .integer('Must be an integer!')
-          .min(1, 'Duration must be greater than or equal 1!')
+          .min(1, 'Total user must be greater than or equal 1!')
           .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
@@ -101,7 +97,7 @@ export default function CreateUpdateModel({
       then: () =>
         Yup.number()
           .typeError('Must be a number!')
-          .min(1, 'Duration must be greater than or equal 1!')
+          .min(1, 'Total stamps must be greater than or equal 1!')
           .integer('Must be an integer!')
           .required('Required!'),
       otherwise: () => Yup.number().nullable(),
@@ -111,7 +107,7 @@ export default function CreateUpdateModel({
       then: () =>
         Yup.number()
           .typeError('Must be a number!')
-          .min(1, 'Duration must be greater than or equal 1!')
+          .min(1, 'Total users must be greater than or equal 1!')
           .integer('Must be an integer!')
           .required('Required!'),
       otherwise: () => Yup.number().nullable(),
@@ -121,7 +117,7 @@ export default function CreateUpdateModel({
       then: () =>
         Yup.number()
           .typeError('Must be a number!')
-          .min(1, 'Duration must be greater than or equal 1!')
+          .min(1, 'Total stamps must be greater than or equal 1!')
           .integer('Must be an integer!')
           .required('Required!'),
       otherwise: () => Yup.number().nullable(),
