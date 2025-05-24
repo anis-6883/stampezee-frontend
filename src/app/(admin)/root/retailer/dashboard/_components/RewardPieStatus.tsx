@@ -16,6 +16,14 @@ const statsData = [
     color: '#eab308',
   },
 ];
+const statsData1 = [
+  {
+    name: '',
+    value: 100,
+    percentage: 100,
+    color: '#3872FA',
+  },
+];
 
 export default function RewardPieStatus({ className, dateRange }: { className?: string; dateRange: string | undefined }) {
   const t = useTranslations('retailerDashboardStampAndCustomerStats');
@@ -95,6 +103,28 @@ export default function RewardPieStatus({ className, dateRange }: { className?: 
               // </div>
               <div className="col-span-full mt-10 flex items-center justify-center">
                 {statsData.map((item: any) => (
+                  <div key={item.name} className={cn('w-52 text-center')}>
+                    <CircleProgressbar
+                      percentage={item.percentage}
+                      size={120}
+                      stroke="#eab308"
+                      strokeWidth={5}
+                      progressColor={item.color}
+                      useParentResponsive={true}
+                      label={
+                        <Text className="font-lexend 2xl:text-base text-sm font-bold text-gray-900 dark:text-gray-700">{item.value}</Text>
+                      }
+                      strokeClassName="dark:stroke-gray-200"
+                    />
+                    <Text className="mt-3 text-sm font-semibold text-gray-900 @md:text-sm @7xl:text-base dark:text-gray-700">
+                      {item.name}
+                    </Text>
+                  </div>
+                ))}
+              </div>
+            ) : rewardCollectedTruePercentage === 100 && rewardCollectedFalsePercentage === 0 ? (
+              <div className="col-span-full mt-10 flex items-center justify-center">
+                {statsData1.map((item: any) => (
                   <div key={item.name} className={cn('w-52 text-center')}>
                     <CircleProgressbar
                       percentage={item.percentage}

@@ -93,10 +93,11 @@ export default function Update({ Id }: any) {
     rewardType: stampData?.data?.rewardType ? stampData?.data?.rewardType : '',
     promotionReward: stampData?.data?.promotionReward ? stampData?.data?.promotionReward : '',
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
-    hasValidity: stampData?.data?.hasValidity,
-    validDateRange: stampData?.data?.hasValidity
-      ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, session?.user?.timezone?.label || '')} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, session?.user?.timezone?.label || '')}`
-      : '',
+    // hasValidity: stampData?.data?.hasValidity,
+    validDateRange:
+      stampData?.data?.startedAt && stampData?.data?.expiredAt
+        ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, session?.user?.timezone?.label || '')} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, session?.user?.timezone?.label || '')}`
+        : '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -139,15 +140,15 @@ export default function Update({ Id }: any) {
             handleSubmit(values);
           } else {
             const changedData = removeEmptyValues(values, ['validDateRange']);
-            if (values.hasValidity) {
-              if (values?.validDateRange?.includes('to')) {
-                changedData.startedAt = values?.validDateRange?.split('to')[0];
-                changedData.expiredAt = values?.validDateRange?.split('to')[1];
-              } else {
-                changedData.startedAt = values?.validDateRange;
-                changedData.expiredAt = values?.validDateRange;
-              }
+
+            if (values?.validDateRange?.includes('to')) {
+              changedData.startedAt = values?.validDateRange?.split('to')[0];
+              changedData.expiredAt = values?.validDateRange?.split('to')[1];
+            } else {
+              changedData.startedAt = values?.validDateRange;
+              changedData.expiredAt = values?.validDateRange;
             }
+
             if (submitAction === 'draft') {
               changedData.isPublished = false;
             } else {
@@ -191,8 +192,8 @@ export default function Update({ Id }: any) {
                 <InputField readOnly={stampData?.data?.isPublished} name="rules" label={t('basicRules')} placeholder="You need to buy..." />
               </div>
 
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                <div>
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-1">
+                {/* <div>
                   <SelectField
                     disabled={stampData?.data?.isPublished}
                     name="hasValidity"
@@ -209,17 +210,15 @@ export default function Update({ Id }: any) {
                       setFieldValue('hasValidity', option.value);
                     }}
                   />
-                </div>
-                {values?.hasValidity && (
-                  <FormikDatePicker
-                    disabled={stampData?.data?.isPublished}
-                    isMinDate={true}
-                    label={t('validDateRange')}
-                    name="validDateRange"
-                    range={true}
-                    minDate={initialValues?.validDateRange.split('to')[0]}
-                  />
-                )}
+                </div> */}
+                <FormikDatePicker
+                  disabled={stampData?.data?.isPublished}
+                  isMinDate={true}
+                  label={t('validDateRange')}
+                  name="validDateRange"
+                  range={true}
+                  minDate={initialValues?.validDateRange.split('to')[0]}
+                />
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -248,7 +247,7 @@ export default function Update({ Id }: any) {
                     label={t('rewardType')}
                     value={values?.rewardType}
                     options={[
-                      { id: 1, name: 'discount', value: 'discount' },
+                      { id: 1, name: 'discount percentage', value: 'discount' },
                       { id: 2, name: 'promotion', value: 'promotion' },
                     ].map((item: any) => ({
                       label: _.startCase(_.toLower(item.name)),

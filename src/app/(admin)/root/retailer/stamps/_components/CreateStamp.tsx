@@ -129,7 +129,7 @@ export default function Create({ locale }: { locale: string }) {
     categoryId: Yup.string().required(tCommon('required')),
     title: Yup.string().trim().required(tCommon('required')),
     rules: Yup.string().trim().required(tCommon('required')),
-    hasValidity: Yup.boolean().required(tCommon('required')),
+    // hasValidity: Yup.boolean().required(tCommon('required')),
     minPurchaseAmount: Yup.number().min(0, 'Minimum Purchase Amount must be at least 0').required(tCommon('required')),
     noOfStampsToCollect: Yup.number()
       .integer('No. of stamps must be a whole number')
@@ -147,11 +147,12 @@ export default function Create({ locale }: { locale: string }) {
       then: () => Yup.number().required(tCommon('required')).min(1, 'Discount must be greater than zero!'),
       otherwise: () => Yup.number(),
     }),
-    validDateRange: Yup.string().when('hasValidity', {
-      is: true,
-      then: () => Yup.string().required(tCommon('required')),
-      otherwise: () => Yup.string(),
-    }),
+    // validDateRange: Yup.string().when('hasValidity', {
+    //   is: true,
+    //   then: () => Yup.string().required(tCommon('required')),
+    //   otherwise: () => Yup.string(),
+    // }),
+    validDateRange: Yup.string().required(tCommon('required')),
     description: Yup.string().required('Required!'),
   });
 
@@ -236,8 +237,8 @@ export default function Create({ locale }: { locale: string }) {
                 <InputField name="rules" label={t('basicRules')} placeholder="You need to buy..." />
               </div>
 
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                <div>
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-1">
+                {/* <div>
                   <SelectField
                     name="hasValidity"
                     label={t('validityPeriod')}
@@ -251,8 +252,8 @@ export default function Create({ locale }: { locale: string }) {
                     }))}
                     onChange={(option: { label: string; value: boolean }) => setFieldValue('hasValidity', option.value)}
                   />
-                </div>
-                {values?.hasValidity && <FormikDatePicker isMinDate={true} label="Valid Date Range" name="validDateRange" range={true} />}
+                </div> */}
+                <FormikDatePicker isMinDate={true} label="Valid Date Range" name="validDateRange" range={true} />
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -275,7 +276,7 @@ export default function Create({ locale }: { locale: string }) {
                     label={t('rewardType')}
                     value={values?.rewardType}
                     options={[
-                      { id: 1, name: 'discount', value: 'discount' },
+                      { id: 1, name: 'discount percentage', value: 'discount' },
                       { id: 2, name: 'promotion', value: 'promotion' },
                     ].map((item: any) => ({
                       label: _.startCase(_.toLower(item.name)),
@@ -365,9 +366,9 @@ export default function Create({ locale }: { locale: string }) {
 
               {!isAddons && (
                 <div className="border-l-4 border-red-400 bg-blue-50 p-4">
-                  <p className="mb-3 font-semibold">Attach your Custom Stamp Image!</p>
+                  <p className="mb-3 font-semibold">Want to use your own stamp design?</p>
                   <p>
-                    {t('purchaseCustomStampAddOn')}.{' '}
+                    {t('purchaseCustomStampAddOn')} 👉
                     <Link
                       onClick={() => localStorage.setItem('values', JSON.stringify(values))}
                       href={`${routes.privateRoutes.retailer.membershipPlan}`}

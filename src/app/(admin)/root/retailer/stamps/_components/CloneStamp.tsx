@@ -7,6 +7,7 @@ import InputTextarea from '@/components/Formik/InputTextArea ';
 import SelectField from '@/components/Formik/SelectField';
 import { routes } from '@/config/routes';
 import { useBranchCategoryImageListQuery, useCreateStampMutation, useGetSingleStampsQuery } from '@/features/retailer/stamp/stampApi';
+
 import getFormattedDateByTimezone from '@/utils/get-formatted-date-By-Timezone';
 import removeEmptyValues from '@/utils/removeEmptyValues';
 import { Form, Formik } from 'formik';
@@ -57,16 +58,15 @@ export default function CloneStamp({ Id, locale }: any) {
       setSubmitting(true);
       const changedData = removeEmptyValues(values, ['validDateRange']);
 
-      if (values.hasValidity) {
-        if (values?.validDateRange?.includes('to')) {
-          const dateRange = values.validDateRange.split('to').map((date: string) => date.trim());
-          changedData.startedAt = dateRange[0];
-          changedData.expiredAt = dateRange[1];
-        } else {
-          changedData.startedAt = values?.validDateRange;
-          changedData.expiredAt = values?.validDateRange;
-        }
+      if (values?.validDateRange?.includes('to')) {
+        const dateRange = values.validDateRange.split('to').map((date: string) => date.trim());
+        changedData.startedAt = dateRange[0];
+        changedData.expiredAt = dateRange[1];
+      } else {
+        changedData.startedAt = values?.validDateRange;
+        changedData.expiredAt = values?.validDateRange;
       }
+
       if (submitAction === 'draft') {
         changedData.isPublished = false;
       } else {
@@ -95,10 +95,11 @@ export default function CloneStamp({ Id, locale }: any) {
     rewardType: stampData?.data?.rewardType ? stampData?.data?.rewardType : '',
     promotionReward: stampData?.data?.promotionReward ? stampData?.data?.promotionReward : '',
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
-    hasValidity: stampData?.data?.hasValidity,
-    validDateRange: stampData?.data?.hasValidity
-      ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, session?.user?.timezone?.label || '')} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, session?.user?.timezone?.label || '')}`
-      : '',
+    // hasValidity: stampData?.data?.hasValidity,
+    validDateRange:
+      stampData?.data?.startedAt && stampData?.data?.expiredAt
+        ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, session?.user?.timezone?.label || '')} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, session?.user?.timezone?.label || '')}`
+        : '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -122,11 +123,12 @@ export default function CloneStamp({ Id, locale }: any) {
       then: () => Yup.number().required(tCommon('required')),
       otherwise: () => Yup.number(),
     }),
-    validDateRange: Yup.string().when('hasValidity', {
-      is: true,
-      then: () => Yup.string().required(tCommon('required')),
-      otherwise: () => Yup.string(),
-    }),
+    // validDateRange: Yup.string().when('hasValidity', {
+    //   is: true,
+    //   then: () => Yup.string().required(tCommon('required')),
+    //   otherwise: () => Yup.string(),
+    // }),
+    validDateRange: Yup.string().required(tCommon('required')),
     description: Yup.string().required('Required!'),
   });
 
@@ -141,15 +143,15 @@ export default function CloneStamp({ Id, locale }: any) {
             handleSubmit(values);
           } else {
             const changedData = removeEmptyValues(values, ['validDateRange']);
-            if (values.hasValidity) {
-              if (values?.validDateRange?.includes('to')) {
-                changedData.startedAt = values?.validDateRange?.split('to')[0];
-                changedData.expiredAt = values?.validDateRange?.split('to')[1];
-              } else {
-                changedData.startedAt = values?.validDateRange;
-                changedData.expiredAt = values?.validDateRange;
-              }
+
+            if (values?.validDateRange?.includes('to')) {
+              changedData.startedAt = values?.validDateRange?.split('to')[0];
+              changedData.expiredAt = values?.validDateRange?.split('to')[1];
+            } else {
+              changedData.startedAt = values?.validDateRange;
+              changedData.expiredAt = values?.validDateRange;
             }
+
             if (submitAction === 'draft') {
               changedData.isPublished = false;
             } else {
@@ -191,8 +193,8 @@ export default function CloneStamp({ Id, locale }: any) {
                 <InputField name="rules" label={t('basicRules')} placeholder="You need to buy..." />
               </div>
 
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                <div>
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-1">
+                {/* <div>
                   <SelectField
                     name="hasValidity"
                     label={t('validityPeriod')}
@@ -208,16 +210,14 @@ export default function CloneStamp({ Id, locale }: any) {
                       setFieldValue('hasValidity', option.value);
                     }}
                   />
-                </div>
-                {values?.hasValidity && (
-                  <FormikDatePicker
-                    isMinDate={true}
-                    label={t('validDateRange')}
-                    minDate={initialValues?.validDateRange.split('to')[0]}
-                    name="validDateRange"
-                    range={true}
-                  />
-                )}
+                </div> */}
+                <FormikDatePicker
+                  isMinDate={true}
+                  label={t('validDateRange')}
+                  minDate={initialValues?.validDateRange.split('to')[0]}
+                  name="validDateRange"
+                  range={true}
+                />
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -239,7 +239,7 @@ export default function CloneStamp({ Id, locale }: any) {
                     label={t('rewardType')}
                     value={values?.rewardType}
                     options={[
-                      { id: 1, name: 'discount', value: 'discount' },
+                      { id: 1, name: 'discount percentage', value: 'discount' },
                       { id: 2, name: 'promotion', value: 'promotion' },
                     ].map((item: any) => ({
                       label: _.startCase(_.toLower(item.name)),
@@ -321,7 +321,7 @@ export default function CloneStamp({ Id, locale }: any) {
                 <div className="border-l-4 border-red-400 bg-blue-50 p-4">
                   <p className="mb-3 text-sm font-semibold">{t('thereIsNoActiveCustomImageAvailable')}</p>
                   <p>
-                    {t('createOrActiveCustomStamp')}.{' '}
+                    {t('createOrActiveCustomStamp')}👉
                     <Link href={routes.privateRoutes.retailer.stampImage.home} className="font-semibold text-danger hover:cursor-pointer">
                       {t('clickHere')}
                     </Link>

@@ -164,7 +164,7 @@ export default function BranchTable() {
         const countDays = row?.original?.enrollSubscription?.planDaysLeft;
 
         return row?.original?.disabledBySystem ? (
-          <span className="font-semibold text-danger">{t('expired')}</span>
+          <span className="font-semibold text-danger">{'Disabled'}</span>
         ) : session?.user?.plan === 'trial' && row?.original?.enrollSubscription?.unlimitedFieldName ? (
           <span className="font-semibold text-danger">{session?.user?.unlimitedFieldName}</span>
         ) : (

@@ -13,7 +13,7 @@
 
 // export default getFormattedDate;
 
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 const getFormattedDateByTimezone = (date: Date, timezone?: string) => {
   if (!date) return 'N/A';
