@@ -217,7 +217,7 @@ export default function Update({ Id }: any) {
                     label={t('validDateRange')}
                     name="validDateRange"
                     range={true}
-                    minDate={initialValues?.validDateRange.split('to')[0]}
+                    minDate="today"
                   />
                 )}
               </div>
