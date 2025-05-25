@@ -1,5 +1,6 @@
 'use client';
 
+import { useDrawer } from '@/components/drawer-views/use-drawer';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ROLE } from '@/config/constants';
 import { RootState } from '@/features/store';
@@ -11,16 +12,26 @@ import HamburgerButton from '@/layouts/hamburger-button';
 import HeaderMenuRight from '@/layouts/header-menu-right';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import SearchWidget from '../components/search/search';
 import Sidebar from './sidebar';
 
 export default function Header() {
+  const { openDrawer } = useDrawer();
   const isMounted = useIsMounted();
   const windowScroll = useWindowScroll();
   const { data: session }: any = useSession();
   const { role, accessToken } = useSelector((state: RootState) => state.authSlice);
   const { data, isLoading } = useGetGeneralSettingsQuery(null, { skip: !accessToken || role !== ROLE.SUPER_ADMIN });
+
+  const handleLeftEdgeHover = useCallback(() => {
+    openDrawer({
+      view: <Sidebar className="static w-full xxl:w-full" />,
+      placement: 'left',
+      customSize: 320,
+    });
+  }, [openDrawer]);
 
   return (
     <header
@@ -29,6 +40,8 @@ export default function Header() {
         ((isMounted && windowScroll.y) as number) > 2 ? 'card-shadow' : ''
       )}
     >
+      {/* Left hover area */}
+      <div className="fixed left-0 top-0 z-50 h-screen w-5 cursor-pointer sxl:hidden" onMouseEnter={handleLeftEdgeHover} />
       <div className="flex w-full max-w-2xl items-center">
         <HamburgerButton view={<Sidebar className="static w-full xxl:w-full" />} />
         <Link href={'/'} aria-label="Site Logo" className="me-4 w-9 shrink-0 lg:me-5 xl:hidden">

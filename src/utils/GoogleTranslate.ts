@@ -1,4 +1,5 @@
 import axios from 'axios';
+import he from 'he';
 import { axiosBackendUrl } from './axios/getAxios';
 
 const API_URL = 'https://translation.googleapis.com/language/translate/v2';
@@ -11,7 +12,7 @@ const translateText = async (text: string[], targetLanguage: string, sourceLangu
     source: sourceLanguage ?? 'en',
   });
 
-  return response.data.data.translations.map((translation: any) => translation.translatedText);
+  return response.data.data.translations.map((translation: any) => he.decode(translation.translatedText));
 };
 
 const translateData = async (data: any, targetLanguage: string, sourceLanguage: string) => {

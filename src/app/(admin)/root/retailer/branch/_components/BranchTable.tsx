@@ -26,6 +26,7 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
 import { IoPower } from 'react-icons/io5';
+import { LuCopy } from 'react-icons/lu';
 import { SiConvertio } from 'react-icons/si';
 import { Badge, Switch } from 'rizzui';
 import ActivateConfirmModal from '../../../_components/ActivateConfirmModal';
@@ -124,6 +125,22 @@ export default function BranchTable() {
   }, [session]);
 
   const structure = [
+    {
+      header: 'ID',
+      Cell: ({ row }: any) => (
+        <div className="flex items-center gap-x-2 text-start text-sm">
+          <span>{row?.original?._id.slice(-5)}</span>
+          <LuCopy
+            className="hover:text-active cursor-pointer"
+            onClick={() => {
+              navigator.clipboard.writeText(row?.original?._id);
+              toast.success('ID Copied!');
+            }}
+          />
+        </div>
+      ),
+      size: 40,
+    },
     {
       header: t('branchName'),
       accessorKey: 'name',
@@ -311,7 +328,7 @@ export default function BranchTable() {
         setQuery={setQuery}
         query={query}
         searchPlaceHolder={t('placeHolder')}
-        enableRowNumbers={true}
+        enableRowNumbers={false}
       />
 
       <ActivateConfirmModal

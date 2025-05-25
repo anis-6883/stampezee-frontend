@@ -24,7 +24,7 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
 import { IoCheckmarkCircle, IoEyeOutline } from 'react-icons/io5';
-import { LuPartyPopper } from 'react-icons/lu';
+import { LuCopy, LuPartyPopper } from 'react-icons/lu';
 import { Badge } from 'rizzui';
 import SwitchButton from '../../../_components/SwitchButton';
 import DeleteStampModal from './DeleteStampModal';
@@ -103,6 +103,22 @@ export default function StampTable() {
   const totalCreatedStamp = data?.data.totalDocs;
 
   const structure = [
+    {
+      header: 'ID',
+      Cell: ({ row }: any) => (
+        <div className="flex items-center gap-x-2 text-start text-sm">
+          <span>{row?.original?._id.slice(-5)}</span>
+          <LuCopy
+            className="hover:text-active cursor-pointer"
+            onClick={() => {
+              navigator.clipboard.writeText(row?.original?._id);
+              toast.success('ID Copied!');
+            }}
+          />
+        </div>
+      ),
+      size: 40,
+    },
     {
       header: t('info'),
       accessorKey: 'image',

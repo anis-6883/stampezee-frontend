@@ -172,7 +172,9 @@
     "revolutionTitle": "هل أنت مستعد لتحويل تجربة عملائك؟",
     "revolutionBodyTitle": "انضم إلى الثورة الرقمية",
     "revolutionBodySubtitle": "للولاء الآن!",
-    "revolutionButtonText": "ابدأ الآن!"
+    "revolutionButtonText": "ابدأ الآن!",
+    "introVideoTitle": "ما هو StampEzee",
+    "introVideoDescription": "StampEzee هو حل ذكي لبرامج الولاء يستبدل البطاقات الورقية التقليدية ببطاقات طوابع رقمية، يتم تخزينها جميعًا بشكل مريح في هاتف العميل. مع كل زيارة أو عملية شراء، يحصل العملاء على طوابع رقمية يمكنهم استبدالها بمكافآت مثيرة — مما يحفزهم على التفاعل والعودة مرة أخرى."
   },
   "LoginPage": {
     "credentials": "بيانات الاعتماد: jane@doe.com / next-intl",

@@ -105,8 +105,8 @@ export default function CreateUpdateModal({
   const validationSchema = Yup.object().shape({
     branchId: Yup.string().required(tCommon('required')),
     firstName: Yup.string()
-      .matches(/^\S.*\S$|^\S{1}$/, 'FirstName cannot start or end with a space')
-      .matches(/^[A-Za-z\s]+$/, 'FirstName can only contain letters')
+      .matches(/^\S.*\S$|^\S{1}$/, 'First name cannot start or end with a space')
+      .matches(/^[A-Za-z\s]+$/, 'First name can only contain letters')
       .trim()
       .required(tCommon('required')),
     email: Yup.string()

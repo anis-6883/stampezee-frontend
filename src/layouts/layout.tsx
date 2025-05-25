@@ -1,3 +1,4 @@
+import { useDrawer } from '@/components/drawer-views/use-drawer';
 import { ROLE } from '@/config/constants';
 import { useRetailerGetProfileQuery, useSuperAdminGetProfileQuery } from '@/features/auth/authApi';
 import { setValue } from '@/features/auth/authSlice';
@@ -5,10 +6,11 @@ import { RootState } from '@/features/store';
 import Header from '@/layouts/header';
 import Sidebar from '@/layouts/sidebar';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function HydrogenLayout({ children }: { children: React.ReactNode }) {
+  const { openDrawer } = useDrawer();
   const dispatch = useDispatch();
   const { data: session, update } = useSession();
   const { role, accessToken } = useSelector((state: RootState) => state.authSlice);
@@ -41,12 +43,24 @@ export default function HydrogenLayout({ children }: { children: React.ReactNode
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, retailerProfile?.data, retailerProfileSuccess, superAdminProfile?.data, superAdminProfileSuccess, role]);
+
+  const handleLeftEdgeHover = useCallback(() => {
+    openDrawer({
+      view: <Sidebar className="static w-full xxl:w-full" />,
+      placement: 'left',
+      customSize: 320,
+    });
+  }, [openDrawer]);
+
   return (
     <main className="flex min-h-screen flex-grow">
+      {/* Left hover area */}
+      <div className="fixed left-0 top-0 z-50 h-screen w-5 cursor-pointer sxl:hidden" onMouseEnter={handleLeftEdgeHover} />
       <Sidebar className="fixed hidden dark:bg-gray-50 sxl:block" />
+
       <div className="2xl:ms-72 2xl:w-[calc(100%-288px)] flex w-full flex-col sxl:ms-[270px] sxl:w-[calc(100%-270px)]">
         <Header />
-        <div className=" ml-4 flex flex-grow flex-col px-4 pb-6 pt-2 md:px-5 lg:px-6 lg:pb-8 3xl:px-8 3xl:pt-4 4xl:px-10 4xl:pb-9">
+        <div className=" flex flex-grow flex-col px-4 pb-6 pt-2 md:px-5 lg:px-6 lg:pb-8 3xl:px-8 3xl:pt-4 4xl:px-10 4xl:pb-9">
           {children}
         </div>
       </div>
