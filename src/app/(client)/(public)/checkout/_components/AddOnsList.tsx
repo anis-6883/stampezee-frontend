@@ -80,7 +80,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
   ) : (
     <div className={`grid grid-cols-1 gap-4 ${isMemberShip ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
       {addOnList?.map((addOn: AddOn, index: number) => (
-        <div key={index}>
+        <div key={index} className="grid h-full">
           {subscription?.slug && subscription?.slug !== 'trial' && !isCheckedAddonBlock(addOn?.slug) ? (
             <div
               onClick={() => handleAddOnSelect(addOn)}
@@ -104,10 +104,10 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
               </div>
 
               {isMemberShip ? (
-                <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
+                <h3 className="mb-2 pr-10 text-base font-semibold capitalize">{addOn.title}</h3>
               ) : (
                 <div className="w-[180px]">
-                  <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
+                  <h3 className="mb-2 pr-10 text-base font-semibold capitalize">{addOn.title}</h3>
                 </div>
               )}
               {!selectedCurrencyExchangeRate?.name ? (
@@ -122,7 +122,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
               <ul className="text-gray-600">
                 {addOn.descriptions.map((info, idx) => (
                   <li className="flex items-center space-x-3" key={idx}>
-                    <IoCheckmarkDoneCircle className="text-2xl text-danger flex-shrink-0" /> <span className="mx-1 my-1">{info}</span>
+                    <IoCheckmarkDoneCircle className="flex-shrink-0 text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
                   </li>
                 ))}
               </ul>
@@ -140,10 +140,10 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
                 </div>
               )}
               {isMemberShip ? (
-                <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
+                <h3 className="mb-2 pr-10 text-base font-semibold capitalize">{addOn.title}</h3>
               ) : (
                 <div className="w-[180px]">
-                  <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
+                  <h3 className="mb-2 pr-10 text-base font-semibold capitalize">{addOn.title}</h3>
                 </div>
               )}
               {!selectedCurrencyExchangeRate?.name ? (
@@ -157,7 +157,7 @@ export default function AddOnsList({ isMemberShip, locale }: { isMemberShip?: bo
               <ul className="text-gray-600">
                 {addOn.descriptions.map((info, idx) => (
                   <li className="flex items-center space-x-3" key={idx}>
-                    <IoCheckmarkDoneCircle className="text-2xl text-danger flex-shrink-0" /> <span className="mx-1 my-1">{info}</span>
+                    <IoCheckmarkDoneCircle className="flex-shrink-0 text-2xl text-danger" /> <span className="mx-1 my-1">{info}</span>
                   </li>
                 ))}
               </ul>

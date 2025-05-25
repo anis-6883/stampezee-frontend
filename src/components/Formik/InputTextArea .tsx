@@ -7,6 +7,7 @@ export default function InputTextarea({
   label,
   rows = 5,
   required = true,
+  className,
   placeholder = 'Write you message...',
   readOnly = false,
 }: {
@@ -16,6 +17,7 @@ export default function InputTextarea({
   ref?: any;
   required?: boolean;
   readOnly?: boolean;
+  className?: string;
   type?: string;
   rows?: number;
 }) {
@@ -34,7 +36,7 @@ export default function InputTextarea({
             }
             placeholder={placeholder}
             readOnly={readOnly}
-            textareaClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
+            textareaClassName={`${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'} ${className}`}
             helperText={
               meta.touched && meta.error ? (
                 <span className="flex items-center gap-x-1">

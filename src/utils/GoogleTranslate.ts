@@ -17,7 +17,7 @@ const translateText = async (text: string[], targetLanguage: string, sourceLangu
 const translateData = async (data: any, targetLanguage: string, sourceLanguage: string) => {
   for (const item of data) {
     // Translate title
-    const translatedTitle = await translateText([item.title], targetLanguage, sourceLanguage);
+    const translatedTitle = await translateText([item.title?.toLowerCase()], targetLanguage, sourceLanguage);
     item.title = translatedTitle[0];
 
     // Translate descriptions

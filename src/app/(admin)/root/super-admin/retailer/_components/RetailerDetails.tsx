@@ -30,7 +30,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
     province,
     postalCode,
     currentPlan,
-    totalActiveBranch,
+    totalActiveBranches,
     totalActiveStamp,
     totalCustomer,
     totalRevenue,
@@ -41,6 +41,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
     addonSubscriptions,
     about,
     website,
+    businessCurrency,
   } = data?.data || {};
 
   if (currentPlan) {
@@ -82,6 +83,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
           <InfoRow label="Address" value={address ? address : 'N/A'} isLoading={isLoading} />
           <InfoRow label="About" value={about ? about : 'N/A'} isLoading={isLoading} />
           <InfoRow label="Website" value={website ? website : 'N/A'} isLoading={isLoading} />
+          <InfoRow label="Business Currency" value={businessCurrency ? businessCurrency : 'N/A'} isLoading={isLoading} />
           <InfoRow
             label="Current Plan"
             value={<span className={`${currentPlan === 'No Enrollment Yet' && 'text-danger'}`}>{currentPlan}</span>}
@@ -112,7 +114,8 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
         </div>
       </div>
 
-      <h2 className="my-5 text-lg font-bold">Branch Statistics: ({totalActiveBranch})</h2>
+      <h2 className="my-5 text-lg font-bold">Branch Statistics: ({totalActiveBranches})</h2>
+
       <BranchStatisticsTable data={branches} isLoading={isLoading} isError={isError} />
 
       <h2 className="my-5 text-lg font-bold">Subscriptions:</h2>

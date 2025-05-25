@@ -62,9 +62,9 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      <div className="md-px-0 container mx-auto mt-10 max-w-screen-xl px-3">
+      {/* <div className="md-px-0 container mx-auto mt-10 max-w-screen-xl px-3">
         <h1 className="text-2xl font-bold leading-tight  sm:text-6xl">{t('questionTitle')}</h1>
-      </div>
+      </div> */}
 
       <div className="md-px-0 container mx-auto mt-10 max-w-screen-xl px-3">
         <Accordion locale={locale} />

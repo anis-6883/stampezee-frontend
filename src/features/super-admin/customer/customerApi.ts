@@ -9,6 +9,7 @@ export const customerApi = apiSlice.injectEndpoints({
         return `/api/secret-root/admin/super-admin/manage-customer/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['superAdminCustomer'],
+      keepUnusedDataFor: 0,
     }),
     getSingleCustomerBySuperAdmin: builder.query({
       query: (id) => {

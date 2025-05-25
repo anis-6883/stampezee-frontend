@@ -4,13 +4,14 @@ import Button from '@/components/Formik/Button';
 import { PACKAGES } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { roundToTwoDecimals } from '@/features/subscription/subscriptionSlice';
-import { calculateBalancePrice, countDaysLeft } from '@/utils';
+import { calculateBalancePrice } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { FaArrowTrendUp } from 'react-icons/fa6';
+import { FaArrowTrendUp, FaRegCircleUser } from 'react-icons/fa6';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { IoDiamondOutline } from 'react-icons/io5';
+import { PiStampFill } from 'react-icons/pi';
 
 const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
   const { data: session }: any = useSession();
@@ -27,16 +28,47 @@ const BalanceCard = ({ showUpButton = false }: { showUpButton?: boolean }) => {
 
   return (
     <div className="m-4 flex flex-col gap-y-2 rounded-lg bg-[#F4F6F8] p-3">
+      {/* plan */}
       <div className="flex">
         <IoDiamondOutline className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('plan')} :</p>
         <span className="pl-3 font-medium capitalize">{session?.user?.planTitle}</span>
       </div>
-      <div className="flex">
-        <GiSandsOfTime className="text-xl" /> <p className="pl-3 text-center font-semibold">{t('expire')} : </p>
-        <span className="pl-3 font-medium text-danger">
-          {countDaysLeft(session?.user?.planValidAt)} {t2('daysLeft')}
-        </span>
+
+      {/* next renewal */}
+      <div className="flex ">
+        <GiSandsOfTime className="flex-shrink-0 text-xl" /> <p className="pl-3   font-semibold">{t('expire')} : </p>
+        {session?.user?.plan === 'trial' && session?.user?.unlimitedFieldName ? (
+          <span className="pl-3 font-medium text-danger">{session?.user?.unlimitedFieldName}</span>
+        ) : (
+          <span className="pl-3 font-medium text-danger">
+            {session?.user?.planDaysLeft} {t2('daysLeft')}
+          </span>
+        )}
       </div>
+
+      {showUpButton && session?.user?.plan == 'trial' && (
+        <>
+          {/* user limit */}
+          <div className="flex  ">
+            <FaRegCircleUser className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('userLimit')} : </p>
+            {session?.user?.allowTotalUser === 0 || session?.user?.allowTotalUser ? (
+              <span className="pl-3 font-medium text-danger">{session?.user?.allowTotalUser}</span>
+            ) : (
+              <span className="pl-3 font-medium capitalize text-danger">{t('unlimited')}</span>
+            )}
+          </div>
+          {/* stamp limit */}
+          <div className="flex  ">
+            <PiStampFill className="flex-shrink-0 text-xl" /> <p className="pl-3 text-center font-semibold">{t('stampLimit')} : </p>
+            {session?.user?.allowTotalScan === 0 || session?.user?.allowTotalScan ? (
+              <span className="pl-3 font-medium text-danger">{session?.user?.allowTotalScan}</span>
+            ) : (
+              <span className="pl-3 font-medium capitalize text-danger">{t('unlimited')}</span>
+            )}
+          </div>
+        </>
+      )}
+
       {/* {session?.user?.plan !== 'trial' && (
         <>
           <div className="flex">

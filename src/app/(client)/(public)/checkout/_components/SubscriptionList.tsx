@@ -2,6 +2,7 @@
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { SUBSCRIPTIONS } from '@/config/constants';
+import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import {
   downgradePlan,
@@ -17,6 +18,7 @@ import { calculateCurrencyExchangeRate } from '@/utils';
 import { translateData } from '@/utils/GoogleTranslate';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { MdStar } from 'react-icons/md';
@@ -109,6 +111,12 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
     // dispatch(resetAddOns());
   };
 
+  useEffect(() => {
+    if (!session?.user?.accessToken) {
+      return redirect(routes.publicRoutes?.retailerLogin);
+    }
+  }, [session]);
+
   return (
     <div>
       {isLoading || translateLoading ? (
@@ -135,23 +143,24 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
                     <span className="text-sm font-medium">{t('active')}</span>
                   </div>
                 )}
-                {/* {session?.user?.takeFreeTrial && item?.slug === 'trial' && (
-                  <div
-                    className={`absolute ${isRtl ? 'left-2' : 'right-2'} top-2 z-50 flex items-center justify-center space-x-1 rounded-lg border bg-red-600 px-2 py-1 text-white`}
-                  >
-                    <span className="font-medium">
-                      <IoCheckmarkDoneOutline className="text-lg" />
-                    </span>
-                    <span className="text-sm font-medium">{t('applied')}</span>
-                  </div>
-                )} */}
-                <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
+
+                <h3 className="mb-2 text-base font-semibold capitalize">{item.title}</h3>
                 {!selectedCurrencyExchangeRate?.name ? (
                   <Skeleton className="w-50 h-8 rounded" />
                 ) : (
                   <p className="mb-2 text-xl font-bold">
                     {item?.price ? item?.price?.toFixed(2) : Number(0).toFixed(2)}
-                    {` ${selectedCurrencyExchangeRate?.name}/${item.duration === 30 ? 'month' : `${item.duration} days`}`}
+                    {` ${selectedCurrencyExchangeRate?.name}/${
+                      item?.slug === 'trial'
+                        ? item?.isUnlimited
+                          ? item?.unlimitedFieldName
+                          : item.duration === 30
+                            ? 'month'
+                            : `${item?.duration} days`
+                        : item.duration === 30
+                          ? 'month'
+                          : `${item?.duration} days`
+                    }`}
                   </p>
                 )}
                 <ul className="text-gray-600">
@@ -170,13 +179,23 @@ export default function SubscriptionList({ isMemberShip, locale }: { isMemberShi
                   subscription?._id === item._id ? 'scale-105 border-2 border-red-600 ring-1 ring-red-400' : 'border'
                 } hover:border-red-600`}
               >
-                <h3 className="mb-2 text-base font-semibold">{item.title}</h3>
+                <h3 className="mb-2 text-base font-semibold capitalize">{item.title}</h3>
                 {!selectedCurrencyExchangeRate?.name ? (
                   <Skeleton className="w-50 h-8 rounded" />
                 ) : (
                   <p className="mb-2 text-xl font-bold">
                     {item?.price ? item?.price?.toFixed(2) : Number(0).toFixed(2)}
-                    {` ${selectedCurrencyExchangeRate?.name}/${item.duration === 30 ? 'month' : `${item.duration} days`}`}
+                    {` ${selectedCurrencyExchangeRate?.name}/${
+                      item?.slug === 'trial'
+                        ? item?.isUnlimited
+                          ? item?.unlimitedFieldName
+                          : item.duration === 30
+                            ? 'month'
+                            : `${item?.duration} days`
+                        : item.duration === 30
+                          ? 'month'
+                          : `${item?.duration} days`
+                    }`}
                   </p>
                 )}
                 <ul className="text-gray-600">

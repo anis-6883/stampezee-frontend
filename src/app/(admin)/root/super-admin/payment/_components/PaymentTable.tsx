@@ -19,18 +19,32 @@ import { PiFlagCheckeredFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 
-export default function PaymentTable({ timezone }: { timezone: string }) {
+export default function PaymentTable({ timezone, start, end }: { timezone: string; start: string; end: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetSubscriptionPaymentsQuery(
-    {
-      page: query.pageIndex + 1,
-      limit: query.pageSize,
-      ...searchQuery,
-    },
-    { skip: !accessToken }
-  );
+
+  const queryObject: any = {
+    page: query.pageIndex + 1,
+    limit: query.pageSize,
+    ...searchQuery,
+  };
+  if (start) {
+    queryObject.start = start;
+  }
+  if (end) {
+    queryObject.end = end;
+  }
+
+  // const { data, isLoading, isFetching } = useGetSubscriptionPaymentsQuery(
+  //   {
+  //     page: query.pageIndex + 1,
+  //     limit: query.pageSize,
+  //     ...searchQuery,
+  //   },
+  //   { skip: !accessToken }
+  // );
+  const { data, isLoading, isFetching } = useGetSubscriptionPaymentsQuery(queryObject, { skip: !accessToken });
 
   const structure = [
     {
@@ -145,7 +159,7 @@ export default function PaymentTable({ timezone }: { timezone: string }) {
             <div className="text-white">
               {row?.original?.enrollStatus === 'purchase' ? (
                 <Badge className="bg-primary text-white">
-                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                  <HiShoppingCart className="mr-1 text-xl" /> {'Paid Subscription'}
                 </Badge>
               ) : row?.original?.enrollStatus === 'upgrade' ? (
                 <Badge className="!bg-success text-white">
@@ -153,7 +167,7 @@ export default function PaymentTable({ timezone }: { timezone: string }) {
                 </Badge>
               ) : row?.original?.enrollStatus === 'trial' ? (
                 <Badge className="!bg-black text-white">
-                  <HiShoppingCart className="mr-1 text-xl" /> {_.capitalize(row?.original?.enrollStatus)}
+                  <HiShoppingCart className="mr-1 text-xl" /> {'Free Subscription'}
                 </Badge>
               ) : (
                 <Badge className="!bg-danger text-white">
@@ -170,7 +184,7 @@ export default function PaymentTable({ timezone }: { timezone: string }) {
       mantineTableBodyCellProps: {
         align: 'center',
       },
-      size: 120,
+      size: 170,
     },
     {
       header: 'Actions',

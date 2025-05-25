@@ -45,7 +45,7 @@ export default function Table({
     const baseColumns = structure;
 
     // Show Serial No by default, unless hasSerialNo is explicitly false
-    const shouldShowSerialNo = enableRowNumbers !== true;
+    const shouldShowSerialNo = enableRowNumbers;
 
     if (shouldShowSerialNo) {
       return [

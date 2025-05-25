@@ -5,15 +5,17 @@ import Flatpickr from 'react-flatpickr';
 
 interface DateRangeProps {
   label?: string;
+  value?: string;
   enableTime?: boolean;
   range?: boolean;
   required?: boolean;
   changeHandler: (value: string) => void;
 }
 
-const DatePicker: React.FC<DateRangeProps> = ({ label, enableTime = false, range = false, required = true, changeHandler }) => {
+const DatePicker: React.FC<DateRangeProps> = ({ value, label, enableTime = false, range = false, required = true, changeHandler }) => {
   return (
     <Flatpickr
+      value={value} // this makes it controlled
       render={({ defaultValue, value, ...props }, ref) => (
         <div className="flex flex-col gap-y-0.5">
           {label && (
@@ -31,22 +33,34 @@ const DatePicker: React.FC<DateRangeProps> = ({ label, enableTime = false, range
               ref={ref}
               placeholder={range ? 'YYYY-MM-DD to YYYY-MM-DD' : enableTime ? 'YYYY-MM-DD HH:II' : 'YYYY-MM-DD'}
               aria-label="Select date range"
+              onInput={(e) => {
+                const value = (e.target as HTMLInputElement).value;
+                if (value === '') {
+                  changeHandler('');
+                }
+              }}
             />
-            {/* <div
-              //   onClick={() => setFieldValue(name, '')}
-              className="border-r-none flex h-10 w-10 cursor-pointer items-center justify-center rounded-r-lg border border-gray-200 bg-gray-200 hover:border-slate-300 hover:bg-danger hover:text-white"
-            >
-              <MdOutlineClose className="text-xl" />
-            </div> */}
           </div>
         </div>
       )}
-      //   value={values[name]}
       options={{
-        onChange: function (_, selectedDates) {
-          //   setFieldValue(name, selectedDates);
-          // console.log({ selectedDates });
-          changeHandler(selectedDates);
+        onChange: function (selectedDates: Date[]) {
+          const formatDate = (date: Date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+          };
+
+          if (range) {
+            if (selectedDates.length === 2) {
+              const formattedRange = selectedDates.map(formatDate).join(' to ');
+              changeHandler(formattedRange);
+            }
+          } else {
+            const formattedDate = selectedDates[0] ? formatDate(selectedDates[0]) : null;
+            if (formattedDate) changeHandler(formattedDate);
+          }
         },
         disableMobile: true,
         allowInput: false,

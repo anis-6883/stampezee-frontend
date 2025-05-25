@@ -3,6 +3,7 @@ import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import PaymentTable from './_components/PaymentTable';
+import SuperAdminPaymentTopSection from './_components/SuperAdminPaymentTopSection';
 
 const pageHeader = {
   title: 'Manage Payments',
@@ -24,8 +25,7 @@ export default async function Page() {
 
   return (
     <div>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <PaymentTable timezone={data?.data?.general?.timezone?.label} />
+      <SuperAdminPaymentTopSection pageHeader={pageHeader} timezone={data?.data?.general?.timezone?.label} />
     </div>
   );
 }

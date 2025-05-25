@@ -1,11 +1,12 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Drawer } from 'rizzui';
 import { useDrawer } from './use-drawer';
 
 export default function GlobalDrawer() {
+  const [show, setShow] = useState(false);
   const { isOpen, view, placement, customSize, closeDrawer } = useDrawer();
   const pathname = usePathname();
 
@@ -13,6 +14,21 @@ export default function GlobalDrawer() {
     closeDrawer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (target.closest('.rizzui-drawer-overlay')) {
+        closeDrawer();
+      }
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [closeDrawer]);
 
   return (
     <Drawer

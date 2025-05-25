@@ -34,6 +34,8 @@ export interface IAllBranchQueryArgs {
   search?: string | null;
 }
 export interface IPagination {
+  start?: string;
+  end?: string;
   page: number;
   limit: number;
   hasNext?: boolean;
@@ -50,6 +52,8 @@ export interface IOption {
 export type IResponse = {
   status: boolean;
   message: string;
+  start?: string;
+  end?: string;
   pagination?: IPagination;
   data: any;
   notificationLimit?: number;
@@ -375,6 +379,8 @@ export interface Subscription {
   isBlocked?: boolean;
   allowTotalBranch?: number;
   allowTotalStamp?: number;
+  isUnlimited?: boolean;
+  unlimitedFieldName?: string;
 }
 
 export interface AddOn {
@@ -467,8 +473,31 @@ interface IPage {
   terms?: string;
 }
 
+interface IIos {
+  name?: string;
+  version: number;
+  forceUpdate: boolean;
+  appUrl: string;
+  buttonText: string;
+  description: string;
+}
+
+interface IAndroid {
+  name: string;
+  version: number;
+  forceUpdate: boolean;
+  appUrl: string;
+  buttonText: string;
+  description: string;
+}
+interface IAppVersion {
+  ios?: IIos;
+  android?: IAndroid;
+}
+
 export interface IGeneralSettingData {
   general?: IGeneral;
+  appVersion?: IAppVersion;
   mail?: IMail;
   notification?: INotification;
   s3Bucket?: IS3Bucket;

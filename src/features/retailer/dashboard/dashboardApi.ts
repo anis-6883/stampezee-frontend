@@ -3,13 +3,41 @@ import { apiSlice } from '@/features/api/apiSlice';
 export const dashboardApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getRetailerDashboardCalc: builder.query({
-      query: () => `/api/web/retailer/dashboard/calc`,
-      keepUnusedDataFor: 5,
+      query: (queries?: { dateRange?: string }) => {
+        const dateRange = queries?.dateRange;
+
+        if (dateRange) {
+          if (dateRange.includes('to')) {
+            const dates = dateRange.replaceAll(' ', '').split('to');
+            const [start, end] = dates;
+            return `/api/web/retailer/dashboard/calc?start=${start}&end=${end}`;
+          }
+          return `/api/web/retailer/dashboard/calc?start=${dateRange}&end=${dateRange}`;
+        }
+
+        // fallback if dateRange is not passed
+        return `/api/web/retailer/dashboard/calc`;
+      },
+      keepUnusedDataFor: 0,
       providesTags: ['retailerProfile'],
     }),
     rewardCollectPercentage: builder.query({
-      query: () => `/api/web/retailer/dashboard/reward-collect-percentage`,
-      keepUnusedDataFor: 5,
+      query: (queries?: { dateRange?: string }) => {
+        const dateRange = queries?.dateRange;
+
+        if (dateRange) {
+          if (dateRange.includes('to')) {
+            const dates = dateRange.replaceAll(' ', '').split('to');
+            const [start, end] = dates;
+            return `/api/web/retailer/dashboard/reward-collect-percentage?start=${start}&end=${end}`;
+          }
+          return `/api/web/retailer/dashboard/reward-collect-percentage?start=${dateRange}&end=${dateRange}`;
+        }
+
+        // fallback if dateRange is not passed
+        return `/api/web/retailer/dashboard/reward-collect-percentage`;
+      },
+      keepUnusedDataFor: 0,
     }),
     avgCollectedStamp: builder.query({
       query: (queries) => {
@@ -26,7 +54,7 @@ export const dashboardApi = apiSlice.injectEndpoints({
 
         return `/api/web/retailer/dashboard/avg-collected-stamp`;
       },
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: 0,
     }),
   }),
 });

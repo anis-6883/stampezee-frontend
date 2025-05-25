@@ -7,13 +7,22 @@ import { useGetTopOutletsQuery } from '@/features/super-admin/dashboard/dashboar
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
-export default function TopBranchTable() {
+export default function TopBranchTable({ dateRange }: { dateRange: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { data, isLoading, isError } = useGetTopOutletsQuery(null, { skip: !accessToken });
+  const { data, isLoading, isError, isFetching } = useGetTopOutletsQuery({ dateRange }, { skip: !accessToken });
 
-  const tableHeaders = ['Serial No', 'Retailer Name', 'Retailer Email', 'Branch Name', 'Branch Address', 'Total Revenue'];
+  const tableHeaders = [
+    'Serial No.',
+    'Retailer Store Name',
+    'Retailer Store Email',
+    'Branch Name',
+    'Total Customer',
+    'Total Stamp Cards',
+    'Total Stamps',
+    'Total Revenue',
+  ];
 
-  if (isLoading || isError) {
+  if (isLoading || isError || isFetching) {
     return (
       <>
         <h2 className="mb-5 text-lg font-medium">Top Branch List:</h2>
@@ -80,18 +89,31 @@ export default function TopBranchTable() {
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     {index + 1}
                   </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     <Link href={routes.privateRoutes.superAdmin.retailer.details(item.retailer._id)}>{item.retailer.storeName}</Link>
                   </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     {retailerEmail}
                   </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     {item?.branch.name}
                   </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {item?.branch.address}
+                    {item?.branch?.totalCustomers}
                   </td>
+
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    {item?.branch?.totalStampsCards}
+                  </td>
+
+                  <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    {item?.branch?.totalStamps}
+                  </td>
+
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                     {item?.totalRevenue && item?.totalRevenue.toFixed(2)} {item?.amountCurrency}
                   </td>

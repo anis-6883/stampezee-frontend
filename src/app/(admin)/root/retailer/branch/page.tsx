@@ -28,7 +28,6 @@ export default async function Page() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-
       <BranchTable />
     </>
   );

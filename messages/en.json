@@ -38,8 +38,9 @@
     "warning": "Warning!",
     "info": "Info",
     "associatedSubAdminAndStampsWillBeDeleted": "Associated sub-admin and stamps will also deleted!",
-    "notNow": "Not Now",
-    "confirm": "Yes, Confirm"
+    "notNow": "Keep It",
+    "confirmPlan": "Yes, Cancel Plan",
+    "confirmAddon": "Yes, Cancel Add-on"
   },
   "ActivateConfirmModal": {
     "title": "Activate Confirmation",
@@ -73,12 +74,12 @@
     "revolutionize": "Revolutionize",
     "yourCustomer": "Your Customer",
     "experience": "Experience",
-    "bannerDetails": "Engage, reward, and retain your customers with a touch of simplicity and technology, and bring the future of loyalty programs to your business.",
-    "bannerButtonText": "GET STARTED",
+    "bannerDetails": "Engage, reward, and retain your customers with a touch of simplicity and technology. No more clunky paper punch cards or complex systems – just a streamlined digital solution that delights customers and drives repeat business.",
+    "bannerButtonText": "Get Started for Free!",
     "heroTitleOne": "Why choose StampEzee?",
     "heroDescriptionOne": "Digitalization has transformed the way businesses interact with their customers. Our platform combines intuitive design, robust analytics, and unparalleled customization, bringing you the ultimate tool for customer engagement.",
     "heroTitleTwo": "Empower Customer Retention",
-    "heroDescriptionTwo": "In today's competitive market, customer retention is key. StampEzee fosters loyalty and encourages repeat business. More than a rewards system, our platform amplifies your brand engagement, nurturing long-lasting customer relationships.",
+    "heroDescriptionTwo": "In today’s competitive market, customer retention is key. StampEzee helps turn one-time buyers into loyal regulars by making rewards fun and effortless. More than just a rewards system, our platform amplifies your brand engagement and nurtures long-lasting relationships. Customers love using StampEzee – they’ll never forget or lose a loyalty card again, and they get excited about earning free rewards. By bringing convenience and a personal touch to your loyalty program, StampEzee keeps your customers coming back for more.",
     "workMainTitle": "How It Works?",
     "workTitleOne": "UNMATCHED",
     "workSubtitleOne": "FLEXIBILITY",
@@ -122,7 +123,8 @@
     "email": "Email",
     "phone": "Phone Number",
     "message": "Message",
-    "buttonText": "Send"
+    "buttonText": "Send",
+    "warningText": "Fields marked with * are mandatory!"
   },
   "pricingPage": {
     "explore": "Explore",
@@ -132,7 +134,8 @@
     "ourAddons": "Our Add-ons",
     "pricingButtonText": "Get started",
     "applied": "Applied",
-    "active": "Active"
+    "active": "Active",
+    "tooltipText": "You can select add-on after choosing a plan!"
   },
   "CheckoutPage": {
     "plans": "Plans",
@@ -268,7 +271,7 @@
     "Stamp Cards": "Stamp Cards",
     "Stamps": "Stamps",
     "Customers": "Customers",
-    "Custom Stamp Card Images": "Custom Stamp Card Images",
+    "Custom Stamp Image": "Custom Stamp Image",
     "Push Notifications": "Push Notifications",
     "Regular": "Regular",
     "Location Based": "Location Based",
@@ -278,7 +281,7 @@
     "title": "Retailer Dashboard",
     "totalOrders": "Total Stamps",
     "totalRevenue": "Total Revenue",
-    "totalCustomer": "Total Customer",
+    "totalCustomer": "Total Customers",
     "totalActiveStamp": "Total Active Stamp Cards",
     "branchStatistics": "Branch Statistics"
   },
@@ -286,13 +289,15 @@
     "serialNo": "Serial No.",
     "branchName": "Branch Name",
     "branchAddress": "Branch Address",
-    "subAdminName": "Sub Admin Name",
-    "subAdminEmail": "Sub Admin Email",
-    "totalStamp": "Total Stamp",
-    "totalCustomer": "Total Customer",
+    "subAdminName": "Loyalty-Exclusive Name",
+    "subAdminEmail": "Loyalty-Exclusive Email",
+    "totalStamp": "Total Stamp Cards",
+    "totalCustomer": "Total Customers",
     "totalSubAdmin": "Total Loyalty Executive",
     "totalOrder": "Total Stamps",
-    "totalRevenue": "Total Revenue"
+    "totalStampCard": "Total Stamp Cards",
+    "totalRevenue": "Total Revenue",
+    "totalRewardsCollected": "Total Rewards Collected"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "Average Stamp Collection Overview",
@@ -301,9 +306,10 @@
     "withDate": "With Date",
     "stampCollectStatus": "Avg. Stamps Collected per Customer",
     "totalCollectedStamp": "Total Stamps Collected",
-    "totalUniqueCustomer": "Unique Customers",
+    "totalUniqueCustomer": "Unique Stamp Scanners",
     "rewardCollectStatus": "Reward Collect Ratio",
-    "rewardEligible": "Users Eligible for Reward",
+    "rewardEligible": "User Eligible for Reward",
+    "rewardEligibles": "Users Eligible for Reward",
     "rewardEfficacy": "Collected vs. Not Collected",
     "collected": "Collected",
     "notCollected": "Not Collected",
@@ -435,7 +441,7 @@
   },
   "RetailerSubAdmin": {
     "title": "Manage Loyalty-Exclusive",
-    "subAdmins": "Sub-Admins",
+    "subAdmins": "Loyalty-Exclusive",
     "dashboard": "Dashboard",
     "addNewSubAdmin": "Add New Loyalty-Executive",
     "updateASubAdmin": "Update A Loyalty-Executive",
@@ -559,7 +565,7 @@
     "customer": "Customer",
     "scannedBy": "Stamped By",
     "status": "Status",
-    "placeHolder": "Search By Customer Name Or Email"
+    "placeHolder": "Search By Customer Name"
   },
   "RetailerProfile": {
     "title": "Manage Profile",
@@ -586,8 +592,11 @@
   "RetailerBalanceCard": {
     "plan": "Plan",
     "expire": "Next Renewal",
+    "userLimit": "User Limit",
+    "stampLimit": "Stamp Limit",
     "current": "Current",
-    "usage": "Usage"
+    "usage": "Usage",
+    "unlimited": "Unlimited"
   },
   "RetailerNotification": {
     "title": "Manage Regular Notification",
@@ -648,7 +657,7 @@
   },
   "RetailerStampImage": {
     "title": "Manage Custom Stamp Image",
-    "customStampImage": "Manage Custom Stamp",
+    "customStampImage": "Manage Custom Stamp Image",
     "dashboard": "Dashboard"
   },
   "RetailerStampImageTable": {
@@ -679,7 +688,7 @@
     "joinedDate": "Joined Date",
     "statistics": "Statistics",
     "actions": "Actions",
-    "placeHolder": "Search By Customer Name or Email",
+    "placeHolder": "Search By Customer Name",
     "name": "Name",
     "email": "Email",
     "phone": "Phone",
@@ -719,8 +728,8 @@
     "status": "Status",
     "branchName": "Branch Name",
     "branchAddress": "Branch Address",
-    "subAdminName": "Sub Admin Name",
-    "subAdminEmail": "Sub Admin Email",
+    "subAdminName": "Loyalty-Exclusive Name",
+    "subAdminEmail": "Loyalty-Exclusive Email",
     "name": "Name",
     "email": "Email",
     "phone": "Phone",

@@ -346,7 +346,7 @@ export default function Update({ Id }: any) {
                   {tCommon('baseCurrency')}: <span className="text-red-600">CAD</span>
                 </span>
                 <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
-                <span>{tCommon('needDoubleClickToSelectASingleDate')}</span>
+                {/* <span>{tCommon('needDoubleClickToSelectASingleDate')}</span> */}
               </p>
               {!stampData?.data?.isPublished && (
                 <div className="mt-2 flex justify-end">

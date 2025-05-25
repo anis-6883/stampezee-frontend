@@ -25,8 +25,8 @@ export default function CreateUpdateModel({
 }: {
   formData: any;
   modalState: boolean;
-  setFormData: (data: any) => void;
-  setModalState: (state: boolean) => void;
+  setFormData: any;
+  setModalState: any;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -44,47 +44,82 @@ export default function CreateUpdateModel({
     type: formData?.type || 'subscription',
     slug: formData?.slug || '',
     duration: formData?.duration || 0,
-    durationTitle: '',
+    unlimitedFieldName: formData?.unlimitedFieldName || 'Unlimited',
     allowTotalUser: formData?.allowTotalUser || 0,
     allowTotalScan: formData?.allowTotalScan || 0,
     isUserUnlimited: formData?.allowTotalUser !== null ? false : true,
     isScanUnlimited: formData?.allowTotalScan !== null ? false : true,
-    isDurationUnlimited: false,
+    isUnlimited: formData?.isUnlimited || false,
   };
 
   const validationSchema = Yup.object({
     title: Yup.string().trim().required('Required!'),
-    price: Yup.mixed().required('Required!'),
+    price: Yup.number().typeError('Price must be a number').required('Required!').min(0, 'Price cannot be negative'),
     slug: Yup.string().trim().required('Required!'),
     type: Yup.mixed().oneOf(['subscription', 'addon']).required('Required!'),
-    duration: Yup.string().when('slug', {
-      is: 'trial',
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+    duration: Yup.string().when('isUnlimited', {
+      is: false,
+      then: () =>
+        Yup.number()
+          .min(1, 'Duration must be greater than or equal 1!')
+          .typeError('Must be a number!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
+    }),
+    unlimitedFieldName: Yup.string().when('isUnlimited', {
+      is: true,
+      then: () => Yup.string().required('Required!'),
+      otherwise: () => Yup.string().nullable(),
     }),
     allowTotalBranch: Yup.string().when('type', {
       is: 'subscription',
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .typeError('Must be a number!')
+          .min(1, 'Total branch must be greater than or equal 1!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalTeamMember: Yup.string().when('type', {
       is: 'subscription',
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .typeError('Must be a number!')
+          .integer('Must be an integer!')
+          .min(1, 'Total user must be greater than or equal 1!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalStamp: Yup.string().when('type', {
       is: 'subscription',
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .typeError('Must be a number!')
+          .min(1, 'Total stamps must be greater than or equal 1!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalUser: Yup.string().when('isUserUnlimited', {
       is: false,
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .typeError('Must be a number!')
+          .min(1, 'Total users must be greater than or equal 1!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     allowTotalScan: Yup.string().when('isScanUnlimited', {
       is: false,
-      then: () => Yup.number().typeError('Must be a number!').integer('Must be an integer!').required('Required!'),
+      then: () =>
+        Yup.number()
+          .typeError('Must be a number!')
+          .min(1, 'Total stamps must be greater than or equal 1!')
+          .integer('Must be an integer!')
+          .required('Required!'),
       otherwise: () => Yup.number().nullable(),
     }),
     limit: Yup.string().when('type', {
@@ -128,6 +163,9 @@ export default function CreateUpdateModel({
       }
       if (values?.isUserUnlimited) {
         values.allowTotalUser = null;
+      }
+      if (!values?.isUnlimited) {
+        ignoreList.push('unlimitedFieldName');
       }
 
       ignoreList.push('isUserUnlimited', 'isScanUnlimited');
@@ -213,15 +251,15 @@ export default function CreateUpdateModel({
                           label={<span className="text-sm font-normal text-black">Unlimited</span>}
                           size="sm"
                           onChange={() => {
-                            setFieldValue('isDurationUnlimited', !values?.isDurationUnlimited);
+                            setFieldValue('isUnlimited', !values?.isUnlimited);
                           }}
-                          checked={values?.isDurationUnlimited}
+                          checked={values?.isUnlimited}
                         />
                       </div>
 
-                      {values?.isDurationUnlimited ? (
+                      {values?.isUnlimited ? (
                         <InputField
-                          name="durationTitle"
+                          name="unlimitedFieldName"
                           label=""
                           type="text"
                           placeholder="Unlimited"

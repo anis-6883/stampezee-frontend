@@ -7,6 +7,7 @@ import { IGeneralSetting, IGeneralSettingData } from '@/types';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { VscSourceControl } from 'react-icons/vsc';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { FaAws, FaCcStripe } from 'react-icons/fa6';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
@@ -23,6 +24,8 @@ import S3BucketForm from './S3BucketForm';
 import StripeSettingsForm from './StripeSettingsForm';
 import TabButtonItem from './TabButtonItem';
 import TermsAndConditionForm from './TermsAndConditionForm';
+import VersionControlForm from './VersionControlForm';
+import * as Yup from 'yup';
 
 function updateGeneralSetting(generalSetting: IGeneralSetting) {
   const updatedObject = {
@@ -48,6 +51,24 @@ function updateGeneralSetting(generalSetting: IGeneralSetting) {
       instagram: generalSetting?.data?.general?.instagram || '',
       linkedin: generalSetting?.data?.general?.linkedin || '',
       tiktok: generalSetting?.data?.general?.tiktok || '',
+    },
+    appVersion: {
+      ios: {
+        name: generalSetting?.data?.appVersion?.ios?.name || '',
+        version: generalSetting?.data?.appVersion?.ios?.version || 0,
+        forceUpdate: generalSetting?.data?.appVersion?.ios?.forceUpdate || true,
+        appUrl: generalSetting?.data?.appVersion?.ios?.appUrl || '',
+        buttonText: generalSetting?.data?.appVersion?.ios?.buttonText || '',
+        description: generalSetting?.data?.appVersion?.ios?.description || '',
+      },
+      android: {
+        name: generalSetting?.data?.appVersion?.android?.name || '',
+        version: generalSetting?.data?.appVersion?.android?.version || 0,
+        forceUpdate: generalSetting?.data?.appVersion?.android?.forceUpdate || false,
+        appUrl: generalSetting?.data?.appVersion?.android?.appUrl || '',
+        buttonText: generalSetting?.data?.appVersion?.android?.buttonText || '',
+        description: generalSetting?.data?.appVersion?.android?.description || '',
+      },
     },
     mail: {
       host: generalSetting?.data?.mail?.host || '',
@@ -96,6 +117,8 @@ function cleanTimezoneLabel(obj: any) {
 export default function SettingsMainForm() {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { data: generalSetting, isLoading: generalSettingLoading } = useGetGeneralSettingsQuery(undefined, { skip: !accessToken });
+
+  console.log(generalSetting);
   const [updateGeneralSettings, { data: updatedData, isSuccess, isError: updatingError }] = useUpdateGeneralSettingsMutation();
   const [currentTab, setCurrentTab] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -118,6 +141,24 @@ export default function SettingsMainForm() {
       instagram: '',
       tiktok: '',
       contactEmail: '',
+    },
+    appVersion: {
+      ios: {
+        name: '',
+        version: 0,
+        forceUpdate: false,
+        appUrl: '',
+        buttonText: '',
+        description: '',
+      },
+      android: {
+        name: '',
+        version: 0,
+        forceUpdate: false,
+        appUrl: '',
+        buttonText: '',
+        description: '',
+      },
     },
     mail: {
       host: '',
@@ -179,6 +220,10 @@ export default function SettingsMainForm() {
       icon: <HiOutlineCog8Tooth className="text-xl" />,
     },
     {
+      name: 'App Version',
+      icon: <VscSourceControl className="text-xl" />,
+    },
+    {
       name: 'Email Settings',
       icon: <TbMail className="text-xl" />,
     },
@@ -214,13 +259,34 @@ export default function SettingsMainForm() {
 
   // Submit Handler
   const handleSubmit = async (values: any) => {
+    // console.log(values);
     setIsSubmitting(true);
     // cleanTimezoneLabel(values);
     updateGeneralSettings(values);
   };
 
+  const validationSchema = Yup.object({
+    appVersion: Yup.object({
+      ios: Yup.object({
+        version: Yup.number()
+          .typeError('Version must be a number')
+          .integer('Version must be an integer')
+          .min(0, 'Version cannot be negative')
+          .required('Version is required'),
+        description: Yup.string().min(5, 'At least 5 characters!').max(300, 'maximum 300 characters!'),
+      }),
+      android: Yup.object({
+        version: Yup.number()
+          .typeError('Version must be a number')
+          .integer('Version must be an integer')
+          .min(0, 'Version cannot be negative')
+          .required('Version is required'),
+        description: Yup.string().min(5, 'At least 5 characters!').max(300, 'maximum 300 characters!'),
+      }),
+    }),
+  });
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
+    <Formik validationSchema={validationSchema} initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
       {({ values, setFieldValue }) => {
         return (
           <Form>
@@ -243,30 +309,33 @@ export default function SettingsMainForm() {
                 </div>
 
                 <div hidden={currentTab === 1 ? false : true}>
+                  <VersionControlForm />
+                </div>
+                <div hidden={currentTab === 2 ? false : true}>
                   <EmailSettingsForm />
                 </div>
 
-                <div hidden={currentTab === 2 ? false : true}>
+                <div hidden={currentTab === 3 ? false : true}>
                   <NotificationSettingsForm />
                 </div>
 
-                <div hidden={currentTab === 3 ? false : true}>
+                <div hidden={currentTab === 4 ? false : true}>
                   <S3BucketForm />
                 </div>
 
-                <div hidden={currentTab === 4 ? false : true}>
+                <div hidden={currentTab === 5 ? false : true}>
                   <StripeSettingsForm />
                 </div>
 
-                <div hidden={currentTab === 5 ? false : true}>
+                <div hidden={currentTab === 6 ? false : true}>
                   <GoogleMapForm />
                 </div>
 
-                <div hidden={currentTab === 6 ? false : true}>
+                <div hidden={currentTab === 7 ? false : true}>
                   <TermsAndConditionForm values={values} setFieldValue={setFieldValue} />
                 </div>
 
-                <div hidden={currentTab === 7 ? false : true}>
+                <div hidden={currentTab === 8 ? false : true}>
                   <PrivacyAndPolicyForm values={values} setFieldValue={setFieldValue} />
                 </div>
               </div>

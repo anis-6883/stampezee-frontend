@@ -23,11 +23,12 @@ function extractLinks(obj: any) {
 const superAdminProtectedRoutes = extractLinks(routes?.privateRoutes?.superAdmin);
 const retailerProtectedRoutes = extractLinks(routes?.privateRoutes?.retailer);
 
+retailerProtectedRoutes?.push('/checkout');
+
 const middleware = withAuth(
   function middleware(request) {
     const token = request.nextauth?.token;
     const pathname = request.nextUrl.pathname;
-
     const isSuperAdminProtected = superAdminProtectedRoutes.includes(pathname);
     const isRetailerProtected = retailerProtectedRoutes.includes(pathname);
 

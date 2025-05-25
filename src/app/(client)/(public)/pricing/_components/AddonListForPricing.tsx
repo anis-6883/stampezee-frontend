@@ -56,7 +56,7 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
   ) : (
     <div className={`grid gap-4 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]`}>
       {addOnList?.map((addOn: AddOn, index: number) => (
-        <div key={index}>
+        <div key={index} className="grid h-full">
           <div className={`relative rounded-lg border p-4`}>
             {session?.user?.activeAddonSlugs?.includes(addOn?.slug) ? (
               <div
@@ -68,19 +68,13 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
                 <span className="text-sm font-medium">{t('active')}</span>
               </div>
             ) : (
-              <Tooltip
-                className="bg-danger text-white"
-                placement="top"
-                size="md"
-                arrowClassName="fill-danger"
-                content={'You can select add-on after choosing a plan!'}
-              >
+              <Tooltip className="bg-danger text-white" placement="top" size="md" arrowClassName="fill-danger" content={t('tooltipText')}>
                 <div className={`absolute z-0 ${isRtl ? 'left-2' : 'right-2'} top-2 `}>
                   <IoInformationCircleOutline className="text-2xl" />
                 </div>
               </Tooltip>
             )}
-            <h3 className="mb-2 text-base font-semibold">{addOn.title}</h3>
+            <h3 className="mb-2 pr-10 text-base font-semibold capitalize sxl:pr-16">{addOn.title}</h3>
             {!selectedCurrencyExchangeRate?.name ? (
               <Skeleton className="w-50 h-8 rounded" />
             ) : (
@@ -93,7 +87,8 @@ export default function AddOnListForPricing({ locale }: { locale?: string }) {
             <ul className="">
               {addOn.descriptions.map((info, idx) => (
                 <li className="flex items-center space-x-3" key={idx}>
-                  <IoCheckmarkDoneCircle className="text-2xl text-[#e02826] flex-shrink-0" /> <span className="mx-1 my-1 text-gray-600">{info}</span>
+                  <IoCheckmarkDoneCircle className="flex-shrink-0 text-2xl text-[#e02826]" />{' '}
+                  <span className="mx-1 my-1 text-gray-600">{info}</span>
                 </li>
               ))}
             </ul>

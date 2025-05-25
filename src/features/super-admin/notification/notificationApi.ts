@@ -10,7 +10,7 @@ export const notificationApi = apiSlice.injectEndpoints({
         return `/api/secret-root/admin/super-admin/notification/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['superAdminNotifications'],
-      keepUnusedDataFor: 10,
+      keepUnusedDataFor: 0,
     }),
     createNotificationBySuperAdmin: builder.mutation({
       query: (data) => ({

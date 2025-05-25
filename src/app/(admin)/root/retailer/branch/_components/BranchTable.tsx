@@ -14,7 +14,6 @@ import {
 } from '@/features/retailer/branch/branchApi';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { IQueryType, Subscription } from '@/types';
-import { countDaysLeft } from '@/utils';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -162,10 +161,12 @@ export default function BranchTable() {
     {
       header: t('expiryDay'),
       Cell: ({ row }: any) => {
-        const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
+        const countDays = row?.original?.enrollSubscription?.planDaysLeft;
 
         return row?.original?.disabledBySystem ? (
           <span className="font-semibold text-danger">{t('expired')}</span>
+        ) : session?.user?.plan === 'trial' && row?.original?.enrollSubscription?.unlimitedFieldName ? (
+          <span className="font-semibold text-danger">{session?.user?.unlimitedFieldName}</span>
         ) : (
           <span className="font-semibold text-danger">{countDays < 0 ? t('expired') : `${countDays} ${t('daysLeft')}`}</span>
         );
@@ -181,7 +182,7 @@ export default function BranchTable() {
       header: t3('status'),
       accessorKey: 'status',
       Cell: ({ row }: any) => {
-        const countDays = countDaysLeft(row?.original?.enrollSubscription?.validityTo);
+        const countDays = row?.original?.enrollSubscription?.planDaysLeft;
 
         return row?.original?.disabledBySystem || countDays < 0 ? (
           <Switch
@@ -271,7 +272,8 @@ export default function BranchTable() {
   ];
 
   const totalAllowBranch = session?.user?.totalBranch;
-  const totalCreatedBranch = data?.data.totalDocs;
+  const totalDisabledBySystem = data?.data?.docs?.filter((item: any) => item?.disabledBySystem && item?.source === 'subscription')?.length;
+  const totalCreatedBranch = data?.data.totalDocs - totalDisabledBySystem;
 
   return (
     <>

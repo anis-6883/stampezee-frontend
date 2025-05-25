@@ -6,12 +6,26 @@ import { useGetDashboardCalcQuery } from '@/features/super-admin/dashboard/dashb
 import cn from '@/hooks/class-names';
 import { IoInformationCircleOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
-import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip as ReTooltip } from 'recharts';
 import { Text, Title, Tooltip } from 'rizzui';
 
-export default function SignUpStatus({ className }: { className?: string }) {
+// Custom tooltip component
+const CustomTooltip = ({ active, payload, totalCustomer = 0, totalRetailer = 0 }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div className="max-w-52 rounded-lg bg-danger px-3 py-2 text-white shadow">
+        <p className="font-semibold">{`Retailer : ${totalRetailer}`}</p>
+        <p className="font-semibold">{`Customer : ${totalCustomer}`}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+export default function SignUpStatus({ className, dateRange }: { className?: string; dateRange: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { data: dashBoardData, isLoading, isError } = useGetDashboardCalcQuery(null, { skip: !accessToken });
+  const { data: dashBoardData, isLoading, isError, isFetching } = useGetDashboardCalcQuery({ dateRange }, { skip: !accessToken });
 
   const data = [
     { name: 'Retailer Signup:', value: Number(dashBoardData?.data?.signupRatio?.retailer), color: '#3872FA' },
@@ -47,21 +61,21 @@ export default function SignUpStatus({ className }: { className?: string }) {
             arrowClassName={`fill-danger`}
           >
             <span>
-              <IoInformationCircleOutline className="text-xl text-danger " />
+              <IoInformationCircleOutline className="cursor-pointer text-xl text-danger" />
             </span>
           </Tooltip>
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">
           <div className="mx-auto h-44 w-44">
-            {isLoading || isError || dashBoardData === undefined ? (
-              <Skeleton className="m-auto h-36 w-36 rounded-full" />
+            {isLoading || isError || isFetching || dashBoardData === undefined ? (
+              <Skeleton className="m-auto rounded-full md:size-36 sxl:size-44" />
             ) : dashBoardData?.data?.signupRatio?.retailer == 0 && dashBoardData?.data?.signupRatio?.customer == 0 ? (
               <div className="flex h-full items-center justify-center">
                 <span className="font-medium text-danger">No Stats Available!</span>
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart className="[&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-white">
+                <PieChart className=" [&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-white">
                   <Pie
                     data={data}
                     cx="50%"
@@ -72,11 +86,23 @@ export default function SignUpStatus({ className }: { className?: string }) {
                     fill="#8884d8"
                     strokeWidth={2}
                     dataKey="value"
+                    cursor={'pointer'}
                   >
                     {data.map((item, index) => (
                       <Cell key={index} fill={item.color} stroke={item.color} />
                     ))}
                   </Pie>
+                  <ReTooltip
+                    contentStyle={{ backgroundColor: '#333', border: 'none', borderRadius: '10px' }}
+                    itemStyle={{ color: '#fff' }}
+                    cursor={{ fill: 'rgba(0,0,0,0.1)' }}
+                    content={
+                      <CustomTooltip
+                        totalRetailer={dashBoardData?.data?.totalVerifiedRetailer}
+                        totalCustomer={dashBoardData?.data?.totalVerifiedCustomer}
+                      />
+                    }
+                  />
                 </PieChart>
               </ResponsiveContainer>
             )}

@@ -9,12 +9,15 @@ export const paymentApi = apiSlice.injectEndpoints({
         return `/api/secret-root/admin/super-admin/payment/subscription`;
       },
       providesTags: ['payments'],
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: 0,
     }),
     singleSubscriptionPayment: builder.query({
       query: (_id) => `/api/secret-root/admin/super-admin/payment/subscription/find/${_id}`,
       providesTags: ['payments'],
       keepUnusedDataFor: 10,
+    }),
+    getSinglePaymentMethodBySuperAdmin: builder.query({
+      query: (paymentMethodId) => `/api/secret-root/admin/super-admin/payment/find-payment-method/${paymentMethodId}`,
     }),
     createBillingPdfBySuperAdmin: builder.mutation({
       query: (id) => ({
@@ -91,4 +94,5 @@ export const {
   useGetAllPaymentMethodByAdminQuery,
   useSetDefaultPaymentMethodByAdminMutation,
   useSetupPaymentIntentByAdminMutation,
+  useGetSinglePaymentMethodBySuperAdminQuery,
 } = paymentApi;

@@ -74,7 +74,7 @@
     "yourCustomer": "あなたの顧客",
     "experience": "体験",
     "bannerDetails": "シンプルさとテクノロジーを駆使してお客様を引き付け、報酬を与え、維持し、ロイヤリティプログラムの未来をビジネスに導入しましょう。",
-    "bannerButtonText": "始める",
+    "bannerButtonText": " 参加して報酬をゲット",
     "heroTitleOne": "なぜStampEzeeを選ぶのか？",
     "heroDescriptionOne": "デジタル化により、企業が顧客とやり取りする方法が変わりました。私たちのプラットフォームは、直感的なデザイン、強力な分析、そして比類のないカスタマイズを組み合わせ、顧客エンゲージメントのための究極のツールを提供します。",
     "heroTitleTwo": "顧客維持を強化",
@@ -121,7 +121,8 @@
     "email": "メールアドレス",
     "phone": "電話番号",
     "message": "メッセージ",
-    "buttonText": "送信"
+    "buttonText": "送信",
+    "warningText": "＊が付いている項目は必須です！"
   },
   "pricingPage": {
     "explore": "探る",
@@ -131,7 +132,8 @@
     "ourAddons": "(日本語): 私たちのアドオン",
     "pricingButtonText": "始める",
     "applied": "適用済み",
-    "active": "アクティブ"
+    "active": "アクティブ",
+    "tooltipText": "プランを選択した後にアドオンを選択できます！"
   },
   "CheckoutPage": {
     "plans": "プラン",
@@ -263,11 +265,11 @@
     "Billing": "請求書",
     "Refunds": "払い戻し",
     "Branches": "支店",
-    "Loyalty-Executive": "サブ管理者",
+    "Loyalty-Executive": "ロイヤルティ担当者",
     "Stamp Cards": "スタンプ",
     "Stamps": "スキャン",
     "Customers": "顧客",
-    "Custom Stamp Images": "カスタムスタンプ画像",
+    "Custom Stamp Image": "カスタムスタンプ画像",
     "Push Notifications": "プッシュ通知",
     "Regular": "通常",
     "Location Based": "位置に基づく",
@@ -285,13 +287,15 @@
     "serialNo": "シリアル番号",
     "branchName": "支店名",
     "branchAddress": "支店住所",
-    "subAdminName": "サブ管理者名",
-    "subAdminEmail": "サブ管理者メール",
+    "subAdminName": "ロイヤルティ担当者の名前",
+    "subAdminEmail": "ロイヤルティ担当者のメール",
     "totalStamp": "総スタンプ数",
     "totalCustomer": "総顧客数",
     "totalSubAdmin": "サブ管理者の合計",
     "totalOrder": "総注文数",
-    "totalRevenue": "総収益"
+    "totalStampCard": "トータルスタンプカード",
+    "totalRevenue": "総収益",
+    "totalRewardsCollected": "獲得した報酬の合計"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "スタンプ収集",
@@ -302,7 +306,8 @@
     "totalCollectedStamp": "総収集スタンプ数",
     "totalUniqueCustomer": "総ユニーク顧客数",
     "rewardCollectStatus": "報酬収集状況",
-    "rewardEligible": "報酬対象",
+    "rewardEligible": "ユーザーは報酬の対象です",
+    "rewardEligibles": "複数のユーザーが報酬の対象です",
     "rewardEfficacy": "報酬の効果",
     "collected": "収集済み",
     "notCollected": "収集されていない",
@@ -430,11 +435,11 @@
     "branchUpdated": "支店が正常に更新されました！"
   },
   "RetailerSubAdmin": {
-    "title": "サブ管理者を管理",
-    "subAdmins": "サブ管理者",
+    "title": "ロイヤルティ専属担当者の管理",
+    "subAdmins": "ロイヤルティ専属担当者",
     "dashboard": "ダッシュボード",
-    "addNewSubAdmin": "新しいサブ管理者を追加",
-    "updateASubAdmin": "サブ管理者を更新",
+    "addNewSubAdmin": "新しいロイヤルティ担当者を追加",
+    "updateASubAdmin": "ロイヤルティ担当者を更新",
     "submit": "送信",
     "update": "更新"
   },
@@ -539,8 +544,8 @@
     "reward": "報酬",
     "branchName": "支店名",
     "branchAddress": "支店の住所",
-    "subAdminName": "サブ管理者名",
-    "subAdminEmail": "サブ管理者のメール",
+    "subAdminName": "ロイヤルティ担当者の名前",
+    "subAdminEmail": "ロイヤルティ担当者のメール",
     "name": "名前",
     "email": "メール",
     "phone": "電話",
@@ -581,9 +586,12 @@
   },
   "RetailerBalanceCard": {
     "plan": "プラン",
-    "expire": "有効期限",
+    "expire": "更新",
+    "userLimit": "人数",
+    "stampLimit": "印数",
     "current": "現在",
-    "usage": "使用量"
+    "usage": "使用",
+    "unlimited": "無制限"
   },
   "RetailerNotification": {
     "title": "定期通知を管理",
@@ -713,8 +721,8 @@
     "status": "ステータス",
     "branchName": "支店名",
     "branchAddress": "支店住所",
-    "subAdminName": "サブ管理者名",
-    "subAdminEmail": "サブ管理者メール",
+    "subAdminName": "ロイヤルティ担当者の名前",
+    "subAdminEmail": "ロイヤルティ担当者のメール",
     "name": "名前",
     "email": "メール",
     "phone": "電話番号",
@@ -737,8 +745,8 @@
     "ownerName": "オーナー名",
     "branchName": "支店名",
     "branchAddress": "支店住所",
-    "subAdminName": "サブ管理者名",
-    "subAdminEmail": "サブ管理者のメール",
+    "subAdminName": "ロイヤルティ担当者の名前",
+    "subAdminEmail": "ロイヤルティ担当者のメール",
     "paymentReceipt": "支払い領収書"
   }
 }

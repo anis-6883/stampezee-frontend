@@ -346,7 +346,7 @@ export default function CloneStamp({ Id, locale }: any) {
                   {tCommon('baseCurrency')}: <span className="text-red-600">CAD</span>
                 </span>
                 <span dangerouslySetInnerHTML={{ __html: tCommon.raw('mandatoryFieldsMessage') }} />
-                <span>{tCommon('needDoubleClickToSelectASingleDate')}</span>
+                {/* <span>{tCommon('needDoubleClickToSelectASingleDate')}</span> */}
               </p>
               <div className="mt-2 flex justify-end">
                 <Button

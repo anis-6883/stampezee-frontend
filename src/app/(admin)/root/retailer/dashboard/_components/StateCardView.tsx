@@ -6,29 +6,26 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
-import { countDaysLeft } from '@/utils';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { BsPatchCheck } from 'react-icons/bs';
 import { FaMoneyBillAlt } from 'react-icons/fa';
 import { LuUsers } from 'react-icons/lu';
-import { MdShoppingCartCheckout } from 'react-icons/md';
+import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
 import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
-export default function StateCardView({ className }: { className: string }) {
+export default function StateCardView({ className, dateRange }: { className: string; dateRange: string }) {
+  const t = useTranslations('RetailerDashboard');
   const { data: session }: any = useSession();
   const [modalState, setModalState] = useState(false);
   const [trialCountDownModalState, setTrialCountDownModalState] = useState(true);
-  const t = useTranslations('RetailerDashboard');
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
-  const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
+  const { data, isLoading, isError, isFetching } = useGetRetailerDashboardCalcQuery({ dateRange });
   const { data: retailerProfile, isLoading: isRetailerProfileLoading, refetch } = useRetailerGetProfileQuery(null);
-
-  console.log(retailerProfile);
-  const { totalOrder = 0, totalActiveStamp = 0, totalRevenue = 0, totalCustomer = 0 } = data?.data || {};
+  const { totalStamps = 0, totalStampCards = 0, totalRevenue = 0, totalCustomers = 0 } = data?.data || {};
 
   useEffect(() => {
     if (retailerProfile?.data?.isLimitExceeded) {
@@ -41,7 +38,7 @@ export default function StateCardView({ className }: { className: string }) {
   }, [refetch]);
 
   useEffect(() => {
-    if (countDaysLeft(session?.user?.planValidAt) < 5 && session?.user?.plan === 'trial' && !retailerProfile?.data?.isLimitExceeded) {
+    if (session?.user?.planDaysLeft < 5 && session?.user?.plan === 'trial' && !retailerProfile?.data?.isLimitExceeded) {
       setTrialCountDownModalState(true);
     } else {
       setTrialCountDownModalState(false);
@@ -62,43 +59,43 @@ export default function StateCardView({ className }: { className: string }) {
       <div className="w-full overflow-hidden">
         <div ref={sliderEl} className="custom-scrollbar-x 2xl:gap-6 grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 3xl:gap-8">
           <MetricCard
-            icon={<MdShoppingCartCheckout className="text-2xl" />}
+            icon={<MdOutlineQrCodeScanner className="text-2xl" />}
             key={1}
             title={t('totalOrders')}
-            metric={totalOrder}
+            metric={totalStamps}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isFetching}
           />
 
           <MetricCard
             icon={<FaMoneyBillAlt className="text-2xl" />}
-            key={1}
+            key={2}
             title={`${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`}
             metric={totalRevenue.toFixed(2)}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError || isRetailerProfileLoading}
+            isLoading={isLoading || isError || isRetailerProfileLoading || isFetching}
           />
 
           <MetricCard
             icon={<LuUsers className="text-2xl" />}
-            key={1}
+            key={3}
             title={t('totalCustomer')}
-            metric={totalCustomer}
+            metric={totalCustomers}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isFetching}
           />
 
           <MetricCard
             icon={<BsPatchCheck className="text-2xl" />}
-            key={1}
+            key={4}
             title={t('totalActiveStamp')}
-            metric={totalActiveStamp}
+            metric={totalStampCards}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"
-            isLoading={isLoading || isError}
+            isLoading={isLoading || isError || isFetching}
           />
         </div>
       </div>
@@ -122,7 +119,7 @@ export default function StateCardView({ className }: { className: string }) {
       <FreeTrialCountdownModal
         modalState={trialCountDownModalState}
         setModalState={setTrialCountDownModalState}
-        countDownDays={countDaysLeft(session?.user?.planValidAt)}
+        countDownDays={session?.user?.planDaysLeft}
       />
     </div>
   );

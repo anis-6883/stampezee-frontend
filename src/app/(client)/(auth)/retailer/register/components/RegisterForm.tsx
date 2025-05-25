@@ -4,12 +4,16 @@ import Button from '@/components/Formik/Button';
 import InputField from '@/components/Formik/InputField';
 import InputPassword from '@/components/Formik/InputPassword';
 import PhoneNumber from '@/components/Formik/PhoneNumber';
+import { Currency } from '@/config';
 import { SerializedError } from '@/features/api/apiSlice';
 import { useRetailerRegisterMutation } from '@/features/auth/authApi';
 import { setAccessToken } from '@/features/auth/authSlice';
+import useCurrencyExchange from '@/hooks/use-currency-exchange';
+import { getUserCurrency, setUserCurrency } from '@/services/currency';
 import { ICountrySelect } from '@/types';
 import { getCountryByTimezone, getPhoneCodeByTimezone } from '@/utils/get-country-by-timezone';
 import countryData from '@/utils/get-country-list';
+import currencyData from '@/utils/get-currency-list';
 import timeZoneData from '@/utils/get-timezone-list';
 import { translateText } from '@/utils/GoogleTranslate';
 import removeEmptyValues from '@/utils/removeEmptyValues';
@@ -29,8 +33,6 @@ import MapModal from './MapModal';
 import OtpModal from './OtpModal';
 import PolicyModal from './PolicyModal';
 import TermsModal from './TermsModal';
-import currencyData from '@/utils/get-currency-list';
-import useCurrencyExchange from '@/hooks/use-currency-exchange';
 export default function RegisterForm({
   terms,
   policy,
@@ -54,6 +56,8 @@ export default function RegisterForm({
   const [timezone, setTimezone] = useState({
     label: 'America/Toronto',
   });
+  const [businessCurrency, setBusinessCurrency] = useState('CAD');
+  const [currencyOption, setCurrencyOption] = useState('CAD');
 
   const [register, { data: registerResponse, isSuccess, error }] = useRetailerRegisterMutation();
   const dispatch = useDispatch();
@@ -74,14 +78,20 @@ export default function RegisterForm({
     });
     return acc;
   }, []);
-  const cadCurr = currencyExchangeOptions?.find((item: any) => item.label == 'CAD');
 
-  // console.log(cadCurr?.value);
   useEffect(() => {
     const timezones = timeZoneData?.filter((item) => item?.label?.includes(Intl.DateTimeFormat().resolvedOptions().timeZone));
     setCountryInfo({ country: getCountryByTimezone(), dialCode: getPhoneCodeByTimezone() });
     setTimezone({ label: timezones[0]?.label });
+
+    (async () => {
+      const localCurrency = await getUserCurrency();
+      setCurrencyOption(localCurrency);
+      setBusinessCurrency(localCurrency);
+    })();
   }, []);
+
+  const cadCurr = currencyExchangeOptions?.find((item: any) => item.label == currencyOption);
 
   useEffect(() => {
     if (error) {
@@ -100,10 +110,10 @@ export default function RegisterForm({
 
     if (isSuccess) {
       dispatch(setAccessToken(registerResponse.data.temp));
-
       setIsSubmitting(false);
       setModalState(true);
       toast.success(t('otpSentMessage'));
+      setUserCurrency(businessCurrency as Currency);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, error, isSuccess, registerResponse]);
@@ -136,20 +146,44 @@ export default function RegisterForm({
 
   const validationSchema = Yup.object().shape({
     storeName: Yup.string()
-      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      // .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
       .required(tCommon('required'))
-      .min(2, 'At least 2 characters!')
-      .max(50, 'maximum 50 characters!'),
+      .min(3, 'At least 3 characters!')
+      .max(50, 'maximum 50 characters!')
+      .test('no-numbers', 'Numbers are not allowed !', (value) => {
+        if (!value) return true;
+        return !/\d/.test(value);
+      })
+      .test('no-special-char', 'Special Characters are not allowed !', (value) => {
+        if (!value) return true;
+        return /^[a-zA-Z\s]*$/.test(value);
+      }),
     firstName: Yup.string()
-      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      // .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
       .required(tCommon('required'))
-      .max(50, 'maximum 50 characters!'),
+      .max(50, 'maximum 50 characters!')
+      .test('no-numbers', 'Numbers are not allowed !', (value) => {
+        if (!value) return true;
+        return !/\d/.test(value);
+      })
+      .test('no-special-char', 'Special Characters are not allowed !', (value) => {
+        if (!value) return true;
+        return /^[a-zA-Z\s]*$/.test(value);
+      }),
     lastName: Yup.string()
-      .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
+      // .matches(/[a-zA-Z]/, 'Are you sure you entered your name correctly?')
       .trim()
-      .max(50, 'maximum 50 characters!'),
+      .max(50, 'maximum 50 characters!')
+      .test('no-numbers', 'Numbers are not allowed !', (value) => {
+        if (!value) return true;
+        return !/\d/.test(value);
+      })
+      .test('no-special-char', 'Special Characters are not allowed !', (value) => {
+        if (!value) return true;
+        return /^[a-zA-Z\s]*$/.test(value);
+      }),
     email: Yup.string()
       .test('email', tLogin('invalidEmail'), (value: any) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -247,6 +281,7 @@ export default function RegisterForm({
                       }`}
                       onChange={(selectedOption) => {
                         setFieldValue('businessCurrency', selectedOption?.value);
+                        setBusinessCurrency(selectedOption?.value);
                       }}
                       onBlur={() => setFieldTouched('businessCurrency', true)}
                     />

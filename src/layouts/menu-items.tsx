@@ -106,34 +106,19 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuLayoutDashboard />,
     },
     {
-      name: 'Plans & Add-on',
-      href: routes.privateRoutes.retailer.membershipPlan,
-      icon: <IoDiamondOutline />,
-    },
-    {
-      name: 'Billing',
-      href: routes.privateRoutes.retailer.billing.home,
-      icon: <FaMoneyBillTransfer />,
-    },
-    {
-      name: 'Refunds',
-      href: routes.privateRoutes.retailer.refund,
-      icon: <RiRefund2Line />,
-    },
-    {
-      name: 'Branches',
-      href: routes.privateRoutes.retailer.branch.home,
-      icon: <LiaMapMarkedAltSolid />,
-    },
-    {
-      name: 'Loyalty-Executive',
-      href: routes.privateRoutes.retailer.sub_admin.home,
-      icon: <TbUserShield />,
+      name: 'Manage Profile',
+      href: routes.privateRoutes.retailer.profile,
+      icon: <LuUserCog />,
     },
     {
       name: 'Stamp Cards',
       href: routes.privateRoutes.retailer.stamp.home,
       icon: <PiStamp />,
+    },
+    {
+      name: 'Loyalty-Executive',
+      href: routes.privateRoutes.retailer.sub_admin.home,
+      icon: <TbUserShield />,
     },
     {
       name: 'Stamps',
@@ -146,9 +131,9 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuUsers />,
     },
     {
-      name: 'Custom Stamp Card Images',
-      href: routes.privateRoutes.retailer.stampImage.home,
-      icon: <BsPatchCheck />,
+      name: 'Branches',
+      href: routes.privateRoutes.retailer.branch.home,
+      icon: <LiaMapMarkedAltSolid />,
     },
     {
       name: 'Push Notifications',
@@ -168,9 +153,24 @@ export const menuItems: { [key: string]: any } = {
       ],
     },
     {
-      name: 'Manage Profile',
-      href: routes.privateRoutes.retailer.profile,
-      icon: <LuUserCog />,
+      name: 'Custom Stamp Image',
+      href: routes.privateRoutes.retailer.stampImage.home,
+      icon: <BsPatchCheck />,
     },
+    {
+      name: 'Plans & Add-on',
+      href: routes.privateRoutes.retailer.membershipPlan,
+      icon: <IoDiamondOutline />,
+    },
+    {
+      name: 'Billing',
+      href: routes.privateRoutes.retailer.billing.home,
+      icon: <FaMoneyBillTransfer />,
+    },
+    // {
+    //   name: 'Refunds',
+    //   href: routes.privateRoutes.retailer.refund,
+    //   icon: <RiRefund2Line />,
+    // },
   ],
 };

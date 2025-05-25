@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ReactSelect, { OnChangeValue } from 'react-select';
 import { FieldError } from 'rizzui';
 import * as Yup from 'yup';
+import { setUserCurrency } from '@/services/currency';
 
 export default function UpdateProfileForm({ locale }: { locale: string }) {
   const t = useTranslations('RetailerProfile');
@@ -72,6 +73,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
       setIsSubmitting(false);
       toast.success(t('retailerProfileUpdated'));
       update({ ...session?.user, ...updateRetailerProfile?.data });
+      setUserCurrency(updateRetailerProfile?.data?.businessCurrency);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, isSuccess, updateRetailerProfile]);

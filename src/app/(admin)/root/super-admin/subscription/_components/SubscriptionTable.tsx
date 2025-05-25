@@ -38,7 +38,9 @@ export default function StampsImageTable() {
           </p>
           <p>
             <span className="font-semibold">Duration: </span>
-            {row.original.duration} days
+            {row?.original?.slug === 'trial' && row?.original?.isUnlimited
+              ? row?.original?.unlimitedFieldName
+              : `${row.original.duration} days`}
           </p>
         </div>
       ),

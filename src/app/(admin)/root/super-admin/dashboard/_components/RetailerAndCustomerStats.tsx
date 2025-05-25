@@ -10,16 +10,18 @@ import cn from '@/hooks/class-names';
 import { useSelector } from 'react-redux';
 import ActiveUsers from './ActiveUser';
 
-export default function RetailerAndCustomerStats({ className }: { className?: string }) {
+export default function RetailerAndCustomerStats({ className, dateRange }: { className?: string; dateRange: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { data: retailerWiseData, isLoading: isRetailerWiseDataLoading } = useGetRetailerStatsWithCountryWiseQuery(
-    {},
-    { skip: !accessToken }
-  );
-  const { data: customerWiseData, isLoading: isCustomerWiseDataLoading } = useGetCustomerStatsWithCountryWiseQuery(
-    {},
-    { skip: !accessToken }
-  );
+  const {
+    data: retailerWiseData,
+    isLoading: isRetailerWiseDataLoading,
+    isFetching: isRetailerFetching,
+  } = useGetRetailerStatsWithCountryWiseQuery({ dateRange }, { skip: !accessToken });
+  const {
+    data: customerWiseData,
+    isLoading: isCustomerWiseDataLoading,
+    isFetching: isCustomerFetching,
+  } = useGetCustomerStatsWithCountryWiseQuery({ dateRange }, { skip: !accessToken });
 
   if (isRetailerWiseDataLoading || isCustomerWiseDataLoading) {
     return (
@@ -37,13 +39,13 @@ export default function RetailerAndCustomerStats({ className }: { className?: st
         className="col-span-12 md:col-span-12"
         title="Active Retailers"
         data={retailerWiseData?.data?.countries || []}
-        isLoading={isRetailerWiseDataLoading}
+        isLoading={isRetailerWiseDataLoading || isRetailerFetching}
       />
       <ActiveUsers
         className="col-span-12 md:col-span-12"
         title="Active Customers"
         data={transformedData || []}
-        isLoading={isCustomerWiseDataLoading}
+        isLoading={isCustomerWiseDataLoading || isCustomerFetching}
       />
     </div>
   );

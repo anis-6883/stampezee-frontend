@@ -5,8 +5,8 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import { useTranslations } from 'next-intl';
 
-export default function BranchStatsTable() {
-  const { data, isLoading, isError } = useGetRetailerDashboardCalcQuery(null);
+export default function BranchStatsTable({ dateRange }: { dateRange: string }) {
+  const { data, isLoading, isError, isFetching } = useGetRetailerDashboardCalcQuery({ dateRange });
   const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
   const t = useTranslations('RetailerDashboardTable');
   const t2 = useTranslations('RetailerDashboard');
@@ -15,17 +15,18 @@ export default function BranchStatsTable() {
   const tableHeaders = [
     t('serialNo'),
     t('branchName'),
-    t('branchAddress'),
     t('totalSubAdmin'),
     t('totalCustomer'),
+    t('totalStampCard'),
     t('totalOrder'),
+    t('totalRewardsCollected'),
     `${t('totalRevenue')} (${isRetailerProfileLoading ? ' ' : retailerProfile?.data?.businessCurrency})`,
   ];
 
-  if (isLoading || isError) {
+  if (isLoading || isError || isFetching) {
     return (
       <>
-        <h2 className="mb-5 text-lg font-medium">{t2('branchStatistics')}:</h2>
+        <h2 className="mb-5 mt-5 text-lg font-medium">{t2('branchStatistics')}:</h2>
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -51,12 +52,12 @@ export default function BranchStatsTable() {
   }
 
   const branchStatistics = data?.data?.branches || [];
-  const { totalActiveBranch } = data?.data || {};
+  const { totalActiveBranches } = data?.data || {};
 
   return (
     <div className="relative my-5 overflow-x-auto">
       <h2 className="mb-5 text-lg font-medium">
-        {t2('branchStatistics')}: ({totalActiveBranch})
+        {t2('branchStatistics')}: ({totalActiveBranches})
       </h2>
 
       <table className="w-full text-left text-sm text-gray-500 shadow-md dark:text-gray-400 sm:rounded-lg rtl:text-right">
@@ -92,20 +93,27 @@ export default function BranchStatsTable() {
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item.name}
                 </td>
-                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                {/* <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item.address.length > 25 ? `${item.address.slice(0, 25)}...` : item.address}
-                </td>
+                </td> */}
+
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item?.totalSubAdmin}
+                  {item?.totalSubAdmins}
                 </td>
                 {/* <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {item.subAdminEmail ?? <span className="text-danger">No Assigned</span>}
                 </td> */}
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.totalCustomer}
+                  {item.totalCustomers}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {item.totalOrder}
+                  {item?.totalStampsCards}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                  {item.totalStamps}
+                </td>
+                <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                  {Number(item.totalRewardCollected)}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {Number(item.totalRevenue).toFixed(2)}

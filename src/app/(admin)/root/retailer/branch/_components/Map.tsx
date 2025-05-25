@@ -7,10 +7,12 @@ import { Input, Loader } from 'rizzui';
 
 export default function MapComponent({
   circle = false,
+  isUpdate = false,
   radius,
   googleMapsApiKey,
 }: {
   circle?: boolean;
+  isUpdate?: boolean;
   radius?: number;
   googleMapsApiKey: string;
 }) {
@@ -140,7 +142,7 @@ export default function MapComponent({
         const geocoder = new google.maps.Geocoder(); // Initialize geocoder
         const response = await geocoder.geocode({ location: { lat: latitude, lng: longitude } });
 
-        if (response.results && response.results.length > 0) {
+        if (response.results && response.results.length > 0 && !isUpdate) {
           const address = response.results[0].formatted_address;
 
           setFieldValue('address', address);
@@ -157,6 +159,7 @@ export default function MapComponent({
     function error() {
       console.log('Unable to retrieve your location');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded, setFieldValue, setSelectedLocation]);
 
   const defaultOptions = {

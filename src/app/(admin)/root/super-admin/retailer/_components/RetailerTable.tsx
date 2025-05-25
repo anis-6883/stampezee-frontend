@@ -2,6 +2,7 @@
 
 import Table from '@/app/(admin)/root/_components/Table';
 import Button from '@/components/Formik/Button';
+import DatePicker from '@/components/Formik/DatePicker';
 import StatusIndicator from '@/components/StatusIndicator';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
@@ -20,12 +21,16 @@ import { FaInfoCircle } from 'react-icons/fa';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
 import { ImBin } from 'react-icons/im';
+import { IoCloseCircleSharp } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 
 export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone: string; googleMapsApiKey: string }) {
+  const [dateRange, setDateRange] = useState('');
+  const [start, setStart] = useState<string>('');
+  const [end, setEnd] = useState<string>('');
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
@@ -34,15 +39,46 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useGetAllRetailersQuery(
-    {
-      page: query.pageIndex + 1,
-      limit: query.pageSize,
-      ...searchQuery,
-    },
-    { skip: !accessToken }
-  );
 
+  const queryObject: any = {
+    page: query.pageIndex + 1,
+    limit: query.pageSize,
+    ...searchQuery,
+  };
+
+  if (start) {
+    queryObject.start = start;
+  }
+  if (end) {
+    queryObject.end = end;
+  }
+
+  const { data, isLoading, isFetching, refetch } = useGetAllRetailersQuery(queryObject, { skip: !accessToken });
+  // const { data, isLoading, isFetching, refetch } = useGetAllRetailersQuery(
+  //   {
+  //     page: query.pageIndex + 1,
+  //     limit: query.pageSize,
+  //     ...searchQuery,
+  //     start.length> 0 && start,
+  //     end.length> 0 && end,
+  //   },
+  //   { skip: !accessToken }
+  // );
+
+  useEffect(() => {
+    if (dateRange) {
+      if (dateRange.includes('to')) {
+        const dates = dateRange.replaceAll(' ', '').split('to');
+        setStart(dates[0]);
+        setEnd(dates[1]);
+      }
+    } else {
+      setStart('');
+      setEnd('');
+    }
+  }, [dateRange]);
+
+  console.log(dateRange);
   const { data: subscriptions } = useGetSubscriptionQuery(undefined);
 
   const [deleteRetailer, { isSuccess, isError }] = useDeleteSuperAdminRetailerMutation();
@@ -211,9 +247,22 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
       />
       <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
         <StatusIndicator />
-        <div>
+        <div className="flex items-center gap-4">
+          <div className="flex flex-shrink-0 items-center gap-2">
+            <h5 className="text-base font-medium">Filter by Date :</h5>
+            {/* date picker */}
+            <div className="relative">
+              {/* close button */}
+              {dateRange.length > 0 && (
+                <div className="absolute -right-1 -top-2 text-lg font-semibold">
+                  <IoCloseCircleSharp onClick={() => setDateRange('')} className="cursor-pointer text-2xl text-[#dc2626]" />
+                </div>
+              )}
+              <DatePicker value={dateRange} range={true} changeHandler={setDateRange} />
+            </div>
+          </div>
           <Button
-            className="w-full"
+            className="!mb-0 w-full"
             color="danger"
             onClick={() => setCreateState(true)}
             text="Add New Retailer"

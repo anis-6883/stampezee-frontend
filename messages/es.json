@@ -74,7 +74,7 @@
     "yourCustomer": "La experiencia de tus clientes",
     "experience": "Experiencia",
     "bannerDetails": "Involucra, recompensa y retén a tus clientes con un toque de simplicidad y tecnología, y trae el futuro de los programas de fidelización a tu negocio.",
-    "bannerButtonText": "EMPEZAR",
+    "bannerButtonText": "Únete y recibe recompensas",
     "heroTitleOne": "¿Por qué elegir StampEzee?",
     "heroDescriptionOne": "La digitalización ha transformado la forma en que las empresas interactúan con sus clientes. Nuestra plataforma combina diseño intuitivo, análisis robustos y personalización inigualable, brindándote la mejor herramienta para el compromiso con tus clientes.",
     "heroTitleTwo": "Impulsa la Retención de Clientes",
@@ -122,7 +122,8 @@
     "email": "Correo Electrónico",
     "phone": "Número de Teléfono",
     "message": "Mensaje",
-    "buttonText": "Enviar"
+    "buttonText": "Enviar",
+    "warningText": "¡Los campos marcados con * son obligatorios!"
   },
   "pricingPage": {
     "explore": "Explorar",
@@ -132,7 +133,8 @@
     "ourAddons": "Nuestras extensiones",
     "pricingButtonText": "Empezar",
     "applied": "Aplicado",
-    "active": "Activo"
+    "active": "Activo",
+    "tooltipText": "¡Puedes seleccionar un complemento después de elegir un plan!"
   },
   "CheckoutPage": {
     "plans": "Planes",
@@ -264,11 +266,11 @@
     "Billing": "Facturación",
     "Refunds": "Reembolsos",
     "Branches": "Sucursales",
-    "Loyalty-Executive": "Subadministradores",
+    "Loyalty-Executive": "Ejecutivo de Fidelización",
     "Stamp Cards": "Sellos",
     "Stamps": "Escaneos",
     "Customers": "Clientes",
-    "Custom Stamp Images": "Imágenes de Sellos Personalizados",
+    "Custom Stamp Image": "Imágenes de Sellos Personalizados",
     "Push Notifications": "Notificaciones Push",
     "Regular": "Regular",
     "Location Based": "Basadas en Ubicación",
@@ -286,13 +288,15 @@
     "serialNo": "No. de Serie",
     "branchName": "Nombre de la Sucursal",
     "branchAddress": "Dirección de la Sucursal",
-    "subAdminName": "Nombre del Subadministrador",
-    "subAdminEmail": "Correo Electrónico del Subadministrador",
+    "subAdminName": "Nombre del ejecutivo de fidelización",
+    "subAdminEmail": "Correo del ejecutivo de fidelización",
     "totalStamp": "Total de Sellos",
     "totalCustomer": "Total de Clientes",
     "totalSubAdmin": "Total de Subadministradores",
     "totalOrder": "Total de Pedidos",
-    "totalRevenue": "Ingresos Totales"
+    "totalStampCard": "Tarjeta de Sellos Total",
+    "totalRevenue": "Ingresos Totales",
+    "totalRewardsCollected": "Recompensas totales recolectadas"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "Colección de Sello",
@@ -303,7 +307,8 @@
     "totalCollectedStamp": "Total de Sellos Recogidos",
     "totalUniqueCustomer": "Total de Clientes Únicos",
     "rewardCollectStatus": "Estado de Recolección de Recompensas",
-    "rewardEligible": "Elegible para Recompensa",
+    "rewardEligible": "Usuario elegible para la recompensa",
+    "rewardEligibles": "Usuarios elegibles para la recompensa",
     "rewardEfficacy": "Eficacia de la Recompensa",
     "collected": "Recogido",
     "notCollected": "No Recogido",
@@ -432,11 +437,11 @@
     "branchUpdated": "Sucursal actualizada con éxito!"
   },
   "RetailerSubAdmin": {
-    "title": "Gestionar Sub-Administradores",
-    "subAdmins": "Sub-Administradores",
+    "title": "Gestionar Ejecutivos Exclusivos de Fidelización",
+    "subAdmins": "Ejecutivo de Fidelización Exclusivo",
     "dashboard": "Panel de control",
-    "addNewSubAdmin": "Agregar Nuevo Sub-Administrador",
-    "updateASubAdmin": "Actualizar un Sub-Administrador",
+    "addNewSubAdmin": "Agregar nuevo ejecutivo de fidelización",
+    "updateASubAdmin": "Actualizar ejecutivo de fidelización",
     "submit": "Enviar",
     "update": "Actualizar"
   },
@@ -541,8 +546,8 @@
     "reward": "Recompensa",
     "branchName": "Nombre de la Sucursal",
     "branchAddress": "Dirección de la Sucursal",
-    "subAdminName": "Nombre del Subadministrador",
-    "subAdminEmail": "Correo del Subadministrador",
+    "subAdminName": "Nombre del ejecutivo de fidelización",
+    "subAdminEmail": "Correo del ejecutivo de fidelización",
     "name": "Nombre",
     "email": "Correo Electrónico",
     "phone": "Teléfono",
@@ -583,9 +588,12 @@
   },
   "RetailerBalanceCard": {
     "plan": "Plan",
-    "expire": "Expira",
+    "expire": "Renov.",
+    "userLimit": "Usuarios",
+    "stampLimit": "Sellos",
     "current": "Actual",
-    "usage": "Uso"
+    "usage": "Uso",
+    "unlimited": "Ilimitado"
   },
   "RetailerNotification": {
     "title": "Gestionar Notificación Regular",
@@ -715,8 +723,8 @@
     "status": "Estado",
     "branchName": "Nombre de la Sucursal",
     "branchAddress": "Dirección de la Sucursal",
-    "subAdminName": "Nombre del Subadministrador",
-    "subAdminEmail": "Correo Electrónico del Subadministrador",
+    "subAdminName": "Nombre del ejecutivo de fidelización",
+    "subAdminEmail": "Correo del ejecutivo de fidelización",
     "name": "Nombre",
     "email": "Correo Electrónico",
     "phone": "Teléfono",
@@ -739,8 +747,8 @@
     "ownerName": "Nombre del Propietario",
     "branchName": "Nombre de la Sucursal",
     "branchAddress": "Dirección de la Sucursal",
-    "subAdminName": "Nombre del Subadministrador",
-    "subAdminEmail": "Correo Electrónico del Subadministrador",
+    "subAdminName": "Nombre del ejecutivo de fidelización",
+    "subAdminEmail": "Correo del ejecutivo de fidelización",
     "paymentReceipt": "Recibo de pago"
   }
 }

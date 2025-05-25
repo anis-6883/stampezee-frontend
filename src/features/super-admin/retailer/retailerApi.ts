@@ -10,6 +10,7 @@ export const superAdminRetailerApi = apiSlice.injectEndpoints({
         return `/api/secret-root/admin/super-admin/manage-retailer/all`; // Ensure it returns a base URL if no queries are present
       },
       providesTags: ['superAdminRetailer'],
+      keepUnusedDataFor: 0,
     }),
     getSingleRetailer: builder.query({
       query: (id) => {

@@ -21,12 +21,12 @@ export default function PackageCancelModal({
 }: {
   modalState?: boolean;
   cancelSubscriptionId: string | null;
-  cancelSubscriptionHandler: (id: any) => void;
-  setModalState: (state: boolean) => void;
+  cancelSubscriptionHandler: any;
+  setModalState: any;
   isSubmitting?: boolean;
   isPlan?: boolean;
 
-  setIsSubmitting: (state: boolean) => void;
+  setIsSubmitting: any;
 }) {
   const t = useTranslations('DeleteConfirmationModal');
   const { role } = useSelector((state: RootState) => state.authSlice);
@@ -43,14 +43,27 @@ export default function PackageCancelModal({
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-5 flex items-center justify-between">
           <h3 className="flex items-center gap-2 text-lg font-semibold text-danger">
-            <BsExclamationTriangle className="text-xl" /> {'Cancel Confirmation'}
+            <BsExclamationTriangle className="text-xl" /> {`${isPlan ? 'Cancel Plan Subscription!' : 'Cancel Add-on Subscription!'}`}
           </h3>
 
           <ActionIcon size="sm" variant="text" onClick={() => setModalState(false)}>
             <IoCloseOutline className="text-2xl text-danger" />
           </ActionIcon>
         </div>
-        <p className="text-base font-medium">Do you want to cancel it ?</p>
+        <div className="text-base font-medium">
+          {isPlan ? (
+            'Are you sure you want to cancel your plan subscription?'
+          ) : (
+            <div>
+              <p>You&apos;re about to cancel your subscription for this add-on.</p>
+              <p>
+                You&apos;ll still be able to use it until the end of your current subscription period, after which it will no longer be
+                active or billed.
+              </p>
+            </div>
+          )}
+        </div>
+
         {isPlan && (
           <div className="my-3">
             <div
@@ -68,10 +81,15 @@ export default function PackageCancelModal({
               </svg>
               <span className="sr-only">{'Info'}</span>
               <div>
-                <span className="font-medium">{'Warning!'}</span> <br />
-                Associated add-ons will remain active until the end of the current billing cycle. Refunds, if eligible, will be processed as
-                per our policy. Add-ons are non-refundable. If you re-purchase before the next billing, you will be given permission to
-                restore previous add-ons!
+                <span className="font-medium">{'Important Note:'}</span> <br />
+                <div>
+                  <span>
+                    Your plan will remain active until the end of your current billing cycle. A refund—if eligible—will be calculated based
+                    on your usage and processed according to our policy. Once canceled, all associated services (including add-ons) will
+                    stop functioning beyond this period.
+                  </span>
+                  <span className="block">If you resubscribe before the next billing date, your previous add-ons can be restored.</span>
+                </div>
               </div>
             </div>
           </div>
@@ -87,7 +105,7 @@ export default function PackageCancelModal({
           <Button
             color="primary"
             onClick={handleCancel}
-            text={role === ROLE.SUPER_ADMIN ? 'Yes, Confirm' : t('confirm')}
+            text={role === ROLE.SUPER_ADMIN ? 'Yes, Confirm' : isPlan ? t('confirmPlan') : t('confirmAddon')}
             postIcon={<BsCheck2Circle className="text-base" />}
             isSubmitting={isSubmitting}
           />

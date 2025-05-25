@@ -1,6 +1,7 @@
 'use client';
 
 import BalanceCard from '@/app/(client)/(public)/components/BalanceCard';
+import { useDrawer } from '@/components/drawer-views/use-drawer';
 import { ROLE } from '@/config/constants';
 import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
@@ -12,6 +13,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
+import { IoCloseSharp } from 'react-icons/io5';
 import { PiCaretDownBold } from 'react-icons/pi';
 import { SlLock } from 'react-icons/sl';
 import { useSelector } from 'react-redux';
@@ -19,8 +21,6 @@ import { Collapse, Title } from 'rizzui';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import { menuItems } from './menu-items';
-import { IoCloseSharp } from 'react-icons/io5';
-import { useDrawer } from '@/components/drawer-views/use-drawer';
 
 // user has no current plan sidebar locked url list
 const blockedMenuUrls = [
@@ -41,13 +41,15 @@ const addonsBlockedMenuUrls = [
   routes.privateRoutes.retailer.locationBasedNotification.home,
 ];
 
-const lockedMenuNames = ['Branches', 'Custom Stamp Images', 'Regular', 'Location Based', 'Push Notifications'];
+const lockedMenuNames = ['Branches', 'Custom Stamp Image', 'Regular', 'Location Based', 'Push Notifications'];
 
 const checkedLocked = (role: string, url: string, menuName: string, user: any) => {
   // if user has current plan
   if (user?.plan) {
     // free trail checked lock
     if (user?.plan === 'trial') {
+      // if total stamps or total user limit cross then sidebar menu locked
+      if (user?.isLimitExceeded) return role === 'retailer' && blockedMenuUrls.includes(url);
       return role === 'retailer' && addonsBlockedMenuUrls.includes(url);
     }
     // if sidebar menu name contain lockedMenuNames
@@ -57,7 +59,7 @@ const checkedLocked = (role: string, url: string, menuName: string, user: any) =
         return role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalBranch === 0;
       }
       // if sidebar menu name is Custom Stamp Images
-      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Custom Stamp Images') {
+      if (lockedMenuNames[lockedMenuNames?.indexOf(menuName)] === 'Custom Stamp Image') {
         return (
           role === 'retailer' && blockedMenuUrls.includes(url) && lockedMenuNames?.includes(menuName) && user?.totalCustomStampImage === 0
         );
@@ -290,7 +292,7 @@ export default function Sidebar({ className }: { className?: string }) {
                           <span className="truncate">
                             {role === ROLE.RETAILER ? t(item.name) : item.name}{' '}
                             {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
-                            {item.name === 'Custom Stamp Images' && `(${session?.user?.totalCustomStampImage || 0})`}
+                            {item.name === 'Custom Stamp Image' && `(${session?.user?.totalCustomStampImage || 0})`}
                             {item.name === 'Stamp Cards' && `(${session?.user?.totalStamp || 0})`}
                           </span>
                         </div>

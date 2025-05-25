@@ -14,18 +14,31 @@ import { useSelector } from 'react-redux';
 import { Tab } from 'rizzui';
 import Table from '../../../_components/Table';
 
-export default function ScanTable({ timezone }: { timezone: string }) {
+export default function ScanTable({ timezone, start, end }: { timezone: string; start: string; end: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useSuperAdminScanDetailsQuery(
-    {
-      page: query.pageIndex + 1,
-      limit: query.pageSize,
-      ...searchQuery,
-    },
-    { skip: !accessToken }
-  );
+
+  const queryObject: any = {
+    page: query.pageIndex + 1,
+    limit: query.pageSize,
+    ...searchQuery,
+  };
+  if (start) {
+    queryObject.start = start;
+  }
+  if (end) {
+    queryObject.end = end;
+  }
+  // const { data, isLoading, isFetching } = useSuperAdminScanDetailsQuery(
+  //   {
+  //     page: query.pageIndex + 1,
+  //     limit: query.pageSize,
+  //     ...searchQuery,
+  //   },
+  //   { skip: !accessToken }
+  // );
+  const { data, isLoading, isFetching } = useSuperAdminScanDetailsQuery(queryObject, { skip: !accessToken });
 
   const structure = [
     {
@@ -232,7 +245,7 @@ export default function ScanTable({ timezone }: { timezone: string }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder="Search By Customer Name Or Email"
+      searchPlaceHolder="Search By Customer Name"
       searchFieldWidth="300px"
       renderDetailPanel={renderDetailPanel}
     />

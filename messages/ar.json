@@ -81,7 +81,8 @@
     "email": "بريد إلكتروني",
     "phone": "رقم التليفون",
     "message": "رسالة",
-    "buttonText": "يرسل"
+    "buttonText": "يرسل",
+    "warningText": "الحقول المميزة بـ * إلزامية!"
   },
   "pricingPage": {
     "explore": "يستكشف",
@@ -91,7 +92,8 @@
     "ourAddons": "إضافاتنا",
     "pricingButtonText": "البدء",
     "applied": "تم تطبيق",
-    "active": "نشط"
+    "active": "نشط",
+    "tooltipText": "يمكنك اختيار الإضافة بعد اختيار خطة!"
   },
   "CheckoutPage": {
     "plans": "الخطط",
@@ -137,7 +139,7 @@
     "yourCustomer": "تجربة العميل",
     "experience": "تجربتك",
     "bannerDetails": "قم بإشراك عملائك ومكافأتهم والاحتفاظ بهم بلمسة من البساطة والتكنولوجيا، وأحضر مستقبل برامج الولاء إلى عملك.",
-    "bannerButtonText": "البدء",
+    "bannerButtonText": "انضم واحصل على المكافآت",
     "heroTitleOne": "لماذا تختار StampEzee؟",
     "heroDescriptionOne": "لقد غيرت الرقمنة الطريقة التي تتفاعل بها الشركات مع عملائها. تجمع منصتنا بين التصميم البديهي والتحليلات القوية والتخصيص الذي لا مثيل له، مما يوفر لك الأداة المثالية للتفاعل مع العملاء.",
     "heroTitleTwo": "تمكين الاحتفاظ بالعملاء",
@@ -264,11 +266,11 @@
     "Billing": "الفواتير",
     "Refunds": "استرداد الأموال",
     "Branches": "الفروع",
-    "Loyalty-Executive": "المشرفون الفرعيون",
+    "Loyalty-Executive": "تنفيذي الولاء",
     "Stamp Cards": "طوابع",
     "Stamps": "المسح الضوئي",
     "Customers": "عملاء",
-    "Custom Stamp Images": "صور الطوابع المخصصة",
+    "Custom Stamp Image": "صور الطوابع المخصصة",
     "Push Notifications": "إشعارات الدفع",
     "Regular": "عادي",
     "Location Based": "يعتمد على الموقع",
@@ -286,13 +288,15 @@
     "serialNo": "رقم التسلسل",
     "branchName": "اسم الفرع",
     "branchAddress": "عنوان الفرع",
-    "subAdminName": "اسم المشرف الفرعي",
-    "subAdminEmail": "البريد الإلكتروني للمشرف الفرعي",
+    "subAdminName": "اسم تنفيذي الولاء",
+    "subAdminEmail": "البريد الإلكتروني لتنفيذي الولاء",
     "totalStamp": "إجمالي الطوابع",
     "totalCustomer": "إجمالي العملاء",
     "totalSubAdmin": "إجمالي المشرفين الفرعيين",
     "totalOrder": "إجمالي الطلبات",
-    "totalRevenue": "إجمالي الإيرادات"
+    "totalStampCard": "بطاقة الطوابع الإجمالية",
+    "totalRevenue": "إجمالي الإيرادات",
+    "totalRewardsCollected": "إجمالي المكافآت التي تم جمعها"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "جمع الطوابع",
@@ -303,7 +307,8 @@
     "totalCollectedStamp": "إجمالي الطوابع المجمعة",
     "totalUniqueCustomer": "إجمالي العملاء الفريدين",
     "rewardCollectStatus": "حالة جمع المكافآت",
-    "rewardEligible": "مؤهل للمكافأة",
+    "rewardEligible": "المستخدم مؤهل للمكافأة",
+    "rewardEligibles": "المستخدمون مؤهلون للمكافأة",
     "rewardEfficacy": "فعالية المكافأة",
     "collected": "تم جمعها",
     "notCollected": "لم يتم جمعها",
@@ -432,11 +437,11 @@
     "branchUpdated": "تم تحديث الفرع بنجاح!"
   },
   "RetailerSubAdmin": {
-    "title": "إدارة المشرفين الفرعيين",
-    "subAdmins": "المشرفين الفرعيين",
+    "title": "إدارة التنفيذيين الحصريين للولاء",
+    "subAdmins": "تنفيذي الولاء الحصري",
     "dashboard": "لوحة التحكم",
-    "addNewSubAdmin": "إضافة مشرف فرعي جديد",
-    "updateASubAdmin": "تحديث مشرف فرعي",
+    "addNewSubAdmin": "إضافة تنفيذي ولاء جديد",
+    "updateASubAdmin": "تحديث تنفيذي الولاء",
     "submit": "إرسال",
     "update": "تحديث"
   },
@@ -541,8 +546,8 @@
     "reward": "المكافأة",
     "branchName": "اسم الفرع",
     "branchAddress": "عنوان الفرع",
-    "subAdminName": "اسم المسؤول الفرعي",
-    "subAdminEmail": "البريد الإلكتروني للمسؤول الفرعي",
+    "subAdminName": "اسم تنفيذي الولاء",
+    "subAdminEmail": "البريد الإلكتروني لتنفيذي الولاء",
     "name": "الاسم",
     "email": "البريد الإلكتروني",
     "phone": "الهاتف",
@@ -583,9 +588,12 @@
   },
   "RetailerBalanceCard": {
     "plan": "الخطة",
-    "expire": "تنتهي",
+    "expire": "التجديد التالي",
+    "userLimit": "حد المستخدمين",
+    "stampLimit": "حد الطوابع",
     "current": "الحالي",
-    "usage": "الاستخدام"
+    "usage": "الاستخدام",
+    "unlimited": "غير محدود"
   },
   "RetailerNotification": {
     "title": "إدارة الإشعارات العادية",
@@ -715,8 +723,8 @@
     "status": "الحالة",
     "branchName": "اسم الفرع",
     "branchAddress": "عنوان الفرع",
-    "subAdminName": "اسم المشرف الفرعي",
-    "subAdminEmail": "البريد الإلكتروني للمشرف الفرعي",
+    "subAdminName": "اسم تنفيذي الولاء",
+    "subAdminEmail": "البريد الإلكتروني لتنفيذي الولاء",
     "name": "الاسم",
     "email": "البريد الإلكتروني",
     "phone": "الهاتف",
@@ -739,8 +747,8 @@
     "ownerName": "اسم المالك",
     "branchName": "اسم الفرع",
     "branchAddress": "عنوان الفرع",
-    "subAdminName": "اسم المشرف الفرعي",
-    "subAdminEmail": "البريد الإلكتروني للمشرف الفرعي",
+    "subAdminName": "اسم تنفيذي الولاء",
+    "subAdminEmail": "البريد الإلكتروني لتنفيذي الولاء",
     "paymentReceipt": "إيصال الدفع"
   }
 }

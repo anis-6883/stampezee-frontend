@@ -30,6 +30,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import BranchDisableModal from './BranchDisableModal';
 import CouponForm from './CouponForm';
+import CurrencyConvertModal from './CurrencyConvertModal';
 import PlanAddOns from './PlanAddons';
 import { PrevAddonModal } from './PrevAddonModal';
 
@@ -53,6 +54,8 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     refundableThreshold,
   } = useSelector((state: RootState) => state.subscriptionSlice);
   const [isExistingDisableModal, setIsExistingDisableModal] = useState(false);
+  const [currencyConvertModal, setCurrencyConvertModal] = useState(false);
+  const [isCurrencyModalOpen, setIsCurrencyModalOpen] = useState(true);
 
   const [branchDisableModalState, setBranchDisableModalState] = useState(false);
   const [disableBranchOptions, setDisableBranchOptions] = useState([]);
@@ -94,7 +97,12 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
   useEffect(() => {
     if (checkoutError) {
       const myError = checkoutError as SerializedError;
-      toast.error(myError?.data?.message || 'Something went wrong!');
+      if (!myError?.data?.data?.changeCurrency) {
+        toast.error(myError?.data?.message || 'Something went wrong!');
+      }
+      if (isCurrencyModalOpen && myError?.data?.data?.changeCurrency) {
+        setCurrencyConvertModal(myError?.data?.data?.changeCurrency);
+      }
     }
 
     if (checkOutResponse) {
@@ -143,6 +151,8 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
       // setModalState(true);
       return;
     }
+
+    setIsCurrencyModalOpen(true);
 
     // when buy just addons
     if (activeSubscription?.slug === subscription?.slug && addOns?.length > 0) {
@@ -444,6 +454,13 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
         disableStampOptions={disableStampOptions}
         modalState={branchDisableModalState}
         setModalState={setBranchDisableModalState}
+      />
+      <CurrencyConvertModal
+        modalState={currencyConvertModal}
+        setModalState={setCurrencyConvertModal}
+        paymentCurrency={profile?.data?.stripePaymentCurrency}
+        selectedCurrency={selectedCurrency}
+        setIsCurrencyModalOpen={setIsCurrencyModalOpen}
       />
     </>
   );

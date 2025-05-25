@@ -3,6 +3,7 @@ import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import ScanTable from './_components/ScanTable';
+import SuperAdminStampsTopSection from './_components/SuperAdminStampsTopSection';
 
 const pageHeader = {
   title: 'Manage Stamps',
@@ -24,8 +25,9 @@ export default async function Page() {
 
   return (
     <div>
-      <PageHeader title={pageHeader?.title} breadcrumb={pageHeader?.breadcrumb} />
-      <ScanTable timezone={data?.data?.general?.timezone?.label} />
+      {/* <PageHeader title={pageHeader?.title} breadcrumb={pageHeader?.breadcrumb} />
+      <ScanTable timezone={data?.data?.general?.timezone?.label} /> */}
+      <SuperAdminStampsTopSection pageHeader={pageHeader} timezone={data?.data?.general?.timezone?.label} />
     </div>
   );
 }

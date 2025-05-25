@@ -17,15 +17,24 @@ const statsData = [
   },
 ];
 
-export default function RewardPieStatus({ className }: { className?: string }) {
+export default function RewardPieStatus({ className, dateRange }: { className?: string; dateRange: string | undefined }) {
   const t = useTranslations('retailerDashboardStampAndCustomerStats');
-  const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery(null);
+  const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery({ dateRange });
 
-  const { rewardCollectedTruePercentage = 0, rewardCollectedFalsePercentage = 0, totalEligibleForReward = 0 } = rewardCollect?.data || {};
+  const {
+    rewardCollectedTruePercentage = 0,
+    rewardCollectedFalsePercentage = 0,
+    totalEligibleForReward = 0,
+    totalRewardCollectedTrue = 0,
+    totalRewardCollectedFalse = 0,
+    totalReward = 0,
+  } = rewardCollect?.data || {};
+
+  // console.log(rewardCollect?.data );
 
   const data = [
-    { name: `${t('collected')}:`, value: Number(rewardCollectedTruePercentage), color: '#3872FA' },
-    { name: `${t('notCollected')}:`, value: Number(rewardCollectedFalsePercentage), color: '#eab308' },
+    { name: `${t('collected')}: (${totalRewardCollectedTrue})`, value: Number(rewardCollectedTruePercentage), color: '#3872FA' },
+    { name: `${t('notCollected')}: (${totalRewardCollectedFalse})`, value: Number(rewardCollectedFalsePercentage), color: '#eab308' },
   ];
 
   const RADIAN = Math.PI / 180;
@@ -60,7 +69,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
               arrowClassName={`fill-danger`}
             >
               <span>
-                <IoInformationCircleOutline className="text-xl text-danger " />
+                <IoInformationCircleOutline className="cursor-pointer text-xl text-danger" />
               </span>
             </Tooltip>
           </div>
@@ -73,13 +82,13 @@ export default function RewardPieStatus({ className }: { className?: string }) {
                 <span>{totalEligibleForReward}</span>
               )}
             </span>
-            {t('rewardEligible')}
+            {totalEligibleForReward <= 1 ? t('rewardEligible') : t('rewardEligibles')}
           </p>
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">
           <div className="mx-auto h-44 w-44">
-            {isLoading || isError || rewardCollect === undefined ? (
-              <Skeleton className="m-auto h-36 w-36 rounded-full" />
+            {isLoading || isError || isFetching || rewardCollect === undefined ? (
+              <Skeleton className="m-auto rounded-full md:size-36 sxl:size-48" />
             ) : rewardCollectedTruePercentage === 0 && rewardCollectedFalsePercentage === 0 ? (
               // <div className="flex h-full items-center justify-center">
               //   <span className="font-medium text-danger">{t('noStatsAvailable')}</span>
@@ -130,7 +139,7 @@ export default function RewardPieStatus({ className }: { className?: string }) {
           <p className="mt-4 text-center font-semibold text-gray-800">{t('rewardEfficacy')}</p>
         </div>
         <div className="">
-          {isLoading || isError || rewardCollect === undefined ? (
+          {isLoading || isError || isFetching || rewardCollect === undefined ? (
             <>
               <Skeleton className="m-auto h-6 w-full rounded-md" />
               <hr className="my-3" />

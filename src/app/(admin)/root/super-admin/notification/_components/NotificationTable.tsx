@@ -19,8 +19,13 @@ import { useSelector } from 'react-redux';
 import { Badge } from 'rizzui';
 import DeleteConfirmModal from '../../../_components/DeleteConfirmModal';
 import CreateUpdateModel from './CreateUpdateModal';
+import { IoCloseCircleSharp } from 'react-icons/io5';
+import DatePicker from '@/components/Formik/DatePicker';
 
 export default function NotificationTable({ timezone, googleMapsApiKey }: { timezone: string; googleMapsApiKey: string }) {
+  const [dateRange, setDateRange] = useState('');
+  const [start, setStart] = useState<string>('');
+  const [end, setEnd] = useState<string>('');
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
@@ -29,20 +34,45 @@ export default function NotificationTable({ timezone, googleMapsApiKey }: { time
   const [formData, setFormData] = useState({});
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isFetching } = useSuperAdminNotificationsQuery(
-    {
-      page: query.pageIndex + 1,
-      limit: query.pageSize,
-      ...searchQuery,
-    },
-    { skip: !accessToken }
-  );
+  const queryObject: any = {
+    page: query.pageIndex + 1,
+    limit: query.pageSize,
+    ...searchQuery,
+  };
+  if (start) {
+    queryObject.start = start;
+  }
+  if (end) {
+    queryObject.end = end;
+  }
+  const { data, isLoading, isFetching } = useSuperAdminNotificationsQuery(queryObject, { skip: !accessToken });
+  // const { data, isLoading, isFetching } = useSuperAdminNotificationsQuery(
+  //   {
+  //     page: query.pageIndex + 1,
+  //     limit: query.pageSize,
+  //     ...searchQuery,
+  //   },
+  //   { skip: !accessToken }
+  // );
   const [deleteNotificationBySuperAdmin, { isSuccess, isError }] = useDeleteNotificationBySuperAdminMutation();
 
   const handleDelete = async (rowData: any) => {
     setDeleteState(true);
     setDeleteId(rowData._id);
   };
+
+  useEffect(() => {
+    if (dateRange) {
+      if (dateRange.includes('to')) {
+        const dates = dateRange.replaceAll(' ', '').split('to');
+        setStart(dates[0]);
+        setEnd(dates[1]);
+      }
+    } else {
+      setStart('');
+      setEnd('');
+    }
+  }, [dateRange]);
 
   useEffect(() => {
     if (isError) {
@@ -187,7 +217,20 @@ export default function NotificationTable({ timezone, googleMapsApiKey }: { time
   return (
     <>
       <div className="mb-5 flex flex-col justify-end gap-y-3 md:flex-row md:gap-0">
-        <div>
+        <div className="flex items-center gap-4">
+          <div className="flex flex-shrink-0 items-center gap-2">
+            <h5 className="text-base font-medium">Filter by Date :</h5>
+            {/* date picker */}
+            <div className="relative">
+              {/* close button */}
+              {dateRange.length > 0 && (
+                <div className="absolute -right-1 -top-2 text-lg font-semibold">
+                  <IoCloseCircleSharp onClick={() => setDateRange('')} className="cursor-pointer text-2xl text-[#dc2626]" />
+                </div>
+              )}
+              <DatePicker value={dateRange} range={true} changeHandler={setDateRange} />
+            </div>
+          </div>
           <Button
             className="w-full"
             color="danger"

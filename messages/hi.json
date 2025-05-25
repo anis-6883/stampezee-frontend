@@ -74,7 +74,7 @@
     "yourCustomer": "आपके ग्राहक",
     "experience": "अनुभव",
     "bannerDetails": "सरलता और प्रौद्योगिकी के साथ अपने ग्राहकों को जोड़ें, पुरस्कृत करें और उन्हें बनाए रखें, और अपने व्यवसाय में वफादारी कार्यक्रमों का भविष्य लाएं।",
-    "bannerButtonText": "शुरू करें",
+    "bannerButtonText": "शामिल हों और इनाम पाएं",
     "heroTitleOne": "StampEzee क्यों चुनें?",
     "heroDescriptionOne": "डिजिटलीकरण ने व्यवसायों के ग्राहकों के साथ बातचीत करने के तरीके को बदल दिया है। हमारा प्लेटफ़ॉर्म सहज डिज़ाइन, मजबूत एनालिटिक्स और बेजोड़ अनुकूलन को मिलाता है, जिससे आपको ग्राहक जुड़ाव के लिए सबसे बेहतरीन उपकरण मिलता है।",
     "heroTitleTwo": "ग्राहक प्रतिधारण को सशक्त करें",
@@ -122,7 +122,8 @@
     "email": "ईमेल",
     "phone": "फोन नंबर",
     "message": "संदेश",
-    "buttonText": "भेजें"
+    "buttonText": "भेजें",
+    "warningText": "के साथ चिह्नित फ़ील्ड अनिवार्य हैं!"
   },
   "pricingPage": {
     "explore": "अन्वेषण करें",
@@ -132,7 +133,8 @@
     "ourAddons": "हमारे ऐड-ऑन",
     "pricingButtonText": "शुरू करें",
     "applied": "लागू",
-    "active": "सक्रिय"
+    "active": "सक्रिय",
+    "tooltipText": "आप योजना चुनने के बाद ऐड-ऑन चुन सकते हैं!"
   },
   "CheckoutPage": {
     "plans": "योजनाएँ",
@@ -264,11 +266,11 @@
     "Billing": "बिलिंग",
     "Refunds": "रिफंड",
     "Branches": "शाखाएं",
-    "Loyalty-Executive": "उप-प्रशासक",
+    "Loyalty-Executive": "निष्ठा कार्यकारी",
     "Stamp Cards": "स्टैम्प्स",
     "Stamps": "स्कैन",
     "Customers": "ग्राहक",
-    "Custom Stamp Images": "कस्टम स्टाम्प छवियां",
+    "Custom Stamp Image": "कस्टम स्टाम्प छवियां",
     "Push Notifications": "पुश सूचनाएं",
     "Regular": "नियमित",
     "Location Based": "स्थान आधारित",
@@ -286,13 +288,15 @@
     "serialNo": "क्रम संख्या",
     "branchName": "शाखा नाम",
     "branchAddress": "शाखा का पता",
-    "subAdminName": "उप प्रशासक का नाम",
-    "subAdminEmail": "उप प्रशासक ईमेल",
+    "subAdminName": "निष्ठा कार्यकारी का नाम",
+    "subAdminEmail": "निष्ठा कार्यकारी की ईमेल",
     "totalStamp": "कुल स्टैम्प",
     "totalCustomer": "कुल ग्राहक",
     "totalSubAdmin": "कुल उप-प्रशासक",
     "totalOrder": "कुल ऑर्डर",
-    "totalRevenue": "कुल राजस्व"
+    "totalStampCard": "कुल स्टैम्प कार्ड",
+    "totalRevenue": "कुल राजस्व",
+    "totalRewardsCollected": "कुल एकत्रित पुरस्कार"
   },
   "retailerDashboardStampAndCustomerStats": {
     "stampCollect": "स्टांप संग्रह",
@@ -303,7 +307,8 @@
     "totalCollectedStamp": "कुल एकत्रित स्टांप",
     "totalUniqueCustomer": "कुल अद्वितीय ग्राहक",
     "rewardCollectStatus": "इनाम संग्रह स्थिति",
-    "rewardEligible": "इनाम के लिए पात्र",
+    "rewardEligible": "उपयोगकर्ता इनाम के लिए पात्र है",
+    "rewardEligibles": "उपयोगकर्ता इनाम के लिए पात्र हैं",
     "rewardEfficacy": "इनाम की प्रभावकारिता",
     "collected": "संग्रहित",
     "notCollected": "संग्रहित नहीं",
@@ -431,12 +436,12 @@
     "branchUpdated": "शाखा सफलतापूर्वक अपडेट हुई!"
   },
   "RetailerSubAdmin": {
-    "title": "उप-प्रशासकों का प्रबंधन करें",
-    "subAdmins": "उप-प्रशासक",
+    "title": "वफादारी-विशेष कार्यकारी प्रबंधन करें",
+    "subAdmins": "वफादारी-विशेष कार्यकारी",
     "dashboard": "डैशबोर्ड",
-    "addNewSubAdmin": "नया उप-प्रशासक जोड़ें",
-    "updateASubAdmin": "एक उप-प्रशासक को अपडेट करें",
-    "submit": "प्रस्तुत करें",
+    "addNewSubAdmin": "नया निष्ठा कार्यकारी जोड़ें",
+    "updateASubAdmin": "निष्ठा कार्यकारी अपडेट करें",
+    "submit": "जमा करें",
     "update": "अपडेट करें"
   },
   "RetailerSubAdminTable": {
@@ -540,8 +545,8 @@
     "reward": "पुरस्कार",
     "branchName": "शाखा का नाम",
     "branchAddress": "शाखा का पता",
-    "subAdminName": "उप-प्रशासक का नाम",
-    "subAdminEmail": "उप-प्रशासक का ईमेल",
+    "subAdminName": "निष्ठा कार्यकारी का नाम",
+    "subAdminEmail": "निष्ठा कार्यकारी की ईमेल",
     "name": "नाम",
     "email": "ईमेल",
     "phone": "फोन",
@@ -582,9 +587,12 @@
   },
   "RetailerBalanceCard": {
     "plan": "योजना",
-    "expire": "समाप्त",
+    "expire": "नवीनी",
+    "userLimit": "यूज़र",
+    "stampLimit": "स्टैम्प",
     "current": "वर्तमान",
-    "usage": "उपयोग"
+    "usage": "प्रयोग",
+    "unlimited": "असीमित"
   },
   "RetailerNotification": {
     "title": "नियमित सूचना प्रबंधित करें",
@@ -714,8 +722,8 @@
     "status": "स्थिति",
     "branchName": "शाखा का नाम",
     "branchAddress": "शाखा का पता",
-    "subAdminName": "उप व्यवस्थापक का नाम",
-    "subAdminEmail": "उप व्यवस्थापक का ईमेल",
+    "subAdminName": "निष्ठा कार्यकारी का नाम",
+    "subAdminEmail": "निष्ठा कार्यकारी की ईमेल",
     "name": "नाम",
     "email": "ईमेल",
     "phone": "फ़ोन",
@@ -738,8 +746,8 @@
     "ownerName": "मालिक का नाम",
     "branchName": "शाखा का नाम",
     "branchAddress": "शाखा का पता",
-    "subAdminName": "उप प्रशासक का नाम",
-    "subAdminEmail": "उप प्रशासक का ईमेल",
+    "subAdminName": "निष्ठा कार्यकारी का नाम",
+    "subAdminEmail": "निष्ठा कार्यकारी की ईमेल",
     "paymentReceipt": "भुगतान रसीद"
   }
 }
