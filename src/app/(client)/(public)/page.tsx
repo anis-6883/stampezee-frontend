@@ -150,9 +150,9 @@ export default async function Page() {
       {/* Hero Image Start */}
 
       <div
-        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40 md:left-36 md:top-20 lg:left-10 lg:top-24' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36 md:right-44 md:top-20 lg:right-0 lg:top-24'}  mt-10 items-center justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
+        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40 md:left-36 md:top-20 lg:left-10 lg:top-16 sxl:top-40' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36 md:right-44 md:top-20 lg:right-0 lg:top-16 sxl:top-40'}  mt-10 items-center justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
       >
-        <div className="hidden h-[40%] w-[40%] md:h-[60%] md:w-[60%] lg:block xl:h-[44%] xxl:w-[44%]">
+        <div className="hidden h-[40%] w-[40%] md:h-[60%] md:w-[60%] lg:block xl:h-[44%] xxl:w-[57%] sxl:w-[44%]">
           <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
         </div>
       </div>

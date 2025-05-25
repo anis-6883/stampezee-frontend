@@ -28,6 +28,7 @@ export default function GlobalDrawer() {
         onMouseLeave={() => {
           closeDrawer();
         }}
+        className="h-full overflow-auto"
       >
         {view}
       </div>
