@@ -39,7 +39,9 @@
     "info": "信息",
     "associatedSubAdminAndStampsWillBeDeleted": "相关的子管理员和邮票也将被删除！",
     "notNow": "暂不",
-    "confirm": "是的，确认"
+    "confirm": "是的，确认",
+    "confirmPlan": "是，取消计划",
+    "confirmAddon": "是，取消附加服务"
   },
   "ActivateConfirmModal": {
     "title": "激活确认",

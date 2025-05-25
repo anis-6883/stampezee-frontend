@@ -193,34 +193,7 @@ export default function CloneStamp({ Id, locale }: any) {
                 <InputField name="rules" label={t('basicRules')} placeholder="You need to buy..." />
               </div>
 
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-1">
-                {/* <div>
-                  <SelectField
-                    name="hasValidity"
-                    label={t('validityPeriod')}
-                    value={values?.hasValidity}
-                    options={[
-                      { id: 1, name: 'no expiration', value: false },
-                      { id: 2, name: 'expiration', value: true },
-                    ].map((item: any) => ({
-                      label: _.startCase(_.toLower(item.name)),
-                      value: item.value,
-                    }))}
-                    onChange={(option: { label: string; value: boolean }) => {
-                      setFieldValue('hasValidity', option.value);
-                    }}
-                  />
-                </div> */}
-                <FormikDatePicker
-                  isMinDate={true}
-                  label={t('validDateRange')}
-                  minDate={initialValues?.validDateRange.split('to')[0]}
-                  name="validDateRange"
-                  range={true}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                 <InputField name="noOfStampsToCollect" label={t('noOfStampsToCollect')} type="number" />
                 <InputField
                   name="minPurchaseAmount"
@@ -229,6 +202,13 @@ export default function CloneStamp({ Id, locale }: any) {
                   type="number"
                   prefix={<LuCircleDollarSign className="text-xl" />}
                   placeholder="0"
+                />
+                <FormikDatePicker
+                  isMinDate={true}
+                  label={t('validDateRange')}
+                  minDate={initialValues?.validDateRange.split('to')[0]}
+                  name="validDateRange"
+                  range={true}
                 />
               </div>
 

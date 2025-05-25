@@ -40,7 +40,8 @@
     "associatedSubAdminAndStampsWillBeDeleted": "Associated sub-admin and stamps will also deleted!",
     "notNow": "Keep It",
     "confirmPlan": "Yes, Cancel Plan",
-    "confirmAddon": "Yes, Cancel Add-on"
+    "confirmAddon": "Yes, Cancel Add-on",
+    "confirm": "Yes, Confirm"
   },
   "ActivateConfirmModal": {
     "title": "Activate Confirmation",

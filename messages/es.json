@@ -39,7 +39,9 @@
     "info": "Información",
     "associatedSubAdminAndStampsWillBeDeleted": "¡Los sub-administradores y sellos asociados también serán eliminados!",
     "notNow": "No ahora",
-    "confirm": "Sí, confirmar"
+    "confirm": "Sí, confirmar",
+    "confirmPlan": "Sí, cancelar plan",
+    "confirmAddon": "Sí, cancelar complemento"
   },
   "ActivateConfirmModal": {
     "title": "Confirmación de activación",

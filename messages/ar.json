@@ -39,7 +39,9 @@
     "info": "معلومة",
     "associatedSubAdminAndStampsWillBeDeleted": "سيتم أيضًا حذف المسؤولين الفرعيين والطوابع المرتبطة!",
     "notNow": "ليس الآن",
-    "confirm": "نعم، تأكيد"
+    "confirm": "نعم، تأكيد",
+    "confirmPlan": "نعم، إلغاء الخطة",
+    "confirmAddon": "نعم، إلغاء الإضافة"
   },
   "ActivateConfirmModal": {
     "title": "تأكيد التفعيل",

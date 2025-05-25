@@ -39,7 +39,9 @@
     "info": "जानकारी",
     "associatedSubAdminAndStampsWillBeDeleted": "संबंधित सब-एडमिन और स्टैम्प्स भी हटाए जाएंगे!",
     "notNow": "अभी नहीं",
-    "confirm": "हाँ, पुष्टि करें"
+    "confirm": "हाँ, पुष्टि करें",
+    "confirmPlan": "हाँ, योजना रद्द करें",
+    "confirmAddon": "हाँ, ऐड-ऑन रद्द करें"
   },
   "ActivateConfirmModal": {
     "title": "सक्रिय करने की पुष्टि",

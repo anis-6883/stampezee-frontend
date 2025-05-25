@@ -232,11 +232,7 @@ export default function Create({ locale }: { locale: string }) {
                 <InputField name="rules" label={t('basicRules')} placeholder="You need to buy..." />
               </div>
 
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-1">
-                <FormikDatePicker isMinDate={true} label="Valid Date Range" name="validDateRange" range={true} />
-              </div>
-
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                 <InputField name="noOfStampsToCollect" label={t('noOfStampsToCollect')} type="number" />
                 <InputField
                   name="minPurchaseAmount"
@@ -247,6 +243,7 @@ export default function Create({ locale }: { locale: string }) {
                   suffix={<span>{session?.user?.businessCurrency}</span>}
                   placeholder="0"
                 />
+                <FormikDatePicker isMinDate={true} label="Valid Date Range" name="validDateRange" range={true} />
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

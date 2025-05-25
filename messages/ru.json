@@ -39,7 +39,9 @@
     "info": "Информация",
     "associatedSubAdminAndStampsWillBeDeleted": "Связанные суб-администраторы и марки также будут удалены!",
     "notNow": "Не сейчас",
-    "confirm": "Да, подтвердить"
+    "confirm": "Да, подтвердить",
+    "confirmPlan": "Да, отменить план",
+    "confirmAddon": "Да, отменить дополнение"
   },
   "ActivateConfirmModal": {
     "title": "Подтверждение активации",

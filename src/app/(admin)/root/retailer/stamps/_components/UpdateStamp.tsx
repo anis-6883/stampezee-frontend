@@ -93,7 +93,7 @@ export default function Update({ Id }: any) {
     rewardType: stampData?.data?.rewardType ? stampData?.data?.rewardType : '',
     promotionReward: stampData?.data?.promotionReward ? stampData?.data?.promotionReward : '',
     discountReward: stampData?.data?.discountReward ? stampData?.data?.discountReward : 0,
-    // hasValidity: stampData?.data?.hasValidity,
+    hasValidity: true,
     validDateRange:
       stampData?.data?.startedAt && stampData?.data?.expiredAt
         ? `${getFormattedDateByTimezone(stampData?.data?.startedAt, session?.user?.timezone?.label || '')} to ${getFormattedDateByTimezone(stampData?.data?.expiredAt, session?.user?.timezone?.label || '')}`
@@ -192,36 +192,7 @@ export default function Update({ Id }: any) {
                 <InputField readOnly={stampData?.data?.isPublished} name="rules" label={t('basicRules')} placeholder="You need to buy..." />
               </div>
 
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-1">
-                {/* <div>
-                  <SelectField
-                    disabled={stampData?.data?.isPublished}
-                    name="hasValidity"
-                    label={t('validityPeriod')}
-                    value={values?.hasValidity}
-                    options={[
-                      { id: 1, name: 'no expiration', value: false },
-                      { id: 2, name: 'expiration', value: true },
-                    ].map((item: any) => ({
-                      label: _.startCase(_.toLower(item.name)),
-                      value: item.value,
-                    }))}
-                    onChange={(option: { label: string; value: boolean }) => {
-                      setFieldValue('hasValidity', option.value);
-                    }}
-                  />
-                </div> */}
-                <FormikDatePicker
-                  disabled={stampData?.data?.isPublished}
-                  isMinDate={true}
-                  label={t('validDateRange')}
-                  name="validDateRange"
-                  range={true}
-                  minDate={'today'}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                 <InputField
                   readOnly={stampData?.data?.isPublished}
                   name="noOfStampsToCollect"
@@ -236,6 +207,14 @@ export default function Update({ Id }: any) {
                   type="number"
                   prefix={<LuCircleDollarSign className="text-xl" />}
                   placeholder="0"
+                />
+                <FormikDatePicker
+                  disabled={stampData?.data?.isPublished}
+                  isMinDate={true}
+                  label={t('validDateRange')}
+                  name="validDateRange"
+                  range={true}
+                  minDate={'today'}
                 />
               </div>
 

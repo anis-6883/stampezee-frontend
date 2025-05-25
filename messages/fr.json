@@ -39,7 +39,9 @@
     "info": "Info",
     "associatedSubAdminAndStampsWillBeDeleted": "Les sous-administrateurs et les timbres associés seront également supprimés!",
     "notNow": "Pas maintenant",
-    "confirm": "Oui, confirmer"
+    "confirm": "Oui, confirmer",
+    "confirmPlan": "Oui, annuler le forfait",
+    "confirmAddon": "Oui, annuler l'option"
   },
   "ActivateConfirmModal": {
     "title": "Confirmation d'activation",

@@ -25,7 +25,7 @@ export default async function Page() {
     <div className="relative overflow-hidden">
       {/* rgba(22, 28, 36, 0.8),  */}
       <div className={`${isRtl ? 'hero-curve-rtr' : 'hero-curve'} relative mx-auto mt-[4.4rem] w-full sm:mt-10 md:mt-16`}>
-        <div className="h-screen w-full  bg-[#FF3131] md:h-[80vh] lg:h-[82vh]  "></div>
+        <div className="h-screen w-full  bg-[#FF3131] md:h-[70vh] lg:h-[74vh]  "></div>
         <div className="absolute inset-0"></div>
         <div
           className={`container absolute top-[60px] ${isRtl ? '' : 'mx-auto'} flex max-w-screen-xl items-center px-0 sm:inset-0 md:px-8 lg:px-10`}
@@ -148,12 +148,11 @@ export default async function Page() {
       </div>
       {/* Revolution Card End  */}
       {/* Hero Image Start */}
-      {/* sm:right-60 sm:top-36 */}
-      {/* right-[-15rem] top-[33rem] */}
+
       <div
-        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40 md:left-36 md:top-20 lg:left-36 lg:top-40' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36 md:right-44 md:top-20 lg:right-0 lg:top-32'}  mt-10 items-center justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
+        className={`absolute ${isRtl ? 'left-[-15rem] top-[33rem] sm:left-56 sm:top-40 md:left-36 md:top-20 lg:left-10 lg:top-24' : 'right-[-15rem] top-[33rem] sm:right-60 sm:top-36 md:right-44 md:top-20 lg:right-0 lg:top-24'}  mt-10 items-center justify-center sm:mt-0 sm:w-1/2 md:flex lg:flex`}
       >
-        <div className="hidden h-[40%] w-[40%] md:h-[60%] md:w-[60%] lg:block xl:h-[50%] xxl:w-[50%]">
+        <div className="hidden h-[40%] w-[40%] md:h-[60%] md:w-[60%] lg:block xl:h-[44%] xxl:w-[44%]">
           <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full" />
         </div>
       </div>

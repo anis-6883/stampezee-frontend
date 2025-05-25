@@ -39,7 +39,9 @@
     "info": "情報",
     "associatedSubAdminAndStampsWillBeDeleted": "関連するサブ管理者とスタンプも削除されます！",
     "notNow": "今はしない",
-    "confirm": "はい、確認します"
+    "confirm": "はい、確認します",
+    "confirmPlan": "はい、プランをキャンセル",
+    "confirmAddon": "はい、アドオンをキャンセル"
   },
   "ActivateConfirmModal": {
     "title": "アクティベーション確認",

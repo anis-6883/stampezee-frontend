@@ -70,7 +70,7 @@ export default function PackageCancelModal({
               className="mb-4 flex items-center rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-gray-800 dark:text-red-400"
               role="alert"
             >
-              <svg
+              {/* <svg
                 className="me-3 inline h-4 w-4 flex-shrink-0"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
@@ -78,17 +78,19 @@ export default function PackageCancelModal({
                 viewBox="0 0 20 20"
               >
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
+              </svg> */}
               <span className="sr-only">{'Info'}</span>
               <div>
-                <span className="font-medium">{'Important Note:'}</span> <br />
-                <div>
-                  <span>
+                <span className=" text-lg font-medium">⚠️ {'Important Note:'}</span> <br />
+                <div className="mt-3">
+                  <span className="text-sm font-normal">
                     Your plan will remain active until the end of your current billing cycle. A refund—if eligible—will be calculated based
                     on your usage and processed according to our policy. Once canceled, all associated services (including add-ons) will
                     stop functioning beyond this period.
                   </span>
-                  <span className="block">If you resubscribe before the next billing date, your previous add-ons can be restored.</span>
+                  <span className="mt-2 block">
+                    If you resubscribe before the next billing date, your previous add-ons can be restored.
+                  </span>
                 </div>
               </div>
             </div>

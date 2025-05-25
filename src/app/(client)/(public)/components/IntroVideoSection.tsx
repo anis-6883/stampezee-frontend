@@ -15,7 +15,7 @@ export default function IntroVideoSection({ title, description }: { title: strin
       <div data-aos="fade-right" className="mb-6 flex w-full items-center justify-center overflow-hidden md:mb-0 md:w-1/2 lg:mb-4 sxl:mb-8">
         <iframe
           className="h-[300px] w-[550px] rounded-xl shadow-lg"
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          src="https://www.youtube.com/embed/fqo9a7nJBo0"
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
