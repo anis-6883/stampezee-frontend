@@ -32,7 +32,7 @@ export default function Accordion({ locale }: { locale: string }) {
 
   useEffect(() => {
     if (contentRef.current) {
-      setMaxHeight(status ? `${contentRef.current.scrollHeight}px` : '0px');
+      setMaxHeight(status ? `${contentRef.current.scrollHeight + 32}px` : '0px');
     }
   }, [status]);
 
@@ -77,11 +77,11 @@ export default function Accordion({ locale }: { locale: string }) {
             id="accordion-collapse-body-1"
             ref={contentRef}
             style={{ maxHeight: status === item?._id ? maxHeight : 0 }}
-            className={`transition-max-height overflow-hidden duration-500 ease-in-out ${status === item?._id ? 'max-h-96' : 'max-h-0'}`}
+            className={`transition-max-height overflow-hidden duration-500 ease-in-out ${status === item?._id ? 'max-h-screen' : 'max-h-0'}`}
             aria-labelledby="accordion-collapse-heading-1"
           >
-            <div className=" border-none p-5 dark:bg-gray-900">
-              <p className="mb-2 text-pretty pb-4 text-base text-gray-500 dark:text-gray-400 sm:text-lg">{item?.description}</p>
+            <div className=" border-none dark:bg-gray-900">
+              <p className="text-pretty p-6 text-base text-gray-500 dark:text-gray-400 sm:text-lg">{item?.description}</p>
             </div>
           </div>
         </div>

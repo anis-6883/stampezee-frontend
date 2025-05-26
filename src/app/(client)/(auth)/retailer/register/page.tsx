@@ -46,7 +46,7 @@ export default async function Page() {
               googleMapsApiKey={data?.data?.googleMap?.googleMapsApiKey}
             />
 
-            <div className="mt-5 text-center">
+            <div className="mt-1 text-center">
               {t('alreadyHaveAccount')}{' '}
               <Link href={routes.publicRoutes.retailerLogin} className="font-semibold text-danger">
                 {t('signIn')}

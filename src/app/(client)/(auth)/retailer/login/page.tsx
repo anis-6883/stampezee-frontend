@@ -44,7 +44,7 @@ export default async function Page() {
               </Link>
             </div>
 
-            <div className="mt-10 text-center">
+            <div className="mt-5 text-center">
               {t('newRetailer')}{' '}
               <Link href={routes.publicRoutes.retailerRegister} className="font-semibold text-danger">
                 {t('signUp')}

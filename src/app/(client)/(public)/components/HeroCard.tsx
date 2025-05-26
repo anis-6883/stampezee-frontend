@@ -5,7 +5,7 @@ import IntroVideoSection from './IntroVideoSection';
 export const HeroCard = () => {
   const t = useTranslations('HomePage');
   return (
-    <div className="px-5 md:px-8 lg:px-10">
+    <div className=" px-5 md:px-8 lg:px-10">
       <IntroVideoSection title={t('introVideoTitle')} description={t('introVideoDescription')} />
       <Featured
         image="/default/why-stamp.png"

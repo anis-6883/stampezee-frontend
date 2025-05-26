@@ -31,7 +31,7 @@ export default async function Page() {
           className={`container absolute top-[60px] ${isRtl ? '' : 'mx-auto'} flex max-w-screen-xl items-center px-0 sm:inset-0 md:px-8 lg:px-10`}
         >
           <div className="flex w-full  flex-col-reverse items-center justify-between sm:flex-row-reverse lg:flex-row">
-            <div className="mt-2 block h-[40%] w-[40%] md:h-[50%]  md:w-[60%] lg:hidden  ">
+            <div className=" mt-2 block h-[60%] w-[60%] md:h-[50%]  md:w-[60%] lg:hidden  ">
               <Image src="/default/hero-image.png" alt="hero image" className=" h-full w-full object-contain" />
             </div>
             <div className="w-full p-3 text-center sm:w-full md:w-[50%] md:text-left">
@@ -47,7 +47,7 @@ export default async function Page() {
               <div className="mt-2 md:mt-6 lg:mt-8">
                 <Link
                   href={routes.publicRoutes.pricing}
-                  className="dark:bg-primary-red md:text-md rounded-full bg-white px-4 py-2.5 text-lg font-semibold uppercase text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] md:py-3 xl:px-8 xl:text-xl xxl:py-4 sxl:text-2xl"
+                  className="dark:bg-primary-red md:text-md rounded-full bg-white px-4 py-2.5 text-base font-semibold uppercase text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] md:py-3 xl:px-8 xl:text-lg xxl:py-4 sxl:text-xl"
                 >
                   {t('bannerButtonText')}
                 </Link>
@@ -138,7 +138,7 @@ export default async function Page() {
             <div className="mb-3 mt-4 md:mt-6 lg:mt-8">
               <Link
                 href={routes.publicRoutes.pricing}
-                className="dark:bg-primary-red  rounded-full bg-white px-3 py-4 text-base font-semibold uppercase tracking-widest text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:px-8 md:text-xl lg:text-2xl"
+                className="dark:bg-primary-red  rounded-full bg-white px-3 py-4 text-sm font-semibold uppercase tracking-widest text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:px-8 md:text-lg lg:text-xl"
               >
                 {t('revolutionButtonText')}
               </Link>
