@@ -24,6 +24,14 @@ const statsData1 = [
     color: '#3872FA',
   },
 ];
+const statsData2 = [
+  {
+    name: '',
+    value: 100,
+    percentage: 100,
+    color: '#eab308',
+  },
+];
 
 export default function RewardPieStatus({ className, dateRange }: { className?: string; dateRange: string | undefined }) {
   const t = useTranslations('retailerDashboardStampAndCustomerStats');
@@ -37,8 +45,6 @@ export default function RewardPieStatus({ className, dateRange }: { className?: 
     totalRewardCollectedFalse = 0,
     totalReward = 0,
   } = rewardCollect?.data || {};
-
-  // console.log(rewardCollect?.data );
 
   const data = [
     { name: `${t('collected')}: (${totalRewardCollectedTrue})`, value: Number(rewardCollectedTruePercentage), color: '#3872FA' },
@@ -55,6 +61,94 @@ export default function RewardPieStatus({ className, dateRange }: { className?: 
       <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
         {`${(percent * 100).toFixed(0)}%`}
       </text>
+    );
+  };
+
+  const renderRewardCollectedGraph = () => {
+    if (isLoading || isError || isFetching || rewardCollect === undefined) {
+      return <Skeleton className="m-auto rounded-full md:size-36 sxl:size-48" />;
+    } else if (rewardCollectedTruePercentage === 0 && rewardCollectedFalsePercentage === 0) {
+      return (
+        <div className="col-span-full mt-10 flex items-center justify-center">
+          {statsData.map((item: any) => (
+            <div key={item.name} className={cn('w-52 text-center')}>
+              <CircleProgressbar
+                percentage={item.percentage}
+                size={120}
+                stroke="#eab308"
+                strokeWidth={5}
+                progressColor={item.color}
+                useParentResponsive={true}
+                label={<Text className="font-lexend 2xl:text-base text-sm font-bold text-gray-900 dark:text-gray-700">{item.value}</Text>}
+                strokeClassName="dark:stroke-gray-200"
+              />
+              <Text className="mt-3 text-sm font-semibold text-gray-900 @md:text-sm @7xl:text-base dark:text-gray-700">{item.name}</Text>
+            </div>
+          ))}
+        </div>
+      );
+    } else if (rewardCollectedTruePercentage === 100 && rewardCollectedFalsePercentage === 0) {
+      return (
+        <div className="col-span-full mt-10 flex items-center justify-center">
+          {statsData1.map((item: any) => (
+            <div key={item.name} className={cn('w-52 text-center')}>
+              <CircleProgressbar
+                percentage={item.percentage}
+                size={120}
+                stroke="#eab308"
+                strokeWidth={5}
+                progressColor={item.color}
+                useParentResponsive={true}
+                label={<Text className="font-lexend 2xl:text-base text-sm font-bold text-gray-900 dark:text-gray-700">{item.value}</Text>}
+                strokeClassName="dark:stroke-gray-200"
+              />
+              <Text className="mt-3 text-sm font-semibold text-gray-900 @md:text-sm @7xl:text-base dark:text-gray-700">{item.name}</Text>
+            </div>
+          ))}
+        </div>
+      );
+    } else if (rewardCollectedTruePercentage === 0 && rewardCollectedFalsePercentage === 100) {
+      return (
+        <div className="col-span-full mt-10 flex items-center justify-center">
+          {statsData2.map((item: any) => (
+            <div key={item.name} className={cn('w-52 text-center')}>
+              <CircleProgressbar
+                percentage={item.percentage}
+                size={120}
+                stroke="#eab308"
+                strokeWidth={5}
+                progressColor={item.color}
+                useParentResponsive={true}
+                label={<Text className="font-lexend 2xl:text-base text-sm font-bold text-gray-900 dark:text-gray-700">{item.value}</Text>}
+                strokeClassName="dark:stroke-gray-200"
+              />
+              <Text className="mt-3 text-sm font-semibold text-gray-900 @md:text-sm @7xl:text-base dark:text-gray-700">{item.name}</Text>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    return (
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart className="[&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-white">
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={80}
+            fill="#8884d8"
+            strokeWidth={2}
+            dataKey="value"
+          >
+            {data.map((item, index) => (
+              <Cell key={index} fill={item.color} stroke={item.color} />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -94,78 +188,7 @@ export default function RewardPieStatus({ className, dateRange }: { className?: 
           </p>
         </div>
         <div className="mb-6 w-full @3xl:w-40 @4xl:mb-0">
-          <div className="mx-auto h-44 w-44">
-            {isLoading || isError || isFetching || rewardCollect === undefined ? (
-              <Skeleton className="m-auto rounded-full md:size-36 sxl:size-48" />
-            ) : rewardCollectedTruePercentage === 0 && rewardCollectedFalsePercentage === 0 ? (
-              // <div className="flex h-full items-center justify-center">
-              //   <span className="font-medium text-danger">{t('noStatsAvailable')}</span>
-              // </div>
-              <div className="col-span-full mt-10 flex items-center justify-center">
-                {statsData.map((item: any) => (
-                  <div key={item.name} className={cn('w-52 text-center')}>
-                    <CircleProgressbar
-                      percentage={item.percentage}
-                      size={120}
-                      stroke="#eab308"
-                      strokeWidth={5}
-                      progressColor={item.color}
-                      useParentResponsive={true}
-                      label={
-                        <Text className="font-lexend 2xl:text-base text-sm font-bold text-gray-900 dark:text-gray-700">{item.value}</Text>
-                      }
-                      strokeClassName="dark:stroke-gray-200"
-                    />
-                    <Text className="mt-3 text-sm font-semibold text-gray-900 @md:text-sm @7xl:text-base dark:text-gray-700">
-                      {item.name}
-                    </Text>
-                  </div>
-                ))}
-              </div>
-            ) : rewardCollectedTruePercentage === 100 && rewardCollectedFalsePercentage === 0 ? (
-              <div className="col-span-full mt-10 flex items-center justify-center">
-                {statsData1.map((item: any) => (
-                  <div key={item.name} className={cn('w-52 text-center')}>
-                    <CircleProgressbar
-                      percentage={item.percentage}
-                      size={120}
-                      stroke="#eab308"
-                      strokeWidth={5}
-                      progressColor={item.color}
-                      useParentResponsive={true}
-                      label={
-                        <Text className="font-lexend 2xl:text-base text-sm font-bold text-gray-900 dark:text-gray-700">{item.value}</Text>
-                      }
-                      strokeClassName="dark:stroke-gray-200"
-                    />
-                    <Text className="mt-3 text-sm font-semibold text-gray-900 @md:text-sm @7xl:text-base dark:text-gray-700">
-                      {item.name}
-                    </Text>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart className="[&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-white">
-                  <Pie
-                    data={data}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={renderCustomizedLabel}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    strokeWidth={2}
-                    dataKey="value"
-                  >
-                    {data.map((item, index) => (
-                      <Cell key={index} fill={item.color} stroke={item.color} />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-            )}
-          </div>
+          <div className="mx-auto h-44 w-44">{renderRewardCollectedGraph()}</div>
           <p className="mt-4 text-center font-semibold text-gray-800">{t('rewardEfficacy')}</p>
         </div>
         <div className="">

@@ -2,6 +2,7 @@
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
+import { RxArrowRight } from 'react-icons/rx';
 
 export default function IntroVideoSection({ title, description }: { title: string; description: string }) {
   useEffect(() => {
@@ -27,6 +28,11 @@ export default function IntroVideoSection({ title, description }: { title: strin
       <div data-aos="fade-left" className=" overflow-hidden text-center md:w-1/2 md:text-left">
         <h1 className="mb-7 text-3xl font-bold text-black md:text-4xl lg:text-4xl  sxl:text-5xl">{title}</h1>
         <p className="text-balance text-base text-black md:text-lg sxl:text-xl">{description}</p>
+
+        <p className="mt-4 flex items-center text-lg font-bold text-black">
+          Take a Quick Peek at our 1-minute overview 👀
+          <RxArrowRight className="text-xl" />
+        </p>
       </div>
     </div>
   );
