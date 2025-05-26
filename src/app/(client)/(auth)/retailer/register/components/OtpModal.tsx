@@ -114,7 +114,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
           </ActionIcon>
         </div>
         <p className="my-5 text-sm font-medium">
-          We sent an OTP to your email. You have 2 minutes to complete this verification. Thank you!
+          An OTP has been sent to your email.You have 2 minutes to complete this verification. Thank you!
         </p>
         <div className="grid gap-x-5 gap-y-6">
           <form onSubmit={otpSubmitHandler}>

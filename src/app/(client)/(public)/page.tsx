@@ -47,7 +47,7 @@ export default async function Page() {
               <div className="mt-2 md:mt-6 lg:mt-8">
                 <Link
                   href={routes.publicRoutes.pricing}
-                  className="dark:bg-primary-red md:text-md rounded-full bg-white px-4 py-2.5 text-xl font-semibold uppercase text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] md:py-3 xl:px-8 xl:text-2xl xxl:py-4 sxl:text-2xl"
+                  className="dark:bg-primary-red md:text-md rounded-full bg-white px-4 py-2.5 text-lg font-semibold uppercase text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] md:py-3 xl:px-8 xl:text-xl xxl:py-4 sxl:text-2xl"
                 >
                   {t('bannerButtonText')}
                 </Link>
