@@ -43,7 +43,7 @@ export default function PackageCancelModal({
       <div className="m-auto px-7 pb-8 pt-6">
         <div className="mb-5 flex items-center justify-between">
           <h3 className="flex items-center gap-2 text-lg font-semibold text-danger">
-            <BsExclamationTriangle className="text-xl" /> {`${isPlan ? 'Cancel Plan Subscription!' : 'Cancel Add-on Subscription!'}`}
+            <BsExclamationTriangle className="text-xl" /> {`${isPlan ? t('cancelPlanTitle') : t('cancelAddOnTitle')}`}
           </h3>
 
           <ActionIcon size="sm" variant="text" onClick={() => setModalState(false)}>
@@ -52,14 +52,11 @@ export default function PackageCancelModal({
         </div>
         <div className="text-base font-medium">
           {isPlan ? (
-            'Are you sure you want to cancel your plan subscription?'
+            t('cancelPlanSubtitle')
           ) : (
             <div>
-              <p>You&apos;re about to cancel your subscription for this add-on.</p>
-              <p>
-                You&apos;ll still be able to use it until the end of your current subscription period, after which it will no longer be
-                active or billed.
-              </p>
+              <p>{t('cancelAddOnSubtitle1')}</p>
+              <p>{t('cancelAddOnSubtitle2')}</p>
             </div>
           )}
         </div>
@@ -81,16 +78,10 @@ export default function PackageCancelModal({
               </svg> */}
               <span className="sr-only">{'Info'}</span>
               <div>
-                <span className=" text-lg font-medium">⚠️ {'Important Note:'}</span> <br />
+                <span className=" text-lg font-medium">⚠️ {t('importantNote')}</span> <br />
                 <div className="mt-3">
-                  <span className="text-sm font-normal">
-                    Your plan will remain active until the end of your current billing cycle. A refund—if eligible—will be calculated based
-                    on your usage and processed according to our policy. Once canceled, all associated services (including add-ons) will
-                    stop functioning beyond this period.
-                  </span>
-                  <span className="mt-2 block">
-                    If you resubscribe before the next billing date, your previous add-ons can be restored.
-                  </span>
+                  <span className="text-sm font-normal">{t('importantNoteDetails')}</span>
+                  <span className="mt-2 block">{t('importantNoteSecondaryDetails')}</span>
                 </div>
               </div>
             </div>

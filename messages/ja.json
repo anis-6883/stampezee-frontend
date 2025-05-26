@@ -34,14 +34,22 @@
   },
   "DeleteConfirmationModal": {
     "title": "削除の確認",
-    "description": "それを削除しますか？",
+    "description": "本当に削除しますか？",
     "warning": "警告！",
     "info": "情報",
     "associatedSubAdminAndStampsWillBeDeleted": "関連するサブ管理者とスタンプも削除されます！",
-    "notNow": "今はしない",
-    "confirm": "はい、確認します",
+    "notNow": "保持する",
     "confirmPlan": "はい、プランをキャンセル",
-    "confirmAddon": "はい、アドオンをキャンセル"
+    "confirmAddon": "はい、アドオンをキャンセル",
+    "confirm": "はい、確認する",
+    "cancelPlanTitle": "プランのサブスクリプションをキャンセル！",
+    "cancelPlanSubtitle": "本当にプランのサブスクリプションをキャンセルしますか？",
+    "cancelAddOnSubtitle1": "このアドオンのサブスクリプションをキャンセルしようとしています。",
+    "cancelAddOnSubtitle2": "現在のサブスクリプション期間が終了するまでは使用可能ですが、それ以降は無効となり、請求も発生しません。",
+    "cancelAddOnTitle": "アドオンのサブスクリプションをキャンセル！",
+    "importantNote": "重要な注意:",
+    "importantNoteDetails": "プランは現在の請求サイクルの終了まで有効です。返金が対象の場合は、利用状況に応じて計算され、当社のポリシーに従って処理されます。キャンセル後、関連するすべてのサービス（アドオンを含む）はこの期間以降無効になります。",
+    "importantNoteSecondaryDetails": "次の請求日までに再加入すると、以前のアドオンを復元できます。"
   },
   "ActivateConfirmModal": {
     "title": "アクティベーション確認",

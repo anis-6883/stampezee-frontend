@@ -21,11 +21,11 @@ export default function DeleteConfirmModal({
 }: {
   modalState?: boolean;
   deleteId: string | null;
-  deleteHandler: (id: string) => void;
-  setModalState: (state: boolean) => void;
+  deleteHandler: any;
+  setModalState: any;
   isSubmitting?: boolean;
   isBranch?: boolean;
-  setIsSubmitting: (state: boolean) => void;
+  setIsSubmitting: any;
 }) {
   const t = useTranslations('DeleteConfirmationModal');
   const { role } = useSelector((state: RootState) => state.authSlice);

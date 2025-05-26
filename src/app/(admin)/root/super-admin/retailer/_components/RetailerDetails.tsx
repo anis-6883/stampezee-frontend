@@ -30,7 +30,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
     province,
     postalCode,
     currentPlan,
-    totalActiveBranches,
+    totalActiveBranch,
     totalActiveStamp,
     totalCustomer,
     totalRevenue,
@@ -43,6 +43,8 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
     website,
     businessCurrency,
   } = data?.data || {};
+
+  // console.log(data?.data);
 
   if (currentPlan) {
     currentPlan = subscriptions?.data?.find((item: any) => item?.type === 'subscription' && item?.slug === currentPlan)?.title;
@@ -99,6 +101,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
         totalRevenue={totalRevenue}
         totalSubAdmin={totalSubAdmin}
         isLoading={isLoading}
+        businessCurrency={businessCurrency}
         isError={isError}
         className="my-5 xxl:mb-8"
       />
@@ -114,9 +117,9 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
         </div>
       </div>
 
-      <h2 className="my-5 text-lg font-bold">Branch Statistics: ({totalActiveBranches})</h2>
+      <h2 className="my-5 text-lg font-bold">Branch Statistics: ({totalActiveBranch})</h2>
 
-      <BranchStatisticsTable data={branches} isLoading={isLoading} isError={isError} />
+      <BranchStatisticsTable businessCurrency={businessCurrency} data={branches} isLoading={isLoading} isError={isError} />
 
       <h2 className="my-5 text-lg font-bold">Subscriptions:</h2>
       <RetailerPaymentTable timezone={timezone} id={id} />
