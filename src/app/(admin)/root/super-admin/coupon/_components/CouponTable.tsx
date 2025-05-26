@@ -149,10 +149,10 @@ export default function CouponTable({ timezone }: { timezone: string }) {
       Cell: ({ row }: any) => (
         <div className="text-md mx-auto text-start">
           <p>
-            <span className="font-bold">Started At:</span> {getFormatDateByTimezone(row?.original?.startedAt, timezone)}
+            <span className="font-bold">Start:</span> {getFormatDateByTimezone(row?.original?.startedAt, timezone)}
           </p>
           <p>
-            <span className="font-bold">Expired At:</span> {getFormatDateByTimezone(row?.original?.expiredAt, timezone)}
+            <span className="font-bold">Expire:</span> {getFormatDateByTimezone(row?.original?.expiredAt, timezone)}
           </p>
         </div>
       ),
@@ -209,11 +209,11 @@ export default function CouponTable({ timezone }: { timezone: string }) {
   return (
     <>
       <CreateUpdateModel setFormData={setFormData} formData={formData} modalState={createState} setModalState={setCreateState} />
-      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+      <div className="mb-5 flex flex-col justify-between gap-y-3 lg:flex-row lg:gap-0">
         <StatusIndicator />
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-4 md:flex-row">
           <div className="flex flex-shrink-0 items-center gap-2">
-            <h5 className="text-base font-medium">Filter by Date :</h5>
+            <h5 className="text-base font-medium">Filter by Start Date :</h5>
             {/* date picker */}
             <div className="relative">
               {/* close button */}
