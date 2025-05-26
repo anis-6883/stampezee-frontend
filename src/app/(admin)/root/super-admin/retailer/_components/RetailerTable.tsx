@@ -245,11 +245,11 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
         modalState={createState}
         setModalState={setCreateState}
       />
-      <div className="mb-5 flex flex-col justify-between gap-y-3 md:flex-row md:gap-0">
+      <div className="mb-5 flex flex-col justify-between gap-y-3 lg:flex-row lg:gap-0">
         <StatusIndicator />
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-4 md:flex-row">
           <div className="flex flex-shrink-0 items-center gap-2">
-            <h5 className="text-base font-medium">Filter by Date :</h5>
+            <h5 className="text-base font-medium">Filter by Join Date :</h5>
             {/* date picker */}
             <div className="relative">
               {/* close button */}
@@ -292,7 +292,7 @@ export default function RetailerTable({ timezone, googleMapsApiKey }: { timezone
         setQuery={setQuery}
         query={query}
         searchPlaceHolder="Search By Store, Owner Name Or Email"
-        searchFieldWidth="320px"
+        searchFieldWidth="330px"
       />
 
       <DeleteConfirmModal

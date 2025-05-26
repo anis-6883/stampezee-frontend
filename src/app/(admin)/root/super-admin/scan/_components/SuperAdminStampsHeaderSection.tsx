@@ -16,7 +16,7 @@ const SuperAdminStampsHeaderSection = ({
 }) => {
   return (
     <header className="mb-3 pt-2 @container xs:-mt-2 lg:mb-7">
-      <div className="flex flex-col @lg:flex-row @lg:items-center @lg:justify-between">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-5">
           <div>
             <Title as="h2" className="mb-2 text-[22px] lg:text-2xl 4xl:text-[26px]">
@@ -35,7 +35,7 @@ const SuperAdminStampsHeaderSection = ({
           </div>
         </div>
         <div className="flex flex-shrink-0 items-center gap-2">
-          <h5 className="text-base font-medium">Filter by Date :</h5>
+          <h5 className="text-base font-medium">Filter by Stamped Date :</h5>
           {/* date picker */}
           <div className="relative">
             {/* close button */}

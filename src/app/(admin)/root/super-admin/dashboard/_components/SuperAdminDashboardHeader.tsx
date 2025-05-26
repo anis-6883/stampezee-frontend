@@ -8,7 +8,7 @@ import { IoCloseCircleSharp } from 'react-icons/io5';
 const SuperAdminDashboardHeader = ({ title, setDateRange, dateRange }: { title: string; setDateRange: any; dateRange: string }) => {
   return (
     <header className={cn('mb-3 pt-2 @container xs:-mt-2 lg:mb-7')}>
-      <div className="flex flex-col @lg:flex-row @lg:items-center @lg:justify-between">
+      <div className="flex flex-col @lg:items-center @lg:justify-between md:flex-row">
         <Title as="h2" className="mb-2 text-[22px] lg:text-2xl 4xl:text-[26px]">
           {title}
         </Title>

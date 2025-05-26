@@ -217,9 +217,9 @@ export default function NotificationTable({ timezone, googleMapsApiKey }: { time
   return (
     <>
       <div className="mb-5 flex flex-col justify-end gap-y-3 md:flex-row md:gap-0">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-4 md:flex-row">
           <div className="flex flex-shrink-0 items-center gap-2">
-            <h5 className="text-base font-medium">Filter by Date :</h5>
+            <h5 className="text-base font-medium">Filter by Sent Date :</h5>
             {/* date picker */}
             <div className="relative">
               {/* close button */}
