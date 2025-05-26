@@ -69,7 +69,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<LiaTrophySolid className="text-2xl" />}
             key={1}
-            title={'Total Reward Collected'}
+            title={'Total Rewards Collected'}
             metric={totalRewardCollect}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[292px] max-w-full justify-between"

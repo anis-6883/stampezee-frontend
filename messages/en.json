@@ -706,7 +706,7 @@
     "country": "Country",
     "totalCollectStamp": "Total Stamp Cards Collected",
     "totalScan": "Total Stamps",
-    "totalRewardCollect": "Total Reward Collected"
+    "totalRewardCollect": "Total Rewards Collected"
   },
 
   "RetailerCustomerDetails": {
@@ -726,7 +726,7 @@
   "RetailerCustomerDetailsStats": {
     "totalCollectStamp": "Total Stamp Cards Collected",
     "totalScan": "Total Stamps",
-    "totalRewardCollect": "Total Reward Collected",
+    "totalRewardCollect": "Total Rewards Collected",
     "totalPurchased": "Total Revenue Amount"
   },
   "RetailerCustomerDetailsScanTable": {
