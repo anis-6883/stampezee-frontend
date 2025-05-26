@@ -144,7 +144,7 @@ export default function CreateUpdateModel({
     const isFile = (obj: any): obj is File => obj instanceof File;
 
     let objToFormData: FormData;
-    console.log({ values });
+    // console.log({ values });
 
     if (formData?._id) {
       const ignoreList = [];

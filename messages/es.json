@@ -33,15 +33,23 @@
     "status": "Estado"
   },
   "DeleteConfirmationModal": {
-    "title": "Confirmación de eliminación",
-    "description": "¿Desea eliminarlo?",
+    "title": "Confirmación de Eliminación",
+    "description": "¿Deseas eliminarlo?",
     "warning": "¡Advertencia!",
     "info": "Información",
-    "associatedSubAdminAndStampsWillBeDeleted": "¡Los sub-administradores y sellos asociados también serán eliminados!",
-    "notNow": "No ahora",
-    "confirm": "Sí, confirmar",
-    "confirmPlan": "Sí, cancelar plan",
-    "confirmAddon": "Sí, cancelar complemento"
+    "associatedSubAdminAndStampsWillBeDeleted": "¡También se eliminarán los subadministradores y sellos asociados!",
+    "notNow": "Conservar",
+    "confirmPlan": "Sí, Cancelar Plan",
+    "confirmAddon": "Sí, Cancelar Complemento",
+    "confirm": "Sí, Confirmar",
+    "cancelPlanTitle": "¡Cancelar Suscripción al Plan!",
+    "cancelPlanSubtitle": "¿Estás seguro de que deseas cancelar tu suscripción al plan?",
+    "cancelAddOnSubtitle1": "Estás a punto de cancelar tu suscripción a este complemento.",
+    "cancelAddOnSubtitle2": "Aún podrás usarlo hasta el final de tu período de suscripción actual, después del cual ya no estará activo ni se facturará.",
+    "cancelAddOnTitle": "¡Cancelar Suscripción al Complemento!",
+    "importantNote": "Nota Importante:",
+    "importantNoteDetails": "Tu plan permanecerá activo hasta el final de tu ciclo de facturación actual. Un reembolso—si corresponde—se calculará en función de tu uso y se procesará de acuerdo con nuestra política. Una vez cancelado, todos los servicios asociados (incluidos los complementos) dejarán de funcionar más allá de este período.",
+    "importantNoteSecondaryDetails": "Si te vuelves a suscribir antes de la próxima fecha de facturación, tus complementos anteriores pueden ser restaurados."
   },
   "ActivateConfirmModal": {
     "title": "Confirmación de activación",

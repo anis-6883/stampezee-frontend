@@ -34,14 +34,22 @@
   },
   "DeleteConfirmationModal": {
     "title": "삭제 확인",
-    "description": "삭제하시겠습니까?",
+    "description": "정말로 삭제하시겠습니까?",
     "warning": "경고!",
     "info": "정보",
-    "associatedSubAdminAndStampsWillBeDeleted": "관련된 하위 관리자와 스탬프도 삭제됩니다!",
-    "notNow": "지금은 아니요",
-    "confirm": "예, 확인",
+    "associatedSubAdminAndStampsWillBeDeleted": "연관된 하위 관리자와 도장도 삭제됩니다!",
+    "notNow": "유지하기",
     "confirmPlan": "예, 플랜 취소",
-    "confirmAddon": "예, 애드온 취소"
+    "confirmAddon": "예, 애드온 취소",
+    "confirm": "예, 확인",
+    "cancelPlanTitle": "플랜 구독 취소!",
+    "cancelPlanSubtitle": "플랜 구독을 정말로 취소하시겠습니까?",
+    "cancelAddOnSubtitle1": "이 애드온의 구독을 취소하려고 합니다.",
+    "cancelAddOnSubtitle2": "현재 구독 기간이 끝날 때까지 사용할 수 있으며, 이후에는 비활성화되고 과금되지 않습니다.",
+    "cancelAddOnTitle": "애드온 구독 취소!",
+    "importantNote": "중요 참고사항:",
+    "importantNoteDetails": "플랜은 현재 청구 주기 종료 시까지 활성 상태로 유지됩니다. 환불 대상인 경우 사용량에 따라 계산되며 정책에 따라 처리됩니다. 취소 후에는 관련된 모든 서비스(애드온 포함)가 중단됩니다.",
+    "importantNoteSecondaryDetails": "다음 청구일 이전에 다시 구독하면 이전 애드온을 복원할 수 있습니다."
   },
   "ActivateConfirmModal": {
     "title": "활성화 확인",

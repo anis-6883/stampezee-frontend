@@ -18,6 +18,7 @@ export default function StatsCardView({
   totalSubAdmin,
   isLoading,
   isError,
+  businessCurrency,
 }: {
   className: string;
   totalOrder: number;
@@ -27,6 +28,7 @@ export default function StatsCardView({
   totalSubAdmin: number;
   isLoading: boolean;
   isError: boolean;
+  businessCurrency: string;
 }) {
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
 
@@ -57,7 +59,7 @@ export default function StatsCardView({
           <MetricCard
             icon={<LuCircleDollarSign className="text-2xl" />}
             key={1}
-            title={'Total Revenue (CAD)'}
+            title={`Total Revenue (${businessCurrency})`}
             metric={totalRevenue}
             hasDecimalTwoDigits={true}
             metricClassName="3xl:text-[22px]"

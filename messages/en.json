@@ -41,7 +41,15 @@
     "notNow": "Keep It",
     "confirmPlan": "Yes, Cancel Plan",
     "confirmAddon": "Yes, Cancel Add-on",
-    "confirm": "Yes, Confirm"
+    "confirm": "Yes, Confirm",
+    "cancelPlanTitle": "Cancel Plan Subscription!",
+    "cancelPlanSubtitle": "Are you sure you want to cancel your plan subscription?",
+    "cancelAddOnSubtitle1": "You're about to cancel your subscription for this add-on.",
+    "cancelAddOnSubtitle2": " You'll still be able to use it until the end of your current subscription period,after which it will no longer be active or billed.",
+    "cancelAddOnTitle": "Cancel Add-on Subscription!",
+    "importantNote": "Important Note :",
+    "importantNoteDetails": "Your plan will remain active until the end of your current billing cycle. A refund—if eligible—will be calculated based on your usage and processed according to our policy. Once canceled, all associated services (including add-ons) will stop functioning beyond this period.",
+    "importantNoteSecondaryDetails": "If you resubscribe before the next billing date, your previous add-ons can be restored."
   },
   "ActivateConfirmModal": {
     "title": "Activate Confirmation",

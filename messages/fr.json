@@ -33,15 +33,23 @@
     "status": "Statut"
   },
   "DeleteConfirmationModal": {
-    "title": "Confirmation de suppression",
-    "description": "Voulez-vous le supprimer?",
-    "warning": "Avertissement!",
+    "title": "Confirmation de Suppression",
+    "description": "Souhaitez-vous le supprimer ?",
+    "warning": "Attention !",
     "info": "Info",
-    "associatedSubAdminAndStampsWillBeDeleted": "Les sous-administrateurs et les timbres associés seront également supprimés!",
-    "notNow": "Pas maintenant",
-    "confirm": "Oui, confirmer",
-    "confirmPlan": "Oui, annuler le forfait",
-    "confirmAddon": "Oui, annuler l'option"
+    "associatedSubAdminAndStampsWillBeDeleted": "Les sous-administrateurs et les tampons associés seront également supprimés !",
+    "notNow": "Conserver",
+    "confirmPlan": "Oui, Annuler le Plan",
+    "confirmAddon": "Oui, Annuler l'Extension",
+    "confirm": "Oui, Confirmer",
+    "cancelPlanTitle": "Annuler l'Abonnement au Plan !",
+    "cancelPlanSubtitle": "Êtes-vous sûr de vouloir annuler votre abonnement au plan ?",
+    "cancelAddOnSubtitle1": "Vous êtes sur le point d'annuler votre abonnement à cette extension.",
+    "cancelAddOnSubtitle2": "Vous pourrez toujours l'utiliser jusqu'à la fin de votre période d'abonnement actuelle, après quoi elle ne sera plus active ni facturée.",
+    "cancelAddOnTitle": "Annuler l'Abonnement à l'Extension !",
+    "importantNote": "Remarque Importante :",
+    "importantNoteDetails": "Votre plan restera actif jusqu'à la fin de votre cycle de facturation actuel. Un remboursement—si éligible—sera calculé en fonction de votre utilisation et traité conformément à notre politique. Une fois annulés, tous les services associés (y compris les extensions) cesseront de fonctionner au-delà de cette période.",
+    "importantNoteSecondaryDetails": "Si vous vous réabonnez avant la prochaine date de facturation, vos extensions précédentes peuvent être restaurées."
   },
   "ActivateConfirmModal": {
     "title": "Confirmation d'activation",

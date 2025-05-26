@@ -16,11 +16,20 @@ interface BranchStatisticsTableProps {
   data: BranchStatistics[] | undefined;
   isLoading: boolean;
   isError: boolean;
+  businessCurrency: string;
 }
 
-const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isLoading, isError }) => {
-  const tableHeaders = ['Serial No.', 'Branch Name', 'Branch Address', 'Total Customer', 'Total Order', 'Total Revenue (CAD)'];
+const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isLoading, isError, businessCurrency }) => {
+  const tableHeaders = [
+    'Serial No.',
+    'Branch Name',
+    'Branch Address',
+    'Total Customer',
+    'Total Stamps',
+    `Total Revenue (${businessCurrency})`,
+  ];
 
+  // console.log(data);
   if (isLoading || isError) {
     return (
       <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
@@ -96,7 +105,7 @@ const BranchStatisticsTable: React.FC<BranchStatisticsTableProps> = ({ data, isL
                   {item?.totalOrder}
                 </td>
                 <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  ${item?.totalRevenue}
+                  ${item?.totalRevenue.toFixed(2)}
                 </td>
               </tr>
             ))
