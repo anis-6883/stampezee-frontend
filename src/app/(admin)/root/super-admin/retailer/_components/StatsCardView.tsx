@@ -15,6 +15,7 @@ export default function StatsCardView({
   totalOrder,
   totalActiveStamp,
   totalCustomer,
+  totalBranch,
   totalRevenue,
   totalSubAdmin,
   isLoading,
@@ -28,6 +29,7 @@ export default function StatsCardView({
   totalCustomer: number;
   totalRevenue: number;
   totalSubAdmin: number;
+  totalBranch: number;
   isLoading: boolean;
   isError: boolean;
   businessCurrency: string;
@@ -48,7 +50,7 @@ export default function StatsCardView({
       </Button>
 
       <div className="w-full overflow-hidden">
-        <div ref={sliderEl} className="custom-scrollbar-x 2xl:gap-2 grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 3xl:gap-3">
+        <div ref={sliderEl} className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <MetricCard
             isDetailsView
             icon={<MdShoppingCartCheckout className="text-xl" />}
@@ -99,6 +101,7 @@ export default function StatsCardView({
           />
           <MetricCard
             isDetailsView
+            detailsLink={`${routes?.privateRoutes?.superAdmin?.retailer?.details(id as string)}/loyalty-executives`}
             icon={<LuUsers className="text-xl" />}
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
@@ -115,7 +118,7 @@ export default function StatsCardView({
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
             title={'Total Branches'}
-            metric={totalSubAdmin}
+            metric={totalBranch}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[200px] max-w-full justify-between"
             isLoading={isLoading || isError}

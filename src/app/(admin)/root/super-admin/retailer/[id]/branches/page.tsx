@@ -1,7 +1,6 @@
 import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
-import { axiosBackendUrl } from '@/utils/axios/getAxios';
 import { BranchDetails } from '../../_components/BranchDetails';
 
 const pageHeader = {
@@ -25,7 +24,7 @@ export const metadata = { ...metaObject(pageHeader.title) };
 
 export default async function Page({ params }: any) {
   const { id } = params;
-  const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
+  //   const { data } = await axiosBackendUrl.get('/api/web/get-common-settings');
   return (
     <div>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
