@@ -9,10 +9,21 @@ interface DateRangeProps {
   enableTime?: boolean;
   range?: boolean;
   required?: boolean;
+  className?: string;
+  prefix?: React.ReactNode;
   changeHandler: (value: string) => void;
 }
 
-const DatePicker: React.FC<DateRangeProps> = ({ value, label, enableTime = false, range = false, required = true, changeHandler }) => {
+const DatePicker: React.FC<DateRangeProps> = ({
+  value,
+  label,
+  enableTime = false,
+  range = false,
+  required = true,
+  changeHandler,
+  className,
+  prefix,
+}) => {
   return (
     <Flatpickr
       value={value} // this makes it controlled
@@ -27,19 +38,38 @@ const DatePicker: React.FC<DateRangeProps> = ({ value, label, enableTime = false
           )}
 
           <div className="flex items-center">
-            <input
-              type="text"
-              className={`h-10 w-full rounded-md border-[1px] border-slate-300 placeholder:text-sm`}
-              ref={ref}
-              placeholder={range ? 'YYYY-MM-DD to YYYY-MM-DD' : enableTime ? 'YYYY-MM-DD HH:II' : 'YYYY-MM-DD'}
-              aria-label="Select date range"
-              onInput={(e) => {
-                const value = (e.target as HTMLInputElement).value;
-                if (value === '') {
-                  changeHandler('');
-                }
-              }}
-            />
+            {prefix ? (
+              <div className="flex !cursor-pointer items-center overflow-hidden rounded-md border-[1px] border-slate-300 bg-white px-2">
+                {prefix}
+                <input
+                  type="text"
+                  className={`h-10 w-full  cursor-pointer border-none pl-2 placeholder:text-sm focus:ring-0 ${className}`}
+                  ref={ref}
+                  placeholder={range ? 'YYYY-MM-DD to YYYY-MM-DD' : enableTime ? 'YYYY-MM-DD HH:II' : 'YYYY-MM-DD'}
+                  aria-label="Select date range"
+                  onInput={(e) => {
+                    const value = (e.target as HTMLInputElement).value;
+                    if (value === '') {
+                      changeHandler('');
+                    }
+                  }}
+                />
+              </div>
+            ) : (
+              <input
+                type="text"
+                className={`h-10 w-full rounded-md border-[1px] border-slate-300 placeholder:text-sm ${className}`}
+                ref={ref}
+                placeholder={range ? 'YYYY-MM-DD to YYYY-MM-DD' : enableTime ? 'YYYY-MM-DD HH:II' : 'YYYY-MM-DD'}
+                aria-label="Select date range"
+                onInput={(e) => {
+                  const value = (e.target as HTMLInputElement).value;
+                  if (value === '') {
+                    changeHandler('');
+                  }
+                }}
+              />
+            )}
           </div>
         </div>
       )}
