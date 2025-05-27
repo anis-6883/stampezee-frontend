@@ -24,7 +24,6 @@ import toast from 'react-hot-toast';
 import { FcLock, FcUnlock } from 'react-icons/fc';
 import { HiOutlinePencil } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi2';
-import { ImBin } from 'react-icons/im';
 import { IoPower } from 'react-icons/io5';
 import { LuCopy } from 'react-icons/lu';
 import { SiConvertio } from 'react-icons/si';
@@ -205,7 +204,7 @@ export default function BranchTable() {
           <Switch
             checked={false}
             disabled={true}
-            switchClassName="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-blue-500/50 hover:bg-gradient-to-br focus:ring-blue-300"
+            switchClassName="bg-gradient-to-r from-red-500 via-red-600 to-red-700 shadow-red-500/50 hover:bg-gradient-to-br focus:ring-red-300"
             switchKnobClassName="bg-light"
             variant="flat"
             labelClassName="select-none"
@@ -244,7 +243,8 @@ export default function BranchTable() {
               }}
               className="!m-0 !px-3 !py-2 !text-xs"
               color="danger"
-              text={t('activate')}
+              tooltip={t('activate')}
+              // text={t('activate')}
             />
           ) : session?.user?.plan === 'advanced' ? (
             <Button
@@ -255,7 +255,8 @@ export default function BranchTable() {
               }}
               className="!m-0 !px-3 !py-2 !text-xs"
               color="danger"
-              text={t('convertToAddOn')}
+              tooltip={t('convertToAddOn')}
+              // text={t('convertToAddOn')}
             />
           ) : (
             <span className="font-semibold text-danger">{t('upgradeYourPlan')}</span>
@@ -267,7 +268,7 @@ export default function BranchTable() {
             <Link href={routes.privateRoutes.retailer.branch.edit(_id)}>
               <Button tooltip="Edit" color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
             </Link>
-            <Button
+            {/* <Button
               tooltip="Delete"
               color="danger"
               onClick={() => {
@@ -275,7 +276,7 @@ export default function BranchTable() {
                 setDeleteId(_id);
               }}
               preIcon={<ImBin className="text-base" />}
-            />
+            /> */}
           </div>
         );
       },
