@@ -13,7 +13,7 @@ interface SubAdminListTableProps {
 }
 
 export default function AddonListTable({ data, isLoading, isError }: SubAdminListTableProps) {
-  const tableHeaders = ['Serial No.', 'Title', 'Count'];
+  const tableHeaders = ['Serial No.', 'Title', 'Count', 'Source', 'Next Renewal'];
 
   if (isLoading || isError) {
     return (
@@ -43,7 +43,7 @@ export default function AddonListTable({ data, isLoading, isError }: SubAdminLis
   const addonList = data || [];
 
   return (
-    <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
         <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>

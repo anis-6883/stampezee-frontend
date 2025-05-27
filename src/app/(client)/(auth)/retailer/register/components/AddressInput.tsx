@@ -52,15 +52,28 @@ export default function AddressInput({
       const place = places[0];
       const location = place.geometry?.location;
       const address = place.formatted_address;
+      const components = place.address_components;
       if (location) {
         const newLocation = {
           lat: location.lat(),
           lng: location.lng(),
         };
+        // Helper to get component by type
+        const getComponent = (type: string) => {
+          const component = components?.find((c) => c.types.includes(type));
+          return component ? component.long_name : '';
+        };
+
+        const province = getComponent('administrative_area_level_1');
+        const city = getComponent('locality') || getComponent('administrative_area_level_2');
+        const postalCode = getComponent('postal_code');
         setSelectedLocation(newLocation);
         setFieldValue('latitude', String(newLocation.lat));
         setFieldValue('longitude', String(newLocation.lng));
         setFieldValue('address', address);
+        setFieldValue('province', province);
+        setFieldValue('city', city);
+        setFieldValue('postalCode', postalCode);
         if (map) {
           map.panTo(newLocation);
         }
@@ -87,10 +100,23 @@ export default function AddressInput({
 
         if (response.results && response.results.length > 0) {
           const address = response.results[0].formatted_address;
+          const components = response.results[0].address_components;
 
+          // Helper to get component by type
+          const getComponent = (type: string) => {
+            const component = components.find((c) => c.types.includes(type));
+            return component ? component.long_name : '';
+          };
+
+          const province = getComponent('administrative_area_level_1');
+          const city = getComponent('locality') || getComponent('administrative_area_level_2');
+          const postalCode = getComponent('postal_code');
           setFieldValue('address', address);
           setFieldValue('latitude', String(latitude));
           setFieldValue('longitude', String(longitude));
+          setFieldValue('province', province);
+          setFieldValue('city', city);
+          setFieldValue('postalCode', postalCode);
         } else {
           console.log('No address found for this location.');
         }

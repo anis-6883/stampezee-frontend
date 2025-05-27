@@ -373,12 +373,6 @@ export default function RegisterForm({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                  <InputField name="province" label={t('province')} placeholder="Ontario" />
-                  <InputField name="city" label={t('city')} placeholder="Toronto" />
-                  <InputField name="postalCode" label={t('postalCode')} placeholder="M3M5K5" />
-                </div>
-
                 <div className="grid grid-cols-12 items-center justify-center gap-x-3">
                   <div className="col-span-9">
                     <AddressInput
@@ -399,6 +393,12 @@ export default function RegisterForm({
                       // isSubmitting={isSubmitting}
                     />
                   </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                  <InputField name="province" label={t('province')} placeholder="Ontario" />
+                  <InputField name="city" label={t('city')} placeholder="Toronto" />
+                  <InputField name="postalCode" label={t('postalCode')} placeholder="M3M5K5" />
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
