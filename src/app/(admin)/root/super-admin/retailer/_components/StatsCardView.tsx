@@ -1,5 +1,6 @@
 'use client';
 
+import { routes } from '@/config/routes';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 import { BsPatchCheck } from 'react-icons/bs';
@@ -19,6 +20,7 @@ export default function StatsCardView({
   isLoading,
   isError,
   businessCurrency,
+  id,
 }: {
   className: string;
   totalOrder: number;
@@ -29,6 +31,7 @@ export default function StatsCardView({
   isLoading: boolean;
   isError: boolean;
   businessCurrency: string;
+  id?: string;
 }) {
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
 
@@ -45,54 +48,76 @@ export default function StatsCardView({
       </Button>
 
       <div className="w-full overflow-hidden">
-        <div ref={sliderEl} className="custom-scrollbar-x 2xl:gap-6 grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 3xl:gap-8">
+        <div ref={sliderEl} className="custom-scrollbar-x 2xl:gap-2 grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 3xl:gap-3">
           <MetricCard
-            icon={<MdShoppingCartCheckout className="text-2xl" />}
+            isDetailsView
+            icon={<MdShoppingCartCheckout className="text-xl" />}
+            iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
             title={'Total Stamps'}
             metric={totalOrder}
             metricClassName="3xl:text-[22px]"
-            className="w-full min-w-[292px] max-w-full justify-between"
+            className="w-full min-w-[200px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
 
           <MetricCard
-            icon={<LuCircleDollarSign className="text-2xl" />}
+            isDetailsView
+            icon={<LuCircleDollarSign className="text-xl" />}
+            iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
             title={`Total Revenue (${businessCurrency})`}
             metric={totalRevenue}
             hasDecimalTwoDigits={true}
             metricClassName="3xl:text-[22px]"
-            className="w-full min-w-[292px] max-w-full justify-between"
+            className="w-full min-w-[200px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
 
           <MetricCard
-            icon={<LuUsers className="text-2xl" />}
+            isDetailsView
+            icon={<LuUsers className="text-xl" />}
+            iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
             title={'Total Customer'}
             metric={totalCustomer}
             metricClassName="3xl:text-[22px]"
-            className="w-full min-w-[292px] max-w-full justify-between"
+            className="w-full min-w-[200px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
 
           <MetricCard
-            icon={<BsPatchCheck className="text-2xl" />}
+            isDetailsView
+            icon={<BsPatchCheck className="text-xl" />}
+            iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
             title={'Total Active Stamp Cards'}
             metric={totalActiveStamp}
             metricClassName="3xl:text-[22px]"
-            className="w-full min-w-[292px] max-w-full justify-between"
+            className="w-full min-w-[200px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
           <MetricCard
-            icon={<LuUsers className="text-2xl" />}
+            isDetailsView
+            icon={<LuUsers className="text-xl" />}
+            iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
             title={'Total Loyalty Executive'}
             metric={totalSubAdmin}
             metricClassName="3xl:text-[22px]"
-            className="w-full min-w-[292px] max-w-full justify-between"
+            className="w-full min-w-[200px] max-w-full justify-between"
+            isLoading={isLoading || isError}
+          />
+          <MetricCard
+            isDetailsView
+            detailsLink={`${routes?.privateRoutes?.superAdmin?.retailer?.details(id as string)}/branches`}
+            icon={<LuUsers className="text-xl" />}
+            iconClassName="lg:h-9 lg:w-9 h-6 w-6"
+            key={1}
+            title={'Total Branches'}
+            metric={totalSubAdmin}
+            metricClassName="3xl:text-[22px]"
+            className="w-full min-w-[200px] max-w-full justify-between"
             isLoading={isLoading || isError}
           />
         </div>

@@ -6,11 +6,8 @@ import { useGetSingleRetailerQuery } from '@/features/super-admin/retailer/retai
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
 import { useSelector } from 'react-redux';
 import AddonListTable from './AddonListTable';
-import BranchStatisticsTable from './BranchStatisticsTable';
 import { InfoRow } from './InfoRow';
-import RetailerPaymentTable from './RetailerPaymentTable';
 import StatsCardView from './StatsCardView';
-import SubAdminListTable from './SubAdminListTable';
 
 export default function RetailerDetails({ id, timezone }: { id: string; timezone: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
@@ -54,26 +51,32 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
 
   return (
     <div className="w-full">
-      <div className="mb-3.5">
-        {isLoading || isError ? (
-          <Skeleton className="my-3 h-8 w-32 rounded" />
-        ) : (
-          <div className="flex items-center gap-x-1">
-            <h3 className="text-base font-semibold">Store Name : </h3>
-            <div className="flex items-center gap-x-2 rounded-md bg-[#F4F6F8] px-3 py-2">
-              {image ? (
-                <div>
-                  <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${image}`} alt="image" className="h-8 w-8 rounded" />
-                </div>
-              ) : (
-                <img src={'/images/stamp-logo.png'} alt="image" className="h-8 w-8 rounded" />
-              )}
-              <h3 className=" text-base font-medium">{storeName}</h3>
+      <div className="grid grid-cols-1 gap-7 md:grid-cols-2">
+        <div className="mb-3.5">
+          {isLoading || isError ? (
+            <Skeleton className="my-3 h-8 w-32 rounded" />
+          ) : (
+            <div className="flex items-center gap-x-1">
+              <h3 className="text-base font-semibold">Store Name : </h3>
+              <div className="flex items-center gap-x-2 rounded-md bg-[#F4F6F8] px-3 py-2">
+                {image ? (
+                  <div>
+                    <img src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/${image}`} alt="image" className="h-8 w-8 rounded" />
+                  </div>
+                ) : (
+                  <img src={'/images/stamp-logo.png'} alt="image" className="h-8 w-8 rounded" />
+                )}
+                <h3 className=" text-base font-medium">{storeName}</h3>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
+
+        <div className="flex items-center">
+          <h2 className=" text-lg font-bold">Active Subscriptions List:</h2>
+        </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-7 md:grid-cols-2">
         <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
           <InfoRow label="Owner Name" value={fullName ? fullName : 'N/A'} isLoading={isLoading} />
           <InfoRow label="Owner Email" value={email ? email : 'N/A'} isLoading={isLoading} />
@@ -92,6 +95,10 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
             isLoading={isLoading}
           />
         </div>
+
+        <div className="">
+          <AddonListTable data={addonSubscriptions} isLoading={isLoading} isError={isError} />
+        </div>
       </div>
 
       <StatsCardView
@@ -104,9 +111,10 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
         businessCurrency={businessCurrency}
         isError={isError}
         className="my-5 xxl:mb-8"
+        id={id}
       />
 
-      <div className="grid grid-cols-1 gap-x-5 md:grid-cols-6 xxl:gap-x-10">
+      {/* <div className="grid grid-cols-1 gap-x-5 md:grid-cols-6 xxl:gap-x-10">
         <div className="col-span-1 md:col-span-2 xl:col-span-3 xxl:col-span-2">
           <h2 className="my-5 text-lg font-bold">Active Add-Ons List:</h2>
           <AddonListTable data={addonSubscriptions} isLoading={isLoading} isError={isError} />
@@ -122,7 +130,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
       <BranchStatisticsTable businessCurrency={businessCurrency} data={branches} isLoading={isLoading} isError={isError} />
 
       <h2 className="my-5 text-lg font-bold">Subscriptions:</h2>
-      <RetailerPaymentTable timezone={timezone} id={id} />
+      <RetailerPaymentTable timezone={timezone} id={id} /> */}
     </div>
   );
 }

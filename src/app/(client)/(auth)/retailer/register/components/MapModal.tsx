@@ -1,6 +1,6 @@
 import Button from '@/components/Formik/Button';
 import { Circle, GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { IoCloseOutline } from 'react-icons/io5';
 import { ActionIcon, Loader, Modal, Title } from 'rizzui';
@@ -31,9 +31,6 @@ export default function MapModal({
   });
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [searchBox, setSearchBox] = useState<google.maps.places.SearchBox | null>(null);
-
-  const autocompleteRef = useRef<HTMLInputElement>(null);
 
   const onLoad = useCallback((map: google.maps.Map) => {
     setMap(map);
@@ -64,7 +61,21 @@ export default function MapModal({
 
       if (response.results && response.results.length > 0) {
         const address = response.results[0].formatted_address;
+        const components = response.results[0].address_components;
+
+        // Helper to get component by type
+        const getComponent = (type: string) => {
+          const component = components.find((c) => c.types.includes(type));
+          return component ? component.long_name : '';
+        };
+
+        const province = getComponent('administrative_area_level_1');
+        const city = getComponent('locality') || getComponent('administrative_area_level_2');
+        const postalCode = getComponent('postal_code');
         setFieldValue('address', address);
+        setFieldValue('province', province);
+        setFieldValue('city', city);
+        setFieldValue('postalCode', postalCode);
       } else {
         console.log('No address found for this location.');
       }

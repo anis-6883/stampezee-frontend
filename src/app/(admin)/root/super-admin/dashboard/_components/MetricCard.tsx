@@ -102,11 +102,20 @@ export default function MetricCard({
         {children}
       </div>
       {isDetailsView && (
-        <div className="absolute bottom-3 right-3">
-          <Link href={detailsLink}>
-            <FaRegEye className="text-lg text-gray-500 hover:text-black" />
-          </Link>
-        </div>
+        <Tooltip
+          color="danger"
+          className={`bg-gray-700 text-white`}
+          size="sm"
+          placement="top"
+          content={'Details'}
+          arrowClassName={`fill-gray`}
+        >
+          <div className="absolute bottom-3 right-3">
+            <Link href={detailsLink}>
+              <FaRegEye className="text-lg text-gray-500 hover:text-black" />
+            </Link>
+          </div>
+        </Tooltip>
       )}
     </div>
   );

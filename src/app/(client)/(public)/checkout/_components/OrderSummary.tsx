@@ -108,13 +108,13 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     if (checkOutResponse) {
       if (subscription?.slug === 'trial') {
         toast.success(t('freeTrialActivated'));
-        update({ ...session?.user, ...checkOutResponse?.data });
-        dispatch(
-          setValue({
-            target: 'user',
-            value: { ...user, ...profile?.data },
-          })
-        );
+        // update({ ...session?.user, ...checkOutResponse?.data });
+        // dispatch(
+        //   setValue({
+        //     target: 'user',
+        //     value: { ...user, ...profile?.data },
+        //   })
+        // );
         replace(routes.privateRoutes.retailer.dashboard);
         dispatch(resetState());
       } else {

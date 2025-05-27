@@ -13,6 +13,7 @@ export default function CustomerDetails({ id, timezone }: { id: string; timezone
   const {
     fullName,
     email,
+    provider,
     contactEmail,
     address,
     dialCode,
@@ -34,6 +35,7 @@ export default function CustomerDetails({ id, timezone }: { id: string; timezone
           <InfoRow label="Phone" value={dialCode && phone ? `${dialCode}${phone}` : 'N/A'} isLoading={isLoading} />
           <InfoRow label="Country" value={country ? country : 'N/A'} isLoading={isLoading} />
           <InfoRow label="Address" value={address?.name ? address?.name : 'N/A'} isLoading={isLoading} />
+          <InfoRow label="Sign up with" value={provider ? provider : 'N/A'} isLoading={isLoading} />
         </div>
       </div>
 

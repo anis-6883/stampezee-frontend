@@ -121,7 +121,14 @@ export default function CreateUpdateModal({
         return emailRegex.test(value);
       })
       .required(tCommon('required')),
-    password: (formData?._id ? Yup.string() : Yup.string().required(tCommon('required'))).min(6, 'At least 6 characters long!'),
+    password: (formData?._id ? Yup.string() : Yup.string().required(tCommon('required')))
+      .matches(/^\S.*\S$|^\S{1}$/, 'Password cannot start or end with a space')
+      .required(tCommon('required'))
+      .min(8, tCommon('atLeast8Characters'))
+      .matches(/[0-9]/, 'Password must contain at least one number')
+      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+      .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+      .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
     image: Yup.string().nullable(),
   });
 
