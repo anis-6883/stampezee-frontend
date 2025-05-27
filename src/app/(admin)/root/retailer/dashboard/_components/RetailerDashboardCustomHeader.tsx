@@ -77,7 +77,7 @@ const RetailerDashboardCustomHeader = ({ title, setDateRange, dateRange }: { tit
             <div className="relative">
               <DatePicker
                 prefix={<IoCalendarOutline className="text-xl" />}
-                className="text-sm placeholder:text-[13px] "
+                className="text-sm placeholder:text-[13px]"
                 value={dateRange}
                 range={true}
                 changeHandler={setDateRange}

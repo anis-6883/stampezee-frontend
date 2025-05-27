@@ -16,18 +16,16 @@ interface Props {
   options: IValues[];
 }
 
-function renderBranchFilterOptions(option: any, selected: any) {
+function renderBranchFilterOptions(option: IValues, selected: boolean, handleToggle: any) {
   return (
     <div className="flex w-full items-center justify-between gap-2">
       <div className="flex items-center gap-2">
-        {/* <input checked={selected} type="checkbox" name="" id="" /> */}
-        <Checkbox size="sm" checked={selected} />
-        <div className="space-y-1">
-          <h6 className="text-sm">{option?.label}</h6>
-          <p className="text-xs">{option?.address}</p>
+        <Checkbox size="sm" checked={selected} onChange={handleToggle} />
+        <div className="space-y-[2px]">
+          <h6 className="text-sm font-medium">{option.label}</h6>
+          <p className="text-xs opacity-80">{option.address}</p>
         </div>
       </div>
-      {/* indicator */}
       <div className={`size-3 rounded-full ${option.status ? 'bg-green-500' : 'bg-red-500'}`}></div>
     </div>
   );
@@ -97,7 +95,18 @@ const BranchFilter = ({ value, setValue, options }: Props) => {
         onChange={setValue}
         displayValue={renderDisplayValue}
         selectClassName="h-10 ring-0 active:ring-0 focus:ring-0"
-        getOptionDisplayValue={renderBranchFilterOptions}
+        // getOptionDisplayValue={renderBranchFilterOptions}
+        getOptionDisplayValue={(option: IValues) => {
+          const selected = value.includes(option.value);
+          const handleToggle = (val: string) => {
+            if (value.includes(val)) {
+              setValue(value.filter((v) => v !== val));
+            } else {
+              setValue([...value, val]);
+            }
+          };
+          return renderBranchFilterOptions(option, selected, handleToggle);
+        }}
         className="h-10 min-w-72 rounded-xl bg-white p-0"
         // label="Multi Select"
         clearable
