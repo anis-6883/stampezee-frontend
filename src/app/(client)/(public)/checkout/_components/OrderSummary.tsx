@@ -230,11 +230,6 @@ export default function OrderSummary({ stripeInfo, selectedCurrency, locale }: a
     }
   };
 
-  const handleUpgradeConfirm = () => {
-    replace(checkOutResponse?.data?.url);
-    dispatch(resetState());
-  };
-
   return (
     <>
       <div className="rounded-lg border p-4">
