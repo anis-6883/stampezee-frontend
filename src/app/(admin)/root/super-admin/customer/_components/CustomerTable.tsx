@@ -155,7 +155,7 @@ export default function CustomerTable({ timezone }: { timezone: string }) {
             <span className="font-bold">Total Stamps:</span> {row?.original?.totalScan}
           </p>
           <p>
-            <span className="font-bold">Total Reward Collected:</span> {row?.original?.totalRewardCollect}
+            <span className="font-bold">Total Rewards Collected:</span> {row?.original?.totalRewardCollect}
           </p>
         </div>
       ),
