@@ -13,35 +13,48 @@ import { IoCalendarOutline } from 'react-icons/io5';
 import { LuFilterX } from 'react-icons/lu';
 import { Title, Tooltip } from 'rizzui';
 import BranchFilter from './BranchFilter';
+import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 
-const RetailerDashboardCustomHeader = ({ title, setDateRange, dateRange }: { title: string; setDateRange: any; dateRange: string }) => {
-  const options: any = [
-    {
-      label: 'Kacchi Bhai 1',
-      address: 'Mohammadpur,Dhaka,Bangladesh',
-      status: true,
-      value: 'Kacchi Bhai 1',
-    },
-    {
-      label: 'Kacchi Bhai 2',
-      address: 'Mohakhali,Dhaka,Bangladesh',
-      status: true,
-      value: 'Kacchi Bhai 2',
-    },
-    {
-      label: 'Kacchi Bhai 3',
-      address: 'Mirpur,Dhaka,Bangladesh',
-      status: false,
-      value: 'Kacchi Bhai 3',
-    },
-  ];
-  const [value, setValue] = useState([options[0].value]);
+const RetailerDashboardCustomHeader = ({
+  value,
+  setValue,
+  title,
+  setDateRange,
+  dateRange,
+}: {
+  title: string;
+  setDateRange: any;
+  dateRange: string;
+  value: string[];
+  setValue: any;
+}) => {
+  const {
+    data: allBranches,
+    // isLoading,
+    // isFetching,
+  } = useAllBranchQuery({
+    page: 1,
+    limit: 100,
+    // ...searchQuery,
+  });
+
+  const options =
+    allBranches?.data?.docs.map((branch: any) => ({
+      id: branch._id,
+      label: branch.name,
+      address: branch.address.name,
+      status: branch.status,
+      value: branch._id,
+      disabledBySystem: branch?.disabledBySystem,
+    })) ?? [];
+
   const tStamp = useTranslations('RetailerStamp');
   const { data: session }: any = useSession();
 
   const { data } = useGetAllStampsQuery({ page: 1, limit: 100 });
   // console.log(session, data);
 
+  // console.log(value);
   const checkedDisableStampBtn = () => {
     if (!session?.user?.plan) {
       return true;

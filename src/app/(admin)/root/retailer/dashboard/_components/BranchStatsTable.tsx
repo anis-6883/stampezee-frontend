@@ -5,8 +5,8 @@ import { useRetailerGetProfileQuery } from '@/features/auth/authApi';
 import { useGetRetailerDashboardCalcQuery } from '@/features/retailer/dashboard/dashboardApi';
 import { useTranslations } from 'next-intl';
 
-export default function BranchStatsTable({ dateRange }: { dateRange: string }) {
-  const { data, isLoading, isError, isFetching } = useGetRetailerDashboardCalcQuery({ dateRange });
+export default function BranchStatsTable({ dateRange, value }: { dateRange: string; value: string[] }) {
+  const { data, isLoading, isError, isFetching } = useGetRetailerDashboardCalcQuery({ dateRange, value });
   const { data: retailerProfile, isLoading: isRetailerProfileLoading } = useRetailerGetProfileQuery(null);
   const t = useTranslations('RetailerDashboardTable');
   const t2 = useTranslations('RetailerDashboard');

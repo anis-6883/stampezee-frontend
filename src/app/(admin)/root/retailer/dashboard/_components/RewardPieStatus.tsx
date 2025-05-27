@@ -33,9 +33,17 @@ const statsData2 = [
   },
 ];
 
-export default function RewardPieStatus({ className, dateRange }: { className?: string; dateRange: string | undefined }) {
+export default function RewardPieStatus({
+  className,
+  dateRange,
+  value,
+}: {
+  className?: string;
+  dateRange: string | undefined;
+  value: string[];
+}) {
   const t = useTranslations('retailerDashboardStampAndCustomerStats');
-  const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery({ dateRange });
+  const { data: rewardCollect, isLoading, isError, isFetching } = useRewardCollectPercentageQuery({ dateRange, value });
 
   const {
     rewardCollectedTruePercentage = 0,

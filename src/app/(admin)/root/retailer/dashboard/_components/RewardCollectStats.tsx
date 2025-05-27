@@ -10,7 +10,7 @@ import { Text, Title, Tooltip } from 'rizzui';
 import CircleProgressbar from './CircleProgressbar';
 import WidgetCard from './WidgetCard';
 
-export default function RewardCollectStats({ className, dateRange }: { className?: string; dateRange: string }) {
+export default function RewardCollectStats({ className, dateRange, value }: { className?: string; dateRange: string; value: string[] }) {
   const t = useTranslations('retailerDashboardStampAndCustomerStats');
   // const [dateRange, setDateRange] = useState('');
   const [showDate, setShowDate] = useState({ label: t('noDate'), value: 'no-date' });
@@ -22,6 +22,7 @@ export default function RewardCollectStats({ className, dateRange }: { className
     refetch,
   } = useAvgCollectedStampQuery({
     dateRange,
+    value,
   });
 
   useEffect(() => {

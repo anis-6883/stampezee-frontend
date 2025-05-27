@@ -4,10 +4,12 @@ import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { Checkbox, MultiSelect, MultiSelectOption } from 'rizzui';
 
 interface IValues {
+  id: string;
   label: string;
   address: string;
   status: boolean;
   value: string;
+  disabledBySystem: string;
 }
 
 interface Props {
@@ -16,25 +18,28 @@ interface Props {
   options: IValues[];
 }
 
-function renderBranchFilterOptions(option: IValues, selected: boolean, handleToggle: any) {
+function renderBranchFilterOptions(option: IValues, selected: boolean) {
   return (
     <div className="flex w-full items-center justify-between gap-2">
       <div className="flex items-center gap-2">
-        <Checkbox size="sm" checked={selected} onChange={handleToggle} />
+        <Checkbox size="sm" checked={selected} />
         <div className="space-y-[2px]">
-          <h6 className="text-sm font-medium">{option.label}</h6>
-          <p className="text-xs opacity-80">{option.address}</p>
+          <h6 className="text-sm font-medium">
+            {/* {option.label} */}
+            {option.label.length > 20 ? `${option.label.substring(0, 20)}...` : option.label}
+          </h6>
+          <p className="text-xs opacity-80">{option.address.length > 30 ? `${option.address.substring(0, 30)}...` : option.address}</p>
         </div>
       </div>
-      <div className={`size-3 rounded-full ${option.status ? 'bg-green-500' : 'bg-red-500'}`}></div>
+      <div className={`size-3 rounded-full ${option.status ? 'bg-green-500' : 'bg-red-500'}`} />
     </div>
   );
 }
 
-function renderDisplayValue(selectedItems: string[], options: MultiSelectOption[], handleClearItem: any) {
-  const filteredItems = options.filter((option) => selectedItems.includes(option.value));
-  const isEmpty = filteredItems.length === 0;
-  const isLongerThanOne = filteredItems.length > 1;
+function renderDisplayValue(selectedItems: string[], options: IValues[], handleClearItem: any) {
+  const filteredItems = options?.filter((option) => selectedItems.includes(option.value));
+  const isEmpty = filteredItems?.length === 0;
+  const isLongerThanOne = filteredItems?.length > 1;
 
   if (isEmpty) {
     return (
@@ -47,12 +52,12 @@ function renderDisplayValue(selectedItems: string[], options: MultiSelectOption[
   return (
     <div className={cn('flex w-full flex-wrap items-center gap-2 text-start', !isEmpty && 'me-6')}>
       {isLongerThanOne ? (
-        <span className="ms-2 ps-2">{filteredItems.length} Branches Selected</span>
+        <span className="ms-2 ps-2">{filteredItems?.length} Branches Selected</span>
       ) : (
         <div className="flex items-center gap-2 ps-2">
-          {filteredItems.slice(0, 1).map((item) => (
-            <div key={item?.label} className="border-muted flex items-center gap-3 rounded border ps-2">
-              <h4>{item.label}</h4>
+          {filteredItems?.slice(0, 1).map((item) => (
+            <div key={item.label} className="border-muted flex items-center gap-3 rounded border ps-2">
+              <h4>{item.label.length > 14 ? `${item.label.substring(0, 14)}...` : item.label}</h4>
               <span
                 className="hover:bg-muted cursor-pointer rounded-full p-1"
                 onClick={(e) => {
@@ -60,6 +65,7 @@ function renderDisplayValue(selectedItems: string[], options: MultiSelectOption[
                   handleClearItem(item.value);
                 }}
               >
+                {/* X icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -95,20 +101,19 @@ const BranchFilter = ({ value, setValue, options }: Props) => {
         onChange={setValue}
         displayValue={renderDisplayValue}
         selectClassName="h-10 ring-0 active:ring-0 focus:ring-0"
-        // getOptionDisplayValue={renderBranchFilterOptions}
-        getOptionDisplayValue={(option: IValues) => {
-          const selected = value.includes(option.value);
-          const handleToggle = (val: string) => {
-            if (value.includes(val)) {
-              setValue(value.filter((v) => v !== val));
-            } else {
-              setValue([...value, val]);
-            }
-          };
-          return renderBranchFilterOptions(option, selected, handleToggle);
-        }}
-        className="h-10 min-w-72 rounded-xl bg-white p-0"
-        // label="Multi Select"
+        // getOptionDisplayValue={(option: IValues) => {
+        //   const selected = value.includes(option.value);
+        //   const handleToggle = (val: string) => {
+        //     if (value.includes(val)) {
+        //       setValue(value.filter((v) => v !== val));
+        //     } else {
+        //       setValue([...value, val]);
+        //     }
+        //   };
+        //   return renderBranchFilterOptions(option, selected, handleToggle);
+        // }}
+        getOptionDisplayValue={renderBranchFilterOptions}
+        className="h-10 min-w-72 max-w-72 rounded-xl bg-white p-0"
         clearable
         onClear={() => setValue([])}
       />

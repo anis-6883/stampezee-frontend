@@ -17,13 +17,13 @@ import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
 import { Button } from 'rizzui';
 import MetricCard from './MetricCard';
 
-export default function StateCardView({ className, dateRange }: { className: string; dateRange: string }) {
+export default function StateCardView({ className, dateRange, value }: { className: string; dateRange: string; value: string[] }) {
   const t = useTranslations('RetailerDashboard');
   const { data: session }: any = useSession();
   const [modalState, setModalState] = useState(false);
   const [trialCountDownModalState, setTrialCountDownModalState] = useState(true);
   const { sliderEl, sliderPrevBtn, sliderNextBtn, scrollToTheRight, scrollToTheLeft } = useScrollableSlider();
-  const { data, isLoading, isError, isFetching } = useGetRetailerDashboardCalcQuery({ dateRange });
+  const { data, isLoading, isError, isFetching } = useGetRetailerDashboardCalcQuery({ dateRange, value });
   const { data: retailerProfile, isLoading: isRetailerProfileLoading, refetch } = useRetailerGetProfileQuery(null);
   const { totalStamps = 0, totalStampCards = 0, totalRevenue = 0, totalCustomers = 0 } = data?.data || {};
 

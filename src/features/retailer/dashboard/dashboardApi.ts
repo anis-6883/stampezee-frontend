@@ -3,56 +3,98 @@ import { apiSlice } from '@/features/api/apiSlice';
 export const dashboardApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getRetailerDashboardCalc: builder.query({
-      query: (queries?: { dateRange?: string }) => {
+      query: (queries?: { dateRange?: string; value?: string[] }) => {
         const dateRange = queries?.dateRange;
+        const branchIds = queries?.value;
 
+        let url = `/api/web/retailer/dashboard/calc`;
+
+        const params: string[] = [];
+
+        // Handle date range
         if (dateRange) {
           if (dateRange.includes('to')) {
             const dates = dateRange.replaceAll(' ', '').split('to');
             const [start, end] = dates;
-            return `/api/web/retailer/dashboard/calc?start=${start}&end=${end}`;
+            params.push(`start=${start}`, `end=${end}`);
+          } else {
+            params.push(`start=${dateRange}`, `end=${dateRange}`);
           }
-          return `/api/web/retailer/dashboard/calc?start=${dateRange}&end=${dateRange}`;
         }
 
-        // fallback if dateRange is not passed
-        return `/api/web/retailer/dashboard/calc`;
+        // Handle branch IDs
+        if (branchIds && branchIds.length > 0) {
+          params.push(`branchIds=${branchIds.join(',')}`);
+        }
+
+        if (params.length > 0) {
+          url += `?${params.join('&')}`;
+        }
+
+        return url;
       },
       keepUnusedDataFor: 0,
       providesTags: ['retailerProfile'],
     }),
+
     rewardCollectPercentage: builder.query({
-      query: (queries?: { dateRange?: string }) => {
+      query: (queries?: { dateRange?: string; value?: string[] }) => {
         const dateRange = queries?.dateRange;
+        const branchIds = queries?.value;
+
+        let url = `/api/web/retailer/dashboard/reward-collect-percentage`;
+        const params: string[] = [];
 
         if (dateRange) {
           if (dateRange.includes('to')) {
             const dates = dateRange.replaceAll(' ', '').split('to');
             const [start, end] = dates;
-            return `/api/web/retailer/dashboard/reward-collect-percentage?start=${start}&end=${end}`;
+            params.push(`start=${start}`, `end=${end}`);
+          } else {
+            params.push(`start=${dateRange}`, `end=${dateRange}`);
           }
-          return `/api/web/retailer/dashboard/reward-collect-percentage?start=${dateRange}&end=${dateRange}`;
         }
 
-        // fallback if dateRange is not passed
-        return `/api/web/retailer/dashboard/reward-collect-percentage`;
+        if (branchIds && branchIds.length > 0) {
+          params.push(`branchIds=${branchIds.join(',')}`);
+        }
+
+        if (params.length > 0) {
+          url += `?${params.join('&')}`;
+        }
+
+        return url;
       },
       keepUnusedDataFor: 0,
     }),
+
     avgCollectedStamp: builder.query({
-      query: (queries) => {
-        const { dateRange }: { dateRange: string } = queries;
+      query: (queries?: { dateRange?: string; value?: string[] }) => {
+        const dateRange = queries?.dateRange;
+        const branchIds = queries?.value;
+
+        let url = `/api/web/retailer/dashboard/avg-collected-stamp`;
+        const params: string[] = [];
 
         if (dateRange) {
           if (dateRange.includes('to')) {
             const dates = dateRange.replaceAll(' ', '').split('to');
             const [start, end] = dates;
-            return `/api/web/retailer/dashboard/avg-collected-stamp?start=${start}&end=${end}`;
+            params.push(`start=${start}`, `end=${end}`);
+          } else {
+            params.push(`start=${dateRange}`, `end=${dateRange}`);
           }
-          return `/api/web/retailer/dashboard/avg-collected-stamp?start=${dateRange}&end=${dateRange}`;
         }
 
-        return `/api/web/retailer/dashboard/avg-collected-stamp`;
+        if (branchIds && branchIds.length > 0) {
+          params.push(`branchIds=${branchIds.join(',')}`);
+        }
+
+        if (params.length > 0) {
+          url += `?${params.join('&')}`;
+        }
+
+        return url;
       },
       keepUnusedDataFor: 0,
     }),
