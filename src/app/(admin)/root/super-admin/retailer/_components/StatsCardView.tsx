@@ -4,32 +4,33 @@ import { routes } from '@/config/routes';
 import cn from '@/hooks/class-names';
 import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 import { BsPatchCheck } from 'react-icons/bs';
+import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { LuCircleDollarSign, LuUsers } from 'react-icons/lu';
-import { MdShoppingCartCheckout } from 'react-icons/md';
+import { MdOutlineQrCodeScanner } from 'react-icons/md';
 import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
 import { Button } from 'rizzui';
 import MetricCard from '../../dashboard/_components/MetricCard';
 
 export default function StatsCardView({
   className,
-  totalOrder,
-  totalActiveStamp,
-  totalCustomer,
-  totalBranch,
+  totalStamps,
+  totalStampCards,
+  totalCustomers,
+  totalBranches,
   totalRevenue,
-  totalSubAdmin,
+  totalSubAdmins,
   isLoading,
   isError,
   businessCurrency,
   id,
 }: {
   className: string;
-  totalOrder: number;
-  totalActiveStamp: number;
-  totalCustomer: number;
+  totalStamps: number;
+  totalStampCards: number;
+  totalCustomers: number;
   totalRevenue: number;
-  totalSubAdmin: number;
-  totalBranch: number;
+  totalSubAdmins: number;
+  totalBranches: number;
   isLoading: boolean;
   isError: boolean;
   businessCurrency: string;
@@ -53,18 +54,6 @@ export default function StatsCardView({
         <div ref={sliderEl} className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <MetricCard
             isDetailsView
-            icon={<MdShoppingCartCheckout className="text-xl" />}
-            iconClassName="lg:h-9 lg:w-9 h-6 w-6"
-            key={1}
-            title={'Total Stamps'}
-            metric={totalOrder}
-            metricClassName="3xl:text-[22px]"
-            className="w-full min-w-[200px] max-w-full justify-between"
-            isLoading={isLoading || isError}
-          />
-
-          <MetricCard
-            isDetailsView
             icon={<LuCircleDollarSign className="text-xl" />}
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
@@ -78,11 +67,23 @@ export default function StatsCardView({
 
           <MetricCard
             isDetailsView
+            icon={<MdOutlineQrCodeScanner className="text-xl" />}
+            iconClassName="lg:h-9 lg:w-9 h-6 w-6"
+            key={1}
+            title={'Total Stamps'}
+            metric={totalStamps}
+            metricClassName="3xl:text-[22px]"
+            className="w-full min-w-[200px] max-w-full justify-between"
+            isLoading={isLoading || isError}
+          />
+
+          <MetricCard
+            isDetailsView
             icon={<LuUsers className="text-xl" />}
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
-            title={'Total Customer'}
-            metric={totalCustomer}
+            title={'Total Customers'}
+            metric={totalCustomers}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[200px] max-w-full justify-between"
             isLoading={isLoading || isError}
@@ -93,8 +94,8 @@ export default function StatsCardView({
             icon={<BsPatchCheck className="text-xl" />}
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
-            title={'Total Active Stamp Cards'}
-            metric={totalActiveStamp}
+            title={'Total Stamp Cards'}
+            metric={totalStampCards}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[200px] max-w-full justify-between"
             isLoading={isLoading || isError}
@@ -105,8 +106,8 @@ export default function StatsCardView({
             icon={<LuUsers className="text-xl" />}
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
-            title={'Total Loyalty Executive'}
-            metric={totalSubAdmin}
+            title={'Total Loyalty Executives'}
+            metric={totalSubAdmins}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[200px] max-w-full justify-between"
             isLoading={isLoading || isError}
@@ -114,11 +115,11 @@ export default function StatsCardView({
           <MetricCard
             isDetailsView
             detailsLink={`${routes?.privateRoutes?.superAdmin?.retailer?.details(id as string)}/branches`}
-            icon={<LuUsers className="text-xl" />}
+            icon={<LiaMapMarkedAltSolid className="text-xl" />}
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
             title={'Total Branches'}
-            metric={totalBranch}
+            metric={totalBranches}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[200px] max-w-full justify-between"
             isLoading={isLoading || isError}

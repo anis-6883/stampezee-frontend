@@ -31,14 +31,13 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
     province,
     postalCode,
     currentPlan,
-    totalActiveBranch,
-    totalActiveStamp,
-    totalCustomer,
-    totalRevenue,
-    totalOrder,
-    totalSubAdmin,
+    totalBranches = 0,
+    totalStampCards = 0,
+    totalCustomers = 0,
+    totalRevenue = 0,
+    totalStamps = 0,
+    totalSubAdmins = 0,
     branches,
-    sub_admins,
     addonSubscriptions,
     about,
     website,
@@ -104,12 +103,12 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
 
         <div className="col-span-12 md:col-span-5">
           <StatsCardView
-            totalOrder={totalOrder}
-            totalActiveStamp={totalActiveStamp}
-            totalCustomer={totalCustomer}
+            totalStamps={totalStamps}
+            totalStampCards={totalStampCards}
+            totalCustomers={totalCustomers}
             totalRevenue={totalRevenue}
-            totalBranch={branches?.length || 0}
-            totalSubAdmin={totalSubAdmin}
+            totalBranches={totalBranches}
+            totalSubAdmins={totalSubAdmins}
             isLoading={isLoading}
             businessCurrency={businessCurrency}
             isError={isError}
