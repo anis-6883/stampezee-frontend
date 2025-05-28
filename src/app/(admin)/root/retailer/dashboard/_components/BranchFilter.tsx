@@ -20,27 +20,35 @@ interface Props {
 
 function renderBranchFilterOptions(option: IValues, selected: boolean, handleToggle: any) {
   //  console.log(option)
-  return (
-    <div className="flex w-full items-center justify-between gap-2">
-      <div className="flex items-center gap-2">
-        <Checkbox
-          inputClassName={`!ring-0 checked:!bg-danger checked:!border-danger`}
-          iconClassName="top-0"
-          size="sm"
-          checked={selected}
-          onChange={() => handleToggle(option?.value)}
-        />
-        <div className="space-y-[2px]">
-          <h6 className="text-sm font-medium">
-            {/* {option.label} */}
-            {option.label.length > 20 ? `${option.label.substring(0, 20)}...` : option.label}
-          </h6>
-          <p className="text-xs opacity-80">{option.address.length > 30 ? `${option.address.substring(0, 30)}...` : option.address}</p>
+  if (option) {
+    return (
+      <div className="flex w-full items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <Checkbox
+            inputClassName={`!ring-0 checked:!bg-danger checked:!border-danger`}
+            size="sm"
+            checked={selected}
+            iconClassName="top-0"
+            onChange={() => handleToggle(option?.value)}
+          />
+          <div className="space-y-[2px]">
+            <h6 className="text-sm font-medium">
+              {/* {option.label} */}
+              {option.label.length > 20 ? `${option.label.substring(0, 20)}...` : option.label}
+            </h6>
+            <p className="text-xs opacity-80">{option.address.length > 30 ? `${option.address.substring(0, 30)}...` : option.address}</p>
+          </div>
         </div>
+        <div className={`size-3 rounded-full ${option?.status && !option?.disabledBySystem ? 'bg-green-500' : 'bg-red-500'}`} />
       </div>
-      <div className={`size-3 rounded-full ${option?.status && !option?.disabledBySystem ? 'bg-green-500' : 'bg-red-500'}`} />
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <p>no data found</p>
+      </div>
+    );
+  }
 }
 
 function renderDisplayValue(selectedItems: string[], options: IValues[], handleClearItem: any) {
@@ -109,15 +117,20 @@ const BranchFilter = ({ value, setValue, options }: Props) => {
         displayValue={renderDisplayValue}
         selectClassName="h-10 ring-0 active:ring-0 focus:ring-0"
         getOptionDisplayValue={(option: IValues) => {
+          if (option.value === 'no-option') {
+            return <div className="w-full px-3 py-2 text-center text-sm text-gray-500">No branch found.</div>;
+          }
+
           const selected = value.includes(option.value);
           const handleToggle = (val: string) => {
-            const isExist = value?.filter((item: any) => val == item.value);
+            const isExist = value?.includes(val);
             if (isExist) {
-              setValue(value?.filter((item: any) => val !== item.value));
+              setValue(value?.filter((item: any) => item !== val));
             } else {
               setValue([...value, val]);
             }
           };
+
           return renderBranchFilterOptions(option, selected, handleToggle);
         }}
         // getOptionDisplayValue={renderBranchFilterOptions}

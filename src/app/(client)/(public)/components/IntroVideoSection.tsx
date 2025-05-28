@@ -13,7 +13,7 @@ export default function IntroVideoSection({ title, description }: { title: strin
   }, []);
   return (
     <div
-      className={`mx-auto mt-16 block max-w-screen-xl  flex-row-reverse items-center justify-between gap-5 text-black md:flex sxl:mt-28`}
+      className={`mx-auto mt-16  flex max-w-screen-xl flex-col-reverse items-center justify-between gap-5 text-black md:flex md:flex-row-reverse sxl:mt-28`}
     >
       <div data-aos="fade-right" className="mb-6 flex w-full items-center justify-center overflow-hidden md:mb-0 md:w-1/2 lg:mb-4 sxl:mb-8">
         <iframe
@@ -26,7 +26,7 @@ export default function IntroVideoSection({ title, description }: { title: strin
         ></iframe>
       </div>
       <div data-aos="fade-left" className=" overflow-hidden text-center md:w-1/2 md:text-left">
-        <h1 className="mb-7 text-3xl font-bold text-black md:text-4xl lg:text-4xl  sxl:text-5xl">{title}</h1>
+        <h1 className="mb-3 text-3xl font-bold text-black md:mb-5 md:text-4xl lg:mb-7 lg:text-4xl  sxl:text-5xl">{title}</h1>
         <p className="text-balance text-base text-black md:text-lg sxl:text-xl">{description}</p>
 
         <p className="mt-4 flex items-center text-lg font-bold text-black">

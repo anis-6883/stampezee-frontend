@@ -25,9 +25,9 @@ export default function WorksCard({
   }, []);
   return (
     <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" className="overflow-hidden">
-      <div className="mb-10 p-4 text-center">
+      <div className="mb-2 p-4 text-center md:mb-8 lg:mb-10">
         <div data-aos="fade-up-right" className="mb-2">
-          <Image src={image} className="mx-auto size-28 md:size-32 lg:size-36" alt="image" />
+          <Image src={image} className="mx-auto size-24 sm:size-28 md:size-32 lg:size-36" alt="image" />
         </div>
         <div className="mb-2 text-xl font-bold text-black md:text-2xl lg:text-3xl">{title}</div>
         <div className="mb-3 text-xl font-bold text-black md:mb-4 md:text-2xl lg:text-3xl xl:mb-6">{subTitle}</div>

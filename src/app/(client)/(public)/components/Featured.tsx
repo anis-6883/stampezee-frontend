@@ -57,7 +57,7 @@ export default function Featured({
           <Image src={image} alt="image" />
         </div>
         <div data-aos="fade-left" className=" overflow-hidden text-center md:w-1/2 md:text-left">
-          <h1 className="mb-7 text-3xl font-bold text-black md:text-4xl lg:text-4xl  sxl:text-5xl">{title}</h1>
+          <h1 className="mb-3 text-3xl font-bold text-black md:mb-5 md:text-4xl lg:mb-7 lg:text-4xl  sxl:text-5xl">{title}</h1>
           <p className="text-balance text-base text-black md:text-lg sxl:text-xl">{description}</p>
         </div>
       </div>
