@@ -26,16 +26,13 @@ import { Tooltip } from 'rizzui';
 import CreateUpdateModel from '../../../../customer/_components/CreateUpdateModel';
 
 export default function CustomerTable({ timezone, id }: { timezone: string; id: string }) {
-  const [dateRange, setDateRange] = useState('');
-  const [start, setStart] = useState<string>('');
-  const [end, setEnd] = useState<string>('');
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [formData, setFormData] = useState({});
   const [createState, setCreateState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
-  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
+  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10 });
 
   const { data, isLoading, isFetching } = useGetAllCustomerByAdminQuery({ id, queries: query }, { skip: !accessToken });
 
@@ -46,19 +43,6 @@ export default function CustomerTable({ timezone, id }: { timezone: string; id: 
     setDeleteState(true);
     setDeleteId(rowData._id);
   };
-
-  useEffect(() => {
-    if (dateRange) {
-      if (dateRange.includes('to')) {
-        const dates = dateRange.replaceAll(' ', '').split('to');
-        setStart(dates[0]);
-        setEnd(dates[1]);
-      }
-    } else {
-      setStart('');
-      setEnd('');
-    }
-  }, [dateRange]);
 
   useEffect(() => {
     if (isError) {
