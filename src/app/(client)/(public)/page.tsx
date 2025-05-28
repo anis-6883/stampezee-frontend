@@ -24,6 +24,8 @@ export default async function Page() {
   return (
     <div className="relative overflow-hidden">
       {/* rgba(22, 28, 36, 0.8),  */}
+
+      {/* hero banner */}
       <div className={`${isRtl ? 'hero-curve-rtr' : 'hero-curve'} relative mx-auto mt-[4.4rem] w-full sm:mt-10 md:mt-16`}>
         <div className="h-screen w-full  bg-[#FF3131] md:h-[70vh] lg:h-[74vh]  "></div>
         <div className="absolute inset-0"></div>
@@ -44,10 +46,10 @@ export default async function Page() {
               <p className="mt-1 text-balance py-2 text-base font-medium text-white sm:text-xl md:mt-2 md:py-3.5 lg:mt-3 lg:py-4 xl:py-4 xxl:mt-4 sxl:py-3">
                 {t('bannerDetails')}
               </p>
-              <div className="mt-2 md:mt-6 lg:mt-8">
+              <div className="mt-5 md:mt-6 lg:mt-8">
                 <Link
                   href={routes.publicRoutes.pricing}
-                  className="dark:bg-primary-red md:text-md rounded-full bg-white px-4 py-2.5 text-base font-semibold uppercase text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] md:py-3 xl:px-8 xl:text-lg xxl:py-4 sxl:text-xl"
+                  className="dark:bg-primary-red md:text-md rounded-full bg-white px-6 py-2.5 text-base font-semibold uppercase text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] md:py-3 xl:px-8 xl:text-lg xxl:py-4 sxl:text-xl"
                 >
                   {t('bannerButtonText')}
                 </Link>
@@ -63,7 +65,9 @@ export default async function Page() {
       {/* How It Works start */}
       <section id="how_we_work" className={`${isRtl ? 'works-curve-rtr' : 'works-curve'} bg-[#FCE8E8] px-5 py-10 md:px-8 lg:px-10`}>
         <div className="container mx-auto block  max-w-screen-xl gap-3 sm:gap-10">
-          <div className="my-7 text-center text-3xl font-bold text-black md:text-5xl lg:text-6xl sxl:text-7xl">{t('workMainTitle')}</div>
+          <div className="my-4 text-center text-3xl font-bold text-black md:my-6 md:text-5xl lg:my-7 lg:text-6xl sxl:text-7xl">
+            {t('workMainTitle')}
+          </div>
           <div className=" items-center justify-between md:flex">
             <WorksCard
               image="/default/flex.svg"
@@ -92,7 +96,6 @@ export default async function Page() {
       {/* How It Works end */}
 
       {/* TESTIMONIALS start */}
-
       <div>
         <div className=" mt-5 text-center">
           <p className="mb-3 text-lg font-semibold leading-8 text-black sm:text-3xl md:mb-5 lg:mb-6 sxl:mb-7">{t('testimonials')}</p>
@@ -104,7 +107,7 @@ export default async function Page() {
           </div>
         </div>
 
-        <div className="container mx-auto mb-8 mt-[30px] grid max-w-screen-xl grid-cols-1 gap-10   py-8 sm:mb-20 sm:gap-10 md:mt-16 md:grid-cols-2 md:p-0 md:px-8 lg:grid-cols-3 lg:px-10 xl:mt-[76px]">
+        <div className="container mx-auto mt-5 grid max-w-screen-xl grid-cols-1 gap-7 px-5 py-8 sm:mb-8 sm:gap-10 md:mt-16 md:grid-cols-2 md:p-0 md:px-8 lg:grid-cols-3 lg:px-10 xl:mt-[76px] sxl:mb-20 sxl:px-0">
           <Testimonial
             image={'/default/olivia.png'}
             name={t('testimonialTitleOne')}
@@ -125,20 +128,23 @@ export default async function Page() {
           />
         </div>
       </div>
-
       {/* TESTIMONIALS end */}
 
       {/* Revolution Card Start  */}
-      <div className="m-7 px-5 sm:m-0 md:px-8 lg:px-10">
-        <div className="container mx-auto max-w-screen-xl rounded-3xl bg-gradient-to-r from-[#BA0000] to-[#FB7C7C] px-10 py-8">
-          <div className="flex flex-col items-center gap-y-6">
+      <div className="px-5 sm:m-0 md:px-8 lg:m-7 lg:px-10">
+        <div className="container mx-auto max-w-screen-xl rounded-3xl bg-gradient-to-r from-[#BA0000] to-[#FB7C7C] px-8 py-8 lg:px-10">
+          <div className="flex flex-col gap-y-3 md:items-center md:gap-y-5 lg:gap-y-6">
             <span className="text-base font-semibold uppercase tracking-widest text-[#000000] sm:text-xl">{t('revolutionTitle')}</span>
-            <span className="text-3xl font-bold tracking-widest text-[#ffffff] md:text-4xl lg:text-5xl">{t('revolutionBodyTitle')}</span>
-            <span className="text-3xl font-bold tracking-widest text-[#ffffff] md:text-4xl lg:text-5xl">{t('revolutionBodySubtitle')}</span>
+            <span className="text-2xl font-bold tracking-widest text-[#ffffff] sm:text-3xl md:text-4xl lg:text-5xl">
+              {t('revolutionBodyTitle')}
+            </span>
+            <span className="text-2xl font-bold tracking-widest text-[#ffffff] sm:text-3xl md:text-4xl lg:text-5xl">
+              {t('revolutionBodySubtitle')}
+            </span>
             <div className="mb-3 mt-4 md:mt-6 lg:mt-8">
               <Link
                 href={routes.publicRoutes.pricing}
-                className="dark:bg-primary-red  rounded-full bg-white px-3 py-4 text-sm font-semibold uppercase tracking-widest text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:px-8 md:text-lg lg:text-xl"
+                className="dark:bg-primary-red  rounded-full bg-white px-6 py-3 text-sm font-semibold uppercase tracking-widest text-black duration-300 ease-in-out focus:outline-none dark:hover:bg-[#454F5B] sm:px-8 md:py-4 md:text-lg lg:text-xl"
               >
                 {t('revolutionButtonText')}
               </Link>

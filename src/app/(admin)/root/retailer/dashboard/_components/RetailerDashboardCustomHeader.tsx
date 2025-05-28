@@ -48,6 +48,21 @@ const RetailerDashboardCustomHeader = ({
       disabledBySystem: branch?.disabledBySystem,
     })) ?? [];
 
+  // const options: any = [];
+  const modifiedOptions =
+    options.length === 0
+      ? [
+          {
+            id: 'no-option',
+            label: 'No Branch Found',
+            address: '',
+            status: false,
+            value: 'no-option',
+            disabledBySystem: '',
+          },
+        ]
+      : options;
+
   const tStamp = useTranslations('RetailerStamp');
   const { data: session }: any = useSession();
 
@@ -83,7 +98,7 @@ const RetailerDashboardCustomHeader = ({
             {/* title */}
             <h5 className="text-nowrap text-base font-medium">Filters :</h5>
             {/* filter */}
-            <BranchFilter options={options} value={value} setValue={setValue} />
+            <BranchFilter options={modifiedOptions} value={value} setValue={setValue} />
 
             {/* date filter */}
             <div className="relative">
