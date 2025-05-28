@@ -125,28 +125,6 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
         </Link>
       </div>
       <ActiveSubscriptionsTable data={addonSubscriptions} isLoading={isLoading} isError={isError} />
-      {/* <AddonListTable data={addonSubscriptions} isLoading={isLoading} isError={isError} /> */}
-
-      {/* <div className="grid grid-cols-1 gap-x-5 md:grid-cols-6 xxl:gap-x-10">
-        <div className="col-span-1 md:col-span-2 xl:col-span-3 xxl:col-span-2">
-          <h2 className="my-5 text-lg font-bold">Active Add-Ons List:</h2>
-          <AddonListTable data={addonSubscriptions} isLoading={isLoading} isError={isError} />
-        </div>
-        <div className="col-span-1 md:col-span-4 xl:col-span-3 xxl:col-span-4">
-          <h2 className="my-5 text-lg font-bold">Loyalty-Executive List:</h2>
-          <SubAdminListTable data={sub_admins} isLoading={isLoading} isError={isError} />
-        </div>
-      </div>
-
-      <h2 className="my-5 text-lg font-bold">Branch Statistics: ({totalActiveBranch})</h2>
-
-      <BranchStatisticsTable businessCurrency={businessCurrency} data={branches} isLoading={isLoading} isError={isError} />
-
-      <h2 className="my-5 text-lg font-bold">Subscriptions:</h2>
-      <RetailerPaymentTable timezone={timezone} id={id} /> */}
-
-      {/* <h2 className="my-5 text-lg font-bold">Subscriptions:</h2>
-      <RetailerPaymentTable timezone={timezone} id={id} /> */}
     </div>
   );
 }

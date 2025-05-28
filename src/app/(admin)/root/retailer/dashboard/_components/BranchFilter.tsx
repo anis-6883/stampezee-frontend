@@ -1,7 +1,6 @@
 import cn from '@/hooks/class-names';
-import React from 'react';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
-import { Checkbox, MultiSelect, MultiSelectOption } from 'rizzui';
+import { Checkbox, MultiSelect } from 'rizzui';
 
 interface IValues {
   id: string;
@@ -116,23 +115,23 @@ const BranchFilter = ({ value, setValue, options }: Props) => {
         onChange={setValue}
         displayValue={renderDisplayValue}
         selectClassName="h-10 ring-0 active:ring-0 focus:ring-0"
-        getOptionDisplayValue={(option: IValues) => {
-          if (option.value === 'no-option') {
-            return <div className="w-full px-3 py-2 text-center text-sm text-gray-500">No branch found.</div>;
-          }
+        // getOptionDisplayValue={(option: IValues) => {
+        //   if (option.value === 'no-option') {
+        //     return <div className="w-full px-3 py-2 text-center text-sm text-gray-500">No branch found.</div>;
+        //   }
 
-          const selected = value.includes(option.value);
-          const handleToggle = (val: string) => {
-            const isExist = value?.includes(val);
-            if (isExist) {
-              setValue(value?.filter((item: any) => item !== val));
-            } else {
-              setValue([...value, val]);
-            }
-          };
+        //   const selected = value.includes(option.value);
+        //   const handleToggle = (val: string) => {
+        //     const isExist = value?.includes(val);
+        //     if (isExist) {
+        //       setValue(value?.filter((item: any) => item !== val));
+        //     } else {
+        //       setValue([...value, val]);
+        //     }
+        //   };
 
-          return renderBranchFilterOptions(option, selected, handleToggle);
-        }}
+        //   return renderBranchFilterOptions(option, selected, handleToggle);
+        // }}
         // getOptionDisplayValue={renderBranchFilterOptions}
         className="h-10 min-w-72 max-w-72 rounded-xl bg-white p-0"
         clearable

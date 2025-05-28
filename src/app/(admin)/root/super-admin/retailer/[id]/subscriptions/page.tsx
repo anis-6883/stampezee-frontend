@@ -2,7 +2,7 @@ import PageHeader from '@/components/page-header';
 import { routes } from '@/config/routes';
 import { metaObject } from '@/config/site.config';
 import { axiosBackendUrl } from '@/utils/axios/getAxios';
-import RetailerPaymentTable from '../../_components/RetailerPaymentTable';
+import RetailerPaymentTable from './_components/RetailerPaymentTable';
 
 const pageHeader = {
   title: 'Manage Retailer Details',

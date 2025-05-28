@@ -1,7 +1,7 @@
 'use client';
 
 import { RootState } from '@/features/store';
-import { useGetSingleRetailerQuery } from '@/features/super-admin/retailer/retailerApi';
+import { useGetAllBranchByAdminQuery } from '@/features/super-admin/retailer/retailerApi';
 import { IQueryType } from '@/types';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -10,10 +10,9 @@ import Table from '../../../../../_components/Table';
 export function BranchDetails({ id }: { id: string }) {
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
 
-  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 20, search: null });
+  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10 });
 
-  const searchQuery = query.search ? { search: query.search } : {};
-  const { data, isLoading, isError, isFetching } = useGetSingleRetailerQuery(id, { skip: !accessToken });
+  const { data, isLoading, isError, isFetching } = useGetAllBranchByAdminQuery({ id, queries: query }, { skip: !accessToken });
 
   const structure = [
     {
@@ -24,23 +23,27 @@ export function BranchDetails({ id }: { id: string }) {
       header: 'Branch Address',
       accessorKey: 'address',
       Cell: ({ row }: any) => (
-        <div>
-          {row?.original?.address.name.length > 60 ? `${row?.original?.address.name.substring(0, 60)}...` : row?.original?.address.name}
-        </div>
+        <div>{row?.original?.address.length > 60 ? `${row?.original?.address.substring(0, 60)}...` : row?.original?.address}</div>
       ),
+      size: 250,
     },
 
     {
-      header: 'Total Customer',
-      accessorKey: 'totalCustomer',
+      header: 'Total Customers',
+      accessorKey: 'totalCustomers',
+    },
+    {
+      header: 'Total Stamp Cards',
+      accessorKey: 'totalStampsCards',
     },
     {
       header: 'Total Stamps',
       accessorKey: 'totalStamps',
     },
     {
-      header: `Total Revenue (${data?.data?.businessCurrency})`,
+      header: `Total Revenue`,
       accessorKey: 'totalRevenue',
+      Cell: ({ row }: any) => <div>{`${row?.original?.totalRevenue.toFixed(2)} ${row?.original?.currency}`}</div>,
     },
   ];
 
@@ -66,7 +69,7 @@ export function BranchDetails({ id }: { id: string }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder={'Search..'}
+      showGlobalFilter={false}
       enableRowNumbers={true}
     />
   );

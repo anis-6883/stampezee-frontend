@@ -12,6 +12,64 @@ export const superAdminRetailerApi = apiSlice.injectEndpoints({
       providesTags: ['superAdminRetailer'],
       keepUnusedDataFor: 0,
     }),
+    getAllStampByAdmin: builder.query<IResponse, IPagination>({
+      query: ({ queries, id }: any) => {
+        const values = Object.values(queries);
+        if (values.length) return `/api/secret-root/admin/super-admin/manage-retailer/stamps/${id}?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/manage-retailer/stamps/${id}`; // Ensure it returns a base URL if no queries are present
+      },
+      providesTags: ['superAdminRetailer'],
+      keepUnusedDataFor: 0,
+    }),
+    getAllBranchByAdmin: builder.query({
+      query: ({ queries, id }) => {
+        const values = Object.values(queries);
+        if (values.length)
+          return `/api/secret-root/admin/super-admin/manage-retailer/branches/${id}?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/manage-retailer/branches/${id}`; // Ensure it returns a base URL if no queries are present
+      },
+      providesTags: ['superAdminRetailer'],
+      keepUnusedDataFor: 0,
+    }),
+    getAllSubAdminByAdmin: builder.query({
+      query: ({ queries, id }) => {
+        const values = Object.values(queries);
+        if (values.length)
+          return `/api/secret-root/admin/super-admin/manage-retailer/sub-admins/${id}?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/manage-retailer/sub-admins/${id}`; // Ensure it returns a base URL if no queries are present
+      },
+      providesTags: ['superAdminRetailer'],
+      keepUnusedDataFor: 0,
+    }),
+    getAllStampCardByAdmin: builder.query({
+      query: ({ queries, id }) => {
+        const values = Object.values(queries);
+        if (values.length)
+          return `/api/secret-root/admin/super-admin/manage-retailer/stamp-cards/${id}?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/manage-retailer/stamp-cards/${id}`; // Ensure it returns a base URL if no queries are present
+      },
+      providesTags: ['superAdminRetailer'],
+      keepUnusedDataFor: 0,
+    }),
+    getAllCustomerByAdmin: builder.query({
+      query: ({ queries, id }) => {
+        const values = Object.values(queries);
+        if (values.length)
+          return `/api/secret-root/admin/super-admin/manage-retailer/customers/${id}?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/manage-retailer/customers/${id}`; // Ensure it returns a base URL if no queries are present
+      },
+      providesTags: ['superAdminRetailer'],
+      keepUnusedDataFor: 0,
+    }),
+    getAllScansByAdmin: builder.query({
+      query: ({ queries, id }) => {
+        const values = Object.values(queries);
+        if (values.length) return `/api/secret-root/admin/super-admin/manage-retailer/stamps/${id}?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/manage-retailer/stamps/${id}`; // Ensure it returns a base URL if no queries are present
+      },
+      providesTags: ['superAdminRetailer'],
+      keepUnusedDataFor: 0,
+    }),
     getSingleRetailer: builder.query({
       query: (id) => {
         return `/api/secret-root/admin/super-admin/manage-retailer/${id}`; // Ensure it returns a base URL if no queries are present
@@ -69,6 +127,12 @@ export const {
   useDeleteSuperAdminRetailerMutation,
   useUpdateRetailerStatusMutation,
   useGetPaymentsByRetailerIdQuery,
+  useGetAllStampByAdminQuery,
+  useGetAllBranchByAdminQuery,
+  useGetAllSubAdminByAdminQuery,
+  useGetAllStampCardByAdminQuery,
+  useGetAllCustomerByAdminQuery,
+  useGetAllScansByAdminQuery,
 } = superAdminRetailerApi;
 
 export default superAdminRetailerApi;

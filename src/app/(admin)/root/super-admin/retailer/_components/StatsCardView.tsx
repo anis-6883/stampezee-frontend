@@ -54,6 +54,7 @@ export default function StatsCardView({
         <div ref={sliderEl} className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <MetricCard
             isDetailsView
+            // detailsLink={`${routes?.privateRoutes?.superAdmin?.retailer?.details(id as string)}/revenue`}
             icon={<LuCircleDollarSign className="text-xl" />}
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
@@ -67,6 +68,7 @@ export default function StatsCardView({
 
           <MetricCard
             isDetailsView
+            detailsLink={`${routes?.privateRoutes?.superAdmin?.retailer?.details(id as string)}/stamps`}
             icon={<MdOutlineQrCodeScanner className="text-xl" />}
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
@@ -79,6 +81,7 @@ export default function StatsCardView({
 
           <MetricCard
             isDetailsView
+            detailsLink={`${routes?.privateRoutes?.superAdmin?.retailer?.details(id as string)}/customers`}
             icon={<LuUsers className="text-xl" />}
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
@@ -91,6 +94,7 @@ export default function StatsCardView({
 
           <MetricCard
             isDetailsView
+            detailsLink={`${routes?.privateRoutes?.superAdmin?.retailer?.details(id as string)}/stamp-cards`}
             icon={<BsPatchCheck className="text-xl" />}
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}

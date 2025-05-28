@@ -2,18 +2,17 @@
 import Button from '@/components/Formik/Button';
 import DatePicker from '@/components/Formik/DatePicker';
 import { routes } from '@/config/routes';
+import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 import { useGetAllStampsQuery } from '@/features/retailer/stamp/stampApi';
 import cn from '@/hooks/class-names';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useState } from 'react';
 import { HiPlus } from 'react-icons/hi2';
 import { IoCalendarOutline } from 'react-icons/io5';
 import { LuFilterX } from 'react-icons/lu';
 import { Title, Tooltip } from 'rizzui';
 import BranchFilter from './BranchFilter';
-import { useAllBranchQuery } from '@/features/retailer/branch/branchApi';
 
 const RetailerDashboardCustomHeader = ({
   value,

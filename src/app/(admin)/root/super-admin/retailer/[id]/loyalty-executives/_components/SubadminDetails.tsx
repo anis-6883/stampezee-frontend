@@ -1,18 +1,16 @@
 'use client';
 
 import { RootState } from '@/features/store';
-import { useGetSingleRetailerQuery } from '@/features/super-admin/retailer/retailerApi';
+import { useGetAllSubAdminByAdminQuery } from '@/features/super-admin/retailer/retailerApi';
 import { IQueryType } from '@/types';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Table from '../../../../../_components/Table';
 
 export function SubAdminDetails({ id }: { id: string }) {
-  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 20, search: null });
-
-  const searchQuery = query.search ? { search: query.search } : {};
+  const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 20 });
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { data, isLoading, isError, isFetching } = useGetSingleRetailerQuery(id, { skip: !accessToken });
+  const { data, isLoading, isError, isFetching } = useGetAllSubAdminByAdminQuery({ id, queries: query }, { skip: !accessToken });
 
   const structure = [
     {
@@ -22,6 +20,7 @@ export function SubAdminDetails({ id }: { id: string }) {
     {
       header: 'Last Name',
       accessorKey: 'lastName',
+      Cell: ({ row }: any) => <div>{row?.original?.lastName ? row?.original?.lastName : 'N/A'}</div>,
     },
     {
       header: 'Email',
@@ -29,16 +28,19 @@ export function SubAdminDetails({ id }: { id: string }) {
     },
     {
       header: 'Branch Name',
-      accessorKey: 'branchName',
+      accessorKey: 'branch.name',
     },
     {
       header: 'Branch Address',
       accessorKey: 'address',
       Cell: ({ row }: any) => (
         <div>
-          {row?.original?.address.name.length > 60 ? `${row?.original?.address.name.substring(0, 60)}...` : row?.original?.address.name}
+          {row?.original?.branch?.address.length > 60
+            ? `${row?.original?.branch?.address.substring(0, 60)}...`
+            : row?.original?.branch?.address}
         </div>
       ),
+      size: 250,
     },
   ];
 
@@ -55,7 +57,7 @@ export function SubAdminDetails({ id }: { id: string }) {
               },
             }
           : {
-              data: data?.data.docs || [],
+              data: data?.data?.docs || [],
               pagination: {
                 totalDocuments: data?.data.totalDocs || 0,
               },
@@ -64,7 +66,7 @@ export function SubAdminDetails({ id }: { id: string }) {
       structure={structure}
       setQuery={setQuery}
       query={query}
-      searchPlaceHolder={'Search..'}
+      showGlobalFilter={false}
       enableRowNumbers={true}
     />
   );
