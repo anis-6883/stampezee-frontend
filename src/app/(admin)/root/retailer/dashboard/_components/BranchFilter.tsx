@@ -18,11 +18,12 @@ interface Props {
   options: IValues[];
 }
 
-function renderBranchFilterOptions(option: IValues, selected: boolean) {
+function renderBranchFilterOptions(option: IValues, selected: boolean, handleToggle: any) {
+  // console.log(option)
   return (
     <div className="flex w-full items-center justify-between gap-2">
       <div className="flex items-center gap-2">
-        <Checkbox size="sm" checked={selected} />
+        <Checkbox size="sm" checked={selected} onChange={() => handleToggle(option?.value)} />
         <div className="space-y-[2px]">
           <h6 className="text-sm font-medium">
             {/* {option.label} */}
@@ -101,18 +102,19 @@ const BranchFilter = ({ value, setValue, options }: Props) => {
         onChange={setValue}
         displayValue={renderDisplayValue}
         selectClassName="h-10 ring-0 active:ring-0 focus:ring-0"
-        // getOptionDisplayValue={(option: IValues) => {
-        //   const selected = value.includes(option.value);
-        //   const handleToggle = (val: string) => {
-        //     if (value.includes(val)) {
-        //       setValue(value.filter((v) => v !== val));
-        //     } else {
-        //       setValue([...value, val]);
-        //     }
-        //   };
-        //   return renderBranchFilterOptions(option, selected, handleToggle);
-        // }}
-        getOptionDisplayValue={renderBranchFilterOptions}
+        getOptionDisplayValue={(option: IValues) => {
+          const selected = value.includes(option.value);
+          const handleToggle = (val: string) => {
+            const isExist = value?.filter((item: any) => val == item.value);
+            if (isExist) {
+              setValue(value?.filter((item: any) => val !== item.value));
+            } else {
+              setValue([...value, val]);
+            }
+          };
+          return renderBranchFilterOptions(option, selected, handleToggle);
+        }}
+        // getOptionDisplayValue={renderBranchFilterOptions}
         className="h-10 min-w-72 max-w-72 rounded-xl bg-white p-0"
         clearable
         onClear={() => setValue([])}
