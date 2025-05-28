@@ -1,6 +1,7 @@
 import cn from '@/hooks/class-names';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
-import { Checkbox, MultiSelect } from 'rizzui';
+import { MultiSelect } from 'rizzui';
+import { CustomCheckbox } from './CustomCheckbox';
 
 interface IValues {
   id: string;
@@ -23,13 +24,15 @@ function renderBranchFilterOptions(option: IValues, selected: boolean, handleTog
     return (
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Checkbox
+          {/* <Checkbox
             inputClassName={`!ring-0 checked:!bg-danger checked:!border-danger`}
             size="sm"
             checked={selected}
             iconClassName="top-0"
             onChange={() => handleToggle(option?.value)}
-          />
+          /> */}
+          <CustomCheckbox checked={selected} size="w-5 h-5" />
+
           <div className="space-y-[2px]">
             <h6 className="text-sm font-medium">
               {/* {option.label} */}
@@ -115,23 +118,23 @@ const BranchFilter = ({ value, setValue, options }: Props) => {
         onChange={setValue}
         displayValue={renderDisplayValue}
         selectClassName="h-10 ring-0 active:ring-0 focus:ring-0"
-        // getOptionDisplayValue={(option: IValues) => {
-        //   if (option.value === 'no-option') {
-        //     return <div className="w-full px-3 py-2 text-center text-sm text-gray-500">No branch found.</div>;
-        //   }
+        getOptionDisplayValue={(option: IValues) => {
+          if (option.value === 'no-option') {
+            return <div className="w-full px-3 py-2 text-center text-sm text-gray-500">No branch found.</div>;
+          }
 
-        //   const selected = value.includes(option.value);
-        //   const handleToggle = (val: string) => {
-        //     const isExist = value?.includes(val);
-        //     if (isExist) {
-        //       setValue(value?.filter((item: any) => item !== val));
-        //     } else {
-        //       setValue([...value, val]);
-        //     }
-        //   };
+          const selected = value.includes(option.value);
+          const handleToggle = (val: string) => {
+            const isExist = value?.includes(val);
+            if (isExist) {
+              setValue(value?.filter((item: any) => item !== val));
+            } else {
+              setValue([...value, val]);
+            }
+          };
 
-        //   return renderBranchFilterOptions(option, selected, handleToggle);
-        // }}
+          return renderBranchFilterOptions(option, selected, handleToggle);
+        }}
         // getOptionDisplayValue={renderBranchFilterOptions}
         className="h-10 min-w-72 max-w-72 rounded-xl bg-white p-0"
         clearable

@@ -38,7 +38,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
     totalStamps = 0,
     totalSubAdmins = 0,
     branches,
-    addonSubscriptions,
+    activeSubscriptions,
     about,
     website,
     businessCurrency,
@@ -124,7 +124,7 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
           <Button className=" !px-2 !py-1.5" text="Subscription Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
         </Link>
       </div>
-      <ActiveSubscriptionsTable data={addonSubscriptions} isLoading={isLoading} isError={isError} />
+      <ActiveSubscriptionsTable data={activeSubscriptions} isLoading={isLoading} isError={isError} timezone={timezone} />
     </div>
   );
 }

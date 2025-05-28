@@ -1,5 +1,6 @@
 'use client';
 
+import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
 import { Badge } from 'rizzui';
 import Table from '../../../_components/Table';
@@ -14,17 +15,14 @@ interface ActiveSubscriptionsTableProps {
   data: SubAdminList[] | undefined;
   isLoading: boolean;
   isError: boolean;
+  timezone: string;
 }
 
-export default function ActiveSubscriptionsTable({ data, isLoading, isError }: ActiveSubscriptionsTableProps) {
+export default function ActiveSubscriptionsTable({ data, isLoading, isError, timezone }: ActiveSubscriptionsTableProps) {
   const structure = [
     {
       header: 'Title',
       accessorKey: 'title',
-    },
-    {
-      header: 'Count',
-      accessorKey: 'count',
     },
     {
       header: 'Source',
@@ -32,7 +30,11 @@ export default function ActiveSubscriptionsTable({ data, isLoading, isError }: A
       Cell: ({ row }: any) => {
         return (
           <div>
-            <Badge className="!bg-danger text-white">{_.capitalize('add-on')}</Badge>
+            {row?.original?.type === 'addon' ? (
+              <Badge className="!bg-danger text-white">{_.capitalize(row?.original?.type)}</Badge>
+            ) : (
+              <Badge className="bg-primary text-white">{_.capitalize(row?.original?.type)}</Badge>
+            )}
           </div>
         );
       },
@@ -40,7 +42,7 @@ export default function ActiveSubscriptionsTable({ data, isLoading, isError }: A
     {
       header: 'Next Renewal',
       Cell: ({ row }: any) => {
-        return <div>25-06-2025</div>;
+        return <div>{getFormatDateByTimezone(row?.original?.enrollSubscriptions[0]?.enrollment?.validityTo, timezone)}</div>;
       },
     },
   ];
@@ -71,7 +73,8 @@ export default function ActiveSubscriptionsTable({ data, isLoading, isError }: A
       structure={structure}
       enablePagination={false}
       showGlobalFilter={false}
-      renderDetailPanel={renderDetailPanel}
+      enableRowNumbers={true}
+      // renderDetailPanel={renderDetailPanel}
     />
   );
 }
