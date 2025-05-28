@@ -211,11 +211,11 @@ export default function RegisterForm({
     province: Yup.string()
       .trim()
       .required(tCommon('required'))
-      .test('not-just-numbers', 'Invalid province', (value) => !!value && /^[a-zA-Z]+$/.test(value)),
+      .test('not-just-numbers', 'Invalid province', (value) => !!value && /^[a-zA-Z\s]+$/.test(value)),
     city: Yup.string()
       .trim()
       .required(tCommon('required'))
-      .test('not-just-numbers', 'Invalid city', (value) => !!value && /^[a-zA-Z]+$/.test(value)),
+      .test('not-just-numbers', 'Invalid city', (value) => !!value && /^[a-zA-Z\s]+$/.test(value)),
     postalCode: Yup.string()
       .trim()
       .required(tCommon('required'))

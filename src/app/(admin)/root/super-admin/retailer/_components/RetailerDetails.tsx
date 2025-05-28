@@ -1,13 +1,16 @@
 'use client';
 
+import Button from '@/components/Formik/Button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { routes } from '@/config/routes';
 import { RootState } from '@/features/store';
 import { useGetSingleRetailerQuery } from '@/features/super-admin/retailer/retailerApi';
 import { useGetSubscriptionQuery } from '@/features/super-admin/subscription/subscriptionApi';
+import Link from 'next/link';
+import { FaInfoCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import AddonListTable from './AddonListTable';
+import ActiveSubscriptionsTable from './ActiveSubscriptionsTable';
 import { RetailerInfoCol } from './RetailerInfoCol';
-import RetailerPaymentTable from './RetailerPaymentTable';
 import StatsCardView from './StatsCardView';
 
 export default function RetailerDetails({ id, timezone }: { id: string; timezone: string }) {
@@ -116,8 +119,14 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
         </div>
       </div>
 
-      <h2 className=" mb-4 text-lg font-bold">Active Subscriptions List:</h2>
-      <AddonListTable data={addonSubscriptions} isLoading={isLoading} isError={isError} />
+      <div className="flex items-center justify-between">
+        <h2 className=" mb-4 text-lg font-bold">Active Subscriptions List:</h2>
+        <Link href={`${routes.privateRoutes.superAdmin.retailer?.details(id)}/subscriptions`}>
+          <Button className=" !px-2 !py-1.5" text="Subscription Details" color="danger" preIcon={<FaInfoCircle className="text-base" />} />
+        </Link>
+      </div>
+      <ActiveSubscriptionsTable data={addonSubscriptions} isLoading={isLoading} isError={isError} />
+      {/* <AddonListTable data={addonSubscriptions} isLoading={isLoading} isError={isError} /> */}
 
       {/* <div className="grid grid-cols-1 gap-x-5 md:grid-cols-6 xxl:gap-x-10">
         <div className="col-span-1 md:col-span-2 xl:col-span-3 xxl:col-span-2">
@@ -137,8 +146,8 @@ export default function RetailerDetails({ id, timezone }: { id: string; timezone
       <h2 className="my-5 text-lg font-bold">Subscriptions:</h2>
       <RetailerPaymentTable timezone={timezone} id={id} /> */}
 
-      <h2 className="my-5 text-lg font-bold">Subscriptions:</h2>
-      <RetailerPaymentTable timezone={timezone} id={id} />
+      {/* <h2 className="my-5 text-lg font-bold">Subscriptions:</h2>
+      <RetailerPaymentTable timezone={timezone} id={id} /> */}
     </div>
   );
 }
