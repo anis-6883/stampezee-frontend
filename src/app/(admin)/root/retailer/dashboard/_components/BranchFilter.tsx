@@ -19,11 +19,17 @@ interface Props {
 }
 
 function renderBranchFilterOptions(option: IValues, selected: boolean, handleToggle: any) {
-  // console.log(option)
+  //  console.log(option)
   return (
     <div className="flex w-full items-center justify-between gap-2">
       <div className="flex items-center gap-2">
-        <Checkbox size="sm" checked={selected} onChange={() => handleToggle(option?.value)} />
+        <Checkbox
+          inputClassName={`!ring-0 checked:!bg-danger checked:!border-danger`}
+          iconClassName="top-0"
+          size="sm"
+          checked={selected}
+          onChange={() => handleToggle(option?.value)}
+        />
         <div className="space-y-[2px]">
           <h6 className="text-sm font-medium">
             {/* {option.label} */}
@@ -32,7 +38,7 @@ function renderBranchFilterOptions(option: IValues, selected: boolean, handleTog
           <p className="text-xs opacity-80">{option.address.length > 30 ? `${option.address.substring(0, 30)}...` : option.address}</p>
         </div>
       </div>
-      <div className={`size-3 rounded-full ${option.status ? 'bg-green-500' : 'bg-red-500'}`} />
+      <div className={`size-3 rounded-full ${option?.status && !option?.disabledBySystem ? 'bg-green-500' : 'bg-red-500'}`} />
     </div>
   );
 }
