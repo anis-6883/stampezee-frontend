@@ -19,6 +19,7 @@ import SwitchButton from '../../../_components/SwitchButton';
 import CreateUpdateModel from './CreateUpdateModel';
 import DatePicker from '@/components/Formik/DatePicker';
 import { IoCloseCircleSharp } from 'react-icons/io5';
+import { IoMdClose } from 'react-icons/io';
 
 export default function CouponTable({ timezone }: { timezone: string }) {
   const [dateRange, setDateRange] = useState('');
@@ -215,14 +216,22 @@ export default function CouponTable({ timezone }: { timezone: string }) {
           <div className="flex flex-shrink-0 items-center gap-2">
             <h5 className="text-base font-medium">Filter by Start Date :</h5>
             {/* date picker */}
-            <div className="relative">
+            <div className="relative overflow-hidden rounded-md">
               {/* close button */}
               {dateRange.length > 0 && (
-                <div className="absolute -right-1 -top-2 text-lg font-semibold">
-                  <IoCloseCircleSharp onClick={() => setDateRange('')} className="cursor-pointer text-2xl text-[#dc2626]" />
+                <div
+                  onClick={() => setDateRange('')}
+                  className="absolute right-0 top-0 flex h-full w-9 cursor-pointer items-center justify-center bg-[#dc2626] text-lg font-semibold"
+                >
+                  <IoMdClose className="cursor-pointer text-white" />
                 </div>
               )}
-              <DatePicker value={dateRange} range={true} changeHandler={setDateRange} />
+              <DatePicker
+                className="min-w-60 pr-8 text-sm placeholder:text-[12px]"
+                value={dateRange}
+                range={true}
+                changeHandler={setDateRange}
+              />
             </div>
           </div>
           <Button
