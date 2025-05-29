@@ -3,6 +3,7 @@ import Breadcrumb from '@/components/ui/breadcrumb';
 import DatePicker from '@/components/Formik/DatePicker';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import SelectField from '@/components/Formik/SelectField';
+import { IoMdClose } from 'react-icons/io';
 
 interface IOption {
   label: string;
@@ -27,8 +28,8 @@ const SuperAdminStampsHeaderSection = ({
   setStatus: any;
 }) => {
   return (
-    <header className="mb-3 pt-2 @container xs:-mt-2 lg:mb-7">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+    <header className="mb-5 pt-2 @container xs:-mt-2 lg:mb-7">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-5">
           <div>
             <Title as="h2" className="mb-2 text-[22px] lg:text-2xl 4xl:text-[26px]">
@@ -46,24 +47,9 @@ const SuperAdminStampsHeaderSection = ({
             )}
           </div>
         </div>
-        <div className="flex flex-shrink-0 items-center gap-2">
-          {/* date picker */}
-          <div className="flex flex-shrink-0 items-center gap-2">
-            <h5 className="text-base font-medium">Filter by Validity Date :</h5>
-            <div className="relative">
-              {/* close button */}
-              {dateRange.length > 0 && (
-                <div className="absolute -right-1 -top-2 text-lg font-semibold">
-                  <IoCloseCircleSharp onClick={() => setDateRange('')} className="cursor-pointer text-2xl text-[#dc2626]" />
-                </div>
-              )}
-              <DatePicker value={dateRange} range={true} changeHandler={setDateRange} />
-            </div>
-          </div>
-
+        <div className="flex flex-shrink-0 flex-col gap-3 md:flex-row md:items-center md:gap-4">
           {/* status */}
-          <div className="flex min-w-72 flex-shrink-0 items-center gap-2">
-            <h5 className="text-base font-medium">Status:</h5>
+          <div className="flex min-w-28 flex-shrink-0 items-center gap-2 md:min-w-44 xl:min-w-72">
             <div className="relative w-full">
               <SelectField
                 withoutForm={true}
@@ -71,6 +57,22 @@ const SuperAdminStampsHeaderSection = ({
                 options={options}
                 onChange={(option: { label: string; value: string }) => setStatus(option.value)}
               />
+            </div>
+          </div>
+          {/* date picker */}
+          <div className="flex flex-shrink-0 flex-col gap-2 lg:flex-row lg:items-center">
+            <h5 className="text-sm font-medium md:hidden md:text-base xl:block">Filter by Validity Date :</h5>
+            <div className="relative overflow-hidden rounded-md">
+              {/* close button */}
+              {dateRange.length > 0 && (
+                <div
+                  onClick={() => setDateRange('')}
+                  className="absolute right-0 top-0 flex h-full w-9 cursor-pointer items-center justify-center bg-[#dc2626] text-lg font-semibold"
+                >
+                  <IoMdClose className="cursor-pointer text-white" />
+                </div>
+              )}
+              <DatePicker className="pr-8 text-sm placeholder:text-[12px]" value={dateRange} range={true} changeHandler={setDateRange} />
             </div>
           </div>
         </div>

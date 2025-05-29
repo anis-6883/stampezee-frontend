@@ -58,7 +58,7 @@ const DatePicker: React.FC<DateRangeProps> = ({
             ) : (
               <input
                 type="text"
-                className={`h-10 w-full rounded-md border-[1px] border-slate-300 placeholder:text-sm ${className}`}
+                className={`h-10 w-full rounded-md border-[1px] border-slate-300 placeholder:text-[13px] ${className}`}
                 ref={ref}
                 placeholder={range ? 'YYYY-MM-DD to YYYY-MM-DD' : enableTime ? 'YYYY-MM-DD HH:II' : 'YYYY-MM-DD'}
                 aria-label="Select date range"

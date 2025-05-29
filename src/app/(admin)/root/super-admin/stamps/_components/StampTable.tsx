@@ -177,11 +177,7 @@ export default function StampTable({ timezone, start, end, status }: { timezone:
         return (
           <div className="flex gap-2">
             <Link href={routes.privateRoutes.superAdmin.stamp.edit(row.original._id, row?.original?.isPublished)}>
-              <Button
-                tooltip={row?.original?.isPublished ? 'View' : 'Edit'}
-                color="warning"
-                preIcon={<HiOutlinePencil className="text-base" />}
-              />
+              <Button tooltip={'Edit'} color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
             </Link>
             <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
           </div>
