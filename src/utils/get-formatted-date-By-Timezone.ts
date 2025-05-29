@@ -18,7 +18,8 @@ import moment from 'moment-timezone';
 const getFormattedDateByTimezone = (date: Date, timezone?: string) => {
   if (!date) return 'N/A';
   if (!timezone) return 'N/A';
-  console.log({ date });
+  // console.log({ date });
+  // console.log( moment(date).tz(timezone).format('YYYY-MM-DD'));
   return moment(date).tz(timezone).format('YYYY-MM-DD');
 };
 

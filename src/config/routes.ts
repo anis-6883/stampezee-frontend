@@ -83,6 +83,12 @@ export const routes = {
       currencyExchange: {
         home: `/root/super-admin/currency-exchange`,
       },
+      stamp: {
+        home: `/root/super-admin/stamps`,
+        create: `/root/super-admin/stamps/create`,
+        edit: (id: number | string, isPublished: boolean) => `/root/super-admin/stamps/${id}/update?publish=${isPublished ? 'yes' : 'no'}`,
+        clone: (id: number | string) => `/root/super-admin/stamps/${id}/clone`,
+      },
       notification: `/root/super-admin/notification`,
       payment: {
         home: `/root/super-admin/payment`,

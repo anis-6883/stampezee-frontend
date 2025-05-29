@@ -86,5 +86,7 @@ export const apiSlice = createApi({
     'payment-card',
     'change-payment-card',
     'refund',
+    'superAdminStamps',
+    'superAdminSingleStamp',
   ],
 });

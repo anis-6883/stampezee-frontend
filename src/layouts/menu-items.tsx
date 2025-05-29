@@ -49,6 +49,11 @@ export const menuItems: { [key: string]: any } = {
       icon: <LuUsers />,
     },
     {
+      name: 'Stamp Cards',
+      href: routes.privateRoutes.superAdmin.stamp.home,
+      icon: <PiStamp />,
+    },
+    {
       name: 'Stamps',
       href: routes.privateRoutes.superAdmin.scan,
       icon: <MdOutlineQrCodeScanner />,

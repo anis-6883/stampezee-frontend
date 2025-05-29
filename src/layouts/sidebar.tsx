@@ -295,7 +295,7 @@ export default function Sidebar({ className }: { className?: string }) {
                             {role === ROLE.RETAILER ? t(item.name) : item.name}{' '}
                             {item.name === 'Branches' && `(${session?.user?.totalBranch || 0})`}
                             {item.name === 'Custom Stamp Image' && `(${session?.user?.totalCustomStampImage || 0})`}
-                            {item.name === 'Stamp Cards' && `(${session?.user?.totalStamp || 0})`}
+                            {item.name === 'Stamp Cards' && role !== ROLE.SUPER_ADMIN && `(${session?.user?.totalStamp || 0})`}
                           </span>
                         </div>
                         {checkedLocked(role, item?.href, item.name, session?.user) && (

@@ -13,6 +13,7 @@ interface SelectOptionProps {
   required?: boolean;
   disabled?: boolean;
   selectClassName?: string;
+  withoutForm?: boolean;
 }
 
 const defaultOptions = [
@@ -23,6 +24,7 @@ const defaultOptions = [
 const SelectField: React.FC<SelectOptionProps> = ({
   name = 'status',
   label = 'Status',
+  withoutForm,
   options = defaultOptions,
   labelClassName,
   onChange,
@@ -31,38 +33,52 @@ const SelectField: React.FC<SelectOptionProps> = ({
   value = null,
   selectClassName,
 }) => {
-  return (
-    <Field name={name}>
-      {({ field, meta }: { field: any; meta: any }) => (
-        <Select
-          className="flex flex-col"
-          label={
-            <span>
-              {label}
-              {required && <span className="h-fit text-red-500"> *</span>}
-            </span>
-          }
-          selectClassName={`${selectClassName} ${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
-          labelClassName={labelClassName}
-          options={options}
-          value={options.find((option) => option.value === value)}
-          onChange={onChange}
-          disabled={disabled}
-          helperText={
-            meta.touched && meta.error ? (
-              <span className="flex items-center gap-x-1">
-                <IoAlertCircle className="text-lg" />
-                <span>{meta.error}</span>
+  if (withoutForm) {
+    return (
+      <Select
+        className="flex flex-col"
+        selectClassName={`${selectClassName} border-gray-200 !ring-0`}
+        labelClassName={labelClassName}
+        options={options}
+        value={options.find((option) => option.value === value)}
+        onChange={onChange}
+        disabled={disabled}
+      />
+    );
+  } else {
+    return (
+      <Field name={name}>
+        {({ field, meta }: { field: any; meta: any }) => (
+          <Select
+            className="flex flex-col"
+            label={
+              <span>
+                {label}
+                {required && <span className="h-fit text-red-500"> *</span>}
               </span>
-            ) : (
-              ''
-            )
-          }
-          helperClassName="text-danger"
-        />
-      )}
-    </Field>
-  );
+            }
+            selectClassName={`${selectClassName} ${meta.touched && meta.error ? '!border-red-500 !ring-0' : 'border-gray-200 !ring-0'}`}
+            labelClassName={`${labelClassName}`}
+            options={options}
+            value={options.find((option) => option.value === value)}
+            onChange={onChange}
+            disabled={disabled}
+            helperText={
+              meta.touched && meta.error ? (
+                <span className="flex items-center gap-x-1">
+                  <IoAlertCircle className="text-lg" />
+                  <span>{meta.error}</span>
+                </span>
+              ) : (
+                ''
+              )
+            }
+            helperClassName="text-danger"
+          />
+        )}
+      </Field>
+    );
+  }
 };
 
 export default SelectField;
