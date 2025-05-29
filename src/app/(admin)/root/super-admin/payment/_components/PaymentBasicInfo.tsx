@@ -20,6 +20,37 @@ export function PaymentBasicInfo({
   timezone: string;
 }) {
   const validityToUtc = moment.tz(data?.validityTo, timezone).utc();
+  const renderSubscriptionInterval = () => {
+    // Running Subscriptions
+    if (data?.status === true && moment().isBefore(validityToUtc)) {
+      if (data?.enrollStatus === 'trial') {
+        return (
+          <div className="flex items-center justify-between font-medium">
+            <span className="font-semibold">{'Expired At'}</span>
+            <span>
+              {data?.enrollSubscriptions[0]?.unlimitedFieldName
+                ? data?.enrollSubscriptions[0]?.unlimitedFieldName
+                : getFormatDateByTimezone(data?.validityTo, timezone || '')}
+            </span>
+          </div>
+        );
+      } else {
+        return (
+          <div className="flex items-center justify-between font-medium">
+            <span className="font-semibold">{'Next Invoice'}</span>
+            <span>{getFormatDateByTimezone(data?.validityTo, timezone || '')}</span>
+          </div>
+        );
+      }
+    } else {
+      return (
+        <div className="flex items-center justify-between font-medium">
+          <span className="font-semibold">{'Subscription Cancel At'}</span>{' '}
+          <span className="text-danger">{getFormatDateByTimezone(data?.enrollSubscriptions[0]?.deletedByRetailerAt, timezone || '')}</span>
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="space-y-6 rounded-xl border border-gray-200 px-5 py-6">
@@ -110,30 +141,7 @@ export function PaymentBasicInfo({
           </Badge>
         )}
       </div>
-      {!isLoading && data?.stripe?.renewCancelAt !== null && (
-        <div className="flex items-center justify-between font-medium">
-          <span className="font-semibold">Subscription Cancel At</span>{' '}
-          <span className="text-danger">{getFormatDateByTimezone(data?.stripe?.renewCancelAt, timezone)}</span>
-        </div>
-      )}
-      {!data?.stripe?.renewCancelAt && (
-        <div className="flex items-center justify-between font-medium">
-          {data?.enrollStatus === 'trial' ? (
-            <span className="font-semibold">{'Expired At'}</span>
-          ) : (
-            <span className="font-semibold">{'Next Invoice'}</span>
-          )}
-          {isLoading || isError ? (
-            <Skeleton className="h-6 w-32 rounded" />
-          ) : (
-            <span>
-              {data?.enrollStatus === 'trial' && data?.enrollSubscriptions[0]?.unlimitedFieldName
-                ? data?.enrollSubscriptions[0]?.unlimitedFieldName
-                : getFormatDateByTimezone(data?.validityTo, timezone)}
-            </span>
-          )}
-        </div>
-      )}
+      {renderSubscriptionInterval()}
     </div>
   );
 }

@@ -214,7 +214,7 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
 
       {/* invoices  */}
 
-      <InvoiceTable isLoading={isLoading} isError={isError} data={data?.data} />
+      <InvoiceTable enrolmentId={id} enrollStatus={data?.enrollStatus} />
 
       <PackageCancelModal
         cancelSubscriptionId={cancelSubscriptionId}

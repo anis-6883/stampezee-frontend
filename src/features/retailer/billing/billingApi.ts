@@ -20,6 +20,13 @@ export const billingApi = apiSlice.injectEndpoints({
       providesTags: ['billings', 'change-payment-card'],
       keepUnusedDataFor: 10,
     }),
+    getAllPaymentByEnrollId: builder.query({
+      query: ({ queries, enrolmentId }: any) => {
+        const values = Object.values(queries);
+        if (values.length) return `/api/web/retailer/billing/find/payments/${enrolmentId}?${new URLSearchParams(queries as any)}`;
+        return `/api/web/retailer/billing/find/payments/${enrolmentId}`; // Ensure it returns a base URL if no queries are present
+      },
+    }),
     createBillingPdf: builder.mutation({
       query: (id) => ({
         url: `/api/web/retailer/billing/download-pdf/${id}`,
@@ -121,4 +128,5 @@ export const {
   useGetAllExistingBillingQuery,
   useGetSinglePaymentMethodByIdQuery,
   useChangePaymentMethodMutation,
+  useGetAllPaymentByEnrollIdQuery,
 } = billingApi;

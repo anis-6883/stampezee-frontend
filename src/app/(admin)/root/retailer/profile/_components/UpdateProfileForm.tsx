@@ -98,9 +98,7 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     about: retailerProfile?.data?.about || '',
     website: retailerProfile?.data?.website || '',
     address: retailerProfile?.data?.address || '',
-    image: retailerProfile?.data?.image
-      ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailerProfile?.data?.image}`
-      : '/images/stamp-logo.png',
+    image: retailerProfile?.data?.image ? `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${retailerProfile?.data?.image}` : '',
     businessCurrency: retailerProfile?.data?.businessCurrency || 'CAD',
     timezone: retailerProfile?.data?.timezone || {
       label: 'America/Toronto',

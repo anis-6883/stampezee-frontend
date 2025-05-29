@@ -19,6 +19,14 @@ export const paymentApi = apiSlice.injectEndpoints({
     getSinglePaymentMethodBySuperAdmin: builder.query({
       query: (paymentMethodId) => `/api/secret-root/admin/super-admin/payment/find-payment-method/${paymentMethodId}`,
     }),
+    getAllPaymentMethodBySuperAdmin: builder.query({
+      query: ({ queries, enrolmentId }: any) => {
+        const values = Object.values(queries);
+        if (values.length)
+          return `/api/secret-root/admin/super-admin/payment/subscription/find/payments/${enrolmentId}?${new URLSearchParams(queries as any)}`;
+        return `/api/secret-root/admin/super-admin/payment/subscription/find/payments/${enrolmentId}`; // Ensure it returns a base URL if no queries are present
+      },
+    }),
     createBillingPdfBySuperAdmin: builder.mutation({
       query: (id) => ({
         url: `/api/secret-root/admin/super-admin/payment/download-pdf/${id}`,
@@ -95,4 +103,5 @@ export const {
   useSetDefaultPaymentMethodByAdminMutation,
   useSetupPaymentIntentByAdminMutation,
   useGetSinglePaymentMethodBySuperAdminQuery,
+  useGetAllPaymentMethodBySuperAdminQuery,
 } = paymentApi;

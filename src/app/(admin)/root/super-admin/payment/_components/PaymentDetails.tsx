@@ -58,7 +58,7 @@ export default function PaymentDetails({ id, timezone }: { id: string; timezone:
         {enrollStatus !== 'trial' && <PaymentMethod data={data?.data} />}
       </div>
 
-      <h2 className="my-5 text-lg font-medium">{'Enroll Subscriptions'}</h2>
+      <h2 className="my-5 text-lg font-medium">{'Enroll Subscriptions:'}</h2>
       <div className="relative my-5 overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -195,7 +195,7 @@ export default function PaymentDetails({ id, timezone }: { id: string; timezone:
         </table>
       </div>
 
-      <InvoiceTable isLoading={isLoading} isError={isError} data={data?.data} timezone={timezone} />
+      <InvoiceTable enrolmentId={id} timezone={timezone} enrollStatus={data?.enrollStatus} />
 
       <PackageCancelModal
         cancelSubscriptionId={cancelSubscriptionId}

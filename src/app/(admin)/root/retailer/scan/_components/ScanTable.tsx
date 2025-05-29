@@ -128,7 +128,9 @@ export default function ScanTable() {
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('minPurchaseAmount')}</td>
-                        <td className="px-6 py-4">{row?.original?.offer?.minPurchaseAmount} CAD</td>
+                        <td className="px-6 py-4">
+                          {row?.original?.offer?.minPurchaseAmount} {row?.original?.scan?.amountCurrency}
+                        </td>
                       </tr>
                       <tr className="border-b bg-white">
                         <td className="px-6 py-4">{tScanTab('rewardType')}</td>
