@@ -20,6 +20,9 @@ export interface ITableProps {
   showGlobalFilter?: boolean;
   mantinePaperProps?: any;
   hasSerialNo?: boolean;
+  mantineExpandButtonProps?: any;
+  mantineTableBodyRowProps?: any;
+  mantineExpandAllButtonProps?: any;
 }
 
 export interface ICountrySelect {

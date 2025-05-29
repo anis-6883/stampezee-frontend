@@ -18,19 +18,11 @@ interface Props {
   options: IValues[];
 }
 
-function renderBranchFilterOptions(option: IValues, selected: boolean, handleToggle: any) {
-  //  console.log(option)
+function renderBranchFilterOptions(option: IValues, selected: boolean) {
   if (option) {
     return (
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          {/* <Checkbox
-            inputClassName={`!ring-0 checked:!bg-danger checked:!border-danger`}
-            size="sm"
-            checked={selected}
-            iconClassName="top-0"
-            onChange={() => handleToggle(option?.value)}
-          /> */}
           <CustomCheckbox checked={selected} size="w-5 h-5" />
 
           <div className="space-y-[2px]">
@@ -124,18 +116,9 @@ const BranchFilter = ({ value, setValue, options }: Props) => {
           }
 
           const selected = value.includes(option.value);
-          const handleToggle = (val: string) => {
-            const isExist = value?.includes(val);
-            if (isExist) {
-              setValue(value?.filter((item: any) => item !== val));
-            } else {
-              setValue([...value, val]);
-            }
-          };
 
-          return renderBranchFilterOptions(option, selected, handleToggle);
+          return renderBranchFilterOptions(option, selected);
         }}
-        // getOptionDisplayValue={renderBranchFilterOptions}
         className="h-10 min-w-72 max-w-72 rounded-xl bg-white p-0"
         clearable
         onClear={() => setValue([])}

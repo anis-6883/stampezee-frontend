@@ -21,6 +21,9 @@ export default function Table({
   searchPlaceHolder = 'Search',
   searchFieldWidth = '180px',
   renderDetailPanel,
+  mantineExpandButtonProps,
+  mantineTableBodyRowProps,
+  mantineExpandAllButtonProps,
   showGlobalFilter = true,
   mantinePaperProps = {
     sx: {
@@ -134,7 +137,11 @@ export default function Table({
         },
       }),
     }),
+
     renderDetailPanel,
+    mantineExpandButtonProps,
+    mantineTableBodyRowProps,
+    mantineExpandAllButtonProps,
   });
 
   return <MantineReactTable table={table} />;

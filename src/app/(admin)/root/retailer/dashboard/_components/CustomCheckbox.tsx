@@ -11,7 +11,7 @@ export const CustomCheckbox: React.FC<CustomCheckboxProps> = ({ checked, size = 
       className={`flex items-center justify-center rounded border ${size} cursor-pointer transition 
         ${checked ? 'border-danger bg-danger text-white' : 'border-gray-300 bg-white'}`}
     >
-      {checked && <RiCheckFill className="text-xl text-white" />}
+      {checked && <RiCheckFill className="text-2xl text-white" />}
     </div>
   );
 };

@@ -105,6 +105,16 @@ export function SubscriptionBasicInfo({ isLoading, isError, data }: { isLoading:
           )}
           {isLoading || isError ? (
             <Skeleton className="h-6 w-32 rounded" />
+          ) : data?.enrollSubscriptions[0]?.deletedByRetailerAt || data?.enrollSubscriptions[0]?.validAtAfterCancel ? (
+            data?.enrollSubscriptions[0]?.deletedByRetailerAt ? (
+              <span className="text-danger">
+                {getFormatDateByTimezone(data?.enrollSubscriptions[0]?.deletedByRetailerAt, session?.user?.timezone?.label || '')}
+              </span>
+            ) : (
+              <span className="text-danger">
+                {getFormatDateByTimezone(data?.enrollSubscriptions[0]?.validAtAfterCancel, session?.user?.timezone?.label || '')}
+              </span>
+            )
           ) : (
             <span>
               {data?.enrollStatus === 'trial' && data?.enrollSubscriptions[0]?.unlimitedFieldName

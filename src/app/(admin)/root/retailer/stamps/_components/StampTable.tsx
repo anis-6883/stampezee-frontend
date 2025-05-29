@@ -13,6 +13,7 @@ import {
 import { IQueryType } from '@/types';
 import { getFormatDateByTimezone } from '@/utils/getFormatDate';
 import _ from 'lodash';
+import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -273,6 +274,8 @@ export default function StampTable() {
     {
       header: t('actions'),
       Cell: ({ row }: any) => {
+        const validityToUtc = moment.tz(row?.original?.expiredAt, session?.user?.timezone?.label).utc();
+
         return (
           <div className="flex gap-2">
             <Link href={routes.privateRoutes.retailer.stamp.clone(row.original._id)}>
@@ -290,7 +293,14 @@ export default function StampTable() {
                 preIcon={row?.original?.isPublished ? <IoEyeOutline className="text-base" /> : <HiOutlinePencil className="text-base" />}
               />
             </Link>
-            <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+            {(moment().isAfter(validityToUtc) || !row?.original?.isPublished) && (
+              <Button
+                tooltip="Delete"
+                onClick={() => handleDelete(row.original)}
+                color="danger"
+                preIcon={<ImBin className="text-base" />}
+              />
+            )}
           </div>
         );
       },

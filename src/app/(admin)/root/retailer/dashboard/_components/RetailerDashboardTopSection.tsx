@@ -1,10 +1,10 @@
 'use client';
+import { useState } from 'react';
+import BranchStatsTable from './BranchStatsTable';
+import RetailerDashboardCustomHeader from './RetailerDashboardCustomHeader';
 import RewardCollectStats from './RewardCollectStats';
 import RewardPieStatus from './RewardPieStatus';
 import StateCardView from './StateCardView';
-import RetailerDashboardCustomHeader from './RetailerDashboardCustomHeader';
-import { useState } from 'react';
-import BranchStatsTable from './BranchStatsTable';
 
 const RetailerDashboardTopSection = ({ title }: { title: string }) => {
   const [dateRange, setDateRange] = useState('');

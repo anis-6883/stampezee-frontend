@@ -9,6 +9,7 @@ import { useRetailerGetProfileQuery, useRetailerUpdateProfileMutation } from '@/
 import { setValue } from '@/features/auth/authSlice';
 import { RootState } from '@/features/store';
 import useCurrencyExchange from '@/hooks/use-currency-exchange';
+import { setUserCurrency } from '@/services/currency';
 import { ICountrySelect } from '@/types';
 import { appendFormData } from '@/utils';
 import countryData from '@/utils/get-country-list';
@@ -26,7 +27,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import ReactSelect, { OnChangeValue } from 'react-select';
 import { FieldError } from 'rizzui';
 import * as Yup from 'yup';
-import { setUserCurrency } from '@/services/currency';
 
 export default function UpdateProfileForm({ locale }: { locale: string }) {
   const t = useTranslations('RetailerProfile');
@@ -144,11 +144,11 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
     province: Yup.string()
       .trim()
       .required(tRetailerCommon('required'))
-      .test('not-just-numbers', 'Invalid province', (value) => !!value && /^[a-zA-Z]+$/.test(value)),
+      .test('not-just-numbers', 'Invalid province', (value) => !!value && /^[a-zA-Z\s]+$/.test(value)),
     city: Yup.string()
       .trim()
       .required(tRetailerCommon('required'))
-      .test('not-just-numbers', 'Invalid city', (value) => !!value && /^[a-zA-Z]+$/.test(value)),
+      .test('not-just-numbers', 'Invalid city', (value) => !!value && /^[a-zA-Z\s]+$/.test(value)),
     postalCode: Yup.string()
       .trim()
       .required(tRetailerCommon('required'))
