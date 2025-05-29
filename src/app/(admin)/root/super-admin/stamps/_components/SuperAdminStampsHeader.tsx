@@ -49,7 +49,7 @@ const SuperAdminStampsHeaderSection = ({
         </div>
         <div className="flex flex-shrink-0 flex-col gap-3 md:flex-row md:items-center md:gap-4">
           {/* status */}
-          <div className="flex min-w-28 flex-shrink-0 items-center gap-2 md:min-w-44 xl:min-w-72">
+          <div className="flex min-w-28 flex-shrink-0 items-center gap-2 md:min-w-44 xl:min-w-52">
             <div className="relative w-full">
               <SelectField
                 withoutForm={true}
@@ -72,7 +72,12 @@ const SuperAdminStampsHeaderSection = ({
                   <IoMdClose className="cursor-pointer text-white" />
                 </div>
               )}
-              <DatePicker className="pr-8 text-sm placeholder:text-[12px]" value={dateRange} range={true} changeHandler={setDateRange} />
+              <DatePicker
+                className="min-w-60 pr-8 text-sm placeholder:text-[12px]"
+                value={dateRange}
+                range={true}
+                changeHandler={setDateRange}
+              />
             </div>
           </div>
         </div>

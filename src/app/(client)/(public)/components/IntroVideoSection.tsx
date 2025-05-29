@@ -1,16 +1,28 @@
 'use client';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { getLocale } from 'next-intl/server';
 import { useEffect } from 'react';
 import { RxArrowRight } from 'react-icons/rx';
 
-export default function IntroVideoSection({ title, description }: { title: string; description: string }) {
+export default function IntroVideoSection({
+  title,
+  description,
+  subtitle,
+  isRtl,
+}: {
+  title: string;
+  description: string;
+  subtitle: string;
+  isRtl: boolean;
+}) {
   useEffect(() => {
     AOS.init({
       easing: 'ease-out-quad',
       duration: 1000,
     });
   }, []);
+
   return (
     <div
       className={`mx-auto mt-16  flex max-w-screen-xl flex-col-reverse items-center justify-between gap-5 text-black md:flex md:flex-row-reverse sxl:mt-28`}
@@ -30,8 +42,8 @@ export default function IntroVideoSection({ title, description }: { title: strin
         <p className="text-balance text-base text-black md:text-lg sxl:text-xl">{description}</p>
 
         <p className="mt-4 flex items-center text-lg font-bold text-black">
-          Take a Quick Peek at our 1-minute overview 👀
-          <RxArrowRight className="text-xl" />
+          {subtitle} 👀
+          {<RxArrowRight className={`text-xl ${isRtl ? 'rotate-180' : ''}`} />}
         </p>
       </div>
     </div>

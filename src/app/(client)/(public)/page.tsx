@@ -60,7 +60,7 @@ export default async function Page() {
       </div>
 
       {/* why choose section */}
-      <HeroCard />
+      <HeroCard isRtl={isRtl} />
 
       {/* How It Works start */}
       <section id="how_we_work" className={`${isRtl ? 'works-curve-rtr' : 'works-curve'} bg-[#FCE8E8] px-5 py-10 md:px-8 lg:px-10`}>
