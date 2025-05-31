@@ -42,10 +42,6 @@ export default async function Page() {
             <div className="mt-6">
               <h2 className="mb-4 text-2xl font-semibold sm:text-4xl">{t('addOns')}</h2>
               <p className="mb-6 text-lg text-gray-600">{t('selectAddOn')}</p>
-              {/* <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4">
-                <p className="font-medium text-blue-700">Select Multiple Add on</p>
-                <p className="text-blue-700">You can able to selected multiple add on</p>
-              </div> */}
               <AddOnsList locale={locale} />
             </div>
           </div>

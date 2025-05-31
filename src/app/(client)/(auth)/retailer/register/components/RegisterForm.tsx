@@ -58,6 +58,7 @@ export default function RegisterForm({
   });
   const [businessCurrency, setBusinessCurrency] = useState('CAD');
   const [currencyOption, setCurrencyOption] = useState('CAD');
+  const [email, setEmail] = useState('');
 
   const [register, { data: registerResponse, isSuccess, error }] = useRetailerRegisterMutation();
   const dispatch = useDispatch();
@@ -242,7 +243,7 @@ export default function RegisterForm({
     }
     setIsSubmitting(true);
     register(removeEmptyValues(values, ['isAgree']));
-
+    setEmail(values?.email);
     // console.log('values', values);
   };
 
@@ -462,7 +463,7 @@ export default function RegisterForm({
         </Formik>
       </div>
 
-      <OtpModal modalState={modalState} setModalState={setModalState} />
+      <OtpModal modalState={modalState} setModalState={setModalState} email={email} />
       <TermsModal modalState={termsModalState} setModalState={setTermsModalState} terms={terms} />
       <PolicyModal modalState={privacyPolicyModalState} setModalState={setPrivacyPolicyModalState} policy={policy} />
     </div>

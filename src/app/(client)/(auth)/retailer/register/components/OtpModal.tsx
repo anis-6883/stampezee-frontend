@@ -16,7 +16,15 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { ActionIcon, Modal, PinCode, Title } from 'rizzui';
 
-export default function OtpModal({ modalState, setModalState }: { setModalState: (state: boolean) => void; modalState: boolean }) {
+export default function OtpModal({
+  modalState,
+  setModalState,
+  email,
+}: {
+  setModalState: (state: boolean) => void;
+  modalState: boolean;
+  email: string;
+}) {
   const [otp, setOtp] = useState<SetStateAction<string | number | undefined>>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resendOtpSubmitting, setResendOtpSubmitting] = useState(false);
@@ -101,7 +109,7 @@ export default function OtpModal({ modalState, setModalState }: { setModalState:
   // Handle Resend Otp Submit
   const handleResendOtp = () => {
     setResendOtpSubmitting(true);
-    resendOtp(undefined);
+    resendOtp({ email });
   };
 
   return (

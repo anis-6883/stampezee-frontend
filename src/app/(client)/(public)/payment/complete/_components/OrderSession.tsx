@@ -20,10 +20,10 @@ export default function OrderSession() {
   const t = useTranslations('PaymentCompletePage');
   const { data: session, update }: any = useSession();
   const dispatch = useDispatch();
-  const { user, isLoggedIn, accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { activeSubscription, subscription, addOns } = useSelector((state: RootState) => state.subscriptionSlice);
+  const { accessToken } = useSelector((state: RootState) => state.authSlice);
+  const { activeSubscription } = useSelector((state: RootState) => state.subscriptionSlice);
   const { data: profile, isSuccess: profileSuccess } = useRetailerGetProfileQuery(null, { skip: !accessToken });
-  const { data, isLoading } = useGetSubscriptionQuery(undefined);
+  const { data } = useGetSubscriptionQuery(undefined);
   const { data: currencyExchanges } = useCurrencyExchange({ page: 1, limit: 20 });
 
   useEffect(() => {
