@@ -32,8 +32,20 @@ export default function SignUpStatus({ className, dateRange }: { className?: str
     { name: 'Customer Signup:', value: Number(dashBoardData?.data?.signupRatio?.customer), color: '#eab308' },
   ];
 
+  const filteredData = data?.filter((item: any) => item?.value > 0);
+
+  console.log(filteredData);
+
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }: any) => {
+    if (filteredData.length === 1) {
+      return (
+        <text x={cx} y={cy} fill="white" textAnchor="middle" dominantBaseline="central">
+          100%
+        </text>
+      );
+    }
+
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -70,25 +82,57 @@ export default function SignUpStatus({ className, dateRange }: { className?: str
             {isLoading || isError || isFetching || dashBoardData === undefined ? (
               <Skeleton className="m-auto rounded-full md:size-36 sxl:size-44" />
             ) : dashBoardData?.data?.signupRatio?.retailer == 0 && dashBoardData?.data?.signupRatio?.customer == 0 ? (
-              <div className="flex h-full items-center justify-center">
-                <span className="font-medium text-danger">No Stats Available!</span>
-              </div>
+              // <div className="flex h-full items-center justify-center">
+              //   <span className="font-medium text-danger">No Stats Available!</span>
+              // </div>
+
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart className=" [&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-white">
+                  <Pie
+                    data={filteredData.length > 0 ? filteredData : [{ name: 'No Data', value: 100, color: '#E11E1E' }]}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={() => (
+                      <text x="50%" y="50%" textAnchor="middle" dominantBaseline="central" fill="#fff">
+                        0%
+                      </text>
+                    )}
+                    outerRadius={80}
+                    strokeWidth={2}
+                    dataKey="value"
+                    cursor={'pointer'}
+                  >
+                    <Cell key={0} fill={'#E11E1E'} stroke={'#E11E1E'} />
+                  </Pie>
+                  <ReTooltip
+                    contentStyle={{ backgroundColor: '#333', border: 'none', borderRadius: '10px' }}
+                    itemStyle={{ color: '#fff' }}
+                    cursor={{ fill: 'rgba(0,0,0,0.1)' }}
+                    content={
+                      <CustomTooltip
+                        totalRetailer={dashBoardData?.data?.totalVerifiedRetailer}
+                        totalCustomer={dashBoardData?.data?.totalVerifiedCustomer}
+                      />
+                    }
+                  />
+                </PieChart>
+              </ResponsiveContainer>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart className=" [&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-white">
                   <Pie
-                    data={data}
+                    data={filteredData}
                     cx="50%"
                     cy="50%"
                     labelLine={false}
                     label={renderCustomizedLabel}
                     outerRadius={80}
-                    fill="#8884d8"
                     strokeWidth={2}
                     dataKey="value"
                     cursor={'pointer'}
                   >
-                    {data.map((item, index) => (
+                    {filteredData.map((item: any, index: number) => (
                       <Cell key={index} fill={item.color} stroke={item.color} />
                     ))}
                   </Pie>
