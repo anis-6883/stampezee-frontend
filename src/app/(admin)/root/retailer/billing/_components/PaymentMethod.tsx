@@ -25,10 +25,10 @@ export function PaymentMethod({ data, stripePublishKey }: { data: any; stripePub
   const [changePaymentMethodModal, setChangePaymentMethodModal] = useState(false);
   const { data: allPaymentMethod, isLoading: isAllPaymentMethod } = useGetAllPaymentMethodQuery(
     {
-      customerId: data?.stripe?.customerId,
-      limit: 10,
+      customerId: session?.user?.stripeCustomerId,
+      limit: 100,
     },
-    { skip: !data?.stripe?.customerId }
+    { skip: !session?.user?.stripeCustomerId }
   );
 
   const { data: paymentMethod, isLoading } = useGetSinglePaymentMethodByIdQuery(data?.stripe?.paymentMethodId, {
@@ -80,7 +80,7 @@ export function PaymentMethod({ data, stripePublishKey }: { data: any; stripePub
       <AddPaymentCardModal
         modalState={addPaymentCardModal}
         setModalState={setAddPaymentCardModal}
-        customerId={data?.stripe?.customerId}
+        customerId={session?.user?.stripeCustomerId}
         stripePublishKey={stripePublishKey}
         subscriptionId={data?.stripe?.subscriptionId}
       />

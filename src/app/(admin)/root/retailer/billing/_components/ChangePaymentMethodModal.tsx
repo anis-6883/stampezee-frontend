@@ -109,7 +109,7 @@ export function ChangePaymentMethodModal({
           {isLoading ? (
             [1, 2, 3, 4]?.map((item) => <Skeleton key={item} className="h-10 w-60 rounded" />)
           ) : allPaymentMethod?.length === 0 ? (
-            <div className="text-center text-base font-semibold text-black">{'No Card Available!'}</div>
+            <div className="text-center text-base font-semibold text-black">{'No saved cards are available!'}</div>
           ) : (
             <div>
               <h2 className="mb-3 text-lg font-semibold text-black">Select a Card</h2>
