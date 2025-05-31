@@ -11,7 +11,6 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { ImBin } from 'react-icons/im';
-import { MdAutorenew } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { InvoiceTable } from './InvoiceTable';
 import PackageCancelModal from './PackageCancelModal';
@@ -197,9 +196,7 @@ export default function SubscriptionDetails({ id, stripePublishKey }: { id: stri
                               else setIsPlan(false);
                             }}
                             text={t4('remove')}
-                            postIcon={
-                              stripe?.renewCancelAt === null ? <ImBin className="text-base" /> : <MdAutorenew className="text-xl" />
-                            }
+                            postIcon={<ImBin className="text-base" />}
                           />
                         )}
                       </td>

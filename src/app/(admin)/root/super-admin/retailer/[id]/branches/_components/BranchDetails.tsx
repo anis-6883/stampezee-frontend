@@ -12,7 +12,16 @@ export function BranchDetails({ id }: { id: string }) {
 
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10 });
 
-  const { data, isLoading, isError, isFetching } = useGetAllBranchByAdminQuery({ id, queries: query }, { skip: !accessToken });
+  const { data, isLoading, isError, isFetching } = useGetAllBranchByAdminQuery(
+    {
+      id,
+      queries: {
+        page: query.pageIndex + 1,
+        limit: query.pageSize,
+      },
+    },
+    { skip: !accessToken }
+  );
 
   const structure = [
     {
