@@ -189,10 +189,10 @@ export default function RefundTable({ timezone, start, end }: { timezone: string
             tooltip="Details"
           />
           {row?.original?.refundStatus === 'completed' ? (
-            <span className="font-semibold text-danger">Refunded!</span>
+            <span className="!w-24 font-semibold text-danger">Refunded!</span>
           ) : (
             <Button
-              className="!px-3 !py-2 !text-xs"
+              className="w-[90px] !px-3 !py-2 !text-xs"
               onClick={() => handleRefund(row.original)}
               color="danger"
               text="Refund"
