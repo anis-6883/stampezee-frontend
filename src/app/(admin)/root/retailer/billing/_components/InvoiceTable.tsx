@@ -17,7 +17,7 @@ import { RiDownloadCloud2Fill } from 'react-icons/ri';
 import Table from '../../../_components/Table';
 import PdfPreviewModal from './PdfPreviewModal';
 
-export function InvoiceTable({ enrolmentId, enrollStatus }: { enrolmentId: string; enrollStatus: string }) {
+export function InvoiceTable({ enrolmentId, enrollmentData }: { enrolmentId: string; enrollmentData: any }) {
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10 });
   const { data: session }: any = useSession();
   const [selectPaymentId, setSelectPaymentId] = useState<any>({});
@@ -98,7 +98,7 @@ export function InvoiceTable({ enrolmentId, enrollStatus }: { enrolmentId: strin
   const handlePdfDownloadForTrial = async () => {
     setSelectPdfBtn('download');
     try {
-      await createBillingPdfForTrial({ id: data?._id, data: { createdAt: data?.createdAt } });
+      await createBillingPdfForTrial({ id: enrollmentData?._id, data: { createdAt: enrollmentData?.createdAt } });
     } catch (err) {
       toast.error('Error occur for invoice download!');
       console.error('Error downloading invoice:', err);
@@ -108,7 +108,7 @@ export function InvoiceTable({ enrolmentId, enrollStatus }: { enrolmentId: strin
     setSelectPdfBtn('preview');
     setPdfModalState(true);
     try {
-      await createBillingPdfForTrial({ id: data?._id, data: { createdAt: data?.createdAt } });
+      await createBillingPdfForTrial({ id: enrollmentData?._id, data: { createdAt: enrollmentData?.createdAt } });
     } catch (err) {
       toast.error('Error occur for invoice download!');
       console.error('Error downloading invoice:', err);
@@ -163,7 +163,7 @@ export function InvoiceTable({ enrolmentId, enrollStatus }: { enrolmentId: strin
 
   return (
     <div>
-      {enrollStatus !== 'trial' ? (
+      {enrollmentData?.enrollStatus !== 'trial' ? (
         <>
           <h2 className="my-5 text-lg font-medium">{t2('invoices')}</h2>
           <Table
@@ -224,13 +224,13 @@ export function InvoiceTable({ enrolmentId, enrollStatus }: { enrolmentId: strin
                   </td>
 
                   <td scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    {'INV-' + data?.data?.docs[0]?._id.slice(-8).toUpperCase()}
+                    {'INV-' + enrollmentData?._id.slice(-8).toUpperCase()}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
                     {'0.00'} {'CAD'}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
-                    {getFormatDateByTimezone(data?.data?.docs[0]?.createdAt, session?.user?.timezone?.label || '')}
+                    {getFormatDateByTimezone(enrollmentData?.createdAt, session?.user?.timezone?.label || '')}
                   </td>
                   <td className="flex items-center gap-x-2 whitespace-nowrap px-6 py-4">
                     <Button
