@@ -43,13 +43,7 @@ export const billingApi = apiSlice.injectEndpoints({
         responseHandler: (response) => response.blob(),
       }),
     }),
-    getBillingPortal: builder.mutation({
-      query: (data) => ({
-        url: `/api/web/retailer/billing/portal`,
-        method: 'POST',
-        body: data,
-      }),
-    }),
+
     getAllPaymentMethod: builder.query({
       query: ({ customerId, limit }) => ({
         url: `/api/web/retailer/billing/payment-method/all/${customerId}?limit=${limit}`,
@@ -116,7 +110,6 @@ export const billingApi = apiSlice.injectEndpoints({
 export const {
   useAllBillingQuery,
   useSingleBillingQuery,
-  useGetBillingPortalMutation,
   useCreateBillingPdfMutation,
   useCreateBillingPdfForTrialMutation,
   useAttachPaymentMethodMutation,

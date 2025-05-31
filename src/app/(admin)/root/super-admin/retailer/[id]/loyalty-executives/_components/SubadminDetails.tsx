@@ -10,7 +10,16 @@ import Table from '../../../../../_components/Table';
 export function SubAdminDetails({ id }: { id: string }) {
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 20 });
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
-  const { data, isLoading, isError, isFetching } = useGetAllSubAdminByAdminQuery({ id, queries: query }, { skip: !accessToken });
+  const { data, isLoading, isError, isFetching } = useGetAllSubAdminByAdminQuery(
+    {
+      id,
+      queries: {
+        page: query.pageIndex + 1,
+        limit: query.pageSize,
+      },
+    },
+    { skip: !accessToken }
+  );
 
   const structure = [
     {

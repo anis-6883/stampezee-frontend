@@ -163,7 +163,7 @@ export const menuItems: { [key: string]: any } = {
       icon: <BsPatchCheck />,
     },
     {
-      name: 'Plans & Add-on',
+      name: 'Plans & Add-ons',
       href: routes.privateRoutes.retailer.membershipPlan,
       icon: <IoDiamondOutline />,
     },

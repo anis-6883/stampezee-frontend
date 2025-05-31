@@ -34,7 +34,16 @@ export default function CustomerTable({ timezone, id }: { timezone: string; id: 
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10 });
 
-  const { data, isLoading, isFetching } = useGetAllCustomerByAdminQuery({ id, queries: query }, { skip: !accessToken });
+  const { data, isLoading, isFetching } = useGetAllCustomerByAdminQuery(
+    {
+      id,
+      queries: {
+        page: query.pageIndex + 1,
+        limit: query.pageSize,
+      },
+    },
+    { skip: !accessToken }
+  );
 
   const [deleteCustomerBySuperAdmin, { isSuccess, isError }] = useDeleteCustomerBySuperAdminMutation();
   const [customerStatusUpdateBySuperAdmin] = useCustomerStatusUpdateBySuperAdminMutation();

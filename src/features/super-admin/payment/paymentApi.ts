@@ -43,13 +43,7 @@ export const paymentApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['payments', 'superAdminRefund'],
     }),
-    getRetailerBillingPortal: builder.mutation({
-      query: (data) => ({
-        url: `/api/secret-root/admin/super-admin/payment/retailer-billing-portal`,
-        method: 'POST',
-        body: data,
-      }),
-    }),
+
     getAllPaymentMethodByAdmin: builder.query({
       query: ({ customerId, limit }) => ({
         url: `/api/secret-root/admin/super-admin/payment/payment-method/all/${customerId}?limit=${limit}`,
@@ -94,7 +88,6 @@ export const paymentApi = apiSlice.injectEndpoints({
 export const {
   useGetSubscriptionPaymentsQuery,
   useSingleSubscriptionPaymentQuery,
-  useGetRetailerBillingPortalMutation,
   useCreateBillingPdfBySuperAdminMutation,
   useCancelSubscriptionByAdminMutation,
   useAttachPaymentMethodByAdminMutation,
