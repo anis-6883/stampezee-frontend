@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/features/store';
 import moment from 'moment-timezone';
 
-export default function StampTable({ timezone, start, end, status }: { timezone: string; start: string; end: string; status: string }) {
+export default function StampTable({ timezone, start, end, status }: { timezone: string; start: string; end: string; status?: string }) {
   const t = useTranslations('RetailerStampTable');
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const { data: session }: any = useSession();
@@ -29,6 +29,8 @@ export default function StampTable({ timezone, start, end, status }: { timezone:
   const [deleteSubmitting, setDeleteSubmitting] = useState(false);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10, search: null });
   const searchQuery = query.search ? { search: query.search } : {};
+
+  console.log(status);
 
   const queryObject: any = {
     page: query.pageIndex + 1,
@@ -176,10 +178,21 @@ export default function StampTable({ timezone, start, end, status }: { timezone:
       Cell: ({ row }: any) => {
         return (
           <div className="flex gap-2">
-            <Link href={routes.privateRoutes.superAdmin.stamp.edit(row.original._id, row?.original?.isPublished)}>
-              <Button tooltip={'Edit'} color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
-            </Link>
-            <Button tooltip="Delete" onClick={() => handleDelete(row.original)} color="danger" preIcon={<ImBin className="text-base" />} />
+            {status !== 'deletedByAdmin' ? (
+              <Link href={routes.privateRoutes.superAdmin.stamp.edit(row.original._id, row?.original?.isPublished)}>
+                <Button tooltip="Edit" color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+              </Link>
+            ) : (
+              <Button disabled tooltip="Edit" color="warning" preIcon={<HiOutlinePencil className="text-base" />} />
+            )}
+
+            <Button
+              disabled={status == 'deletedByAdmin'}
+              tooltip="Delete"
+              onClick={() => handleDelete(row.original)}
+              color="danger"
+              preIcon={<ImBin className="text-base" />}
+            />
           </div>
         );
       },
