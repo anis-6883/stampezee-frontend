@@ -374,8 +374,8 @@ export default function RegisterForm({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-12 items-center justify-center gap-x-3">
-                  <div className="col-span-9">
+                <div className="grid grid-cols-12 items-center justify-center md:gap-x-3">
+                  <div className=" col-span-12 md:col-span-9">
                     <AddressInput
                       googleMapsApiKey={googleMapsApiKey}
                       setSelectedLocation={setSelectedLocation}
@@ -383,7 +383,7 @@ export default function RegisterForm({
                       address={values?.address}
                     />
                   </div>
-                  <div className={`col-span-3 mt-6`}>
+                  <div className={`col-span-12 mt-2 md:col-span-3 md:mt-6`}>
                     <Button
                       color="danger"
                       className="w-full"

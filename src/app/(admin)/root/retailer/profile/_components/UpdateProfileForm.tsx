@@ -151,6 +151,8 @@ export default function UpdateProfileForm({ locale }: { locale: string }) {
       .trim()
       .required(tRetailerCommon('required'))
       .matches(/^[a-zA-Z0-9]+$/, 'Are you sure you entered your Postal Code correctly?'),
+    about: Yup.string().trim().required(tRetailerCommon('required')).max(300, 'maximum 300 characters!'),
+    website: Yup.string().url('Please enter a valid URL (e.g., https://example.com)').required('Website is required'),
     address: Yup.string()
       .trim()
       .required(tRetailerCommon('required'))
