@@ -59,7 +59,7 @@ export default function StatsCardView({
             iconClassName="lg:h-9 lg:w-9 h-6 w-6"
             key={1}
             title={`Total Revenue (${businessCurrency})`}
-            metric={totalRevenue}
+            metric={totalRevenue?.toFixed(2)}
             hasDecimalTwoDigits={true}
             metricClassName="3xl:text-[22px]"
             className="w-full min-w-[200px] max-w-full justify-between"

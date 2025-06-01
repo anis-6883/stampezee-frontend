@@ -18,7 +18,16 @@ export default function StampTable({ timezone, id }: { timezone: string; id: str
   const { accessToken } = useSelector((state: RootState) => state.authSlice);
   const [query, setQuery] = useState<IQueryType>({ pageIndex: 0, pageSize: 10 });
 
-  const { data, isLoading, isFetching } = useGetAllScansByAdminQuery({ id, queries: query }, { skip: !accessToken });
+  const { data, isLoading, isFetching } = useGetAllScansByAdminQuery(
+    {
+      id,
+      queries: {
+        page: query.pageIndex + 1,
+        limit: query.pageSize,
+      },
+    },
+    { skip: !accessToken }
+  );
 
   const structure = [
     {
